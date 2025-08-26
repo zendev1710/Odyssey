@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="../BUILD.md" />
+    <File Path="../DEVELOPER.md" />
+    <File Path="../FEATURES.md" />
+    <File Path="../README.md" />
+    <File Path="../TODO.md" />
+  </Folder>
+  <Project Path="app/Odyssey.Desktop/Odyssey.csproj" />
+</Solution>

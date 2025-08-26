@@ -1,0 +1,2730 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="mainmenu_file_open" xml:space="preserve">
+    <value>_Äffnen...</value>
+  </data>
+  <data name="actions_opencraction_title" xml:space="preserve">
+    <value>Reportdatei äffnen</value>
+  </data>
+  <data name="actions_opencraction_tooltip" xml:space="preserve">
+    <value>Computer-Report äffnen</value>
+  </data>
+  <data name="rules_skill_Alchemie" xml:space="preserve">
+    <value>Alchemie</value>
+  </data>
+  <data name="rules_skill_Armbrustschießen" xml:space="preserve">
+    <value>Armbrustschieäen</value>
+  </data>
+  <data name="rules_skill_Ausdauer" xml:space="preserve">
+    <value>Ausdauer</value>
+  </data>
+  <data name="rules_skill_Bergbau" xml:space="preserve">
+    <value>Bergbau</value>
+  </data>
+  <data name="rules_skill_Bogenschießen" xml:space="preserve">
+    <value>Bogenschieäen</value>
+  </data>
+  <data name="rules_skill_Burgenbau" xml:space="preserve">
+    <value>Burgenbau</value>
+  </data>
+  <data name="rules_skill_Handeln" xml:space="preserve">
+    <value>Handeln</value>
+  </data>
+  <data name="rules_skill_Hiebwaffen" xml:space="preserve">
+    <value>Hiebwaffen</value>
+  </data>
+  <data name="rules_skill_Holzfällen" xml:space="preserve">
+    <value>Forstwirtschaft</value>
+  </data>
+  <data name="rules_skill_Katapultbedienung" xml:space="preserve">
+    <value>Katapultbedienung</value>
+  </data>
+  <data name="rules_skill_Kräuterkunde" xml:space="preserve">
+    <value>Kräuterkunde</value>
+  </data>
+  <data name="rules_skill_Magie" xml:space="preserve">
+    <value>Magie</value>
+  </data>
+  <data name="rules_skill_Pferdedressur" xml:space="preserve">
+    <value>Pferdedressur</value>
+  </data>
+  <data name="rules_skill_Reiten" xml:space="preserve">
+    <value>Reiten</value>
+  </data>
+  <data name="rules_skill_Rüstungsbau" xml:space="preserve">
+    <value>Rästungsbau</value>
+  </data>
+  <data name="rules_skill_Schiffbau" xml:space="preserve">
+    <value>Schiffbau</value>
+  </data>
+  <data name="rules_skill_Segeln" xml:space="preserve">
+    <value>Segeln</value>
+  </data>
+  <data name="rules_skill_Spionage" xml:space="preserve">
+    <value>Spionage</value>
+  </data>
+  <data name="rules_skill_Stangenwaffen" xml:space="preserve">
+    <value>Stangenwaffen</value>
+  </data>
+  <data name="rules_skill_Steinbau" xml:space="preserve">
+    <value>Steinbau</value>
+  </data>
+  <data name="rules_skill_Steuereintreiben" xml:space="preserve">
+    <value>Steuereintreiben</value>
+  </data>
+  <data name="rules_skill_Straßenbau" xml:space="preserve">
+    <value>straäenbau</value>
+  </data>
+  <data name="rules_skill_Taktik" xml:space="preserve">
+    <value>Taktik</value>
+  </data>
+  <data name="rules_skill_Tarnung" xml:space="preserve">
+    <value>Tarnung</value>
+  </data>
+  <data name="rules_skill_Unterhaltung" xml:space="preserve">
+    <value>Unterhaltung</value>
+  </data>
+  <data name="rules_skill_Waffenbau" xml:space="preserve">
+    <value>Waffenbau</value>
+  </data>
+  <data name="rules_skill_WaffenloserKampf" xml:space="preserve">
+    <value>Waffenloser Kampf</value>
+  </data>
+  <data name="rules_skill_Wagenbau" xml:space="preserve">
+    <value>Wagenbau</value>
+  </data>
+  <data name="rules_skill_Wahrnehmung" xml:space="preserve">
+    <value>Wahrnehmung</value>
+  </data>
+  <data name="rules_building_Akademie" xml:space="preserve">
+    <value>Akademie</value>
+  </data>
+  <data name="rules_building_AkademiederKünste" xml:space="preserve">
+    <value>Akademie der Künste</value>
+  </data>
+  <data name="rules_building_Befestigung" xml:space="preserve">
+    <value>Befestigung</value>
+  </data>
+  <data name="rules_building_Bergwerk" xml:space="preserve">
+    <value>Bergwerk</value>
+  </data>
+  <data name="rules_building_Burg" xml:space="preserve">
+    <value>Burg</value>
+  </data>
+  <data name="rules_building_Damm" xml:space="preserve">
+    <value>Damm</value>
+  </data>
+  <data name="rules_building_Festung" xml:space="preserve">
+    <value>Festung</value>
+  </data>
+  <data name="rules_building_Gerüst" xml:space="preserve">
+    <value>Gerüst</value>
+  </data>
+  <data name="rules_building_GesegneterSteinkreis" xml:space="preserve">
+    <value>Gesegneter Steinkreis</value>
+  </data>
+  <data name="rules_building_Grundmauern" xml:space="preserve">
+    <value>Grundmauern</value>
+  </data>
+  <data name="rules_building_Hafen" xml:space="preserve">
+    <value>Hafen</value>
+  </data>
+  <data name="rules_building_Handelsposten" xml:space="preserve">
+    <value>Handelsposten</value>
+  </data>
+  <data name="rules_building_Karawanserei" xml:space="preserve">
+    <value>Karawanserei</value>
+  </data>
+  <data name="rules_building_Leuchtturm" xml:space="preserve">
+    <value>Leuchtturm</value>
+  </data>
+  <data name="rules_building_Magierturm" xml:space="preserve">
+    <value>Magierturm</value>
+  </data>
+  <data name="rules_building_Marktplatz" xml:space="preserve">
+    <value>Marktplatz</value>
+  </data>
+  <data name="rules_building_Monument" xml:space="preserve">
+    <value>Monument</value>
+  </data>
+  <data name="rules_building_Pferdezucht" xml:space="preserve">
+    <value>Pferdezucht</value>
+  </data>
+  <data name="rules_building_Portal" xml:space="preserve">
+    <value>Portal</value>
+  </data>
+  <data name="rules_building_Schmiede" xml:space="preserve">
+    <value>Schmiede</value>
+  </data>
+  <data name="rules_building_Steinbruch" xml:space="preserve">
+    <value>Steinbruch</value>
+  </data>
+  <data name="rules_building_Steinkreis" xml:space="preserve">
+    <value>Steinkreis</value>
+  </data>
+  <data name="rules_building_Sägewerk" xml:space="preserve">
+    <value>Sägewerk</value>
+  </data>
+  <data name="rules_building_Taverne" xml:space="preserve">
+    <value>Taverne</value>
+  </data>
+  <data name="rules_building_Tunnel" xml:space="preserve">
+    <value>Tunnel</value>
+  </data>
+  <data name="rules_building_Turm" xml:space="preserve">
+    <value>Turm</value>
+  </data>
+  <data name="rules_building_Wachstube" xml:space="preserve">
+    <value>Wachstube</value>
+  </data>
+  <data name="rules_building_Wachturm" xml:space="preserve">
+    <value>Wachturm</value>
+  </data>
+  <data name="rules_building_Wurmloch" xml:space="preserve">
+    <value>Wurmloch</value>
+  </data>
+  <data name="rules_building_Zitadelle" xml:space="preserve">
+    <value>Zitadelle</value>
+  </data>
+  <data name="emapdetailspanel_node_compactpersons_mod" xml:space="preserve">
+    <value>{0} ({1}) {2}, {3}</value>
+  </data>
+  <data name="emapdetailspanel_node_compactpersons_hero_mod" xml:space="preserve">
+    <value>{0} ({1}) Helden-{2}, {3}</value>
+  </data>
+  <data name="emapdetailspanel_node_compactpersons" xml:space="preserve">
+    <value>{0} {2}, {3}</value>
+  </data>
+  <data name="emapdetailspanel_node_compactpersons_hero" xml:space="preserve">
+    <value>{0} Helden-{2}, {3}</value>
+  </data>
+  <data name="emapdetailspanel_node_resinfo_old_one" xml:space="preserve">
+    <value>vor {0} Runde</value>
+  </data>
+  <data name="emapdetailspanel_node_resinfo_old_more" xml:space="preserve">
+    <value>vor {0} Runden</value>
+  </data>
+  <data name="emapdetailspanel_menu_addorder_caption" xml:space="preserve">
+    <value>Befehl geben</value>
+  </data>
+  <data name="emapdetailspanel_addtag_caption" xml:space="preserve">
+    <value>Tag hinzufägen</value>
+  </data>
+  <data name="emapdetailspanel_prefs_capacity_allfactions" xml:space="preserve">
+    <value>alle Gegenstände in der Region</value>
+  </data>
+  <data name="emapdetailspanel_prefs_capacity_all" xml:space="preserve">
+    <value>alle Gegenstände</value>
+  </data>
+  <data name="emapdetailspanel_node_alliances" xml:space="preserve">
+    <value>Allianzen</value>
+  </data>
+  <data name="emapdetailspanel_prefs_allowCustomIcons" xml:space="preserve">
+    <value>Erlaube Eigene Icons</value>
+  </data>
+  <data name="emapdetailspanel_node_attackedBy" xml:space="preserve">
+    <value>Angreifer</value>
+  </data>
+  <data name="emapdetailspanel_node_aura" xml:space="preserve">
+    <value>Aura</value>
+  </data>
+  <data name="emapdetailspanel_backbutton_text" xml:space="preserve">
+    <value>Zuräck</value>
+  </data>
+  <data name="emapdetailspanel_node_besieged" xml:space="preserve">
+    <value>belagert von {0} Feinden</value>
+  </data>
+  <data name="emapdetailspanel_node_besiegeprefix" xml:space="preserve">
+    <value>belagert</value>
+  </data>
+  <data name="emapdetailspanel_node_besieges" xml:space="preserve">
+    <value>belagert {0}</value>
+  </data>
+  <data name="emapdetailspanel_node_buildingcost" xml:space="preserve">
+    <value>Baukosten</value>
+  </data>
+  <data name="emapdetailspanel_node_buildings" xml:space="preserve">
+    <value>Gebäude</value>
+  </data>
+  <data name="emapdetailspanel_prefs_capacity_label" xml:space="preserve">
+    <value>Kapazitätsknoten für</value>
+  </data>
+  <data name="emapdetailspanel_node_capacityonfoot" xml:space="preserve">
+    <value>Kapazität zu Fuä</value>
+  </data>
+  <data name="emapdetailspanel_node_capacityonhorse" xml:space="preserve">
+    <value>Kapazität zu Pferd</value>
+  </data>
+  <data name="emapdetailspanel_node_captain" xml:space="preserve">
+    <value>Kapitän</value>
+  </data>
+  <data name="emapdetailspanel_node_captainskill" xml:space="preserve">
+    <value>Kapitäns-Segeltalent</value>
+  </data>
+  <data name="emapdetailspanel_node_carriers" xml:space="preserve">
+    <value>Transporteure</value>
+  </data>
+  <data name="emapdetailspanel_shortcuts_description_2" xml:space="preserve">
+    <value>ändere "Mache-Begrenzung"</value>
+  </data>
+  <data name="emapdetailspanel_menu_changecomment" xml:space="preserve">
+    <value>Kommentar ändern</value>
+  </data>
+  <data name="emapdetailspanel_node_combat_spells" xml:space="preserve">
+    <value>Kampfzauber</value>
+  </data>
+  <data name="emapdetailspanel_node_combatstatus" xml:space="preserve">
+    <value>Kampfstatus</value>
+  </data>
+  <data name="emapdetailspanel_node_command" xml:space="preserve">
+    <value>Kommando</value>
+  </data>
+  <data name="emapdetailspanel_node_comments" xml:space="preserve">
+    <value>Kommentare</value>
+  </data>
+  <data name="emapdetailspanel_prefs_compact" xml:space="preserve">
+    <value>Anzeige in Kurzform</value>
+  </data>
+  <data name="emapdetailspanel_node_completion" xml:space="preserve">
+    <value>Fertigstellung</value>
+  </data>
+  <data name="emapdetailspanel_node_components" xml:space="preserve">
+    <value>Komponenten</value>
+  </data>
+  <data name="emapdetailspanel_menu_confirm_caption" xml:space="preserve">
+    <value>Bestätigungsstatus ändern</value>
+  </data>
+  <data name="emapdetailspanel_node_coordinates" xml:space="preserve">
+    <value>Koordinaten</value>
+  </data>
+  <data name="emapdetailspanel_menu_copyid_caption" xml:space="preserve">
+    <value>Kopiere Nummer</value>
+  </data>
+  <data name="emapdetailspanel_menu_copyidandname_caption" xml:space="preserve">
+    <value>Kopiere Name + Nummer</value>
+  </data>
+  <data name="emapdetailspanel_menu_createcomment" xml:space="preserve">
+    <value>Kommentar anlegen</value>
+  </data>
+  <data name="emapdetailspanel_node_crew" xml:space="preserve">
+    <value>Crew</value>
+  </data>
+  <data name="emapdetailspanel_node_crewskill" xml:space="preserve">
+    <value>Mannschafts-Segeltalent</value>
+  </data>
+  <data name="emapdetailspanel_node_resinfo_current" xml:space="preserve">
+    <value>aktuell</value>
+  </data>
+  <data name="emapdetailspanel_menu_mnemonic" xml:space="preserve">
+    <value>D</value>
+  </data>
+  <data name="emapdetailspanel_node_damage" xml:space="preserve">
+    <value>Schaden</value>
+  </data>
+  <data name="emapdetailspanel_prefs_datadisplay" xml:space="preserve">
+    <value>Datenanzeige</value>
+  </data>
+  <data name="emapdetailspanel_wrapperfactory_title" xml:space="preserve">
+    <value>Detaileinträge</value>
+  </data>
+  <data name="emapdetailspanel_shortcuts_title" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="emapdetailspanel_menu_caption" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="emapdetailspanel_prefs_title" xml:space="preserve">
+    <value>Detailanzeige</value>
+  </data>
+  <data name="emapdetailspanel_node_direction" xml:space="preserve">
+    <value>Richtung</value>
+  </data>
+  <data name="emapdetailspanel_node_disguised" xml:space="preserve">
+    <value>parteigetarnt</value>
+  </data>
+  <data name="emapdetailspanel_node_disguisedas" xml:space="preserve">
+    <value>Parteigetarnt als</value>
+  </data>
+  <data name="emapdetailspanel_node_spell_far" xml:space="preserve">
+    <value>Fernzauber</value>
+  </data>
+  <data name="emapdetailspanel_contextmenu_give_getamount_true_title" xml:space="preserve">
+    <value>Anzahl eingeben</value>
+  </data>
+  <data name="emapdetailspanel_contextmenu_give_getamount_false_title" xml:space="preserve">
+    <value>Anzahl eingeben</value>
+  </data>
+  <data name="emapdetailspanel_contextmenu_reserve_getamount_true_title" xml:space="preserve">
+    <value>Anzahl eingeben</value>
+  </data>
+  <data name="emapdetailspanel_contextmenu_reserve_getamount_false_title" xml:space="preserve">
+    <value>Anzahl eingeben</value>
+  </data>
+  <data name="emapdetailspanel_node_entertainment" xml:space="preserve">
+    <value>Unterhaltung</value>
+  </data>
+  <data name="emapdetailspanel_error" xml:space="preserve">
+    <value>Fehler</value>
+  </data>
+  <data name="emapdetailspanel_node_faction" xml:space="preserve">
+    <value>Partei</value>
+  </data>
+  <data name="emapdetailspanel_node_group" xml:space="preserve">
+    <value>Gruppe</value>
+  </data>
+  <data name="emapdetailspanel_node_guarded" xml:space="preserve">
+    <value>Bewacht durch</value>
+  </data>
+  <data name="emapdetailspanel_node_guards" xml:space="preserve">
+    <value>Bewachter</value>
+  </data>
+  <data name="emapdetailspanel_node_guardsnot" xml:space="preserve">
+    <value>Bewacht nicht</value>
+  </data>
+  <data name="emapdetailspanel_node_health" xml:space="preserve">
+    <value>Gesundheitszustand</value>
+  </data>
+  <data name="emapdetailspanel_alliancestate" xml:space="preserve">
+    <value>Helfestatus {0}</value>
+  </data>
+  <data name="emapdetailspanel_node_herb" xml:space="preserve">
+    <value>Kräuter</value>
+  </data>
+  <data name="emapdetailspanel_node_1_hero" xml:space="preserve">
+    <value>Held</value>
+  </data>
+  <data name="emapdetailspanel_node_horses" xml:space="preserve">
+    <value>Pferde</value>
+  </data>
+  <data name="emapdetailspanel_node_ingredients" xml:space="preserve">
+    <value>Zutaten</value>
+  </data>
+  <data name="emapdetailspanel_node_inmates" xml:space="preserve">
+    <value>Insassen</value>
+  </data>
+  <data name="emapdetailspanel_node_items" xml:space="preserve">
+    <value>Gegenstände</value>
+  </data>
+  <data name="emapdetailspanel_prefs_capacity_privilegedfactions" xml:space="preserve">
+    <value>Gegenstände von Parteien mit Passwort</value>
+  </data>
+  <data name="emapdetailspanel_prefs_capacity_myfaction" xml:space="preserve">
+    <value>Gegenstände der eigenen Partei</value>
+  </data>
+  <data name="emapdetailspanel_node_laen" xml:space="preserve">
+    <value>Laen</value>
+  </data>
+  <data name="emapdetailspanel_node_weightunits" xml:space="preserve">
+    <value>GE</value>
+  </data>
+  <data name="emapdetailspanel_node_level" xml:space="preserve">
+    <value>Stufe</value>
+  </data>
+  <data name="emapdetailspanel_node_terrain_visibility_LIGHTHOUSE" xml:space="preserve">
+    <value>Leuchtturm</value>
+  </data>
+  <data name="emapdetailspanel_node_load" xml:space="preserve">
+    <value>Ladung</value>
+  </data>
+  <data name="emapdetailspanel_node_mallorntrees" xml:space="preserve">
+    <value>Mallornbäume</value>
+  </data>
+  <data name="emapdetailspanel_node_buildingsizemax" xml:space="preserve">
+    <value>max: {0} (x{1})</value>
+  </data>
+  <data name="emapdetailspanel_node_morale" xml:space="preserve">
+    <value>Moral: {0}</value>
+  </data>
+  <data name="emapdetailspanel_node_morale_mourning" xml:space="preserve">
+    <value>Moral: {0}, in Trauer!</value>
+  </data>
+  <data name="emapdetailspanel_node_buildingminskilllevel" xml:space="preserve">
+    <value>benätigte Talentstufe</value>
+  </data>
+  <data name="emapdetailspanel_node_terrain_visibility_NEIGHBOR" xml:space="preserve">
+    <value>Nachbarregion</value>
+  </data>
+  <data name="emapdetailspanel_spell_noinfo" xml:space="preserve">
+    <value>Keine Information verfägbar (keine passenden Daten im CR)</value>
+  </data>
+  <data name="emapdetailspanel_node_terrain_visibility_NULL" xml:space="preserve">
+    <value>nicht gesehen</value>
+  </data>
+  <data name="emapdetailspanel_node_captainAmount" xml:space="preserve">
+    <value>Anzahl Kapitäne</value>
+  </data>
+  <data name="emapdetailspanel_node_of" xml:space="preserve">
+    <value>von</value>
+  </data>
+  <data name="emapdetailspanel_node_misc" xml:space="preserve">
+    <value>Weitere Befehle</value>
+  </data>
+  <data name="emapdetailspanel_node_resinfo_old_unknown" xml:space="preserve">
+    <value>nicht aktuell?</value>
+  </data>
+  <data name="emapdetailspanel_node_overloadedby" xml:space="preserve">
+    <value>äberladen mit</value>
+  </data>
+  <data name="emapdetailspanel_node_owner" xml:space="preserve">
+    <value>Besitzer</value>
+  </data>
+  <data name="emapdetailspanel_node_passengers" xml:space="preserve">
+    <value>Passagiere</value>
+  </data>
+  <data name="emapdetailspanel_node_wage" xml:space="preserve">
+    <value>Bauernlohn</value>
+  </data>
+  <data name="emapdetailspanel_node_peasants" xml:space="preserve">
+    <value>Bauern</value>
+  </data>
+  <data name="emapdetailspanel_node_regiondetails" xml:space="preserve">
+    <value>Bauern Details</value>
+  </data>
+  <data name="emapdetailspanel_node_permanenteaura" xml:space="preserve">
+    <value>permanente Aura</value>
+  </data>
+  <data name="emapdetailspanel_node_persons" xml:space="preserve">
+    <value>Personen</value>
+  </data>
+  <data name="emapdetailspanel_addtag_tagname_message" xml:space="preserve">
+    <value>Bitte Tag-Name eingeben</value>
+  </data>
+  <data name="emapdetailspanel_addtag_tagvalue_message" xml:space="preserve">
+    <value>Bitte Tag-Wert eingeben</value>
+  </data>
+  <data name="emapdetailspanel_node_postcombat_spells" xml:space="preserve">
+    <value>Postkampfzauber</value>
+  </data>
+  <data name="emapdetailspanel_node_potions" xml:space="preserve">
+    <value>Tränke</value>
+  </data>
+  <data name="emapdetailspanel_node_precombat_spells" xml:space="preserve">
+    <value>Präkampfzauber</value>
+  </data>
+  <data name="emapdetailspanel_node_pupils" xml:space="preserve">
+    <value>Schäler</value>
+  </data>
+  <data name="emapdetailspanel_node_race" xml:space="preserve">
+    <value>Rasse</value>
+  </data>
+  <data name="emapdetailspanel_node_range" xml:space="preserve">
+    <value>Reichweite</value>
+  </data>
+  <data name="emapdetailspanel_node_rank" xml:space="preserve">
+    <value>Rang</value>
+  </data>
+  <data name="emapdetailspanel_node_recruit" xml:space="preserve">
+    <value>Rekrutieren</value>
+  </data>
+  <data name="emapdetailspanel_menu_removecomment_all" xml:space="preserve">
+    <value>Alle Kommentare läschen</value>
+  </data>
+  <data name="emapdetailspanel_menu_removecomment" xml:space="preserve">
+    <value>Kommentar läschen</value>
+  </data>
+  <data name="emapdetailspanel_contextmenu_give_set0_title" xml:space="preserve">
+    <value>GIB-Befehl läschen</value>
+  </data>
+  <data name="emapdetailspanel_removetag_caption" xml:space="preserve">
+    <value>Tag entfernen</value>
+  </data>
+  <data name="emapdetailspanel_shortcuts_description_1" xml:space="preserve">
+    <value>Fordere Fokus für Befehlseingabe</value>
+  </data>
+  <data name="emapdetailspanel_shortcuts_description_0" xml:space="preserve">
+    <value>Fordere Fokus für Befehlseingabe</value>
+  </data>
+  <data name="emapdetailspanel_contextmenu_reserve_set0_title" xml:space="preserve">
+    <value>RESERVIERE 0</value>
+  </data>
+  <data name="emapdetailspanel_node_resources" xml:space="preserve">
+    <value>Ressourcen</value>
+  </data>
+  <data name="emapdetailspanel_node_resources_region" xml:space="preserve">
+    <value>Ressourcen (Region)</value>
+  </data>
+  <data name="emapdetailspanel_node_terrain_visibility_WRAP" xml:space="preserve">
+    <value>Welt umrundet!</value>
+  </data>
+  <data name="emapdetailspanel_node_sailing_skill" xml:space="preserve">
+    <value>Segeltalent</value>
+  </data>
+  <data name="emapdetailspanel_node_schemes" xml:space="preserve">
+    <value>Schemen</value>
+  </data>
+  <data name="emapdetailspanel_node_spell_ocean" xml:space="preserve">
+    <value>Seezauber</value>
+  </data>
+  <data name="emapdetailspanel_node_terrain_visibility_UNIT" xml:space="preserve">
+    <value>direkt gesehen</value>
+  </data>
+  <data name="emapdetailspanel_contextmenu_give_set_false_title" xml:space="preserve">
+    <value>Setze Anzahl des GIB-Befehls</value>
+  </data>
+  <data name="emapdetailspanel_contextmenu_give_set_true_title" xml:space="preserve">
+    <value>Setze Anzahl des GIB-Befehls mit JE</value>
+  </data>
+  <data name="emapdetailspanel_contextmenu_reserve_set_false_title" xml:space="preserve">
+    <value>Setze Anzahl von RESERVIERE</value>
+  </data>
+  <data name="emapdetailspanel_contextmenu_reserve_set_true_title" xml:space="preserve">
+    <value>Setze Anzahl von RESERVIERE mit JE</value>
+  </data>
+  <data name="emapdetailspanel_shipplaner_text" xml:space="preserve">
+    <value>Schiffsroutenplaner</value>
+  </data>
+  <data name="emapdetailspanel_node_spell_ship" xml:space="preserve">
+    <value>Schiffszauber</value>
+  </data>
+  <data name="emapdetailspanel_node_shore" xml:space="preserve">
+    <value>Käste</value>
+  </data>
+  <data name="emapdetailspanel_prefs_showRegionItemAmount" xml:space="preserve">
+    <value>Regionsanzahl bei den Gegenständen einer Einheit anzeigen</value>
+  </data>
+  <data name="emapdetailspanel_prefs_showcontainericons" xml:space="preserve">
+    <value>Bei Einheiten Icons für Gebäude und Schiffe anzeigen</value>
+  </data>
+  <data name="emapdetailspanel_prefs_showskillicons" xml:space="preserve">
+    <value>Bei Einheiten Icons für Talente anzeigen</value>
+  </data>
+  <data name="emapdetailspanel_prefs_showTagButtons" xml:space="preserve">
+    <value>Zeige Tag-Buttons</value>
+  </data>
+  <data name="emapdetailspanel_prefs_showNextSkillLevelPoints" xml:space="preserve">
+    <value>Bei Einheiten die Talenttage bis zur nächsten Talentstufe anzeigen</value>
+  </data>
+  <data name="emapdetailspanel_prefs_showNextSkillLevelLearnTurns" xml:space="preserve">
+    <value>Bei Einheiten die Anzahl der Runden anzeigen, die bis zur nächsten Talentstufe gelernt werden mässen</value>
+  </data>
+  <data name="emapdetailspanel_node_silver" xml:space="preserve">
+    <value>Silber</value>
+  </data>
+  <data name="emapdetailspanel_node_size" xml:space="preserve">
+    <value>größe: {0}</value>
+  </data>
+  <data name="emapdetailspanel_node_buildingsizelimits" xml:space="preserve">
+    <value>Größenbereich des aktuellen Typs: {0} - {1}</value>
+  </data>
+  <data name="emapdetailspanel_node_skills" xml:space="preserve">
+    <value>Talente</value>
+  </data>
+  <data name="emapdetailspanel_node_spells" xml:space="preserve">
+    <value>Zauberspräche</value>
+  </data>
+  <data name="emapdetailspanel_node_stealth" xml:space="preserve">
+    <value>Tarnung</value>
+  </data>
+  <data name="emapdetailspanel_node_surplus" xml:space="preserve">
+    <value>Äberschuss</value>
+  </data>
+  <data name="emapdetailspanel_node_tags" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="emapdetailspanel_node_teacher" xml:space="preserve">
+    <value>Lehrer</value>
+  </data>
+  <data name="emapdetailspanel_node_terrain" xml:space="preserve">
+    <value>Terrain</value>
+  </data>
+  <data name="emapdetailspanel_node_terrains" xml:space="preserve">
+    <value>Terrains</value>
+  </data>
+  <data name="emapdetailspanel_msg_cannotdescribe_text" xml:space="preserve">
+    <value>Die Beschreibung konnte nicht geändert werden. Bitte verwende den BESCHREIBE Befehl.</value>
+  </data>
+  <data name="emapdetailspanel_msg_cannotrename_text" xml:space="preserve">
+    <value>Der Name konnte nicht geändert werden. Bitte verwende den BENENNE Befehl.</value>
+  </data>
+  <data name="emapdetailspanel_node_orcinfestation" xml:space="preserve">
+    <value>In der Region gibt es zu viele orks.</value>
+  </data>
+  <data name="emapdetailspanel_node_spy" xml:space="preserve">
+    <value>Spion einer anderen Partei!</value>
+  </data>
+  <data name="emapdetailspanel_node_toomanyhorses" xml:space="preserve">
+    <value>Die Einheit besitzt zu viele Pferde</value>
+  </data>
+  <data name="emapdetailspanel_node_trade" xml:space="preserve">
+    <value>Handel</value>
+  </data>
+  <data name="emapdetailspanel_node_terrain_visibility_TRAVEL" xml:space="preserve">
+    <value>Durchreise</value>
+  </data>
+  <data name="emapdetailspanel_node_treasury" xml:space="preserve">
+    <value>Reichsschatz: {0} Silber</value>
+  </data>
+  <data name="emapdetailspanel_menu_supertitle" xml:space="preserve">
+    <value>Baum</value>
+  </data>
+  <data name="emapdetailspanel_node_trees" xml:space="preserve">
+    <value>Bäume</value>
+  </data>
+  <data name="emapdetailspanel_node_type" xml:space="preserve">
+    <value>Typ</value>
+  </data>
+  <data name="emapdetailspanel_node_starved" xml:space="preserve">
+    <value>Einheit hungert</value>
+  </data>
+  <data name="emapdetailspanel_node_majoritywage" xml:space="preserve">
+    <value>Einheiten</value>
+  </data>
+  <data name="emapdetailspanel_menu_units" xml:space="preserve">
+    <value>Einheiten</value>
+  </data>
+  <data name="emapdetailspanel_node_unknownfaction" xml:space="preserve">
+    <value>unbekannte Partei</value>
+  </data>
+  <data name="emapdetailspanel_node_maintenance" xml:space="preserve">
+    <value>Unterhalt</value>
+  </data>
+  <data name="emapdetailspanel_node_upkeep" xml:space="preserve">
+    <value>Unterhalt</value>
+  </data>
+  <data name="emapdetailspanel_node_attacks" xml:space="preserve">
+    <value>Opfer</value>
+  </data>
+  <data name="emapdetailspanel_node_weight" xml:space="preserve">
+    <value>Gewicht</value>
+  </data>
+  <data name="combatstatus_0" xml:space="preserve">
+    <value>aggressiv</value>
+  </data>
+  <data name="combatstatus_1" xml:space="preserve">
+    <value>vorne</value>
+  </data>
+  <data name="combatstatus_2" xml:space="preserve">
+    <value>hinten</value>
+  </data>
+  <data name="combatstatus_3" xml:space="preserve">
+    <value>defensiv</value>
+  </data>
+  <data name="combatstatus_4" xml:space="preserve">
+    <value>kämpft nicht</value>
+  </data>
+  <data name="combatstatus_5" xml:space="preserve">
+    <value>flieht</value>
+  </data>
+  <data name="combatstatus_6" xml:space="preserve">
+    <value>unbekannte</value>
+  </data>
+  <data name="rules_item_Silber" xml:space="preserve">
+    <value>Silber</value>
+  </data>
+  <data name="rules_item_Schwert" xml:space="preserve">
+    <value>Schwert</value>
+  </data>
+  <data name="rules_item_Pferd" xml:space="preserve">
+    <value>Pferd</value>
+  </data>
+  <data name="rules_item_Flammenschwert" xml:space="preserve">
+    <value>Flammenschwert</value>
+  </data>
+  <data name="rules_item_Laenschwert" xml:space="preserve">
+    <value>Laenschwert</value>
+  </data>
+  <data name="rules_item_Schartiges Schwert" xml:space="preserve">
+    <value>Schartigesschwert</value>
+  </data>
+  <data name="emapdetailspanel_node_heroes" xml:space="preserve">
+    <value>Helden</value>
+  </data>
+  <data name="rules_item_Weihrauch" xml:space="preserve">
+    <value>Weihrauch</value>
+  </data>
+  <data name="rules_item_Seide" xml:space="preserve">
+    <value>Seide</value>
+  </data>
+  <data name="rules_item_Öl" xml:space="preserve">
+    <value>Öl</value>
+  </data>
+  <data name="rules_item_Myrrhe" xml:space="preserve">
+    <value>Myrrhe</value>
+  </data>
+  <data name="rules_item_Juwel" xml:space="preserve">
+    <value>Juwel</value>
+  </data>
+  <data name="rules_item_Gewürz" xml:space="preserve">
+    <value>Gewürz</value>
+  </data>
+  <data name="emapdetailspanel_node_1_persons" xml:space="preserve">
+    <value>Person</value>
+  </data>
+  <data name="rules_item_Wagen" xml:space="preserve">
+    <value>Wagen</value>
+  </data>
+  <data name="rules_item_Balsam" xml:space="preserve">
+    <value>Balsam</value>
+  </data>
+  <data name="rules_item_Speer" xml:space="preserve">
+    <value>Speer</value>
+  </data>
+  <data name="rules_item_Mallornspeer" xml:space="preserve">
+    <value>Mallornspeer</value>
+  </data>
+  <data name="rules_item_Kriegsaxt" xml:space="preserve">
+    <value>Kriegsaxt</value>
+  </data>
+  <data name="rules_item_Armbrust" xml:space="preserve">
+    <value>Armbrust</value>
+  </data>
+  <data name="rules_item_Bogen" xml:space="preserve">
+    <value>Bogen</value>
+  </data>
+  <data name="rules_item_Elfenbogen" xml:space="preserve">
+    <value>Elfenbogen</value>
+  </data>
+  <data name="rules_race_Zwerge" xml:space="preserve">
+    <value>Zwerge</value>
+  </data>
+  <data name="rules_race_Wiedergänger" xml:space="preserve">
+    <value>Wiedergänger</value>
+  </data>
+  <data name="rules_race_Trolle" xml:space="preserve">
+    <value>Trolle</value>
+  </data>
+  <data name="rules_race_Skelettherren" xml:space="preserve">
+    <value>Skeleton Lords</value>
+  </data>
+  <data name="rules_race_Schrecken" xml:space="preserve">
+    <value>Schrecken</value>
+  </data>
+  <data name="rules_race_Orks" xml:space="preserve">
+    <value>Orks</value>
+  </data>
+  <data name="rules_race_Menschen" xml:space="preserve">
+    <value>Menschen</value>
+  </data>
+  <data name="rules_race_Meermenschen" xml:space="preserve">
+    <value>Meermenschen</value>
+  </data>
+  <data name="rules_race_Katzen" xml:space="preserve">
+    <value>Katzen</value>
+  </data>
+  <data name="rules_race_Insekten" xml:space="preserve">
+    <value>Insekten</value>
+  </data>
+  <data name="rules_race_Halblinge" xml:space="preserve">
+    <value>Halblinge</value>
+  </data>
+  <data name="rules_race_Goblins" xml:space="preserve">
+    <value>Goblins</value>
+  </data>
+  <data name="rules_race_Elfen" xml:space="preserve">
+    <value>Elfen</value>
+  </data>
+  <data name="rules_race_Dämonen" xml:space="preserve">
+    <value>Dämonen</value>
+  </data>
+  <data name="rules_race_1_Zwerge" xml:space="preserve">
+    <value>Zwerg</value>
+  </data>
+  <data name="rules_race_1_Wiedergänger" xml:space="preserve">
+    <value>Wiedergänger</value>
+  </data>
+  <data name="rules_race_1_Trolle" xml:space="preserve">
+    <value>Troll</value>
+  </data>
+  <data name="rules_race_1_Skelettherren" xml:space="preserve">
+    <value>Skeleton Lord</value>
+  </data>
+  <data name="rules_race_1_Schrecken" xml:space="preserve">
+    <value>Schrecken</value>
+  </data>
+  <data name="rules_race_1_Orks" xml:space="preserve">
+    <value>Ork</value>
+  </data>
+  <data name="rules_race_1_Menschen" xml:space="preserve">
+    <value>Mensch</value>
+  </data>
+  <data name="rules_race_1_Meermenschen" xml:space="preserve">
+    <value>Meermensch</value>
+  </data>
+  <data name="rules_race_1_Katzen" xml:space="preserve">
+    <value>Katze</value>
+  </data>
+  <data name="rules_race_1_Insekten" xml:space="preserve">
+    <value>Insekt</value>
+  </data>
+  <data name="rules_race_1_Halblinge" xml:space="preserve">
+    <value>Halbling</value>
+  </data>
+  <data name="rules_race_1_Goblins" xml:space="preserve">
+    <value>Goblin</value>
+  </data>
+  <data name="rules_race_1_Elfen" xml:space="preserve">
+    <value>Elf</value>
+  </data>
+  <data name="rules_race_1_Dämonen" xml:space="preserve">
+    <value>Dämon</value>
+  </data>
+  <data name="rules_item_Laenschild" xml:space="preserve">
+    <value>Laenschild</value>
+  </data>
+  <data name="rules_item_Schild" xml:space="preserve">
+    <value>Schild</value>
+  </data>
+  <data name="rules_region_Ebene" xml:space="preserve">
+    <value>Ebene</value>
+  </data>
+  <data name="rules_region_Hochland" xml:space="preserve">
+    <value>Hochland</value>
+  </data>
+  <data name="rules_region_Wüste" xml:space="preserve">
+    <value>Wüste</value>
+  </data>
+  <data name="rules_region_Berge" xml:space="preserve">
+    <value>Berge</value>
+  </data>
+  <data name="rules_item_Plattenpanzer" xml:space="preserve">
+    <value>Plattenpanzer</value>
+  </data>
+  <data name="rules_item_Bihänder" xml:space="preserve">
+    <value>Bihänder</value>
+  </data>
+  <data name="rules_item_Meermenschschuppe" xml:space="preserve">
+    <value>Meermenschschuppe</value>
+  </data>
+  <data name="rules_item_Kettenhemd" xml:space="preserve">
+    <value>Kettenhemd</value>
+  </data>
+  <data name="rules_item_Laenkettenhemd" xml:space="preserve">
+    <value>Laenkettenhemd</value>
+  </data>
+  <data name="rules_item_Rostiges Kettenhemd" xml:space="preserve">
+    <value>Rostiges Kettenhemd</value>
+  </data>
+  <data name="rules_item_Rostiger Schild" xml:space="preserve">
+    <value>Rostiger Schild</value>
+  </data>
+  <data name="rules_item_Zwergenbart" xml:space="preserve">
+    <value>Zwergenbart</value>
+  </data>
+  <data name="rules_item_Ring der Unsichtbarkeit" xml:space="preserve">
+    <value>Ring der Unsichtbarkeit</value>
+  </data>
+  <data name="rules_item_Ring der flinken Finger" xml:space="preserve">
+    <value>Ring der flinken Finger</value>
+  </data>
+  <data name="rules_item_Ring der Macht" xml:space="preserve">
+    <value>Ring der Macht</value>
+  </data>
+  <data name="rules_item_Rostige Kriegsaxt" xml:space="preserve">
+    <value>Rostige Kriegsaxt</value>
+  </data>
+  <data name="rules_item_Blasenmorchel" xml:space="preserve">
+    <value>Blasenmorchel</value>
+  </data>
+  <data name="rules_item_Flachwurz" xml:space="preserve">
+    <value>Flachwurz</value>
+  </data>
+  <data name="rules_item_Eisen" xml:space="preserve">
+    <value>Eisen</value>
+  </data>
+  <data name="rules_item_Stein" xml:space="preserve">
+    <value>Stein</value>
+  </data>
+  <data name="rules_item_Silberbeutel" xml:space="preserve">
+    <value>Silberbeutel</value>
+  </data>
+  <data name="rules_item_Silberkassette" xml:space="preserve">
+    <value>Silberkassette</value>
+  </data>
+  <data name="rules_item_Katapultmunition" xml:space="preserve">
+    <value>Katapultmunition</value>
+  </data>
+  <data name="rules_item_Holz" xml:space="preserve">
+    <value>Holz</value>
+  </data>
+  <data name="rules_item_Sandfäule" xml:space="preserve">
+    <value>Sandfäule</value>
+  </data>
+  <data name="rules_effect_Wundsalbe" xml:space="preserve">
+    <value>Wundsalbe</value>
+  </data>
+  <data name="rules_effect_Heiltrank" xml:space="preserve">
+    <value>Heiltrank</value>
+  </data>
+  <data name="rules_item_Blauer Baumringel" xml:space="preserve">
+    <value>Blauer Baumringel</value>
+  </data>
+  <data name="rules_item_Drachenkopf" xml:space="preserve">
+    <value>Drachenkopf</value>
+  </data>
+  <data name="rules_item_Elfenohr" xml:space="preserve">
+    <value>Elfenohr</value>
+  </data>
+  <data name="rules_item_Geburtstagstorte" xml:space="preserve">
+    <value>Geburtstagstorte</value>
+  </data>
+  <data name="rules_item_Goblinkopf" xml:space="preserve">
+    <value>Goblinkopf</value>
+  </data>
+  <data name="rules_effect_Goliathwasser" xml:space="preserve">
+    <value>Goliathwasser</value>
+  </data>
+  <data name="rules_item_Menschenskalp" xml:space="preserve">
+    <value>Menschenskalp</value>
+  </data>
+  <data name="rules_effect_Nestwärme" xml:space="preserve">
+    <value>Nestwärme</value>
+  </data>
+  <data name="rules_item_Trollhorn" xml:space="preserve">
+    <value>Trollhorn</value>
+  </data>
+  <data name="rules_item_Feenstiefel" xml:space="preserve">
+    <value>Feenstiefel</value>
+  </data>
+  <data name="rules_effect_Siebenmeilentee" xml:space="preserve">
+    <value>Siebenmeilentee</value>
+  </data>
+  <data name="rules_item_Würziger Wagemut" xml:space="preserve">
+    <value>Würziger Wagemut</value>
+  </data>
+  <data name="rules_item_Fjordwuchs" xml:space="preserve">
+    <value>Fjordwuchs</value>
+  </data>
+  <data name="rules_item_Gurgelkraut" xml:space="preserve">
+    <value>Gurgelkraut</value>
+  </data>
+  <data name="rules_effect_Bauernblut" xml:space="preserve">
+    <value>Bauernblut</value>
+  </data>
+  <data name="rules_effect_Gehirnschmalz" xml:space="preserve">
+    <value>Gehirnschmalz</value>
+  </data>
+  <data name="rules_effect_Schaffenstrunk" xml:space="preserve">
+    <value>Schaffenstrunk</value>
+  </data>
+  <data name="rules_spell_Wunderdoktor" xml:space="preserve">
+    <value>Wunderdoktor</value>
+  </data>
+  <data name="rules_spell_Stehle Aura" xml:space="preserve">
+    <value>Stehle Aura</value>
+  </data>
+  <data name="rules_spell_Fluch brechen" xml:space="preserve">
+    <value>Fluch brechen</value>
+  </data>
+  <data name="rules_spell_Astraler Ausgang" xml:space="preserve">
+    <value>Astraler Ausgang</value>
+  </data>
+  <data name="rules_spell_Astraler Riss" xml:space="preserve">
+    <value>Astraler Riss</value>
+  </data>
+  <data name="rules_spell_Astraler Ruf" xml:space="preserve">
+    <value>Astraler Ruf</value>
+  </data>
+  <data name="rules_spell_Astraler Weg" xml:space="preserve">
+    <value>Astraler Weg</value>
+  </data>
+  <data name="rules_spell_Astrales Chaos" xml:space="preserve">
+    <value>Astrales Chaos</value>
+  </data>
+  <data name="rules_spell_Magie analysieren" xml:space="preserve">
+    <value>Magie analysieren</value>
+  </data>
+  <data name="rules_spell_Magiefresser" xml:space="preserve">
+    <value>Magiefresser</value>
+  </data>
+  <data name="rules_spell_Mauern der Ewigkeit" xml:space="preserve">
+    <value>Mauern der Ewigkeit</value>
+  </data>
+  <data name="rules_spell_Ruf der Realität" xml:space="preserve">
+    <value>Ruf der Realität</value>
+  </data>
+  <data name="rules_spell_Erschaffe einen Ring der Unsichtbarkeit" xml:space="preserve">
+    <value>Erschaffe einen Ring der Unsichtbarkeit</value>
+  </data>
+  <data name="rules_spell_Erschaffe einen Ring der Macht" xml:space="preserve">
+    <value>Erschaffe einen Ring der Macht</value>
+  </data>
+  <data name="rules_spell_Erschaffe Eisengolems" xml:space="preserve">
+    <value>Erschaffe Eisengolems</value>
+  </data>
+  <data name="rules_spell_Erschaffe Steingolems" xml:space="preserve">
+    <value>Erschaffe Steingolems</value>
+  </data>
+  <data name="rules_spell_Erschaffe Antimagiekristall" xml:space="preserve">
+    <value>Erschaffe Antimagiekristall</value>
+  </data>
+  <data name="rules_spell_Erschaffe ein Amulett des wahren Sehens" xml:space="preserve">
+    <value>Erschaffe ein Amulett des wahren Sehens</value>
+  </data>
+  <data name="rules_spell_Schockwelle" xml:space="preserve">
+    <value>Schockwelle</value>
+  </data>
+  <data name="rules_spell_Luftschiff" xml:space="preserve">
+    <value>Luftschiff</value>
+  </data>
+  <data name="rules_spell_Schutz vor Magie" xml:space="preserve">
+    <value>Schutz vor Magie</value>
+  </data>
+  <data name="rules_spell_Schutzzauber" xml:space="preserve">
+    <value>Schutzzauber</value>
+  </data>
+  <data name="rules_spell_Auratransfer" xml:space="preserve">
+    <value>Auratransfer</value>
+  </data>
+  <data name="rules_spell_Beute Bewahren" xml:space="preserve">
+    <value>Beute Bewahren</value>
+  </data>
+  <data name="rules_spell_Schleieraura" xml:space="preserve">
+    <value>Schleieraura</value>
+  </data>
+  <data name="faction_disguised" xml:space="preserve">
+    <value>Parteigetarnt</value>
+  </data>
+  <data name="unknown_id" xml:space="preserve">
+    <value>unbekannt ({0})</value>
+  </data>
+  <data name="faction_disguised_as_faction" xml:space="preserve">
+    <value>Parteigetarnt als</value>
+  </data>
+  <data name="aura_from_auramax" xml:space="preserve">
+    <value>{0} von {1} Aura</value>
+  </data>
+  <data name="rules_race_Unknown" xml:space="preserve">
+    <value>Personen</value>
+  </data>
+  <data name="rules_race_1_Unknown" xml:space="preserve">
+    <value>Person</value>
+  </data>
+  <data name="rules_spell_Hainzauber" xml:space="preserve">
+    <value>Hainzauber</value>
+  </data>
+  <data name="rules_spell_Hail" xml:space="preserve">
+    <value>Hagel</value>
+  </data>
+  <data name="rules_spell_Rain of Rust" xml:space="preserve">
+    <value>Rostregen</value>
+  </data>
+  <data name="rules_spell_Grove of Oak Trees" xml:space="preserve">
+    <value>Hainzauber</value>
+  </data>
+  <data name="rules_spell_Create Stone Golems" xml:space="preserve">
+    <value>Erschaffe Steingolems</value>
+  </data>
+  <data name="rules_spell_Create Iron Golems" xml:space="preserve">
+    <value>Erschaffe Steingolems</value>
+  </data>
+  <data name="rules_spell_Firun's Coat" xml:space="preserve">
+    <value>Firuns Fell</value>
+  </data>
+  <data name="rules_spell_Mountain Guardian" xml:space="preserve">
+    <value>Bergwächter</value>
+  </data>
+  <data name="rules_spell_Blessed Harvest" xml:space="preserve">
+    <value>Segen der Erde</value>
+  </data>
+  <data name="rules_spell_Cattle Healing" xml:space="preserve">
+    <value>Viehheilung</value>
+  </data>
+  <data name="rules_spell_Hagel" xml:space="preserve">
+    <value>Hagel</value>
+  </data>
+  <data name="rules_spell_Viehheilung" xml:space="preserve">
+    <value>Viehheilung</value>
+  </data>
+  <data name="rules_spell_Rostregen" xml:space="preserve">
+    <value>Rostregen</value>
+  </data>
+  <data name="rules_spell_Rosthauch" xml:space="preserve">
+    <value>Rosthauch</value>
+  </data>
+  <data name="rules_spell_Winds of Rust" xml:space="preserve">
+    <value>Rosthauch</value>
+  </data>
+  <data name="rules_spell_Bergwächter" xml:space="preserve">
+    <value>Bergwächter</value>
+  </data>
+  <data name="rules_spell_Firuns Fell" xml:space="preserve">
+    <value>Firuns Fell</value>
+  </data>
+  <data name="emapdetailspanel_node_weight_info" xml:space="preserve">
+    <value>Gewicht: {0}</value>
+  </data>
+  <data name="Nacht" xml:space="preserve">
+    <value>Nacht</value>
+  </data>
+  <data name="race_info" xml:space="preserve">
+    <value>{0}{1}</value>
+  </data>
+  <data name="status_schwer verwundet" xml:space="preserve">
+    <value>schwer verwundet</value>
+  </data>
+  <data name="status_verwundet" xml:space="preserve">
+    <value>verwundet</value>
+  </data>
+  <data name="status_erschöpft" xml:space="preserve">
+    <value>erschöpft</value>
+  </data>
+  <data name="status_guarding" xml:space="preserve">
+    <value>bewacht</value>
+  </data>
+  <data name="rules_spell_Windschild" xml:space="preserve">
+    <value>Windschild</value>
+  </data>
+  <data name="rules_spell_Air Shield" xml:space="preserve">
+    <value>Windschild</value>
+  </data>
+  <data name="rules_spell_Magischer Pfad" xml:space="preserve">
+    <value>Magischer Pfad</value>
+  </data>
+  <data name="rules_spell_Magic Path" xml:space="preserve">
+    <value>Magischer Pfad</value>
+  </data>
+  <data name="rules_spell_Wasserelementar" xml:space="preserve">
+    <value>Wasserelementar</value>
+  </data>
+  <data name="rules_spell_Summon Water Elemental" xml:space="preserve">
+    <value>Wasserelementar</value>
+  </data>
+  <data name="rules_spell_Segne Mallornstecken" xml:space="preserve">
+    <value>Segne Mallornstecken</value>
+  </data>
+  <data name="rules_spell_Bless Mallorn Logs" xml:space="preserve">
+    <value>Segne Mallornstecken</value>
+  </data>
+  <data name="capacity_on_foot_info" xml:space="preserve">
+    <value>Kapazität zu Fuä: {0}</value>
+  </data>
+  <data name="capacity_on_horse_info" xml:space="preserve">
+    <value>Kapazität zu Pferd: {0}</value>
+  </data>
+  <data name="capacity_ship_info" xml:space="preserve">
+    <value>Loading: {0} from {1} GE</value>
+  </data>
+  <data name="rules_ship_Boot" xml:space="preserve">
+    <value>boot</value>
+  </data>
+  <data name="rules_ship_Langboot" xml:space="preserve">
+    <value>langboot</value>
+  </data>
+  <data name="rules_ship_Drachenschiff" xml:space="preserve">
+    <value>drachenschiff</value>
+  </data>
+  <data name="rules_ship_Karavelle" xml:space="preserve">
+    <value>karavelle</value>
+  </data>
+  <data name="rules_ship_Trireme" xml:space="preserve">
+    <value>trireme</value>
+  </data>
+  <data name="rules_ship_Galeone" xml:space="preserve">
+    <value>galeone</value>
+  </data>
+  <data name="emapdetailspanel_node_Besitzer" xml:space="preserve">
+    <value>Besitzer</value>
+  </data>
+  <data name="Mond" xml:space="preserve">
+    <value>Mond</value>
+  </data>
+  <data name="Düster" xml:space="preserve">
+    <value>Düster</value>
+  </data>
+  <data name="Hoch" xml:space="preserve">
+    <value>Hoch</value>
+  </data>
+  <data name="Blut" xml:space="preserve">
+    <value>Blut</value>
+  </data>
+  <data name="rules_spell_Runen des Schutzes" xml:space="preserve">
+    <value>Runen des Schutzes</value>
+  </data>
+  <data name="rules_spell_Schild des Fisches" xml:space="preserve">
+    <value>Schild des Fisches</value>
+  </data>
+  <data name="rules_spell_Beschleunigung" xml:space="preserve">
+    <value>Beschleunigung</value>
+  </data>
+  <data name="rules_spell_Astrale Schwächezone" xml:space="preserve">
+    <value>Astrale Schwächezone</value>
+  </data>
+  <data name="rules_spell_Astralschutzgeister" xml:space="preserve">
+    <value>Astralschutzgeister</value>
+  </data>
+  <data name="rules_item_Amulett" xml:space="preserve">
+    <value>Amulett</value>
+  </data>
+  <data name="rules_item_Alraune" xml:space="preserve">
+    <value>Alraune</value>
+  </data>
+  <data name="rules_item_Amulett des wahren Sehens" xml:space="preserve">
+    <value>Amulett des wahren Sehens</value>
+  </data>
+  <data name="rules_item_Weißer Wüterich" xml:space="preserve">
+    <value>Weißer Wüterich</value>
+  </data>
+  <data name="emapdetailspanel_node_effects" xml:space="preserve">
+    <value>Effekts</value>
+  </data>
+  <data name="rules_effect_Wasser des Lebens" xml:space="preserve">
+    <value>Wasser des Lebens</value>
+  </data>
+  <data name="rules_effect_Trank der Wahrheit" xml:space="preserve">
+    <value>Trank der Wahrheit</value>
+  </data>
+  <data name="rules_effect_Dumpfbackenbrot" xml:space="preserve">
+    <value>Dumpfbackenbrot</value>
+  </data>
+  <data name="rules_effect_Pferdeglück" xml:space="preserve">
+    <value>Pferdeglück</value>
+  </data>
+  <data name="rules_effect_Berserkerblut" xml:space="preserve">
+    <value>Berserkerblut</value>
+  </data>
+  <data name="rules_effect_Bauernlieb" xml:space="preserve">
+    <value>Bauernlieb</value>
+  </data>
+  <data name="rules_effect_Elixier der Macht" xml:space="preserve">
+    <value>Elixier der Macht</value>
+  </data>
+  <data name="rules_item_Wundsalbe" xml:space="preserve">
+    <value>Wundsalbe</value>
+  </data>
+  <data name="rules_item_Wasser des Lebens" xml:space="preserve">
+    <value>Wasser des Lebens</value>
+  </data>
+  <data name="rules_item_Trank der Wahrheit" xml:space="preserve">
+    <value>Trank der Wahrheit</value>
+  </data>
+  <data name="rules_item_Siebenmeilentee" xml:space="preserve">
+    <value>Siebenmeilentee</value>
+  </data>
+  <data name="rules_item_Schaffenstrunk" xml:space="preserve">
+    <value>Schaffenstrunk</value>
+  </data>
+  <data name="rules_item_Pferdeglück" xml:space="preserve">
+    <value>Pferdeglück</value>
+  </data>
+  <data name="rules_item_Nestwärme" xml:space="preserve">
+    <value>Nestwärme</value>
+  </data>
+  <data name="rules_item_Heiltrank" xml:space="preserve">
+    <value>Heiltrank</value>
+  </data>
+  <data name="rules_item_Goliathwasser" xml:space="preserve">
+    <value>Goliathwasser</value>
+  </data>
+  <data name="rules_item_Gehirnschmalz" xml:space="preserve">
+    <value>Gehirnschmalz</value>
+  </data>
+  <data name="rules_item_Elixier der Macht" xml:space="preserve">
+    <value>Elixier der Macht</value>
+  </data>
+  <data name="rules_item_Dumpfbackenbrot" xml:space="preserve">
+    <value>Dumpfbackenbrot</value>
+  </data>
+  <data name="rules_item_Berserkerblut" xml:space="preserve">
+    <value>Berserkerblut</value>
+  </data>
+  <data name="rules_item_Bauernlieb" xml:space="preserve">
+    <value>Bauernlieb</value>
+  </data>
+  <data name="rules_item_Bauernblut" xml:space="preserve">
+    <value>Bauernblut</value>
+  </data>
+  <data name="rules_item_Elfenpferd" xml:space="preserve">
+    <value>Elfenpferd</value>
+  </data>
+  <data name="rules_item_Sternenstaub" xml:space="preserve">
+    <value>Sternenstaub</value>
+  </data>
+  <data name="rules_item_Phiole" xml:space="preserve">
+    <value>Phiole</value>
+  </data>
+  <data name="rules_item_Tiegel mit Krötenschleim" xml:space="preserve">
+    <value>Tiegel mit Krötenschleim</value>
+  </data>
+  <data name="rules_item_Drachenblut" xml:space="preserve">
+    <value>Drachenblut</value>
+  </data>
+  <data name="rules_item_Katzenschwanz" xml:space="preserve">
+    <value>Katzenschwanz</value>
+  </data>
+  <data name="rules_spell_Machtübertragung" xml:space="preserve">
+    <value>Machtübertragung</value>
+  </data>
+  <data name="rules_spell_Kleines Blutopfer" xml:space="preserve">
+    <value>Kleines Blutopfer</value>
+  </data>
+  <data name="rules_spell_Blutrausch" xml:space="preserve">
+    <value>Blutrausch</value>
+  </data>
+  <data name="rules_spell_Kleine Flüche" xml:space="preserve">
+    <value>Kleine Flüche</value>
+  </data>
+  <data name="rules_spell_Verwünschung" xml:space="preserve">
+    <value>Verwünschung</value>
+  </data>
+  <data name="rules_spell_Feuerball" xml:space="preserve">
+    <value>Feuerball</value>
+  </data>
+  <data name="rules_spell_Fluch der Pestilenz" xml:space="preserve">
+    <value>Fluch der Pestilenz</value>
+  </data>
+  <data name="rules_spell_Chaosfluch" xml:space="preserve">
+    <value>Chaosfluch</value>
+  </data>
+  <data name="rules_spell_Feuerwand" xml:space="preserve">
+    <value>Feuerwand</value>
+  </data>
+  <data name="rules_spell_Gabe des Chaos" xml:space="preserve">
+    <value>Gabe des Chaos</value>
+  </data>
+  <data name="rules_spell_Mächte des Todes" xml:space="preserve">
+    <value>Mächte des Todes</value>
+  </data>
+  <data name="Schatten" xml:space="preserve">
+    <value>Schatten</value>
+  </data>
+  <data name="rules_item_Hellebarde" xml:space="preserve">
+    <value>Hellebarde</value>
+  </data>
+  <data name="rules_item_Windbeutel" xml:space="preserve">
+    <value>Windbeutel</value>
+  </data>
+  <data name="rules_item_Wasserfinder" xml:space="preserve">
+    <value>Wasserfinder</value>
+  </data>
+  <data name="rules_item_Kakteenschwitz" xml:space="preserve">
+    <value>Kakteenschwitz</value>
+  </data>
+  <data name="rules_item_Elfenlieb" xml:space="preserve">
+    <value>Elfenlieb</value>
+  </data>
+  <data name="rules_item_Grüner Spinnerich" xml:space="preserve">
+    <value>Grüner Spinnerich</value>
+  </data>
+  <data name="rules_item_Weihnachtsbaum" xml:space="preserve">
+    <value>Weihnachtsbaum</value>
+  </data>
+  <data name="rules_item_Eulenauge" xml:space="preserve">
+    <value>Eulenauge</value>
+  </data>
+  <data name="rules_item_Halblingfuß" xml:space="preserve">
+    <value>Halblingfuß</value>
+  </data>
+  <data name="rules_item_Krauterbeutel" xml:space="preserve">
+    <value>Kräuterbeutel</value>
+  </data>
+  <data name="rules_item_Spaltwachs" xml:space="preserve">
+    <value>Spaltwachs</value>
+  </data>
+  <data name="rules_item_Eisblume" xml:space="preserve">
+    <value>Eisblume</value>
+  </data>
+  <data name="rules_item_Steinbeißer" xml:space="preserve">
+    <value>Steinbeißer</value>
+  </data>
+  <data name="rules_item_Knotiger Saugwurz" xml:space="preserve">
+    <value>Knotiger Saugwurz</value>
+  </data>
+  <data name="rules_item_Mallornarmbrust" xml:space="preserve">
+    <value>Mallornarmbrust</value>
+  </data>
+  <data name="rules_item_Same" xml:space="preserve">
+    <value>Same</value>
+  </data>
+  <data name="rules_item_Katapult" xml:space="preserve">
+    <value>Katapult</value>
+  </data>
+  <data name="rules_item_Höhlenglimm" xml:space="preserve">
+    <value>Höhlenglimm</value>
+  </data>
+  <data name="rules_item_Schneekristall" xml:space="preserve">
+    <value>Schneekristall</value>
+  </data>
+  <data name="rules_item_Waffenloser Kampf" xml:space="preserve">
+    <value>Waffenloser Kampf</value>
+  </data>
+  <data name="combat_spell_period_0" xml:space="preserve">
+    <value>vor-kampf zauber</value>
+  </data>
+  <data name="combat_spell_period_1" xml:space="preserve">
+    <value>kampf zauber</value>
+  </data>
+  <data name="combat_spell_period_2" xml:space="preserve">
+    <value>nach-kampf zauber</value>
+  </data>
+  <data name="rules_spell_Erschaffe einen magischen Kräuterbeutel" xml:space="preserve">
+    <value>Erschaffe einen magischen Kräuterbeutel</value>
+  </data>
+  <data name="rules_spell_Weg der Bäume" xml:space="preserve">
+    <value>Weg der Bäume</value>
+  </data>
+  <data name="rules_spell_Vertrauten binden" xml:space="preserve">
+    <value>Vertrauten binden</value>
+  </data>
+  <data name="rules_spell_Segen der Erde" xml:space="preserve">
+    <value>Segen der Erde</value>
+  </data>
+  <data name="rules_spell_Starkes Tor und feste Mauer" xml:space="preserve">
+    <value>Starkes Tor und feste Mauer</value>
+  </data>
+  <data name="rules_spell_Erwecke Ents" xml:space="preserve">
+    <value>Erwecke Ents</value>
+  </data>
+  <data name="rules_spell_Geister bannen" xml:space="preserve">
+    <value>Geister bannen</value>
+  </data>
+  <data name="rules_spell_Beschwöre einen Erdelementar" xml:space="preserve">
+    <value>Beschwöre einen Erdelementar</value>
+  </data>
+  <data name="rules_spell_Wirbelwind" xml:space="preserve">
+    <value>Wirbelwind</value>
+  </data>
+  <data name="rules_spell_Blick des Basilisken" xml:space="preserve">
+    <value>Blick des Basilisken</value>
+  </data>
+  <data name="rules_spell_Heilung" xml:space="preserve">
+    <value>Heilung</value>
+  </data>
+  <data name="rules_spell_Heiliger Boden" xml:space="preserve">
+    <value>Heiliger Boden</value>
+  </data>
+  <data name="rules_spell_Wolfsgeheul" xml:space="preserve">
+    <value>Wolfsgeheul</value>
+  </data>
+  <data name="rules_spell_Timber Wolves" xml:space="preserve">
+    <value>Wolfsgeheul</value>
+  </data>
+  <data name="rules_spell_Beschwörung eines Wasserelementares" xml:space="preserve">
+    <value>Beschwörung eines Wasserelementares</value>
+  </data>
+  <data name="rules_spell_Heimstein" xml:space="preserve">
+    <value>Heimstein</value>
+  </data>
+  <data name="rules_spell_Homestone" xml:space="preserve">
+    <value>Heimstein</value>
+  </data>
+  <data name="rules_spell_Sog des Lebens" xml:space="preserve">
+    <value>Sog des Lebens</value>
+  </data>
+  <data name="rules_spell_Meditation" xml:space="preserve">
+    <value>Meditation</value>
+  </data>
+  <data name="rules_spell_Segne Steinkreis" xml:space="preserve">
+    <value>Segne Steinkreis</value>
+  </data>
+  <data name="rules_spell_Rindenhaut" xml:space="preserve">
+    <value>Rindenhaut</value>
+  </data>
+  <data name="rules_spell_Beschwöre einen Sturmelementar" xml:space="preserve">
+    <value>Beschwöre einen Sturmelementar</value>
+  </data>
+  <data name="rules_spell_Beschwörung eines Hitzeelementar" xml:space="preserve">
+    <value>Beschwörung eines Hitzeelementar</value>
+  </data>
+  <data name="rules_spell_Beschwöre Schattendämonen" xml:space="preserve">
+    <value>Beschwöre Schattendämonen</value>
+  </data>
+  <data name="rules_item_Kräuterbeutel" xml:space="preserve">
+    <value>Kräuterbeutel</value>
+  </data>
+  <data name="inside_info" xml:space="preserve">
+    <value>In {0}</value>
+  </data>
+  <data name="emapdetailspanel_node_units" xml:space="preserve">
+    <value>Einheiten</value>
+  </data>
+  <data name="ship_damage" xml:space="preserve">
+    <value>Schaden: {0} %</value>
+  </data>
+  <data name="coast_0" xml:space="preserve">
+    <value>Nordwestküste</value>
+  </data>
+  <data name="coast_1" xml:space="preserve">
+    <value>Nordostküste</value>
+  </data>
+  <data name="coast_2" xml:space="preserve">
+    <value>Ostküste</value>
+  </data>
+  <data name="coast_3" xml:space="preserve">
+    <value>Südostküste</value>
+  </data>
+  <data name="coast_4" xml:space="preserve">
+    <value>Südwestküste</value>
+  </data>
+  <data name="coast_5" xml:space="preserve">
+    <value>Westküste</value>
+  </data>
+  <data name="direction_0" xml:space="preserve">
+    <value>Nordwesten</value>
+  </data>
+  <data name="direction_abbreviated_0" xml:space="preserve">
+    <value>N.-W</value>
+  </data>
+  <data name="direction_1" xml:space="preserve">
+    <value>Nordosten</value>
+  </data>
+  <data name="direction_abbreviated_1" xml:space="preserve">
+    <value>N.-O</value>
+  </data>
+  <data name="direction_2" xml:space="preserve">
+    <value>Osten</value>
+  </data>
+  <data name="direction_abbreviated_2" xml:space="preserve">
+    <value>O.</value>
+  </data>
+  <data name="direction_3" xml:space="preserve">
+    <value>Südosten</value>
+  </data>
+  <data name="direction_abbreviated_3" xml:space="preserve">
+    <value>S.-O</value>
+  </data>
+  <data name="direction_4" xml:space="preserve">
+    <value>Südwesten</value>
+  </data>
+  <data name="direction_abbreviated_4" xml:space="preserve">
+    <value>S.-W</value>
+  </data>
+  <data name="direction_5" xml:space="preserve">
+    <value>Westen</value>
+  </data>
+  <data name="direction_abbreviated_5" xml:space="preserve">
+    <value>W.</value>
+  </data>
+  <data name="emapdetailspanel_node_speed" xml:space="preserve">
+    <value>Speed</value>
+  </data>
+  <data name="search_everything" xml:space="preserve">
+    <value>Alles</value>
+  </data>
+  <data name="search_regions" xml:space="preserve">
+    <value>Regionen</value>
+  </data>
+  <data name="search_units" xml:space="preserve">
+    <value>Einheiten</value>
+  </data>
+  <data name="search_buildings" xml:space="preserve">
+    <value>Gebäude</value>
+  </data>
+  <data name="search_ships" xml:space="preserve">
+    <value>Schiffe</value>
+  </data>
+  <data name="search_orders" xml:space="preserve">
+    <value>Befehlen</value>
+  </data>
+  <data name="faction_all" xml:space="preserve">
+    <value>Alles</value>
+  </data>
+  <data name="Dunkel" xml:space="preserve">
+    <value>Dunkel</value>
+  </data>
+  <data name="Anzahl" xml:space="preserve">
+    <value>Anzahl</value>
+  </data>
+  <data name="rules_race_1_Luchse" xml:space="preserve">
+    <value>Luchs</value>
+  </data>
+  <data name="rules_race_Luchse" xml:space="preserve">
+    <value>Luchse</value>
+  </data>
+  <data name="rules_race_1_Untote" xml:space="preserve">
+    <value>Untote</value>
+  </data>
+  <data name="rules_race_Untote" xml:space="preserve">
+    <value>Untote</value>
+  </data>
+  <data name="familiar_info" xml:space="preserve">
+    <value>Vertrauter von {0}</value>
+  </data>
+  <data name="familiar_mage_info" xml:space="preserve">
+    <value>Hat {0} für Vertraut</value>
+  </data>
+  <data name="season_0" xml:space="preserve">
+    <value>Früchling</value>
+  </data>
+  <data name="in_season_0" xml:space="preserve">
+    <value>in Früchling</value>
+  </data>
+  <data name="season_1" xml:space="preserve">
+    <value>Sommer</value>
+  </data>
+  <data name="in_season_1" xml:space="preserve">
+    <value>in Sommer</value>
+  </data>
+  <data name="season_2" xml:space="preserve">
+    <value>Herbst</value>
+  </data>
+  <data name="in_season_2" xml:space="preserve">
+    <value>in Herbst</value>
+  </data>
+  <data name="season_3" xml:space="preserve">
+    <value>Winter</value>
+  </data>
+  <data name="in_season_3" xml:space="preserve">
+    <value>in Winter</value>
+  </data>
+  <data name="game_date_info" xml:space="preserve">
+    <value>Woche {0} {1} des Jahres {2}</value>
+  </data>
+  <data name="game_date_info_tip" xml:space="preserve">
+    <value>Datum und Runde</value>
+  </data>
+  <data name="traitor" xml:space="preserve">
+    <value>Verraeter</value>
+  </data>
+  <data name="emapdetailspanel_node_battle" xml:space="preserve">
+    <value>Kampf</value>
+  </data>
+  <data name="emapdetailspanel_node_messages" xml:space="preserve">
+    <value>Meldungen</value>
+  </data>
+  <data name="emapdetailspanel_node_transit" xml:space="preserve">
+    <value>Durchreise</value>
+  </data>
+  <data name="emapdetailspanel_node_roads" xml:space="preserve">
+    <value>Straßen</value>
+  </data>
+  <data name="mainmenu_file" xml:space="preserve">
+    <value>_Datei</value>
+  </data>
+  <data name="parm_key_lang_english" xml:space="preserve">
+    <value>Englisch</value>
+  </data>
+  <data name="parm_key_lang_french" xml:space="preserve">
+    <value>Französisch</value>
+  </data>
+  <data name="parm_key_lang_german" xml:space="preserve">
+    <value>Deutsch</value>
+  </data>
+  <data name="parm_grp_appearance" xml:space="preserve">
+    <value>Darstellung</value>
+  </data>
+  <data name="parm_hdr_explorer_active_faction_units_at_top" xml:space="preserve">
+    <value>Aktive Parteieinheiten oben</value>
+  </data>
+  <data name="parm_hdr_explorer_expand_tree_on_load" xml:space="preserve">
+    <value>[DE]</value>
+  </data>
+  <data name="parm_hdr_features_hide_in_progress" xml:space="preserve">
+    <value>[DE]</value>
+  </data>
+  <data name="parm_inf_features_hide_in_progress" xml:space="preserve">
+    <value>[DE]</value>
+  </data>
+  <data name="parm_inf_explorer_active_faction_units_at_top" xml:space="preserve">
+    <value>Aktive Parteieinheiten werden als erste Elemente des Regionsknotens angezeigt</value>
+  </data>
+  <data name="parm_inf_explorer_expand_tree_on_load" xml:space="preserve">
+    <value>[DE]</value>
+  </data>
+  <data name="parm_hdr_language" xml:space="preserve">
+    <value>Anzeigesprache</value>
+  </data>
+  <data name="parm_inf_language" xml:space="preserve">
+    <value>Bei der Auswahl einer anderen Sprache muss die App neu gestartet werden</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Stornieren</value>
+  </data>
+  <data name="mainmenu_file_save" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
+  <data name="parm_cat_general" xml:space="preserve">
+    <value>Allgemein</value>
+  </data>
+  <data name="parm_cat_views" xml:space="preserve">
+    <value>Ansichten</value>
+  </data>
+  <data name="parm_cat_development" xml:space="preserve">
+    <value>Development [DE]</value>
+  </data>
+  <data name="win_map" xml:space="preserve">
+    <value>Karte</value>
+  </data>
+  <data name="win_minimap" xml:space="preserve">
+    <value>Minikarte</value>
+  </data>
+  <data name="mainmenu_view_win_map" xml:space="preserve">
+    <value>Karte</value>
+  </data>
+  <data name="mainmenu_view_win_map1" xml:space="preserve">
+    <value>Karte</value>
+  </data>
+  <data name="mainmenu_view_win_minimap" xml:space="preserve">
+    <value>Minikarte</value>
+  </data>
+  <data name="win_explorer" xml:space="preserve">
+    <value>Explorer</value>
+  </data>
+  <data name="win_history" xml:space="preserve">
+    <value>Historisch</value>
+  </data>
+  <data name="win_bookmarks" xml:space="preserve">
+    <value>Lesezeichen</value>
+  </data>
+  <data name="mainmenu_view_win_bookmarks" xml:space="preserve">
+    <value>Lesezeichen</value>
+  </data>
+  <data name="mainmenu_view_win_explorer" xml:space="preserve">
+    <value>Explorer</value>
+  </data>
+  <data name="mainmenu_view_win_history" xml:space="preserve">
+    <value>Historisch</value>
+  </data>
+  <data name="win_region_properties" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="mainmenu_view_win_region_properties" xml:space="preserve">
+    <value>Regionseigenschaften</value>
+  </data>
+  <data name="win_region_statistics" xml:space="preserve">
+    <value>Statistik</value>
+  </data>
+  <data name="mainmenu_view_win_region_statistics" xml:space="preserve">
+    <value>Regionsstatistik</value>
+  </data>
+  <data name="win_details" xml:space="preserve">
+    <value>Einzelheiten</value>
+  </data>
+  <data name="mainmenu_view_win_details" xml:space="preserve">
+    <value>Einzelheiten</value>
+  </data>
+  <data name="win_unit_orders" xml:space="preserve">
+    <value>Befehle</value>
+  </data>
+  <data name="mainmenu_view_win_unit_orders" xml:space="preserve">
+    <value>Einheitenbefehle</value>
+  </data>
+  <data name="win_region_info" xml:space="preserve">
+    <value>Informationen</value>
+  </data>
+  <data name="win_battles" xml:space="preserve">
+    <value>Schlachten</value>
+  </data>
+  <data name="mainmenu_view_win_battles" xml:space="preserve">
+    <value>Schlachten</value>
+  </data>
+  <data name="win_search_results" xml:space="preserve">
+    <value>Gebnisse</value>
+  </data>
+  <data name="mainmenu_view_win_search_results" xml:space="preserve">
+    <value>Suchergebnisse</value>
+  </data>
+  <data name="win_report_info" xml:space="preserve">
+    <value>Melden</value>
+  </data>
+  <data name="mainmenu_view_win_report_info" xml:space="preserve">
+    <value>Informationen melden</value>
+  </data>
+  <data name="win_error_list" xml:space="preserve">
+    <value>Fehlerliste</value>
+  </data>
+  <data name="mainmenu_view_win_error_list" xml:space="preserve">
+    <value>Fehlerliste</value>
+  </data>
+  <data name="People" xml:space="preserve">
+    <value>Personen</value>
+  </data>
+  <data name="People_tip" xml:space="preserve">
+    <value>Anzahl der Menschen in dieser region</value>
+  </data>
+  <data name="Horses_tip" xml:space="preserve">
+    <value>Anzahl der pferde in der region</value>
+  </data>
+  <data name="Entertainment_tip" xml:space="preserve">
+    <value>Maximale anzahl an silber, die durch unterhaltung verdient werden kann</value>
+  </data>
+  <data name="Faction_people" xml:space="preserve">
+    <value>Parteileute</value>
+  </data>
+  <data name="Faction_silver" xml:space="preserve">
+    <value>Parteisilber</value>
+  </data>
+  <data name="Laen" xml:space="preserve">
+    <value>Laen</value>
+  </data>
+  <data name="Revenues_and_taxes" xml:space="preserve">
+    <value>Einnahmen und steuern</value>
+  </data>
+  <data name="Trade_duties" xml:space="preserve">
+    <value>Handelszölle</value>
+  </data>
+  <data name="Trade_duties_tip" xml:space="preserve">
+    <value>Einnahmen aus dem Handel anderer parteinen</value>
+  </data>
+  <data name="Salary" xml:space="preserve">
+    <value>Gehalt</value>
+  </data>
+  <data name="Wages_for_work" xml:space="preserve">
+    <value>Lohn für arbeit</value>
+  </data>
+  <data name="Misc_revenue" xml:space="preserve">
+    <value>Sonstiges einnahmen</value>
+  </data>
+  <data name="Misc_revenue_tip" xml:space="preserve">
+    <value>Einkünfte aus anderen tätigkeiten</value>
+  </data>
+  <data name="Learning_costs" xml:space="preserve">
+    <value>Lernkosten</value>
+  </data>
+  <data name="Learning_cost_tip" xml:space="preserve">
+    <value>Ausgaben für die ausbildung von talenten</value>
+  </data>
+  <data name="Theft" xml:space="preserve">
+    <value>Diebstahl</value>
+  </data>
+  <data name="emapdetailspanel_node_trade_tip" xml:space="preserve">
+    <value>Einnahmen aus dem handel</value>
+  </data>
+  <data name="Theft_tip" xml:space="preserve">
+    <value>Einkünfte aus diebstahl</value>
+  </data>
+  <data name="Sorcery" xml:space="preserve">
+    <value>Zauberei</value>
+  </data>
+  <data name="Sorcery_tip" xml:space="preserve">
+    <value>Einnahmen aus magie</value>
+  </data>
+  <data name="Entertain" xml:space="preserve">
+    <value>Unterhalten</value>
+  </data>
+  <data name="Entertain_tip" xml:space="preserve">
+    <value>Unterhaltungseinnahmen</value>
+  </data>
+  <data name="emapdetailspanel_node_mallornsaplings" xml:space="preserve">
+    <value>Mallonrschössling</value>
+  </data>
+  <data name="emapdetailspanel_node_silver_tip" xml:space="preserve">
+    <value>Silbervorrat der bauern</value>
+  </data>
+  <data name="emapdetailspanel_node_peasants_tip" xml:space="preserve">
+    <value>Anzahl der bauern</value>
+  </data>
+  <data name="emapdetailspanel_node_recruit_tip" xml:space="preserve">
+    <value>Anzahl der möglichen rekruten</value>
+  </data>
+  <data name="emapdetailspanel_node_surplus_tip" xml:space="preserve">
+    <value>Surplus</value>
+  </data>
+  <data name="Taxes_income" xml:space="preserve">
+    <value>Steuern einkommen</value>
+  </data>
+  <data name="Taxes_income_tip" xml:space="preserve">
+    <value>Einkommen durch steuern</value>
+  </data>
+  <data name="emapdetailspanel_node_saplings" xml:space="preserve">
+    <value>Jeunes arbres</value>
+  </data>
+  <data name="there_is_no_battle" xml:space="preserve">
+    <value>Es gibt keinen kampf.</value>
+  </data>
+  <data name="btn_reveal_in_explorer" xml:space="preserve">
+    <value>Im explorer anzeigen</value>
+  </data>
+  <data name="btn_reveal_in_explorer_tip" xml:space="preserve">
+    <value>Zeigen Sie im Explorer die region an, in der die ausgewählte schlacht stattgefunden hat</value>
+  </data>
+  <data name="btn_previous_unit" xml:space="preserve">
+    <value>Vorherige</value>
+  </data>
+  <data name="btn_next_unit" xml:space="preserve">
+    <value>Nächste</value>
+  </data>
+  <data name="btn_previous_unit_tip" xml:space="preserve">
+    <value>Navigieren Sie zur vorherigen Einheit mit unbestätigten Bestellungen</value>
+  </data>
+  <data name="btn_next_unit_tip" xml:space="preserve">
+    <value>Navigieren Sie zur nächsten Einheit mit unbestätigten Bestellungen</value>
+  </data>
+  <data name="opt_confirmed_orders" xml:space="preserve">
+    <value>Bestätigt</value>
+  </data>
+  <data name="opt_confirmed_orders_tip" xml:space="preserve">
+    <value>Bestätigten/unbestätigten status von einheitenbestellungen umschalten</value>
+  </data>
+  <data name="emapdetailspanel_node_ships" xml:space="preserve">
+    <value>Schiffe</value>
+  </data>
+  <data name="mainmenu_file_save_as" xml:space="preserve">
+    <value>Speichern unter...</value>
+  </data>
+  <data name="mainmenu_file_save_orders" xml:space="preserve">
+    <value>Befehle speichern</value>
+  </data>
+  <data name="mainmenu_file_exit" xml:space="preserve">
+    <value>Beenden</value>
+  </data>
+  <data name="mainmenu_view" xml:space="preserve">
+    <value>_Anzeige</value>
+  </data>
+  <data name="mainmenu_view_win_region_info" xml:space="preserve">
+    <value>Informationen zur region</value>
+  </data>
+  <data name="mainmenu_window" xml:space="preserve">
+    <value>[DE]</value>
+  </data>
+  <data name="mainmenu_window_layout_manage" xml:space="preserve">
+    <value>[DE]</value>
+  </data>
+  <data name="mainmenu_window_layout_restore" xml:space="preserve">
+    <value>Restore layout [DE]</value>
+  </data>
+  <data name="mainmenu_window_layout_apply" xml:space="preserve">
+    <value>Apply layout [DE]</value>
+  </data>
+  <data name="mainmenu_window_layout_save" xml:space="preserve">
+    <value>Save layout [DE]</value>
+  </data>
+  <data name="mainmenu_view_advanced_search" xml:space="preserve">
+    <value>_Suchen</value>
+  </data>
+  <data name="mainmenu_view_home" xml:space="preserve">
+    <value>S_tartseite</value>
+  </data>
+  <data name="mainmenu_view_settings" xml:space="preserve">
+    <value>_Einstellungen</value>
+  </data>
+  <data name="mainmenu_view_fullscreen" xml:space="preserve">
+    <value>_Vollbild</value>
+  </data>
+  <data name="find_watermark" xml:space="preserve">
+    <value>Suchen...</value>
+  </data>
+  <data name="find_tip" xml:space="preserve">
+    <value>Suchen...</value>
+  </data>
+  <data name="btn_find_opt_whole_word_tip" xml:space="preserve">
+    <value>Nur ganzes wort zuchen (ALT+W)</value>
+  </data>
+  <data name="btn_find_opt_match_case_tip" xml:space="preserve">
+    <value>Groß-/Kleinschreinbung streichholzetui beachten (ALT+C)</value>
+  </data>
+  <data name="btn_find_opt_use_reg_exp_tip" xml:space="preserve">
+    <value>Regulären ausdrück verwenden (ALT+R)</value>
+  </data>
+  <data name="btn_find_opt_next_match_tip" xml:space="preserve">
+    <value>Nächste übereinstimmung (Enter)</value>
+  </data>
+  <data name="btn_find_opt_prev_match_tip" xml:space="preserve">
+    <value>Vorherige übereinstimmung (UUMSCHALTTASTE+Enter)</value>
+  </data>
+  <data name="rules_spell_Shadow Knights" xml:space="preserve">
+    <value>Schattenritteren</value>
+  </data>
+  <data name="rules_spell_Divination" xml:space="preserve">
+    <value>Weissagung</value>
+  </data>
+  <data name="rules_spell_Dream" xml:space="preserve">
+    <value>Traum</value>
+  </data>
+  <data name="rules_spell_Heal" xml:space="preserve">
+    <value>Heilung</value>
+  </data>
+  <data name="rules_spell_Whirlwind" xml:space="preserve">
+    <value>Wirbelwind</value>
+  </data>
+  <data name="rules_spell_Astral Guardian Spirits" xml:space="preserve">
+    <value>Astralschutzgeister</value>
+  </data>
+  <data name="rules_spell_Create A Magical Herb Pouch" xml:space="preserve">
+    <value>Erschaffe einen magischen Kräuterbeutel</value>
+  </data>
+  <data name="rules_spell_Summon Earth Elemental" xml:space="preserve">
+    <value>Beschwöre einen Erdelementar</value>
+  </data>
+  <data name="rules_spell_Summon Storm Elemental" xml:space="preserve">
+    <value>Beschwöre einen Sturmelementar</value>
+  </data>
+  <data name="rules_spell_Create A Ring of Invisibility" xml:space="preserve">
+    <value>Erschaffe einen Ring der Unsichtbarkeit</value>
+  </data>
+  <data name="rules_spell_Create An Amulet of True Sight" xml:space="preserve">
+    <value>Erschaffe ein Amulett des wahren Sehens</value>
+  </data>
+  <data name="rules_spell_Hail_tip" xml:space="preserve">
+    <value>Im Kampf ruft der Magier die Elementargeister der Kälte an und bindet sie an sich.</value>
+  </data>
+  <data name="rules_spell_Hagel_tip" xml:space="preserve">
+    <value>Im Kampf ruft der Magier die Elementargeister der Kälte an und bindet sie an sich.</value>
+  </data>
+  <data name="rules_spell_Rain of Rust_tip" xml:space="preserve">
+    <value>Mit diesem Ritual wird eine dunkle Gewitterfront beschworen, die sich unheilverkündend über der Region auftürmt.</value>
+  </data>
+  <data name="rules_spell_Rostregen_tip" xml:space="preserve">
+    <value>Mit diesem Ritual wird eine dunkle Gewitterfront beschworen, die sich unheilverkündend über der Region auftürmt.</value>
+  </data>
+  <data name="rules_spell_Firun's Coat_tip" xml:space="preserve">
+    <value>Dieser Zauber ermöglicht es dem Magier Insekten auf magische Weise vor der lähmenden Kälte der Gletscher zu bewahren.</value>
+  </data>
+  <data name="rules_spell_Firuns Fell_tip" xml:space="preserve">
+    <value>Dieser Zauber ermöglicht es dem Magier Insekten auf magische Weise vor der lähmenden Kälte der Gletscher zu bewahren.</value>
+  </data>
+  <data name="rules_spell_Mountain Guardian_tip" xml:space="preserve">
+    <value>Erschafft einen Wächtergeist, der in Gletschern und Bergen Eisen- und Laenabbau durch nichtalliierte Parteien (HELFE BEWACHE) verhindert, solange er die Region bewacht.</value>
+  </data>
+  <data name="rules_spell_Wasserelementar_tip" xml:space="preserve">
+    <value>Der Magier zwingt mit diesem Ritual die Elementargeister des Wassers in seinen Dienst und bringt sie dazu, das angegebene Schiff schneller durch das Wasser zu tragen.</value>
+  </data>
+  <data name="rules_spell_Summon Water Elemental_tip" xml:space="preserve">
+    <value>Der Magier zwingt mit diesem Ritual die Elementargeister des Wassers in seinen Dienst und bringt sie dazu, das angegebene Schiff schneller durch das Wasser zu tragen.</value>
+  </data>
+  <data name="rules_spell_Air Shield_tip" xml:space="preserve">
+    <value>Die Anrufung der Elementargeister des Windes beschwört plötzliche Windböen, kleine Windhosen und Luftlöcher herauf, die die gegnerischen Schützen behindern werden.</value>
+  </data>
+  <data name="rules_spell_Windschild_tip" xml:space="preserve">
+    <value>Die Anrufung der Elementargeister des Windes beschwört plötzliche Windböen, kleine Windhosen und Luftlöcher herauf, die die gegnerischen Schützen behindern werden.</value>
+  </data>
+  <data name="rules_spell_Magic Path_tip" xml:space="preserve">
+    <value>Durch Ausführung dieser Rituale ist der Magier in der Lage einen mächtigen Erdelementar zu beschwören.</value>
+  </data>
+  <data name="rules_spell_Magischer Pfad_tip" xml:space="preserve">
+    <value>Durch Ausführung dieser Rituale ist der Magier in der Lage einen mächtigen Erdelementar zu beschwören.</value>
+  </data>
+  <data name="rules_spell_Bless Mallorn Logs_tip" xml:space="preserve">
+    <value>Diese Ritual verstärkt die Wirkung des magischen Trankes um ein vielfaches.</value>
+  </data>
+  <data name="rules_spell_Segne Mallornstecken_tip" xml:space="preserve">
+    <value>Diese Ritual verstärkt die Wirkung des magischen Trankes um ein vielfaches.</value>
+  </data>
+  <data name="rules_spell_Grove of Oak Trees_tip" xml:space="preserve">
+    <value>Wo sonst aus einem Stecken nur ein Baum sprießen konnte, so treibt nun jeder Ast Wurzeln.</value>
+  </data>
+  <data name="rules_spell_Hainzauber_tip" xml:space="preserve">
+    <value>Wo sonst aus einem Stecken nur ein Baum sprießen konnte, so treibt nun jeder Ast Wurzeln.</value>
+  </data>
+  <data name="rules_spell_Create Stone Golems_tip" xml:space="preserve">
+    <value>Man befeuchte einen kluftfreien Block aus feinkristallinen Gestein mit einer Phiole des Lebenswassers bis dieses vollständig vom Gestein aufgesogen wurde.</value>
+  </data>
+  <data name="rules_spell_Erschaffe Steingolems_tip" xml:space="preserve">
+    <value>Man befeuchte einen kluftfreien Block aus feinkristallinen Gestein mit einer Phiole des Lebenswassers bis dieses vollständig vom Gestein aufgesogen wurde.</value>
+  </data>
+  <data name="rules_spell_Create Iron Golems_tip" xml:space="preserve">
+    <value>Je mehr Kraft der Magier investiert, desto mehr Golems können geschaffen werden.</value>
+  </data>
+  <data name="rules_spell_Erschaffe Eisengolems_tip" xml:space="preserve">
+    <value>Je mehr Kraft der Magier investiert, desto mehr Golems können geschaffen werden.</value>
+  </data>
+  <data name="rules_spell_Blessed Harvest_tip" xml:space="preserve">
+    <value>Dieses Ernteritual verbessert die Erträge der arbeitenden Bauern in der Region um ein Silberstück.</value>
+  </data>
+  <data name="rules_spell_Segen der Erde_tip" xml:space="preserve">
+    <value>Dieses Ernteritual verbessert die Erträge der arbeitenden Bauern in der Region um ein Silberstück.</value>
+  </data>
+  <data name="rules_spell_Cattle Healing_tip" xml:space="preserve">
+    <value>Die Fähigkeiten der Gwyrrd-Magier in der Viehzucht und Heilung sind bei den Bauern sehr begehrt.</value>
+  </data>
+  <data name="rules_spell_Viehheilung_tip" xml:space="preserve">
+    <value>Die Fähigkeiten der Gwyrrd-Magier in der Viehzucht und Heilung sind bei den Bauern sehr begehrt.</value>
+  </data>
+  <data name="rules_spell_Magie analysieren_tip" xml:space="preserve">
+    <value>Mit diesem Spruch kann der Magier versuchen, die Verzauberungen eines einzelnen angegebenen Objekts zu erkennen.</value>
+  </data>
+  <data name="rules_spell_Analyze Magic" xml:space="preserve">
+    <value>Magie analysieren</value>
+  </data>
+  <data name="rules_spell_Analyze Magic_tip" xml:space="preserve">
+    <value>Mit diesem Spruch kann der Magier versuchen, die Verzauberungen eines einzelnen angegebenen Objekts zu erkennen.</value>
+  </data>
+  <data name="rules_spell_Schleieraura_tip" xml:space="preserve">
+    <value>Dieser Zauber wird die gesamte Ausrüstung der Zieleinheit für einige Zeit vor den Blicken anderer verschleiern.</value>
+  </data>
+  <data name="rules_spell_Concealing Aura" xml:space="preserve">
+    <value>Schleieraura</value>
+  </data>
+  <data name="rules_spell_Concealing Aura_tip" xml:space="preserve">
+    <value>Dieser Zauber wird die gesamte Ausrüstung der Zieleinheit für einige Zeit vor den Blicken anderer verschleiern.</value>
+  </data>
+  <data name="rules_spell_Wunderdoktor_tip" xml:space="preserve">
+    <value>Wenn einem der Alchemist nicht weiterhelfen kann, geht man zu dem gelehrten Tybiedmagier.</value>
+  </data>
+  <data name="rules_spell_Miracle Doctor" xml:space="preserve">
+    <value>Wunderdoktor</value>
+  </data>
+  <data name="rules_spell_Miracle Doctor_tip" xml:space="preserve">
+    <value>Wenn einem der Alchemist nicht weiterhelfen kann, geht man zu dem gelehrten Tybiedmagier.</value>
+  </data>
+  <data name="rules_spell_Protection from Magic" xml:space="preserve">
+    <value>Schutz vor Magie</value>
+  </data>
+  <data name="rules_spell_Protection from Magic_tip" xml:space="preserve">
+    <value>Dieser Zauber legt ein antimagisches Feld um die Magier der Feinde und behindert ihre Zauber erheblich.</value>
+  </data>
+  <data name="rules_spell_Schutz vor Magie_tip" xml:space="preserve">
+    <value>Dieser Zauber legt ein antimagisches Feld um die Magier der Feinde und behindert ihre Zauber erheblich.</value>
+  </data>
+  <data name="rules_spell_Heal_tip" xml:space="preserve">
+    <value>Nicht nur der Feldscher kann den Verwundeten einer Schlacht helfen.</value>
+  </data>
+  <data name="rules_spell_Heilung_tip" xml:space="preserve">
+    <value>Nicht nur der Feldscher kann den Verwundeten einer Schlacht helfen.</value>
+  </data>
+  <data name="rules_spell_Astralschutzgeister_tip" xml:space="preserve">
+    <value>Dieses Ritual beschwört einige Elementargeister der Magie und schickt sie in die Reihen der feindlichen Magier.</value>
+  </data>
+  <data name="rules_spell_Astral Guardian Spirits_tip" xml:space="preserve">
+    <value>Dieses Ritual beschwört einige Elementargeister der Magie und schickt sie in die Reihen der feindlichen Magier.</value>
+  </data>
+  <data name="rules_spell_Erschaffe einen magischen Kräuterbeutel_tip" xml:space="preserve">
+    <value>Der Druide nehme etwas präpariertes Leder, welches er in einem großen Ritual der Reinigung von allen unreinen Geistern befreie, und binde dann einige kleine Geister der Luft und des Wassers in das Material.</value>
+  </data>
+  <data name="rules_spell_Create A Magical Herb Pouch_tip" xml:space="preserve">
+    <value>Der Druide nehme etwas präpariertes Leder, welches er in einem großen Ritual der Reinigung von allen unreinen Geistern befreie, und binde dann einige kleine Geister der Luft und des Wassers in das Material.</value>
+  </data>
+  <data name="rules_spell_Schutzzauber_tip" xml:space="preserve">
+    <value>Dieser Zauber verstärkt die natürliche Widerstandskraft gegen Magie.</value>
+  </data>
+  <data name="rules_spell_Resist Magic" xml:space="preserve">
+    <value>Schutzzauber</value>
+  </data>
+  <data name="rules_spell_Resist Magic_tip" xml:space="preserve">
+    <value>Dieser Zauber verstärkt die natürliche Widerstandskraft gegen Magie.</value>
+  </data>
+  <data name="rules_spell_Save Spoils" xml:space="preserve">
+    <value>Beute Bewahren</value>
+  </data>
+  <data name="rules_spell_Save Spoils_tip" xml:space="preserve">
+    <value>Dieser Zauber verhindert, dass ein Teil der sonst im Kampf zerstörten Gegenstände beschädigt wird</value>
+  </data>
+  <data name="rules_spell_Beute Bewahren_tip" xml:space="preserve">
+    <value>Dieser Zauber verhindert, dass ein Teil der sonst im Kampf zerstörten Gegenstände beschädigt wird</value>
+  </data>
+  <data name="rules_spell_Lied der Heilung" xml:space="preserve">
+    <value>Lied der Heilung</value>
+  </data>
+  <data name="rules_spell_Song of Healing" xml:space="preserve">
+    <value>Lied der Heilung</value>
+  </data>
+  <data name="rules_spell_Lied der Heilung_tip" xml:space="preserve">
+    <value>Nicht nur der Feldscher kann den Verwundeten einer Schlacht helfen.</value>
+  </data>
+  <data name="rules_spell_Song of Healing_tip" xml:space="preserve">
+    <value>Nicht nur der Feldscher kann den Verwundeten einer Schlacht helfen.</value>
+  </data>
+  <data name="rules_spell_Song of Generosity" xml:space="preserve">
+    <value>Hohes Lied der Gaukelei</value>
+  </data>
+  <data name="rules_spell_Song of Generosity_tip" xml:space="preserve">
+    <value>Dieser fröhliche Gesang wird sich wie ein Gerücht in der Region ausbreiten und alle Welt in Feierlaune versetzen.</value>
+  </data>
+  <data name="rules_spell_Hohes Lied der Gaukelei" xml:space="preserve">
+    <value>Hohes Lied der Gaukelei</value>
+  </data>
+  <data name="rules_spell_Hohes Lied der Gaukelei_tip" xml:space="preserve">
+    <value>Dieser fröhliche Gesang wird sich wie ein Gerücht in der Region ausbreiten und alle Welt in Feierlaune versetzen.</value>
+  </data>
+  <data name="rules_spell_Astral Path" xml:space="preserve">
+    <value>Astraler Weg</value>
+  </data>
+  <data name="rules_spell_Astral Path_tip" xml:space="preserve">
+    <value>Alte arkane Formeln ermöglichen es dem Magier, sich und andere in die astrale Ebene zu schicken.</value>
+  </data>
+  <data name="rules_spell_Astraler Weg_tip" xml:space="preserve">
+    <value>Alte arkane Formeln ermöglichen es dem Magier, sich und andere in die astrale Ebene zu schicken.</value>
+  </data>
+  <data name="rules_spell_Astraler Ausgang_tip" xml:space="preserve">
+    <value>Der Magier konzentriert sich auf die Struktur der Realität und kann so die astrale Ebene verlassen.</value>
+  </data>
+  <data name="rules_spell_Astral Exit" xml:space="preserve">
+    <value>Astraler Ausgang</value>
+  </data>
+  <data name="rules_spell_Astral Exit_tip" xml:space="preserve">
+    <value>Der Magier konzentriert sich auf die Struktur der Realität und kann so die astrale Ebene verlassen.</value>
+  </data>
+  <data name="rules_spell_Fireball" xml:space="preserve">
+    <value>Feuerball</value>
+  </data>
+  <data name="rules_spell_Fireball_tip" xml:space="preserve">
+    <value>Der Zauberer schleudert fokussiertes Chaos in die Reihen der Gegner.</value>
+  </data>
+  <data name="rules_spell_Feuerball_tip" xml:space="preserve">
+    <value>Der Zauberer schleudert fokussiertes Chaos in die Reihen der Gegner.</value>
+  </data>
+  <data name="rules_spell_Hex" xml:space="preserve">
+    <value>Verwünschung</value>
+  </data>
+  <data name="rules_spell_Hex_tip" xml:space="preserve">
+    <value>Das Ziel dieses Zaubers wird einem harmlosen Fluch unterworfen.</value>
+  </data>
+  <data name="rules_spell_Kleine Flüche_tip" xml:space="preserve">
+    <value>In den dunkleren Gassen gibt es sie, die Flüche und Verhexungen auf Bestellung.</value>
+  </data>
+  <data name="rules_spell_Minor Curses" xml:space="preserve">
+    <value>Kleine Flüche</value>
+  </data>
+  <data name="rules_spell_Minor Curses_tip" xml:space="preserve">
+    <value>In den dunkleren Gassen gibt es sie, die Flüche und Verhexungen auf Bestellung.</value>
+  </data>
+  <data name="rules_spell_Verwünschung_tip" xml:space="preserve">
+    <value>Das Ziel dieses Zaubers wird einem harmlosen Fluch unterworfen.</value>
+  </data>
+  <data name="rules_spell_Chaos Gift" xml:space="preserve">
+    <value>Gabe des Chaos</value>
+  </data>
+  <data name="rules_spell_Chaos Gift_tip" xml:space="preserve">
+    <value>Der Magier öffnet seinen Geist den Sphären des Chaos und wird so für einige Zeit über mehr magische Kraft verfügen.</value>
+  </data>
+  <data name="rules_spell_Gabe des Chaos_tip" xml:space="preserve">
+    <value>Der Magier öffnet seinen Geist den Sphären des Chaos und wird so für einige Zeit über mehr magische Kraft verfügen.</value>
+  </data>
+  <data name="rules_spell_Lesser Sacrifice" xml:space="preserve">
+    <value>Kleines Blutopfer</value>
+  </data>
+  <data name="rules_spell_Kleines Blutopfer_tip" xml:space="preserve">
+    <value>Mit diesem Ritual kann der Magier einen Teil seiner Lebensenergie opfern, um dafür an magischer Kraft zu gewinnen.</value>
+  </data>
+  <data name="rules_spell_Lesser Sacrifice_tip" xml:space="preserve">
+    <value>Mit diesem Ritual kann der Magier einen Teil seiner Lebensenergie opfern, um dafür an magischer Kraft zu gewinnen.</value>
+  </data>
+  <data name="rules_spell_Blood Frenzy" xml:space="preserve">
+    <value>Blutrausch</value>
+  </data>
+  <data name="rules_spell_Blood Frenzy_tip" xml:space="preserve">
+    <value>In diesem blutigen Ritual opfert der Magier vor der Schlacht ein Neugeborenes vor den Augen seiner Armee.</value>
+  </data>
+  <data name="rules_spell_Blutrausch_tip" xml:space="preserve">
+    <value>In diesem blutigen Ritual opfert der Magier vor der Schlacht ein Neugeborenes vor den Augen seiner Armee.</value>
+  </data>
+  <data name="rules_spell_Chaosfluch_tip" xml:space="preserve">
+    <value>Dieser heimtückische Fluch beeinträchtigt die magischen Fähigkeiten des Opfers erheblich.</value>
+  </data>
+  <data name="rules_spell_Chaos Curse" xml:space="preserve">
+    <value>Chaosfluch</value>
+  </data>
+  <data name="rules_spell_Chaos Curse_tip" xml:space="preserve">
+    <value>Dieser heimtückische Fluch beeinträchtigt die magischen Fähigkeiten des Opfers erheblich.</value>
+  </data>
+  <data name="rules_spell_Meditation_tip" xml:space="preserve">
+    <value>Mit Hilfe dieses Zaubers kann der Magier eigene Aura im Verhältnis 2:1 auf einen anderen Magier des gleichen Magiegebietes übertragen.</value>
+  </data>
+  <data name="rules_spell_Meditate" xml:space="preserve">
+    <value>Meditation</value>
+  </data>
+  <data name="rules_spell_Meditate_tip" xml:space="preserve">
+    <value>Mit Hilfe dieses Zaubers kann der Magier eigene Aura im Verhältnis 2:1 auf einen anderen Magier des gleichen Magiegebietes übertragen.</value>
+  </data>
+  <data name="rules_spell_Beschwöre einen Erdelementar_tip" xml:space="preserve">
+    <value>Der Druide beschwört mit diesem Ritual einen Elementargeist der Erde und bringt ihn dazu, die Erde erbeben zu lassen.</value>
+  </data>
+  <data name="rules_spell_Summon Earth Elemental_tip" xml:space="preserve">
+    <value>Der Druide beschwört mit diesem Ritual einen Elementargeist der Erde und bringt ihn dazu, die Erde erbeben zu lassen.</value>
+  </data>
+  <data name="rules_spell_Summon Storm Elemental_tip" xml:space="preserve">
+    <value>Die Beschwörung von Elementargeistern der Stürme ist ein uraltes Ritual.</value>
+  </data>
+  <data name="rules_spell_Beschwöre einen Sturmelementar_tip" xml:space="preserve">
+    <value>Die Beschwörung von Elementargeistern der Stürme ist ein uraltes Ritual.</value>
+  </data>
+  <data name="rules_spell_Create A Ring of Invisibility_tip" xml:space="preserve">
+    <value>Mit diesem Spruch kann der Zauberer einen Ring der Unsichtbarkeit erschaffen.</value>
+  </data>
+  <data name="rules_spell_Erschaffe einen Ring der Unsichtbarkeit_tip" xml:space="preserve">
+    <value>Mit diesem Spruch kann der Zauberer einen Ring der Unsichtbarkeit erschaffen.</value>
+  </data>
+  <data name="rules_spell_Create An Amulet of True Sight_tip" xml:space="preserve">
+    <value>Der Spruch ermöglicht es einem Magier, ein Amulett des Wahren Sehens zu erschaffen.</value>
+  </data>
+  <data name="rules_item_Amulett des wahren Sehens_tip" xml:space="preserve">
+    <value>Der Spruch ermöglicht es einem Magier, ein Amulett des Wahren Sehens zu erschaffen.</value>
+  </data>
+  <data name="rules_spell_Auratransfer_tip" xml:space="preserve">
+    <value>Mit Hilfe dieses Zaubers kann der Magier eigene Aura im Verhältnis 2:1 auf einen anderen Magier des gleichen Magiegebietes oder im Verhältnis 3:1 auf einen Magier eines anderen Magiegebietes übertragen.</value>
+  </data>
+  <data name="rules_spell_Transfer Aura" xml:space="preserve">
+    <value>Auratransfer</value>
+  </data>
+  <data name="rules_spell_Transfer Aura_tip" xml:space="preserve">
+    <value>Mit Hilfe dieses Zaubers kann der Magier eigene Aura im Verhältnis 2:1 auf einen anderen Magier des gleichen Magiegebietes oder im Verhältnis 3:1 auf einen Magier eines anderen Magiegebietes übertragen.</value>
+  </data>
+  <data name="rules_spell_Erschaffe Antimagiekristall_tip" xml:space="preserve">
+    <value>Mit Hilfe dieses Zauber entzieht der Magier einem Quarzkristall all seine magischen Energien.</value>
+  </data>
+  <data name="rules_spell_Antimagic" xml:space="preserve">
+    <value>Erschaffe Antimagiekristall</value>
+  </data>
+  <data name="rules_spell_Antimagic_tip" xml:space="preserve">
+    <value>Mit Hilfe dieses Zauber entzieht der Magier einem Quarzkristall all seine magischen Energien.</value>
+  </data>
+  <data name="rules_spell_Destroy Magic" xml:space="preserve">
+    <value>Magiefresser</value>
+  </data>
+  <data name="rules_spell_Destroy Magic_tip" xml:space="preserve">
+    <value>Dieser Zauber ermöglicht dem Magier, Verzauberungen einer Einheit, eines Schiffes, Gebäudes oder auch der Region aufzulösen.</value>
+  </data>
+  <data name="rules_spell_Magiefresser_tip" xml:space="preserve">
+    <value>Dieser Zauber ermöglicht dem Magier, Verzauberungen einer Einheit, eines Schiffes, Gebäudes oder auch der Region aufzulösen.</value>
+  </data>
+  <data name="rules_spell_Shockwave" xml:space="preserve">
+    <value>Schockwelle</value>
+  </data>
+  <data name="rules_spell_Shockwave_tip" xml:space="preserve">
+    <value>Dieser Zauber läßt eine Welle aus purer Kraft über die gegnerischen Reihen hinwegfegen.</value>
+  </data>
+  <data name="rules_spell_Schockwelle_tip" xml:space="preserve">
+    <value>Dieser Zauber läßt eine Welle aus purer Kraft über die gegnerischen Reihen hinwegfegen.</value>
+  </data>
+  <data name="rules_spell_Song of Terror" xml:space="preserve">
+    <value>Gesang der Furcht</value>
+  </data>
+  <data name="rules_spell_Song of Terror_tip" xml:space="preserve">
+    <value>Ein gar machtvoller Gesang aus den Überlieferungen der Katzen, der tief in die Herzen der Feinde dringt und ihnen Mut und Hoffnung raubt.</value>
+  </data>
+  <data name="rules_spell_Gesang der Furcht_tip" xml:space="preserve">
+    <value>Ein gar machtvoller Gesang aus den Überlieferungen der Katzen, der tief in die Herzen der Feinde dringt und ihnen Mut und Hoffnung raubt.</value>
+  </data>
+  <data name="rules_spell_Gesang der Furcht" xml:space="preserve">
+    <value>Gesang der Furcht</value>
+  </data>
+  <data name="rules_spell_Regentanz" xml:space="preserve">
+    <value>Regentanz</value>
+  </data>
+  <data name="rules_spell_Regentanz_tip" xml:space="preserve">
+    <value>Dieses uralte Tanzritual ruft die Kräfte des Lebens und der Fruchtbarkeit.</value>
+  </data>
+  <data name="rules_spell_Rain Dance" xml:space="preserve">
+    <value>Regentanz</value>
+  </data>
+  <data name="rules_spell_Rain Dance_tip" xml:space="preserve">
+    <value>Dieses uralte Tanzritual ruft die Kräfte des Lebens und der Fruchtbarkeit.</value>
+  </data>
+  <data name="rules_spell_Shadow Knights_tip" xml:space="preserve">
+    <value>Dieser Zauber vermag dem Gegner ein geringfügig versetztes Bild der eigenen Truppen vorzuspiegeln.</value>
+  </data>
+  <data name="rules_spell_Schattenritter" xml:space="preserve">
+    <value>Schattenritteren</value>
+  </data>
+  <data name="rules_spell_Schattenritter_tip" xml:space="preserve">
+    <value>Dieser Zauber vermag dem Gegner ein geringfügig versetztes Bild der eigenen Truppen vorzuspiegeln.</value>
+  </data>
+  <data name="rules_spell_Dream_tip" xml:space="preserve">
+    <value>[DE]</value>
+  </data>
+  <data name="rules_spell_Divination_tip" xml:space="preserve">
+    <value>[DE]</value>
+  </data>
+  <data name="rules_spell_Winds of Rust_tip" xml:space="preserve">
+    <value>Mit diesem Ritual wird eine dunkle Gewitterfront beschworen, die sich unheilverkündend über der Region auftürmt.</value>
+  </data>
+  <data name="rules_spell_Rosthauch_tip" xml:space="preserve">
+    <value>Mit diesem Ritual wird eine dunkle Gewitterfront beschworen, die sich unheilverkündend über der Region auftürmt.</value>
+  </data>
+  <data name="rules_spell_Mächte des Todes_tip" xml:space="preserve">
+    <value>Nächtelang muss der Schwarzmagier durch die Friedhöfe und Gräberfelder der Region ziehen um dann die ausgegrabenen Leichen beleben zu können.</value>
+  </data>
+  <data name="rules_spell_Animate Dead_tip" xml:space="preserve">
+    <value>Nächtelang muss der Schwarzmagier durch die Friedhöfe und Gräberfelder der Region ziehen um dann die ausgegrabenen Leichen beleben zu können.</value>
+  </data>
+  <data name="rules_spell_Animate Dead" xml:space="preserve">
+    <value>Mächte des Todes</value>
+  </data>
+  <data name="rules_spell_Unspeakable Horrors" xml:space="preserve">
+    <value>[DE]</value>
+  </data>
+  <data name="rules_spell_Unspeakable Horrors_tip" xml:space="preserve">
+    <value>Vor einer Schlacht erschafft der Mentalist furchterregende Illusionen von abscheulichen Kreaturen, die bei den Feinden Panik auslösen. Wer an die Illusionen glaubt, versucht, aus der Schlacht zu fliehen.</value>
+  </data>
+  <data name="rules_spell_Eternal Rest" xml:space="preserve">
+    <value>[DE]</value>
+  </data>
+  <data name="rules_spell_Eternal Rest_tip" xml:space="preserve">
+    <value>[DE]</value>
+  </data>
+  <data name="rules_spell_Steal Aura" xml:space="preserve">
+    <value>Stehle Aura</value>
+  </data>
+  <data name="rules_spell_Steal Aura_tip" xml:space="preserve">
+    <value>Mit Hilfe dieses Zaubers kann der Magier einem anderen Magier seine Aura gegen dessen Willen entziehen und sich selber zuführen.</value>
+  </data>
+  <data name="rules_spell_Stehle Aura_tip" xml:space="preserve">
+    <value>Mit Hilfe dieses Zaubers kann der Magier einem anderen Magier seine Aura gegen dessen Willen entziehen und sich selber zuführen.</value>
+  </data>
+  <data name="rules_spell_Luftschiff_tip" xml:space="preserve">
+    <value>Diese magischen Runen bringen ein Boot oder ein Langboot für eine Woche zum Fliegen.</value>
+  </data>
+  <data name="rules_spell_Airship_tip" xml:space="preserve">
+    <value>Diese magischen Runen bringen ein Boot oder ein Langboot für eine Woche zum Fliegen.</value>
+  </data>
+  <data name="rules_spell_Airship" xml:space="preserve">
+    <value>Luftschiff</value>
+  </data>
+  <data name="rules_spell_Astral Call_tip" xml:space="preserve">
+    <value>Ein Magier, der sich in der astralen Ebene befindet, kann mit Hilfe dieses Zaubers andere Einheiten zu sich holen.</value>
+  </data>
+  <data name="rules_spell_Astral Call" xml:space="preserve">
+    <value>Astraler Ruf</value>
+  </data>
+  <data name="rules_spell_Astraler Ruf_tip" xml:space="preserve">
+    <value>Ein Magier, der sich in der astralen Ebene befindet, kann mit Hilfe dieses Zaubers andere Einheiten zu sich holen.</value>
+  </data>
+  <data name="rules_spell_Call of Reality" xml:space="preserve">
+    <value>Ruf der Realität</value>
+  </data>
+  <data name="rules_spell_Call of Reality_tip" xml:space="preserve">
+    <value>Ein Magier, welcher sich in der materiellen Welt befindet, kann er mit Hilfe dieses Zaubers Einheiten aus der angrenzenden Astralwelt herbeiholen.</value>
+  </data>
+  <data name="rules_spell_Ruf der Realität_tip" xml:space="preserve">
+    <value>Ein Magier, welcher sich in der materiellen Welt befindet, kann er mit Hilfe dieses Zaubers Einheiten aus der angrenzenden Astralwelt herbeiholen.</value>
+  </data>
+  <data name="rules_spell_Dream of Magic" xml:space="preserve">
+    <value>Traum der Magie</value>
+  </data>
+  <data name="rules_spell_Dream of Magic_tip" xml:space="preserve">
+    <value>Mit Hilfe dieses Zaubers kann der Traumweber eigene Aura im Verhältnis 2:1 auf einen anderen Traumweber übertragen.</value>
+  </data>
+  <data name="rules_spell_Traum der Magie" xml:space="preserve">
+    <value>Traum der Magie</value>
+  </data>
+  <data name="rules_spell_Traum der Magie_tip" xml:space="preserve">
+    <value>Dieser Zauber ermöglicht dem Magier, Verzauberungen einer Einheit, eines Schiffes, Gebäudes oder auch der Region aufzulösen.</value>
+  </data>
+  <data name="rules_spell_Shapeshift" xml:space="preserve">
+    <value>Gestaltwandlung</value>
+  </data>
+  <data name="rules_spell_Shapeshift_tip" xml:space="preserve">
+    <value>Mit Hilfe dieses arkanen Rituals vermag der Traumweber die wahre Gestalt einer Gruppe zu verschleiern.</value>
+  </data>
+  <data name="rules_spell_Gestaltwandlung" xml:space="preserve">
+    <value>Gestaltwandlung</value>
+  </data>
+  <data name="rules_spell_Gestaltwandlung_tip" xml:space="preserve">
+    <value>Mit Hilfe dieses arkanen Rituals vermag der Traumweber die wahre Gestalt einer Gruppe zu verschleiern.</value>
+  </data>
+  <data name="rules_spell_Castle of Illusion" xml:space="preserve">
+    <value>Traumschlößchen</value>
+  </data>
+  <data name="rules_spell_Castle of Illusion_tip" xml:space="preserve">
+    <value>Mit Hilfe dieses Zaubers kann der Traumweber die Illusion eines beliebigen Gebäudes erzeugen.</value>
+  </data>
+  <data name="rules_spell_Traumschlößchen" xml:space="preserve">
+    <value>Traumschlößchen</value>
+  </data>
+  <data name="rules_spell_Traumschlößchen_tip" xml:space="preserve">
+    <value>Mit Hilfe dieses Zaubers kann der Traumweber die Illusion eines beliebigen Gebäudes erzeugen.</value>
+  </data>
+  <data name="parm_hdr_readonly_mode" xml:space="preserve">
+    <value>Nur-Lese-Modus</value>
+  </data>
+  <data name="parm_grp_behaviours" xml:space="preserve">
+    <value>Verhaltensweisen</value>
+  </data>
+  <data name="parm_inf_readonly_mode" xml:space="preserve">
+    <value>Im Nur-Lese-Modus können nur Bestellungen gespeichert werden</value>
+  </data>
+  <data name="parm_grp_tools" xml:space="preserve">
+    <value>Werkzeuge</value>
+  </data>
+  <data name="parm_hdr_echeck_program" xml:space="preserve">
+    <value>ECheck Programm</value>
+  </data>
+  <data name="parm_inf_echeck_program" xml:space="preserve">
+    <value>Wählen Sie die ausführbare Datei des ECheck Programms</value>
+  </data>
+  <data name="parm_cat_game" xml:space="preserve">
+    <value>Spiel</value>
+  </data>
+  <data name="parm_key_theme_fluent" xml:space="preserve">
+    <value>Fluent</value>
+  </data>
+  <data name="parm_key_theme_mode_dark" xml:space="preserve">
+    <value>Dunkei</value>
+  </data>
+  <data name="parm_key_theme_simple" xml:space="preserve">
+    <value>Simple</value>
+  </data>
+  <data name="parm_key_theme_mode_light" xml:space="preserve">
+    <value>Hell</value>
+  </data>
+  <data name="parm_key_system" xml:space="preserve">
+    <value>Verwenden Sie die Systemeinstellungen</value>
+  </data>
+  <data name="parm_hdr_theme" xml:space="preserve">
+    <value>App-thema</value>
+  </data>
+  <data name="parm_hdr_theme_mode" xml:space="preserve">
+    <value>App-thema</value>
+  </data>
+  <data name="parm_inf_theme" xml:space="preserve">
+    <value>Wähle das anzuzeigende App-Thema aus</value>
+  </data>
+  <data name="parm_inf_theme_mode" xml:space="preserve">
+    <value>Wähle das anzuzeigende App-Thema aus</value>
+  </data>
+  <data name="active_faction_tip" xml:space="preserve">
+    <value>Aktive Partei</value>
+  </data>
+  <data name="parm_grp_explorer" xml:space="preserve">
+    <value>Explorer</value>
+  </data>
+  <data name="parm_grp_features" xml:space="preserve">
+    <value>[DE]</value>
+  </data>
+  <data name="search_opt_match_case" xml:space="preserve">
+    <value>Groß-/Kleinschreinbung streichholzetui beachten</value>
+  </data>
+  <data name="search_opt_whole_word" xml:space="preserve">
+    <value>Nur ganzes wort zuchen</value>
+  </data>
+  <data name="search_opt_use_regular_expression" xml:space="preserve">
+    <value>Reguläre Ausdrücke verwenden</value>
+  </data>
+  <data name="search_look_in" xml:space="preserve">
+    <value>Blick in</value>
+  </data>
+  <data name="search_opt_include_desc" xml:space="preserve">
+    <value>Beschreibungen einbeziehen</value>
+  </data>
+  <data name="search_opt_include_factions" xml:space="preserve">
+    <value>Partei einbeziehen</value>
+  </data>
+  <data name="search_btn_find_next" xml:space="preserve">
+    <value>[DE]</value>
+  </data>
+  <data name="search_btn_close" xml:space="preserve">
+    <value>[DE]</value>
+  </data>
+  <data name="search_btn_find_all" xml:space="preserve">
+    <value>[DE]</value>
+  </data>
+  <data name="search_btn_find_previous" xml:space="preserve">
+    <value>[DE]</value>
+  </data>
+  <data name="parm_btn_cancel" xml:space="preserve">
+    <value>Stornieren</value>
+  </data>
+  <data name="parm_btn_save" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="search_for" xml:space="preserve">
+    <value>[DE]</value>
+  </data>
+  <data name="mainmenu_help" xml:space="preserve">
+    <value>[DE]</value>
+  </data>
+  <data name="mainmenu_window_help_view" xml:space="preserve">
+    <value>View help [DE]</value>
+  </data>
+  <data name="mainmenu_window_help_getting_started" xml:space="preserve">
+    <value>Getting started [DE]</value>
+  </data>
+  <data name="disguised" xml:space="preserve">
+    <value>Parteigetarnt</value>
+  </data>
+  <data name="road_info" xml:space="preserve">
+    <value>Fertiggestellte Straße Im {0}</value>
+  </data>
+  <data name="road_in_progress_info" xml:space="preserve">
+    <value>befindet sich zu {1}% vollendete Im {0}</value>
+  </data>
+</root>

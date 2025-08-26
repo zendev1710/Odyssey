@@ -1,0 +1,19 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="using:Odyssey.ViewModels.Tools"
+			 xmlns:a="clr-namespace:Odyssey.Assets"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
+			 x:DataType="vm:BookmarksViewModel" x:CompileBindings="True"
+             x:Class="Odyssey.Views.Tools.BookmarksView">
+	<Grid Focusable="True" IsVisible="{Binding HasDocument}" RowDefinitions="Auto,*,Auto" ColumnDefinitions="*,Auto" >
+		<ListBox Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Bookmarks}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinWidth="200"  IsVisible="{Binding HasBookmark}" Margin="5,5,5,5">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<TextBlock Text="{Binding Label}" />
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+	</Grid>
+</UserControl>

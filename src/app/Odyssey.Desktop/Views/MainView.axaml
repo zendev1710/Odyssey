@@ -1,0 +1,348 @@
+﻿<UserControl x:Class="Odyssey.Views.MainView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ids="using:Dock.Settings"
+             xmlns:dm="using:Dock.Model.Core"
+             xmlns:dmc="using:Dock.Model.Controls"
+			 xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+			 xmlns:conv="using:Odyssey.Converters"
+             xmlns:vm="using:Odyssey.ViewModels"
+			 xmlns:search="using:Odyssey.Search"
+			 xmlns:a="clr-namespace:Odyssey.Assets"
+             mc:Ignorable="d"
+             d:DesignWidth="1000" d:DesignHeight="550"
+             x:DataType="vm:MainWindowViewModel" x:CompileBindings="True"
+             FontFamily="avares://Avalonia.Fonts.Inter/Assets#Inter">
+	<Design.DataContext>
+		<vm:MainWindowViewModel />
+	</Design.DataContext>
+	<UserControl.Resources>
+		<StreamGeometry x:Key="DarkTheme">M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10Zm0-2V4a8 8 0 1 1 0 16Z</StreamGeometry>
+		<StreamGeometry x:Key="ChevronRightIconPath">m384 780-15-15 189-189-189-189 15-15 204 204-204 204Z</StreamGeometry>
+		<StreamGeometry x:Key="CaseSensitiveIconPath">m186 768 140-380h30l143 380h-32l-40-113H257l-40 113h-31Zm80-139h151l-75-209h-1l-75 209Zm398 148q-40 0-62.5-21.5T579 697q0-41 27-65.5t74-24.5q18 0 39.5 5t32.5 11v-24q0-39-20-60t-56-21q-20 0-35.5 6T605 544l-17-19q20-16 42.5-23.5T677 494q50 0 75 27.5t25 81.5v164h-26v-39h-4q-17 27-36 38t-47 11Zm-2-26q40 0 64.5-29.5T751 646q-13-8-29.5-12.5T684 629q-35 0-56.5 18.5T606 696q0 26 15 40.5t41 14.5Z</StreamGeometry>
+		<StreamGeometry x:Key="CompleteWordIconPath">M124 764V650h20v94h672v-94h20v114H124Zm266.903-93v-39H387q-17 27-36 38t-46.737 11q-38.789 0-62.026-21.695Q219 637.611 219 601q0-41 27-65.5t73-24.5q18 0 39.5 5t33.5 11v-24q0-39-19.5-60T318 422q-21 0-37 6t-36 20l-17-19q20-16 42.5-23.5t47.84-7.5q49.66 0 74.16 27.284 24.5 27.283 24.5 81.974V671h-26.097ZM324 533q-34 0-56 18.5T246 599q0 27 15.667 41.5Q277.333 655 303 655q40 0 64-29.706t24-75.576Q378 542 361.5 537.5T324 533Zm197 139V285h25v136.182L543 460h2q15-23 37.083-34t49.189-11Q679 415 707 450.5q28 35.5 28 98.5 0 61-28.073 96.5-28.072 35.5-76.53 35.5Q603 681 580 669t-35-33h-2v36h-22Zm108-229q-36 0-61 30.159t-25 76.523Q543 596 568 626.5t61 30.5q36 0 57.5-29t21.5-78q0-49-21.5-78T629 443Z</StreamGeometry>
+		<StreamGeometry x:Key="RegularExpressionIconPath">M251 817q-49-48-76.5-109.5T147 577q0-69 27-131.5T251 335l16 14q-48 44-74 103t-26 124q0 64 26 122.5T266 803l-15 14Zm121-27q-14 0-24-10t-10-24q0-14 10-24t24-10q14 0 24 10t10 24q0 14-10 24t-24 10Zm158-192V496l-88 51-10-16 88-51-88-51 10-16 88 51V362h20v102l88-51 10 16-88 51 88 51-10 16-88-51v102h-20Zm178 219-15-14q47-44 73-103t26-124q0-65-25.5-123.5T693 349l15-14q49 49 76.5 111T812 577q0 69-27.5 131.5T708 817Z</StreamGeometry>
+		<StreamGeometry x:Key="FindPreviousIconPath">M470 824V367L247 590l-15-14 248-248 248 248-15 14-223-223v457h-20Z</StreamGeometry>
+		<StreamGeometry x:Key="FindNextIconPath">M480 824 232 576l15-14 223 223V328h20v457l223-223 15 14-248 248Z</StreamGeometry>
+		<StreamGeometry x:Key="FactionIconPath">m8.5 6c.82843 0 1.5.67157 1.5 1.5 0 1.11608-.45897 2.01027-1.21215 2.6148-.74127.595-1.73477.8852-2.78785.8852s-2.04658-.2902-2.78785-.8852c-.75318-.60453-1.21215-1.49872-1.21215-2.6148 0-.77966118.59487668-1.42044457 1.3555213-1.49313306l.1444587-.00686694zm-2.5-5c1.10457 0 2 .89543 2 2s-.89543 2-2 2-2-.89543-2-2 .89543-2 2-2z</StreamGeometry>
+		<StreamGeometry x:Key="CalendarDayIconPath">M17.75 3A3.25 3.25 0 0 1 21 6.25v11.5A3.25 3.25 0 0 1 17.75 21H6.25A3.25 3.25 0 0 1 3 17.75V6.25A3.25 3.25 0 0 1 6.25 3h11.5Zm-1.5 8h-8.5a.75.75 0 0 0-.743.648L7 11.75v4.5c0 .38.282.694.648.743L7.75 17h8.5a.75.75 0 0 0 .743-.648L17 16.25v-4.5a.75.75 0 0 0-.648-.743L16.25 11Zm-.75 1.5v3h-7v-3h7Zm.75-5.25h-8.5a.75.75 0 0 0 0 1.5h8.5a.75.75 0 0 0 0-1.5Z</StreamGeometry>
+		<StreamGeometry x:Key="FileIconPath">M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z</StreamGeometry>
+	</UserControl.Resources>
+	<UserControl.KeyBindings>
+		<KeyBinding Gesture="Ctrl+F" Command="{Binding FindSetFocus}" />
+	</UserControl.KeyBindings>
+	<Grid RowDefinitions="Auto,*,25" ColumnDefinitions="Auto,*" Background="Transparent" DragDrop.AllowDrop="True">
+		<!--MENUS -->
+		<Menu Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" >
+			<MenuItem Header="{x:Static a:Lang.mainmenu_file}">
+				<MenuItem Header="{x:Static a:Lang.mainmenu_file_open}" Command="{Binding OpenFileCommand}" HotKey="Ctrl+O" InputGesture="Ctrl+O"/>
+				<MenuItem Header="{x:Static a:Lang.mainmenu_file_save}" Command="{Binding SaveFileCommand}" HotKey="Ctrl+S" InputGesture="Ctrl+S" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_file_save_as}" Command="{Binding SaveFileAsCommand}" HotKey="Ctrl+Shift+S" InputGesture="Ctrl+Shift+S" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_file_save_orders}" Command="{Binding SaveOrdersCommand}" />
+				<!-- Separator /-->
+				<!-- close active document -->
+				<!--MenuItem Header="_Close" Command="{Binding FileClose}" /-->
+				<Separator />
+				<!-- MenuItem Header="_Close Window" Command="{Binding CloseWindow}" /-->
+				<MenuItem Header="{x:Static a:Lang.mainmenu_file_exit}" Command="{Binding ExitCommand}" HotKey="Alt+F4" InputGesture="Alt+F4"/>
+				<!--MenuItem Header="_Exit" DataContext="{Binding Layout}" Command="{Binding ExitWindows}" /-->
+				<!-- MenuItem Header="_Show Windows" Command="{Binding ShowWindows}" /-->
+			</MenuItem>
+			<MenuItem Header="{x:Static a:Lang.mainmenu_view}" >
+				<MenuItem DataContext="{Binding Layout}" Header="{x:Static a:Lang.mainmenu_view_home}" Command="{Binding Navigate}" CommandParameter="Home" HotKey="Ctrl+Home" InputGesture="Ctrl+Home" />
+				<!-- in German Ctrl in InputGesture should be replace by STRG -->
+				<MenuItem DataContext="{Binding Layout}" Header="{x:Static a:Lang.mainmenu_view_advanced_search}" Command="{Binding Navigate}" CommandParameter="Search" HotKey="Ctrl+Shift+F" InputGesture="Ctrl+Shift+F" />
+				<Separator />
+				<MenuItem DataContext="{Binding Layout}" Header="{x:Static a:Lang.mainmenu_view_settings}" Command="{Binding Navigate}" CommandParameter="Configuration" HotKey="Ctrl+," InputGesture="Ctrl+,"/>
+				<Separator />
+				<!-- Toggle view menu items -->
+				<!-- at this moment MapViewModel is the document docked view and cannot be hidden -->
+				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_map}"
+						  IsChecked="{Binding IsMapViewVisible}"
+						  Command="{Binding ToggleViewCommand}"
+						  CommandParameter="map"
+						  ToggleType="CheckBox"
+						  HotKey="Ctrl+W+M"
+						  InputGesture="Ctrl+W+M"/>
+				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_minimap}"
+						  IsChecked="{Binding IsMiniMapViewVisible}"
+						  Command="{Binding ToggleViewCommand}"
+						  CommandParameter="minimap"
+						  ToggleType="CheckBox"
+						  HotKey="Ctrl+W+J"
+						  InputGesture="Ctrl+W+J"/>
+				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_history}"
+						  IsChecked="{Binding IsHistoryViewVisible}"
+						  Command="{Binding ToggleViewCommand}"
+						  CommandParameter="history"
+						  ToggleType="CheckBox"
+						  HotKey="Ctrl+W+T"
+						  InputGesture="Ctrl+W+T"/>
+				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_bookmarks}"
+						  IsChecked="{Binding IsBookmarksViewVisible}"
+						  Command="{Binding ToggleViewCommand}"
+						  CommandParameter="bookmarks"
+						  ToggleType="CheckBox"
+						  HotKey="Ctrl+W+K"
+						  InputGesture="Ctrl+W+K"/>
+				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_region_info}"
+						  IsChecked="{Binding IsRegionInfoViewVisible}"
+						  Command="{Binding ToggleViewCommand}"
+						  CommandParameter="region_info"
+						  ToggleType="CheckBox"
+						  HotKey="Ctrl+W+I"
+						  InputGesture="Ctrl+W+I"/>
+				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_battles}"
+						  IsChecked="{Binding IsBattlesViewVisible}"
+						  Command="{Binding ToggleViewCommand}"
+						  ToggleType="CheckBox"
+						  CommandParameter="battles"
+						  HotKey="Ctrl+W+B"
+						  InputGesture="Ctrl+W+B"/>
+				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_search_results}"
+						  IsChecked="{Binding IsSearchResultsViewVisible}"
+						  Command="{Binding ToggleViewCommand}"
+						  CommandParameter="search_results"
+						  ToggleType="CheckBox"
+						  HotKey="Ctrl+W+F"
+						  InputGesture="Ctrl+W+F"/>
+				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_report_info}"
+						  IsChecked="{Binding IsReportInfoViewVisible}"
+						  Command="{Binding ToggleViewCommand}"
+						  ToggleType="CheckBox"
+						  CommandParameter="report_info"
+						  HotKey="Ctrl+W+R"
+						  InputGesture="Ctrl+W+R"/>
+				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_error_list}"
+						  IsChecked="{Binding IsErrorsListViewVisible}"
+						  Command="{Binding ToggleViewCommand}"
+						  CommandParameter="error_list"
+						  ToggleType="CheckBox"
+						  HotKey="Ctrl+W+E"
+						  InputGesture="Ctrl+W,E"/>
+				<Separator />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_details}"
+						  IsChecked="{Binding IsDetailsViewVisible}"
+						  Command="{Binding ToggleViewCommand}"
+						  CommandParameter="details"
+						  ToggleType="CheckBox"
+						  HotKey="Ctrl+W+D"
+						  InputGesture="Ctrl+W+D"/>
+				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_region_statistics}"
+						  IsChecked="{Binding IsRegionStatisticsViewVisible}"
+						  Command="{Binding ToggleViewCommand}"
+						  CommandParameter="region_statistics"
+						  ToggleType="CheckBox"
+						  HotKey="Ctrl+W+S"
+						  InputGesture="Ctrl+W+S"/>
+				<Separator />
+				<!-- InputGeture bug: Ctrl+<key1>+<key2> displays Ctrl+<key2> -->
+				<!-- InputGeture/HotKey bug: Ctrl+W+O does not work, instead Ctrl+O is called (File/Open) -->
+				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_unit_orders}"
+						  IsChecked="{Binding IsUnitOrdersViewVisible}"
+						  Command="{Binding ToggleViewCommand}"
+						  CommandParameter="unit_orders"
+						  ToggleType="CheckBox"
+						  HotKey="Ctrl+W+O"
+						  InputGesture="Ctrl+W+O"/>
+				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_region_properties}"
+						  IsChecked="{Binding IsRegionPropertiesViewVisible}"
+						  Command="{Binding ToggleViewCommand}"
+						  CommandParameter="region_properties"
+						  ToggleType="CheckBox"
+						  HotKey="Ctrl+W+P"
+						  InputGesture="Ctrl+W+P"/>
+				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_explorer}"
+						  IsChecked="{Binding IsExplorerViewVisible}"
+						  Command="{Binding ToggleViewCommand}"
+						  CommandParameter="explorer"
+						  ToggleType="CheckBox"
+						  HotKey="Ctrl+W+X"
+						  InputGesture="Ctrl+W+X"/>
+				<Separator />
+				<!-- TODO: restore windows label when isfullscreen is true -->
+				<MenuItem Header="{x:Static a:Lang.mainmenu_view_fullscreen}" Command="{Binding ToggleFullscreenCommand}" HotKey="F11" InputGesture="F11" />
+			</MenuItem>
+			<MenuItem Header="{x:Static a:Lang.mainmenu_window}" IsVisible="{Binding EnableLayoutFeature}">
+				<MenuItem Header="{x:Static a:Lang.mainmenu_window_layout_save}" Command="{Binding LayoutSave}" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_window_layout_apply}" Command="{Binding LayoutOpen}" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_window_layout_manage}" Command="{Binding LayoutNew}" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_window_layout_restore}" Command="{Binding LayoutClose}" />
+				<!--TODO : dynamic menu items to navigate from one document to another, with checkbox on current active document -->
+				<!-- Separator /-->
+				<!-- ... /-->
+			</MenuItem>
+			<MenuItem Header="{x:Static a:Lang.mainmenu_help}">
+				<MenuItem Header="{x:Static a:Lang.mainmenu_window_help_view}" Command="{Binding ShowHelpCommand}" HotKey="F1" InputGesture="F1" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_window_help_getting_started}" Command="{Binding ShowHelpCommand}" CommandParameter="getting-started" />
+				<!--TODO : dynamic menu items to navigate from one document to another, with checkbox on current active document -->
+				<!-- Separator /-->
+				<!-- ... /-->
+			</MenuItem>
+			<!--MenuItem Header="_Options">
+				<MenuItem x:Name="OptionsIsDragEnabled" Header="Enable Drag">
+					<MenuItem.Icon>
+						<CheckBox IsChecked="{Binding $parent[Window].(ids:DockProperties.IsDragEnabled)}"
+								  BorderThickness="0"
+								  IsHitTestVisible="False" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<Separator />
+				<MenuItem x:Name="OptionsIsDropEnabled" Header="Enable Drop">
+					<MenuItem.Icon>
+						<CheckBox IsChecked="{Binding $parent[Window].(ids:DockProperties.IsDropEnabled)}"
+								  BorderThickness="0"
+								  IsHitTestVisible="False" />
+					</MenuItem.Icon>
+				</MenuItem>
+				<Separator />
+				<MenuItem Header="Preferences..." DataContext="{Binding Layout}" Command="{Binding Navigate}" CommandParameter="Configuration" />
+			</MenuItem-->
+		</Menu>
+		<Panel x:Name="ToolBar" Grid.Row="0" Grid.Column="1">
+			<Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+				  HorizontalAlignment="Right"
+				  Margin="4"
+				  x:CompileBindings="True">
+				<Grid.Styles>
+					<Style Selector="Button">
+						<Setter Property="Margin" Value="0" />
+						<Setter Property="Padding" Value="4" />
+						<Setter Property="VerticalAlignment" Value="Stretch" />
+						<Setter Property="VerticalContentAlignment" Value="Center" />
+					</Style>
+					<Style Selector="TextBox">
+						<Setter Property="MinHeight" Value="0" />
+						<Setter Property="Margin" Value="4,0,4,0" />
+						<Setter Property="Padding" Value="4" />
+						<Setter Property="VerticalAlignment" Value="Stretch" />
+						<Setter Property="VerticalContentAlignment" Value="Center" />
+					</Style>
+					<Style Selector="ComboBox">
+						<Setter Property="Margin" Value="4,0,0,0" />
+					</Style>
+				</Grid.Styles>
+				<!--SEARCH PANEL -->
+				<StackPanel IsVisible="{Binding EnableSearchFeature}" Orientation="Horizontal" Grid.Column="0" Margin="5,0,0,0">
+					<TextBox Watermark="{x:Static a:Lang.find_watermark}"
+							 Name="PART_searchTextBox"
+							 Grid.Column="1"
+							 Grid.Row="0"
+							 Width="205"
+							 Margin="0,0,0,0"
+							 Text=""
+						>
+						<TextBox.InnerRightContent>
+							<StackPanel Orientation="Horizontal">
+								<ToggleButton Theme="{StaticResource SearchPanelTextBoxButton}"
+											  HotKey="Alt+C"
+											  IsChecked="True"
+											  ToolTip.Tip="{x:Static a:Lang.btn_find_opt_match_case_tip}"
+											  VerticalAlignment="Center">
+									<Path Data="{StaticResource CaseSensitiveIconPath}"
+										  Stretch="UniformToFill"
+										  HorizontalAlignment="Center"
+										  VerticalAlignment="Center"
+										  Width="12"
+										  Fill="{Binding $parent[ToggleButton].Foreground}"
+										  Stroke="{Binding $parent[ToggleButton].Foreground}"
+										  StrokeThickness="1" />
+								</ToggleButton>
+								<ToggleButton Theme="{StaticResource SearchPanelTextBoxButton}"
+											  HotKey="Alt+W"
+											  IsChecked="True"
+											  ToolTip.Tip="{x:Static a:Lang.btn_find_opt_whole_word_tip}"
+											  Margin="3,0,0,0"
+											  VerticalAlignment="Center">
+									<Path Data="{StaticResource CompleteWordIconPath}"
+										  Stretch="Uniform"
+										  HorizontalAlignment="Center"
+										  VerticalAlignment="Center"
+										  Width="14"
+										  Fill="{Binding $parent[ToggleButton].Foreground}"
+										  Stroke="{Binding $parent[ToggleButton].Foreground}"
+										  StrokeThickness="1" />
+								</ToggleButton>
+								<ToggleButton Theme="{StaticResource SearchPanelTextBoxButton}"
+											  HotKey="Alt+R"
+											  IsChecked="True"
+											  ToolTip.Tip="{x:Static a:Lang.btn_find_opt_use_reg_exp_tip}"
+											  Margin="3,0,5,0"
+											  VerticalAlignment="Center">
+									<Path Data="{StaticResource RegularExpressionIconPath}"
+										  Stretch="Uniform"
+										  HorizontalAlignment="Center"
+										  VerticalAlignment="Center"
+										  Width="12"
+										  Fill="{Binding $parent[ToggleButton].Foreground}"
+										  Stroke="{Binding $parent[ToggleButton].Foreground}"
+										  StrokeThickness="1" />
+								</ToggleButton>
+							</StackPanel>
+						</TextBox.InnerRightContent>
+					</TextBox>
+					<Button Margin="5,0,0,0"
+							MinWidth="34"
+							HotKey="Shift+Enter"
+							VerticalAlignment="Stretch"
+							Command="{x:Static search:SearchCommands.FindPrevious}">
+						<ToolTip.Tip>
+							<TextBlock Text="{x:Static a:Lang.btn_find_opt_prev_match_tip}" />
+						</ToolTip.Tip>
+						<Path Data="{StaticResource FindPreviousIconPath}"
+							  Stretch="Uniform"
+							  HorizontalAlignment="Center"
+							  VerticalAlignment="Center"
+							  Width="16"
+							  Fill="{Binding $parent[Button].Foreground}"
+							  Stroke="{Binding $parent[Button].Foreground}"
+							  StrokeThickness="1" />
+					</Button>
+					<Button Margin="3,0,0,0"
+							VerticalAlignment="Stretch"
+							MinWidth="34"
+							HotKey="Enter"
+							Command="{x:Static search:SearchCommands.FindNext}">
+						<ToolTip.Tip>
+							<TextBlock Text="{x:Static a:Lang.btn_find_opt_next_match_tip}" />
+						</ToolTip.Tip>
+						<Path Data="{StaticResource FindNextIconPath}"
+							  HorizontalAlignment="Center"
+							  VerticalAlignment="Center"
+							  Stretch="Uniform"
+							  Width="16"
+							  Fill="{Binding $parent[Button].Foreground}"
+							  Stroke="{Binding $parent[Button].Foreground}"
+							  StrokeThickness="1" />
+					</Button>
+				</StackPanel>
+				<!-- THEME SELECTION -->
+				<Button x:Name="ThemeButton" Grid.Column="1" Background="Transparent">
+					<PathIcon Width="24" Height="24" Opacity="0.6" Data="{StaticResource DarkTheme}"/>
+				</Button>
+			</Grid>
+		</Panel>
+		<DockControl x:Name="DockControl" Layout="{Binding Layout}" Margin="4" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
+		<!-- Bottom status bar -->
+		<Panel x:Name="StatusBar" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" >
+			<Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto,Auto" IsVisible="{Binding HasDocument}" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+				<!--TODO - add orders completed status to the left (number of units to confirm / total number of units which need orders for faction)-->
+				<!-- better order : faction name / date / turn / report name -->
+				<PathIcon HorizontalAlignment="Left" Grid.Column="0" Width="18" Height="18" Opacity="0.6" Data="{StaticResource FactionIconPath}" Margin="5,0,0,0"/>
+				<TextBlock HorizontalAlignment="Left" Grid.Column="1" Text="{Binding FactionName}" ToolTip.Tip="{x:Static a:Lang.active_faction_tip}" Margin="5,0,0,0"/>
+				<StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Grid.Column="2" ToolTip.Tip="{x:Static a:Lang.game_date_info_tip}" Margin="5,0,0,0" >
+					<PathIcon Width="18" Height="18" Opacity="0.6" Data="{StaticResource CalendarDayIconPath}" Margin="5,0,0,0"/>
+					<TextBlock Text="{Binding GameDate}" Margin="5,0,0,0"/>
+					<TextBlock Text="{Binding GameTurn}" Margin="5,0,0,0"/>
+				</StackPanel>
+				<PathIcon Grid.Column="4" Width="18" Height="18" Opacity="0.6" Data="{StaticResource FileIconPath}" HorizontalAlignment="Right" Margin="5,0,0,0"/>
+				<!--PathIcon Grid.Column="6" Width="24" Height="24" Opacity="0.6" Data="{StaticResource CalendarDay}"/-->
+				<!-- TODO : Tip with the full pathname -->
+				<!-- combobox with recently/last loaded reports (having reportname as label and pathname as data -->
+				<TextBlock Grid.Column="5" Text="{Binding ReportName}" HorizontalAlignment="Right" Margin="5,0,0,0"/>
+			</Grid>
+		</Panel>
+	</Grid>
+</UserControl>
