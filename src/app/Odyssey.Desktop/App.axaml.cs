@@ -15,6 +15,7 @@ using Prism.DryIoc;
 using Prism.Ioc;
 using System.Diagnostics;
 using System.Globalization;
+using System.Reflection;
 
 namespace Odyssey;
 
@@ -242,4 +243,13 @@ public class App : PrismApplication
             }
         }
     }
+    /*
+    public static string GetAppVersion()
+    {
+        var version = Assembly.GetEntryAssembly()?
+            .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
+            .InformationalVersion;
+        return version ?? "Unknown";
+    }
+    */
 }

@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:avalonia="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls"
         xmlns:ids="using:Dock.Settings"
         xmlns:vm="using:Odyssey.ViewModels"
         xmlns:views="using:Odyssey.Views"
@@ -21,7 +22,7 @@
         BorderThickness="1"
 		BorderBrush="{DynamicResource DockThemeBorderLowBrush}"
         FontFamily="Segoe UI, SF Pro Display, Noto Sans, Cantarel"
-        Title="Coast'Sea Map eXtended"
+        Title="{Binding WindowTitle}"
 		Height="680"
 		Width="1200"
         ExtendClientAreaToDecorationsHint="True"
@@ -44,10 +45,29 @@
   <Design.DataContext>
     <vm:MainWindowViewModel />
   </Design.DataContext>
+	<DockPanel>
+	<!-- Customized top bar if I want to add window title in it-->
+		<!--Border
+    x:Name="TopBar"
+    Background="{DynamicResource DockThemeBackgroundBrush}"
+    DockPanel.Dock="Top"
+    Height="30">
+    <Grid>
+        <TextBlock
+            Text="{Binding WindowTitle}"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Left"
+            Margin="5,0,0,0"
+            FontWeight="Bold"
+            FontSize="12"/>
+    </Grid>
+</Border-->
   <Panel>
 	<ExperimentalAcrylicBorder IsHitTestVisible="False" Material="{StaticResource AcrylicMaterial}" />
     <Panel Margin="{Binding #MainWindowView.OffScreenMargin}">
-      <Panel Margin="{Binding #MainWindowView.WindowDecorationMargin}">
+		<!--Panel Margin="5"-->
+		<!-- this WindowDecorationMargin Avalonia.Dock property seems to be too big. What is its usage? -->
+	  <Panel Margin="{Binding #MainWindowView.WindowDecorationMargin}">
         <views:MainView>
           <views:MainView.Styles>
             <Style Selector="GridSplitter">
@@ -66,4 +86,5 @@
       </Panel>
     </Panel>
   </Panel>
+		</DockPanel>
 </Window>

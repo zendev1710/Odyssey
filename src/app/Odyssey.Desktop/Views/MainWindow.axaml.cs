@@ -25,6 +25,12 @@ public partial class MainWindow : Window
                 vm.PropertyChanged += ViewModel_PropertyChanged;
             }
         };
+
+        // Just if I want to have a custom top bar having the window title
+        /*
+        TopBar = this.FindControl<Border>("TopBar");
+        TopBar.PointerPressed += TopBar_PointerPressed;
+        */
     }
 
     /// <summary>
@@ -57,6 +63,14 @@ public partial class MainWindow : Window
     private void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);
+    }
+
+    private void TopBar_PointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
+        {
+            BeginMoveDrag(e);
+        }
     }
 
     /*

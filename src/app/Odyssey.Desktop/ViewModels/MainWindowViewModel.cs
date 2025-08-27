@@ -26,11 +26,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Reflection;
 
 namespace Odyssey.ViewModels;
 
 public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelector
 {
+    public string AppVersion =>
+    Assembly.GetEntryAssembly()?
+        .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
+        .InformationalVersion ?? "Unknown";
+
+    public string WindowTitle => $"Odyssey v{AppVersion}";
+
     [ObservableProperty]
     private bool _enableSearchFeature;
 
@@ -1578,5 +1586,4 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
             Debug.WriteLine($"[MAINWINDOW] WindowMoveDragEnd Title='{args.Window?.Title}', X='{args.Window?.X}', Y='{args.Window?.Y}");
         };
     }
-
 }
