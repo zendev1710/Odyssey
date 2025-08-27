@@ -1,0 +1,8 @@
+﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Id="zendev.Odyssey" Name="Odyssey" Manufacturer="zendev" Version="0.1.0.0" UpgradeCode="10c8147f-4cc3-40b5-a292-c9fa520d9744" >
+    <MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeError)" />
+    <Feature Id="Main">
+      <ComponentGroupRef Id="ComponentsForNet80" />
+    </Feature>
+  </Package>
+</Wix>
