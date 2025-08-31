@@ -120,6 +120,9 @@
   <data name="mainmenu_file_open" xml:space="preserve">
     <value>_Äffnen...</value>
   </data>
+  <data name="mainmenu_file_close" xml:space="preserve">
+    <value>_Close [DE]</value>
+  </data>
   <data name="actions_opencraction_title" xml:space="preserve">
     <value>Reportdatei äffnen</value>
   </data>
@@ -2619,8 +2622,8 @@
   <data name="parm_grp_behaviours" xml:space="preserve">
     <value>Verhaltensweisen</value>
   </data>
-  <data name="parm_inf_readonly_mode" xml:space="preserve">
-    <value>Im Nur-Lese-Modus können nur Bestellungen gespeichert werden</value>
+  <data name="parm_inf_open_last_report_at_startup" xml:space="preserve">
+    <value>The last read report will be automatically reopened at startup [DE]</value>
   </data>
   <data name="parm_grp_tools" xml:space="preserve">
     <value>Werkzeuge</value>
@@ -2726,5 +2729,17 @@
   </data>
   <data name="road_in_progress_info" xml:space="preserve">
     <value>befindet sich zu {1}% vollendete Im {0}</value>
+  </data>
+  <data name="parm_hdr_explorer_select_last_active_region" xml:space="preserve">
+    <value>Select the active region when opening report [DE]</value>
+  </data>
+  <data name="parm_inf_explorer_select_last_active_region" xml:space="preserve">
+    <value>The active region is the one that was selected the last time the report was read. If disabled, the (0,0 region will be selected [DE]</value>
+  </data>
+  <data name="parm_hdr_open_last_report_at_startup" xml:space="preserve">
+    <value>Load the last opened report at startup [DE]</value>
+  </data>
+  <data name="parm_inf_readonly_mode" xml:space="preserve">
+    <value>Im Nur-Lese-Modus können nur Bestellungen gespeichert werden</value>
   </data>
 </root>

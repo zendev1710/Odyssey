@@ -2437,6 +2437,15 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to _Close.
+        /// </summary>
+        public static string mainmenu_file_close {
+            get {
+                return ResourceManager.GetString("mainmenu_file_close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exit.
         /// </summary>
         public static string mainmenu_file_exit {
@@ -2914,6 +2923,15 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select the active region when opening report.
+        /// </summary>
+        public static string parm_hdr_explorer_select_last_active_region {
+            get {
+                return ResourceManager.GetString("parm_hdr_explorer_select_last_active_region", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to In-progress features hidden.
         /// </summary>
         public static string parm_hdr_features_hide_in_progress {
@@ -2928,6 +2946,15 @@ namespace Odyssey.Assets {
         public static string parm_hdr_language {
             get {
                 return ResourceManager.GetString("parm_hdr_language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load the last opened report at startup.
+        /// </summary>
+        public static string parm_hdr_open_last_report_at_startup {
+            get {
+                return ResourceManager.GetString("parm_hdr_open_last_report_at_startup", resourceCulture);
             }
         }
         
@@ -2986,6 +3013,15 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The active region is the one selected at the last report closing. If disabled, the (0,0 region will be selected.
+        /// </summary>
+        public static string parm_inf_explorer_select_last_active_region {
+            get {
+                return ResourceManager.GetString("parm_inf_explorer_select_last_active_region", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hide in-progress features (taken into accoun after app restart).
         /// </summary>
         public static string parm_inf_features_hide_in_progress {
@@ -3000,6 +3036,15 @@ namespace Odyssey.Assets {
         public static string parm_inf_language {
             get {
                 return ResourceManager.GetString("parm_inf_language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The last read report will be automatically reopened at startup.
+        /// </summary>
+        public static string parm_inf_open_last_report_at_startup {
+            get {
+                return ResourceManager.GetString("parm_inf_open_last_report_at_startup", resourceCulture);
             }
         }
         

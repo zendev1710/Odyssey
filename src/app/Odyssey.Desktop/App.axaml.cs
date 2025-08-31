@@ -111,6 +111,9 @@ public class App : PrismApplication
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
+            // TODO: handle Args as a file to open
+            //this.
+            //desktop.Args;
             /*
             DataContext = Container.Resolve<<IMainWindowViewModel>();
             desktop.MainWindow = new MainWindow
