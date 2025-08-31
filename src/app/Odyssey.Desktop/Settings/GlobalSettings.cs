@@ -30,11 +30,15 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
     //private const string WindowsThemeRegistryValueName = "AppsUseLightTheme";
 
     public const string IS_READONLY_MODE = "IsReadOnlyMode";
+    public const String OPEN_LAST_REPORT_AT_STARTUP = "OpenLastReportAtStartup";
+
     public const string LANGUAGE = "Language";
     public const string THEME = "Theme";
     public const string THEME_MODE = "ThemeMode";
     public const string EXPLORER_ACTIVE_FACTION_UNITS_AT_FIRST = "ActiveFactionUnitsAtTop";
     public const string EXPLORER_EXPAND_TREE_ON_REPORT_OPENING = "ExpandTreeOnReportOpening";
+    public const string EXPLORER_SELECT_LAST_ACTIVE_REGION_ON_REPORT_OPENING = "SelectLastActiveRegionOnReportOpening";
+    
     public const string HIDE_IN_PROGRESS_FEATURES = "HideInProgressFeatures";
 
     [ObservableProperty]
@@ -54,7 +58,6 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
        RuntimeItemsSourceMethodName = "GetThemes",
        DisplayMemberPath = "Key",
        SelectedValuePath = "Value")]
-
     [property: Config(
        Header = "parm_hdr_theme",
        Description = "parm_inf_theme",
@@ -67,14 +70,12 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
        RuntimeItemsSourceMethodName = "GetThemeModes",
        DisplayMemberPath = "Key",
        SelectedValuePath = "Value")]
-
     [property: Config(
        Header = "parm_hdr_theme_mode",
        Description = "parm_inf_theme_mode",
        Category = "parm_cat_general",
        Group = "parm_grp_appearance")]
     private int _themeMode = (int)Core.Theme.ApplicationThemeMode.Default;
-
 
     [ObservableProperty]
     [property: Config(
@@ -84,6 +85,14 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
         Group = "parm_grp_behaviours")]
     private bool _isReadOnlyMode = true;
 
+    [ObservableProperty]
+    [property: Config(
+    Header = "parm_hdr_open_last_report_at_startup",
+    Description = "parm_inf_open_last_report_at_startup",
+    Category = "parm_cat_general",
+    Group = "parm_grp_behaviours")]
+    private bool _openLastReportAtStartup = false;
+
     // whether the Explorer tree view will be fully expanded when a report is document is opened
     [ObservableProperty]
     [property: Config(
@@ -92,6 +101,14 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
         Category = "parm_cat_views",
         Group = "parm_grp_explorer")]
     private bool _expandTreeOnReportOpening = false;
+
+    [ObservableProperty]
+    [property: Config(
+    Header = "parm_hdr_explorer_select_last_active_region",
+    Description = "parm_inf_explorer_select_last_active_region",
+    Category = "parm_cat_views",
+    Group = "parm_grp_explorer")]
+    private bool _useLastActiveRegionOnReportOpening = false;
 
     // At this moment, this setting is set to false by default because it has negative impact on explorer navigation (e.g. unit prev/next.),
     // because DataBlocks tree order should then not the same as in the Explorer.
