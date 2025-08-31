@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using CommunityToolkit.Mvvm.Input;
 using Dock.Model.Mvvm.Controls;
+using Odyssey.Models.Data;
 using Odyssey.ViewModels.Documents;
 
 namespace Odyssey.ViewModels.Docks;
@@ -27,7 +28,7 @@ public class FilesDocumentDock : DocumentDock
             Path = string.Empty,
             Text = "",
             Encoding = Encoding.Default.WebName,
-            EresseaFileType = Models.Data.EresseaFileType.UNKNOWN
+            DocumentType = DocumentType.UNKNOWN
         };
 
         Factory?.AddDockable(this, document);

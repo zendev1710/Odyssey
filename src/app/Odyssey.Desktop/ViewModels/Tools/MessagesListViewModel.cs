@@ -17,7 +17,7 @@ public abstract partial class MessagesListViewModel : DocumentToolViewModelBase
     [ObservableProperty]
     protected MessageEntry? selectedItem;
 
-    public ObservableCollection<MessageEntry> Items { get; }
+    public ObservableCollection<MessageEntry> Items { get; } = [];
 
     public MessagesListViewModel() : this(null)
     {
@@ -30,8 +30,8 @@ public abstract partial class MessagesListViewModel : DocumentToolViewModelBase
     protected MessagesListViewModel(IEventAggregator? eventAggregator) : base(eventAggregator)
     {
         // LATER: use filter on filePath to update the list only if different
-        EventAggregator?.GetEvent<ActiveDocumentChangedEvent>().Subscribe(OnEventActiveDocumentChanged, ThreadOption.UIThread);
-        Items = new ObservableCollection<MessageEntry>();
+        EventAggregator?.GetEvent<ReportDocumentChangedEvent>().Subscribe(OnEventActiveDocumentChanged, ThreadOption.UIThread);
+        //Items = new ObservableCollection<MessageEntry>();
         SelectedItem = null;
     }
 
@@ -66,5 +66,9 @@ public abstract partial class MessagesListViewModel : DocumentToolViewModelBase
             PublishSelectionChangedEvent(new SelectionChange(sel, this, null));
         }
     }
-
+    protected void Clear()
+    {
+        Items.Clear();
+        SelectedItem = null;
+    }
 }

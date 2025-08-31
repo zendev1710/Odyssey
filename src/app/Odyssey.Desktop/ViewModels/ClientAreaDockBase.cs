@@ -41,7 +41,7 @@ namespace Odyssey.ViewModels
             // links to an empty report document
             Report = new CRDocument();
 
-            EventAggregator?.GetEvent<ActiveDocumentChangedEvent>().Subscribe(OnActiveDocumentChanged, ThreadOption.UIThread);
+            EventAggregator?.GetEvent<ReportDocumentChangedEvent>().Subscribe(OnActiveDocumentChanged, ThreadOption.UIThread);
         }
 
         /// <summary>

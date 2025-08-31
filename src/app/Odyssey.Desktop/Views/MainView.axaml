@@ -41,14 +41,27 @@
 				<MenuItem Header="{x:Static a:Lang.mainmenu_file_save}" Command="{Binding SaveFileCommand}" HotKey="Ctrl+S" InputGesture="Ctrl+S" />
 				<MenuItem Header="{x:Static a:Lang.mainmenu_file_save_as}" Command="{Binding SaveFileAsCommand}" HotKey="Ctrl+Shift+S" InputGesture="Ctrl+Shift+S" />
 				<MenuItem Header="{x:Static a:Lang.mainmenu_file_save_orders}" Command="{Binding SaveOrdersCommand}" />
-				<!-- Separator /-->
-				<!-- close active document -->
-				<!--MenuItem Header="_Close" Command="{Binding FileClose}" /-->
 				<Separator />
-				<!-- MenuItem Header="_Close Window" Command="{Binding CloseWindow}" /-->
+				<!--MenuItem Header="Recent Files" ItemsSource="{Binding RecentFiles}"-->
+				<MenuItem Header="Recent Files" x:Name="RecentFiles">
+					<!-- problems in binding: Items anf Commad => could not resolve -->
+					<ItemsControl ItemsSource="{Binding RecentFiles}">
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<MenuItem Header="{Binding .}"
+										  Command="{Binding #RecentFiles.DataContext.OpenRecentFileCommand}"
+										  CommandParameter="{Binding .}" />
+								<!--Command="{Binding OpenRecentFileCommand}"-->
+								<!--MenuItem Header="{Binding .}" Command="{Binding DataContext.OpenRecentFileCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding .}" /-->
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+				</MenuItem>
+				<Separator />
+				<!-- close active document -->
+				<MenuItem Header="{x:Static a:Lang.mainmenu_file_close}" Command="{Binding CloseFileCommand}"  HotKey="Ctrl+F4" InputGesture="Ctrl+F4"/>
+				<Separator />
 				<MenuItem Header="{x:Static a:Lang.mainmenu_file_exit}" Command="{Binding ExitCommand}" HotKey="Alt+F4" InputGesture="Alt+F4"/>
-				<!--MenuItem Header="_Exit" DataContext="{Binding Layout}" Command="{Binding ExitWindows}" /-->
-				<!-- MenuItem Header="_Show Windows" Command="{Binding ShowWindows}" /-->
 			</MenuItem>
 			<MenuItem Header="{x:Static a:Lang.mainmenu_view}" >
 				<MenuItem DataContext="{Binding Layout}" Header="{x:Static a:Lang.mainmenu_view_home}" Command="{Binding Navigate}" CommandParameter="Home" HotKey="Ctrl+Home" InputGesture="Ctrl+Home" />

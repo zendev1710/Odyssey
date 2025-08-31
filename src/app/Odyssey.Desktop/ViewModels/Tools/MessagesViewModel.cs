@@ -21,7 +21,7 @@ public abstract partial class MessagesViewModel : DocumentToolViewModelBase
 
     protected Node Root { get { return _root; } }
 
-    public ObservableCollection<Node> Items { get; }
+    public ObservableCollection<Node> Items { get; } = [];
 
     public MessagesViewModel() : this(null)
     {
@@ -36,7 +36,13 @@ public abstract partial class MessagesViewModel : DocumentToolViewModelBase
         Items = Root.Children;
 
         // TODO: use filter on filePath to update the list only if different
-        EventAggregator?.GetEvent<ActiveDocumentChangedEvent>().Subscribe(OnEventActiveDocumentChanged, ThreadOption.UIThread);
+        EventAggregator?.GetEvent<ReportDocumentChangedEvent>().Subscribe(OnEventActiveDocumentChanged, ThreadOption.UIThread);
+    }
+
+    protected void Clear()
+    {
+        Items.Clear();
+        SelectedItem = Root;
     }
 
     /// <summary>

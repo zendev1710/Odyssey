@@ -85,7 +85,7 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         HandleSelection(selectionChange.Selection);
     }
 
-    protected override int OnMapChange(ISelection selection)
+    protected override int OnReportChange(ISelection selection)
     {
         HandleSelection(selection);
         return 1;

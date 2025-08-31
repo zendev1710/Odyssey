@@ -120,6 +120,9 @@
   <data name="mainmenu_file_open" xml:space="preserve">
     <value>_Ouvrir...</value>
   </data>
+  <data name="mainmenu_file_close" xml:space="preserve">
+    <value>_Fermer</value>
+  </data>
   <data name="actions_opencraction_title" xml:space="preserve">
     <value>Ouvrir le fichier de rapport</value>
   </data>
@@ -2619,8 +2622,8 @@
   <data name="parm_grp_behaviours" xml:space="preserve">
     <value>Comportements</value>
   </data>
-  <data name="parm_inf_readonly_mode" xml:space="preserve">
-    <value>En mode lecture seule, seuls les ordres peuvent être enregistrés</value>
+  <data name="parm_inf_open_last_report_at_startup" xml:space="preserve">
+    <value>Le dernier rapport consulté sera automatiquement réouvert au démarrage</value>
   </data>
   <data name="parm_grp_tools" xml:space="preserve">
     <value>Outils</value>
@@ -2726,5 +2729,17 @@
   </data>
   <data name="road_in_progress_info" xml:space="preserve">
     <value>{1}% des travaux routiers sont effectués sur la route {0}</value>
+  </data>
+  <data name="parm_hdr_explorer_select_last_active_region" xml:space="preserve">
+    <value>Sélectionne la région active à l'ouverture d'un rapport</value>
+  </data>
+  <data name="parm_inf_explorer_select_last_active_region" xml:space="preserve">
+    <value>La région active est celle sélectionnée lors de la dernière fermeture du rapport. Si désactivé, la région de coordonnées (0,0) sera sélectionnée à l'ouverture.</value>
+  </data>
+  <data name="parm_hdr_open_last_report_at_startup" xml:space="preserve">
+    <value>Charge au démarrage le dernier rapport ouvert</value>
+  </data>
+  <data name="parm_inf_readonly_mode" xml:space="preserve">
+    <value>En mode lecture seule, seuls les ordres peuvent être enregistrés</value>
   </data>
 </root>

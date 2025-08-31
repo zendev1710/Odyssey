@@ -120,6 +120,9 @@
   <data name="mainmenu_file_open" xml:space="preserve">
     <value>_Open...</value>
   </data>
+  <data name="mainmenu_file_close" xml:space="preserve">
+    <value>_Close</value>
+  </data>
   <data name="actions_opencraction_title" xml:space="preserve">
     <value>Open report file</value>
   </data>
@@ -2619,8 +2622,8 @@
   <data name="parm_grp_behaviours" xml:space="preserve">
     <value>Behaviours</value>
   </data>
-  <data name="parm_inf_readonly_mode" xml:space="preserve">
-    <value>In read only mode, only orders can be saved</value>
+  <data name="parm_inf_open_last_report_at_startup" xml:space="preserve">
+    <value>The last read report will be automatically reopened at startup</value>
   </data>
   <data name="parm_grp_tools" xml:space="preserve">
     <value>Tools</value>
@@ -2726,5 +2729,17 @@
   </data>
   <data name="road_in_progress_info" xml:space="preserve">
     <value> {1} % of roadworks are completed for  {0} road</value>
+  </data>
+  <data name="parm_hdr_explorer_select_last_active_region" xml:space="preserve">
+    <value>Select the active region when opening report</value>
+  </data>
+  <data name="parm_inf_explorer_select_last_active_region" xml:space="preserve">
+    <value>The active region is the one selected at the last report closing. If disabled, the (0,0 region will be selected</value>
+  </data>
+  <data name="parm_hdr_open_last_report_at_startup" xml:space="preserve">
+    <value>Load the last opened report at startup</value>
+  </data>
+  <data name="parm_inf_readonly_mode" xml:space="preserve">
+    <value>In read only mode, only orders can be saved</value>
   </data>
 </root>

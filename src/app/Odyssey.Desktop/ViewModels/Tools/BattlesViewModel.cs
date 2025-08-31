@@ -19,7 +19,7 @@ public partial class BattlesViewModel : DocumentToolViewModelBase
 {
     public int BattlesNumber { get { return Battles.Count; } }
 
-    public ObservableCollection<BattleModel> Battles { get; }
+    public ObservableCollection<BattleModel> Battles { get; } = [];
 
     public BattlesViewModel() : this(null)
     {
@@ -31,10 +31,7 @@ public partial class BattlesViewModel : DocumentToolViewModelBase
 
     public BattlesViewModel(IEventAggregator? eventAggregator) : base(eventAggregator)
     {
-        _selectedBattleIndex = -1;
-        _selectedBattleText = string.Empty;
-        _hasBattle = false;
-        Battles = [];
+        Clear();
     }
 
     /// <summary>
@@ -61,6 +58,13 @@ public partial class BattlesViewModel : DocumentToolViewModelBase
         {
             CollectData();
         }
+    }
+
+    protected override void OnActiveDocumentClosed(CRDocument cr)
+    {
+        Clear();
+        // reset to an empty report document
+        SetMapFile(new CRDocument());
     }
 
     /// <summary>
@@ -131,6 +135,15 @@ public partial class BattlesViewModel : DocumentToolViewModelBase
 
         HasBattle = BattlesNumber > 0;
         Debug.WriteLine($"Number of battles = {BattlesNumber}");
+    }
+
+    private void Clear()
+    {
+        // LATER: check about Selection that should be cleared also
+        Battles.Clear();
+        SelectedBattleIndex = -1;
+        SelectedBattleText = string.Empty;
+        HasBattle = false;
     }
 
     /// <summary>

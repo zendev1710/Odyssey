@@ -23,6 +23,7 @@ public partial class MainWindow : Window
             {
                 // Handle ViewModel property changed events
                 vm.PropertyChanged += ViewModel_PropertyChanged;
+                vm.OpenInitialDocumentIfNeeded();
             }
         };
 

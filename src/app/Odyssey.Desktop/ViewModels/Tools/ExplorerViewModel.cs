@@ -22,7 +22,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
     private ExplorerNodeViewModel? selectedItem;
 
     private readonly ExplorerNodeViewModel _root;
-    private readonly Dictionary<int, FactionInfo> factionsInfo = [];
+    private readonly Dictionary<int, FactionInfo> _factionsInfo = [];
 
     /// <summary>
     /// when is true, units of the active faction are grouped together inside a faction node at the top of the factions list;
@@ -174,6 +174,13 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         {
             RebuildTree();
         }
+    }
+
+    protected override void OnActiveDocumentClosed(CRDocument cr)
+    {
+        Clear();
+        // reset to an empty report document
+        SetMapFile(new CRDocument());
     }
 
     private bool HandleSelection(ISelectionChange selectionChange)
@@ -522,10 +529,17 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         Debug.WriteLine("[EXPLORER] Data collection done");
     }
 
+    private void Clear()
+    {   
+        Items.Clear();
+        _factionsInfo.Clear();
+        SelectedItem = null;
+    }
+
     private FactionInfo RetrieveAndStoreFactionInfo(int factionId)
     {
         FactionInfo factionInfo;
-        if (!factionsInfo.TryGetValue(factionId, out factionInfo))
+        if (!_factionsInfo.TryGetValue(factionId, out factionInfo))
         {
             // retrieve faction status
             if (factionId == (int)SpecialFaction.ANONYMOUS)
@@ -575,7 +589,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
                 }
             }
             factionInfo.Name = Report.GetFactionName(factionId);
-            factionsInfo[factionId] = factionInfo;
+            _factionsInfo[factionId] = factionInfo;
         }
         return factionInfo;
     }

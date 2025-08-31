@@ -5,7 +5,11 @@ using Avalonia.Input;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Dock.Model.Controls;
+using Dock.Model.Core;
+using Dock.Model.Core.Events;
 using Odyssey.Events;
+using Odyssey.Extensions;
 using Odyssey.Help;
 using Odyssey.Models.Dal;
 using Odyssey.Models.Data;
@@ -13,8 +17,6 @@ using Odyssey.Models.Documents;
 using Odyssey.Settings;
 using Odyssey.Utils;
 using Odyssey.ViewModels.Documents;
-using Dock.Model.Controls;
-using Dock.Model.Core;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
@@ -23,10 +25,10 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Reflection;
 
 namespace Odyssey.ViewModels;
 
@@ -38,6 +40,13 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         .InformationalVersion ?? "Unknown";
 
     public string WindowTitle => $"Odyssey v{AppVersion}";
+
+    private RecentFilesManager _recentFilesManager = new RecentFilesManager("Odyssey");
+
+    public ObservableCollection<string> RecentFiles { get; } = new();
+    //public IReadOnlyList<string> RecentFiles => _recentFilesManager.RecentFiles;
+
+    private string? InitialDocumentPathname { get; set; } = string.Empty;
 
     [ObservableProperty]
     private bool _enableSearchFeature;
@@ -133,7 +142,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         Ids.ErrorList,
     ];
 
-    private readonly IFactory? _factory;
+    private readonly IFactory _factory;
     private readonly IEventAggregator? _eventAggregator;
     private IRootDock? _layout;
 
@@ -196,10 +205,10 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         //_serializer = new DockSerializer(typeof(AvaloniaList<>));
         //_dockState = new DockState();
 
-        Layout = _factory?.CreateLayout();
+        Layout = _factory.CreateLayout();
         if (Layout is { })
         {
-            _factory?.InitLayout(Layout);
+            _factory.InitLayout(Layout);
             if (Layout is { } root)
             {
                 // Display the home view, which embeds all the layout docked windows
@@ -228,15 +237,58 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         /*
         foreach (var id in _viewVisibilitySetters.Keys)
         {
-            _factory?.RestoreDockable(_factory.GetDockable<IDockable>(id)!);
+            _factory.RestoreDockable(_factory.GetDockable<IDockable>(id)!);
         }
         */
         if (hideInProgressFeatures)
         {
             foreach (var id in _inProgressFeaturesIds)
             {
-                _factory?.HideDockable(_factory.GetDockable<IDockable>(id)!);
+                _factory.HideDockable(_factory.GetDockable<IDockable>(id)!);
             }
+        }
+
+        _factory.DockableClosed += OnDockableClosed;
+
+        if (!Design.IsDesignMode)
+        {
+            if (App.Current!.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopLifetime)
+            {
+                if (desktopLifetime.Args?.Length > 0)
+                {
+                    InitialDocumentPathname = desktopLifetime.Args[0];
+                }
+            }
+            // After loading recent files from manager:
+            foreach (var file in _recentFilesManager.RecentFiles)
+            {
+                RecentFiles.Add(file);
+            }
+
+            if (string.IsNullOrEmpty(InitialDocumentPathname) && GlobalSettings.Get<bool>(GlobalSettings.OPEN_LAST_REPORT_AT_STARTUP))
+            {
+                // Retrieve last opened report file pathname to open it, if any
+                Func<string, bool> predicate = static f => IsSupportedFileType(f, out DocumentType fileType) && fileType.IsReportType();
+                InitialDocumentPathname = RecentFiles.FirstOrDefault(predicate);
+            }
+        }
+    }
+
+    [RelayCommand(CanExecute = nameof(CanOpenRecentFile))]
+    private void OpenRecentFile(string pathname)
+    {
+        OpenDocument(pathname);
+    }
+
+    public void OpenInitialDocumentIfNeeded()
+    {
+        if (!string.IsNullOrEmpty(InitialDocumentPathname))
+        {
+            if (File.Exists(InitialDocumentPathname))
+            {
+                OpenDocument(InitialDocumentPathname);
+            }
+            InitialDocumentPathname = string.Empty;
         }
     }
 
@@ -317,10 +369,10 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
             }
         }
 
-        var layout = _factory?.CreateLayout();
+        var layout = _factory.CreateLayout();
         if (layout is not null)
         {
-            _factory?.InitLayout(layout);
+            _factory.InitLayout(layout);
             Layout = layout;
         }
     }
@@ -360,20 +412,24 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
     private static void SaveFileViewModel(FileViewModel fileViewModel)
     {
+        DocumentType docType = fileViewModel.DocumentType;
         string path = fileViewModel.Path;
         CRDocument doc = (fileViewModel.Document as CRDocument)!;
-        switch (fileViewModel.EresseaFileType)
+
+        switch (docType)
         {
-            case EresseaFileType.REPORT_FROM_ZIP:
-            case EresseaFileType.REPORT:
+            case DocumentType.ERESSEA_REPORT:
+            case DocumentType.ERESSEA_REPORT_FROM_ZIP:
                 ReportFileService.Save(path, doc, MapType.FULL, []);
                 break;
-            case EresseaFileType.ORDERS:
-                ReportFileService.Save(path,doc, MapType.FULL, []);
+            case DocumentType.ERESSEA_ORDERS:
+                //OrdersFileService.Save(path, doc, MapType.FULL, []);
+                break;
+            case DocumentType.TXT:
+                //TxtFileService.Save(path, doc, MapType.FULL, []);
                 break;
             default:
-                // TODO: autodetect type ? ask type ? then save
-                //ReportFileService.Save(path, (fileViewModel.Document as CRDocument)!, MapType.FULL, []);
+                Debug.WriteLine($"[MAINWINDOW] WARNING | SaveFileViewModel - Unable to save file of type {fileViewModel.DocumentType}!");
                 break;
         }
     }
@@ -382,9 +438,9 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     /// Publish a ActiveDocumentChangedEvent to all ViewModel subscribers.
     /// /// handle(this, FXSEL(SEL_COMMAND, ID_UPDATE), &selection);
     /// </summary>
-    private void NotifyMapHasChanged(CRDocument cr)
+    private void NotifyReportHasChanged(CRDocument cr)
     {
-        EventAggregator?.GetEvent<ActiveDocumentChangedEvent>().Publish(cr);
+        EventAggregator?.GetEvent<ReportDocumentChangedEvent>().Publish(cr);
     }
 
     private void ResetPlanes()
@@ -395,34 +451,16 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         Planes.Add(new WorldPlane("World", PlaneType.WORLD)); // plane matching an empty (map) world
     }
 
-    private void OnActiveDocumentChanged(CRDocument report)
+    private void OnReportDocumentLoaded(CRDocument report)
     {
-        if (report.IsEmpty())
-        {
-            HasDocument = false;
-            GameTurn = string.Empty;
-            ReportName = string.Empty;
-            FactionName = string.Empty;
-            GameDate = string.Empty;
-            return;
-        }
-        HasDocument = report.HasData();
-        FactionName = report.GetActiveFactionName();
-        ReportName = report.Name;
-        GameTurn = $"[{report.Turn}]";
-        GameDate = DateUtils.GameTurnToDateLabel(report.Turn);
-    }
-
-    /// <summary>
-    /// CSMap::mapChange.
-    /// </summary>
-    private void MapChange(CRDocument report)
-    {
-        OnActiveDocumentChanged(report);
-
+        UpdateReportInformation(report);
         ResetPlanes();
 
         // TODO: Selection should have been saved before (region Id as an automatic bookmark), then cleared
+        if (GlobalSettings.Get<bool>(GlobalSettings.EXPLORER_SELECT_LAST_ACTIVE_REGION_ON_REPORT_OPENING))
+        {
+            // TODO: get active region from CRDocument and set as selection
+        }
         ISelection sel = Selection ?? new SimpleItemSelection(report, 0, 0);
         // map changed, let selection function handle this
         if (report.IsEmpty())
@@ -600,8 +638,8 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
         Selection = sel;
 
-        OnMapChange(sel, report);
-        NotifyMapHasChanged(report);
+        OnReportChange(sel, report);
+        NotifyReportHasChanged(report);
 
         PublishSelectionChangedEvent(new SelectionChange(Selection!, this, null));
 
@@ -621,12 +659,12 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
     private void AddFileViewModel(FileViewModel fileViewModel)
     {
-        var files = _factory?.GetDockable<IDocumentDock>("Files");
+        var files = _factory.GetDockable<IDocumentDock>("Files");
         if (Layout is { } && files is { })
         {
-            _factory?.AddDockable(files, fileViewModel);
-            _factory?.SetActiveDockable(fileViewModel);
-            _factory?.SetFocusedDockable(Layout, fileViewModel);
+            _factory.AddDockable(files, fileViewModel);
+            _factory.SetActiveDockable(fileViewModel);
+            _factory.SetFocusedDockable(Layout, fileViewModel);
         }
     }
 
@@ -634,27 +672,48 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     /// Get the file view model for the active document.
     /// </summary>
     /// <returns> the file view model for the active document; null if no document is opened.</returns>
-    private FileViewModel? GetActiveFileViewModel()
+    private bool GetActiveFileViewModel(out FileViewModel? fileViewModel, out bool isModified)
     {
-        var files = _factory?.GetDockable<IDocumentDock>("Files");
-        return files?.ActiveDockable as FileViewModel;
+        var files = _factory.GetDockable<IDocumentDock>("Files");
+        fileViewModel = files?.ActiveDockable as FileViewModel;
+        bool hasActive = fileViewModel is not null;
+        isModified = hasActive ? fileViewModel!.IsModified : false;
+        return hasActive;
     }
 
     /// <summary>
     /// Gets the active opened document or null if no document is opened.
     /// </summary>
     /// <returns>The active opened document; null if no document is opened.</returns>
-    private EresseaDocument? GetActiveDocument(out EresseaFileType docFileType)
+    private EresseaDocument? GetActiveDocument(out DocumentType docFileType)
     {
-        docFileType = EresseaFileType.UNKNOWN;
-        FileViewModel? f = GetActiveFileViewModel();
-        if (f != null)
+        docFileType = DocumentType.UNKNOWN;
+        FileViewModel? fileViewModel;
+        if (GetActiveFileViewModel(out fileViewModel, out _))
         {
-            docFileType = f.EresseaFileType;
-            return f.Document;
+            docFileType = fileViewModel!.DocumentType;
+            return fileViewModel.Document;
         }
         return null;
     }
+
+    /*
+    // TODO
+    private bool GetActiveReportDocument(out DocumentType docFileType)
+    {
+
+        foreach (var dock in _factory.GetDockable<IDocumentDock>("Files"))
+        {             
+            if (dock is FileViewModel fvm && fvm.Document is CRDocument)
+            {
+                docFileType = fvm.DocumentType;
+                return true;
+            }
+        }
+
+        return false;
+    }
+    */
 
     /// <summary>
     /// Gets the active opened document or null if no document is opened.
@@ -662,10 +721,10 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     /// <returns>The active opened document; null if no document is opened.</returns>
     private EresseaDocument? GetActiveDocument()
     {
-        FileViewModel? f = GetActiveFileViewModel();
-        if (f != null)
-        {
-            return f.Document;
+        FileViewModel? fileViewModel;
+        if (GetActiveFileViewModel(out fileViewModel, out _))
+        { 
+            return fileViewModel?.Document;
         }
         return null;
     }
@@ -782,25 +841,88 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         MergeFiles(result);
     }
 
+    private bool OpenDocument(string pathname)
+    {
+        if (!IsSupportedFileType(pathname, out DocumentType fileType))
+        {
+            // LATER: log it in docked windows console
+            Debug.WriteLine($"[MAINWINDOW] WARNING | OpenDocument - '{pathname}' is not an Eressea file");
+            return false;
+        }
+        FileViewModel? fileViewModel = null;
+        return OpenDocument(pathname, fileType, out fileViewModel);
+    }
+
+    private bool OpenDocument(string pathname, DocumentType fileType, out FileViewModel? fileViewModel)
+    {
+        fileViewModel = null;
+        try
+        {
+            fileViewModel = OpenFileViewModel(pathname, fileType);
+            if (fileViewModel is not null)
+            {
+                AddFileViewModel(fileViewModel);
+
+                // Update RecentFilesManager (handles duplicates and persistence)
+                _recentFilesManager.AddFile(pathname);
+                // Update UI collection
+                // Remove if already present
+                int existingIndex = RecentFiles.IndexOf(pathname);
+                if (existingIndex >= 0)
+                    RecentFiles.RemoveAt(existingIndex);
+                // Insert at top
+                RecentFiles.Insert(0, pathname);
+                // Limit to 10 items
+                while (RecentFiles.Count > 10)
+                    RecentFiles.RemoveAt(RecentFiles.Count - 1);
+                OnReportDocumentLoaded((fileViewModel.Document as CRDocument)!);
+                return true;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+        return false;
+    }
+
     private void OpenOrMergeFiles(IEnumerable<IStorageItem> storageItems, bool mergeReportsRequested)
     {
+        FileViewModel? lastTxtFileViewModel = null;
         FileViewModel? lastOrdersFileViewModel = null;
         FileViewModel? lastReportFileViewModel = null;
+        List<DocumentType> reportDocTypes = [];
         List<String> reportPathnames = [];
         List<String> ordersPathnames = [];
+        List<String> txtPathnames = [];
         bool mergeReports = mergeReportsRequested;
 
         // store pathnames
         foreach (IStorageItem file in storageItems.Where(IsFile))
         {
             string pathname = file.Path.LocalPath;
-            if (!IsEresseaFile(pathname, out EresseaFileType fileType))
+            if (!IsSupportedFileType(pathname, out DocumentType documentType))
             {
-                // LATER: log it in docked windows console
-                Debug.WriteLine($"[MAINWINDOW] WARNING | OpenOrMergeFiles - '{pathname}' is not an Eressea file");
+                Debug.WriteLine($"[MAINWINDOW] WARNING | OpenOrMergeFiles - '{pathname}' is not a supported file type to be opened in Odyssey");
                 continue;
             }
-            if (fileType == EresseaFileType.ORDERS) ordersPathnames.Add(pathname); else reportPathnames.Add(pathname);
+            switch (documentType)
+            {
+                case DocumentType.ERESSEA_REPORT:
+                case DocumentType.ERESSEA_REPORT_FROM_ZIP:
+                    reportPathnames.Add(pathname);
+                    reportDocTypes.Add(documentType);
+                    break;
+                case DocumentType.ERESSEA_ORDERS:
+                    ordersPathnames.Add(pathname);
+                    break;
+                case DocumentType.TXT:
+                    txtPathnames.Add(pathname);
+                    break;
+                default:
+                    Debug.WriteLine($"[MAINWINDOW] WARNING | OpenOrMergeFiles - Unable to handle file of type {documentType}!");
+                    break;
+            }
         }
 
         // LATER: sort ordersPathnames and reportPathnames according settings
@@ -817,47 +939,44 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
             mergeReports = true;
         }
 
+        FileViewModel? fileViewModel = null;
+        int reportIndex = 0;
+        // Load report .cr or .zip file(s) if any
         foreach (String pathname in reportPathnames)
         {
-            try
+            if (OpenDocument(pathname, reportDocTypes[reportIndex++], out fileViewModel))
             {
-                FileViewModel? fileViewModel = OpenFileViewModel(pathname, true);
-                if (fileViewModel is not null)
+                if (mergeReports)
                 {
-                    // TODO: merge if required
-                    AddFileViewModel(fileViewModel);
-                    lastReportFileViewModel = fileViewModel;
+                    //TODO: merge the loaded report with the current one
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
+                lastReportFileViewModel = fileViewModel;
             }
         }
 
-        // Load orders file if any (no merge)
+        // Load orders .txt file(s) if any
         foreach (String pathname in ordersPathnames)
         {
-            try
+            if (OpenDocument(pathname, DocumentType.ERESSEA_ORDERS, out fileViewModel))
             {
-                FileViewModel? fileViewModel = OpenFileViewModel(pathname, EresseaFileType.ORDERS);
-                if (fileViewModel is not null)
-                {
-                    AddFileViewModel(fileViewModel);
-                    lastOrdersFileViewModel = fileViewModel;
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"[MAINWINDOW] ERROR ||| Failed to load $pathname orders file: ${e}");
+                lastOrdersFileViewModel = fileViewModel;
             }
         }
 
-        // LATER: notify map change if an ord"ers file has been loaded ?
+        // Load other .txt file(s) if any
+        foreach (String pathname in txtPathnames)
+        {
+            if (OpenDocument(pathname, DocumentType.TXT, out fileViewModel))
+            {
+                lastTxtFileViewModel = fileViewModel;
+            }
+        }
+
+        // LATER: notify map change if an orders file has been loaded ?
         //FileViewModel? lastFileViewModel = lastReportFileViewModel ?? lastOrdersFileViewModel;
         if (lastReportFileViewModel is not null)
         {
-            MapChange((lastReportFileViewModel.Document as CRDocument)!);
+            OnReportDocumentLoaded((lastReportFileViewModel.Document as CRDocument)!);
         }
     }
 
@@ -874,7 +993,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
             try
             {
                 string pathname = file.Path.LocalPath;
-                if (!IsEresseaFile(pathname, out EresseaFileType fileType))
+                if (!IsSupportedFileType(pathname, out DocumentType fileType))
                 {
                     Debug.WriteLine($"[MAINWINDOW] WARNING | '{pathname}' is not an Eressea file");
                     continue;
@@ -886,7 +1005,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
                     // TODO: merge the loaded report with the current one
                     /*
                     lastFileViewModel = fileViewModel;
-                    if (fileType == EresseaFileType.REPORT || fileType == EresseaFileType.REPORT_FROM_ZIP)
+                    if (fileType == DocumentType.REPORT || fileType == DocumentType.REPORT_FROM_ZIP)
                     {
                         lastReportFileViewModel = lastFileViewModel;
                     }
@@ -902,7 +1021,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
         if (resultReportFileViewModel != null)
         {
-            MapChange((resultReportFileViewModel.Document as CRDocument)!);
+            OnReportDocumentLoaded((resultReportFileViewModel.Document as CRDocument)!);
         }
     }
 
@@ -1003,7 +1122,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     }
     */
 
-    private int OnMapChange(ISelection selection, CRDocument reportDocument)
+    private int OnReportChange(ISelection selection, CRDocument reportDocument)
     {
         /*
         if (pstate.FileChange != Selection.FileChange) {
@@ -1152,26 +1271,32 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
     }
 
+    private static bool IsOrdersFile(string pathname)
+    {
+        // TODO: check content to distnguish between orders and other text files
+        return true;
+    }
+
     /// <summary>
-    /// Returns true if the file is an Eressea file (report or orders).
+    /// Returns true if the file is an Eressea file (report, orders, or other text file with .txt extension).
     /// An Eressea file is identified by its extension (.cr, .txt or .zip are valid).
     /// </summary>
     /// <param name="pathname">pathname to be checked</param>
-    /// <param name="fileType">eressea file type according to the pathname extension</param>
-    /// <returns>true if pathname extension is a valid eressea file extension; otherwise, false</returns>
-    private static bool IsEresseaFile(string pathname, out EresseaFileType fileType)
+    /// <param name="fileType">document type according to the file extension</param>
+    /// <returns>true if file extension is a supported file extension; otherwise, false</returns>
+    private static bool IsSupportedFileType(string pathname, out DocumentType fileType)
     {
-        fileType = EresseaFileType.UNKNOWN;
+        fileType = DocumentType.UNKNOWN;
         switch (FileUtils.GetFileExtensionWithoutDot(pathname))
         {
             case StorageService.CrExt:
-                fileType = EresseaFileType.REPORT;
+                fileType = DocumentType.ERESSEA_REPORT;
                 break;
             case StorageService.ZipExt:
-                fileType = EresseaFileType.REPORT_FROM_ZIP;
+                fileType = DocumentType.ERESSEA_REPORT_FROM_ZIP;
                 break;
             case StorageService.TxtExt:
-                fileType = EresseaFileType.ORDERS;
+                fileType = IsOrdersFile(pathname) ? DocumentType.ERESSEA_ORDERS : DocumentType.TXT;
                 break;
             default: return false;
         }
@@ -1183,29 +1308,30 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         return file != null && file.Path.IsFile && !string.IsNullOrEmpty(file.Path.LocalPath);
     }
 
-    private static bool LoadReportFile(string pathname, EresseaFileType fileType, out EresseaDocument eresseaDocument)
+    private static bool LoadReportFile(string pathname, DocumentType fileType, out EresseaDocument eresseaDocument)
     {
         eresseaDocument = null;
         bool loaded = false;
         string errorMessage;
         switch (fileType)
         {
-            case EresseaFileType.REPORT:
+            case DocumentType.ERESSEA_REPORT:
                 loaded = ReportFileService.LoadFile(pathname, out eresseaDocument, out errorMessage);
                 break;
-            case EresseaFileType.REPORT_FROM_ZIP:
+            case DocumentType.ERESSEA_REPORT_FROM_ZIP:
                 if (ZipFileService.LoadFile(pathname, out eresseaDocument, out errorMessage))
                 {
                     // CR file content has been extracted from the zip file
                     //pathname = Path.ChangeExtension(pathname, StorageService.CrExt);
-                    //fileType = EresseaFileType.REPORT;
+                    //fileType = DocumentType.REPORT;
                     loaded = true;
                 }
                 break;
-            case EresseaFileType.ORDERS:
+            case DocumentType.ERESSEA_ORDERS:
                 loaded = OrdersFileService.LoadFile(pathname, out eresseaDocument, out errorMessage);
                 break;
             default:
+                // TODO: handle other text files
                 break;
         }
 
@@ -1214,14 +1340,15 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
     private FileViewModel? OpenFileViewModel(string pathname, bool reportOnly)
     {
-        if (IsEresseaFile(pathname, out EresseaFileType fileType) && (!reportOnly || (fileType == EresseaFileType.REPORT || fileType == EresseaFileType.REPORT_FROM_ZIP)))
+        // open only if it's a report file
+        if (IsSupportedFileType(pathname, out DocumentType fileType) && (!reportOnly || fileType.IsReportType()))
         {
             return OpenFileViewModel(pathname, fileType);
         }
         return null;
     }
 
-    private FileViewModel? OpenFileViewModel(string pathname, EresseaFileType fileType)
+    private FileViewModel? OpenFileViewModel(string pathname, DocumentType fileType)
     {
         EresseaDocument? eresseaDocument = null;
         bool loaded = LoadReportFile(pathname, fileType, out eresseaDocument);
@@ -1229,8 +1356,8 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         FileViewModel? fileViewModel = null;
         if (loaded)
         {
-            string title = Path.GetFileNameWithoutExtension(pathname);
-            if (fileType == EresseaFileType.REPORT_FROM_ZIP)
+            string title = System.IO.Path.GetFileNameWithoutExtension(pathname);
+            if (fileType == DocumentType.ERESSEA_REPORT_FROM_ZIP)
             {
                 title += " [zip]";
             }
@@ -1245,7 +1372,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
                 Document = eresseaDocument,
                 Path = pathname,
                 Encoding = encoding.WebName,
-                EresseaFileType = fileType,
+                DocumentType = fileType,
             };
         }
         return fileViewModel;
@@ -1324,18 +1451,20 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     [RelayCommand(CanExecute = nameof(CanSaveFile))]
     private void SaveFile()
     {
-        if (GetActiveFileViewModel() is { } fileViewModel)
+        FileViewModel? fileViewModel = null;
+        bool isModified = false;
+        if (GetActiveFileViewModel(out fileViewModel, out isModified) && isModified)
         {
-            SaveFileViewModel(fileViewModel);
+            SaveFileViewModel(fileViewModel!);
         }
     }
 
     [RelayCommand(CanExecute = nameof(CanSaveFileAs))]
     private async Task SaveFileAs()
     {
-        if (GetActiveFileViewModel() is { } fileViewModel)
+        if (GetActiveFileViewModel(out FileViewModel? fileViewModel, out _))
         {
-            await FileSaveAsImpl(fileViewModel);
+            await FileSaveAsImpl(fileViewModel!);
         }
     }
 
@@ -1347,9 +1476,9 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
             return;
         }
 
-        bool isOrdersFile = fileViewModel.EresseaFileType == EresseaFileType.ORDERS;
+        bool isOrdersFile = fileViewModel.DocumentType == DocumentType.ERESSEA_ORDERS;
         string defaultExtension = isOrdersFile ? StorageService.TxtExt : StorageService.CrExt;
-        string pathname = Path.ChangeExtension(fileViewModel.Path, defaultExtension);
+        string pathname = System.IO.Path.ChangeExtension(fileViewModel.Path, defaultExtension);
         FilePickerFileType fileTypeChoice = isOrdersFile ? StorageService.Orders : StorageService.Report;
 
         var file = await storageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
@@ -1369,12 +1498,6 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         }
     }
 
-    private static void UpdateFileViewModel(FileViewModel fileViewModel, string path)
-    {
-        fileViewModel.Path = path;
-        fileViewModel.Title = Path.GetFileNameWithoutExtension(path);
-    }
-
     [RelayCommand(CanExecute = nameof(CanSaveOrders))]
     private void SaveOrders()
     {
@@ -1384,24 +1507,32 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     [RelayCommand(CanExecute = nameof(CanCloseFile))]
     private void CloseFile()
     {
-        Debug.WriteLine($"[MAINWINDOW] close file command...");
-        FileViewModel? fileViewModel = GetActiveFileViewModel();
-        if (fileViewModel != null)
+        FileViewModel? fileViewModel = null;
+        bool isModified = false;
+        //IDocument? currentDocument = _factory.GetCurrentDocument();
+        if (GetActiveFileViewModel(out fileViewModel, out isModified))
         {
-            switch (fileViewModel.EresseaFileType)
+            if (fileViewModel!.IsDocumentModified())
             {
-                case EresseaFileType.REPORT:
-                case EresseaFileType.REPORT_FROM_ZIP:
+                // TODO: modal dialog box with save/do not save/cancel
+            }
+            _factory!.CloseDockable(fileViewModel);
+            /*
+            switch (fileViewModel!.DocumentType)
+            {
+                case DocumentType.ERESSEA_REPORT:
+                case DocumentType.ERESSEA_REPORT_FROM_ZIP:
+                    
                     EventAggregator?.GetEvent<ActiveDocumentClosedEvent>().Publish((fileViewModel.Document as CRDocument)!);
                     break;
-                case EresseaFileType.ORDERS:
+                case DocumentType.ERESSEA_ORDERS:
                     // TODO
                     //EventAggregator?.GetEvent<ActiveDocumentClosedEvent>().Publish(fileViewModel.Document as CRDocument);
                     break;
                 default: break;
             }
+            */
         }
-        Debug.WriteLine($"[MAINWINDOW] close file command done");
     }
 
     /// <summary>
@@ -1410,9 +1541,19 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     /// <returns>true if a document is opened and has been modified; otherwise false.</returns>
     private bool CanSaveFile()
     {
-        EresseaDocument? d = GetActiveDocument(out EresseaFileType docFileType);
-        return d != null && docFileType != EresseaFileType.REPORT_FROM_ZIP && d.IsModified;
+        EresseaDocument? d = GetActiveDocument(out DocumentType docFileType);
+        return d != null && docFileType != DocumentType.ERESSEA_REPORT_FROM_ZIP && d.IsModified;
     }
+
+    private bool CanOpenRecentFile(string pathname)
+    {
+        // TODO
+        //GetActiveFileViewModel(out fileViewModel)
+        //EresseaDocument? d = GetActiveDocument(out DocumentType docFileType);
+        //return d != null && d.GetActiveFileViewModel;
+        return true;
+    }
+
 
     /// <summary>
     /// Indicates if SaveOrders command can be executed.
@@ -1420,9 +1561,9 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     /// <returns>true if a report document is opened; otherwise false.</returns>
     private bool CanSaveOrders()
     {
-        EresseaFileType docFileType;
+        DocumentType docFileType;
         EresseaDocument? d = GetActiveDocument(out docFileType);
-        return d != null && (docFileType == EresseaFileType.REPORT || docFileType == EresseaFileType.REPORT_FROM_ZIP);
+        return d != null && docFileType.IsReportType();
     }
 
     /// <summary>
@@ -1431,6 +1572,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     /// <returns>true if a document is opened; otherwise false.</returns>
     private bool CanSaveFileAs()
     {
+        // It's possible to save as any opened document. The currently active one will be saved as.
         return HasActiveDocument();
     }
 
@@ -1440,6 +1582,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     /// <returns>true if a document is opened; otherwise false.</returns>
     private bool CanCloseFile()
     {
+        // It's possible to close any opened document
         return HasActiveDocument();
     }
 
@@ -1449,7 +1592,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     /// <returns>true if a document is opened; otherwise false.</returns>
     private bool HasActiveDocument()
     {
-        return GetActiveFileViewModel() != null;
+        return GetActiveFileViewModel(out _, out _);
     }
 
     /// <summary>
@@ -1493,6 +1636,30 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     public void SubscribeToSelectionChangedEvent()
     {
         // Main Window ViewModel does not subscribes to SelectionStateChangedEvent because it does not handle selection state changes.
+    }
+
+    private static void UpdateFileViewModel(FileViewModel fileViewModel, string path)
+    {
+        fileViewModel.Path = path;
+        fileViewModel.Title = Path.GetFileNameWithoutExtension(path);
+    }
+
+    private void OnDockableClosed(object? sender, DockableClosedEventArgs args)
+    {
+        if (args.Dockable is FileViewModel fileViewModel && fileViewModel.DocumentType.IsReportType())
+        {
+            UpdateReportInformation(new CRDocument());
+            EventAggregator?.GetEvent<ActiveDocumentClosedEvent>().Publish((fileViewModel.Document as CRDocument)!);
+        }
+    }
+
+    private void UpdateReportInformation(CRDocument report)
+    {
+        HasDocument = report.HasData();
+        FactionName = HasDocument ? report.GetActiveFactionName() : string.Empty;
+        ReportName = HasDocument ? report.Name : string.Empty;
+        GameTurn = HasDocument ? $"[{report.Turn}]" : string.Empty;
+        GameDate = HasDocument ? DateUtils.GameTurnToDateLabel(report.Turn) : string.Empty;
     }
 
     private static void DebugFactoryEvents(IFactory factory)

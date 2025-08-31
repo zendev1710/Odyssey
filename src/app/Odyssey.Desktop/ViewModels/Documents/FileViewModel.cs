@@ -12,11 +12,16 @@ public class FileViewModel : Document
     private string _path = string.Empty;
     private string _text = string.Empty;
     private string _encoding = string.Empty;
-    private EresseaFileType _eresseaFileType = EresseaFileType.UNKNOWN;
+    private DocumentType _documentType = DocumentType.UNKNOWN;
     private EresseaDocument? _document;
 
     public FileViewModel()
     {
+    }
+
+    public bool IsDocumentModified()
+    {
+        return IsModified || (Document?.IsModified ?? false);
     }
 
     /// <summary>
@@ -78,10 +83,10 @@ public class FileViewModel : Document
     /// TYpe of Eressea file.
     /// Can be a report file type, an orders file type, or an unknown file type.
     /// </summary>
-    public EresseaFileType EresseaFileType
+    public DocumentType DocumentType
     {
-        get => _eresseaFileType;
-        set => SetProperty(ref _eresseaFileType, value);
+        get => _documentType;
+        set => SetProperty(ref _documentType, value);
     }
 }
 

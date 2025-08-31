@@ -5,6 +5,7 @@ using Avalonia.Xaml.Interactions.DragAndDrop;
 using Odyssey.ViewModels;
 using Dock.Settings;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace Odyssey.Views;
 
@@ -59,20 +60,25 @@ public partial class MainView : UserControl
     /// <param name="e">Contains event data like property name, old and new values</param>
     private void ViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (sender is MainWindowViewModel vm && e.PropertyName == nameof(vm.IsFullscreen))
+        if (sender is MainWindowViewModel vm)
         {
-            if (vm.IsFullscreen)
+            // You can add logging here to debug property changes
+            Debug.WriteLine($"[MAINVIEW-AX] Property changed: {e.PropertyName}");
+            if (e.PropertyName == nameof(vm.IsFullscreen))
             {
-                // Store the window state before going fullscreen
-               // this._previousWindowState = this.WindowState;
-                //this.WindowState = WindowState.FullScreen;
-                //this.SystemDecorations = SystemDecorations.None;
-            }
-            else
-            {
-                // Set the Window state to the previous one, stored on the last toggle fullscreen command
-                //this.WindowState = this._previousWindowState;
-                //this.SystemDecorations = SystemDecorations.Full;
+                if (vm.IsFullscreen)
+                {
+                    // Store the window state before going fullscreen
+                   // this._previousWindowState = this.WindowState;
+                    //this.WindowState = WindowState.FullScreen;
+                    //this.SystemDecorations = SystemDecorations.None;
+                }
+                else
+                {
+                    // Set the Window state to the previous one, stored on the last toggle fullscreen command
+                    //this.WindowState = this._previousWindowState;
+                    //this.SystemDecorations = SystemDecorations.Full;
+                }
             }
         }
     }

@@ -92,6 +92,30 @@ public partial class RegionInfoViewModel : MessagesViewModel
         _unitMessages = null;
     }
 
+    private void Clear()
+    {
+        /*
+        Root.Children.Clear();
+        _regionMessages.Children.Clear();
+        _effectsMessages.Children.Clear();
+        _travelMessages.Children.Clear();
+        _roadsMessages = null;
+        _guardsMessages = null;
+        _unitMessages = null;
+        Root.Children.Add(_regionMessages);
+        Root.Children.Add(_effectsMessages);
+        Root.Children.Add(_travelMessages);
+        */
+        base.Clear();
+    }
+
+    protected override void OnActiveDocumentClosed(CRDocument cr)
+    {
+        Clear();
+        // reset to an empty report document
+        SetMapFile(new CRDocument());
+    }
+
     protected override void OnSelectionChanged(ISelectionChange selectionChange)
     {
         // Exclude this selector from selection change events to avoid reentrancy issues

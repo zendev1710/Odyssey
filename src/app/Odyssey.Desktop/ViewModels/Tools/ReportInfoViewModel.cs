@@ -41,6 +41,13 @@ public partial class ReportInfoViewModel : MessagesListViewModel
         }
     }
 
+    protected override void OnActiveDocumentClosed(CRDocument cr)
+    {
+        base.Clear();
+        // reset to an empty report document
+        SetMapFile(new CRDocument());
+    }
+
     /// <summary>
     /// Collect the messages from the current document.
     /// Battle messages are excluded from the collected data.

@@ -69,13 +69,12 @@ public partial class HistoryViewModel : DocumentToolViewModelBase
         RevealInExplorer(newValue);
     }
 
-    // TODO: Handle OnActiveDocumentClosed
-    /*
     protected override void OnActiveDocumentClosed(CRDocument cr)
     {
         ClearItems();
+        // reset to an empty report document
+        SetMapFile(new CRDocument());
     }
-    */
 
     protected override void OnActiveDocumentChanged(CRDocument cr)
     {

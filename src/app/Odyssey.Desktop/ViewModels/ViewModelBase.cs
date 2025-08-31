@@ -57,8 +57,8 @@ namespace Odyssey.ViewModels
             HasDocument = false;
             Report = new CRDocument();
             Selection = new SimpleItemSelection();
-
-            EventAggregator?.GetEvent<ActiveDocumentChangedEvent>().Subscribe(OnActiveDocumentChanged, ThreadOption.UIThread, false, null);
+            
+            EventAggregator?.GetEvent<ReportDocumentChangedEvent>().Subscribe(OnActiveDocumentChanged, ThreadOption.UIThread, false, null);
             EventAggregator?.GetEvent<ActiveDocumentClosedEvent>().Subscribe(OnActiveDocumentClosed, ThreadOption.UIThread, false, null);
             SubscribeToSelectionChangedEvent();
         }
@@ -78,11 +78,14 @@ namespace Odyssey.ViewModels
         /// <param name="cr">Report Document</param>
         protected virtual void OnActiveDocumentClosed(CRDocument cr)
         {
+            // reset to an empty report document
+            SetMapFile(new CRDocument());
         }
 
         protected virtual void OnSelectionChanged(ISelectionChange selectionChange)
         {
         }
+
         public bool ShouldIgnoreSelectionChangedEvent(ISelectionChange selectionChange, List<string> selectorIdsIncludeFilter, List<string> selectorIdsExcludeFilter)
         {
             return ISelector.ShouldIgnoreSelector(selectionChange, selectorIdsIncludeFilter, selectorIdsExcludeFilter);
@@ -101,7 +104,7 @@ namespace Odyssey.ViewModels
             return Selection;
         }
 
-        protected virtual int OnMapChange(ISelection selection)
+        protected virtual int OnReportChange(ISelection selection)
         {
             // LATER: should be handled by event aggregator
             SetSelection(selection);

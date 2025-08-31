@@ -52,9 +52,21 @@ Code was inspired from the [CsMapFX](https://github.com/ennorehling/csmapfx) app
             }
             return new CRDocument();
 
+### File association in iOS/MacOS
+
+See :
+
+- [Avalonia activatable lifetime](https://docs.avaloniaui.net/docs/concepts/services/activatable-lifetime)
+- [This discussion](https://stackoverflow.com/questions/49126150/associate-my-app-with-its-custom-file-type-in-osx-and-open-file-on-double-click)
+
+### macOS Deployment
+
+See [Avalonia - macOS deployment](https://docs.avaloniaui.net/docs/deployment/macOS#making-the-application-bundle).
+
 ## Greetings
 
 Some parts of this code have been inspired from other works available in the following GitHub repositories:
 
+- [CsMapFX](https://github.com/ennorehling/csmapfx) for report data management (document loading and saving, data retrieving process...)
 - [DevToys](https://github.com/DevToys-app/DevToys) (settings management, in particular theme handling)
 

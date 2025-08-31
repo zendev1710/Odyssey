@@ -9,12 +9,12 @@ namespace Odyssey
 {
     public class RoutedCommand : ICommand
     {
-        private static IInputElement _inputElement;
+        private static IInputElement? _inputElement;
 
         public string Name { get; }
-        public KeyGesture Gesture { get; }
+        public KeyGesture? Gesture { get; }
 
-        public RoutedCommand(string name, KeyGesture keyGesture = null)
+        public RoutedCommand(string name, KeyGesture? keyGesture = null)
         {
             Name = name;
             Gesture = keyGesture;
@@ -55,7 +55,7 @@ namespace Odyssey
 
         public static RoutedEvent<CanExecuteRoutedEventArgs> CanExecuteEvent { get; } = RoutedEvent.Register<CanExecuteRoutedEventArgs>(nameof(CanExecuteEvent), RoutingStrategies.Bubble, typeof(RoutedCommand));
 
-        public bool CanExecute(object parameter, IInputElement target)
+        public bool CanExecute(object? parameter, IInputElement? target)
         {
             if (target == null) return false;
 
@@ -65,14 +65,14 @@ namespace Odyssey
             return args.CanExecute;
         }
 
-        bool ICommand.CanExecute(object parameter)
+        bool ICommand.CanExecute(object? parameter)
         {
             return CanExecute(parameter, _inputElement);
         }
 
         public static RoutedEvent<ExecutedRoutedEventArgs> ExecutedEvent { get; } = RoutedEvent.Register<ExecutedRoutedEventArgs>(nameof(ExecutedEvent), RoutingStrategies.Bubble, typeof(RoutedCommand));
 
-        public void Execute(object parameter, IInputElement target)
+        public void Execute(object? parameter, IInputElement? target)
         {
             if (target == null) return;
 
@@ -80,13 +80,13 @@ namespace Odyssey
             target.RaiseEvent(args);
         }
 
-        void ICommand.Execute(object parameter)
+        void ICommand.Execute(object? parameter)
         {
             Execute(parameter, _inputElement);
         }
 
         // TODO
-        event EventHandler ICommand.CanExecuteChanged
+        event EventHandler? ICommand.CanExecuteChanged
         {
             add { }
             remove { }
@@ -101,19 +101,19 @@ namespace Odyssey
     public class RoutedCommandBinding
     {
         public RoutedCommandBinding(RoutedCommand command,
-            EventHandler<ExecutedRoutedEventArgs> executed = null,
-            EventHandler<CanExecuteRoutedEventArgs> canExecute = null)
+            EventHandler<ExecutedRoutedEventArgs>? executed = null,
+            EventHandler<CanExecuteRoutedEventArgs>? canExecute = null)
         {
             Command = command;
             if (executed != null) Executed += executed;
             if (canExecute != null) CanExecute += canExecute;
         }
 
-        public RoutedCommand Command { get; }
+        public RoutedCommand? Command { get; }
 
-        public event EventHandler<CanExecuteRoutedEventArgs> CanExecute;
+        public event EventHandler<CanExecuteRoutedEventArgs>? CanExecute;
 
-        public event EventHandler<ExecutedRoutedEventArgs> Executed;
+        public event EventHandler<ExecutedRoutedEventArgs>? Executed;
 
         internal bool DoCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -166,11 +166,11 @@ namespace Odyssey
     {
         public ICommand Command { get; }
 
-        public object Parameter { get; }
+        public object? Parameter { get; }
 
         public bool CanExecute { get; set; }
 
-        internal CanExecuteRoutedEventArgs(ICommand command, object parameter)
+        internal CanExecuteRoutedEventArgs(ICommand command, object? parameter)
         {
             Command = command ?? throw new ArgumentNullException(nameof(command));
             Parameter = parameter;
@@ -182,9 +182,9 @@ namespace Odyssey
     {
         public ICommand Command { get; }
 
-        public object Parameter { get; }
+        public object? Parameter { get; }
 
-        internal ExecutedRoutedEventArgs(ICommand command, object parameter)
+        internal ExecutedRoutedEventArgs(ICommand command, object? parameter)
         {
             Command = command ?? throw new ArgumentNullException(nameof(command));
             Parameter = parameter;

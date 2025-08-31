@@ -31,7 +31,6 @@ namespace Odyssey.ViewModels.Tools
         /// Selection state.
         /// Each document tool view model has its own selection state; 
         /// </summary>
-        //public ItemSelection Selection { get { return _selection; } }
         public ISelection? Selection { get; set; }
 
         public bool IsSelected(ISelection? selection)
@@ -77,7 +76,8 @@ namespace Odyssey.ViewModels.Tools
             Report = new CRDocument();
             Selection = new SimpleItemSelection();
 
-            EventAggregator?.GetEvent<ActiveDocumentChangedEvent>().Subscribe(OnActiveDocumentChanged, ThreadOption.UIThread);
+            EventAggregator?.GetEvent<ReportDocumentChangedEvent>().Subscribe(OnActiveDocumentChanged, ThreadOption.UIThread);
+            EventAggregator?.GetEvent<ActiveDocumentClosedEvent>().Subscribe(OnActiveDocumentClosed, ThreadOption.UIThread);
             SubscribeToSelectionChangedEvent();
         }
 
@@ -90,6 +90,16 @@ namespace Odyssey.ViewModels.Tools
             SetMapFile(cr);
         }
 
+        /// <summary>
+        /// Active Document closed.
+        /// </summary>
+        /// <param name="cr"></param>
+        protected virtual void OnActiveDocumentClosed(CRDocument cr)
+        {
+            // reset to an empty report document
+            SetMapFile(new CRDocument());
+        }
+
         protected abstract void OnSelectionChanged(ISelectionChange selectionChange);
 
         protected void SetSelection(ISelection sel)
@@ -98,7 +108,7 @@ namespace Odyssey.ViewModels.Tools
             Selection = sel;
         }
 
-        protected virtual int OnMapChange(ISelection selection)
+        protected virtual int OnReportChange(ISelection selection)
         {
             // TODO : should be handled by event aggregator
             SetSelection(selection);
