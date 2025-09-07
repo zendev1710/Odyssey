@@ -115,9 +115,9 @@ namespace Odyssey.Models.Dal
             {
                 DataBlock? region = Region;
                 Coordinates coords = new(region.GetX(), region.GetY(), region.GetId());
-                if (!CRDocument.HasKnownChild(region, Unit))
+                if (!CRDocument.HasSeenChild(region, Unit))
                 {
-                    if (!CRDocument.GetKnownParent(ref region, Unit))
+                    if (!CRDocument.GetSeenParent(ref region, Unit))
                     //if (!CRDocument.GetParent(ref region, Unit))
                     {
                         errorMessage = $"Unit in wrong region: {param}";

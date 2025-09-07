@@ -205,7 +205,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         DataBlock? selectedRegion = sel.Region;
         if (!sel.IsRegionSelected())
         {
-            if (sel.Item == null || !GetKnownParent(ref selectedRegion, sel.Item))
+            if (sel.Item == null || !GetSeenParent(ref selectedRegion, sel.Item))
             //if (sel.Item == null || !CRDocument.GetParent(ref selectedRegion, sel.Item))
             {
                 Debug.WriteLine("[EXPLORER] WARNING | Region parent not found for {sel.Item}.");
@@ -520,12 +520,12 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
             Debug.WriteLine($"[EXPLORER] WARNING | {excludedRegionsNumber} unknown regions found but iteration should be only on known regions ");
         }
 
-        if (regionsNumber != cr.KnownRegionsNumber)
+        if (regionsNumber != cr.SeenRegionsNumber)
         {
-            Debug.WriteLine($"[EXPLORER] WARNING | {regionsNumber} regions found instead of {cr.KnownRegionsNumber} known regions ");
+            Debug.WriteLine($"[EXPLORER] WARNING | {regionsNumber} regions found instead of {cr.SeenRegionsNumber} known regions ");
         }
 
-        Debug.WriteLine($"[EXPLORER] regions: {regionsNumber} excluded: {excludedRegionsNumber}) known: {cr.KnownRegionsNumber}");
+        Debug.WriteLine($"[EXPLORER] regions: {regionsNumber} excluded: {excludedRegionsNumber}) known: {cr.SeenRegionsNumber}");
         Debug.WriteLine("[EXPLORER] Data collection done");
     }
 

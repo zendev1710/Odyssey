@@ -60,20 +60,22 @@ public class CRDocument : EresseaDocument
     private LinkedList<DataBlock> Blocks { get; set; }
 
     private bool OptimizeDataConsuming { get; set; }
-    private bool StoreUnknownRegions { get; set; }
-    private bool StoreAllRegions { get; set; }
+    private bool StoreUnseenRegions { get; set; }
+
+    // TODO: add a setting for that
+    private bool StoreAllRegions { get; set; } = true;
 
     public LinkedListNode<DataBlock>? FirstBlock { get { return Blocks?.First; } }
     public LinkedListNode<DataBlock>? LastBlock { get { return Blocks?.Last; } }
     public int AllRegionsNumber {  get { return AllRegions.Count; } }
-    public int KnownRegionsNumber { get { return KnownRegions.Count; } }
+    public int SeenRegionsNumber { get { return SeenRegions.Count; } }
 
-    private Dictionary<int, DataBlock> KnownRegions { get; set; } = [];
-    private Dictionary<int, DataBlock> UnknownRegions { get; set; } = [];
+    private Dictionary<int, DataBlock> SeenRegions { get; set; } = [];
+    private Dictionary<int, DataBlock> UnSeenRegions { get; set; } = [];
 
     private Dictionary<int, DataBlock> Units { get; set; } = [];
     private Dictionary<int, DataBlock> Factions { get; set; } = [];
-    private Dictionary<int, DataBlock> AllRegions { get; set; } = [];
+    public Dictionary<int, DataBlock> AllRegions { get; private set; } = [];
     private Dictionary<int, DataBlock> Ships { get; set; } = [];
     private Dictionary<int, DataBlock> Buildings { get; set; } = [];
     private Dictionary<int, DataBlock> Islands { get; set; } = [];
@@ -352,15 +354,15 @@ public class CRDocument : EresseaDocument
     }
     */
 
-    public DataBlock? FindKnownRegionFromPosition(int x, int y, int plane)
+    public DataBlock? FindSeenRegionFromPosition(int x, int y, int plane)
     {
         var coordinates = new Coordinates(x, y, plane);
-        return KnownRegions.TryGetValue((int)coordinates, out var region) ? region : null;
+        return SeenRegions.TryGetValue((int)coordinates, out var region) ? region : null;
     }
 
-    public bool FindKnownRegionFromPosition(ref DataBlock? region, int x, int y, int plane)
+    public bool FindSeenRegionFromPosition(ref DataBlock? region, int x, int y, int plane)
     {
-        region = FindKnownRegionFromPosition(x, y, plane);
+        region = FindSeenRegionFromPosition(x, y, plane);
         return region != null;
     }
 
@@ -426,7 +428,7 @@ public class CRDocument : EresseaDocument
         {
             RegionAttachment? stats = null;
             DataBlock? region = null;
-            if (GetKnownParent(ref region, unit))
+            if (GetSeenParent(ref region, unit))
             {
                 stats = region!.GetAttachment() as RegionAttachment;
             }
@@ -458,7 +460,7 @@ public class CRDocument : EresseaDocument
     /// found; otherwise, <see langword="null"/>.</param>
     /// <param name="child">The child <see cref="DataBlock"/> for which to find the parent. This parameter is read-only.</param>
     /// <returns><see langword="true"/> if a parent <see cref="DataBlock"/> is found; otherwise, <see langword="false"/>.</returns>
-    public static bool GetKnownParent(ref DataBlock? parent, in DataBlock child)
+    public static bool GetSeenParent(ref DataBlock? parent, in DataBlock child)
     {
         int iterationsNumber = 0;
         //DataBlock child = child.Node;
@@ -472,7 +474,7 @@ public class CRDocument : EresseaDocument
                 return true;
             }
         }
-        Debug.WriteLine("[DOCUMENT] WARNING | GetKnownParent: not found ]");
+        Debug.WriteLine("[DOCUMENT] WARNING | GetSeenParent: not found ]");
         return false;
     }
 
@@ -503,7 +505,7 @@ public class CRDocument : EresseaDocument
         return false;
     }
 
-    public static bool HasKnownChild(in DataBlock parent, in DataBlock child)
+    public static bool HasSeenChild(in DataBlock parent, in DataBlock child)
     {
         int depth = parent.GetDepth();
         var firstChild = parent?.GetNextBlock();
@@ -550,7 +552,7 @@ public class CRDocument : EresseaDocument
     }
     */
 
-    public static bool GetKnownChild(ref DataBlock? child, DataBlock? parent, BlockType type)
+    public static bool GetSeenChild(ref DataBlock? child, DataBlock? parent, BlockType type)
     {
         child = null;
         if (parent == null)
@@ -624,10 +626,9 @@ public class CRDocument : EresseaDocument
         return false;
     }
 
-    public static bool GetKnownCommands(ref DataBlock? commands, DataBlock? unit)
+    public static bool GetSeenCommands(ref DataBlock? commands, DataBlock? unit)
     {
-        //FXASSERT(unit.Type == BlockType.UNIT);
-        return GetKnownChild(ref commands, unit, BlockType.COMMANDS);
+        return GetSeenChild(ref commands, unit, BlockType.COMMANDS);
     }
 
 
@@ -659,15 +660,15 @@ public class CRDocument : EresseaDocument
         return group != null;
     }
 
-    public bool GetKnownRegion(ref DataBlock? region, in DataBlock block)
+    public bool GetSeenRegion(ref DataBlock? region, in DataBlock block)
     {
-        return FindKnownRegionFromPosition(ref region, block.GetX(), block.GetY(), block.GetId());
+        return FindSeenRegionFromPosition(ref region, block.GetX(), block.GetY(), block.GetId());
     }
 
     /*
-    public bool GetKnownRegion(ref DataBlock @out, int x, int y, int plane)
+    public bool GetSeenRegion(ref DataBlock @out, int x, int y, int plane)
     {
-        return FindKnownRegionFromPosition(ref @out, x, y, plane);
+        return FindSeenRegionFromPosition(ref @out, x, y, plane);
     }
     */
 
@@ -1006,7 +1007,7 @@ m_blocks.push_back(*old_r);
         }
         
         DataBlock? startBlock = null;
-        if (!GetKnownChild(ref startBlock, ActiveFaction, BlockType.MESSAGE))
+        if (!GetSeenChild(ref startBlock, ActiveFaction, BlockType.MESSAGE))
         {
             // No MESSAGE block (optimize mode)
             return;
@@ -1070,7 +1071,7 @@ m_blocks.push_back(*old_r);
                 {
                     if (Utils.Converters.ExtractCoordinates(dataKey.GetValue(), out int x, out int y, out int plane))
                     {
-                        if (!FindKnownRegionFromPosition(ref messageRegion, x, y, plane))
+                        if (!FindSeenRegionFromPosition(ref messageRegion, x, y, plane))
                         {
                             // if no region, not needed continuing iteration
                             break;
@@ -1256,9 +1257,9 @@ m_blocks.push_back(*old_r);
         int nbVisibilityOther = 0;
         LinkedListNode<DataBlock>? blockNodeToChange = null;
         LinkedListNode<DataBlock>? previousNode = null;
-        DataBlock? firstKnownRegion = null;
-        DataBlock? lastKnownRegion = null;
-        bool enableKnownRegionsLinks = true; // false;
+        DataBlock? firstSeenRegion = null;
+        DataBlock? lastSeenRegion = null;
+        bool enableSeenRegionsLinks = true; // false;
 
         for (var node = startNode; node != null; node = node.Next)
         {
@@ -1277,19 +1278,21 @@ m_blocks.push_back(*old_r);
                     {
                         if (SetRegionStats(region, regionOwn, regionAlly, regionEnemy, unconfirmed))
                         {
-                            AddKnownRegion(region, OptimizeDataConsuming ? blockNodeToChange : null);
-                            if (firstKnownRegion == null)
+                            AddSeenRegion(region, OptimizeDataConsuming ? blockNodeToChange : null);
+                            if (firstSeenRegion == null)
                             {
-                                firstKnownRegion = region;
+                                firstSeenRegion = region;
                             }
-                            lastKnownRegion = region;
+                            lastSeenRegion = region;
                             blockNodeToChange = null;
                         }
                         else
                         {
-                            if (StoreUnknownRegions)
+
+                            // region is unseen
+                            if (StoreUnseenRegions)
                             {
-                                UnknownRegions[(int)new Coordinates(region.GetX(), region.GetY(), region.GetId())] = region;
+                                UnSeenRegions[(int)new Coordinates(region.GetX(), region.GetY(), region.GetId())] = region;
                             }
                             if (blockNodeToChange == null)
                             {
@@ -1406,7 +1409,7 @@ m_blocks.push_back(*old_r);
                     {
                         // set attachment for unit of active faction
                         DataBlock? orders = null;
-                        // at that moment optimization is partial so not useful to use GetKnownCommands 
+                        // at that moment optimization is partial so not useful to use GetSeenCommands 
                         if (GetCommands(ref orders, node))
                         {
                             // add orders to command block
@@ -1583,7 +1586,7 @@ m_blocks.push_back(*old_r);
         if (region != null) {
             if (SetRegionStats(region, regionOwn, regionAlly, regionEnemy, unconfirmed))
             {
-                AddKnownRegion(region, OptimizeDataConsuming ? blockNodeToChange : null);
+                AddSeenRegion(region, OptimizeDataConsuming ? blockNodeToChange : null);
             }
             else
             {
@@ -1598,7 +1601,7 @@ m_blocks.push_back(*old_r);
         // Just to check data consuming optimization is ok
         if (OptimizeDataConsuming) {
             DataBlock? previousBlock = null;
-            for (var block = firstKnownRegion; block != null; block = block.GetNextBlock())
+            for (var block = firstSeenRegion; block != null; block = block.GetNextBlock())
             {
                 if (block.GetBlockType() == BlockType.REGION)
                 { 
@@ -1621,15 +1624,15 @@ m_blocks.push_back(*old_r);
         Debug.WriteLine($"[DOCUMENT] Groups number : {Groups.Count} ");
     }
 
-    private void AddKnownRegion(DataBlock region, LinkedListNode<DataBlock>? previousNode)
+    private void AddSeenRegion(DataBlock region, LinkedListNode<DataBlock>? previousNode)
     {
         // LATER: check if allready exists, but it should not
         // LATER: link knwon regions each other
         int key = (int)new Coordinates(region.GetX(), region.GetY(), region.GetId());
-        if (KnownRegions.ContainsKey(key)) {
+        if (SeenRegions.ContainsKey(key)) {
             return;
         }
-        KnownRegions[key] = region;
+        SeenRegions[key] = region;
         if (previousNode?.Value != null)
         {
             region.SetPreviousBlock(previousNode.Value);
@@ -1733,33 +1736,34 @@ m_blocks.push_back(*old_r);
         return (int)(Math.Log2(people * 4 + 1));
     }
 
-    private static bool SetRegionStats(DataBlock regionPtr, int region_own, int region_ally, int region_enemy, int unconfirmed)
+    private static bool SetRegionStats(DataBlock region, int ownNumber, int allyNumber, int enemyNumber, int unconfirmed)
     {
-        regionPtr.AddFlags(region_own > 0 ? (int)Flag.REGION_SEEN : 0);
-        int own_log = barHeight2(region_own);
-        int ally_log = barHeight2(region_ally);
-        int enemy_log = barHeight2(region_enemy);
+        int ownNumberLogarithm = barHeight2(ownNumber);
+        int allyNumberLogarithm = barHeight2(allyNumber);
+        int enemyNumberLogarithm = barHeight2(enemyNumber);
+        bool hasPeople = false;
 
         // if everything is zero, it means this is an unknown region (no people)
-        if (own_log > 0 || ally_log > 0 || enemy_log > 0 || unconfirmed > 0)
+        if (ownNumberLogarithm > 0 || allyNumberLogarithm > 0 || enemyNumberLogarithm > 0 || unconfirmed > 0)
         {
             // GetAttachment creates a RegionAttachment if not existing
-            if (regionPtr.GetAttachment() is RegionAttachment stats)
+            if (region.GetAttachment() is RegionAttachment stats)
             {
                 // generate new style flag information. log_2(people) = 1 to 13
                 stats.Unconfirmed = unconfirmed;
                 // Increase the size of the People list as wanted
-                stats.People.Capacity = Math.Max(stats.People.Capacity, enemy_log > 0 ? 3 : 2);
-                stats.People.Add(own_log / 13.0f);
-                stats.People.Add(ally_log / 13.0f);
-                if (enemy_log > 0)
+                stats.People.Capacity = Math.Max(stats.People.Capacity, enemyNumberLogarithm > 0 ? 3 : 2);
+                stats.People.Add(ownNumberLogarithm / 13.0f);
+                stats.People.Add(allyNumberLogarithm / 13.0f);
+                if (enemyNumberLogarithm > 0)
                 {
-                    stats.People.Add(enemy_log / 13.0f);
+                    stats.People.Add(enemyNumberLogarithm / 13.0f);
                 }
             }
-            return true;
+            hasPeople = true;
         }
-        return false;
+        region.AddFlags(hasPeople ? (int)Flag.REGION_SEEN : 0);
+        return hasPeople;
     }
 
     public override string ToString()

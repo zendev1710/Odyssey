@@ -1,16 +1,12 @@
 using Avalonia;
-using Avalonia.Animation.Easings;
 using Avalonia.Controls;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Odyssey.Models.Data;
-using Odyssey.ViewModels;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Runtime.Intrinsics.X86;
-using TextMateSharp.Internal.Rules;
 using Avalonia.VisualTree;
 using System.Linq;
 
@@ -29,8 +25,12 @@ namespace Odyssey.Controls;
 */
 public class HexMapControl : Control
 {
+    // TODO: Store and expose for binding report document season when a document is loaded
+    // handle a season changed event
+    // private int _season = 0;
+
     // Default size of hexagon as the width of the bounding square in pixels
-    private static readonly double defaultHexSideSize = 64;
+    private static readonly double defaultHexSideSize = 80; //64 or 80
 
     // Default size of hexagon as from radius to corner
     private static readonly double defaultHexSize = defaultHexSideSize / Math.Sqrt(3);
@@ -89,6 +89,7 @@ public class HexMapControl : Control
 
     private void OnRegionsChanged()
     {
+        //LoadTerrainResourcesForSeason();
         ComputeRegionBounds();
         InvalidateMeasure();
         InvalidateVisual();
@@ -135,14 +136,14 @@ public class HexMapControl : Control
             // LATER: handle other planes to be displayerd as an alternative map
             var plane = (PlaneType)region.GetId();
             if (plane != PlaneType.WORLD)
-            { 
+            {
                 // Only draw regions on the main plane for now
                 continue;
             }
 
             var x = region.GetX();
             var y = region.GetY();
-           
+
             var center = HexToPixel(x, y, hexSize);
             var hexPoints = GetHexPoints(center, hexSize);
 
@@ -165,34 +166,42 @@ public class HexMapControl : Control
                 var bounds = geometry.Bounds;
                 // Draw the image stretched to the hex's bounding box
                 context.DrawImage(image, new Rect(0, 0, image.Size.Width, image.Size.Height), bounds);
+
+                // If region is unseen, overlay a semi-transparent black to darken
+                if (region.IsUnseenRegion())
+                {
+                    // 160 as first argb parameter is a ~63% opacity black
+                    context.DrawGeometry(
+                        new SolidColorBrush(Color.FromArgb(120, 0, 0, 0)), 
+                        null,
+                        geometry
+                    );
+                }
+                else
+                { 
+                }
                 // Optionally, overlay a semi-transparent fill for effect
                 // context.DrawGeometry(new SolidColorBrush(Color.FromArgb(64, 255, 255, 255)), null, geometry);
             }
             else
             {
-                context.DrawGeometry(Brushes.LightGray, null, geometry);
+                // LATER: add a warning in console. Should not happen
+                //context.DrawGeometry(Brushes.LightGray, null, geometry);
             }
 
             // Draw highlight if selected
             if (_selectedQ == x && _selectedR == y)
             {
-                // 1. Calcul dynamique de l'épaisseur selon le zoom
-                double highlightThickness = Math.Max(2, HexSize * 0.22); // min 2px pour rester visible
+                // compute thickness according t the hexSize (depends on zoom factor)
+                // min 2px to keep it visible
+                double highlightThickness = Math.Max(2, HexSize * 0.22);
 
-                // Définition des variables d'inset
                 double inset = 0.15;
                 var centerInset = new Avalonia.Point(center.X * inset, center.Y * inset);
 
-                // --- DESSIN DES ARÊTES FIXES ---
-                var darkPen = new Pen(
-                    new SolidColorBrush(Color.FromArgb(120, 255, 0, 0)),
-                    //new SolidColorBrush(Color.FromArgb(150, 60, 60, 60)),
-                    highlightThickness/*,
-                    lineCap: PenLineCap.Round,
-                    lineJoin: PenLineJoin.Round*/
-                );
+                // hex in semi-transparent red
+                var darkPen = new Pen(new SolidColorBrush(Color.FromArgb(120, 255, 0, 0)), highlightThickness);
 
-                // Crée une geometry fermée pour le contour
                 var borderGeometry = new StreamGeometry();
                 using (var ctx = borderGeometry.Open())
                 {
@@ -215,8 +224,8 @@ public class HexMapControl : Control
             }
             else
             {
-                // Draw the hex border on top (always last, now light gray)
-                context.DrawGeometry(null, new Pen(new SolidColorBrush(Color.FromRgb(128, 220, 220)), 1), geometry);
+                // Draw the hex border on top (always last, in gray)
+                context.DrawGeometry(null, new Pen(new SolidColorBrush(Color.FromRgb(128, 128, 128)), 1), geometry);
             }
         }
     }
@@ -278,7 +287,6 @@ public class HexMapControl : Control
         return new Size(width, height);
     }
 
-    // Example: Efficient lookup in OnPointerPressed
     private void OnPointerPressed(object? sender, Avalonia.Input.PointerPressedEventArgs e)
     {
         var point = e.GetPosition(this);
@@ -288,7 +296,7 @@ public class HexMapControl : Control
         int key = (int)new Coordinates(q, r, (int)PlaneType.WORLD);
         if (Regions.TryGetValue(key, out var region))
         {
-            System.Diagnostics.Debug.WriteLine($"Clicked hex: q={q}, r={r}, region found: {region}");
+            //System.Diagnostics.Debug.WriteLine($"Clicked hex: q={q}, r={r}, region found: {region}");
             _selectedQ = q;
             _selectedR = r;
             SelectedRegion = region;
@@ -412,10 +420,38 @@ public class HexMapControl : Control
 
     private static readonly ConcurrentDictionary<int, Bitmap?> _terrainImages = new();
 
+    // TODO: take season into account (no more readonly due to report season)
+    private ConcurrentDictionary<int, Bitmap?> _terrainsSeasonImages = new();
+
     private static Bitmap? GetTerrainImage(int terrain)
     {
         _terrainImages.TryGetValue(terrain, out var bmp);
         return bmp;
+    }
+
+    private void LoadTerrainResourcesForSeaoson()
+    { 
+        foreach (var terrain in Terrains)
+        {
+            // Get the resource path for this terrain
+            var resourcePath = GetTerrainResource(terrain);
+            if (string.IsNullOrEmpty(resourcePath))
+                continue;
+            // Compose the avares URI for Avalonia asset loading
+            var uri = $"avares://Odyssey{resourcePath}";
+            try
+            {
+                var uriObj = new Uri(uri);
+                var stream = AssetLoader.Open(uriObj);
+                var bitmap = new Bitmap(stream);
+                _terrainsSeasonImages[terrain] = bitmap;
+            }
+            catch
+            {
+                // Optionally log or handle missing/invalid images
+                _terrainsSeasonImages[terrain] = null;
+            }
+        }
     }
 
     private static string? GetTerrainResource(int t)
@@ -423,82 +459,81 @@ public class HexMapControl : Control
         string? iconName;
         switch (t)
         {
-            case Terrains.OCEAN:
+            case Models.Data.Terrains.OCEAN:
                 iconName = "ocean";
                 break;
-            case Terrains.SWAMP:
-                iconName = "swamp"; // Marais
+            case Models.Data.Terrains.SWAMP:
+                iconName = "swamp";
                 break;
-            case Terrains.PLAINS:
+            case Models.Data.Terrains.PLAINS:
                 iconName = "plains";
                 break;
-            case Terrains.DESERT:
+            case Models.Data.Terrains.DESERT:
                 iconName = "desert";
                 break;
-            case Terrains.FOREST:
+            case Models.Data.Terrains.FOREST:
                 iconName = "forest";
                 break;
-            case Terrains.HIGHLAND:
+            case Models.Data.Terrains.HIGHLAND:
                 iconName = "highland";
                 break;
-            case Terrains.MOUNTAIN:
+            case Models.Data.Terrains.MOUNTAIN:
                 iconName = "mountain";
                 break;
-            case Terrains.GLACIER:
+            case Models.Data.Terrains.GLACIER:
                 iconName = "glacier";
                 break;
-            case Terrains.VOLCANO:
+            case Models.Data.Terrains.VOLCANO:
                 iconName = "volcano";
                 break;
-            case Terrains.VOLCANO_ACTIVE:
+            case Models.Data.Terrains.VOLCANO_ACTIVE:
                 iconName = "volcano";
                 break;
-            case Terrains.ICEBERG:
+            case Models.Data.Terrains.ICEBERG:
                 iconName = "iceberg";
                 break;
-            case Terrains.CORRIDOR:
+            case Models.Data.Terrains.CORRIDOR:
                 iconName = "corridor";
                 break;
-            case Terrains.WALL:
+            case Models.Data.Terrains.WALL:
                 iconName = "wall";
                 break;
-            case Terrains.HALL:
+            case Models.Data.Terrains.HALL:
                 iconName = "hall";
                 break;
-            case Terrains.FOG:
+            case Models.Data.Terrains.FOG:
                 iconName = "fog";
                 break;
-            case Terrains.THICKFOG:
+            case Models.Data.Terrains.THICKFOG:
                 iconName = "thickfog";
                 break;
-            case Terrains.FIREWALL:
+            case Models.Data.Terrains.FIREWALL:
                 iconName = "firewall";
                 break;
-            case Terrains.MAHLSTROM:
+            case Models.Data.Terrains.MAHLSTROM:
                 iconName = "mahlstrom";
                 break;
             // CHECK: wanted icon for the folowing values
-            case Terrains.UNKNOWN:
-            case Terrains.PACKICE:
-            case Terrains.ICEFLOE:
-            case Terrains.LAST:
+            case Models.Data.Terrains.UNKNOWN:
+            case Models.Data.Terrains.PACKICE:
+            case Models.Data.Terrains.ICEFLOE:
+            case Models.Data.Terrains.LAST:
             default: return null;
         }
-        return $"/Assets/Map/Terrains/{iconName}.gif";
+        return $"/Assets/Map/Terrains/{iconName}.png";
     }
 
-    private static readonly int[] KnownTerrains = new[]
+    private static readonly int[] Terrains = new[]
     {
-        Terrains.OCEAN, Terrains.SWAMP, Terrains.PLAINS, Terrains.DESERT, Terrains.FOREST,
-        Terrains.HIGHLAND, Terrains.MOUNTAIN, Terrains.GLACIER, Terrains.VOLCANO, Terrains.VOLCANO_ACTIVE,
-        Terrains.ICEBERG, Terrains.CORRIDOR, Terrains.WALL, Terrains.HALL, Terrains.FOG,
-        Terrains.THICKFOG, Terrains.FIREWALL, Terrains.MAHLSTROM
-        // Add more if needed
+        Models.Data.Terrains.OCEAN, Models.Data.Terrains.SWAMP, Models.Data.Terrains.PLAINS, Models.Data.Terrains.DESERT, Models.Data.Terrains.FOREST,
+        Models.Data.Terrains.HIGHLAND, Models.Data.Terrains.MOUNTAIN, Models.Data.Terrains.GLACIER, Models.Data.Terrains.VOLCANO, Models.Data.Terrains.VOLCANO_ACTIVE,
+        Models.Data.Terrains.ICEBERG, Models.Data.Terrains.CORRIDOR, Models.Data.Terrains.WALL, Models.Data.Terrains.HALL, Models.Data.Terrains.FOG,
+        Models.Data.Terrains.THICKFOG, Models.Data.Terrains.FIREWALL, Models.Data.Terrains.MAHLSTROM
     };
 
     private static void PreloadTerrainResources()
     {
-        foreach (var terrain in KnownTerrains)
+        foreach (var terrain in Terrains)
         {
             // Get the resource path for this terrain
             var resourcePath = GetTerrainResource(terrain);

@@ -404,7 +404,7 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
             DataBlock unit = Selection.Item!;
             unitName = unit.GetUILabel();
             DataBlock cmd = new();
-            if (GetKnownCommands(ref cmd!, unit!))
+            if (GetSeenCommands(ref cmd!, unit!))
             {
                 orders = LoadCommands(cmd!);
                 editable = true;

@@ -86,7 +86,7 @@ public class ShipModel(DataBlock shipDataBlock): ContainerModel(shipDataBlock, C
             {
                 int number = unit.ValueInt(KeyType.NUMBER);
                 DataBlock? child = null;
-                if (number > 0 && CRDocument.GetKnownChild(ref child, unit, BlockType.TALENTS))
+                if (number > 0 && CRDocument.GetSeenChild(ref child, unit, BlockType.TALENTS))
                 {
                     int skill = child!.ValueSkill(DataKey.SKILL_SAILING_NAME);
                     total += skill * number;

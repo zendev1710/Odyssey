@@ -22,8 +22,7 @@ public class DockFactory : Factory
     private IRootDock? _rootDock;
     private IDocumentDock? _documentDock;
 
-    private IDocument? _mapViewModel;
-
+    private ITool? _mapViewModel;
     private ITool? _miniMapViewModel;
     private ITool? _explorerViewModel;
     private ITool? _bookmarksViewModel;
@@ -60,10 +59,8 @@ public class DockFactory : Factory
         // As HideToolsOnClose was set to true, close action just hide a tool, that can be restored
         bool canCloseTool = true;
 
-        // mapViewModel is an IDocument
-        var mapViewModel = new MapViewModel(EventAggregator) { Id = Ids.Map, Title = LocalizedTitle(Ids.Map), CanClose = false };
-
         // all these models are ITool
+        var mapViewModel = new MapViewModel(EventAggregator) { Id = Ids.Map, Title = LocalizedTitle(Ids.Map), CanClose = canCloseTool /*false*/ };
         var miniMapViewModel = new MiniMapViewModel(EventAggregator) { Id = Ids.MiniMap, Title = LocalizedTitle(Ids.MiniMap), CanClose = canCloseTool };
         var explorerViewModel = new ExplorerViewModel(EventAggregator) {Id = Ids.Explorer, Title = LocalizedTitle(Ids.Explorer), CanClose = canCloseTool };
         var historyViewModel = new HistoryViewModel(EventAggregator) { Id = Ids.History, Title = LocalizedTitle(Ids.History), CanClose = canCloseTool };
@@ -125,9 +122,24 @@ public class DockFactory : Factory
             CanCreateDocument = false
         };
 
+        var mapDock = new ProportionalDock
+        {
+            Proportion = 0.50,
+            Orientation = Orientation.Horizontal,
+            VisibleDockables = CreateList<IDockable>
+            (
+                new ToolDock
+                {
+                    ActiveDockable = mapViewModel,
+                    VisibleDockables = CreateList<IDockable>(mapViewModel),
+                    Alignment = Alignment.Bottom,
+                }
+            )
+        };
+
         var regionPropertiesDock = new ProportionalDock
         {
-            Proportion = 0.70,
+            Proportion = 0.25,
             Orientation = Orientation.Horizontal,
             VisibleDockables = CreateList<IDockable>
             (
@@ -164,6 +176,8 @@ public class DockFactory : Factory
             VisibleDockables = CreateList<IDockable>
             (
                 documentDock,
+                new ProportionalDockSplitter(),
+                mapDock,
                 new ProportionalDockSplitter(),
                 regionPropertiesDock,
                 new ProportionalDockSplitter(),

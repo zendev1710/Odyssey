@@ -134,7 +134,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
     private static readonly List<string> _inProgressFeaturesIds = 
     [
-        Ids.Map,
+        //Ids.Map,
         Ids.MiniMap,
         Ids.Bookmarks,
         Ids.RegionStatistics,
@@ -350,7 +350,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
     public void ActivateFindArea()
     {
-        // TODO:
+        // TO IMPLEMENT:
         // only if at lease a document is opened :
         // Set focus to the quick find text box
         // Maybe use a bool representing the IsActiveFind and :
@@ -1365,7 +1365,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
             fileViewModel = new()
             {
                 // DocumentDock properties
-                //Id = $"Document{index}",
+                Id = $"Document {title}",
                 Title = title,
                 // FileViewModel properties
                 Text = eresseaDocument!.Text!,
@@ -1517,21 +1517,6 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
                 // TODO: modal dialog box with save/do not save/cancel
             }
             _factory!.CloseDockable(fileViewModel);
-            /*
-            switch (fileViewModel!.DocumentType)
-            {
-                case DocumentType.ERESSEA_REPORT:
-                case DocumentType.ERESSEA_REPORT_FROM_ZIP:
-                    
-                    EventAggregator?.GetEvent<ActiveDocumentClosedEvent>().Publish((fileViewModel.Document as CRDocument)!);
-                    break;
-                case DocumentType.ERESSEA_ORDERS:
-                    // TODO
-                    //EventAggregator?.GetEvent<ActiveDocumentClosedEvent>().Publish(fileViewModel.Document as CRDocument);
-                    break;
-                default: break;
-            }
-            */
         }
     }
 

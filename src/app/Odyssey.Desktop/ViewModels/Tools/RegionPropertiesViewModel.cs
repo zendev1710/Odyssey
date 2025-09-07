@@ -678,7 +678,7 @@ public partial class RegionPropertiesViewModel : DocumentToolViewModelBase
 
         DataBlock? pricesBlock = null;
         //LinkedListNode<DataBlock>? regionNode = region.Node;
-        if (GetKnownChild(ref pricesBlock, region, BlockType.PRICES))
+        if (GetSeenChild(ref pricesBlock, region, BlockType.PRICES))
         {
             /*	PREISE
 				96;Balsam		// balm is purchased

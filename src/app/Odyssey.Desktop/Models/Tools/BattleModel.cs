@@ -64,7 +64,7 @@ namespace Odyssey.Models.Tools
         {
             DataBlock? region = null;
             // TODO: to check if a battle can be on an unknown region
-            if (Report.GetKnownRegion(ref region, battleBlock))
+            if (Report.GetSeenRegion(ref region, battleBlock))
             {
                 Region = region;
                 Label = region!.GetUILabel();
@@ -73,7 +73,7 @@ namespace Odyssey.Models.Tools
                     Label = $"{Label} [{FactionName}]";
                 }
                 DataBlock? messageBlock = null;
-                if (CRDocument.GetKnownChild(ref messageBlock, battleBlock, BlockType.MESSAGE))
+                if (CRDocument.GetSeenChild(ref messageBlock, battleBlock, BlockType.MESSAGE))
                 //if (CRDocument.GetChild(ref messageBlock, battleBlock.Node, BlockType.MESSAGE))
                 {
                     StringBuilder contentBuilder = new();

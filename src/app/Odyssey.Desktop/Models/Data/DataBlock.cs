@@ -545,6 +545,9 @@ namespace Odyssey.Models.Data
             return false;
         }
 
+        // return true if region is unseen
+        public bool IsUnseenRegion() => (Flags & (int)Flag.REGION_SEEN) == 0;
+
         public void SetFlags(int flags) => Flags = flags;
 
         public void AddFlags(int flags) =>
@@ -714,22 +717,24 @@ namespace Odyssey.Models.Data
             return TRANSLATED_NAMES[Terrains.UNKNOWN];
         }
 
-        /*static*/
+        // Plane name, is part of name for regions
         string GetUIPlaneName(int plane)
         {
-            if (plane == 0)
-                return "Standardebene";
-            if (plane == 1)
-                return "Astralraum";
-            if (plane == 1137)
-                return "Arena";
-            if (plane == 59034966)
-                return "Eternath";
-            if (plane == 2000)
-                return "Weihnachtsinsel";
-
-            // else...
-            return $"Ebene {plane}";
+            switch((PlaneType)plane)
+                {
+                case PlaneType.WORLD:
+                    return "Standardebene"; // Standard level
+                case PlaneType.ASTRAL:
+                    return "Astralraum"; // Astral space
+                case PlaneType.ARENA:
+                    return "Arena";
+                case PlaneType.ETERNATH:
+                    return "Eternath";
+                case PlaneType.CHRISTMAS_ISLAND:
+                    return "Weihnachtsinsel"; // Christmas Island
+                default:
+                    return $"Ebene {plane}"; // level {plane}
+            }
         }
 
         public string GetUIName()
