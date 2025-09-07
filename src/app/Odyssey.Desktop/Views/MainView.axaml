@@ -71,7 +71,7 @@
 				<MenuItem DataContext="{Binding Layout}" Header="{x:Static a:Lang.mainmenu_view_settings}" Command="{Binding Navigate}" CommandParameter="Configuration" HotKey="Ctrl+," InputGesture="Ctrl+,"/>
 				<Separator />
 				<!-- Toggle view menu items -->
-				<!-- at this moment MapViewModel is the document docked view and cannot be hidden -->
+				<!-- at this moment FileViewModel is the document docked view and cannot be hidden -->
 				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_map}"
 						  IsChecked="{Binding IsMapViewVisible}"
 						  Command="{Binding ToggleViewCommand}"

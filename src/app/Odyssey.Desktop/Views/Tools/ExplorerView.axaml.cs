@@ -1,15 +1,13 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.VisualTree;
 using Odyssey.ViewModels;
-using HarfBuzzSharp;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
+
 
 namespace Odyssey.Views.Tools;
 
