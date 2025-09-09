@@ -1752,28 +1752,28 @@
   <data name="familiar_mage_info" xml:space="preserve">
     <value>A {0} pour Familier</value>
   </data>
-  <data name="season_0" xml:space="preserve">
+  <data name="season_1" xml:space="preserve">
     <value>Printemps</value>
   </data>
-  <data name="in_season_0" xml:space="preserve">
+  <data name="in_season_1" xml:space="preserve">
     <value>au Printemps</value>
   </data>
-  <data name="season_1" xml:space="preserve">
+  <data name="season_2" xml:space="preserve">
     <value>Été</value>
   </data>
-  <data name="in_season_1" xml:space="preserve">
+  <data name="in_season_2" xml:space="preserve">
     <value>à l'Été</value>
   </data>
-  <data name="season_2" xml:space="preserve">
+  <data name="season_3" xml:space="preserve">
     <value>Automne</value>
   </data>
-  <data name="in_season_2" xml:space="preserve">
+  <data name="in_season_3" xml:space="preserve">
     <value>à l'Automne</value>
   </data>
-  <data name="season_3" xml:space="preserve">
+  <data name="season_4" xml:space="preserve">
     <value>Hiver</value>
   </data>
-  <data name="in_season_3" xml:space="preserve">
+  <data name="in_season_4" xml:space="preserve">
     <value>à l'Hiver</value>
   </data>
   <data name="game_date_info" xml:space="preserve">
@@ -1818,6 +1818,9 @@
   <data name="parm_hdr_explorer_expand_tree_on_load" xml:space="preserve">
     <value>Déplier tous les éléments de l'Explorateur à l'ouverture du document</value>
   </data>
+  <data name="parm_hdr_map_season_images" xml:space="preserve">
+    <value>Images spécifiques selon la saison</value>
+  </data>
   <data name="parm_hdr_features_hide_in_progress" xml:space="preserve">
     <value>Fonctionnalités en cours d'implémentation masquées</value>
   </data>
@@ -1828,6 +1831,9 @@
     <value>Les unités de la faction active sont les premiers éléments du nœud de région</value>
   </data>
   <data name="parm_inf_explorer_expand_tree_on_load" xml:space="preserve">
+    <value>Sera pris en compte à la prochaine ouverture de document</value>
+  </data>
+  <data name="parm_inf_map_season_images" xml:space="preserve">
     <value>Sera pris en compte à la prochaine ouverture de document</value>
   </data>
   <data name="parm_hdr_language" xml:space="preserve">
@@ -2669,6 +2675,9 @@
   </data>
   <data name="parm_grp_explorer" xml:space="preserve">
     <value>Explorateur</value>
+  </data>
+  <data name="parm_grp_map" xml:space="preserve">
+    <value>Carte</value>
   </data>
   <data name="parm_grp_features" xml:space="preserve">
     <value>Fonctionnalités</value>

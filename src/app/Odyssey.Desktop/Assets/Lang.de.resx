@@ -1752,28 +1752,28 @@
   <data name="familiar_mage_info" xml:space="preserve">
     <value>Hat {0} für Vertraut</value>
   </data>
-  <data name="season_0" xml:space="preserve">
+  <data name="season_1" xml:space="preserve">
     <value>Früchling</value>
   </data>
-  <data name="in_season_0" xml:space="preserve">
+  <data name="in_season_1" xml:space="preserve">
     <value>in Früchling</value>
   </data>
-  <data name="season_1" xml:space="preserve">
+  <data name="season_2" xml:space="preserve">
     <value>Sommer</value>
   </data>
-  <data name="in_season_1" xml:space="preserve">
+  <data name="in_season_2" xml:space="preserve">
     <value>in Sommer</value>
   </data>
-  <data name="season_2" xml:space="preserve">
+  <data name="season_3" xml:space="preserve">
     <value>Herbst</value>
   </data>
-  <data name="in_season_2" xml:space="preserve">
+  <data name="in_season_3" xml:space="preserve">
     <value>in Herbst</value>
   </data>
-  <data name="season_3" xml:space="preserve">
+  <data name="season_4" xml:space="preserve">
     <value>Winter</value>
   </data>
-  <data name="in_season_3" xml:space="preserve">
+  <data name="in_season_4" xml:space="preserve">
     <value>in Winter</value>
   </data>
   <data name="game_date_info" xml:space="preserve">
@@ -1816,7 +1816,10 @@
     <value>Aktive Parteieinheiten oben</value>
   </data>
   <data name="parm_hdr_explorer_expand_tree_on_load" xml:space="preserve">
-    <value>[DE]</value>
+    <value>Expand Explorer tree when report document is opened [DE]</value>
+  </data>
+  <data name="parm_hdr_map_season_images" xml:space="preserve">
+    <value> Additional images depending on current season [DE]</value>
   </data>
   <data name="parm_hdr_features_hide_in_progress" xml:space="preserve">
     <value>[DE]</value>
@@ -1828,7 +1831,10 @@
     <value>Aktive Parteieinheiten werden als erste Elemente des Regionsknotens angezeigt</value>
   </data>
   <data name="parm_inf_explorer_expand_tree_on_load" xml:space="preserve">
-    <value>[DE]</value>
+    <value>Will be taken into account at the next document opening [DE]</value>
+  </data>
+  <data name="parm_inf_map_season_images" xml:space="preserve">
+    <value>Will be taken into account at the next document opening [DE]</value>
   </data>
   <data name="parm_hdr_language" xml:space="preserve">
     <value>Anzeigesprache</value>
@@ -2669,6 +2675,9 @@
   </data>
   <data name="parm_grp_explorer" xml:space="preserve">
     <value>Explorer</value>
+  </data>
+  <data name="parm_grp_map" xml:space="preserve">
+    <value>Karte</value>
   </data>
   <data name="parm_grp_features" xml:space="preserve">
     <value>[DE]</value>

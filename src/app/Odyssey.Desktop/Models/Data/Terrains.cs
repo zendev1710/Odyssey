@@ -9,9 +9,11 @@ namespace Odyssey.Models.Data
 {
     public static class Terrains
     {
-        // Terrain typess.
+        // TODO: change it into enum ?
+        // Terrain types.
         // DO NOT CHANGE these values as they are stored in report files.
 
+        // Standard region terrains
         public const int UNKNOWN = 0;
         public const int OCEAN = 1;
         public const int SWAMP = 2;
@@ -23,7 +25,8 @@ namespace Odyssey.Models.Data
         public const int GLACIER = 8;
         public const int VOLCANO = 9;
         public const int VOLCANO_ACTIVE = 10;
-        // What are these below terrains exactly?
+
+        // Special terrains
         public const int PACKICE = 11;
         public const int ICEBERG = 12;
         public const int ICEFLOE = 13;
@@ -77,7 +80,7 @@ namespace Odyssey.Models.Data
             "Unknown",
             "Ocean",
             "Swamp",
-            "Plains", // was "Level" !?
+            "Plains",
             "Desert",
             "Forest",
             "Highland",
@@ -88,7 +91,7 @@ namespace Odyssey.Models.Data
             "Pack ice",
             "Iceberg",
             "Ice floe",
-            "Gear", // Corridor ???
+            "Gear", // Corridor
             "Wall",
             "Hall",
             "Fog",

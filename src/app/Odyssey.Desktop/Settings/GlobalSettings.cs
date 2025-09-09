@@ -38,7 +38,8 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
     public const string EXPLORER_ACTIVE_FACTION_UNITS_AT_FIRST = "ActiveFactionUnitsAtTop";
     public const string EXPLORER_EXPAND_TREE_ON_REPORT_OPENING = "ExpandTreeOnReportOpening";
     public const string EXPLORER_SELECT_LAST_ACTIVE_REGION_ON_REPORT_OPENING = "SelectLastActiveRegionOnReportOpening";
-    
+    public const string MAP_USE_SEASON_IMAGES = "UseSeasonImages";
+
     public const string HIDE_IN_PROGRESS_FEATURES = "HideInProgressFeatures";
 
     [ObservableProperty]
@@ -119,6 +120,15 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
     Category = "parm_cat_views",
     Group = "parm_grp_explorer")]
     private bool _activeFactionUnitsAtTop = false;
+
+    // whether additional images depending on current season are used in Map
+    [ObservableProperty]
+    [property: Config(
+        Header = "parm_hdr_map_season_images",
+        Description = "parm_inf_map_season_images",
+        Category = "parm_cat_views",
+        Group = "parm_grp_map")]
+    private bool _useSeasonImages = false;
 
     [ObservableProperty]
     [property: Config(

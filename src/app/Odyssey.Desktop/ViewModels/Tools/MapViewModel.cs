@@ -1,12 +1,11 @@
 ﻿using Avalonia.Controls;
-using Avalonia.Input.TextInput;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
+using Odyssey.Utils;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Odyssey.ViewModels.Tools;
 
@@ -14,6 +13,9 @@ public partial class MapViewModel : DocumentToolViewModelBase
 {
     [ObservableProperty]
     DataBlock? _selectedRegion;
+
+    [ObservableProperty]
+    Seasons _season = Seasons.UNKNOWN;
 
     partial void OnSelectedRegionChanged(DataBlock? oldValue, DataBlock? newValue)
     {
@@ -95,5 +97,6 @@ public partial class MapViewModel : DocumentToolViewModelBase
     private void RebuildMap()
     {
         Regions = GetDocument().AllRegions;
+        Season = DateUtils.GetGameSeason(GetDocument().Turn);
     }
 }

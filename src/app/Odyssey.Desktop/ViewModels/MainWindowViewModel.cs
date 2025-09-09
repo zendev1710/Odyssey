@@ -1644,7 +1644,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         FactionName = HasDocument ? report.GetActiveFactionName() : string.Empty;
         ReportName = HasDocument ? report.Name : string.Empty;
         GameTurn = HasDocument ? $"[{report.Turn}]" : string.Empty;
-        GameDate = HasDocument ? DateUtils.GameTurnToDateLabel(report.Turn) : string.Empty;
+        GameDate = HasDocument ? DateUtils.GetGameDateLabel(report.Turn) : string.Empty;
     }
 
     private static void DebugFactoryEvents(IFactory factory)

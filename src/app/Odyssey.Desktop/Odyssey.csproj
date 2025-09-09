@@ -21,23 +21,18 @@
 
   <ItemGroup>
     <AdditionalFiles Remove="Assets\full\**" />
-    <AdditionalFiles Remove="HelpOld\**" />
     <AdditionalFiles Remove="Localization\**" />
       <AvaloniaResource Remove="Assets\full\**" />
     <AvaloniaXaml Remove="Assets\full\**" />
-    <AvaloniaXaml Remove="HelpOld\**" />
     <AvaloniaXaml Remove="Localization\**" />
     <AvaloniaXaml Remove="ViewModels\Views\**" />
     <Compile Remove="Assets\full\**" />
-    <Compile Remove="HelpOld\**" />
     <Compile Remove="Localization\**" />
     <Compile Remove="ViewModels\Views\**" />
     <EmbeddedResource Remove="Assets\full\**" />
-    <EmbeddedResource Remove="HelpOld\**" />
     <EmbeddedResource Remove="Localization\**" />
     <EmbeddedResource Remove="ViewModels\Views\**" />
     <None Remove="Assets\full\**" />
-    <None Remove="HelpOld\**" />
     <None Remove="Localization\**" />
     <None Remove="ViewModels\Views\**" />
   </ItemGroup>

@@ -24,8 +24,10 @@
                   Grid.Row="1"
                   HorizontalScrollBarVisibility="Auto"
                   VerticalScrollBarVisibility="Auto">
+		<!-- 		Season="{Binding Season}"-->
       <controls:HexMapControl
         x:Name="HexMap"
+		Season="{Binding Season}"
         Regions="{Binding Regions}"
 		SelectedRegion="{Binding SelectedRegion, Mode=TwoWay}"
         HorizontalAlignment="Stretch"

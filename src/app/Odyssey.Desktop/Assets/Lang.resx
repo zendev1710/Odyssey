@@ -1752,28 +1752,28 @@
   <data name="familiar_mage_info" xml:space="preserve">
     <value>Has {0} for Familiar</value>
   </data>
-  <data name="season_0" xml:space="preserve">
+  <data name="season_1" xml:space="preserve">
     <value>Spring</value>
   </data>
-  <data name="in_season_0" xml:space="preserve">
+  <data name="in_season_1" xml:space="preserve">
     <value>in Spring</value>
   </data>
-  <data name="season_1" xml:space="preserve">
+  <data name="season_2" xml:space="preserve">
     <value>Summer</value>
   </data>
-  <data name="in_season_1" xml:space="preserve">
+  <data name="in_season_2" xml:space="preserve">
     <value>in Summer</value>
   </data>
-  <data name="season_2" xml:space="preserve">
+  <data name="season_3" xml:space="preserve">
     <value>Autumn</value>
   </data>
-  <data name="in_season_2" xml:space="preserve">
+  <data name="in_season_3" xml:space="preserve">
     <value>in Autumn</value>
   </data>
-  <data name="season_3" xml:space="preserve">
+  <data name="season_4" xml:space="preserve">
     <value>Winter</value>
   </data>
-  <data name="in_season_3" xml:space="preserve">
+  <data name="in_season_4" xml:space="preserve">
     <value>in Winter</value>
   </data>
   <data name="game_date_info" xml:space="preserve">
@@ -1818,16 +1818,19 @@
   <data name="parm_hdr_explorer_expand_tree_on_load" xml:space="preserve">
     <value>Expand Explorer tree when report document is opened</value>
   </data>
+  <data name="parm_hdr_map_season_images" xml:space="preserve">
+    <value> Additional images depending on current season</value>
+  </data>
   <data name="parm_hdr_features_hide_in_progress" xml:space="preserve">
     <value>In-progress features hidden</value>
   </data>
   <data name="parm_inf_features_hide_in_progress" xml:space="preserve">
     <value>Hide in-progress features (taken into accoun after app restart)</value>
   </data>
-  <data name="parm_inf_explorer_active_faction_units_at_top" xml:space="preserve">
-    <value>Active faction units will be displayed as first elements of the region node</value>
-  </data>
   <data name="parm_inf_explorer_expand_tree_on_load" xml:space="preserve">
+    <value>Will be taken into account at the next document opening</value>
+  </data>
+  <data name="parm_inf_map_season_images" xml:space="preserve">
     <value>Will be taken into account at the next document opening</value>
   </data>
   <data name="parm_hdr_language" xml:space="preserve">
@@ -2669,6 +2672,9 @@
   </data>
   <data name="parm_grp_explorer" xml:space="preserve">
     <value>Explorer</value>
+  </data>
+  <data name="parm_grp_map" xml:space="preserve">
+    <value>Map</value>
   </data>
   <data name="parm_grp_features" xml:space="preserve">
     <value>Features</value>

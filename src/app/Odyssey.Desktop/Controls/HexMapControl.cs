@@ -3,12 +3,16 @@ using Avalonia.Controls;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
+using Avalonia.VisualTree;
 using Odyssey.Models.Data;
+using Odyssey.Settings;
+using Odyssey.Utils;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using Avalonia.VisualTree;
+using System.Diagnostics;
 using System.Linq;
+
 
 namespace Odyssey.Controls;
 
@@ -25,17 +29,18 @@ namespace Odyssey.Controls;
 */
 public class HexMapControl : Control
 {
-    // TODO: Store and expose for binding report document season when a document is loaded
-    // handle a season changed event
-    // private int _season = 0;
+    // TODO: scrollbars should stay when map view is in float mode
+    // TODO: zoom slider as a map setting "dispaly zoom slider at the top of the map"
 
     // Default size of hexagon as the width of the bounding square in pixels
-    private static readonly double defaultHexSideSize = 80; //64 or 80
+    private static readonly double defaultHexSideSize = 64; //64 or 80
 
     // Default size of hexagon as from radius to corner
     private static readonly double defaultHexSize = defaultHexSideSize / Math.Sqrt(3);
 
-    // 1. Change the property type and registration:
+    public static readonly StyledProperty<Seasons> SeasonProperty =
+        AvaloniaProperty.Register<HexMapControl, Seasons>(nameof(Season), Seasons.UNKNOWN);
+
     public static readonly StyledProperty<Dictionary<int, DataBlock>> RegionsProperty =
         AvaloniaProperty.Register<HexMapControl, Dictionary<int, DataBlock>>(nameof(Regions));
 
@@ -52,6 +57,12 @@ public class HexMapControl : Control
         set => SetValue(RegionsProperty, value ?? new Dictionary<int, DataBlock>());
     }
 
+    public Seasons Season
+    {
+        get => GetValue(SeasonProperty);
+        set => SetValue(SeasonProperty, value);
+    }
+
     public double HexSize
     {
         get => GetValue(HexSizeProperty);
@@ -66,18 +77,27 @@ public class HexMapControl : Control
 
     static HexMapControl()
     {
-        PreloadTerrainResources();
+        PreloadStandardTerrainImages();
         RegionsProperty.Changed.AddClassHandler<HexMapControl>((ctrl, e) => ctrl.OnRegionsChanged());
         HexSizeProperty.Changed.AddClassHandler<HexMapControl>((ctrl, e) => ctrl.OnHexSizeChanged());
+        SeasonProperty.Changed.AddClassHandler<HexMapControl>((ctrl, e) => ctrl.OnSeasonChanged());
         SelectedRegionProperty.Changed.AddClassHandler<HexMapControl>((ctrl, e) => ctrl.OnSelectedRegionChanged(e));
     }
 
-    //private ISelector _selector = null!; // LATER: use it or remove it
+    private bool _useSeasonImages;
 
     public HexMapControl()
     {
+        _useSeasonImages = GlobalSettings.Get<bool>(GlobalSettings.MAP_USE_SEASON_IMAGES);
         Regions = new Dictionary<int, DataBlock>();
+        UpdateTerrainImagesFromSeason(Season);
+        Season = Seasons.UNKNOWN;
         this.PointerPressed += OnPointerPressed;
+    }
+
+    private void OnSeasonChanged()
+    {
+        UpdateTerrainImagesFromSeason(Season);
     }
 
     private void OnHexSizeChanged()
@@ -89,7 +109,6 @@ public class HexMapControl : Control
 
     private void OnRegionsChanged()
     {
-        //LoadTerrainResourcesForSeason();
         ComputeRegionBounds();
         InvalidateMeasure();
         InvalidateVisual();
@@ -168,6 +187,7 @@ public class HexMapControl : Control
                 context.DrawImage(image, new Rect(0, 0, image.Size.Width, image.Size.Height), bounds);
 
                 // If region is unseen, overlay a semi-transparent black to darken
+                // TODO: exclude also regions visible by travel, lighthouse...
                 if (region.IsUnseenRegion())
                 {
                     // 160 as first argb parameter is a ~63% opacity black
@@ -415,145 +435,161 @@ public class HexMapControl : Control
         return (rq, rr);
     }
 
+    private void UpdateTerrainImagesFromSeason(Seasons season)
+    {
+        // TODO: compare season with previous value to avoid unuseful reloads
+        string seasonStr = string.Empty;
+        if (_useSeasonImages)
+        {
+            switch (Season)
+            {
+                case Seasons.SPRING:
+                    seasonStr = "spring";
+                    break;
+                case Seasons.SUMMER:
+                    seasonStr = "summer";
+                    break;
+                case Seasons.AUTUMN:
+                    seasonStr = "autumn";
+                    break;
+                case Seasons.WINTER:
+                    seasonStr = "winter";
+                    break;
+                default: break;
+            }
+        }
+        for (int terrain = Terrains.UNKNOWN; terrain < Terrains.LAST; terrain++)
+        {
+            Bitmap? bitmap = null;
+            if (_useSeasonImages && !string.IsNullOrEmpty(seasonStr))
+            {
+                // Try to load the season-specific image
+                bitmap = LoadBitmap(GetTerrainResourcePathname(terrain, seasonStr), terrain, false);
+            }
+            _terrainImages[terrain] = bitmap ?? _standardTerrainImages[terrain];
+        }
+    }
+
     private int? _selectedQ = null;
     private int? _selectedR = null;
+    private ConcurrentDictionary<int, Bitmap?> _terrainImages = new();
 
-    private static readonly ConcurrentDictionary<int, Bitmap?> _terrainImages = new();
+    private static readonly ConcurrentDictionary<int, Bitmap?> _standardTerrainImages = new();
 
-    // TODO: take season into account (no more readonly due to report season)
-    private ConcurrentDictionary<int, Bitmap?> _terrainsSeasonImages = new();
-
-    private static Bitmap? GetTerrainImage(int terrain)
+    private Bitmap? GetTerrainImage(int terrain)
     {
         _terrainImages.TryGetValue(terrain, out var bmp);
         return bmp;
     }
 
-    private void LoadTerrainResourcesForSeaoson()
-    { 
-        foreach (var terrain in Terrains)
-        {
-            // Get the resource path for this terrain
-            var resourcePath = GetTerrainResource(terrain);
-            if (string.IsNullOrEmpty(resourcePath))
-                continue;
-            // Compose the avares URI for Avalonia asset loading
-            var uri = $"avares://Odyssey{resourcePath}";
-            try
-            {
-                var uriObj = new Uri(uri);
-                var stream = AssetLoader.Open(uriObj);
-                var bitmap = new Bitmap(stream);
-                _terrainsSeasonImages[terrain] = bitmap;
-            }
-            catch
-            {
-                // Optionally log or handle missing/invalid images
-                _terrainsSeasonImages[terrain] = null;
-            }
-        }
-    }
-
-    private static string? GetTerrainResource(int t)
+    private static string GetTerrainResourcePathname(int t, string suffix)
     {
-        string? iconName;
+        string imageName;
         switch (t)
         {
-            case Models.Data.Terrains.OCEAN:
-                iconName = "ocean";
+            case Terrains.OCEAN:
+                imageName = "ocean";
                 break;
-            case Models.Data.Terrains.SWAMP:
-                iconName = "swamp";
+            case Terrains.SWAMP:
+                imageName = "swamp";
                 break;
-            case Models.Data.Terrains.PLAINS:
-                iconName = "plains";
+            case Terrains.PLAINS:
+                imageName = "plains";
                 break;
-            case Models.Data.Terrains.DESERT:
-                iconName = "desert";
+            case Terrains.DESERT:
+                imageName = "desert";
                 break;
-            case Models.Data.Terrains.FOREST:
-                iconName = "forest";
+            case Terrains.FOREST:
+                imageName = "forest";
                 break;
-            case Models.Data.Terrains.HIGHLAND:
-                iconName = "highland";
+            case Terrains.HIGHLAND:
+                imageName = "highland";
                 break;
-            case Models.Data.Terrains.MOUNTAIN:
-                iconName = "mountain";
+            case Terrains.MOUNTAIN:
+                imageName = "mountain";
                 break;
-            case Models.Data.Terrains.GLACIER:
-                iconName = "glacier";
+            case Terrains.GLACIER:
+                imageName = "glacier";
                 break;
-            case Models.Data.Terrains.VOLCANO:
-                iconName = "volcano";
+            case Terrains.VOLCANO:
+                imageName = "volcano";
                 break;
-            case Models.Data.Terrains.VOLCANO_ACTIVE:
-                iconName = "volcano";
+            case Terrains.VOLCANO_ACTIVE:
+                imageName = "volcano";
                 break;
-            case Models.Data.Terrains.ICEBERG:
-                iconName = "iceberg";
+            case Terrains.ICEBERG:
+                imageName = "iceberg";
                 break;
-            case Models.Data.Terrains.CORRIDOR:
-                iconName = "corridor";
+            case Terrains.CORRIDOR:
+                imageName = "corridor";
                 break;
-            case Models.Data.Terrains.WALL:
-                iconName = "wall";
+            case Terrains.WALL:
+                imageName = "wall";
                 break;
-            case Models.Data.Terrains.HALL:
-                iconName = "hall";
+            case Terrains.HALL:
+                imageName = "hall";
                 break;
-            case Models.Data.Terrains.FOG:
-                iconName = "fog";
+            case Terrains.FOG:
+                imageName = "fog";
                 break;
-            case Models.Data.Terrains.THICKFOG:
-                iconName = "thickfog";
+            case Terrains.THICKFOG:
+                imageName = "thickfog";
                 break;
-            case Models.Data.Terrains.FIREWALL:
-                iconName = "firewall";
+            case Terrains.FIREWALL:
+                imageName = "firewall";
                 break;
-            case Models.Data.Terrains.MAHLSTROM:
-                iconName = "mahlstrom";
+            case Terrains.MAHLSTROM:
+                imageName = "mahlstrom";
                 break;
             // CHECK: wanted icon for the folowing values
-            case Models.Data.Terrains.UNKNOWN:
-            case Models.Data.Terrains.PACKICE:
-            case Models.Data.Terrains.ICEFLOE:
-            case Models.Data.Terrains.LAST:
-            default: return null;
+            case Terrains.UNKNOWN:
+            case Terrains.PACKICE:
+            case Terrains.ICEFLOE:
+            case Terrains.LAST:
+            default: return string.Empty;
         }
-        return $"/Assets/Map/Terrains/{iconName}.png";
+        string imageFullname = string.IsNullOrEmpty(suffix) ? imageName : $"{imageName}_{suffix}";
+        return $"/Assets/Map/Terrains/{imageFullname}.png";
     }
 
-    private static readonly int[] Terrains = new[]
+    private static void PreloadStandardTerrainImages()
     {
-        Models.Data.Terrains.OCEAN, Models.Data.Terrains.SWAMP, Models.Data.Terrains.PLAINS, Models.Data.Terrains.DESERT, Models.Data.Terrains.FOREST,
-        Models.Data.Terrains.HIGHLAND, Models.Data.Terrains.MOUNTAIN, Models.Data.Terrains.GLACIER, Models.Data.Terrains.VOLCANO, Models.Data.Terrains.VOLCANO_ACTIVE,
-        Models.Data.Terrains.ICEBERG, Models.Data.Terrains.CORRIDOR, Models.Data.Terrains.WALL, Models.Data.Terrains.HALL, Models.Data.Terrains.FOG,
-        Models.Data.Terrains.THICKFOG, Models.Data.Terrains.FIREWALL, Models.Data.Terrains.MAHLSTROM
-    };
-
-    private static void PreloadTerrainResources()
-    {
-        foreach (var terrain in Terrains)
+        for (int terrain = Terrains.UNKNOWN; terrain < Terrains.LAST; terrain++)
         {
-            // Get the resource path for this terrain
-            var resourcePath = GetTerrainResource(terrain);
-            if (string.IsNullOrEmpty(resourcePath))
-                continue;
+            var resourcePathname = GetTerrainResourcePathname(terrain, string.Empty);
+            _standardTerrainImages[terrain] = LoadBitmap(resourcePathname, terrain, true);
+        }
+    }
 
+    private static Bitmap? LoadBitmap(string resourcePathname, int terrain, bool shouldFind)
+    {
+        Bitmap? bitmap = null;
+        if (!string.IsNullOrEmpty(resourcePathname))
+        {
             // Compose the avares URI for Avalonia asset loading
-            var uri = $"avares://Odyssey{resourcePath}";
+            var uri = $"avares://Odyssey{resourcePathname}";
             try
             {
                 var uriObj = new Uri(uri);
                 var stream = AssetLoader.Open(uriObj);
-                var bitmap = new Bitmap(stream);
-                _terrainImages[terrain] = bitmap;
+                bitmap = new Bitmap(stream);
             }
-            catch
+            catch (Exception ex)
             {
-                // Optionally log or handle missing/invalid images
-                _terrainImages[terrain] = null;
+                if (shouldFind)
+                {
+                    Debug.WriteLine($"[HEXMAPCONTROL] WARNING | could not load terrain image terrain={terrain} resourcePathname={resourcePathname} {ex}");
+                }
             }
         }
+        else
+        {
+
+        }
+        if (bitmap == null && shouldFind)
+        {
+            Debug.WriteLine($"[HEXMAPCONTROL] WARNING | could not find terrain image for terrain={terrain} resourcePathname={resourcePathname}");
+        }
+        return bitmap;
     }
 }

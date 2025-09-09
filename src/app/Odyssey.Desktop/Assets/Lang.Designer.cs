@@ -2358,15 +2358,6 @@ namespace Odyssey.Assets {
         /// <summary>
         ///   Looks up a localized string similar to in Spring.
         /// </summary>
-        public static string in_season_0 {
-            get {
-                return ResourceManager.GetString("in_season_0", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to in Summer.
-        /// </summary>
         public static string in_season_1 {
             get {
                 return ResourceManager.GetString("in_season_1", resourceCulture);
@@ -2374,7 +2365,7 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to in Autumn.
+        ///   Looks up a localized string similar to in Summer.
         /// </summary>
         public static string in_season_2 {
             get {
@@ -2383,11 +2374,20 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to in Winter.
+        ///   Looks up a localized string similar to in Autumn.
         /// </summary>
         public static string in_season_3 {
             get {
                 return ResourceManager.GetString("in_season_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to in Winter.
+        /// </summary>
+        public static string in_season_4 {
+            get {
+                return ResourceManager.GetString("in_season_4", resourceCulture);
             }
         }
         
@@ -2887,6 +2887,15 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Map.
+        /// </summary>
+        public static string parm_grp_map {
+            get {
+                return ResourceManager.GetString("parm_grp_map", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tools.
         /// </summary>
         public static string parm_grp_tools {
@@ -2950,6 +2959,15 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  Additional images depending on current season.
+        /// </summary>
+        public static string parm_hdr_map_season_images {
+            get {
+                return ResourceManager.GetString("parm_hdr_map_season_images", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Load the last opened report at startup.
         /// </summary>
         public static string parm_hdr_open_last_report_at_startup {
@@ -2995,15 +3013,6 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Active faction units will be displayed as first elements of the region node.
-        /// </summary>
-        public static string parm_inf_explorer_active_faction_units_at_top {
-            get {
-                return ResourceManager.GetString("parm_inf_explorer_active_faction_units_at_top", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Will be taken into account at the next document opening.
         /// </summary>
         public static string parm_inf_explorer_expand_tree_on_load {
@@ -3036,6 +3045,15 @@ namespace Odyssey.Assets {
         public static string parm_inf_language {
             get {
                 return ResourceManager.GetString("parm_inf_language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Will be taken into account at the next document opening.
+        /// </summary>
+        public static string parm_inf_map_season_images {
+            get {
+                return ResourceManager.GetString("parm_inf_map_season_images", resourceCulture);
             }
         }
         
@@ -7623,15 +7641,6 @@ namespace Odyssey.Assets {
         /// <summary>
         ///   Looks up a localized string similar to Spring.
         /// </summary>
-        public static string season_0 {
-            get {
-                return ResourceManager.GetString("season_0", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Summer.
-        /// </summary>
         public static string season_1 {
             get {
                 return ResourceManager.GetString("season_1", resourceCulture);
@@ -7639,7 +7648,7 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Autumn.
+        ///   Looks up a localized string similar to Summer.
         /// </summary>
         public static string season_2 {
             get {
@@ -7648,11 +7657,20 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Winter.
+        ///   Looks up a localized string similar to Autumn.
         /// </summary>
         public static string season_3 {
             get {
                 return ResourceManager.GetString("season_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Winter.
+        /// </summary>
+        public static string season_4 {
+            get {
+                return ResourceManager.GetString("season_4", resourceCulture);
             }
         }
         
