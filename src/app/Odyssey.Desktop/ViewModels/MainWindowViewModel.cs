@@ -17,6 +17,7 @@ using Odyssey.Models.Documents;
 using Odyssey.Settings;
 using Odyssey.Utils;
 using Odyssey.ViewModels.Documents;
+using Odyssey.ViewModels.Tools;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
@@ -134,9 +135,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
     private static readonly List<string> _inProgressFeaturesIds = 
     [
-        //Ids.Map,
         Ids.MiniMap,
-        Ids.Bookmarks,
         Ids.RegionStatistics,
         Ids.SearchResults,
         Ids.ErrorList,
@@ -149,6 +148,9 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     private readonly bool _singleReportMode = true;
 
     private readonly bool _readonlyMode = true;
+
+    private BookmarksViewModel? _bookmarksViewModel;
+    public BookmarksViewModel? BookmarksViewModel => _bookmarksViewModel;
 
     public ISelection? Selection { get; set; }
 
@@ -221,6 +223,8 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         {
             //_dockState.Save(layout);
         }
+
+        _bookmarksViewModel = _factory.GetDockable<IDockable>(Ids.Bookmarks) as BookmarksViewModel;
 
         LayoutNew = new RelayCommand(ResetLayout);
         LayoutOpen = new RelayCommand(FileOpenLayout);
@@ -1478,7 +1482,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
         bool isOrdersFile = fileViewModel.DocumentType == DocumentType.ERESSEA_ORDERS;
         string defaultExtension = isOrdersFile ? StorageService.TxtExt : StorageService.CrExt;
-        string pathname = System.IO.Path.ChangeExtension(fileViewModel.Path, defaultExtension);
+        string pathname = Path.ChangeExtension(fileViewModel.Path, defaultExtension);
         FilePickerFileType fileTypeChoice = isOrdersFile ? StorageService.Orders : StorageService.Report;
 
         var file = await storageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
@@ -1592,22 +1596,26 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         IsFullscreen = !IsFullscreen;
     }
 
-    [RelayCommand(CanExecute = nameof(CanToggleBookmark))]
-    private void ToggleBookmark()
-    {
-        // TODO: toogle bookmark (remove or add bookmark)
-    }
-
-    private bool CanToggleBookmark()
-    {
-        return SelectionIsBookmarkable();
-    }
-
+    /*
     private bool SelectionIsBookmarkable()
     {
         // TODO: true if the selection is an island, region or a unit, ship building in a region, or a unit spell
         return true;
     }
+
+    [RelayCommand(CanExecute = nameof(CanSaveBookmarks))]
+    private void SaveBookmarks()
+    {
+        // TODO: Implement logic to "save as..." existing bookmarks
+    }
+
+    private bool CanSaveBookmarks()
+    {
+        // Enable only if there are some existing bookmark
+        // TODO
+        return HasActiveDocument(); //&& HasBoookmarks()
+    }
+    */
 
     /// <summary>
     /// Publish a SelectionStateHasChanged event.

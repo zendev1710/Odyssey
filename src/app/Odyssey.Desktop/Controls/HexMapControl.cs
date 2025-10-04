@@ -29,8 +29,14 @@ namespace Odyssey.Controls;
 */
 public class HexMapControl : Control
 {
+    // TODO: mouse wheel + ctrl for zoom-in zoom-out
+    // TODO: display zoom percentage while zooming with slider
     // TODO: scrollbars should stay when map view is in float mode
+    // TODO: do not darken oceans where someone traveled, where a lighthouse can watch...
     // TODO: zoom slider as a map setting "dispaly zoom slider at the top of the map"
+    // TODO: 'show fog of war' setting and handle
+    // TODO: 'image background' setting and handle
+    // MG: BorderCellRenderer : streats, coasts...
 
     // Default size of hexagon as the width of the bounding square in pixels
     private static readonly double defaultHexSideSize = 64; //64 or 80

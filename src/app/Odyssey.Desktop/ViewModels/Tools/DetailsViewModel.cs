@@ -59,6 +59,8 @@ public partial class DetailsViewModel : DocumentToolViewModelBase
 
         ISelection sel = selectionChange.Selection;
         // Region, faction or intermediate nodes (ships node, buildings node, etc.) lead to no details view model.
+        // TODO: maybe add a seen region details view model (which details to be shown ?)
+        // TODO: maybe add a unseen region details view model (which details to be shown ?)
         ViewModelBase? vm = _noDetailsViewModel;
         switch (true)
         {

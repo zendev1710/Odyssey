@@ -108,11 +108,30 @@ Information view (Ctrl + I in CsMapFx) - display information about the world dat
 
 ## Known limitations
 
-- No map view
-- No minimap/overtview view
-- No statistics view
-- No search view
-- No information view
-- *No bookmarks view 'like in Magellan)*
-- No search results view
-- No errors view
+Here are main missing features compared to Magellan:
+
+- minimap view
+- *bookmarks view 'like in Magellan)*
+- statistics view
+- search view
+- information view
+- search results view
+- errors view
+- profiles management
+- islands management
+- map other planes display (astral...)
+- reports merging management
+
+Here are main missing features compared to CsMapFx:
+
+- minimap view
+- region statistics view
+- search view
+- information view
+- search results view
+- errors view
+- islands management
+- map other planes display (astral...)
+- map regions/islands multiselection
+- map region borders/buildings/boats... display
+- reports merging management

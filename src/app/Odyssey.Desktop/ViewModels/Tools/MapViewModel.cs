@@ -96,7 +96,7 @@ public partial class MapViewModel : DocumentToolViewModelBase
     /// </summary>
     private void RebuildMap()
     {
-        Regions = GetDocument().AllRegions;
+        Regions = GetDocument().Regions;
         Season = DateUtils.GetGameSeason(GetDocument().Turn);
     }
 }

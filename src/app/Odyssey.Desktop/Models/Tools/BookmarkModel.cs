@@ -1,83 +1,103 @@
-﻿using Odyssey.Models.Data;
+using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Odyssey.Utils;
+using System.Xml.Linq;
 
-namespace Odyssey.Models.Tools
+public class BookmarkModel
 {
-    public class BookmarkModel
+    public string Type { get; set; }
+    public string Id { get; set; }
+    public string Name { get; set; }
+    public string Label { get; private set; }
+    public DataBlock Target { get; set; }
+
+    private const string UnknownTypeValue = "UNKNOWN";
+    private const string RegionTypeValue = "REGION";
+    private const string UnitTypeValue = "UNIT";
+    private const string ShipTypeValue = "SHIP";
+    private const string BuildingTypeValue = "BUILDING";
+    private const string IslandTypeValue = "ISLAND";
+
+    public BookmarkModel(string type, DataBlock dt)
     {
-        private string? _content;
-        private string? _label;
-        private DataBlock? _region;
-        private readonly string? _factionName;
+        Id = dt.GetStringId();
+        Name = dt.GetUIName();
+        Label = dt.GetUILabel();
+        Type = type;
+        Target = dt;
+    }
 
-        public string? Content { get { return _content; } private set { _content = value; } }
-        public string? Label { get { return _label; } private set { _label = value; } }
-        public string? FactionName { get { return _factionName; } }
-        public DataBlock? Region { get { return _region; } private set { _region = value; } }
-
-        private readonly CRDocument _report;
-
-        public CRDocument Report { get { return _report; } }
-
-        public BookmarkModel(CRDocument report, string factionName)
+    public static BookmarkModel? FromObject(DataBlock dt)
+    {
+        var bt = dt.GetBlockType();
+        return bt switch
         {
-            _report = report;
-            _factionName = factionName;
-            Content = string.Empty;
-            Label = string.Empty;
-            Region = null;
+            BlockType.ISLAND => new BookmarkModel(IslandTypeValue, dt),
+            BlockType.REGION => new BookmarkModel(RegionTypeValue, dt),
+            BlockType.UNIT => new BookmarkModel(UnitTypeValue, dt),
+            BlockType.SHIP => new BookmarkModel(ShipTypeValue, dt),
+            BlockType.BUILDING => new BookmarkModel(BuildingTypeValue, dt),
+            _ => new BookmarkModel(UnknownTypeValue, dt),
+        };
+    }
+
+    public static BookmarkModel? FromXml(string? type, string? id, string? name, CRDocument? cr)
+    {
+        if (type == null || id == null || cr == null)
+        {
+            return null;
         }
-
-        public bool CollectData(DataBlock battleBlock)
+        DataBlock? obj = null;
+        if (type == RegionTypeValue)
         {
-            DataBlock? region = null;
-            // TODO: what about abookmark on an entity located in a unknown region ?
-            // TODO: check how it behaviours in Magellan : 
-            // - possible to bookmark an unknown region ?
-            // - is bookmark usable when region becomes unknown ?
-            // TODO
-            /*
-            if (Report.GetRegion(ref region, battleBlock))
+            // TODO: handle island type id
+            if (Converters.ExtractCoordinatesWithComma(id, out int x, out int y))
             {
-                Region = region;
-                Label = region!.GetUILabel();
-                if (!string.IsNullOrEmpty(FactionName))
-                {
-                    Label = $"{Label} [{FactionName}]";
-                }
-                DataBlock? messageBlock = null;
-                if (CRDocument.GetChild(ref messageBlock, battleBlock.Node, BlockType.MESSAGE))
-                {
-                    StringBuilder contentBuilder = new();
-                    LinkedListNode<DataBlock>? node = messageBlock!.Node;
-                    while (node != null)
-                    {
-                        contentBuilder.Append(messageBlock.Value(Strings.EN_MESSAGE_RENDERED));
-                        contentBuilder.Append(Environment.NewLine);
-                        LinkedListNode<DataBlock>? nextNode = node;
-                        if (CRDocument.GetNext(ref nextNode, BlockType.MESSAGE))
-                        {
-                            node = nextNode;
-                            messageBlock = nextNode!.Value;
-                            continue;
-                        }
-                        // no more messages, exit loop
-                        break;
-                    }
-                    Content = contentBuilder.ToString();
-                }
-                return !string.IsNullOrEmpty(Content);
+                obj = cr.FindRegionFromPosition(x, y, 0);
             }
-        */
-            return false;
         }
-
-        public override string ToString()
+        else if (type == IslandTypeValue)
         {
-            return Label!;
+            obj = cr.FindIsland(Converters.StringToInt(id));
+        } 
+        else
+        {
+            int key = Converters.DecodeBase36(id);
+            obj = type switch
+            {
+                UnitTypeValue => cr.FindUnit(key),
+                ShipTypeValue => cr.FindShip(key),
+                BuildingTypeValue => cr.FindBuilding(key),
+                _ => null,
+            };
         }
+        if (obj == null) 
+        { 
+            return null; 
+        }
+        return new BookmarkModel(type, obj);
+    }
+
+    public XElement ToXmlElement()
+    {
+        return new XElement("bookmark",
+            new XAttribute("type", Type),
+            new XAttribute("id", Id),
+            new XAttribute("name", Name)
+        );
+    }
+
+    public bool IsSameObject(object obj)
+    {
+        if (obj is DataBlock db)
+        {
+            return db.GetStringId() == Id;
+        }
+        return false;
+    }
+
+    public override string ToString()
+    {
+        return Label!;
     }
 }

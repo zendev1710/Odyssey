@@ -7,13 +7,7 @@
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
 			 x:DataType="vm:BookmarksViewModel" x:CompileBindings="True"
              x:Class="Odyssey.Views.Tools.BookmarksView">
-	<Grid Focusable="True" IsVisible="{Binding HasDocument}" RowDefinitions="Auto,*,Auto" ColumnDefinitions="*,Auto" >
-		<ListBox Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Bookmarks}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinWidth="200"  IsVisible="{Binding HasBookmark}" Margin="5,5,5,5">
-			<ListBox.ItemTemplate>
-				<DataTemplate>
-					<TextBlock Text="{Binding Label}" />
-				</DataTemplate>
-			</ListBox.ItemTemplate>
-		</ListBox>
+	<Grid Focusable="True" IsVisible="{Binding HasDocument}" >
+		<ListBox ItemsSource="{Binding Bookmarks}" SelectedItem="{Binding SelectedBookmark}" AutoScrollToSelectedItem="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
 	</Grid>
 </UserControl>

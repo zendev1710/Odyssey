@@ -84,6 +84,8 @@ public partial class RegionInfoViewModel : MessagesViewModel
 
     public RegionInfoViewModel(IEventAggregator? eventAggregator) : base(eventAggregator)
     {
+        // TODO: check if an unseen region can have some messages
+        // anyway, handle unseen regions with specific info here, isn't it ?
         _regionMessages = AppendItem(Root, Labels.Localize(Categories.Node, Labels.MESSAGES), null);
         _effectsMessages = AppendItem(Root, Labels.Localize(Categories.Node, Labels.EFFECTS), null);
         _travelMessages = AppendItem(Root, Labels.Localize(Categories.Node, Labels.TRANSIT), null);

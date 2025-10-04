@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:controls="clr-namespace:Odyssey.Controls"
              xmlns:ids="using:Dock.Settings"
              xmlns:dm="using:Dock.Model.Core"
              xmlns:dmc="using:Dock.Model.Controls"
@@ -29,13 +30,43 @@
 		<StreamGeometry x:Key="FactionIconPath">m8.5 6c.82843 0 1.5.67157 1.5 1.5 0 1.11608-.45897 2.01027-1.21215 2.6148-.74127.595-1.73477.8852-2.78785.8852s-2.04658-.2902-2.78785-.8852c-.75318-.60453-1.21215-1.49872-1.21215-2.6148 0-.77966118.59487668-1.42044457 1.3555213-1.49313306l.1444587-.00686694zm-2.5-5c1.10457 0 2 .89543 2 2s-.89543 2-2 2-2-.89543-2-2 .89543-2 2-2z</StreamGeometry>
 		<StreamGeometry x:Key="CalendarDayIconPath">M17.75 3A3.25 3.25 0 0 1 21 6.25v11.5A3.25 3.25 0 0 1 17.75 21H6.25A3.25 3.25 0 0 1 3 17.75V6.25A3.25 3.25 0 0 1 6.25 3h11.5Zm-1.5 8h-8.5a.75.75 0 0 0-.743.648L7 11.75v4.5c0 .38.282.694.648.743L7.75 17h8.5a.75.75 0 0 0 .743-.648L17 16.25v-4.5a.75.75 0 0 0-.648-.743L16.25 11Zm-.75 1.5v3h-7v-3h7Zm.75-5.25h-8.5a.75.75 0 0 0 0 1.5h8.5a.75.75 0 0 0 0-1.5Z</StreamGeometry>
 		<StreamGeometry x:Key="FileIconPath">M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z</StreamGeometry>
+		<StreamGeometry x:Key="StarIconPath">M10,1 L12,7 H18 L13,11 L15,17 L10,13 L5,17 L7,11 L2,7 H8 Z</StreamGeometry>
+		<StreamGeometry x:Key="ChevronLeftIcon">M14,4 L8,10 L14,16</StreamGeometry>
+		<StreamGeometry x:Key="PrevBookmarkStarArrowIcon">M10,2 L11,6 H15 L12,8 L13,12 L10,10 L7,12 L8,8 L5,6 H9 Z M5,15 L10,15 M10,15 L7,12 M10,15 L7,18</StreamGeometry>
+		<!--Style x:Key="StarIconButtonStyle">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="Padding" Value="0"/>
+			<Setter Property="Cursor" Value="Arrow"/>
+			<Setter Property="Focusable" Value="False"/>
+			<Setter Property="Template">
+				<Template>
+					<ContentPresenter/>
+				</Template>
+			</Setter>
+		</Style-->
 	</UserControl.Resources>
+	<UserControl.Styles>
+		<!--Style Selector="Button.star-icon">
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="Padding" Value="0"/>
+			<Setter Property="Cursor" Value="Arrow"/>
+			<Setter Property="Focusable" Value="False"/>
+			<Setter Property="Template">
+				<ControlTemplate>
+					<ContentPresenter/>
+				</ControlTemplate>
+			</Setter>
+		</Style-->
+	</UserControl.Styles>
 	<UserControl.KeyBindings>
 		<KeyBinding Gesture="Ctrl+F" Command="{Binding FindSetFocus}" />
 	</UserControl.KeyBindings>
 	<Grid RowDefinitions="Auto,*,25" ColumnDefinitions="Auto,*" Background="Transparent" DragDrop.AllowDrop="True">
 		<!--MENUS -->
 		<Menu Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" >
+			<!-- File menu -->
 			<MenuItem Header="{x:Static a:Lang.mainmenu_file}">
 				<MenuItem Header="{x:Static a:Lang.mainmenu_file_open}" Command="{Binding OpenFileCommand}" HotKey="Ctrl+O" InputGesture="Ctrl+O"/>
 				<MenuItem Header="{x:Static a:Lang.mainmenu_file_save}" Command="{Binding SaveFileCommand}" HotKey="Ctrl+S" InputGesture="Ctrl+S" />
@@ -63,6 +94,7 @@
 				<Separator />
 				<MenuItem Header="{x:Static a:Lang.mainmenu_file_exit}" Command="{Binding ExitCommand}" HotKey="Alt+F4" InputGesture="Alt+F4"/>
 			</MenuItem>
+			<!-- View menu -->
 			<MenuItem Header="{x:Static a:Lang.mainmenu_view}" >
 				<MenuItem DataContext="{Binding Layout}" Header="{x:Static a:Lang.mainmenu_view_home}" Command="{Binding Navigate}" CommandParameter="Home" HotKey="Ctrl+Home" InputGesture="Ctrl+Home" />
 				<!-- in German Ctrl in InputGesture should be replace by STRG -->
@@ -178,6 +210,30 @@
 				<!-- TODO: restore windows label when isfullscreen is true -->
 				<MenuItem Header="{x:Static a:Lang.mainmenu_view_fullscreen}" Command="{Binding ToggleFullscreenCommand}" HotKey="F11" InputGesture="F11" />
 			</MenuItem>
+			<!-- Bookmarks menu -->
+			<MenuItem Header="Bookmarks" DataContext="{Binding BookmarksViewModel}">
+				<MenuItem Header="Toggle Bookmark" Command="{Binding ToggleBookmarkCommand}" />
+				<Separator/>
+				<MenuItem Header="Jump Forward" Command="{Binding JumpToNextBookmarkCommand}" HotKey="F2" InputGesture="F2" />
+				<MenuItem Header="Jump Backward" Command="{Binding JumpToPreviousBookmarkCommand}" HotKey="Shift+F2" InputGesture="Shift+F2" />
+				<Separator/>
+				<MenuItem Header="Clear All" Command="{Binding RemoveAllBookmarksCommand}" />
+				<Separator/>
+				<MenuItem Header="Import Bookmarks..." Command="{Binding ImportBookmarksCommand}" />
+				<MenuItem Header="Export Bookmarks..." Command="{Binding ExportBookmarksCommand}" />
+				<Separator/>
+				<!--MenuItem Header="Manage Bookmarks" Command="{Binding ManageBookmarksCommand}" /-->
+				<Separator/>
+				<!-- Dynamically generated bookmark items -->
+				<!-- ItemsControl ItemsSource="{Binding Bookmarks}">
+					<ItemsControl.ItemTemplate>
+						<DataTemplate>
+							<MenuItem Header="{Binding Name}" Command="{Binding DataContext.NavigateToBookmarkCommand, RelativeSource={RelativeSource AncestorType=Menu}}" CommandParameter="{Binding}" />
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl-->
+			</MenuItem>
+			<!-- Window menu -->
 			<MenuItem Header="{x:Static a:Lang.mainmenu_window}" IsVisible="{Binding EnableLayoutFeature}">
 				<MenuItem Header="{x:Static a:Lang.mainmenu_window_layout_save}" Command="{Binding LayoutSave}" />
 				<MenuItem Header="{x:Static a:Lang.mainmenu_window_layout_apply}" Command="{Binding LayoutOpen}" />
@@ -187,6 +243,7 @@
 				<!-- Separator /-->
 				<!-- ... /-->
 			</MenuItem>
+			<!-- Help menu -->
 			<MenuItem Header="{x:Static a:Lang.mainmenu_help}">
 				<MenuItem Header="{x:Static a:Lang.mainmenu_window_help_view}" Command="{Binding ShowHelpCommand}" HotKey="F1" InputGesture="F1" />
 				<MenuItem Header="{x:Static a:Lang.mainmenu_window_help_getting_started}" Command="{Binding ShowHelpCommand}" CommandParameter="getting-started" />
@@ -340,18 +397,74 @@
 		<DockControl x:Name="DockControl" Layout="{Binding Layout}" Margin="4" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
 		<!-- Bottom status bar -->
 		<Panel x:Name="StatusBar" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" >
-			<Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto,Auto" IsVisible="{Binding HasDocument}" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+			<Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto,Auto" IsVisible="{Binding HasDocument}" HorizontalAlignment="Stretch" VerticalAlignment="Center">
 				<!--TODO - add orders completed status to the left (number of units to confirm / total number of units which need orders for faction)-->
-				<!-- better order : faction name / date / turn / report name -->
-				<PathIcon HorizontalAlignment="Left" Grid.Column="0" Width="18" Height="18" Opacity="0.6" Data="{StaticResource FactionIconPath}" Margin="5,0,0,0"/>
-				<TextBlock HorizontalAlignment="Left" Grid.Column="1" Text="{Binding FactionName}" ToolTip.Tip="{x:Static a:Lang.active_faction_tip}" Margin="5,0,0,0"/>
-				<StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Grid.Column="2" ToolTip.Tip="{x:Static a:Lang.game_date_info_tip}" Margin="5,0,0,0" >
+				<!-- BOOKMARKS PANEL -->
+				<StackPanel Orientation="Horizontal" Grid.Column="0" VerticalAlignment="Center" DataContext="{Binding BookmarksViewModel}" IsVisible="{Binding HasDocument}">
+					<!-- Star Fluent icon Button that can be yellow (current selection is a bookmark)  or empty (is not a bookmark) -->
+					<Grid Width="18" Height="18" Margin="5,0,0,0" VerticalAlignment="Center">
+						<controls:StarControl
+							ToolTip.Tip="Toggle Bookmark"
+							IsChecked="{Binding SelectionIsBookmarked}"
+							IsVisible="{Binding SelectionIsBookmarkable}"
+							/>
+					</Grid>
+					<!-- Selection on map or explorer -->
+					<TextBlock Text="{Binding SelectionName}" Margin="5,0,0,0" Width="200" VerticalAlignment="Center" ToolTip.Tip="Selected item"/>
+					<!-- Bookmarks File ComboBox -->
+					<ComboBox
+						ItemsSource="{Binding BookmarksFiles}"
+						SelectedItem="{Binding SelectedBookmarksFile}"
+						Width="120"
+						Margin="5,0,0,0"
+						ToolTip.Tip="Bookmarks sets"
+						VerticalAlignment="Center">
+						<ComboBox.ItemTemplate>
+							<DataTemplate>
+								<TextBlock Text="{Binding Label}" />
+							</DataTemplate>
+						</ComboBox.ItemTemplate>
+					</ComboBox>
+					<!-- Previous Bookmark Button -->
+					<Button 
+						Command="{Binding JumpToPreviousBookmarkCommand}"
+						ToolTip.Tip="Previous Bookmark"
+						Background="Transparent" 
+						BorderThickness="0"
+						Padding="0"
+						Margin="10,0,0,0"
+						Width="20"
+						Height="20">
+						<Canvas Width="20" Height="20">
+							<!-- Little star at the top, centered -->
+							<Path Data="M10,3 L10.6,5.1 H12.8 L11.2,6.3 L11.8,8.4 L10,7.2 L8.2,8.4 L8.8,6.3 L7.2,5.1 H9.4 Z"
+								  Fill="White" Stroke="White" StrokeThickness="1.2" Canvas.Left="4" Canvas.Top="1" Width="12" Height="12"/>
+							<!-- Small left arrow with 3 segments, thick and white for visibility -->
+							<Path Data="M4,15 L14,15 M4,15 L8,12 M4,15 L8,18"
+								  Stroke="White" StrokeThickness="2.5" Canvas.Left="0" Canvas.Top="0" Width="16" Height="8"/>
+						</Canvas>
+					</Button>
+					<!-- Next Bookmark Button -->
+					<Button Command="{Binding JumpToNextBookmarkCommand}" ToolTip.Tip="Next Bookmark" Background="Transparent" BorderThickness="0" Padding="0" Margin="2,0,0,0" Width="20" Height="20">
+						<Canvas Width="20" Height="20">
+							<!-- Star at the far left, same vertical as previous button -->
+							<Path Data="M10,3 L10.6,5.1 H12.8 L11.2,6.3 L11.8,8.4 L10,7.2 L8.2,8.4 L8.8,6.3 L7.2,5.1 H9.4 Z"
+								  Fill="White" Stroke="White" StrokeThickness="1.2" Canvas.Left="-4" Canvas.Top="1" Width="12" Height="12"/>
+							<!-- Small right arrow with 3 segments, thick and white for visibility -->
+							<Path Data="M16,15 L6,15 M16,15 L12,12 M16,15 L12,18"
+								  Stroke="White" StrokeThickness="2.5" Canvas.Left="0" Canvas.Top="0" Width="16" Height="8"/>
+						</Canvas>
+					</Button>
+				</StackPanel>
+				<!-- faction icon / faction name / game date / game turn / report name -->
+				<PathIcon HorizontalAlignment="Right" Grid.Column="1" Width="18" Height="18" Opacity="0.6" Data="{StaticResource FactionIconPath}" Margin="5,0,0,0"/>
+				<TextBlock HorizontalAlignment="Right" Grid.Column="2" Text="{Binding FactionName}" ToolTip.Tip="{x:Static a:Lang.active_faction_tip}" Margin="5,0,0,0"/>
+				<StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="3" ToolTip.Tip="{x:Static a:Lang.game_date_info_tip}" Margin="5,0,0,0" >
 					<PathIcon Width="18" Height="18" Opacity="0.6" Data="{StaticResource CalendarDayIconPath}" Margin="5,0,0,0"/>
 					<TextBlock Text="{Binding GameDate}" Margin="5,0,0,0"/>
 					<TextBlock Text="{Binding GameTurn}" Margin="5,0,0,0"/>
 				</StackPanel>
 				<PathIcon Grid.Column="4" Width="18" Height="18" Opacity="0.6" Data="{StaticResource FileIconPath}" HorizontalAlignment="Right" Margin="5,0,0,0"/>
-				<!--PathIcon Grid.Column="6" Width="24" Height="24" Opacity="0.6" Data="{StaticResource CalendarDay}"/-->
 				<!-- TODO : Tip with the full pathname -->
 				<!-- combobox with recently/last loaded reports (having reportname as label and pathname as data -->
 				<TextBlock Grid.Column="5" Text="{Binding ReportName}" HorizontalAlignment="Right" Margin="5,0,0,0"/>

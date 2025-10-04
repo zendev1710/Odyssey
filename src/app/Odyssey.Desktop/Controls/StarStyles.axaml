@@ -1,0 +1,79 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:controls="using:Odyssey.Controls"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!-- Design time preview -->
+  <Design.PreviewWith>
+    <StackPanel Width="100" Spacing="24">
+      <ThemeVariantScope RequestedThemeVariant="Default">
+        <StackPanel Spacing="10" Background="{DynamicResource SystemRegionBrush}">
+          <controls:StarControl IsChecked="False" Width="18" Height="18" IsEnabled="True"/>
+          <controls:StarControl IsChecked="True" />
+        </StackPanel>
+      </ThemeVariantScope>
+      <ThemeVariantScope RequestedThemeVariant="Light">
+        <StackPanel Spacing="10" Background="{DynamicResource SystemRegionBrush}">
+          <controls:StarControl IsChecked="False" />
+          <controls:StarControl IsChecked="True" />
+        </StackPanel>
+      </ThemeVariantScope>
+      <ThemeVariantScope RequestedThemeVariant="Dark">
+        <StackPanel Spacing="10" Background="{DynamicResource SystemRegionBrush}">
+          <controls:StarControl IsChecked="False" />
+          <controls:StarControl IsChecked="True" />
+        </StackPanel>
+      </ThemeVariantScope>
+    </StackPanel>
+  </Design.PreviewWith>
+
+  <!-- Theme resources. Goldenrod is qsome kind of yellow/orange -->
+  <ResourceDictionary.ThemeDictionaries>
+    <ResourceDictionary x:Key="Default">
+      <SolidColorBrush x:Key="StarControlSelectedBrush" Color="Red"/>
+      <SolidColorBrush x:Key="StarControlUnselectedBrush" Color="Transparent"/>
+	  <SolidColorBrush x:Key="StarControlStrokeBrush" Color="White"/>
+	  <SolidColorBrush x:Key="StarControlPointerOverBrush" Color="Gray"/>
+	  <SolidColorBrush x:Key="StarControlCheckedPointerOverBrush" Color="#FFD3D3D3"/>
+    </ResourceDictionary>
+    <ResourceDictionary x:Key="Light">
+      <SolidColorBrush x:Key="StarControlSelectedBrush" Color="Red"/>
+      <SolidColorBrush x:Key="StarControlUnselectedBrush" Color="Transparent"/>
+	  <SolidColorBrush x:Key="StarControlStrokeBrush" Color="Black"/>
+	  <SolidColorBrush x:Key="StarControlPointerOverBrush" Color="Gray"/>
+	  <SolidColorBrush x:Key="StarControlCheckedPointerOverBrush" Color="#FFD3D3D3"/>	
+    </ResourceDictionary>
+    <ResourceDictionary x:Key="Dark">
+      <SolidColorBrush x:Key="StarControlSelectedBrush" Color="Red"/>
+      <SolidColorBrush x:Key="StarControlUnselectedBrush" Color="Transparent"/>
+	  <SolidColorBrush x:Key="StarControlStrokeBrush" Color="White"/>
+	  <SolidColorBrush x:Key="StarControlPointerOverBrush" Color="Gray"/>
+	  <SolidColorBrush x:Key="StarControlCheckedPointerOverBrush" Color="#FFD3D3D3"/>
+    </ResourceDictionary>
+  </ResourceDictionary.ThemeDictionaries>
+
+  <ControlTheme x:Key="{x:Type controls:StarControl}" TargetType="controls:StarControl">
+    <Setter Property="Template">
+		<ControlTemplate>
+			<DataValidationErrors>
+              <DataValidationErrors.Styles>
+                <Style Selector="Path#PART_StarPresenter">
+                  <Setter Property="Data" Value="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                  <Setter Property="Stroke" Value="{DynamicResource StarControlStrokeBrush}" />
+                  <Setter Property="StrokeThickness" Value="2" />
+                  <Setter Property="Stretch" Value="Uniform" />
+                  <Setter Property="Fill" Value="{DynamicResource StarControlUnselectedBrush}" />
+                </Style>
+                <Style Selector="Path#PART_StarPresenter:checked">
+                  <Setter Property="Fill" Value="{DynamicResource StarControlSelectedBrush}" />
+                </Style>
+                <Style Selector="Path#PART_StarPresenter:pointerover">
+                  <Setter Property="Fill" Value="{DynamicResource StarControlPointerOverBrush}" />
+                </Style>
+              </DataValidationErrors.Styles>
+              <Path x:Name="PART_StarPresenter"
+                    Stretch="Uniform"
+                    Fill="{TemplateBinding StarFill}" />
+        </DataValidationErrors>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+</ResourceDictionary>

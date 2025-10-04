@@ -24,7 +24,7 @@ public partial class HistoryViewModel : DocumentToolViewModelBase
     [ObservableProperty]
     private SelectionEntry? _selectedItem;
 
-    public ObservableCollection<SelectionEntry> Items { get; }
+    public ObservableCollection<SelectionEntry> Items { get; } = [];
 
     public HistoryViewModel() : this(null)
     {
@@ -36,7 +36,6 @@ public partial class HistoryViewModel : DocumentToolViewModelBase
 
     public HistoryViewModel(IEventAggregator? eventAggregator) : base(eventAggregator)
     {
-        Items = [];
     }
 
     /// <summary>
@@ -56,17 +55,16 @@ public partial class HistoryViewModel : DocumentToolViewModelBase
             return;
         }
 
-        // TODO: if newValue matches the current selection in Explorer, do nothing
+        // if newValue matches the current selection in Explorer, do nothing
         if (Selection != null && Selection.Item == newValue.Selection?.Item)
         {
             // If the selected item is already the current selection in Explorer, do nothing
             return;
         }
 
-        // Should be called only :
-        // - when selection changing comes from key or mouse gesture 
-        // - or when new explorer item is selected //but not when the selection is set programmatically
-        RevealInExplorer(newValue);
+        // called when selection changing comes from key or mouse gesture,
+        // or when new Explorer or Map item is selected
+        RevealSelection(newValue);
     }
 
     protected override void OnActiveDocumentClosed(CRDocument cr)
@@ -93,6 +91,7 @@ public partial class HistoryViewModel : DocumentToolViewModelBase
             return;
         }
 
+        // Note: an unseen region can also been selected and then added to the history
         ISelection sel = selectionChange.Selection;
         if (!IsSelected(sel))
         {
@@ -141,7 +140,7 @@ public partial class HistoryViewModel : DocumentToolViewModelBase
         }
     }
 
-    private void RevealInExplorer(SelectionEntry selectionEntry)
+    private void RevealSelection(SelectionEntry selectionEntry)
     {
         PublishSelectionChangedEvent(new SelectionChange(selectionEntry.Selection!, this, null));
         SelectedItem = null;

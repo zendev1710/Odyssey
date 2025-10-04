@@ -783,6 +783,12 @@ namespace Odyssey.Models.Data
             return $"{name} ({IdToString()})";
         }
 
+        public string GetStringId()
+        {
+            // TODO: handle ISLAND Id
+            return Type == BlockType.REGION ? $"{X}, {Y}" : IdToString();
+        }
+
         /// <summary>
         /// 
         /// </summary>

@@ -102,9 +102,8 @@ namespace Odyssey.ViewModels.Tools
 
         protected abstract void OnSelectionChanged(ISelectionChange selectionChange);
 
-        protected void SetSelection(ISelection sel)
+        protected virtual void SetSelection(ISelection sel)
         {
-            // LATER: maybe it would be better to set a copy of sel
             Selection = sel;
         }
 

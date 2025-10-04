@@ -53,6 +53,29 @@ public class CRDocument : EresseaDocument
     private DataBlock? ActiveFaction { get; set; } = null;
 
     public Dictionary<int, Rectangle> ContentSizes { get; private set; } = [];
+
+    /// <summary>
+    /// Returns the short name of the document.
+    /// The short name is the trimmed right part of the name after the first dash ('-').
+    /// i.e. for '1200 - Fullmap', it returns 'Fullmap'.
+    /// </summary>
+    public string ShortName
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(Name))
+            {
+                return string.Empty;
+            }
+            int idx = Name.IndexOf('-');
+            if (idx >= 0 && idx < Name.Length - 1)
+            {
+                return Name[(idx + 1)..].Trim();
+            }
+            return Name.Trim();
+        }
+    }
+
     public string Name { get; private set; }
     public string Version { get; private set; }
     public bool HasData() => Blocks.Count > 0;
@@ -60,29 +83,21 @@ public class CRDocument : EresseaDocument
     private LinkedList<DataBlock> Blocks { get; set; }
 
     private bool OptimizeDataConsuming { get; set; }
-    private bool StoreUnseenRegions { get; set; }
-
-    // TODO: add a setting for that
-    private bool StoreAllRegions { get; set; } = true;
 
     public LinkedListNode<DataBlock>? FirstBlock { get { return Blocks?.First; } }
     public LinkedListNode<DataBlock>? LastBlock { get { return Blocks?.Last; } }
-    public int AllRegionsNumber {  get { return AllRegions.Count; } }
-    public int SeenRegionsNumber { get { return SeenRegions.Count; } }
-
-    private Dictionary<int, DataBlock> SeenRegions { get; set; } = [];
-    private Dictionary<int, DataBlock> UnSeenRegions { get; set; } = [];
-
-    private Dictionary<int, DataBlock> Units { get; set; } = [];
+    public Dictionary<int, DataBlock> Units { get; private set; } = [];
+    public Dictionary<int, DataBlock> Regions { get; private set; } = [];
+    public Dictionary<int, DataBlock> Ships { get; private set; } = [];
+    public Dictionary<int, DataBlock> Buildings { get; private set; } = [];
+    public Dictionary<int, DataBlock> Islands { get; private set; } = [];
+    public Dictionary<int, DataBlock> Battles { get; private set; } = [];
+    public Dictionary<int, DataBlock> Groups { get; private set; } = [];
+    public List<WorldPlane> Planes { get; private set; } = [];
     private Dictionary<int, DataBlock> Factions { get; set; } = [];
-    public Dictionary<int, DataBlock> AllRegions { get; private set; } = [];
-    private Dictionary<int, DataBlock> Ships { get; set; } = [];
-    private Dictionary<int, DataBlock> Buildings { get; set; } = [];
-    private Dictionary<int, DataBlock> Islands { get; set; } = [];
-    private Dictionary<int, DataBlock> Battles { get; set; } = [];
-    private Dictionary<int, DataBlock> Groups { get; set; } = [];
-    private List<WorldPlane> Planes { get; set; } = [];
 
+    public int RegionsNumber { get { return Regions.Count; } }
+    public int SeenRegionsNumber { get; private set; } = 0;
     public int Recruitment { get; private set; } = 0;
     public int Turn { get; private set; } = -1;
     public LinkedListNode<DataBlock>? ActiveFactionNode { get; private set; }
@@ -334,6 +349,11 @@ public class CRDocument : EresseaDocument
         return Groups.TryGetValue(id, out var group) ? group : null;
     }
 
+    public DataBlock? FindIsland(int id)
+    {
+        return Islands.TryGetValue(id, out var island) ? island : null;
+    }
+
     public DataBlock? FindBattleFromPosition(int x, int y, int plane)
     {
         var coordinates = new Coordinates(x, y, plane);
@@ -353,39 +373,17 @@ public class CRDocument : EresseaDocument
         return Battles.ContainsKey((int)coordinates);
     }
     */
-
-    public DataBlock? FindSeenRegionFromPosition(int x, int y, int plane)
+    public DataBlock? FindRegionFromPosition(int x, int y, int plane)
     {
         var coordinates = new Coordinates(x, y, plane);
-        return SeenRegions.TryGetValue((int)coordinates, out var region) ? region : null;
+        return Regions.TryGetValue((int)coordinates, out var region) ? region : null;
     }
 
-    public bool FindSeenRegionFromPosition(ref DataBlock? region, int x, int y, int plane)
-    {
-        region = FindSeenRegionFromPosition(x, y, plane);
-        return region != null;
-    }
-
-    private DataBlock? FindRegionFromPosition(int x, int y, int plane)
-    {
-        var coordinates = new Coordinates(x, y, plane);
-        return AllRegions.TryGetValue((int)coordinates, out var region) ? region : null;
-    }
-
-    private bool FindRegionFromPosition(ref DataBlock? region, int x, int y, int plane)
+    public bool FindRegionFromPosition(ref DataBlock? region, int x, int y, int plane)
     {
         region = FindRegionFromPosition(x, y, plane);
         return region != null;
     }
-
-    /*
-     * for map handling
-    public bool HasRegionAtPosition(int x, int y, int plane)
-    {
-        var coordinates = new Coordinates(x, y, plane);
-        return AllRegions.ContainsKey((int)coordinates);
-    }
-    */
 
     public DataBlock? Island(int id)
     {
@@ -631,7 +629,6 @@ public class CRDocument : EresseaDocument
         return GetSeenChild(ref commands, unit, BlockType.COMMANDS);
     }
 
-
     public static bool GetCommands(ref DataBlock? commands, LinkedListNode<DataBlock> unitNode)
     {
         //DataBlock? unit = unitNode?.Value;
@@ -662,22 +659,8 @@ public class CRDocument : EresseaDocument
 
     public bool GetSeenRegion(ref DataBlock? region, in DataBlock block)
     {
-        return FindSeenRegionFromPosition(ref region, block.GetX(), block.GetY(), block.GetId());
-    }
-
-    /*
-    public bool GetSeenRegion(ref DataBlock @out, int x, int y, int plane)
-    {
-        return FindSeenRegionFromPosition(ref @out, x, y, plane);
-    }
-    */
-
-    /*
-    public bool GetRegion(ref DataBlock? region, in DataBlock block)
-    {
         return FindRegionFromPosition(ref region, block.GetX(), block.GetY(), block.GetId());
     }
-    */
 
     public bool GetRegion(ref DataBlock @out, int x, int y, int plane)
     {
@@ -1071,7 +1054,7 @@ m_blocks.push_back(*old_r);
                 {
                     if (Utils.Converters.ExtractCoordinates(dataKey.GetValue(), out int x, out int y, out int plane))
                     {
-                        if (!FindSeenRegionFromPosition(ref messageRegion, x, y, plane))
+                        if (!FindRegionFromPosition(ref messageRegion, x, y, plane))
                         {
                             // if no region, not needed continuing iteration
                             break;
@@ -1250,6 +1233,7 @@ m_blocks.push_back(*old_r);
         // Units that got taxes (MSG id 1264208711); the regions will get a coins icon
         HashSet<int> unitGotTaxes = [];
 
+        int nbSeenRegions = 0;
         int nbVisibilityLighthouse = 0;
         int nbVisibilityTraveler = 0;
         int nbVisibilityNeighbours = 0;
@@ -1259,7 +1243,7 @@ m_blocks.push_back(*old_r);
         LinkedListNode<DataBlock>? previousNode = null;
         DataBlock? firstSeenRegion = null;
         DataBlock? lastSeenRegion = null;
-        bool enableSeenRegionsLinks = true; // false;
+
 
         for (var node = startNode; node != null; node = node.Next)
         {
@@ -1279,6 +1263,7 @@ m_blocks.push_back(*old_r);
                         if (SetRegionStats(region, regionOwn, regionAlly, regionEnemy, unconfirmed))
                         {
                             AddSeenRegion(region, OptimizeDataConsuming ? blockNodeToChange : null);
+                            nbSeenRegions++;
                             if (firstSeenRegion == null)
                             {
                                 firstSeenRegion = region;
@@ -1288,12 +1273,6 @@ m_blocks.push_back(*old_r);
                         }
                         else
                         {
-
-                            // region is unseen
-                            if (StoreUnseenRegions)
-                            {
-                                UnSeenRegions[(int)new Coordinates(region.GetX(), region.GetY(), region.GetId())] = region;
-                            }
                             if (blockNodeToChange == null)
                             {
                                 blockNodeToChange = region.Node?.Previous;
@@ -1335,11 +1314,7 @@ m_blocks.push_back(*old_r);
                         }
                     }
 
-                    // separates known and unknown regions
-                    if (StoreAllRegions)
-                    { 
-                        AllRegions[(int)new Coordinates(b.GetX(), b.GetY(), blockId)] = b;
-                    }
+                    Regions[(int)new Coordinates(b.GetX(), b.GetY(), blockId)] = b;
 
                     // get region owner (E3 only)
                     int ownerId = b.ValueInt(Strings.EN_REGION_OWNER, -1);
@@ -1587,6 +1562,7 @@ m_blocks.push_back(*old_r);
             if (SetRegionStats(region, regionOwn, regionAlly, regionEnemy, unconfirmed))
             {
                 AddSeenRegion(region, OptimizeDataConsuming ? blockNodeToChange : null);
+                nbSeenRegions++;
             }
             else
             {
@@ -1614,7 +1590,10 @@ m_blocks.push_back(*old_r);
             }
         }
 
-        Debug.WriteLine($"[DOCUMENT] AllRegions number : {AllRegions.Count} ");
+        SeenRegionsNumber = nbSeenRegions;
+
+        Debug.WriteLine($"[DOCUMENT] AllRegions number : {Regions.Count} ");
+        Debug.WriteLine($"[DOCUMENT] Seen regions number : {SeenRegionsNumber} ");
         Debug.WriteLine($"[DOCUMENT] Factions number : {Factions.Count} ");
         Debug.WriteLine($"[DOCUMENT] Units number : {Units.Count} ");
         Debug.WriteLine($"[DOCUMENT] Ships number : {Ships.Count} ");
@@ -1626,13 +1605,6 @@ m_blocks.push_back(*old_r);
 
     private void AddSeenRegion(DataBlock region, LinkedListNode<DataBlock>? previousNode)
     {
-        // LATER: check if allready exists, but it should not
-        // LATER: link knwon regions each other
-        int key = (int)new Coordinates(region.GetX(), region.GetY(), region.GetId());
-        if (SeenRegions.ContainsKey(key)) {
-            return;
-        }
-        SeenRegions[key] = region;
         if (previousNode?.Value != null)
         {
             region.SetPreviousBlock(previousNode.Value);
@@ -1646,7 +1618,7 @@ m_blocks.push_back(*old_r);
 
         // regions whose island names flood the island
         List<DataBlock> floodislands = new List<DataBlock> { };
-        foreach (var r in AllRegions)
+        foreach (var r in Regions)
         {
             DataBlock b = r.Value;
             if (b.GetBlockType() != BlockType.REGION)

@@ -11,11 +11,15 @@ namespace Odyssey.ViewModels;
 
 internal static class StorageService
 {
-    public const string CrExt = "cr";
+    public const string XmlExt = "xml";
     public const string TxtExt = "txt";
     public const string ZipExt = "zip";
     public const string JsonExt = "json";
 
+    public const string CrExt = "cr";
+    public const string BookmarksExt = XmlExt;
+
+    public static readonly string XmlPattern = FileUtils.GetFileExtensionPattern(XmlExt);
     public static readonly string CrPattern = FileUtils.GetFileExtensionPattern(CrExt);
     public static readonly string TxtPattern = FileUtils.GetFileExtensionPattern(TxtExt);
     public static readonly string ZipPattern = FileUtils.GetFileExtensionPattern(ZipExt);
@@ -24,10 +28,12 @@ internal static class StorageService
     public static readonly string PlainTextMimeType = "text/plain";
     public static readonly string ZipMimeType = $"application/{ZipExt}";
     public static readonly string JsonMimeType = $"application/{JsonExt}";
+    public static readonly string XmlMimeType = $"application/{XmlExt}";
 
     public static readonly string PlainTextAppleUniformTypeIdentifiers = "public.plain-text";
     public static readonly string ZipAppleUniformTypeIdentifiers = $"public.{ZipExt}";
     public static readonly string JsonAppleUniformTypeIdentifiers = $"public.{JsonExt}";
+    public static readonly string XmlAppleUniformTypeIdentifiers = $"public.{XmlExt}";
 
     public static FilePickerFileType All { get; } = new("All")
     {
@@ -42,16 +48,23 @@ internal static class StorageService
         MimeTypes = [JsonMimeType]
     };
 
-    public static FilePickerFileType Report { get; } = new(CrExt.ToTitleCase())
+    public static FilePickerFileType Text { get; } = new(TxtExt.ToTitleCase())
     {
-        Patterns = [CrPattern],
+        Patterns = [TxtPattern],
         AppleUniformTypeIdentifiers = [PlainTextAppleUniformTypeIdentifiers],
         MimeTypes = [PlainTextMimeType]
     };
 
-    public static FilePickerFileType Orders { get; } = new(TxtExt.ToTitleCase())
+    public static FilePickerFileType Xml { get; } = new(XmlExt.ToTitleCase())
     {
-        Patterns = [TxtPattern],
+        Patterns = [XmlPattern],
+        AppleUniformTypeIdentifiers = [XmlAppleUniformTypeIdentifiers],
+        MimeTypes = [XmlMimeType]
+    };
+
+    public static FilePickerFileType Report { get; } = new(CrExt.ToTitleCase())
+    {
+        Patterns = [CrPattern],
         AppleUniformTypeIdentifiers = [PlainTextAppleUniformTypeIdentifiers],
         MimeTypes = [PlainTextMimeType]
     };
@@ -62,6 +75,10 @@ internal static class StorageService
         AppleUniformTypeIdentifiers = [ZipAppleUniformTypeIdentifiers],
         MimeTypes = [ZipMimeType]
     };
+
+    public static FilePickerFileType Orders { get { return Text; } }
+
+    public static FilePickerFileType Bookmarks { get { return Xml; } }
 
     public static FilePickerFileType ReportEresseaFiles { get; } = new("Report Eressea files")
     {

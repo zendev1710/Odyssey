@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:vm="using:Odyssey.ViewModels.Tools"
-			 xmlns:ctl="using:Odyssey.Controls"
 			 xmlns:controls="clr-namespace:Odyssey.Controls"
 			 x:DataType="vm:MapViewModel" x:CompileBindings="True"
              mc:Ignorable="d"

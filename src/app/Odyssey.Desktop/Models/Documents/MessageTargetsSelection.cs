@@ -47,7 +47,7 @@ public class MessageTargetsSelection : SimpleItemSelection
     {
         Clear();
         DataBlock? region = null;
-        if (report.FindSeenRegionFromPosition(ref region, positionX, positionY, plane))
+        if (report.FindRegionFromPosition(ref region, positionX, positionY, plane))
         {
             SetItem(region, null, null);
         }

@@ -148,7 +148,8 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
     /// <param name="selectionChange"></param>
     protected override void OnSelectionChanged(ISelectionChange selectionChange)
     {
-        // Handle selection changed event from all selectors except itself.
+        // Handle selection changed event from all selectors except itself and BookMarksViewModel (which can select a unseen region).
+        // unseen region selection change event will be received only from map view.
         // Exclude this selector from selection change events to avoid reentrancy issues
         List<string> selectorIdsExcludeFilter = [Id];
         List<string> selectorIdsIncludeFilter = [];
@@ -206,12 +207,13 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         if (!sel.IsRegionSelected())
         {
             if (sel.Item == null || !GetSeenParent(ref selectedRegion, sel.Item))
-            //if (sel.Item == null || !CRDocument.GetParent(ref selectedRegion, sel.Item))
             {
                 Debug.WriteLine("[EXPLORER] WARNING | Region parent not found for {sel.Item}.");
                 return false;
             }
         }
+
+        // TODO: check selectedRegion is always not null here
 
         // Select a not-region item, region being known
         if (selectedRegion == Selection?.Region)
@@ -229,7 +231,11 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         }
         else
         {
-            regionNodeViewModel = FindImmediateTreeItem(Root, selectedRegion);
+            // Only seen regions are in the tree (unseen regions are on the map view)
+            if (!selectedRegion!.IsUnseenRegion())
+            {
+                regionNodeViewModel = FindImmediateTreeItem(Root, selectedRegion);
+            }
         }
 
         // To avoid to search a faction node that does not exist, remove FACTION from selection if it's the active faction
@@ -267,8 +273,11 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         }
         else
         {
-            Debug.WriteLine("[EXPLORER] WARNING | Should kill selection.");
-            //KillSelection();
+            // Happens when unseen region is selected from map view
+            SelectedItem = null;
+            SetSelection(sel);
+            // Notify the other views about the unseen region selection change
+            PublishSelectionChangedEvent(new SelectionChange(sel, this, InnerSelector));
         }
         return false;
     }

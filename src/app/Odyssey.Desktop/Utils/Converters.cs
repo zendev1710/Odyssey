@@ -94,6 +94,7 @@ public static partial class Converters
     /// <summary>
     /// Extract the coordinates (2 or 3 integers, that can be negative) from the input string.
     /// The third coordinate is optional and will be set to 0 if not found in the input string.
+    /// Each integer is separated by one or more whitespaces.
     /// </summary>
     /// <param name="input">input to extract from the coordinates</param>
     /// <param name="x">first coordinate returned as an integer</param>
@@ -116,6 +117,17 @@ public static partial class Converters
         return false;
     }
 
+    /// <summary>
+    /// Extract the coordinates (2 integers that can be negative, separated by comma) from the input string.
+    /// </summary>
+    /// <param name="input">input to extract from the coordinates</param>
+    /// <param name="x">first coordinate returned as an integer</param>
+    /// <param name="y">second coordinate returned as an integer</param>
+    /// <returns>true if extraction was successful; otherwise false </returns>
+    public static bool ExtractCoordinatesWithComma(string input, out int x, out int y)
+    {
+        return ExtractCoordinates(input.Replace(",", " "), out x, out y, out _);
+    }
 
     public static string ToStringWithDecimals(int value)
     {

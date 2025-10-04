@@ -10,10 +10,12 @@
     <File Path="../DEVELOPER.md" />
     <File Path="../FEATURES.md" />
     <File Path="../README.md" />
+    <File Path="../SPECS.md" />
     <File Path="../TODO.md" />
   </Folder>
   <Project Path="app/Odyssey.Desktop/Odyssey.csproj" />
   <Project Path="setup/OdysseySetup.wixproj" Type="b7dd6f7e-def8-4e67-b5b7-07ef123db6f0" Id="f0a29253-4d60-47cb-8a9b-c272b5622891">
     <Platform Solution="*|Any CPU" Project="x64" />
   </Project>
+  <Project Path="tools/cropper/cropper.csproj" />
 </Solution>

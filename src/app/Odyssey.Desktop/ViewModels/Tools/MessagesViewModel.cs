@@ -58,6 +58,7 @@ public abstract partial class MessagesViewModel : DocumentToolViewModelBase
 
     private void RevealInExplorer(Node? node)
     {
+        // TODO: check if an unseen region can have a messageand then should be selected in map instead of explorer 
         MessageEntry? messageEntry = node?.Entry;
         DataBlock? item = messageEntry?.Selection?.GetDefaultTarget();
         DataBlock? region = messageEntry?.Selection?.Region;
