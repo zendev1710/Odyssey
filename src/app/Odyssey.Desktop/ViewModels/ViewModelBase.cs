@@ -7,6 +7,7 @@ using Odyssey.ViewModels.Tools;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Odyssey.ViewModels
 {
@@ -98,15 +99,14 @@ namespace Odyssey.ViewModels
             return innerSelectorId == Id;
         }
 
-        protected ISelection SetSelection(ISelection selection)
+        protected ISelection? SetSelection(ISelection? selection)
         {
             Selection = selection;
             return Selection;
         }
 
-        protected virtual int OnReportChange(ISelection selection)
+        protected virtual int OnReportChange(ISelection? selection)
         {
-            // LATER: should be handled by event aggregator
             SetSelection(selection);
             return 1;
         }
@@ -139,6 +139,7 @@ namespace Odyssey.ViewModels
             bool result = cr.Name == Report.Name;
             return result;
         }
+
         /// <summary>
         /// Get the current report document.
         /// </summary>
@@ -146,6 +147,16 @@ namespace Odyssey.ViewModels
         protected CRDocument GetDocument()
         {
             return Report;
+        }
+
+        protected void SendSelectionChangedEvent(ISelection sel)
+        {
+            var ViewModelId = this.Id;
+            ISelector selector = this;
+            ISelector? innerSelector = null;
+            SelectionChange selectionEvent = new SelectionChange(sel, selector, innerSelector);
+            Debug.WriteLine($"[VIEWMODELBASE] SendSelectionChangedEvent from {ViewModelId} for item {sel.Item}");
+            PublishSelectionChangedEvent(selectionEvent);
         }
 
         public void PublishSelectionChangedEvent(ISelectionChange selectionChange)

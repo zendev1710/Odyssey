@@ -157,7 +157,7 @@ public partial class BattlesViewModel : DocumentToolViewModelBase
             DataBlock? region = Battles[SelectedBattleIndex].Region;
             ISelection sel = new SimpleItemSelection(region, region, null);
             SetSelection(sel);
-            PublishSelectionChangedEvent(new SelectionChange(sel, this, null));
+            SendSelectionChangedEvent(sel);
         }
     }
 

@@ -134,9 +134,9 @@ public partial class UnitDetailsViewModel : ViewModelBase
     public void MakeItems(ISelection sel)
     {
         Items.Clear();
-        ISelection selection = SetSelection(sel);
-        DataBlock? unitDataBlock = selection.Item;
-        DataBlock? regionDataBlock = selection.IsRegionSelected() ? selection.Region : null;
+        ISelection? selection = SetSelection(sel);
+        DataBlock? unitDataBlock = selection?.Item;
+        DataBlock? regionDataBlock = selection is not null ? (selection.IsRegionSelected() ? selection.Region : null) : null;
         string factionName = string.Empty;
         string otherFactionName = string.Empty;
         string mageNameIfFamiliar = string.Empty;
@@ -630,7 +630,7 @@ public partial class UnitDetailsViewModel : ViewModelBase
 
         // LATER: should I keep this newSel ?
         // SetSelection(newSelection);
-        PublishSelectionChangedEvent(new SelectionChange(newSelection, this, null));
+        SendSelectionChangedEvent(newSelection);
     }
 
     /// <summary>

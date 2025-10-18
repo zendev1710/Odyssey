@@ -136,8 +136,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         {
             ISelection sel = new ExplorerNodeSelection(newValue);
             SetSelection(sel);
-            // Notify the other views about the selection change
-            PublishSelectionChangedEvent(new SelectionChange(sel, this, InnerSelector));
+            SendSelectionChangedEvent(sel, InnerSelector);
         }
     }
 
@@ -276,8 +275,8 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
             // Happens when unseen region is selected from map view
             SelectedItem = null;
             SetSelection(sel);
-            // Notify the other views about the unseen region selection change
-            PublishSelectionChangedEvent(new SelectionChange(sel, this, InnerSelector));
+            // TODO: why two SendSelectionChangedEvent calls  in this code ???
+            SendSelectionChangedEvent(sel, InnerSelector);
         }
         return false;
     }

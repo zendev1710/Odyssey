@@ -2,7 +2,6 @@
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DryIoc;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Prism.Events;
@@ -11,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Reactive.Joins;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -36,7 +36,7 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
 
     [ObservableProperty]
     private BookmarksFileItem? _selectedBookmarksFile;
-
+    
     [ObservableProperty]
     private string _selectionName = string.Empty;
 
@@ -58,11 +58,13 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
     [ObservableProperty]
     private bool _hasBookmark;
 
+    private BookmarkModel? _lastSelectedBookmark;
+
     private string? _currentBookmarksFile;
 
     private String _bookmarkFilesPrefix = string.Empty;
 
-    private bool LoadingBookMarksInProgress { get; set; }
+    private bool LoadingBookmarksInProgress { get; set; }
 
     public BookmarksViewModel() : this(null)
     {
@@ -81,7 +83,32 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
     /// </summary>
     partial void OnSelectedBookmarkChanged(BookmarkModel? oldValue, BookmarkModel? newValue)
     {
-        RevealBookmark(newValue);
+        if (newValue is not null)
+        {
+            _lastSelectedBookmark = newValue;
+            RevealBookmark(newValue);
+        }
+
+        // To enable the commands if necessary
+        JumpToPreviousBookmarkCommand.NotifyCanExecuteChanged();
+        JumpToNextBookmarkCommand.NotifyCanExecuteChanged();
+    }
+
+    partial void OnSelectionIsBookmarkedChanged(bool value)
+    {
+        if (SelectedObject is null)
+        {
+            return;
+        }
+
+        if (value)
+        {
+            AddBookmark(SelectedObject);
+        }
+        else
+        {
+            RemoveBookmark(SelectedObject);
+        }
     }
 
     // Called when the active document changes (CRDocument loaded)
@@ -95,8 +122,7 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
 
     protected override void OnActiveDocumentClosed(CRDocument cr)
     {
-        // TODO: do not call this OnActiveDocumentClosed method if recently opened another document with the same short name
-        ClearItems();
+        ClearAll();
         // reset to an empty report document
         SetMapFile(new CRDocument());
     }
@@ -124,6 +150,7 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
             AutoSave();
             SelectedBookmark = null;
             SelectionIsBookmarked = false;
+            _lastSelectedBookmark = null;
         }
     }
 
@@ -152,14 +179,14 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
 
     // Reveal bookmark in explorer (selects the object in the explorer view)
     private void RevealBookmark(BookmarkModel? bookmarkModel)
-    {
-        if (!LoadingBookMarksInProgress && bookmarkModel?.Target is not null)
+     {
+        if (!LoadingBookmarksInProgress && bookmarkModel?.Target is not null)
         {
             // Publish event only if the bookmark target is not the current global selection (from Explorer/Map view)
             if (SelectedObject != bookmarkModel.Target)
             {
                 ISelection sel = new SimpleItemSelection(bookmarkModel.Target, null, null);
-                PublishSelectionChangedEvent(new SelectionChange(sel, this, null));
+                SendSelectionChangedEvent(sel);
             }
         }
     }
@@ -172,16 +199,14 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
         {
             return;
         }
-
-        // TODO: if selection is an existing bookmark, select it
-        // in orde the user to see that it's a bookmark
+        // if selection in event is an existing bookmark, select it in orde the user to see that it's a bookmark
         ISelection sel = selectionChange.Selection;
         if (!IsSelected(sel))
         {
             SetSelection(sel);
         }
     }
-    protected override void SetSelection(ISelection sel)
+    protected override void SetSelection(ISelection? sel)
     {
         base.SetSelection(sel);
         BookmarkModel? bookmarkModel = null;
@@ -193,19 +218,19 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
     }
 
     // Load bookmarks from XML file
-    private void LoadBookmarks(string filePath)
+    private List<BookmarkModel> LoadBookmarksFromFile(string filePath)
     {
+        List<BookmarkModel> bookmarks = [];
         if (!File.Exists(filePath))
         {
-            return;
+            return bookmarks;
         }
 
-        Bookmarks.Clear();
         var doc = XDocument.Load(filePath);
         var root = doc.Root;
         if (root == null)
         {
-            return;
+            return bookmarks;
         }
 
         if (root.HasElements)
@@ -218,11 +243,35 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
                 var model = BookmarkModel.FromXml(type, id, name, GetDocument());
                 if (model != null)
                 {
-                    Bookmarks.Add(model);
+                    bookmarks.Add(model);
                 }
             }
         }
+        return bookmarks;
+
+    }
+
+    // Load bookmarks from XML file
+    private void LoadBookmarks(string filePath)
+    {
+        // LATER: improve empty bookmark file handling (should be removed from the bookmarks files list)
+        Bookmarks.Clear();
+        Bookmarks.AddRange(LoadBookmarksFromFile(filePath));
         _currentBookmarksFile = filePath;
+    }
+
+    /// <summary>
+    /// Save bookmarks to the specified XML file.
+    /// </summary>
+    /// <param name="filePath">where bookmarks have to be saved</param>
+    private void SaveBookmarksInto(IEnumerable<BookmarkModel> bookmarks, string filePath)
+    {
+        var doc = new XDocument(
+            new XElement("Items",
+                bookmarks.Select(b => b.ToXmlElement())
+            )
+        );
+        doc.Save(filePath);
     }
 
     /// <summary>
@@ -231,25 +280,20 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
     /// <param name="filePath">where bookmarks have to be saved</param>
     private void SaveBookmarks(string filePath)
     {
-        var doc = new XDocument(
-            new XElement("Items",
-                Bookmarks.Select(b => b.ToXmlElement())
-            )
-        );
-        doc.Save(filePath);
+        SaveBookmarksInto(Bookmarks, filePath);
     }
 
     // Auto-load bookmarks file for the current CRDocument
     private void AutoLoadBookmarksForDocument(CRDocument cr)
     {
-        LoadingBookMarksInProgress = true;
+        LoadingBookmarksInProgress = true;
         var shortName = cr.ShortName;
         // LATER: in Linux/Mac, comparison should be case-sensitive
         if (string.Equals(shortName, _bookmarkFilesPrefix, StringComparison.OrdinalIgnoreCase))
         {
             // Same prefix means same bookmarks file
             // I's not useful to reload them
-            LoadingBookMarksInProgress = false;
+            LoadingBookmarksInProgress = false;
             return;
         }
         _bookmarkFilesPrefix = shortName;
@@ -262,27 +306,27 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
             Bookmarks.Clear();
             SelectedBookmarksFile = null;
             SelectedBookmark = null;
+            _lastSelectedBookmark = null;
             _bookmarkFilesPrefix = string.Empty;
-            LoadingBookMarksInProgress = false;
+            LoadingBookmarksInProgress = false;
             return;
         }
 
-        var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        var bookmarksDir = Path.Combine(documentsPath, "Odyssey", "bookmarks");
+        var bookmarksDir = GetDefaultBookmarksDirectory();
         Directory.CreateDirectory(bookmarksDir);
 
         var pattern = $"{_bookmarkFilesPrefix}-*.xml";
-        var files = Directory.GetFiles(bookmarksDir, pattern);
+        var pathNames = Directory.GetFiles(bookmarksDir, pattern);
 
         BookmarksFiles.Clear();
-        foreach (var file in files)
+        foreach (var pathName in pathNames)
         {
             // Label is the part after <ShortName>- and before .xml
-            var fileName = Path.GetFileNameWithoutExtension(file);
+            var fileName = Path.GetFileNameWithoutExtension(pathName);
             var label = fileName.Length > _bookmarkFilesPrefix.Length + 1
                 ? fileName[(_bookmarkFilesPrefix.Length + 1)..]
                 : fileName;
-            BookmarksFiles.Add(new BookmarksFileItem(label, file));
+            BookmarksFiles.Add(new BookmarksFileItem(label, pathName));
         }
 
         if (BookmarksFiles.Count == 0)
@@ -292,10 +336,10 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
             _currentBookmarksFile = defaultFilePath;
             AutoSave();
             BookmarksFiles.Add(new BookmarksFileItem("default", defaultFilePath));
-            //Bookmarks.Clear();
             SelectedBookmarksFile = BookmarksFiles.First();
             SelectedBookmark = null;
-            LoadingBookMarksInProgress = false;
+            _lastSelectedBookmark = null;
+            LoadingBookmarksInProgress = false;
             return;
         }
 
@@ -303,8 +347,7 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
         var defaultFile = BookmarksFiles.FirstOrDefault(f => f.Label.Equals("default", StringComparison.OrdinalIgnoreCase))
                        ?? BookmarksFiles.First();
         SelectedBookmarksFile = defaultFile;
-        LoadingBookMarksInProgress = false;
-        // TODO: should be set if current selection is a bookmark
+        LoadingBookmarksInProgress = false;
         SelectedBookmark = null;
     }
 
@@ -312,8 +355,11 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
     {
         if (newValue != null)
         {
+            // LATER : if _lastSelectedBookmark matches an existing bookmark in the new list, should set it
+            _lastSelectedBookmark = null;
             LoadBookmarks(newValue.FilePath);
-            SelectedBookmark = Bookmarks.FirstOrDefault();
+            // Will reselect the current selection if it exists as a bookmark in the loaded bookmarks list
+            SetSelection(Selection);
         }
     }
 
@@ -326,15 +372,21 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
         }
     }
 
-    private void ClearItems()
+    private void ClearAll()
     {
         Bookmarks.Clear();
         BookmarksFiles.Clear();
+        SetSelection(null);
+
+        _lastSelectedBookmark = null;
+        _currentBookmarksFile = null;
+        _bookmarkFilesPrefix = string.Empty;
+        LoadingBookmarksInProgress = false;
     }
 
     private bool IsBookmarkable(DataBlock? dt)
     {
-        if (dt == null)
+        if (dt is null)
         {
             return false;
         }
@@ -348,12 +400,14 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
     [RelayCommand(CanExecute = nameof(CanJumpToPreviousBookmark))]
     private void JumpToPreviousBookmark(object? bookmark)
     {
-        if (SelectedBookmark == null)
+        BookmarkModel? currentBookmark = SelectedBookmark ?? _lastSelectedBookmark;
+        if (currentBookmark == null)
         {
             SelectedBookmark = Bookmarks.First();
             return;
         }
-        int index = Bookmarks.IndexOf(SelectedBookmark);
+        int index = Bookmarks.IndexOf(currentBookmark);
+        if (index == -1) { index = 1; }
         SelectedBookmark = index == 0 ? Bookmarks.Last() : Bookmarks[index - 1];
     }
 
@@ -361,18 +415,19 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
     [RelayCommand(CanExecute = nameof(CanJumpToNextBookmark))]
     private void JumpToNextBookmark(object? bookmark)
     {
-        if (SelectedBookmark == null)
+        BookmarkModel? currentBookmark = SelectedBookmark ?? _lastSelectedBookmark;
+        if (currentBookmark == null)
         {
             SelectedBookmark = Bookmarks.First();
             return;
         }
-        int index = Bookmarks.IndexOf(SelectedBookmark);
+        int index = Bookmarks.IndexOf(currentBookmark);
         SelectedBookmark = index == Bookmarks.Count - 1 ? Bookmarks.First() : Bookmarks[index + 1];
     }
 
 
-    [RelayCommand(CanExecute = nameof(CanImportBookmarks))]
-    private async Task ImportBookmarks()
+    [RelayCommand(CanExecute = nameof(CanLoadBookmarksFrom))]
+    private async Task LoadBookmarksFrom()
     {
         var storageProvider = StorageService.GetStorageProvider();
         if (storageProvider is null)
@@ -383,27 +438,68 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
         var result = await storageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
             // LATER: translate title
-            Title = "Import Bookmarks file",
+            Title = "Load Bookmarks from",
             FileTypeFilter = GetOpenBookmarksFileTypes(),
-            // LATER: multiple bookmarks files could be opened (means merging all)
             AllowMultiple = false
         });
 
-        // TODO: check it's not in the default bookmarks folder and not the current bookmarks file
-        var file = result.FirstOrDefault();
-
+        var file = result[0];
         if (file is not null)
         {
-            // TODO: save file in the default bookmarks folder
-            LoadBookmarks(file.Path.LocalPath);
+            // Save a copy into default location, load then select if several bookmarks files
+            var bookmarksDir = GetDefaultBookmarksDirectory();
+            var sourcePath = file.Path.LocalPath;
+            var sourceFolder = Path.GetDirectoryName(sourcePath);
+            // if it is an existing bookmarks file from default bookmarks, do nothing
+            if (!string.Equals(sourceFolder, bookmarksDir, StringComparison.OrdinalIgnoreCase))
+            {
+                var shortFileNameWithExt = Path.GetFileName(sourcePath);
+                var destinationPathname = Path.Combine(bookmarksDir, shortFileNameWithExt);
+                var shortFileName = Path.GetFileNameWithoutExtension(sourcePath);
+
+                var i = 1;
+                // rename until file does not exist
+                while (File.Exists(destinationPathname))
+                {
+                    // rename it
+                    destinationPathname = Path.Combine(bookmarksDir, $"{shortFileName}-{i}.{StorageService.BookmarksExt}");
+                    i++;
+                }
+
+                // could be also a simple file copy
+                var bookmarks = LoadBookmarksFromFile(sourcePath);
+                SaveBookmarksInto(bookmarks, destinationPathname);
+                if (!string.IsNullOrEmpty(_bookmarkFilesPrefix))
+                {
+                    var pattern = $"{_bookmarkFilesPrefix}-";
+                    var fileName = Path.GetFileNameWithoutExtension(destinationPathname);
+                    // Load and add bookmarks file only if file prefix is the same as the current prefix
+                    if (fileName.StartsWith(pattern, StringComparison.OrdinalIgnoreCase))
+                    {
+                        LoadingBookmarksInProgress = true;
+                        var label = fileName[(_bookmarkFilesPrefix.Length + 1)..];
+                        // LATER: add at the right place (based on label sorting?)
+                        BookmarksFiles.Add(new BookmarksFileItem(label, destinationPathname));
+                        SelectedBookmarksFile = BookmarksFiles.Last();
+                        LoadBookmarks(destinationPathname);
+                        LoadingBookmarksInProgress = false;
+                    }
+                }
+            }
         }
     }
 
+    private String GetDefaultBookmarksDirectory()
+    {
+        var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        return Path.Combine(documentsPath, "Odyssey", "bookmarks");
+    }
+
     /// <summary>
-    /// Export current bookmarks list to a user-selected file.
+    /// Save current bookmarks list as a user-selected file.
     /// </summary>
-    [RelayCommand(CanExecute = nameof(CanExportBookmarks))]
-    private async Task ExportBookmarks()
+    [RelayCommand(CanExecute = nameof(CanSaveBookmarksAs))]
+    private async Task SaveBookmarksAs()
     {
         var storageProvider = StorageService.GetStorageProvider();
         if (storageProvider is null)
@@ -411,21 +507,39 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
             return;
         }
 
+        var bookmarksDir = GetDefaultBookmarksDirectory();
+        var suggestFilePathName = Path.Combine(bookmarksDir, $"{_bookmarkFilesPrefix}-bookmarks.xml");
         // LATER: based on current prefix, suggest a filename
         //string pathname = Path.ChangeExtension(fileViewModel.Path, defaultExtension);
         var file = await storageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
             // LATER: translate title
-            Title = "Export Bookmarks As",
+            Title = "Save Bookmarks As",
             FileTypeChoices = [StorageService.Bookmarks],
-            //SuggestedFileName = pathname,
+            SuggestedFileName = suggestFilePathName,
+            //SuggestedStartLocation = StorageFileLocation.Documents,
             DefaultExtension = StorageService.BookmarksExt,
             ShowOverwritePrompt = true
         });
 
         if (file is not null)
         {
-            SaveBookmarks(file.Path.LocalPath);
+            var sourcePath = file.Path.LocalPath;
+            SaveBookmarks(sourcePath);
+            var sourceFolder = Path.GetDirectoryName(sourcePath);
+            var pattern = $"{_bookmarkFilesPrefix}-";
+            var fileName = Path.GetFileNameWithoutExtension(sourcePath);
+            if (string.Equals(sourceFolder, bookmarksDir, StringComparison.OrdinalIgnoreCase) && fileName.StartsWith(pattern, StringComparison.OrdinalIgnoreCase))
+            {
+                // TODO: check if element is added as duplicata if already exists in list
+                LoadingBookmarksInProgress = true;
+                var label = fileName[(_bookmarkFilesPrefix.Length + 1)..];
+                // LATER: add at the right place (based on label sorting?)
+                BookmarksFiles.Add(new BookmarksFileItem(label, sourcePath));
+                SelectedBookmarksFile = BookmarksFiles.Last();
+                LoadBookmarks(sourcePath);
+                LoadingBookmarksInProgress = false;
+            }
         }
     }
 
@@ -456,11 +570,12 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
         return Bookmarks.Count > 0;
     }
 
-    private bool CanImportBookmarks()
+    private bool CanLoadBookmarksFrom()
     {
         return true;
     }
-    private bool CanExportBookmarks()
+
+    private bool CanSaveBookmarksAs()
     {
         return Bookmarks.Count > 0;
     }
@@ -471,16 +586,5 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
         {
             StorageService.Bookmarks
         };
-    }
-
-    partial void OnSelectionIsBookmarkedChanged(bool value)
-    {
-        if (SelectedObject is null)
-            return;
-
-        if (value)
-            AddBookmark(SelectedObject);
-        else
-            RemoveBookmark(SelectedObject);
     }
 }

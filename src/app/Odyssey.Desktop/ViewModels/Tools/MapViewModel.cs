@@ -22,8 +22,13 @@ public partial class MapViewModel : DocumentToolViewModelBase
         if (oldValue != newValue && newValue != null)
         {
             ISelection selection = new SimpleItemSelection(item: newValue, region: newValue, faction: null);
+            if (IsSelectedRegion(selection))
+            {
+                return;
+            }
             SetSelection(selection);
-            PublishSelectionChangedEvent(new SelectionChange(selection, this, null));
+            // Selection changed event will be sent only when a region has been selected directly in the map (mouse click...)
+            SendSelectionChangedEvent(selection);
         }
     }
 
@@ -65,8 +70,9 @@ public partial class MapViewModel : DocumentToolViewModelBase
         ISelection sel = selectionChange.Selection;
         if (sel.IsRegionSelected() && !IsSelectedRegion(sel))
         {
+            // Update the selected region before setting SelectedRegion, in order to not send back the selection changed event
             SetSelection(sel);
-            SelectedRegion = Selection?.Region!;
+            SelectedRegion = sel?.Region!;
         }
     }
 

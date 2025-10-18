@@ -63,7 +63,7 @@ public abstract partial class MessagesListViewModel : DocumentToolViewModelBase
         if (item != null || region != null)
         {
             ISelection sel = new SimpleItemSelection(item, region, null);
-            PublishSelectionChangedEvent(new SelectionChange(sel, this, null));
+            SendSelectionChangedEvent(sel);
         }
     }
     protected void Clear()

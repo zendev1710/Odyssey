@@ -89,7 +89,7 @@ public partial class ContainerViewModel : ViewModelBase
             newSelection = new SimpleItemSelection(block, Region, null);
         }
 
-        PublishSelectionChangedEvent(new SelectionChange(newSelection, this, null));
+        SendSelectionChangedEvent(newSelection);
     }
 
     protected void AddOwner(NodeViewModel parent, bool buildingContainer)

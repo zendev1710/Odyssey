@@ -645,7 +645,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         OnReportChange(sel, report);
         NotifyReportHasChanged(report);
 
-        PublishSelectionChangedEvent(new SelectionChange(Selection!, this, null));
+        SendSelectionChangedEvent(Selection!);
 
         /*
         searchdlg->setMapFile(report);
@@ -1126,7 +1126,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     }
     */
 
-    private int OnReportChange(ISelection selection, CRDocument reportDocument)
+    private int OnReportChange(ISelection? selection, CRDocument reportDocument)
     {
         /*
         if (pstate.FileChange != Selection.FileChange) {
@@ -1616,6 +1616,17 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         return HasActiveDocument(); //&& HasBoookmarks()
     }
     */
+
+    protected void SendSelectionChangedEvent(ISelection sel)
+    {
+        var ViewModelId = this.Id;
+        ISelector selector = this;
+        ISelector? innerSelector = null;
+        SelectionChange selectionEvent = new SelectionChange(sel, selector, innerSelector);
+        Debug.WriteLine($"[MAINVIEWMODEL] SendSelectionChangedEvent from {ViewModelId} for item {sel.Item}");
+        PublishSelectionChangedEvent(selectionEvent);
+    }
+
 
     /// <summary>
     /// Publish a SelectionStateHasChanged event.

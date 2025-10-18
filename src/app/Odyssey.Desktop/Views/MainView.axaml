@@ -219,8 +219,8 @@
 				<Separator/>
 				<MenuItem Header="Clear All" Command="{Binding RemoveAllBookmarksCommand}" />
 				<Separator/>
-				<MenuItem Header="Import Bookmarks..." Command="{Binding ImportBookmarksCommand}" />
-				<MenuItem Header="Export Bookmarks..." Command="{Binding ExportBookmarksCommand}" />
+				<MenuItem Header="Load Bookmarks From..." Command="{Binding LoadBookmarksFromCommand}" />
+				<MenuItem Header="Save Bookmarks As..." Command="{Binding SaveBookmarksAsCommand}" />
 				<Separator/>
 				<!--MenuItem Header="Manage Bookmarks" Command="{Binding ManageBookmarksCommand}" /-->
 				<Separator/>

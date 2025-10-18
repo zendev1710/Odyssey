@@ -142,7 +142,7 @@ public partial class HistoryViewModel : DocumentToolViewModelBase
 
     private void RevealSelection(SelectionEntry selectionEntry)
     {
-        PublishSelectionChangedEvent(new SelectionChange(selectionEntry.Selection!, this, null));
+        SendSelectionChangedEvent(selectionEntry.Selection!);
         SelectedItem = null;
     }
 

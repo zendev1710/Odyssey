@@ -65,10 +65,10 @@
     <PackageReference Include="ConfigFactory" Version="0.4.3" />
     <PackageReference Include="ConfigFactory.Avalonia" Version="0.4.3" />
     <PackageReference Include="ConfigFactory.Core" Version="0.4.3" />
-	<PackageReference Include="Dock.Avalonia" Version="11.3.6.1" />
-	<PackageReference Include="Dock.Avalonia.Themes.Fluent" Version="11.3.6.1" />
-	<PackageReference Include="Dock.Model.Mvvm" Version="11.3.6.1" />
-    <PackageReference Include="Dock.Avalonia.Themes.Simple" Version="11.3.6.1" />
+	<PackageReference Include="Dock.Avalonia" Version="11.3.6.4" />
+	<PackageReference Include="Dock.Avalonia.Themes.Fluent" Version="11.3.6.4" />
+	<PackageReference Include="Dock.Model.Mvvm" Version="11.3.6.4" />
+    <PackageReference Include="Dock.Avalonia.Themes.Simple" Version="11.3.6.4" />
     <PackageReference Include="Dock.Serializer" Version="11.3.0.12" />
     <PackageReference Include="Markdown.Avalonia" Version="11.0.3-a1" />
     <PackageReference Include="Microsoft.Win32.SystemEvents" Version="10.0.0-preview.4.25258.110" />

@@ -53,15 +53,15 @@ public partial class BuildingDetailsViewModel : ContainerViewModel
     private void MakeItems(ISelection sel)
     {
         Items.Clear();
-        ISelection selection = SetSelection(sel);
-        Block = selection.Item;
-        Region = selection.Region;
+        ISelection? selection = SetSelection(sel);
+        Block = selection?.Item;
+        Region = selection?.Region;
         BuildingModel buildingModel = new(Block!);
         ContainerModel = buildingModel;
 
         DataProperty? property = null;
 
-        if (ContainerModel.CollectData(Report, selection.Region, ref property))
+        if (ContainerModel.CollectData(Report, selection?.Region, ref property))
         {
             OwnerName = ContainerModel.OwnerName;
             OwnerUnit = ContainerModel.OwnerUnit;

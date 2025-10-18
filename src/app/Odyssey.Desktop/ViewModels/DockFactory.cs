@@ -93,15 +93,15 @@ public class DockFactory : Factory
                 new ToolDock
                 {
                     Proportion = 0.1,
-                    ActiveDockable = historyViewModel,
-                    VisibleDockables = CreateList<IDockable>(historyViewModel),
+                    ActiveDockable = bookmarksViewModel,
+                    VisibleDockables = CreateList<IDockable>(bookmarksViewModel),
                 },
                 new ProportionalDockSplitter(),
                 new ToolDock
                 {
                     Proportion = 0.1,
-                    ActiveDockable = bookmarksViewModel,
-                    VisibleDockables = CreateList<IDockable>(bookmarksViewModel),
+                    ActiveDockable = historyViewModel,
+                    VisibleDockables = CreateList<IDockable>(historyViewModel),
                 },
                 new ProportionalDockSplitter(),
                 new ToolDock

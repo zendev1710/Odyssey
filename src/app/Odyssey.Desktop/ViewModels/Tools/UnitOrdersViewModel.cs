@@ -85,7 +85,7 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         HandleSelection(selectionChange.Selection);
     }
 
-    protected override int OnReportChange(ISelection selection)
+    protected override int OnReportChange(ISelection? selection)
     {
         HandleSelection(selection);
         return 1;
@@ -117,9 +117,9 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         // Send a command (notify event ?) to append the "snippet" in text editor area
     }
 
-    private void HandleSelection(ISelection sel)
+    private void HandleSelection(ISelection? sel)
     {
-        if (sel.IsUnitSelected() && IsSelected(sel))
+        if (sel is not null && sel.IsUnitSelected() && IsSelected(sel))
         {
             // if currently selected unit is the specified selection unit, nothing is done
             return;
@@ -197,7 +197,7 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         {
             OnEditableUnitSelected();
             ISelection? sel = new SimpleItemSelection(unit, null, null);
-            PublishSelectionChangedEvent(new SelectionChange(sel, this, null));
+            SendSelectionChangedEvent(sel);
         }
     }
 
@@ -268,7 +268,7 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         {
             OnEditableUnitSelected();
             ISelection? sel = new SimpleItemSelection(unit, null, null);
-            PublishSelectionChangedEvent(new SelectionChange(sel, this, null));
+            SendSelectionChangedEvent(sel);
         }
     }
 

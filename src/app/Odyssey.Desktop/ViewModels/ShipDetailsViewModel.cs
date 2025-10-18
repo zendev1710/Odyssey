@@ -65,13 +65,13 @@ public partial class ShipDetailsViewModel : ContainerViewModel
     public void MakeItems(ISelection sel)
     {
         Items.Clear();
-        ISelection selection = SetSelection(sel);
-        Block = selection.Item;
-        Region = selection.Region;
+        ISelection? selection = SetSelection(sel);
+        Block = selection?.Item;
+        Region = selection?.Region;
         ShipModel shipModel = new(Block!);
         ContainerModel = shipModel; 
         DataProperty? property = null;
-        if (ContainerModel.CollectData(Report, selection.Region, ref property))
+        if (ContainerModel.CollectData(Report, selection?.Region, ref property))
         {
             OwnerName = ContainerModel.OwnerName;
             OwnerUnit = ContainerModel.OwnerUnit;

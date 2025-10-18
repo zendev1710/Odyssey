@@ -102,12 +102,12 @@ namespace Odyssey.ViewModels.Tools
 
         protected abstract void OnSelectionChanged(ISelectionChange selectionChange);
 
-        protected virtual void SetSelection(ISelection sel)
+        protected virtual void SetSelection(ISelection? sel)
         {
             Selection = sel;
         }
 
-        protected virtual int OnReportChange(ISelection selection)
+        protected virtual int OnReportChange(ISelection? selection)
         {
             // TODO : should be handled by event aggregator
             SetSelection(selection);
@@ -152,6 +152,15 @@ namespace Odyssey.ViewModels.Tools
         protected CRDocument GetDocument()
         {
             return Report;
+        }
+
+        protected void SendSelectionChangedEvent(ISelection sel, ISelector? innerSelector = null)
+        {
+            var ViewModelId = this.Id;
+            ISelector selector = this;
+            SelectionChange selectionEvent = new SelectionChange(sel, selector, innerSelector);
+            Debug.WriteLine($"[DOCTOOLVIEWMODELBASE] SendSelectionChangedEvent from {ViewModelId} for item {sel.Item} (innerSel={innerSelector?.Id}");
+            PublishSelectionChangedEvent(selectionEvent);
         }
 
         public bool ShouldIgnoreSelectionChangedEvent(ISelectionChange selectionChange, List<string> selectorIdsIncludeFilter, List<string> selectorIdsExcludeFilter)
