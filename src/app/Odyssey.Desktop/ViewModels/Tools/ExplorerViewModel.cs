@@ -52,17 +52,24 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
     ///     Buildings (only if region has buildings)
     ///       Building 1
     ///       Building 2
-    ///     Unit 1 of active faction (only if ActiveFactionGroup is false)
-    ///     Unit 2 of active faction (only if ActiveFactionGroup is false)
-    ///     Active Faction (only if ActiveFactionGroup is true)
-    ///       Unit 1
-    ///       UniT 2
-    ///     Faction 2
-    ///       Unit 2.1
-    ///       Unit 2.2
-    ///     Faction 3
-    ///       Unit 3.1
-    ///       Unit 3.2
+    ///     Active Faction 1
+    ///       Unit AC1
+    ///       UniT AC2
+    ///     Active Faction 2
+    ///       Unit AC2.1
+    ///       UniT AC2.2
+    ///     Allied Faction 1
+    ///       Unit AL1
+    ///       Unit AL2
+    ///     Allied Faction 2
+    ///       Unit AL2.1
+    ///       Unit AL2.2      
+    ///    NOT Allied Faction 1
+    ///       Unit NA1
+    ///       Unit NA2
+    ///    NOT Allied Faction 2
+    ///       Unit NA2.1
+    ///       Unit NA2.2
     ///   Region 2
     ///     ...
     /// </summary>
@@ -97,8 +104,8 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         
         Items = _root.Children;
 
-        NodeMenuItems = new[]
-            {
+        NodeMenuItems =
+            [
                 //new MenuItemViewModel { Header = "_Open...", Command = OpenCommand },
                 //new MenuItemViewModel { Header = "Save", Command = SaveCommand },
                 new MenuItemViewModel { Header = "-" },
@@ -123,7 +130,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
                     }
                 },
                 */
-            };
+            ];
     }
 
     /// <summary>
@@ -399,10 +406,9 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         int regionsNumber = 0;
         DataBlock? previousBlock = null;
 
+        // TODO: start at first region data block
         for (var block = firstBlockNode?.Value; block != null; block = block.GetNextBlock())
-        //for (var node = firstBlockNode; node != null; node = node.Next)
         {
-            //DataBlock block = node.Value;
             BlockType type = block.GetBlockType();
             if (type == BlockType.REGION)
             {
@@ -550,6 +556,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
 
     private FactionInfo RetrieveAndStoreFactionInfo(int factionId)
     {
+        // TODO: dirctly use Report.Factions FactionModel objects
         FactionInfo factionInfo;
         if (!_factionsInfo.TryGetValue(factionId, out factionInfo))
         {

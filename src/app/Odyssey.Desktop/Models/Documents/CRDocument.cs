@@ -1183,7 +1183,7 @@ m_blocks.push_back(*old_r);
     /// <summary>
     /// What factions do we have HELP status set to?
     /// </summary>
-    ///     /// <param name="currentNode">node to iterate from. modified as the active faction node</param>
+    /// <param name="currentNode">node to iterate from. modified as the active faction node</param>
     /// <returns></returns>
     private Dictionary<int, int> CollectAlliedStatus(ref LinkedListNode<DataBlock>? currentNode)
     {
@@ -1232,7 +1232,7 @@ m_blocks.push_back(*old_r);
 
         LinkedListNode<DataBlock>? currentNode = firstActiveFactionNode;
         // Continue to evaluate ALLIANCE blocks for active faction
-        Dictionary<int, int> alliedStatus = CollectAlliedStatus(ref currentNode);
+        Dictionary<int, int> alliedStatus = []; // CollectAlliedStatus(ref currentNode);
         LinkedListNode<DataBlock>? insertFactionNode = currentNode;
         DataBlock? region = null;
         int unconfirmed = 0;
@@ -1254,7 +1254,7 @@ m_blocks.push_back(*old_r);
         DataBlock? lastSeenRegion = null;
 
         // Iterate through all blocks from current node
-        for (var node = /*currentNode*/ Blocks.First; node != null; node = node.Next)
+        for (var node = currentNode /*Blocks.First*/; node != null; node = node.Next)
         {
             DataBlock b = node.Value;
             BlockType btype = b.GetBlockType();
@@ -1343,7 +1343,7 @@ m_blocks.push_back(*old_r);
                             {
                                 if (ownerFactionId != -1)
                                 {
-                                    // TODO: change alliedStatus mnagement for multi active factions
+                                    // TODO: change alliedStatus management for multi active factions
                                     if ((alliedStatus[ownerFactionId] & HELP_GUARD) != 0)
                                     {
                                         region.AddFlags((int)Flag.REGION_ALLY);
@@ -1412,6 +1412,7 @@ m_blocks.push_back(*old_r);
                     }
                     if (!HasFactionWithId(factionId))
                     {
+                        // TODO: check where it's optimal to insert a new faction block
                         string factionIdStr = Utils.Converters.IntToString(factionId);
                         DataBlock faction = new();
                         faction.SetTypeLabel("PARTEI");
@@ -1449,22 +1450,17 @@ m_blocks.push_back(*old_r);
                         if (factionModel!.IsActive)
                         {
                             currentActiveFaction = factionModel;
+                            // reset allied status for new active faction
+                            alliedStatus = [];
                         }
                     }
                     break;
 
                 case BlockType.ALLIANCE:
                     // alliance as placeholder-faction
-                    //TODO
-                    //currentActiveFaction.AddAlliance(b, blockId);
-                    /*
-                    if (!HasFactionWithId(blockId))
-                    {
-                        if (AddFaction(b, blockId, out var allianceFfactionModel)) 
-                        { 
-                        }
-                    }
-                    */
+                    currentActiveFaction.AddAlliance(b, blockId);
+                    // TODO: add status to Alliance model in AddAlliance method
+                    alliedStatus[b.GetId()] = b.ValueInt(Strings.EN_ALLIANCE_STATUS, 0);
                     break;
 
                 case BlockType.ISLAND:
@@ -1484,7 +1480,7 @@ m_blocks.push_back(*old_r);
                     region.AddFlags((int)Flag.TROOPS);
 
                     // count people
-                    int number = b.ValueInt(KeyType.NUMBER, 0);
+                    int peopleNumber = b.ValueInt(KeyType.NUMBER, 0);
                     OwnerType owner = OwnerType.ENEMY;
 
                     int factionId = GetFactionIdForUnit(unitPtr);
@@ -1492,8 +1488,8 @@ m_blocks.push_back(*old_r);
                     {
                         if (ActiveFactions.ContainsKey(factionId))
                         {
-                            regionOwn += number;
-                            number = 0;
+                            regionOwn += peopleNumber;
+                            peopleNumber = 0;
                             owner = OwnerType.OWN;
                             if (!IsConfirmed(b))
                             {
@@ -1502,13 +1498,17 @@ m_blocks.push_back(*old_r);
                         }
                         else if (alliedStatus.ContainsKey(factionId))
                         {
-                            regionAlly += number;
+                            regionAlly += peopleNumber;
                             owner = OwnerType.ALLY;
-                            number = 0;
+                            peopleNumber = 0;
+                        }
+                        else
+                        {
+                            // enemy unit
                         }
                     }
 
-                    regionEnemy += number;
+                    regionEnemy += peopleNumber;
 
                     if (b.ValueInt(Strings.DE_UNIT_IS_GUARDING) == 1)
                     {
@@ -1567,6 +1567,10 @@ m_blocks.push_back(*old_r);
                             {
                                 // a dragon is in the region
                                 region.AddFlags((int)Flag.DRAGON);
+                            }
+                            else
+                            {
+                                Debug.WriteLine($"[DOCUMENT] Disguised unit {b} with no faction and unknown type '{typeName}' on {region}");
                             }
                         }
                     }

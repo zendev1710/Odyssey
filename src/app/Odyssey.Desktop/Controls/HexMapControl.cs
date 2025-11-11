@@ -2,8 +2,10 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
+using Avalonia.Media.TextFormatting; // added for TextLayout
 using Avalonia.Platform;
 using Avalonia.VisualTree;
+using Avalonia.Threading;
 using Odyssey.Models.Data;
 using Odyssey.Settings;
 using Odyssey.Utils;
@@ -12,7 +14,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-
+using System.Timers; // for delayed hide timer
 
 namespace Odyssey.Controls;
 
@@ -53,6 +55,9 @@ public class HexMapControl : Control
     private readonly List<BoatWake> _boatWakes = new();
     private Bitmap? _boatWakeBitmap;
 
+    // currently hovered region (for tooltip)
+    private DataBlock? _hoveredRegion;
+    
     // Default size of hexagon as the width of the bounding square in pixels
     private static readonly double defaultHexSideSize = 64; //64 or 80
 
@@ -114,7 +119,12 @@ public class HexMapControl : Control
         UpdateTerrainImagesFromSeason(Season);
         Season = Seasons.UNKNOWN;
         this.PointerPressed += OnPointerPressed;
+        this.PointerMoved += OnPointerMoved;
+        this.PointerExited += OnPointerExited;
 
+        // Set a short default tooltip show delay (optional)
+        ToolTip.SetShowDelay(this, 500);
+        
         // Load directional wake image (add a PNG at Assets/Map/Effects/boat_wake.png)
         _boatWakeBitmap = LoadBitmap("/Assets/Map/Effects/boat_wake.png", -1, false);
     }
@@ -170,6 +180,9 @@ public class HexMapControl : Control
 
     public override void Render(DrawingContext context)
     {
+        // TODO:
+        // - show island names according to option
+
         base.Render(context);
         double hexSize = HexSize;
         foreach (var kvp in Regions)
@@ -264,6 +277,93 @@ public class HexMapControl : Control
                 //context.DrawGeometry(Brushes.LightGray, null, geometry);
             }
 
+            if (Terrains.CanBeNamed(terrain))
+            {
+                // Draw region name centered in hex (horizontally and vertically)
+                try
+                {
+                    // Get readable name from the datablock
+                    string name = region.Value(KeyType.NAME);
+                    /**/
+                    if (string.IsNullOrEmpty(name))
+                    {
+                        // fallback to lowercase name or coordinates if no name
+                        name = region.Value(KeyType.LOWERCASE_NAME);
+                    }
+                    /**/
+                    if (!string.IsNullOrEmpty(name))
+                    {
+                        // Can be adjusted. font size relative to hex size (tweak multiplier as needed)
+                        double fontSize = Math.Max(8, hexSize * 0.33 /*0.28 / 0.35*/);
+                        // Can be adjusted. Max width should be a bit smaller than hex bounding width
+                        double maxTextWidth = Math.Max(10, geometry.Bounds.Width * 0.95);
+
+                        // Create a left-aligned TextLayout with a MaxWidth then compute the measured size
+                        TextDecorationCollection? textDecorations = null;
+                        // var typeface = new Typeface("Segoe UI");
+                        // Use SemiBold to increase contrast/visibility; change to FontWeight.Bold if you prefer stronger weight.
+                        var typeface = new Typeface("Segoe UI", FontStyle.Normal, FontWeight.SemiBold);
+                        double maxWidth = maxTextWidth;
+                        double fontSz = fontSize;
+                        // Can be adjusted. slightly stronger shadow: 220 instead of 180
+                        var shadowBrush = new SolidColorBrush(Color.FromArgb(220, 0, 0, 0));
+
+                        // TODO: maybe white on unactive mountain, black for others
+                        var labelBrush = GetLabelBrushForTerrain(terrain);
+
+                        // Create left-aligned layout and center manually (left alignment + manual origin avoids the centering issues)
+                        using (var layout = new TextLayout(
+                            name,
+                            typeface,
+                            fontSz,
+                            labelBrush,
+                            TextAlignment.Left,
+                            TextWrapping.NoWrap,
+                            TextTrimming.CharacterEllipsis,
+                            textDecorations,
+                            FlowDirection.LeftToRight,
+                            maxWidth))
+                        using (var shadowLayout = new TextLayout(
+                            name,
+                            typeface,
+                            fontSz,
+                            shadowBrush,
+                            TextAlignment.Left,
+                            TextWrapping.NoWrap,
+                            TextTrimming.CharacterEllipsis,
+                            textDecorations,
+                            FlowDirection.LeftToRight,
+                            maxWidth))
+                        {
+                            // Prefer WidthIncludingTrailingWhitespace for visual width, fall back to Width.
+                            double measuredWidth = layout.WidthIncludingTrailingWhitespace > 0 ? layout.WidthIncludingTrailingWhitespace : layout.Width;
+                            measuredWidth = Math.Min(measuredWidth, maxWidth);
+                            double measuredHeight = layout.Height;
+
+                            // Center the layout box horizontally and vertically on the hex center,
+                            // then shift slightly downward (a fraction of the font size) so text sits a bit lower than true center.
+                            double dropFactor = 0.9; // smaller = closer to center, larger = further down; tweak as needed
+                            double drop = fontSz * dropFactor;
+                            var origin = new Point(center.X - measuredWidth / 2.0, center.Y - measuredHeight / 2.0 + drop);
+
+                            // Can be adjusted
+                            double raise = Math.Max(0.0, fontSz * 0.3); // tweak 0.12 to move more/less
+                            origin = new Point(origin.X, origin.Y - raise);
+
+                            // Shadow and main draw
+                            var shadowOffset = Math.Max(1.0, fontSz * 0.07);
+                            shadowLayout.Draw(context, new Point(origin.X + shadowOffset, origin.Y + shadowOffset));
+                            layout.Draw(context, origin);
+
+                        }
+                    }
+                }
+                catch
+                {
+                    // Defensive: don't crash rendering on text layout errors
+                }
+            }
+
             // Persisting boat wake: draw for ocean regions flagged with SHIPTRAVEL
             // Keep this simple (no animation) — uses the existing _boatWakeBitmap asset.
             // If you later add direction data you can rotate/draw per-boat similarly to DrawBoatWakes.
@@ -274,6 +374,8 @@ public class HexMapControl : Control
                     var flags = region.GetFlags();
                     if (((flags) & (int)Flag.SHIPTRAVEL) != 0 && _boatWakeBitmap != null)
                     {
+                        // Draw boat wake
+                        /*
                         // size roughly half the hex bounding width (tweak if needed)
                         double wakeSize = Math.Max(4, hexSize * 0.9);
                         var dest = new Rect(center.X - wakeSize / 2, center.Y - wakeSize / 2, wakeSize, wakeSize);
@@ -284,6 +386,7 @@ public class HexMapControl : Control
                             // No rotation available from region data here; future: rotate if direction is known
                             context.DrawImage(_boatWakeBitmap, new Rect(0, 0, _boatWakeBitmap.Size.Width, _boatWakeBitmap.Size.Height), dest);
                         }
+                        */
                     }
                 }
             }
@@ -487,6 +590,47 @@ public class HexMapControl : Control
             SelectedRegion = null;
             InvalidateVisual();
         }
+    }
+
+    private void OnPointerMoved(object? sender, Avalonia.Input.PointerEventArgs e)
+    {
+        var point = e.GetPosition(this);
+        var (q, r) = PixelToHex(point, HexSize);
+        int key = (int)new Coordinates(q, r, (int)PlaneType.WORLD);
+        
+        if (Regions.TryGetValue(key, out var region))
+        {
+            var terrain = region.GetTerrain();
+            if (Terrains.CanBeNamed(terrain))
+            {
+                // don't display tooltip if over a region that can not be named (ocean, firewall...)
+                if (!ReferenceEquals(region, _hoveredRegion))
+                {
+                    _hoveredRegion = region;
+                    // Build tooltip text
+                    string tip = region.GetUILabel();
+                    if (string.IsNullOrEmpty(tip))
+                    {
+                        tip = region.Value(KeyType.NAME);
+                        if (string.IsNullOrEmpty(tip))
+                            tip = $"{q},{r}";
+                    }
+                    ToolTip.SetTip(this, tip);
+                }
+            }
+            else
+            {
+                _hoveredRegion = null;
+                ToolTip.SetTip(this, null);
+            }
+        }
+    }
+
+    private void OnPointerExited(object? sender, Avalonia.Input.PointerEventArgs e)
+    {
+        // TODO: when mouse is over the tooltip itself, then it does not work anymore until mouse re-enters the control
+        _hoveredRegion = null;
+        ToolTip.SetTip(this, null);
     }
 
     private void OnSelectedRegionChanged(AvaloniaPropertyChangedEventArgs e)
@@ -748,5 +892,38 @@ public class HexMapControl : Control
             Debug.WriteLine($"[HEXMAPCONTROL] WARNING | could not find terrain image for terrain={terrain} resourcePathname={resourcePathname}");
         }
         return bitmap;
+    }
+
+    // Helper: pick a readable brush (black or white) depending on terrain "brightness".
+    // Tweak mapping to taste — chosen to be conservative for common terrain images.
+    private static IBrush GetLabelBrushForTerrain(int terrain)
+    {
+        switch (terrain)
+        {
+            case Terrains.FOREST:
+            case Terrains.MOUNTAIN:
+            case Terrains.VOLCANO:
+            case Terrains.VOLCANO_ACTIVE:
+            case Terrains.GLACIER:
+            case Terrains.ICEBERG:
+            case Terrains.ICEFLOE:
+            case Terrains.WALL:
+            case Terrains.HALL:
+            case Terrains.CORRIDOR:
+            case Terrains.FOG:
+            case Terrains.THICKFOG:
+            case Terrains.MAHLSTROM:
+                // dark backgrounds -> use white text
+                //return Brushes.White;
+            case Terrains.DESERT:
+            case Terrains.PLAINS:
+            case Terrains.SWAMP:
+            case Terrains.HIGHLAND:
+            case Terrains.UNKNOWN:
+            case Terrains.PACKICE:
+            default:
+                // lighter backgrounds -> use dark text
+                return Brushes.Black;
+        }
     }
 }

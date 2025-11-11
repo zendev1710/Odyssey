@@ -1,6 +1,7 @@
 ﻿using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Localization;
+using System.Collections.Generic;
 
 namespace Odyssey.Models;
 
@@ -12,6 +13,8 @@ public class FactionModel
     public bool IsActive { get; private set; } = false;
     public int Recruitment { get; private set; } = 0;
 
+    public Dictionary<int, DataBlock> Alliances { get; private set; } = [];
+
     public FactionModel(DataBlock dataBlock)
     {
         Data = dataBlock;
@@ -21,6 +24,12 @@ public class FactionModel
         IsActive = CRDocument.FactionIsActive(Data);
         Id = Data.GetId();
     }
+
+    public void AddAlliance(DataBlock ally, int blockId)
+    {
+        Alliances[blockId] = ally;
+    }
+
     public override string ToString()
     {
         return Name;
