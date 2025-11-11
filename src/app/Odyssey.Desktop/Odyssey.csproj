@@ -1,17 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+	<TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+	<!--TargetFramework>net8.0</TargetFramework-->
     <Nullable>enable</Nullable>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <StartupObject>Odyssey.Program</StartupObject>
+    <Platforms>AnyCPU</Platforms>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <WarningLevel>9999</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <WarningLevel>9999</WarningLevel>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <WarningLevel>9999</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <WarningLevel>9999</WarningLevel>
   </PropertyGroup>
 
@@ -47,15 +55,15 @@
 
   <ItemGroup>
     <PackageReference Include="AsyncImageLoader.Avalonia" Version="3.4.3" />
-	<PackageReference Include="Avalonia" Version="11.3.7" />
+	<PackageReference Include="Avalonia" Version="11.3.8" />
 	<PackageReference Include="Avalonia.AvaloniaEdit" Version="11.3.0" />
-	<PackageReference Include="Avalonia.Controls.DataGrid" Version="11.3.7" />
-	<PackageReference Include="Avalonia.Desktop" Version="11.3.7" />
-	<PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.7" />
-	<PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.7" />
+	<PackageReference Include="Avalonia.Controls.DataGrid" Version="11.3.8" />
+	<PackageReference Include="Avalonia.Desktop" Version="11.3.8" />
+	<PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.8" />
+	<PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.8" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-	<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.3.7" />
-	<PackageReference Include="Avalonia.Themes.Simple" Version="11.3.7" />
+	<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.3.8" />
+	<PackageReference Include="Avalonia.Themes.Simple" Version="11.3.8" />
     <PackageReference Include="AvaloniaEdit.TextMate" Version="11.3.0" />
     <PackageReference Include="AvaloniaEdit.TextMate.Grammars" Version="0.10.12" />
     <PackageReference Include="CommunityToolkit.Common" Version="8.4.0" />
@@ -65,10 +73,10 @@
     <PackageReference Include="ConfigFactory" Version="0.4.3" />
     <PackageReference Include="ConfigFactory.Avalonia" Version="0.4.3" />
     <PackageReference Include="ConfigFactory.Core" Version="0.4.3" />
-	<PackageReference Include="Dock.Avalonia" Version="11.3.6.4" />
-	<PackageReference Include="Dock.Avalonia.Themes.Fluent" Version="11.3.6.4" />
-	<PackageReference Include="Dock.Model.Mvvm" Version="11.3.6.4" />
-    <PackageReference Include="Dock.Avalonia.Themes.Simple" Version="11.3.6.4" />
+	<PackageReference Include="Dock.Avalonia" Version="11.3.6.5" />
+	<PackageReference Include="Dock.Avalonia.Themes.Fluent" Version="11.3.6.5" />
+	<PackageReference Include="Dock.Model.Mvvm" Version="11.3.6.5" />
+    <PackageReference Include="Dock.Avalonia.Themes.Simple" Version="11.3.6.5" />
     <PackageReference Include="Dock.Serializer" Version="11.3.0.12" />
     <PackageReference Include="Markdown.Avalonia" Version="11.0.3-a1" />
     <PackageReference Include="Microsoft.Win32.SystemEvents" Version="10.0.0-preview.4.25258.110" />
@@ -174,5 +182,6 @@
     <AssemblyVersion>0.10.0.0</AssemblyVersion>
     <FileVersion>0.10.0.0</FileVersion>
     <InformationalVersion>0.10.0</InformationalVersion>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
   </PropertyGroup>
 </Project>

@@ -9,7 +9,8 @@ using static Odyssey.Models.Tools.DataProperty;
 namespace Odyssey.Models.Tools;
 
 /// <summary>
-/// Handle information about a container (a building or a ship).
+/// Represents a container, which is an entity that can hold units.
+/// A container can be a building or a ship.
 /// </summary>
 public abstract class ContainerModel : EntityModel
 {
@@ -147,7 +148,6 @@ public abstract class ContainerModel : EntityModel
             foreach (DataKey kb in effects.GetData())
             {
                 Effects.Add(kb.GetValue());
-                //Effects.Add($"{kb.GetName()} = {kb.GetValue()}");
             }
             return true;
         }

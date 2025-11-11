@@ -1,11 +1,14 @@
 <Solution>
   <Configurations>
     <Platform Name="Any CPU" />
+    <Platform Name="ARM" />
     <Platform Name="ARM64" />
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
   <Folder Name="/Solution Items/">
+    <File Path="../.github/workflows/release-with-msix.yml" />
+    <File Path="../.github/workflows/release.yml" />
     <File Path="../BUILD.md" />
     <File Path="../DEVELOPER.md" />
     <File Path="../FEATURES.md" />
@@ -13,9 +16,9 @@
     <File Path="../SPECS.md" />
     <File Path="../TODO.md" />
   </Folder>
-  <Project Path="app/Odyssey.Desktop/Odyssey.csproj" />
-  <Project Path="setup/OdysseySetup.wixproj" Type="b7dd6f7e-def8-4e67-b5b7-07ef123db6f0" Id="f0a29253-4d60-47cb-8a9b-c272b5622891">
-    <Platform Solution="*|Any CPU" Project="x64" />
+  <Project Path="app/Odyssey.Desktop/Odyssey.csproj">
+    <Build Solution="Release|Any CPU" Project="false" />
+    <Build Solution="Release|x64" Project="false" />
   </Project>
   <Project Path="tools/cropper/cropper.csproj" />
 </Solution>

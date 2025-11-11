@@ -4,13 +4,13 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
+using Odyssey.Models.Localization;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Reactive.Joins;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -206,6 +206,7 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
             SetSelection(sel);
         }
     }
+
     protected override void SetSelection(ISelection? sel)
     {
         base.SetSelection(sel);
@@ -215,6 +216,11 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
         SelectionIsBookmarked = SelectionIsBookmarkable && IsInBookmarks(SelectedObject, out bookmarkModel);
         SelectionName = SelectedObject?.GetUILabel() ?? string.Empty;
         SelectedBookmark = SelectionIsBookmarked ? bookmarkModel : null;
+    }
+
+    private void UpdateSelectedBookmark()
+    {
+        // TODO: update bookmark status according to the if current selection (Selection) bookmarks list belonging
     }
 
     // Load bookmarks from XML file
@@ -358,8 +364,7 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
             // LATER : if _lastSelectedBookmark matches an existing bookmark in the new list, should set it
             _lastSelectedBookmark = null;
             LoadBookmarks(newValue.FilePath);
-            // Will reselect the current selection if it exists as a bookmark in the loaded bookmarks list
-            SetSelection(Selection);
+            UpdateSelectedBookmark();
         }
     }
 
@@ -437,8 +442,7 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
         // LATER ? should have a custom overwrite check box to define behaviour about current bookmarks
         var result = await storageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            // LATER: translate title
-            Title = "Load Bookmarks from",
+            Title = Labels.Localize(Labels.DIALOG_TITLE_BOOKMARKS_LOAD),
             FileTypeFilter = GetOpenBookmarksFileTypes(),
             AllowMultiple = false
         });
@@ -513,8 +517,7 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
         //string pathname = Path.ChangeExtension(fileViewModel.Path, defaultExtension);
         var file = await storageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            // LATER: translate title
-            Title = "Save Bookmarks As",
+            Title = Labels.Localize(Labels.DIALOG_TITLE_BOOKMARKS_SAVE_AS),
             FileTypeChoices = [StorageService.Bookmarks],
             SuggestedFileName = suggestFilePathName,
             //SuggestedStartLocation = StorageFileLocation.Documents,

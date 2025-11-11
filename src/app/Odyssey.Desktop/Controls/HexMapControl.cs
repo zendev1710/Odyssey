@@ -16,6 +16,7 @@ using System.Linq;
 
 namespace Odyssey.Controls;
 
+
 /***
  * Represents a hexagonal map control for displaying regions with different terrains.
  * 
@@ -35,8 +36,22 @@ public class HexMapControl : Control
     // TODO: do not darken oceans where someone traveled, where a lighthouse can watch...
     // TODO: zoom slider as a map setting "dispaly zoom slider at the top of the map"
     // TODO: 'show fog of war' setting and handle
+    // TODO: show see monsters, storms...
     // TODO: 'image background' setting and handle
     // MG: BorderCellRenderer : streats, coasts...
+
+    private class BoatWake
+    { 
+        public int Q;
+        public int R;
+        public double AngleDegrees;
+        public DateTime Created;
+        public double DurationSeconds;
+    }
+
+    private readonly object _wakesLock = new();
+    private readonly List<BoatWake> _boatWakes = new();
+    private Bitmap? _boatWakeBitmap;
 
     // Default size of hexagon as the width of the bounding square in pixels
     private static readonly double defaultHexSideSize = 64; //64 or 80
@@ -99,6 +114,9 @@ public class HexMapControl : Control
         UpdateTerrainImagesFromSeason(Season);
         Season = Seasons.UNKNOWN;
         this.PointerPressed += OnPointerPressed;
+
+        // Load directional wake image (add a PNG at Assets/Map/Effects/boat_wake.png)
+        _boatWakeBitmap = LoadBitmap("/Assets/Map/Effects/boat_wake.png", -1, false);
     }
 
     private void OnSeasonChanged()
@@ -188,23 +206,54 @@ public class HexMapControl : Control
 
             if (image != null)
             {
+                // TODO: handle Flag.SHIPTRAVEL means a boat traveled through this region (ocean)
                 var bounds = geometry.Bounds;
                 // Draw the image stretched to the hex's bounding box
                 context.DrawImage(image, new Rect(0, 0, image.Size.Width, image.Size.Height), bounds);
 
                 // If region is unseen, overlay a semi-transparent black to darken
-                // TODO: exclude also regions visible by travel, lighthouse...
-                if (region.IsUnseenRegion())
+                if (region.IsSeenRegion(out Flag visibilityFlag))
                 {
-                    // 160 as first argb parameter is a ~63% opacity black
+                    // Lighten oceans where someone traveled
+                    //if (terrain == Terrains.OCEAN && region.IsWithPeople())
+                    if (visibilityFlag == Flag.LIGHTHOUSE)
+                    {
+                        if (terrain != Terrains.OCEAN)
+                        {
+                            // Should not happen, but just in case
+                        }
+                        // Overlay a semi-transparent blue to lighten the ocean
+                        context.DrawGeometry(
+                            // something from 50 to 80 seems good for first argb parameter
+                            new SolidColorBrush(Color.FromArgb(50, 100, 255, 100)), // light blue, ~31% opacity
+                            null,
+                            geometry
+                        );
+                    }
+                    /*else if (visibilityFlag == Flag.TRAVEL)
+                    {
+                        if (terrain != Terrains.OCEAN)
+                        {
+                            // Should not happen, but just in case
+                            continue;
+                        }
+                        // Overlay a semi-transparent blue to lighten the ocean
+                        context.DrawGeometry(
+                            new SolidColorBrush(Color.FromArgb(100, 100, 180, 255)), // light blue, ~39% opacity
+                            null,
+                            geometry
+                        );
+                    }*/
+                    // TODO: lighten oceans where a lighthouse can watch
+                }
+                else
+                {
+                    // 120 as first argb parameter is a ~47% opacity black
                     context.DrawGeometry(
-                        new SolidColorBrush(Color.FromArgb(120, 0, 0, 0)), 
+                        new SolidColorBrush(Color.FromArgb(120, 0, 0, 0)),
                         null,
                         geometry
                     );
-                }
-                else
-                { 
                 }
                 // Optionally, overlay a semi-transparent fill for effect
                 // context.DrawGeometry(new SolidColorBrush(Color.FromArgb(64, 255, 255, 255)), null, geometry);
@@ -213,6 +262,34 @@ public class HexMapControl : Control
             {
                 // LATER: add a warning in console. Should not happen
                 //context.DrawGeometry(Brushes.LightGray, null, geometry);
+            }
+
+            // Persisting boat wake: draw for ocean regions flagged with SHIPTRAVEL
+            // Keep this simple (no animation) — uses the existing _boatWakeBitmap asset.
+            // If you later add direction data you can rotate/draw per-boat similarly to DrawBoatWakes.
+            try
+            {
+                if (terrain == Terrains.OCEAN)
+                {
+                    var flags = region.GetFlags();
+                    if (((flags) & (int)Flag.SHIPTRAVEL) != 0 && _boatWakeBitmap != null)
+                    {
+                        // size roughly half the hex bounding width (tweak if needed)
+                        double wakeSize = Math.Max(4, hexSize * 0.9);
+                        var dest = new Rect(center.X - wakeSize / 2, center.Y - wakeSize / 2, wakeSize, wakeSize);
+
+                        // Draw with a modest opacity so it blends with ocean
+                        using (context.PushOpacity(0.9))
+                        {
+                            // No rotation available from region data here; future: rotate if direction is known
+                            context.DrawImage(_boatWakeBitmap, new Rect(0, 0, _boatWakeBitmap.Size.Width, _boatWakeBitmap.Size.Height), dest);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                // Defensive: don't crash rendering if Flag enum/value isn't available or cast fails.
             }
 
             // Draw highlight if selected
@@ -252,6 +329,63 @@ public class HexMapControl : Control
             {
                 // Draw the hex border on top (always last, in gray)
                 context.DrawGeometry(null, new Pen(new SolidColorBrush(Color.FromRgb(128, 128, 128)), 1), geometry);
+            }
+        }
+        // TODO: draw ships, lighthouses, monsters, storms...
+        // DrawBoatWakes(context, hexSize);
+    }
+
+    // --- Add helper to cleanup and draw wakes; call DrawBoatWakes(context, hexSize) at the end of Render() ---
+    private void DrawBoatWakes(DrawingContext context, double hexSize)
+    {
+        List<BoatWake> snapshot;
+        lock (_wakesLock)
+        {
+            snapshot = _boatWakes.ToList();
+        }
+
+        if (snapshot.Count == 0 || _boatWakeBitmap == null)
+            return;
+
+        var now = DateTime.UtcNow;
+        // Remove expired wakes (cleanup)
+        lock (_wakesLock)
+        {
+            _boatWakes.RemoveAll(w => (now - w.Created).TotalSeconds >= w.DurationSeconds);
+        }
+
+        foreach (var w in snapshot)
+        {
+            var age = (now - w.Created).TotalSeconds;
+            if (age >= w.DurationSeconds) continue;
+            var remaining = 1.0 - (age / w.DurationSeconds); // 1->0
+
+            // opacity fades out (keep minimum so visible)
+            double opacity = Math.Max(0.15, remaining);
+
+            // size: roughly half the hex bounding width (or use slightly less)
+            double size = hexSize * 1.0; // hexSize is radius-to-corner; adjust as needed
+            double scale = 0.5 + 0.4 * remaining; // vary size slightly while fading
+            double drawSize = size * scale;
+
+            // pixel center for hex
+            var center = HexToPixel(w.Q, w.R, hexSize);
+
+            // dest rectangle centered on hex
+            var dest = new Rect(center.X - drawSize / 2, center.Y - drawSize / 2, drawSize, drawSize);
+
+            // compute rotation matrix around center (PushTransform expects an Avalonia.Matrix)
+            double angleRad = w.AngleDegrees * Math.PI / 180.0;
+            var translateToOrigin = Matrix.CreateTranslation(-center.X, -center.Y);
+            var rotation = Matrix.CreateRotation(angleRad);
+            var translateBack = Matrix.CreateTranslation(center.X, center.Y);
+            var mat = translateToOrigin * rotation * translateBack;
+
+            // Use PushTransform (replacement for deprecated PushPostTransform)
+            using (context.PushTransform(mat))
+            using (context.PushOpacity(opacity))
+            {
+                context.DrawImage(_boatWakeBitmap, new Rect(0, 0, _boatWakeBitmap.Size.Width, _boatWakeBitmap.Size.Height), dest);
             }
         }
     }
@@ -311,6 +445,23 @@ public class HexMapControl : Control
         height = double.IsNaN(height) || height < 0 ? 0 : height;
 
         return new Size(width, height);
+    }
+
+    // --- Public API: call this when a boat travels through a region ---
+    public void AddBoatWake(int q, int r, double angleDegrees, double durationSeconds = 2.5)
+    {
+        lock (_wakesLock)
+        {
+            _boatWakes.Add(new BoatWake
+            {
+                Q = q,
+                R = r,
+                AngleDegrees = angleDegrees,
+                Created = DateTime.UtcNow,
+                DurationSeconds = durationSeconds
+            });
+        }
+        InvalidateVisual();
     }
 
     private void OnPointerPressed(object? sender, Avalonia.Input.PointerPressedEventArgs e)

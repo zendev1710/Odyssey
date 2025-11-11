@@ -486,7 +486,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
             */
 
             // get info about active faction
-            if (report.GetActiveFactionId() != 0)
+            if (report.HasActiveFaction())
             {
                 //DataBlock? block = report.GetActiveFaction();
 
@@ -1660,7 +1660,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     private void UpdateReportInformation(CRDocument report)
     {
         HasDocument = report.HasData();
-        FactionName = HasDocument ? report.GetActiveFactionName() : string.Empty;
+        FactionName = report.GetActiveFactionName();
         ReportName = HasDocument ? report.Name : string.Empty;
         GameTurn = HasDocument ? $"[{report.Turn}]" : string.Empty;
         GameDate = HasDocument ? DateUtils.GetGameDateLabel(report.Turn) : string.Empty;

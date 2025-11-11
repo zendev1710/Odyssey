@@ -12,9 +12,9 @@ namespace Odyssey
         private static IInputElement? _inputElement;
 
         public string Name { get; }
-        public KeyGesture? Gesture { get; }
+        public Avalonia.Input.KeyGesture? Gesture { get; }
 
-        public RoutedCommand(string name, KeyGesture? keyGesture = null)
+        public RoutedCommand(string name, Avalonia.Input.KeyGesture? keyGesture = null)
         {
             Name = name;
             Gesture = keyGesture;

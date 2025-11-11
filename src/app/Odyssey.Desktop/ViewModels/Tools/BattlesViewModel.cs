@@ -12,6 +12,7 @@ using System.Linq;
 using CommunityToolkit.Mvvm.Input;
 using static Odyssey.Models.Documents.CRDocument;
 using static Odyssey.Models.Documents.SimpleItemSelection;
+using Odyssey.Models;
 
 namespace Odyssey.ViewModels.Tools;
 
@@ -116,7 +117,10 @@ public partial class BattlesViewModel : DocumentToolViewModelBase
             }
             else if (type == BlockType.FACTION)
             {
-                currentFactionName = GetFactionName(block);
+                // TODO: is there a better way to get the faction name?
+                FactionModel? factionModel = Report.GetFaction(block.GetId());
+                currentFactionName = factionModel is not null ? factionModel.Name : string.Empty;
+                //currentFactionName = GetFactionName(block);
             }
             else if (type == BlockType.BATTLE)
             {

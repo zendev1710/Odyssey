@@ -520,6 +520,24 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Load Bookmarks from.
+        /// </summary>
+        public static string dlg_title_bookmarks_load {
+            get {
+                return ResourceManager.GetString("dlg_title_bookmarks_load", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Bookmarks As.
+        /// </summary>
+        public static string dlg_title_bookmarks_save_as {
+            get {
+                return ResourceManager.GetString("dlg_title_bookmarks_save_as", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dark.
         /// </summary>
         public static string Dunkel {
@@ -2424,6 +2442,78 @@ namespace Odyssey.Assets {
         public static string Learning_costs {
             get {
                 return ResourceManager.GetString("Learning_costs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bookmarks.
+        /// </summary>
+        public static string mainmenu_bookmarks {
+            get {
+                return ResourceManager.GetString("mainmenu_bookmarks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear All.
+        /// </summary>
+        public static string mainmenu_bookmarks_clear_all {
+            get {
+                return ResourceManager.GetString("mainmenu_bookmarks_clear_all", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import From....
+        /// </summary>
+        public static string mainmenu_bookmarks_import {
+            get {
+                return ResourceManager.GetString("mainmenu_bookmarks_import", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage....
+        /// </summary>
+        public static string mainmenu_bookmarks_manage {
+            get {
+                return ResourceManager.GetString("mainmenu_bookmarks_manage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jump Forward.
+        /// </summary>
+        public static string mainmenu_bookmarks_next {
+            get {
+                return ResourceManager.GetString("mainmenu_bookmarks_next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jump Backward.
+        /// </summary>
+        public static string mainmenu_bookmarks_prev {
+            get {
+                return ResourceManager.GetString("mainmenu_bookmarks_prev", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save As....
+        /// </summary>
+        public static string mainmenu_bookmarks_save_as {
+            get {
+                return ResourceManager.GetString("mainmenu_bookmarks_save_as", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle Bookmark.
+        /// </summary>
+        public static string mainmenu_bookmarks_toggle {
+            get {
+                return ResourceManager.GetString("mainmenu_bookmarks_toggle", resourceCulture);
             }
         }
         

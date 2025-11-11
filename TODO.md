@@ -1,15 +1,21 @@
 # TODO
 
-## Keyboard shortcuts
+## Features in progress
+
+### Keyboard shortcuts
 
 - which one for 'Save Orders'?
-
-
-## Features in progress
 
 ### Menu system
 
 TO BE FINISHED.
+
+### Bookmarks system
+
+- [ ] 'New bookmarks set' item in the status bar's combobox
+- [ ] Manage bookmarks (dialog box)
+- [ ] Combobox control content to up (not bottom), using flyout ?
+- [ ] Bad design preview for starcontrol
 
 ### Statistics view
 
@@ -21,7 +27,7 @@ TO BE DONE.
 
 ### Settings system
 
-TO BE FINISHED.
+TO BE REWRITTEN.
 
 - [x] Use [ConfigFactory.Avalonia](https://www.nuget.org/packages/ConfigFactory.Avalonia) for GUI settings pages
 - [x] Restore/save settings by (de)serializing into an application settings JSON file (config.json)
@@ -29,14 +35,8 @@ TO BE FINISHED.
 
 ### Translation system
 
-TO BE FINISHED.
-
-- [x] Main view
-- [x] Building details view
-- [x] Ship details view
-- [x] Unit details view
-- [x] Explorer view
-- [x] Region properties view
+- [ ] Achieve missing translations displayed -- xxx -- in the UI and stored in to-translate bookmarks
+- [ ] Achieve missing german translations marked [de]
 
 ### Tooltips system
 

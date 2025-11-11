@@ -27,6 +27,8 @@ namespace Odyssey.Models.Localization
         public const string COAST = "coast";
         public const string COMBAT_SPELLS = "combat_spells";
         public const string COMBAT_SPELL_PERIOD = "combat_spell_period";
+        public const string DIALOG_TITLE_BOOKMARKS_LOAD = "dlg_title_bookmarks_load";
+        public const string DIALOG_TITLE_BOOKMARKS_SAVE_AS = "dlg_title_bookmarks_save_as";
         public const string DIRECTION = "direction";
         public const string DIRECTION_ABBREVIATED = "direction_abbreviated";
         public const string DISGUISED = "disguised";

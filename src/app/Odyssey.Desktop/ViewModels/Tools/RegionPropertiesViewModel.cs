@@ -444,7 +444,6 @@ public partial class RegionPropertiesViewModel : DocumentToolViewModelBase
             // Compute and store region information
             // no regionInfo -> collect information (resources and peole...) from other blocks
             bool isActiveFaction = false;
-            int activeFactionId = Report.GetActiveFactionId();
             regionInfos = regionAttachment!.SetRegionInfos(new RegionInfos());
             var startBlock = region.GetNextBlock();
             int depth = region.GetDepth();
@@ -478,8 +477,7 @@ public partial class RegionPropertiesViewModel : DocumentToolViewModelBase
                     // - compute number of people from the active faction
                     DataBlock unitBlock = b;
                     int factionId = GetFactionIdForUnit(unitBlock);
-                    isActiveFaction = factionId == activeFactionId;
-                    //isActiveFaction = GetFactionIdForUnit(unitBlock) == activeFactionId;
+                    isActiveFaction = Report.IsActiveFaction(factionId);
                     int number = unitBlock.ValueInt(KeyType.NUMBER, -1);
                     if (number > 0)
                     {

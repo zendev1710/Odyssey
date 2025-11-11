@@ -12,6 +12,11 @@ using static Odyssey.Models.Tools.DataProperty;
 
 namespace Odyssey.Models.Tools
 {
+    /// <summary>
+    /// Represents a generic entity in the game world.
+    /// It can be a region, a ship, a building or a unit.
+    /// An entity is defined by its DataBlock in the CRDocument. It has properties (children DataBlocks).
+    /// </summary>
     public class EntityModel
     {
         private readonly DataBlock _dataBlock;

@@ -33,33 +33,7 @@
 		<StreamGeometry x:Key="StarIconPath">M10,1 L12,7 H18 L13,11 L15,17 L10,13 L5,17 L7,11 L2,7 H8 Z</StreamGeometry>
 		<StreamGeometry x:Key="ChevronLeftIcon">M14,4 L8,10 L14,16</StreamGeometry>
 		<StreamGeometry x:Key="PrevBookmarkStarArrowIcon">M10,2 L11,6 H15 L12,8 L13,12 L10,10 L7,12 L8,8 L5,6 H9 Z M5,15 L10,15 M10,15 L7,12 M10,15 L7,18</StreamGeometry>
-		<!--Style x:Key="StarIconButtonStyle">
-			<Setter Property="Background" Value="Transparent"/>
-			<Setter Property="BorderThickness" Value="0"/>
-			<Setter Property="Padding" Value="0"/>
-			<Setter Property="Cursor" Value="Arrow"/>
-			<Setter Property="Focusable" Value="False"/>
-			<Setter Property="Template">
-				<Template>
-					<ContentPresenter/>
-				</Template>
-			</Setter>
-		</Style-->
 	</UserControl.Resources>
-	<UserControl.Styles>
-		<!--Style Selector="Button.star-icon">
-			<Setter Property="Background" Value="Transparent"/>
-			<Setter Property="BorderThickness" Value="0"/>
-			<Setter Property="Padding" Value="0"/>
-			<Setter Property="Cursor" Value="Arrow"/>
-			<Setter Property="Focusable" Value="False"/>
-			<Setter Property="Template">
-				<ControlTemplate>
-					<ContentPresenter/>
-				</ControlTemplate>
-			</Setter>
-		</Style-->
-	</UserControl.Styles>
 	<UserControl.KeyBindings>
 		<KeyBinding Gesture="Ctrl+F" Command="{Binding FindSetFocus}" />
 	</UserControl.KeyBindings>
@@ -211,18 +185,18 @@
 				<MenuItem Header="{x:Static a:Lang.mainmenu_view_fullscreen}" Command="{Binding ToggleFullscreenCommand}" HotKey="F11" InputGesture="F11" />
 			</MenuItem>
 			<!-- Bookmarks menu -->
-			<MenuItem Header="Bookmarks" DataContext="{Binding BookmarksViewModel}">
-				<MenuItem Header="Toggle Bookmark" Command="{Binding ToggleBookmarkCommand}" />
+			<MenuItem Header="{x:Static a:Lang.mainmenu_bookmarks}" DataContext="{Binding BookmarksViewModel}">
+				<MenuItem Header="{x:Static a:Lang.mainmenu_bookmarks_toggle}" Command="{Binding ToggleBookmarkCommand}" />
 				<Separator/>
-				<MenuItem Header="Jump Forward" Command="{Binding JumpToNextBookmarkCommand}" HotKey="F2" InputGesture="F2" />
-				<MenuItem Header="Jump Backward" Command="{Binding JumpToPreviousBookmarkCommand}" HotKey="Shift+F2" InputGesture="Shift+F2" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_bookmarks_next}" Command="{Binding JumpToNextBookmarkCommand}" HotKey="F2" InputGesture="F2" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_bookmarks_prev}" Command="{Binding JumpToPreviousBookmarkCommand}" HotKey="Shift+F2" InputGesture="Shift+F2" />
 				<Separator/>
-				<MenuItem Header="Clear All" Command="{Binding RemoveAllBookmarksCommand}" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_bookmarks_clear_all}" Command="{Binding RemoveAllBookmarksCommand}" />
 				<Separator/>
-				<MenuItem Header="Load Bookmarks From..." Command="{Binding LoadBookmarksFromCommand}" />
-				<MenuItem Header="Save Bookmarks As..." Command="{Binding SaveBookmarksAsCommand}" />
-				<Separator/>
-				<!--MenuItem Header="Manage Bookmarks" Command="{Binding ManageBookmarksCommand}" /-->
+				<MenuItem Header="{x:Static a:Lang.mainmenu_bookmarks_import}" Command="{Binding LoadBookmarksFromCommand}" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_bookmarks_save_as}" Command="{Binding SaveBookmarksAsCommand}" />
+				<!--Separator/-->
+				<!--MenuItem Header="{x:Static a:Lang.mainmenu_bookmarks_manage}Manage Bookmarks" Command="{Binding ManageBookmarksCommand}" /-->
 				<Separator/>
 				<!-- Dynamically generated bookmark items -->
 				<!-- ItemsControl ItemsSource="{Binding Bookmarks}">
@@ -401,8 +375,8 @@
 				<!--TODO - add orders completed status to the left (number of units to confirm / total number of units which need orders for faction)-->
 				<!-- BOOKMARKS PANEL -->
 				<StackPanel Orientation="Horizontal" Grid.Column="0" VerticalAlignment="Center" DataContext="{Binding BookmarksViewModel}" IsVisible="{Binding HasDocument}">
-					<!-- Star Fluent icon Button that can be yellow (current selection is a bookmark)  or empty (is not a bookmark) -->
-					<Grid Width="18" Height="18" Margin="5,0,0,0" VerticalAlignment="Center">
+					<!-- Star Fluent icon Button that can be yellow in light mode or red in dark mode (current selection is a bookmark), or empty (is not a bookmark) -->
+					<Grid Width="24" Height="24" Margin="5,0,0,0" VerticalAlignment="Center">
 						<controls:StarControl
 							ToolTip.Tip="Toggle Bookmark"
 							IsChecked="{Binding SelectionIsBookmarked}"

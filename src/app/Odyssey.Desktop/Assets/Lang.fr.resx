@@ -1827,9 +1827,6 @@
   <data name="parm_inf_features_hide_in_progress" xml:space="preserve">
     <value>Masquer les fonctionnalités en cours d'implémentation (pris en compte après redémarrage de l'application)</value>
   </data>
-  <data name="parm_inf_explorer_active_faction_units_at_top" xml:space="preserve">
-    <value>Les unités de la faction active sont les premiers éléments du nœud de région</value>
-  </data>
   <data name="parm_inf_explorer_expand_tree_on_load" xml:space="preserve">
     <value>Sera pris en compte à la prochaine ouverture de document</value>
   </data>
@@ -1882,10 +1879,40 @@
     <value>Historique</value>
   </data>
   <data name="win_bookmarks" xml:space="preserve">
-    <value>Favoris</value>
+    <value>Signets</value>
+  </data>
+  <data name="dlg_title_bookmarks_load" xml:space="preserve">
+    <value>Importer des signets depuis</value>
+  </data>
+  <data name="dlg_title_bookmarks_save_as" xml:space="preserve">
+    <value>Enregistrer les signets dans</value>
   </data>
   <data name="mainmenu_view_win_bookmarks" xml:space="preserve">
-    <value>Favoris</value>
+    <value>Signets</value>
+  </data>
+  <data name="mainmenu_bookmarks" xml:space="preserve">
+    <value>Signets</value>
+  </data>
+  <data name="mainmenu_bookmarks_next" xml:space="preserve">
+    <value>Aller au suivant</value>
+  </data>
+  <data name="mainmenu_bookmarks_prev" xml:space="preserve">
+    <value>Aller au précédent</value>
+  </data>
+  <data name="mainmenu_bookmarks_clear_all" xml:space="preserve">
+    <value>Supprimer tous</value>
+  </data>
+  <data name="mainmenu_bookmarks_import" xml:space="preserve">
+    <value>Importer depuis...</value>
+  </data>
+  <data name="mainmenu_bookmarks_save_as" xml:space="preserve">
+    <value>Enregistrer dans...</value>
+  </data>
+  <data name="mainmenu_bookmarks_manage" xml:space="preserve">
+    <value>Gérer...</value>
+  </data>
+  <data name="mainmenu_bookmarks_toggle" xml:space="preserve">
+    <value>Switch signet</value>
   </data>
   <data name="mainmenu_view_win_explorer" xml:space="preserve">
     <value>Explorateur</value>
@@ -2750,5 +2777,8 @@
   </data>
   <data name="parm_inf_readonly_mode" xml:space="preserve">
     <value>En mode lecture seule, seuls les ordres peuvent être enregistrés</value>
+  </data>
+  <data name="parm_inf_explorer_active_faction_units_at_top" xml:space="preserve">
+    <value>Les unités de la faction active sont les premiers éléments du nœud de région</value>
   </data>
 </root>

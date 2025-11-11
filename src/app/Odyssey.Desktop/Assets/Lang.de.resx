@@ -1827,9 +1827,6 @@
   <data name="parm_inf_features_hide_in_progress" xml:space="preserve">
     <value>[DE]</value>
   </data>
-  <data name="parm_inf_explorer_active_faction_units_at_top" xml:space="preserve">
-    <value>Aktive Parteieinheiten werden als erste Elemente des Regionsknotens angezeigt</value>
-  </data>
   <data name="parm_inf_explorer_expand_tree_on_load" xml:space="preserve">
     <value>Will be taken into account at the next document opening [DE]</value>
   </data>
@@ -1884,8 +1881,38 @@
   <data name="win_bookmarks" xml:space="preserve">
     <value>Lesezeichen</value>
   </data>
+  <data name="dlg_title_bookmarks_load" xml:space="preserve">
+    <value>Load Bookmarks From [de]</value>
+  </data>
+  <data name="dlg_title_bookmarks_save_as" xml:space="preserve">
+    <value>Save Bookmarks As [de]</value>
+  </data>
   <data name="mainmenu_view_win_bookmarks" xml:space="preserve">
     <value>Lesezeichen</value>
+  </data>
+  <data name="mainmenu_bookmarks" xml:space="preserve">
+    <value>Lesezeichen</value>
+  </data>
+  <data name="mainmenu_bookmarks_next" xml:space="preserve">
+    <value>Jump Forward [de]</value>
+  </data>
+  <data name="mainmenu_bookmarks_prev" xml:space="preserve">
+    <value>Jump Backward [de]</value>
+  </data>
+  <data name="mainmenu_bookmarks_clear_all" xml:space="preserve">
+    <value>Clear All [de]</value>
+  </data>
+  <data name="mainmenu_bookmarks_import" xml:space="preserve">
+    <value>Import From... [de]</value>
+  </data>
+  <data name="mainmenu_bookmarks_save_as" xml:space="preserve">
+    <value>Save As... [de]</value>
+  </data>
+  <data name="mainmenu_bookmarks_manage" xml:space="preserve">
+    <value>Manage... [de]</value>
+  </data>
+  <data name="mainmenu_bookmarks_toggle" xml:space="preserve">
+    <value>Toggle Bookmark [de]</value>
   </data>
   <data name="mainmenu_view_win_explorer" xml:space="preserve">
     <value>Explorer</value>
@@ -2750,5 +2777,8 @@
   </data>
   <data name="parm_inf_readonly_mode" xml:space="preserve">
     <value>Im Nur-Lese-Modus können nur Bestellungen gespeichert werden</value>
+  </data>
+  <data name="parm_inf_explorer_active_faction_units_at_top" xml:space="preserve">
+    <value>Aktive Parteieinheiten werden als erste Elemente des Regionsknotens angezeigt</value>
   </data>
 </root>

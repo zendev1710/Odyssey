@@ -1,5 +1,6 @@
 ﻿using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Odyssey.Models;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Localization;
@@ -230,22 +231,25 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         }
         else
         {
-            // Only seen regions are in the tree (unseen regions are on the map view)
-            if (!selectedRegion!.IsUnseenRegion())
+            // Only regions with people are in the tree
+            if (selectedRegion!.IsWithPeople())
             {
                 regionNodeViewModel = FindImmediateTreeItem(Root, selectedRegion);
             }
         }
 
         // To avoid to search a faction node that does not exist, remove FACTION from selection if it's the active faction
+        /*
+        // ActiveFactionGroup is always enabled, so for the moment no need to process
         CRDocument cr = GetDocument();
-        if (!ActiveFactionGroup && cr.HasActiveFaction()  && sel.IsFactionSelected() && sel.Faction == cr.GetActiveFaction())
+        if (!ActiveFactionGroup && cr.HasActiveFaction()  && sel.IsFactionSelected() && cr.IsActiveFaction(sel.Faction))
         {
             Debug.WriteLine("[EXPLORER] WARNING | TODO :remove FACTION mask from selection");
             // TODO: remove FACTION from selection
             // TODO: if item is the faction, then it should select the first unit of the active faction (first node in region after buildings and ships
             //sel.Disable(ItemTypes.FACTION);
         }
+        */
 
         if (regionNodeViewModel != null)
         {
@@ -437,7 +441,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
                         // GREEN for alliance
                         // GRAY for anonymous
 
-                        // Get faction id, -1 means unknown faction (or stealth/anonymous)
+                        // Get faction id, -1 means unknown faction or stealth/anonymous
                         int factionId = GetFactionIdForUnit(block);
                         ExplorerNodeViewModel? factionNode = null;
                         FactionInfo factionInfo = RetrieveAndStoreFactionInfo(factionId);
@@ -484,7 +488,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
                         string shipType = Labels.Localize(Categories.Ship, $"{block.Value(KeyType.TYPE)}");
                         string shipSizeLabel = Labels.Localize(Categories.Node, Labels.SIZE, [$"{block.Value(KeyType.SIZE)}"]);
                         string shipLabel = $"{block.GetUILabel()}, {shipType}, {shipSizeLabel}";
-                        BelongsToStatus shipStatus = block.ValueInt(KeyType.FACTION) != Report.GetActiveFactionId() ? BelongsToStatus.ShipInNotActiveFaction : BelongsToStatus.None;
+                        BelongsToStatus shipStatus = Report.IsActiveFaction(block.ValueInt(KeyType.FACTION)) ? BelongsToStatus.None : BelongsToStatus.ShipInNotActiveFaction;
                         AddShip(shipsNode, shipLabel, block, shipStatus);
                         break;
                     case BlockType.BUILDING:
@@ -494,7 +498,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
                         string buildingType = Labels.Localize(Categories.Building, $"{block.Value(KeyType.TYPE)}");
                         string buildingSizeLabel = Labels.Localize(Categories.Node, Labels.SIZE, [$"{block.Value(KeyType.SIZE)}"]);
                         string buildingLabel = $"{block.GetUILabel()}, {buildingType}, {buildingSizeLabel}";
-                        BelongsToStatus buildingStatus = block.ValueInt(KeyType.FACTION) != Report.GetActiveFactionId() ? BelongsToStatus.BuildingInNotActiveFaction : BelongsToStatus.None;
+                        BelongsToStatus buildingStatus = Report.IsActiveFaction(block.ValueInt(KeyType.FACTION)) ? BelongsToStatus.None : BelongsToStatus.BuildingInNotActiveFaction;
                         AddBuilding(buildingsNode, buildingLabel, block, buildingStatus);
                         break;
 #if DEBUG
@@ -560,39 +564,42 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
             }
             else
             {
-                DataBlock? factionBlock = null;
-                if (Report.GetFaction(ref factionBlock, factionId))
+                FactionModel? factionModel = null;
+                if (Report.GetFaction(ref factionModel, factionId))
                 {
-                    factionInfo.Block = factionBlock;
+                    factionInfo.Block = factionModel!.Data;
+                    factionInfo.Status = factionModel.IsActive ? FactionStatus.ACTIVE : FactionStatus.UNKNOWN;
                 }
-                if (factionId == Report.GetActiveFactionId())
+                else
                 {
-                    factionInfo.Status = FactionStatus.ACTIVE;
-                }
-                else if (Report.HasActiveFaction())
-                {
-                    DataBlock? activeFaction = Report.GetActiveFaction();
 
-                        DataBlock? block = activeFaction?.GetNextBlock();
-                        while (block != null)
+                }
+                if (Report.HasActiveFaction() && factionInfo.Status != FactionStatus.ACTIVE)
+                {
+                    // get first active faction
+                    // LATER : maybe it should be changed when several active factions are possible
+                    // TODO
+                    DataBlock? activeFaction = Report.ActiveFaction.Data;
+                    DataBlock? block = activeFaction?.GetNextBlock();
+                    while (block != null)
+                    {
+                        BlockType refType = block.GetBlockType();
+                        if (refType != BlockType.ALLIANCE &&
+                            refType != BlockType.ITEMS &&
+                            refType != BlockType.OPTIONS &&
+                            refType != BlockType.GROUP)
                         {
-                            BlockType refType = block.GetBlockType();
-                            if (refType != BlockType.ALLIANCE &&
-                                refType != BlockType.ITEMS &&
-                                refType != BlockType.OPTIONS &&
-                                refType != BlockType.GROUP)
-                            {
-                                break;
-                            }
-
-                            if (refType == BlockType.ALLIANCE && block.GetId() == factionId)
-                            {
-                                // change icon to green, if alliance status to faction is set
-                                factionInfo.Status = FactionStatus.ALLIED;
-                                break;
-                            }
-                        block = block.GetNextBlock();
+                            break;
                         }
+
+                        if (refType == BlockType.ALLIANCE && block.GetId() == factionId)
+                        {
+                            // change icon to green, if alliance status to faction is set
+                            factionInfo.Status = FactionStatus.ALLIED;
+                            break;
+                        }
+                        block = block.GetNextBlock();
+                    }
 
                 }
             }

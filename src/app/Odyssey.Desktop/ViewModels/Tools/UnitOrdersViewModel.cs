@@ -353,7 +353,7 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
     /// <returns>The confirmed status value if a unit is selected; otherwise -1</returns>
     public int GetConfirmed()
     {
-        if (!HasDocument)
+        if (!HasDocument || Selection is null)
         {
             return -1;
         }
@@ -361,7 +361,7 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         if (Selection.IsUnitSelected())
         {
             DataBlock block = Selection.Item!;
-            if (block.ValueInt(KeyType.FACTION) == Report.GetActiveFactionId())
+            if (Report.IsActiveFaction(block.ValueInt(KeyType.FACTION)))
             {
                 return block.ValueInt(KeyType.ORDERS_CONFIRMED);
             }

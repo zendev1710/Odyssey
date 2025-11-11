@@ -12,6 +12,7 @@ using Odyssey.Models.Localization;
 using System.Diagnostics;
 using static Odyssey.ViewModels.Tools.RegionStatsViewModel;
 using System.Reflection.Emit;
+using Odyssey.Models;
 
 namespace Odyssey.ViewModels.Tools;
 
@@ -147,13 +148,16 @@ public partial class RegionStatsViewModel : DocumentToolViewModelBase
                 {
                     factions.Add(factionId);
                     string label;
-                    DataBlock? faction = null;
+                    //DataBlock? faction = null;
+                    FactionModel? faction = null;
                     if (factionId <= 0)
                     {
                         label = Labels.Localize(Labels.FACTION_DISGUISED);
                     }
                     else if (cr.GetFaction(ref faction, factionId))
                     {
+                        label = faction!.Name;
+                        /*
                         string name = faction!.Value(KeyType.FACTIONNAME);
                         if (string.IsNullOrEmpty(name))
                         {
@@ -164,6 +168,7 @@ public partial class RegionStatsViewModel : DocumentToolViewModelBase
                             string id = faction.IdToString();
                             label = $"{name} ({id})";
                         }
+                        */
                     }
                     else
                     {
@@ -173,7 +178,7 @@ public partial class RegionStatsViewModel : DocumentToolViewModelBase
                     }
                     FactionItem factionItem = new FactionItem(label, factionId);
                     int index;
-                    if (cr.GetActiveFactionId() == factionId)
+                    if (cr.IsActiveFaction(factionId))
                     {
                         Factions.Insert(0, factionItem);
                         index = 0;

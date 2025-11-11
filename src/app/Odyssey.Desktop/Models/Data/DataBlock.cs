@@ -546,7 +546,26 @@ namespace Odyssey.Models.Data
         }
 
         // return true if region is unseen
-        public bool IsUnseenRegion() => (Flags & (int)Flag.REGION_SEEN) == 0;
+        public bool IsSeenRegion(out Flag visibilityFlag)
+        {
+            visibilityFlag = Flag.None;
+            if ((Flags & (int)Flag.REGION_SEEN) != 0)
+            {
+                visibilityFlag |= Flag.REGION_SEEN;
+            }
+            else if ((Flags & (int)Flag.TRAVEL) != 0)
+            {
+                visibilityFlag |= Flag.TRAVEL;
+            }
+            else if ((Flags & (int)Flag.LIGHTHOUSE) != 0)
+            {
+                visibilityFlag |= Flag.LIGHTHOUSE;
+            }
+            return visibilityFlag != Flag.None;
+        }
+
+        // return true if region has people
+        public bool IsWithPeople() => (Flags & (int)Flag.REGION_SEEN) != 0;
 
         public void SetFlags(int flags) => Flags = flags;
 

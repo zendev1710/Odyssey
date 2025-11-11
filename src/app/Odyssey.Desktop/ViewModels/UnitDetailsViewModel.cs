@@ -10,6 +10,7 @@ using Odyssey.Models.Documents;
 using static Odyssey.Utils.Converters;
 using static Odyssey.Models.Tools.DataProperty;
 using static Odyssey.Models.Tools.UnitModel;
+using Odyssey.Models;
 
 namespace Odyssey.ViewModels;
 
@@ -160,8 +161,7 @@ public partial class UnitDetailsViewModel : ViewModelBase
 
         //////////
         // FACTION
-         
-        DataBlock? factionDataBlock = null;
+
         string factionLabel = string.Empty;
         if (unitModel.FactionId < 0 && unitModel.OtherFactionId < 0)
         {
@@ -170,11 +170,14 @@ public partial class UnitDetailsViewModel : ViewModelBase
         }
         else
         {
-            DataBlock? faction = null;
+            //DataBlock? faction = null;
+            FactionModel? factionModel = null;
             if (unitModel.FactionId > 0)
             {
-                if (Report.GetFaction(ref faction, unitModel.FactionId))
+                if (Report.GetFaction(ref factionModel, unitModel.FactionId))
                 {
+                    factionLabel = factionModel!.Name;
+                    /*
                     factionDataBlock = faction;
                     factionLabel = factionDataBlock!.Value(KeyType.FACTIONNAME);
                     if (string.IsNullOrEmpty(factionLabel))
@@ -185,6 +188,7 @@ public partial class UnitDetailsViewModel : ViewModelBase
                     {
                         factionLabel = $"{factionLabel} ({factionDataBlock.IdToString()})";
                     }
+                    */
                 }
                 else
                 {
@@ -197,10 +201,12 @@ public partial class UnitDetailsViewModel : ViewModelBase
             if (unitModel.OtherFactionId > 0)
             {
                 string otherFactionLabel = string.Empty;
-                DataBlock? anotherFaction = null;
-                if (Report.GetFaction(ref anotherFaction, unitModel.OtherFactionId))
+                //DataBlock? anotherFaction = null;
+                FactionModel? anotherFactionModel = null;
+                if (Report.GetFaction(ref anotherFactionModel, unitModel.OtherFactionId))
                 {
-                    factionDataBlock = anotherFaction!;
+                    // TODO: use anotherFactionModel.Name ?
+                    DataBlock factionDataBlock = anotherFactionModel!.Data;
                     otherFactionLabel = factionDataBlock.Value(KeyType.FACTIONNAME);
                     if (string.IsNullOrEmpty(otherFactionLabel))
                     {

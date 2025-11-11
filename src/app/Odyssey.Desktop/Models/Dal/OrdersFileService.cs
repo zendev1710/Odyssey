@@ -137,7 +137,7 @@ namespace Odyssey.Models.Dal
             { 
                 return false; 
             }
-            if (report.GetActiveFactionId() == 0)
+            if (!report.HasActiveFaction())
             {
                 return false;
             }
@@ -150,6 +150,7 @@ namespace Odyssey.Models.Dal
 
             try
             {
+                // TODO: be able to save orders for several active factions ?
                 // open text file for writing
                 using StreamWriter writer = new(pathname, false);
 
@@ -162,8 +163,9 @@ namespace Odyssey.Models.Dal
                 }
 
                 // get recruitment costs
-                int recruitment = report.Recruitment;
-                int activeFactionId = report.GetActiveFactionId();
+                int recruitment = report.ActiveFaction.Recruitment;
+                // TODO: check if it's what that should be done
+                int activeFactionId = report.ActiveFaction.Id;
                 if (recruitment == 0)
                 {
                     // TODO: check if CR Recruitement property update is needed later

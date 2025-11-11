@@ -14,12 +14,6 @@
 ## User interface
 
 
-
-
-
-
-
-
 ### Settings system
 
 TO BE FINISHED.
@@ -29,8 +23,6 @@ TO BE FINISHED.
 - [ ] Restore/override settings by (de)serializing into an user settings JSON file (config.json)
 
 ### Translation system
-
-TO BE FINISHED.
 
 - [x] Main view
 - [x] Building details view
@@ -57,6 +49,11 @@ TO BE FINISHED.
 - [ ] Extract report .cr file from the active opened zip => extract and transform zip document as CR document
 - [ ] Extract report .cr file from each opened zip
 - [ ] Merge and save CR files
+
+## Factions management
+
+- [x] Multi active factions management
+- [ ] Report owner taken into account when opening a Report .cr file
 
 ## Features upcoming
 
@@ -111,7 +108,6 @@ Information view (Ctrl + I in CsMapFx) - display information about the world dat
 Here are main missing features compared to Magellan:
 
 - minimap view
-- *bookmarks view 'like in Magellan)*
 - statistics view
 - search view
 - information view
@@ -135,3 +131,12 @@ Here are main missing features compared to CsMapFx:
 - map regions/islands multiselection
 - map region borders/buildings/boats... display
 - reports merging management
+
+## Known issues
+
+- Overview : tree badly sorted according to the content. In a region node, it should be :
+  - Buildings
+  - Ships
+  - Active Factions
+  - Allied Factions
+  - Other Factions

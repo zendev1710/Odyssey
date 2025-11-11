@@ -1,11 +1,7 @@
 ﻿
 using Odyssey.Models.Data;
-using System.Collections.Generic;
 using Odyssey.Models.Documents;
-using static Odyssey.Utils.Converters;
-using Odyssey.Models.Localization;
 using static Odyssey.Models.Tools.DataProperty;
-using System.Diagnostics;
 
 namespace Odyssey.Models.Tools;
 
@@ -18,11 +14,11 @@ public class ShipModel(DataBlock shipDataBlock): ContainerModel(shipDataBlock, C
     public int TotalSkill { get; private set; }
 
     /// <summary>
-    /// Collects ship data.
+    /// Collects ship data from its DataKey properties.
+    /// Collects also owner info, units aboard and effects, using region DataBlock and its children DataBlock objects. 
     /// </summary>
-    /// <param name="report"></param>
-    /// <param name="region"></param>
-    /// <param name="owner"></param>
+    /// <param name="report">CR report</param>
+    /// <param name="region">Region where is located the ship</param>
     /// <param name="containerProperty"></param>
     /// <returns></returns>
     public override bool CollectData(CRDocument report, DataBlock? region, ref DataProperty? containerProperty)

@@ -1,11 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Odyssey.Models.Data;
 using Prism.Events;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using static Odyssey.Utils.Converters;
-using static Odyssey.Models.Documents.CRDocument;
-using static Odyssey.Models.Documents.SimpleItemSelection;
 using static Odyssey.Models.Tools.DataProperty;
 using Odyssey.Models.Tools;
 using Odyssey.Models.Localization;

@@ -280,7 +280,7 @@ namespace Odyssey.Models.Dal
                     }
                     else if (blockType == BlockType.COMMANDS)
                     {
-                        // commands are stored in attachment for the active faction
+                        // commands are stored in attachment for the active faction(s)
                         OrdersAttachment? cmds = block.GetAttachment() as OrdersAttachment;
                         if (cmds?.Commands.Count > 0)
                         {

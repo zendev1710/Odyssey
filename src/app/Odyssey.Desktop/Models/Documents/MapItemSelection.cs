@@ -168,11 +168,10 @@ public class MapItemSelection : SimpleItemSelection
                 Region = newBlock;
                 break;
             case BlockType.FACTION:
-                // TODO: why does cr is needed here ?
-                DataBlock? factionBlock = null;
-                if (cr.GetFaction(ref factionBlock, newBlock!.GetId()))
+                FactionModel? factionModel = null;
+                if (cr.GetFaction(ref factionModel, newBlock!.GetId()))
                 {
-                    Faction = factionBlock;
+                    Faction = factionModel!.Data;
                     Selected |= Mask.FACTION;
                 }
                 break;

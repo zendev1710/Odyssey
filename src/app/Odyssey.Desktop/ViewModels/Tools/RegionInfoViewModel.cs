@@ -1,5 +1,6 @@
 ﻿using Avalonia.Controls;
 using Odyssey.Events;
+using Odyssey.Models;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Localization;
@@ -281,10 +282,10 @@ public partial class RegionInfoViewModel : MessagesViewModel
             {
                 foreach (int id in guardsIds)
                 {
-                    DataBlock? faction = null;
-                    if (cr.GetFaction(ref faction, id))
+                    FactionModel? factionModel = null;
+                    if (cr.GetFaction(ref factionModel, id))
                     {
-                        _ = AppendItem(GuardsMessages!, faction!.GetUILabel(), null);
+                        _ = AppendItem(GuardsMessages!, factionModel!.Name, null);
                     }
                 }
             }
@@ -308,7 +309,8 @@ public partial class RegionInfoViewModel : MessagesViewModel
         if (unit != null || region != null)
         {
             // Search for first MESSAGE block beginning from ActiveFaction block
-            DataBlock? firstBlock = cr.GetActiveFaction()?.GetNextBlock();
+            // TODO: check if it's what that should be done
+            DataBlock? firstBlock = cr.ActiveFaction.Data.GetNextBlock();
             DataBlock? firstMessageBlock = null;
             for (var block = firstBlock; block != null; block = block.GetNextBlock())
             {

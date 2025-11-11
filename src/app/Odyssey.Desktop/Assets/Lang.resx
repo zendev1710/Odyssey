@@ -1881,8 +1881,38 @@
   <data name="win_bookmarks" xml:space="preserve">
     <value>Bookmarks</value>
   </data>
+  <data name="dlg_title_bookmarks_load" xml:space="preserve">
+    <value>Load Bookmarks from</value>
+  </data>
+  <data name="dlg_title_bookmarks_save_as" xml:space="preserve">
+    <value>Save Bookmarks As</value>
+  </data>
   <data name="mainmenu_view_win_bookmarks" xml:space="preserve">
     <value>Bookmarks</value>
+  </data>
+  <data name="mainmenu_bookmarks" xml:space="preserve">
+    <value>Bookmarks</value>
+  </data>
+  <data name="mainmenu_bookmarks_next" xml:space="preserve">
+    <value>Jump Forward</value>
+  </data>
+  <data name="mainmenu_bookmarks_prev" xml:space="preserve">
+    <value>Jump Backward</value>
+  </data>
+  <data name="mainmenu_bookmarks_clear_all" xml:space="preserve">
+    <value>Clear All</value>
+  </data>
+  <data name="mainmenu_bookmarks_import" xml:space="preserve">
+    <value>Import From...</value>
+  </data>
+  <data name="mainmenu_bookmarks_save_as" xml:space="preserve">
+    <value>Save As...</value>
+  </data>
+  <data name="mainmenu_bookmarks_manage" xml:space="preserve">
+    <value>Manage...</value>
+  </data>
+  <data name="mainmenu_bookmarks_toggle" xml:space="preserve">
+    <value>Toggle Bookmark</value>
   </data>
   <data name="mainmenu_view_win_explorer" xml:space="preserve">
     <value>Explorer</value>
