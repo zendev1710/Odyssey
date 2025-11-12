@@ -1232,7 +1232,8 @@ m_blocks.push_back(*old_r);
 
         LinkedListNode<DataBlock>? currentNode = firstActiveFactionNode;
         // Continue to evaluate ALLIANCE blocks for active faction
-        Dictionary<int, int> alliedStatus = []; // CollectAlliedStatus(ref currentNode);
+        Dictionary<int, int> alliedStatus = CollectAlliedStatus(ref currentNode);
+        // TODO: maybe insertFactionNode should be after the ALLIIANZ blocks
         LinkedListNode<DataBlock>? insertFactionNode = currentNode;
         DataBlock? region = null;
         int unconfirmed = 0;
@@ -1254,7 +1255,7 @@ m_blocks.push_back(*old_r);
         DataBlock? lastSeenRegion = null;
 
         // Iterate through all blocks from current node
-        for (var node = currentNode /*Blocks.First*/; node != null; node = node.Next)
+        for (var node = currentNode; node != null; node = node.Next)
         {
             DataBlock b = node.Value;
             BlockType btype = b.GetBlockType();
