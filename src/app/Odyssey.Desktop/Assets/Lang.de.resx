@@ -879,8 +879,8 @@
   <data name="rules_item_Speer" xml:space="preserve">
     <value>Speer</value>
   </data>
-  <data name="rules_item_Mallornspeer" xml:space="preserve">
-    <value>Mallornspeer</value>
+  <data name="rules_item_Mallorn" xml:space="preserve">
+    <value>Mallorn</value>
   </data>
   <data name="rules_item_Kriegsaxt" xml:space="preserve">
     <value>Kriegsaxt</value>
@@ -2780,5 +2780,53 @@
   </data>
   <data name="parm_inf_explorer_active_faction_units_at_top" xml:space="preserve">
     <value>Aktive Parteieinheiten werden als erste Elemente des Regionsknotens angezeigt</value>
+  </data>
+  <data name="faction_disguised_as" xml:space="preserve">
+    <value>Parteigetarnt als</value>
+  </data>
+  <data name="rules_item_Mallornspeer" xml:space="preserve">
+    <value>Mallornspeer</value>
+  </data>
+  <data name="rules_spell_Song of Confusion" xml:space="preserve">
+    <value>Gesang der Verwirrung</value>
+  </data>
+  <data name="rules_spell_Song of Confusion_tip" xml:space="preserve">
+    <value>Aus den uralten Gesängen der Katzen entstammt dieses magisches Lied, welches vor einem Kampfe eingesetzt, einem entscheidende strategische Vorteile bringen kann.</value>
+  </data>
+  <data name="rules_spell_Hymn of Aura Sharing" xml:space="preserve">
+    <value>Auratransfer</value>
+  </data>
+  <data name="rules_spell_Hymn of Aura Sharing_tip" xml:space="preserve">
+    <value>Mit Hilfe dieses Zaubers kann der Magier eigene Aura im Verhältnis 2:1 auf einen anderen Magier des gleichen Magiegebietes oder im Verhältnis 3:1 auf einen Magier eines anderen Magiegebietes übertragen.</value>
+  </data>
+  <data name="rules_spell_Appeasing Song" xml:space="preserve">
+    <value>Aufruhr beschwichtigen</value>
+  </data>
+  <data name="rules_spell_Appeasing Song_tip" xml:space="preserve">
+    <value>Mit Hilfe dieses magischen Gesangs kann der Magier eine Region in Aufruhr wieder beruhigen</value>
+  </data>
+  <data name="rules_spell_Song of Seduction" xml:space="preserve">
+    <value>Lied der Verführung</value>
+  </data>
+  <data name="rules_spell_Song of Seduction_tip" xml:space="preserve">
+    <value>Mit diesem Lied kann eine Einheit derartig betört werden, so dass sie dem Barden den größten Teil ihres Bargelds und ihres Besitzes schenkt</value>
+  </data>
+  <data name="rules_spell_Calm Monster" xml:space="preserve">
+    <value>Monster friedlich stimmen</value>
+  </data>
+  <data name="rules_spell_Calm Monster_tip" xml:space="preserve">
+    <value> Dieser einschmeichelnde Gesang kann fast jedes intelligente Monster zähmen</value>
+  </data>
+  <data name="rules_spell_Epic Heroes" xml:space="preserve">
+    <value>Heldengesang</value>
+  </data>
+  <data name="rules_spell_Epic Heroes_tip" xml:space="preserve">
+    <value>Dieser alte Schlachtengesang hebt die Moral der eigenen Truppen und und hilft ihnen auch der angsteinflößenden Aura dämonischer und untoter Wesen zu widerstehen</value>
+  </data>
+  <data name="rules_spell_Analyze Song of Life" xml:space="preserve">
+    <value>Lebenslied festigen</value>
+  </data>
+  <data name="rules_spell_Analyze Song of Life_tip" xml:space="preserve">
+    <value>Jede Verzauberung beeinflußt das Lebenslied, schwächt und verzerrt es</value>
   </data>
 </root>

@@ -178,10 +178,10 @@
  </ItemGroup>
 
   <PropertyGroup>
-    <Version>0.10.0</Version>
-    <AssemblyVersion>0.10.0.0</AssemblyVersion>
-    <FileVersion>0.10.0.0</FileVersion>
-    <InformationalVersion>0.10.0</InformationalVersion>
+    <Version>0.10.1</Version>
+    <AssemblyVersion>0.10.1.0</AssemblyVersion>
+    <FileVersion>0.10.1.0</FileVersion>
+    <InformationalVersion>0.10.1</InformationalVersion>
     <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
   </PropertyGroup>
 </Project>

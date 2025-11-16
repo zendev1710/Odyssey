@@ -2,7 +2,7 @@
     "GeneralSettings": {
         "NetProjectPath": "Odyssey.csproj",
         "ApplicationName": "Odyssey",
-        "Version": "0.10.0",
+        "Version": "0.10.1",
         "PackageName": {
             "$type": "msbuild",
             "property": "AssemblyName"

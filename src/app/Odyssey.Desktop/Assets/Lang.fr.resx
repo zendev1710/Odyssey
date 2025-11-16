@@ -879,8 +879,8 @@
   <data name="rules_item_Speer" xml:space="preserve">
     <value>Lance</value>
   </data>
-  <data name="rules_item_Mallornspeer" xml:space="preserve">
-    <value>Lance en mallorn</value>
+  <data name="rules_item_Mallorn" xml:space="preserve">
+    <value>Mallorn</value>
   </data>
   <data name="rules_item_Kriegsaxt" xml:space="preserve">
     <value>Hache de guerre</value>
@@ -1198,7 +1198,7 @@
     <value>inconnue ({0})</value>
   </data>
   <data name="faction_disguised_as_faction" xml:space="preserve">
-    <value>déguisée en une autre faction</value>
+    <value>déguisée en </value>
   </data>
   <data name="aura_from_auramax" xml:space="preserve">
     <value>{0} de {1} aura</value>
@@ -2780,5 +2780,78 @@
   </data>
   <data name="parm_inf_explorer_active_faction_units_at_top" xml:space="preserve">
     <value>Les unités de la faction active sont les premiers éléments du nœud de région</value>
+  </data>
+  <data name="faction_disguised_as" xml:space="preserve">
+    <value>déguisée en une autre faction</value>
+  </data>
+  <data name="rules_item_Mallornspeer" xml:space="preserve">
+    <value>Lance en mallorn</value>
+  </data>
+  <data name="rules_spell_Song of Confusion" xml:space="preserve">
+    <value>Chant de confusion</value>
+  </data>
+  <data name="rules_spell_Song of Confusion_tip" xml:space="preserve">
+    <value>Ce chant magique trouve son origine dans les chants ancestraux des chats et, utilisé avant une bataille, il peut procurer des avantages stratégiques décisifs.</value>
+  </data>
+  <data name="rules_spell_Hymn of Aura Sharing" xml:space="preserve">
+    <value>Transfert d'aura</value>
+  </data>
+  <data name="rules_spell_Hymn of Aura Sharing_tip" xml:space="preserve">
+    <value>Avec ce sort, le mage peut transférer sa propre aura à un mage de la même école avec un taux de 2:1 ou à un mage d'une école différente avec un taux de 3:1.</value>
+  </data>
+  <data name="rules_spell_Appeasing Song" xml:space="preserve">
+    <value>Chant apaisant</value>
+  </data>
+  <data name="rules_spell_Appeasing Song_tip" xml:space="preserve">
+    <value>Cette petite mélodie apaise même l'orc le plus sauvage et le transforme en une créature douce et sereine qui n'aura même pas l'idée de faire du mal à l'invocateur. Celui-ci peut ainsi voyager dans une région voisine sans être importuné par des fauteurs de troubles</value>
+  </data>
+  <data name="rules_spell_Song of Seduction" xml:space="preserve">
+    <value>Chant de séduction</value>
+  </data>
+  <data name="rules_spell_Song of Seduction_tip" xml:space="preserve">
+    <value>Ce chant peut ensorceler un groupe, le contraignant à léguer une grande partie de ses biens au barde. Il conservera toutefois le nécessaire à sa propre survie</value>
+  </data>
+  <data name="rules_spell_Calm Monster" xml:space="preserve">
+    <value>Rend les monstres paisibles</value>
+  </data>
+  <data name="rules_spell_Calm Monster_tip" xml:space="preserve">
+    <value>Ce chant désarmant peut apprivoiser presque n'importe quel monstre intelligent. Il s'abstiendra d'attaquer le mage et ses compagnons. Mais il ne faut pas se leurrer quant à la nature toujours imprévisible de la créature</value>
+  </data>
+  <data name="rules_spell_Epic Heroes" xml:space="preserve">
+    <value>Chant des héros</value>
+  </data>
+  <data name="rules_spell_Epic Heroes_tip" xml:space="preserve">
+    <value>Ce chant de guerre ancestral galvanise vos troupes et les aide à résister à l'aura terrifiante des êtres démoniaques et des morts-vivants. Un guerrier ainsi fortifié contre le mal ne fuira pas, même face à la terreur, et ses défenses seront renforcées.</value>
+  </data>
+  <data name="rules_spell_Song of Courting" xml:space="preserve">
+    <value>Chant de cour</value>
+  </data>
+  <data name="rules_spell_Song of Courting_tip" xml:space="preserve">
+    <value>Extrait des Chants des Anciens de Firudin le Sage : « cette petite mélodie envoûtante et ses paroles flatteuses séduiront les paysans en un rien de temps. Ils quitteront leurs foyers pour vous suivre. »</value>
+  </data>
+  <data name="rules_spell_Analyze Song of Life" xml:space="preserve">
+    <value>Analyse du chant de la Vie</value>
+  </data>
+  <data name="rules_spell_Analyze Song of Life_tip" xml:space="preserve">
+    <value>Chaque être vivant possède son propre « chant de vie ». Aucun de ces chants n'est identique à un autre, même si les chants des créatures d'une même espèce présentent des similitudes. Chaque sort modifie ce chant de vie d'une manière ou d'une autre, et cette modification peut être identifiée. En lançant ce sort, le barde peut détecter toutes ces variations magiques dans le « chant de vie » d'une personne. Vous serez capable de déchiffrer tous les enchantements ou sorts qui ne sont pas dissimulés au-delà de vos capacités
+</value>
+  </data>
+  <data name="rules_spell_Countersong" xml:space="preserve">
+    <value>Chant de contre</value>
+  </data>
+  <data name="rules_spell_Countersong_tip" xml:space="preserve">
+    <value>Les sons stridents de cette mélodie résonnent sur tout le champ de bataille. Les mages exposés à ces dissonances particulières ont beaucoup de mal à se concentrer sur leurs sorts</value>
+  </data>
+  <data name="rules_spell_Jugglery" xml:space="preserve">
+    <value>Jonglerie</value>
+  </data>
+  <data name="rules_spell_Jugglery_tip" xml:space="preserve">
+    <value>Les mages de Cerddor sont véritablement les bardes des sorciers ; ils adorent user de leur sorcellerie pour divertir les foules et être au centre de l'attention. Même les apprentis étudient ces petits tours de magie qui attirent et fascinent le public, l'incitant ainsi à laisser quelques pièces, voire plus, à l'artiste. À la fin de la semaine, le barde aura gagné 50 pièces d'argent par niveau</value>
+  </data>
+  <data name="rules_spell_Blabbermouth" xml:space="preserve">
+    <value>Moulin à paroles</value>
+  </data>
+  <data name="rules_spell_Blabbermouth_tip" xml:space="preserve">
+    <value>Les personnes ensorcelées se mettent à parler de façon incohérente et incontrôlable, évoquant leurs talents, les objets qu'elles possèdent ou portent, et si elles sont magiciennes, elles iront même jusqu'à énumérer les sorts qu'elles connaissent. Malheureusement, ce sort n'affecte pas la mémoire des sujets et, par la suite, les ensorcelées réaliseront qu'elles ont probablement trop parlé</value>
   </data>
 </root>

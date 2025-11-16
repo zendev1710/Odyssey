@@ -879,8 +879,8 @@
   <data name="rules_item_Speer" xml:space="preserve">
     <value>Spear</value>
   </data>
-  <data name="rules_item_Mallornspeer" xml:space="preserve">
-    <value>Mallorn spear</value>
+  <data name="rules_item_Mallorn" xml:space="preserve">
+    <value>Mallorn</value>
   </data>
   <data name="rules_item_Kriegsaxt" xml:space="preserve">
     <value>Axe</value>
@@ -1198,7 +1198,7 @@
     <value>unknown ({0})</value>
   </data>
   <data name="faction_disguised_as_faction" xml:space="preserve">
-    <value>disguised as a faction</value>
+    <value>disguised as </value>
   </data>
   <data name="aura_from_auramax" xml:space="preserve">
     <value>{0} from {1} Aura</value>
@@ -2777,5 +2777,81 @@
   </data>
   <data name="parm_inf_readonly_mode" xml:space="preserve">
     <value>In read only mode, only orders can be saved</value>
+  </data>
+  <data name="faction_disguised_as" xml:space="preserve">
+    <value>disguised as a faction</value>
+  </data>
+  <data name="rules_item_Mallornspeer" xml:space="preserve">
+    <value>Mallorn spear</value>
+  </data>
+  <data name="rules_spell_Song of Confusion" xml:space="preserve">
+    <value>Song of Confusion</value>
+  </data>
+  <data name="rules_spell_Song of Confusion_tip" xml:space="preserve">
+    <value>his magical song originates from the ancient songs of cats and, when used before a battle, can provide decisive strategic advantages.</value>
+  </data>
+  <data name="rules_spell_Hymn of Aura Sharing" xml:space="preserve">
+    <value>Hymn of Aura Sharing</value>
+  </data>
+  <data name="rules_spell_Hymn of Aura Sharing_tip" xml:space="preserve">
+    <value>With this spell the mage can transfer aura of his own to a mage of the same school with a rate of 2:1 or to a mage of a different school with a rate of 3:1.</value>
+  </data>
+  <data name="rules_spell_Appeasing Song" xml:space="preserve">
+    <value>Appeasing Song</value>
+  </data>
+  <data name="rules_spell_Appeasing Song_tip" xml:space="preserve">
+    <value>This little melody calms even the wildest orc to a gentle and serene creature who will not even think about putting the singer to harm. The magician may travel to a neighboring region without being harassed by annoying troublemakers</value>
+  </data>
+  <data name="rules_spell_Song of Seduction" xml:space="preserve">
+    <value>Song of Seduction</value>
+  </data>
+  <data name="rules_spell_Song of Seduction_tip" xml:space="preserve">
+    <value>With this song a unit can be bewitched in a manner, which compels them to bequeath a large portion of their possessions to the bard. They will keep enough for their own survival, though.</value>
+  </data>
+  <data name="rules_spell_Calm Monster" xml:space="preserve">
+    <value>Calm Monster</value>
+  </data>
+  <data name="rules_spell_Calm Monster_tip" xml:space="preserve">
+    <value>This disarming chant can tame almost any intelligent monster. It will refrain from attacks on the mage and his companions. But one should not deceive oneself about the persisting unpredictable nature of the creature</value>
+  </data>
+  <data name="rules_spell_Epic Heroes" xml:space="preserve">
+    <value>Epic Heroes</value>
+  </data>
+  <data name="rules_spell_Epic Heroes_tip" xml:space="preserve">
+    <value>This ancient battle chant lifts the spirit of your troops and helps them withstand even the fear-inspiring aura of demonic and undead beings. A fighter thus fortified against evil will not flee even in the face of terror, and his defenses will be strengthened
+</value>
+  </data>
+  <data name="rules_spell_Song of Courting" xml:space="preserve">
+    <value>Song of Courting</value>
+  </data>
+  <data name="rules_spell_Song of Courting_tip" xml:space="preserve">
+    <value>From the Songs of the Elder by Firudin the Sage: This enticing little melody and its ingratiating words will lure the peasants in no time. They will leave home and hearth to follow your lead</value>
+  </data>
+  <data name="rules_spell_Analyze Song of Life" xml:space="preserve">
+    <value>Analyze Song of Life</value>
+  </data>
+  <data name="rules_spell_Analyze Song of Life_tip" xml:space="preserve">
+    <value>Each and every living being has its own, individual life-song. No two of these songs are alike, even though songs of creatures of the same species are similar. Every spell alters this song of life in one way or the other and this can be identified. By casting this spell, the bard can detect all those magic variations in a person's life-song. You will be able to decipher all enchantments or spells, which aren't disguised beyond your capability
+</value>
+  </data>
+  <data name="rules_spell_Countersong" xml:space="preserve">
+    <value>Countersong</value>
+  </data>
+  <data name="rules_spell_Countersong_tip" xml:space="preserve">
+    <value>The screeching sounds of this melody can be heard across the whole battlefield. Wizards exposed to these special dissonances find it nearly impossible to concentrate on their spells</value>
+  </data>
+  <data name="rules_spell_Jugglery" xml:space="preserve">
+    <value>Jugglery</value>
+  </data>
+  <data name="rules_spell_Jugglery_tip" xml:space="preserve">
+    <value>The mages of Cerddor truly are the bards of the wizards; they love to use their sorcery to entertain the crowds and to be the center of attention. Even the apprentices study those little magic tricks, which attract and fascinate the people and thus ensnare them into leaving a few coins or more for the artist. By the end of the week, the bard will have earned 50 silver per level
+</value>
+  </data>
+  <data name="rules_spell_Blabbermouth" xml:space="preserve">
+    <value>Blabbermouth</value>
+  </data>
+  <data name="rules_spell_Blabbermouth_tip" xml:space="preserve">
+    <value>The persons of the bewitched unit starts to babble without control about what it is said, speaking about their talents, the objects they carry or wear and if the unit is a magician, he or she will even list the spells they know. Unfortunately, this spell does not influence the memory of the subjects and afterwards, the enchanted will realize that they probably talked too much
+</value>
   </data>
 </root>
