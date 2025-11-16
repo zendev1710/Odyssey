@@ -55,6 +55,9 @@ namespace Odyssey.Models.Data
         public const string EN_ALLIANCE_STATUS = "Status";
         public const string EN_MESSAGE_REGION = "region";
         public const string EN_MESSAGE_RENDERED = "rendered";
+        public const string EN_MESSAGE_SHIP = "ship";
+        public const string EN_MESSAGE_FROM = "from";
+        public const string EN_MESSAGE_TO = "to";
         public const string EN_MESSAGE_PASSWORD = "value";
         public const string EN_MESSAGE_SECTION = "section";
         public const string EN_MESSAGE_UNIT = "unit";

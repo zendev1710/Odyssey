@@ -47,7 +47,7 @@ public class SimpleItemSelection : ISelection
     {
         Clear();
         DataBlock? region = null;
-        if (report.FindRegionFromPosition(ref region, positionX, positionY, plane))
+        if (report.FindRegionFromPosition(ref region, positionX, positionY, (PlaneType)plane))
         {
             SetItem(region, null, null);
         }

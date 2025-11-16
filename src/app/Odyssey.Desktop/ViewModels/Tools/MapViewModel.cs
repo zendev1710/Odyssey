@@ -1,5 +1,6 @@
 ﻿using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Odyssey.Models;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Utils;
@@ -44,7 +45,50 @@ public partial class MapViewModel : DocumentToolViewModelBase
             }
         }
     }
+
+    public IEnumerable<KeyValuePair<int, ShipModel>> Ships
+    {
+        get => _ships;
+        set
+        {
+            if (!EqualityComparer<IEnumerable<KeyValuePair<int, ShipModel>>>.Default.Equals(_ships, value))
+            {
+                _ships = value;
+                OnPropertyChanged(nameof(Ships));
+            }
+        }
+    }
+
+    public IEnumerable<KeyValuePair<int, BuildingModel>> Buildings
+    {
+        get => _buildings;
+        set
+        {
+            if (!EqualityComparer<IEnumerable<KeyValuePair<int, BuildingModel>>>.Default.Equals(_buildings, value))
+            {
+                _buildings = value;
+                OnPropertyChanged(nameof(Buildings));
+            }
+        }
+    }
+
+    public IEnumerable<KeyValuePair<int, RegionModel>> RegionsWithContainer
+    {
+        get => _regionsWithContainer;
+        set
+        {
+            if (!EqualityComparer<IEnumerable<KeyValuePair<int, RegionModel>>>.Default.Equals(_regionsWithContainer, value))
+            {
+                _regionsWithContainer = value;
+                OnPropertyChanged(nameof(RegionsWithContainer));
+            }
+        }
+    }
+
     private IEnumerable<KeyValuePair<int, DataBlock>> _regions = [];
+    private IEnumerable<KeyValuePair<int, ShipModel>> _ships = [];
+    private IEnumerable<KeyValuePair<int, BuildingModel>> _buildings = [];
+    private IEnumerable<KeyValuePair<int, RegionModel>> _regionsWithContainer = [];
 
     public MapViewModel() : this(null)
     {
@@ -102,6 +146,7 @@ public partial class MapViewModel : DocumentToolViewModelBase
     /// </summary>
     private void RebuildMap()
     {
+
         Regions = GetDocument().Regions;
         Season = DateUtils.GetGameSeason(GetDocument().Turn);
     }

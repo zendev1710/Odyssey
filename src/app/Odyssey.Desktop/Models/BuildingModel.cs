@@ -1,21 +1,18 @@
 ﻿
 using Odyssey.Models.Data;
-using System.Collections.Generic;
 using Odyssey.Models.Documents;
-using static Odyssey.Utils.Converters;
-using Odyssey.Models.Localization;
 using static Odyssey.Models.Tools.DataProperty;
-using System.Reactive;
-using System.Diagnostics;
-using Avalonia.Data;
-using Newtonsoft.Json.Linq;
-using System.Xml.Linq;
+using Odyssey.Models.Tools;
 
-namespace Odyssey.Models.Tools;
+namespace Odyssey.Models;
 
-public class BuildingModel(DataBlock buildingDataBlock) : ContainerModel(buildingDataBlock, Categories.Building)
+public class BuildingModel : ContainerModel
 {
-    public override bool CollectData(CRDocument report, DataBlock? region, ref DataProperty? containerProperty)
+    public BuildingModel(DataBlock buildingDataBlock, DataBlock? region = null) : base(buildingDataBlock, Categories.Building, region)
+    {
+    }
+
+    public override bool CollectData(CRDocument report/*, DataBlock? region*/, ref DataProperty? containerProperty)
     {
         if (Container == null)
         {
@@ -33,7 +30,7 @@ public class BuildingModel(DataBlock buildingDataBlock) : ContainerModel(buildin
         string containerLabel = GetLabel();
         containerProperty = new DataProperty(Categories.Node, containerLabel, string.Empty, containerLabel, string.Empty, Container);
         CollectOwnerInfo(report);
-        CollectUnits(region, KeyType.BUILDING, Container.GetId());
+        CollectUnits(/*region,*/ KeyType.BUILDING, Container.GetId());
         CollectEffects();
 
         return true;

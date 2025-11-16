@@ -4,7 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Odyssey.Models.Tools;
 using System;
 using static Odyssey.Models.Tools.DataProperty;
-using static Odyssey.Models.Tools.ShipModel;
+using static Odyssey.Models.ShipModel;
 
 namespace Odyssey.ViewModels;
 

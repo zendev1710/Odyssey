@@ -83,7 +83,7 @@ public class MapItemSelection : SimpleItemSelection
                 SelX = Region!.GetX();
                 SelY = Region.GetY();
                 SelPlane = Region.GetId();
-                if (IsSelected(Mask.UNKNOWN_REGION) && !report.FindRegionFromPosition(ref region, SelX, SelY, SelPlane))
+                if (IsSelected(Mask.UNKNOWN_REGION) && !report.FindRegionFromPosition(ref region, SelX, SelY, (PlaneType)SelPlane))
                 {
                     Selected &= ~Mask.REGION;
                 }

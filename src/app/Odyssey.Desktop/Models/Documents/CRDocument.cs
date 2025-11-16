@@ -1,11 +1,13 @@
 ﻿using Odyssey.Extensions;
 using Odyssey.Models.Data;
 using Odyssey.Models.Localization;
+using Odyssey.Models.Tools;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 
 namespace Odyssey.Models.Documents;
 
@@ -96,8 +98,10 @@ public class CRDocument : EresseaDocument
     public LinkedListNode<DataBlock>? LastBlock { get { return Blocks?.Last; } }
     public Dictionary<int, DataBlock> Units { get; private set; } = [];
     public Dictionary<int, DataBlock> Regions { get; private set; } = [];
-    public Dictionary<int, DataBlock> Ships { get; private set; } = [];
-    public Dictionary<int, DataBlock> Buildings { get; private set; } = [];
+    public Dictionary<int, ShipModel> Ships { get; private set; } = [];
+    public Dictionary<int, BuildingModel> Buildings { get; private set; } = [];
+
+    public Dictionary<int, RegionModel> RegionsWithContainer { get; private set; } = [];
     public Dictionary<int, DataBlock> Islands { get; private set; } = [];
     public Dictionary<int, DataBlock> Battles { get; private set; } = [];
     public Dictionary<int, DataBlock> Groups { get; private set; } = [];
@@ -323,14 +327,24 @@ public class CRDocument : EresseaDocument
         return Units.TryGetValue(id, out var unit) ? unit : null;
     }
 
+    public bool FindShip(int id, out ShipModel? shipModel)
+    {
+        return Ships.TryGetValue(id, out shipModel);
+    }
+
     public DataBlock? FindShip(int id)
     {
-        return Ships.TryGetValue(id, out var ship) ? ship : null;
+        return Ships.TryGetValue(id, out var ship) ? ship.Container : null;
+    }
+
+    public bool FindBuilding(int id, out BuildingModel? buildingModel)
+    {
+        return Buildings.TryGetValue(id, out buildingModel);
     }
 
     public DataBlock? FindBuilding(int id)
     {
-        return Buildings.TryGetValue(id, out var building) ? building : null;
+        return Buildings.TryGetValue(id, out var building) ? building.Container : null;
     }
 
     public DataBlock? FindGroup(int id)
@@ -343,32 +357,25 @@ public class CRDocument : EresseaDocument
         return Islands.TryGetValue(id, out var island) ? island : null;
     }
 
-    public DataBlock? FindBattleFromPosition(int x, int y, int plane)
+    public DataBlock? FindBattleFromPosition(int x, int y)
     {
-        var coordinates = new Coordinates(x, y, plane);
-        return Battles.TryGetValue((int)coordinates, out var battle) ? battle : null;
+        // LATER: handle battle on other planes (astral...)
+        return Battles.TryGetValue(Coordinates.GetId(x, y), out var battle) ? battle : null;
     }
 
-    public bool FindBattleFromPosition(ref DataBlock? battle, int x, int y, int plane)
+    public bool FindBattleFromPosition(ref DataBlock? battle, int x, int y)
     {
-        battle = FindBattleFromPosition(x, y, plane);
+        // LATER: handle battle on other planes (astral...)
+        battle = FindBattleFromPosition(x, y);
         return battle != null;
     }
 
-    /*
-    public bool HasBattleAtPosition(int x, int y, int plane)
+    public DataBlock? FindRegionFromPosition(int x, int y, PlaneType plane = PlaneType.WORLD)
     {
-        var coordinates = new Coordinates(x, y, plane);
-        return Battles.ContainsKey((int)coordinates);
-    }
-    */
-    public DataBlock? FindRegionFromPosition(int x, int y, int plane)
-    {
-        var coordinates = new Coordinates(x, y, plane);
-        return Regions.TryGetValue((int)coordinates, out var region) ? region : null;
+        return Regions.TryGetValue(Coordinates.GetId(x, y, plane), out var region) ? region : null;
     }
 
-    public bool FindRegionFromPosition(ref DataBlock? region, int x, int y, int plane)
+    public bool FindRegionFromPosition(ref DataBlock? region, int x, int y, PlaneType plane = PlaneType.WORLD)
     {
         region = FindRegionFromPosition(x, y, plane);
         return region != null;
@@ -648,10 +655,10 @@ public class CRDocument : EresseaDocument
 
     public bool GetSeenRegion(ref DataBlock? region, in DataBlock block)
     {
-        return FindRegionFromPosition(ref region, block.GetX(), block.GetY(), block.GetId());
+        return FindRegionFromPosition(ref region, block.GetX(), block.GetY());
     }
 
-    public bool GetRegion(ref DataBlock @out, int x, int y, int plane)
+    public bool GetRegion(ref DataBlock @out, int x, int y, PlaneType plane)
     {
         return FindRegionFromPosition(ref @out, x, y, plane);
     }
@@ -906,7 +913,7 @@ m_blocks.push_back(*old_r);
             var parts = location.Split(' ');
             int x = int.Parse(parts[0]);
             int y = int.Parse(parts[1]);
-            int plane = int.Parse(parts[2]);
+            PlaneType plane = (PlaneType)int.Parse(parts[2]);
             if (FindRegionFromPosition(ref regionTarget, x, y, plane))
             {
                 return regionTarget;
@@ -951,7 +958,7 @@ m_blocks.push_back(*old_r);
             var parts = location.Split(' ');
             int x = int.Parse(parts[0]);
             int y = int.Parse(parts[1]);
-            int plane = int.Parse(parts[2]);
+            PlaneType plane = (PlaneType)int.Parse(parts[2]);
             if (FindRegionFromPosition(ref regionTarget, x, y, plane))
             {
                 targets.Add(regionTarget!);
@@ -1004,9 +1011,21 @@ m_blocks.push_back(*old_r);
                     // Skip messages that are not related to income or costs
                     if (type != MESSAGE_TYPE_PASSWORD)
                     {
+                        if (type == MESSAGE_TYPE_SAIL)
+                        {
+                            // parse sail messages to add ship movement information
+                            int shipId = block.ValueInt(Strings.EN_MESSAGE_SHIP);
+                            Utils.Converters.ExtractCoordinates(block.Value(Strings.EN_MESSAGE_FROM), out int fromX, out int fromY, out int _);
+                            Utils.Converters.ExtractCoordinates(block.Value(Strings.EN_MESSAGE_TO), out int toX, out int toY, out int _);
+                            if (FindShip(shipId, out var shipModel))
+                            {
+                                shipModel!.SetFromTo(FindRegionFromPosition(fromX, fromY), FindRegionFromPosition(toX, toY)); 
+                            }
+                        }
 #if DEBUG
                         switch (type)
                         {
+                            case MESSAGE_TYPE_SAIL:
                             case MESSAGE_TYPE_UNIT_NOT_FOUND:
                             case MESSAGE_TYPE_RECEIVE_SOMETHING:
                             case MESSAGE_TYPE_GIVE_SOMETHING:
@@ -1018,7 +1037,6 @@ m_blocks.push_back(*old_r);
                             case MESSAGE_TYPE_BUY_LUXURY_ITEMS:
                             case MESSAGE_TYPE_ROUTE_GUARD_ISSUE:
                             case MESSAGE_TYPE_MOVE:
-                            case MESSAGE_TYPE_SAIL:
                             case MESSAGE_TYPE_REGENERATE_AUTA:
                                 break;
                             default:
@@ -1026,10 +1044,6 @@ m_blocks.push_back(*old_r);
                                 break;
                         }
 #endif
-                        if (type == MESSAGE_TYPE_SAIL)
-                        {
-                            // LATER: parse sail messages to add ship movement info
-                        }
                         continue;
                     }
 
@@ -1051,7 +1065,7 @@ m_blocks.push_back(*old_r);
                     {
                         if (Utils.Converters.ExtractCoordinates(dataKey.GetValue(), out int x, out int y, out int plane))
                         {
-                            if (!FindRegionFromPosition(ref messageRegion, x, y, plane))
+                            if (!FindRegionFromPosition(ref messageRegion, x, y, (PlaneType)plane))
                             {
                                 // if no region, not needed continuing iteration
                                 break;
@@ -1233,7 +1247,7 @@ m_blocks.push_back(*old_r);
         LinkedListNode<DataBlock>? currentNode = firstActiveFactionNode;
         // Continue to evaluate ALLIANCE blocks for active faction
         Dictionary<int, int> alliedStatus = CollectAlliedStatus(ref currentNode);
-        // TODO: maybe insertFactionNode should be after the ALLIIANZ blocks
+        // any temporary faction node (matching a monster or something like that) will be inserted after the last ALLIIANZ block
         LinkedListNode<DataBlock>? insertFactionNode = currentNode;
         DataBlock? region = null;
         int unconfirmed = 0;
@@ -1264,7 +1278,7 @@ m_blocks.push_back(*old_r);
             {
                 case BlockType.BATTLE:
                     // Add battle to list
-                    Battles[(int)new Coordinates(b.GetX(), b.GetY(), blockId)] = b;
+                    Battles[Coordinates.GetId(b.GetX(), b.GetY(), (PlaneType)blockId)] = b;
                     break;
                 case BlockType.REGION:
                     // Add region to region list
@@ -1324,7 +1338,7 @@ m_blocks.push_back(*old_r);
                         }
                     }
 
-                    Regions[(int)new Coordinates(b.GetX(), b.GetY(), blockId)] = b;
+                    Regions[Coordinates.GetId(b.GetX(), b.GetY(), (PlaneType)blockId)] = b;
                     // get region owner (E3 only)
                     int ownerFactionId = b.ValueInt(Strings.EN_REGION_OWNER, -1);
                     // TODO: check if -1 can be a region owner (monster...), because in that case it could be a faction with -1 id
@@ -1365,27 +1379,11 @@ m_blocks.push_back(*old_r);
                     break;
 
                 case BlockType.SHIP:
-                    // add ships to their list
-                    // TODO
-                    //ships[blockId] = b;
-                    Ships[blockId] = b;
-                    /*
-                    // record ship final region position (region is the parent region variable)
-                    if (region != null)
-                    {
-                        if (!shipsFinalPosition.TryGetValue(blockId, out var finalList))
-                        {
-                            finalList = new List<DataBlock>();
-                            shipsFinalPosition[blockId] = finalList;
-                        }
-                        finalList.Add(region);
-                    }
-                    */
+                    AddShipInRegion(b, blockId, region);
                     break;
 
                 case BlockType.BUILDING:
-                    // add buildings to their list
-                    Buildings[blockId] = b;
+                    AddBuildingInRegion(b, blockId, region);
                     break;
 
                 case BlockType.MESSAGE:
@@ -1439,7 +1437,6 @@ m_blocks.push_back(*old_r);
                         }
                         else
                         {
-
                         }
                     }
                     break;
@@ -1594,18 +1591,13 @@ m_blocks.push_back(*old_r);
                                 shipsCrossedRegions[shipId] = travelList;
                             }
                             // store the region (not the DURCHSCHIFFUNG child) so sorting by coordinates is straightforward
-                            if (region != null)
-                            {
-                                travelList.Add(region);
-                            }
+                            travelList.Add(region);
                         }
                     }
-                    int shipÎd = DataBlock.ExtractId(b.GetData().First().GetValue());
                 }
                 else if (btype == BlockType.BUILDING)
                 {
                     // region has a building
-                    // TODO: why CASTLE and not specific building flag ?
                     region.AddFlags((int)Flag.CASTLE);
                     if (b.Value(KeyType.TYPE) == Strings.DE_REGION_BUILDING_VALUE_WORMHOLE)
                     {
@@ -1660,28 +1652,15 @@ m_blocks.push_back(*old_r);
             }
         }
 
-        // Just to check data consuming optimization is ok
-        if (OptimizeDataConsuming) {
-            DataBlock? previousBlock = null;
-            for (var block = firstSeenRegion; block != null; block = block.GetNextBlock())
-            {
-                if (block.GetBlockType() == BlockType.REGION)
-                { 
-                    if (!IsknownRegion(block))
-                    {
-                        Debug.WriteLine($"[DOCUMENT] WARNING | {block} unknown region found. It means there is a bug in data consuming optimization.");
-                    }
-                }
-                previousBlock = block;
-            }
-        }
-
-        SeenRegionsNumber = nbSeenRegions;
-
-        // TODO: fill Ships dictionary from ships and shipsCrossedRegions
-        /*
+        // Update Ships from shipsCrossedRegions information
         foreach (var shipId in shipsCrossedRegions.Keys.ToList())
         {
+            if (FindShip(shipId, out var shipModel))
+            {                 
+                shipModel!.AddCrossedRegions(shipsCrossedRegions[shipId]);
+            }
+
+            /*
             var intermediates = shipsCrossedRegions[shipId];
             if (intermediates == null || intermediates.Count == 0)
                 continue;
@@ -1699,8 +1678,25 @@ m_blocks.push_back(*old_r);
 
             var ordered = OrderRegionsChain(startRegion, intermediates);
             shipsCrossedRegions[shipId] = ordered;
+            */
         }
-        */
+
+        // Just to check data consuming optimization is ok
+        if (OptimizeDataConsuming) {
+            for (var block = firstSeenRegion; block != null; block = block.GetNextBlock())
+            {
+                if (block.GetBlockType() == BlockType.REGION)
+                { 
+                    if (!IsknownRegion(block))
+                    {
+                        Debug.WriteLine($"[DOCUMENT] WARNING | {block} unknown region found. It means there is a bug in data consuming optimization.");
+                    }
+                }
+            }
+        }
+
+        SeenRegionsNumber = nbSeenRegions;
+
 
         Debug.WriteLine($"[DOCUMENT] AllRegions number : {Regions.Count} ");
         Debug.WriteLine($"[DOCUMENT] Seen regions number : {SeenRegionsNumber} ");
@@ -1713,6 +1709,37 @@ m_blocks.push_back(*old_r);
         Debug.WriteLine($"[DOCUMENT] Islands number : {Islands.Count} ");
         Debug.WriteLine($"[DOCUMENT] Groups number : {Groups.Count} ");
     }
+
+    private void AddBuildingInRegion(DataBlock buildingDataBlock, int buildingId, DataBlock region)
+    {
+        int regionId = Coordinates.GetId(region.GetX(), region.GetY());
+        var buildingModel = new BuildingModel(buildingDataBlock, region);
+        Buildings[buildingId] = buildingModel;
+        RegionModel? regionModel = null;
+        if (!RegionsWithContainer.TryGetValue(regionId, out regionModel))
+        {
+            regionModel = new RegionModel(region);
+            RegionsWithContainer[regionId] = regionModel;
+        }
+        regionModel.AddBuilding(buildingModel);
+    }
+
+    private void AddShipInRegion(DataBlock shipDataBlock, int shipId, DataBlock region)
+    {
+        int regionId = Coordinates.GetId(region.GetX(), region.GetY());
+        var shipModel = new ShipModel(shipDataBlock, region);
+        Ships[shipId] = shipModel;
+        RegionModel? regionModel = null;
+        if (!RegionsWithContainer.TryGetValue(regionId, out regionModel))
+        {
+            regionModel = new RegionModel(region);
+            RegionsWithContainer[regionId] = regionModel;
+        }
+        regionModel.AddShip(shipModel);
+
+    }
+
+    // TODO: add building id in region list of buildings)
 
     /// <summary>
     /// Convert axial (q, r) to cube coordinates (x, y, z).
@@ -1892,7 +1919,7 @@ m_blocks.push_back(*old_r);
             {
                 int nx = x + offsets[i, 0];
                 int ny = y + offsets[i, 1];
-                DataBlock? neighbour = FindRegionFromPosition(nx, ny, z);
+                DataBlock? neighbour = FindRegionFromPosition(nx, ny, (PlaneType)z);
                 if (neighbour != null)
                 {
                     // Only flood to "Festland"

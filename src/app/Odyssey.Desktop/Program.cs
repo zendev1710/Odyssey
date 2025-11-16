@@ -1,6 +1,5 @@
 ﻿using Avalonia;
 using System;
-using Dock.Settings;
 
 namespace Odyssey;
 
@@ -12,8 +11,6 @@ internal class Program
     [STAThread]
     private static void Main(string[] args)
     {
-        // DockSettings.UseFloatingDockAdorner = true;
-        // DockSettings.EnableGlobalDocking = true;
         BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
     }
 
@@ -21,10 +18,9 @@ internal class Program
     public static AppBuilder BuildAvaloniaApp()
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
-            //.UseXamlDisplay()
             .WithInterFont()
             .LogToTrace()
-            //.UseReactiveUI()
+            .WithDeveloperTools()
             ;
 }
 

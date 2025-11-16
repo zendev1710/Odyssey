@@ -91,7 +91,7 @@ namespace Odyssey.Models.Dal
             {
                 DataBlock? region = null;
                 // TODO: check if region can be an unknown one in orders
-                if (!Report.GetRegion(ref region, x, y, z))
+                if (!Report.GetRegion(ref region, x, y, (PlaneType)z))
                 {
                     errorMessage = $"Region not found: {param}";
                     return false;

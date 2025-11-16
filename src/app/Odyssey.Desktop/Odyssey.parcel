@@ -1,0 +1,31 @@
+{
+    "GeneralSettings": {
+        "NetProjectPath": "Odyssey.csproj",
+        "ApplicationName": "Odyssey",
+        "Version": "0.10.0",
+        "PackageName": {
+            "$type": "msbuild",
+            "property": "AssemblyName"
+        },
+        "AssemblyName": {
+            "$type": "msbuild",
+            "property": "AssemblyName"
+        }
+    },
+    "LinuxSettings": {
+        "CreateBinSymlink": "True"
+    },
+    "Win32Settings": {
+        "Company": "zendev",
+        "IncludeUninstaller": "True"
+    },
+    "MacOsSettings": {
+        "CreateBundle": true,
+        "BundleIdentifier": "com.CompanyName.Odyssey",
+        "SigningCredentialsType": "AdHoc"
+    },
+    "PublishSettings": {
+        "PublishSingleFile": "True",
+        "ExtraBuildProperties": {}
+    }
+}

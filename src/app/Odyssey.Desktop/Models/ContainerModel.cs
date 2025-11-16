@@ -5,8 +5,9 @@ using Odyssey.Models.Localization;
 using System.Collections.Generic;
 using static Odyssey.Utils.Converters;
 using static Odyssey.Models.Tools.DataProperty;
+using Odyssey.Models.Tools;
 
-namespace Odyssey.Models.Tools;
+namespace Odyssey.Models;
 
 /// <summary>
 /// Represents a container, which is an entity that can hold units.
@@ -16,6 +17,8 @@ public abstract class ContainerModel : EntityModel
 {
     private readonly Categories _category;
 
+    protected DataBlock? Region { get; private set; }
+
     public string Name { get; private set; } = string.Empty;
     public string Type { get; private set; } = string.Empty;
     public int Size { get; private set; }
@@ -23,18 +26,19 @@ public abstract class ContainerModel : EntityModel
     public DataBlock? OwnerUnit { get; private set; }
     public string OwnerName { get; private set; } = string.Empty;
     public string Description { get; private set; } = string.Empty;
-    protected DataBlock Container { get { return DataBlock; } }
+    public DataBlock Container { get { return DataBlock; } }
     protected Categories Category { get { return _category; } }
     public List<DataBlock> Units { get; private set; } = [];
     public List<string> Effects { get; private set; } = [];
-    protected ContainerModel(DataBlock containerDataBlock, Categories category): base(containerDataBlock)
+    protected ContainerModel(DataBlock containerDataBlock, Categories category, DataBlock? region = null) : base(containerDataBlock)
     {
         _category = category;
+        Region = region;
         Size = -1;
         OwnerId = -1;
     }
 
-    public abstract bool CollectData(CRDocument report, DataBlock? region, ref DataProperty? containerProperty);
+    public abstract bool CollectData(CRDocument report/*, DataBlock? region*/, ref DataProperty? containerProperty);
 
     protected bool HandleData(DataKey kb)
     {
@@ -104,18 +108,21 @@ public abstract class ContainerModel : EntityModel
         return false;
     }
 
-    protected bool CollectUnits(DataBlock? region, KeyType key, int containerId)
+    protected bool CollectUnits(/*DataBlock? region,*/ KeyType key, int containerId)
     {
-        if (region == null)
+        if (Region == null)
         { 
             return false; 
         }
+        /**/
         Units.Clear();
+        /*
         if (region == null) {
             return false; 
         }
+        */
 
-        DataBlock? startBlock = region.GetNextBlock();
+        DataBlock? startBlock = Region.GetNextBlock();
         for (DataBlock? block = startBlock; block != null; block = block.GetNextBlock())
         {
             BlockType t = block.GetBlockType();

@@ -272,12 +272,16 @@ public class UnitModel : EntityModel
         return skillsProperties.Count > 0;
     }
     
-    public bool CollectBuildingData(CRDocument report, DataBlock? region, ref DataProperty? buildingProperty)
+    public bool CollectBuildingData(CRDocument report, /*DataBlock? region,*/ ref DataProperty? buildingProperty)
     {
         if (Container == null || ContainerType != KeyType.BUILDING) { return false; }
-
-        BuildingModel buildingModel = new(Container);
-        if (buildingModel.CollectData(report, region, ref buildingProperty))
+        BuildingModel? buildingModel = null;
+        if (!report.FindBuilding(Container!.GetId(), out buildingModel))
+        {
+            return false;
+        }
+        //BuildingModel buildingModel = new(Container);
+        if (buildingModel.CollectData(report/*, region*/, ref buildingProperty))
         {
             ContainerOwnerName = buildingModel.OwnerName;
             ContainerOwnerUnit = buildingModel.OwnerUnit;
@@ -299,11 +303,16 @@ public class UnitModel : EntityModel
     /// <param name="report"></param>
     /// <param name="shipProperty"></param>
     /// <returns>true if unit is inside a ship and ship data has benn successfully collectexd; otherwise, false</returns>
-    public bool CollectShipData(CRDocument report, DataBlock? region, ref DataProperty? shipProperty)
+    public bool CollectShipData(CRDocument report, /*DataBlock? region,*/ ref DataProperty? shipProperty)
     {
         if (Container == null || ContainerType != KeyType.SHIP) { return false; }
-        ShipModel shipModel = new(Container);
-        if (shipModel.CollectData(report, region, ref shipProperty))
+        ShipModel? shipModel = null;
+        if (!report.FindShip(Container!.GetId(), out shipModel))
+        {
+            return false;
+        }
+        //ShipModel shipModel = new(Container);
+        if (shipModel!.CollectData(report, /*region,*/ ref shipProperty))
         {
             ContainerOwnerName = shipModel.OwnerName;
             ContainerOwnerUnit = shipModel.OwnerUnit;

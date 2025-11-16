@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using Odyssey.Models;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Tools;
 using Prism.Events;
@@ -56,12 +57,18 @@ public partial class BuildingDetailsViewModel : ContainerViewModel
         ISelection? selection = SetSelection(sel);
         Block = selection?.Item;
         Region = selection?.Region;
-        BuildingModel buildingModel = new(Block!);
+
+        BuildingModel? buildingModel = null;
+        if (!Report.FindBuilding(Block!.GetId(), out buildingModel))
+        {
+            return;
+        }
+        //BuildingModel buildingModel = new(Block!);
         ContainerModel = buildingModel;
 
         DataProperty? property = null;
 
-        if (ContainerModel.CollectData(Report, selection?.Region, ref property))
+        if (ContainerModel.CollectData(Report/*, selection?.Region*/, ref property))
         {
             OwnerName = ContainerModel.OwnerName;
             OwnerUnit = ContainerModel.OwnerUnit;

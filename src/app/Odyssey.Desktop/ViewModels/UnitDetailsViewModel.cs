@@ -493,7 +493,7 @@ public partial class UnitDetailsViewModel : ViewModelBase
         ///////////
         // BUILDING
         DataProperty? containerProperty = null;
-        if (unitModel.CollectBuildingData(Report, regionDataBlock, ref containerProperty))
+        if (unitModel.CollectBuildingData(Report/*, regionDataBlock*/, ref containerProperty))
         {
             containerNode = AddItem(Root, containerProperty!, string.Empty, 0);
             _ = AddContainerOwner(containerNode, unitModel, true);
@@ -505,7 +505,7 @@ public partial class UnitDetailsViewModel : ViewModelBase
 
         //////////////////////////////////////////////////////
         // SHIP - ONLY IF UNIT IS NOT ALREADY INSIDE A BULDING
-        if (containerNode == null && unitModel.CollectShipData(Report, regionDataBlock, ref containerProperty))
+        if (containerNode == null && unitModel.CollectShipData(Report/*, regionDataBlock*/, ref containerProperty))
         {
             containerNode = AddItem(Root, containerProperty, string.Empty, 0);
             _ = AddContainerOwner(containerNode, unitModel, false);

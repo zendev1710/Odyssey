@@ -18,7 +18,6 @@
   </Folder>
   <Project Path="app/Odyssey.Desktop/Odyssey.csproj">
     <Build Solution="Release|Any CPU" Project="false" />
-    <Build Solution="Release|x64" Project="false" />
   </Project>
   <Project Path="tools/cropper/cropper.csproj" />
 </Solution>

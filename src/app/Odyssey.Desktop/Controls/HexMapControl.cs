@@ -4,8 +4,10 @@ using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Media.TextFormatting; // added for TextLayout
 using Avalonia.Platform;
-using Avalonia.VisualTree;
 using Avalonia.Threading;
+using Avalonia.VisualTree;
+using Fizzler;
+using Odyssey.Models;
 using Odyssey.Models.Data;
 using Odyssey.Settings;
 using Odyssey.Utils;
@@ -70,18 +72,45 @@ public class HexMapControl : Control
     public static readonly StyledProperty<Dictionary<int, DataBlock>> RegionsProperty =
         AvaloniaProperty.Register<HexMapControl, Dictionary<int, DataBlock>>(nameof(Regions));
 
+    public static readonly StyledProperty<Dictionary<int, ShipModel>> ShipsProperty =
+        AvaloniaProperty.Register<HexMapControl, Dictionary<int, ShipModel>>(nameof(Ships));
+
+    public static readonly StyledProperty<Dictionary<int, BuildingModel>> BuildingsProperty =
+       AvaloniaProperty.Register<HexMapControl, Dictionary<int, BuildingModel>>(nameof(Buildings));
+
+    public static readonly StyledProperty<Dictionary<int, RegionModel>> RegionsWithContainerProperty =
+       AvaloniaProperty.Register<HexMapControl, Dictionary<int, RegionModel>>(nameof(RegionsWithContainer));
+
     public static readonly StyledProperty<double> HexSizeProperty =
         AvaloniaProperty.Register<HexMapControl, double>(nameof(HexSize), defaultHexSize);
 
     public static readonly StyledProperty<DataBlock?> SelectedRegionProperty =
         AvaloniaProperty.Register<HexMapControl, DataBlock?>(nameof(SelectedRegion));
 
-    // Update property to never return null
     public Dictionary<int, DataBlock> Regions
     {
         get => GetValue(RegionsProperty) ?? new Dictionary<int, DataBlock>();
         set => SetValue(RegionsProperty, value ?? new Dictionary<int, DataBlock>());
     }
+
+    public Dictionary<int, ShipModel> Ships
+    {
+        get => GetValue(ShipsProperty) ?? new Dictionary<int, ShipModel>();
+        set => SetValue(ShipsProperty, value ?? new Dictionary<int, ShipModel>());
+    }
+
+    public Dictionary<int, BuildingModel> Buildings
+    {
+        get => GetValue(BuildingsProperty) ?? new Dictionary<int, BuildingModel>();
+        set => SetValue(BuildingsProperty, value ?? new Dictionary<int, BuildingModel>());
+    }
+
+    public Dictionary<int, RegionModel> RegionsWithContainer
+    {
+        get => GetValue(RegionsWithContainerProperty) ?? new Dictionary<int, RegionModel>();
+        set => SetValue(RegionsWithContainerProperty, value ?? new Dictionary<int, RegionModel>());
+    }
+    
 
     public Seasons Season
     {
@@ -188,6 +217,7 @@ public class HexMapControl : Control
         foreach (var kvp in Regions)
         {
             var region = kvp.Value;
+            var flags = region.GetFlags();
 
             // LATER: handle other planes to be displayerd as an alternative map
             var plane = (PlaneType)region.GetId();
@@ -371,7 +401,6 @@ public class HexMapControl : Control
             {
                 if (terrain == Terrains.OCEAN)
                 {
-                    var flags = region.GetFlags();
                     if (((flags) & (int)Flag.SHIPTRAVEL) != 0 && _boatWakeBitmap != null)
                     {
                         // Draw boat wake
@@ -395,47 +424,68 @@ public class HexMapControl : Control
                 // Defensive: don't crash rendering if Flag enum/value isn't available or cast fails.
             }
 
-            // Draw highlight if selected
-            if (_selectedQ == x && _selectedR == y)
+            if (((flags) & (int)Flag.CASTLE) != 0)
             {
-                // compute thickness according t the hexSize (depends on zoom factor)
-                // min 2px to keep it visible
-                double highlightThickness = Math.Max(2, HexSize * 0.22);
-
-                double inset = 0.15;
-                var centerInset = new Avalonia.Point(center.X * inset, center.Y * inset);
-
-                // hex in semi-transparent red
-                var darkPen = new Pen(new SolidColorBrush(Color.FromArgb(120, 255, 0, 0)), highlightThickness);
-
-                var borderGeometry = new StreamGeometry();
-                using (var ctx = borderGeometry.Open())
-                {
-                    ctx.BeginFigure(
-                        new Point(hexPoints[0].X * (1 - inset) + centerInset.X, hexPoints[0].Y * (1 - inset) + centerInset.Y),
-                        false // not filled
-                    );
-                    for (int i = 1; i < hexPoints.Length; i++)
-                    {
-                        ctx.LineTo(
-                            new Point(hexPoints[i].X * (1 - inset) + centerInset.X, hexPoints[i].Y * (1 - inset) + centerInset.Y)
-                        );
-                    }
-                    ctx.LineTo(
-                        new Point(hexPoints[0].X * (1 - inset) + centerInset.X, hexPoints[0].Y * (1 - inset) + centerInset.Y)
-                    );
-                    ctx.EndFigure(false);
-                }
-                context.DrawGeometry(null, darkPen, borderGeometry);
+                RenderBuildingsOnRegion(region);
             }
-            else
+
+            if (((flags) & (int)Flag.SHIP) != 0)
             {
-                // Draw the hex border on top (always last, in gray)
-                context.DrawGeometry(null, new Pen(new SolidColorBrush(Color.FromRgb(128, 128, 128)), 1), geometry);
+                RenderShipsOnRegion(region);
+            }
+
+            HighlightSelectedRegion(context, center, hexPoints, x, y, geometry);
+        }
+
+        RenderShipMovements();
+        // TODO: draw monsters, storms, fog of war...
+    }
+
+    private void RenderShipMovements()
+    {
+        // DrawBoatWakes(context, hexSize);
+        foreach (var kvs in Ships)
+        {
+        }
+    }
+
+    private void RenderBuildingsOnRegion(DataBlock region)
+    {
+        if (RegionsWithContainer.TryGetValue(region.GetId(), out var regionModel))
+        {
+            foreach (var buildingModel in regionModel.Buildings)
+            {
+                // TODO
+            }
+            // Lighthouse (phare) :
+            // cercle plein blanc avec bande circulaire rouge à demi diamètre du cercle (donc cercle blanc au milieu)
+            // affiché au centre de la région hexagonale, avec 2 rayons lumineux opposés l'un à l'autre, semi-transparents, partant du cercle, allant vers l'arête de l'hexagone
+            // les rayons lumineux sont présents uniquement si le propriétaire du phare a une perception suffisante
+            //BURG 485590
+            //"Leuchtturm"; Typ
+            //"lighthouse"; Name
+            //10; Groesse
+            //79080; Besitzer
+            //1189101; Partei
+
+            //BURG 1267534
+            //"Hafen"; Typ
+            //"harbour"; Name
+            //25; Groesse
+            //320139; Besitzer
+            //904991; Partei
+        }
+    }
+
+    private void RenderShipsOnRegion(DataBlock region)
+    {
+        if (RegionsWithContainer.TryGetValue(region.GetId(), out var regionModel))
+        {
+            foreach (var shipModel in regionModel.Ships)
+            {
+                // TODO
             }
         }
-        // TODO: draw ships, lighthouses, monsters, storms...
-        // DrawBoatWakes(context, hexSize);
     }
 
     // --- Add helper to cleanup and draw wakes; call DrawBoatWakes(context, hexSize) at the end of Render() ---
@@ -573,7 +623,7 @@ public class HexMapControl : Control
         var (q, r) = PixelToHex(point, HexSize);
 
         // Find the region with the specified position
-        int key = (int)new Coordinates(q, r, (int)PlaneType.WORLD);
+        int key = Coordinates.GetId(q, r);
         if (Regions.TryGetValue(key, out var region))
         {
             //System.Diagnostics.Debug.WriteLine($"Clicked hex: q={q}, r={r}, region found: {region}");
@@ -596,8 +646,7 @@ public class HexMapControl : Control
     {
         var point = e.GetPosition(this);
         var (q, r) = PixelToHex(point, HexSize);
-        int key = (int)new Coordinates(q, r, (int)PlaneType.WORLD);
-        
+        int key = Coordinates.GetId(q, r);
         if (Regions.TryGetValue(key, out var region))
         {
             var terrain = region.GetTerrain();
@@ -924,6 +973,68 @@ public class HexMapControl : Control
             default:
                 // lighter backgrounds -> use dark text
                 return Brushes.Black;
+        }
+    }
+
+    /* 
+    PSEUDOCODE (plan détaillé) :
+    - Ajouter une méthode private void HighlightSelectedRegion(...) qui encapsule la logique actuelle
+      de dessin du contour d'un hexagone sélectionné ou, si non sélectionné, du tracé standard de la bordure.
+    - Paramètres attendus :
+      - DrawingContext context : contexte de dessin
+      - Point center : centre du hex courant (utile pour calculs d'inset)
+      - Point[] hexPoints : points des 6 sommets de l'hex
+      - int x, int y : coordonnées q/r de la région courante
+      - Geometry geometry : géométrie du hexagon (utilisée pour la branche "else" pour dessiner la bordure grise)
+    - Comportement :
+      - Si _selectedQ == x && _selectedR == y :
+        - Calculer épaisseur de surlignage en fonction de HexSize (min 2px)
+        - Calculer inset (déplacement vers le centre pour borderGeometry)
+        - Construire un StreamGeometry pour la bordure réduite
+        - Dessiner cette bordure avec un Pen semi-transparent rouge
+      - Sinon :
+        - Dessiner la bordure standard en gris (Pen de largeur 1)
+    - Remplacer le bloc inline original dans Render() par un appel à HighlightSelectedRegion(context, center, hexPoints, x, y, geometry);
+    */
+    private void HighlightSelectedRegion(DrawingContext context, Point center, Point[] hexPoints, int x, int y, Geometry geometry)
+    {
+        // Draw highlight if selected
+        if (_selectedQ == x && _selectedR == y)
+        {
+            // compute thickness according to the hexSize (depends on zoom factor)
+            // min 2px to keep it visible
+            double highlightThickness = Math.Max(2, HexSize * 0.22);
+
+            double inset = 0.15;
+            var centerInset = new Avalonia.Point(center.X * inset, center.Y * inset);
+
+            // hex in semi-transparent red
+            var darkPen = new Pen(new SolidColorBrush(Color.FromArgb(120, 255, 0, 0)), highlightThickness);
+
+            var borderGeometry = new StreamGeometry();
+            using (var ctx = borderGeometry.Open())
+            {
+                ctx.BeginFigure(
+                    new Point(hexPoints[0].X * (1 - inset) + centerInset.X, hexPoints[0].Y * (1 - inset) + centerInset.Y),
+                    false // not filled
+                );
+                for (int i = 1; i < hexPoints.Length; i++)
+                {
+                    ctx.LineTo(
+                        new Point(hexPoints[i].X * (1 - inset) + centerInset.X, hexPoints[i].Y * (1 - inset) + centerInset.Y)
+                    );
+                }
+                ctx.LineTo(
+                    new Point(hexPoints[0].X * (1 - inset) + centerInset.X, hexPoints[0].Y * (1 - inset) + centerInset.Y)
+                );
+                ctx.EndFigure(false);
+            }
+            context.DrawGeometry(null, darkPen, borderGeometry);
+        }
+        else
+        {
+            // Draw the hex border on top (always last, in gray)
+            context.DrawGeometry(null, new Pen(new SolidColorBrush(Color.FromRgb(128, 128, 128)), 1), geometry);
         }
     }
 }

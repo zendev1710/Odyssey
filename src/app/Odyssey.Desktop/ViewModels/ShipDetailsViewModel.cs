@@ -10,6 +10,7 @@ using Avalonia.Controls;
 using System;
 using System.Diagnostics;
 using Odyssey.Models.Documents;
+using Odyssey.Models;
 
 namespace Odyssey.ViewModels;
 
@@ -65,10 +66,15 @@ public partial class ShipDetailsViewModel : ContainerViewModel
         ISelection? selection = SetSelection(sel);
         Block = selection?.Item;
         Region = selection?.Region;
-        ShipModel shipModel = new(Block!);
+        ShipModel? shipModel = null;
+        if (!Report.FindShip(Block!.GetId(), out shipModel))
+        {
+            return;
+        }
+
         ContainerModel = shipModel; 
         DataProperty? property = null;
-        if (ContainerModel.CollectData(Report, selection?.Region, ref property))
+        if (ContainerModel.CollectData(Report/*, selection?.Region*/, ref property))
         {
             OwnerName = ContainerModel.OwnerName;
             OwnerUnit = ContainerModel.OwnerUnit;

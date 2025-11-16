@@ -1,16 +1,11 @@
 ﻿using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Localization;
-using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 using static Odyssey.Models.Tools.DataProperty;
+using Odyssey.Models.Tools;
 
-namespace Odyssey.Models.Tools
+namespace Odyssey.Models
 {
     /// <summary>
     /// Represents a generic entity in the game world.

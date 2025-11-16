@@ -22,10 +22,9 @@ namespace Odyssey.Models.Data
             return HashCode.Combine(X, Y, Plane);
         }
 
-        // Define an explicit cast to int
-        public static explicit operator int(Coordinates coordinates)
+        public static int GetId(int x, int y, PlaneType plane = PlaneType.WORLD)
         {
-            return HashCode.Combine(coordinates.X, coordinates.Y, coordinates.Plane);
+            return HashCode.Combine(x, y, plane);
         }
 
         public override readonly string ToString()
