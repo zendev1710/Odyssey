@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-	<TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+	<TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -178,10 +178,10 @@
  </ItemGroup>
 
   <PropertyGroup>
-    <Version>0.10.1</Version>
-    <AssemblyVersion>0.10.1.0</AssemblyVersion>
-    <FileVersion>0.10.1.0</FileVersion>
-    <InformationalVersion>0.10.1</InformationalVersion>
+    <Version>0.10.2</Version>
+    <AssemblyVersion>0.10.2.0</AssemblyVersion>
+    <FileVersion>0.10.2.0</FileVersion>
+    <InformationalVersion>0.10.2</InformationalVersion>
     <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
   </PropertyGroup>
 </Project>
