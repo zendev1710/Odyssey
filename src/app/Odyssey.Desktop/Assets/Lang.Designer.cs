@@ -2365,6 +2365,15 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à heroes.
+        /// </summary>
+        public static string heroes {
+            get {
+                return ResourceManager.GetString("heroes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à High.
         /// </summary>
         public static string Hoch {
@@ -4804,6 +4813,15 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à demons.
+        /// </summary>
+        public static string rules_race_demons {
+            get {
+                return ResourceManager.GetString("rules_race_demons", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Elves.
         /// </summary>
         public static string rules_race_Elfen {
@@ -5331,6 +5349,42 @@ namespace Odyssey.Assets {
         public static string rules_spell_Airship_tip {
             get {
                 return ResourceManager.GetString("rules_spell_Airship_tip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Analyse Dreams.
+        /// </summary>
+        public static string rules_spell_Analyse_Dreams {
+            get {
+                return ResourceManager.GetString("rules_spell_Analyse Dreams", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à With this spell the mentalist can attempt to detect enchantments on a target unit. He will get an idea of the effect of all spells that don&apos;t exceed his own abilities. If a spell is stronger, it takes a little luck for a successful analysis.
+        /// </summary>
+        public static string rules_spell_Analyse_Dreams_tip {
+            get {
+                return ResourceManager.GetString("rules_spell_Analyse Dreams_tip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Analysis.
+        /// </summary>
+        public static string rules_spell_Analysis {
+            get {
+                return ResourceManager.GetString("rules_spell_Analysis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Like creatures ships, buildings and even regions also have their own song, even though it&apos;s faint and harder to hear. Like it can be discerned from the life song of a person, if the person is affected by a spell, it can also be done for ships, buildings and regions.
+        /// </summary>
+        public static string rules_spell_Analysis_tip {
+            get {
+                return ResourceManager.GetString("rules_spell_Analysis_tip", resourceCulture);
             }
         }
         
@@ -6526,6 +6580,24 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Hangover.
+        /// </summary>
+        public static string rules_spell_Hangover {
+            get {
+                return ResourceManager.GetString("rules_spell_Hangover", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Transcript to the lecture of Selen Ard&apos;Ragorn in Bar&apos;Glingal: &apos;It is said, this spell had its beginnings in the drinking holes of the Westgassen, but every other disreputable quarter is just as likely. Its most important ingredient is about a cask of terrible wine, the cheaper and more unbecoming, the more effective will be the essence. The art to distill this wine into pure essence is far more demanding than the simple brewery of an alchemist. Even more so to bind and conserve it, preventing its natural te [le reste de la chaîne a été tronqué]&quot;;.
+        /// </summary>
+        public static string rules_spell_Hangover_tip {
+            get {
+                return ResourceManager.GetString("rules_spell_Hangover_tip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Heal.
         /// </summary>
         public static string rules_spell_Heal {
@@ -7004,6 +7076,24 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Read Dreams.
+        /// </summary>
+        public static string rules_spell_Read_Dreams {
+            get {
+                return ResourceManager.GetString("rules_spell_Read Dreams", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à This spell enables the mentalist to penetrate the dreams of a target unit and gather information about that unit&apos;s surroundings. He will receive a report from the corresponding region.
+        /// </summary>
+        public static string rules_spell_Read_Dreams_tip {
+            get {
+                return ResourceManager.GetString("rules_spell_Read Dreams_tip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Rain Dance.
         /// </summary>
         public static string rules_spell_Regentanz {
@@ -7036,6 +7126,24 @@ namespace Odyssey.Assets {
         public static string rules_spell_Resist_Magic_tip {
             get {
                 return ResourceManager.GetString("rules_spell_Resist Magic_tip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Resurrection.
+        /// </summary>
+        public static string rules_spell_Resurrection {
+            get {
+                return ResourceManager.GetString("rules_spell_Resurrection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à When a warrior dies in a battle, his soul begins its long journey to the stars. With the help of this ritual, the mentalist can try to catch those escaping souls and bring them back to their bodies. The spell does not heal physical injuries, but an affected person will survive the battle.
+        /// </summary>
+        public static string rules_spell_Resurrection_tip {
+            get {
+                return ResourceManager.GetString("rules_spell_Resurrection_tip", resourceCulture);
             }
         }
         
@@ -7328,6 +7436,24 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Silence Dissonance.
+        /// </summary>
+        public static string rules_spell_Silence_Dissonance {
+            get {
+                return ResourceManager.GetString("rules_spell_Silence Dissonance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Every enchantment influences the life song, weakens and distorts it. The skillful bard can try to catch the life song, to strengthen it and cleanse the alteration from the song.
+        /// </summary>
+        public static string rules_spell_Silence_Dissonance_tip {
+            get {
+                return ResourceManager.GetString("rules_spell_Silence Dissonance_tip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Ties of Life.
         /// </summary>
         public static string rules_spell_Sog_des_Lebens {
@@ -7369,6 +7495,24 @@ namespace Odyssey.Assets {
         public static string rules_spell_Song_of_Courting_tip {
             get {
                 return ResourceManager.GetString("rules_spell_Song of Courting_tip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Song of fear.
+        /// </summary>
+        public static string rules_spell_Song_of_fear {
+            get {
+                return ResourceManager.GetString("rules_spell_Song of fear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à This war song sows panic among the enemy front line and weakens their fighting strength significantly. Fear will weaken their sword arm and dread will freeze their shield arm.
+        /// </summary>
+        public static string rules_spell_Song_of_fear_tip {
+            get {
+                return ResourceManager.GetString("rules_spell_Song of fear_tip", resourceCulture);
             }
         }
         
@@ -7441,6 +7585,42 @@ namespace Odyssey.Assets {
         public static string rules_spell_Song_of_Terror_tip {
             get {
                 return ResourceManager.GetString("rules_spell_Song of Terror_tip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Song of War.
+        /// </summary>
+        public static string rules_spell_Song_of_War {
+            get {
+                return ResourceManager.GetString("rules_spell_Song of War", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Like many magic chants this one also originates from the ancient knowledge of the cats who always were aware of the powerful effect of the voice. This song inflames the temper of the warriors, enrages them even, into a murderous frenzy. Ignoring their own pain, they fight until death and will never flee from battle. They fight with little regard for themselves.
+        /// </summary>
+        public static string rules_spell_Song_of_War_tip {
+            get {
+                return ResourceManager.GetString("rules_spell_Song of War_tip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Sound out.
+        /// </summary>
+        public static string rules_spell_Sound_out {
+            get {
+                return ResourceManager.GetString("rules_spell_Sound out", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Should the unit succumb to the spell, they will tell the mage everything they know about the region is question. Is no unit of their faction in that region, they&apos;ll have nothing to report. Also, they can only report, what they themselves could see.
+        /// </summary>
+        public static string rules_spell_Sound_out_tip {
+            get {
+                return ResourceManager.GetString("rules_spell_Sound out_tip", resourceCulture);
             }
         }
         
@@ -7549,6 +7729,24 @@ namespace Odyssey.Assets {
         public static string rules_spell_Timber_Wolves {
             get {
                 return ResourceManager.GetString("rules_spell_Timber Wolves", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Tiredness.
+        /// </summary>
+        public static string rules_spell_Tiredness {
+            get {
+                return ResourceManager.GetString("rules_spell_Tiredness", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à This combat spell causes several enemies to suffer from an unnatural tiredness during combat. The soldiers will defend themselves worse than normal and sometimes sink into a slumber instead of attacking.
+        /// </summary>
+        public static string rules_spell_Tiredness_tip {
+            get {
+                return ResourceManager.GetString("rules_spell_Tiredness_tip", resourceCulture);
             }
         }
         

@@ -2778,9 +2778,6 @@
   <data name="parm_inf_readonly_mode" xml:space="preserve">
     <value>En mode lecture seule, seuls les ordres peuvent être enregistrés</value>
   </data>
-  <data name="parm_inf_explorer_active_faction_units_at_top" xml:space="preserve">
-    <value>Les unités de la faction active sont les premiers éléments du nœud de région</value>
-  </data>
   <data name="faction_disguised_as" xml:space="preserve">
     <value>déguisée en une autre faction</value>
   </data>
@@ -2853,5 +2850,50 @@
   </data>
   <data name="rules_spell_Blabbermouth_tip" xml:space="preserve">
     <value>Les personnes ensorcelées se mettent à parler de façon incohérente et incontrôlable, évoquant leurs talents, les objets qu'elles possèdent ou portent, et si elles sont magiciennes, elles iront même jusqu'à énumérer les sorts qu'elles connaissent. Malheureusement, ce sort n'affecte pas la mémoire des sujets et, par la suite, les ensorcelées réaliseront qu'elles ont probablement trop parlé</value>
+  </data>
+  <data name="parm_inf_explorer_active_faction_units_at_top" xml:space="preserve">
+    <value>Les unités de la faction active sont les premiers éléments du nœud de région</value>
+  </data>
+  <data name="heroes" xml:space="preserve">
+    <value>héros</value>
+  </data>
+  <data name="rules_race_demons" xml:space="preserve">
+    <value>démons</value>
+  </data>
+  <data name="rules_spell_Hangover" xml:space="preserve">
+    <value>Gueule de bois</value>
+  </data>
+  <data name="rules_spell_Analysis" xml:space="preserve">
+    <value>Analyses</value>
+  </data>
+  <data name="rules_spell_Silence Dissonance" xml:space="preserve">
+    <value>Dissonance du silence</value>
+  </data>
+  <data name="rules_spell_Read Dreams" xml:space="preserve">
+    <value>Lecture des rêves</value>
+  </data>
+  <data name="rules_spell_Resurrection" xml:space="preserve">
+    <value>Résurrection</value>
+  </data>
+  <data name="rules_spell_Analyse Dreams" xml:space="preserve">
+    <value>Analyse des rêves</value>
+  </data>
+  <data name="rules_spell_Analysis_tip" xml:space="preserve">
+    <value>À l'instar des créatures, les navires, les bâtiments et même les régions possèdent leur propre chant, bien que faible et difficile à percevoir. De même qu'il peut être discerné dans le chant vital d'une personne, si celle-ci est affectée par un sort, il en va de même pour les navires, les bâtiments et les régions</value>
+  </data>
+  <data name="rules_spell_Analyse Dreams_tip" xml:space="preserve">
+    <value>Grâce à ce sort, le mentaliste peut tenter de détecter les enchantements sur une unité cible. Il aura une idée de l'effet de tous les sorts qui ne dépassent pas ses propres capacités. Si un sort est plus puissant, une analyse réussie requiert un peu de chance</value>
+  </data>
+  <data name="rules_spell_Hangover_tip" xml:space="preserve">
+    <value>Transcription de la conférence de Selen Ard'Ragorn à Bar'Glingal : « On raconte que ce sortilège a vu le jour dans les bouges du Westgassen, mais n'importe quel autre quartier malfamé pourrait tout aussi bien provenir de n'importe quel autre lieu louche. Son ingrédient principal est un tonneau de vin exécrable ; plus il est bas de gamme et vil, plus l'essence sera puissante. L'art de distiller ce vin en essence pure est bien plus exigeant que la simple brasserie d'un alchimiste. Le lier et le conserver, en empêchant son évaporation naturelle, l'est encore plus. Seul un maître de Cerddor peut y parvenir. Imaginez que vous réussissiez à produire une fiole de ce rouge rubis scintillant – enfin, pas liquide, mais pas vraiment de la vapeur non plus – appelons-la élixir. D'autres défis vous attendent encore. Les propriétés efficaces de l'élixir se dissipent rapidement. Il faut donc le verser goutte à goutte dans la boisson de la victime choisie dans les jours qui suivent. C'est alors que vous, maîtres de l'envoûtement et de la séduction, pourrez véritablement prouver votre valeur. » Mais prenez garde de ne pas boire vous-mêmes cette potion, car une seule gorgée vous rendra accro au vin et vous passerez une semaine entière à faire l'amour. Et comme le jour succède à la nuit, une terrible agonie vous frappera ensuite. Vous perdrez la maîtrise de votre meilleur atout, deux semaines d'étude réduites à néant. Autre avertissement : ce sort est très complexe. Si vous tentez d'autres sorts durant la même semaine, ils seront bien plus difficiles à réaliser</value>
+  </data>
+  <data name="rules_spell_Read Dreams_tip" xml:space="preserve">
+    <value>Ce sort permet au mentaliste de pénétrer les rêves d'une unité ciblée et de recueillir des informations sur son environnement. Il recevra un rapport de la région correspondante</value>
+  </data>
+  <data name="rules_spell_Resurrection_tip" xml:space="preserve">
+    <value>Lorsqu'un guerrier meurt au combat, son âme entreprend son long voyage vers les étoiles. Grâce à ce rituel, le mentaliste peut tenter de capturer ces âmes errantes et de les ramener dans leur corps. Le sort ne guérit pas les blessures physiques, mais la personne affectée survivra au combat</value>
+  </data>
+  <data name="rules_spell_Silence Dissonance_tip" xml:space="preserve">
+    <value>Chaque enchantement influence le chant de vie, l'affaiblit et le déforme. Le barde habile peut tenter de capter le chant de vie, de le renforcer et de purifier le chant de toute altération</value>
   </data>
 </root>

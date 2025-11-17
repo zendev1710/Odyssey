@@ -2778,9 +2778,6 @@
   <data name="parm_inf_readonly_mode" xml:space="preserve">
     <value>Im Nur-Lese-Modus können nur Bestellungen gespeichert werden</value>
   </data>
-  <data name="parm_inf_explorer_active_faction_units_at_top" xml:space="preserve">
-    <value>Aktive Parteieinheiten werden als erste Elemente des Regionsknotens angezeigt</value>
-  </data>
   <data name="faction_disguised_as" xml:space="preserve">
     <value>Parteigetarnt als</value>
   </data>
@@ -2828,5 +2825,14 @@
   </data>
   <data name="rules_spell_Analyze Song of Life_tip" xml:space="preserve">
     <value>Jede Verzauberung beeinflußt das Lebenslied, schwächt und verzerrt es</value>
+  </data>
+  <data name="parm_inf_explorer_active_faction_units_at_top" xml:space="preserve">
+    <value>Aktive Parteieinheiten werden als erste Elemente des Regionsknotens angezeigt</value>
+  </data>
+  <data name="heroes" xml:space="preserve">
+    <value>helden</value>
+  </data>
+  <data name="rules_race_demons" xml:space="preserve">
+    <value>dämonen</value>
   </data>
 </root>

@@ -2854,4 +2854,70 @@
     <value>The persons of the bewitched unit starts to babble without control about what it is said, speaking about their talents, the objects they carry or wear and if the unit is a magician, he or she will even list the spells they know. Unfortunately, this spell does not influence the memory of the subjects and afterwards, the enchanted will realize that they probably talked too much
 </value>
   </data>
+  <data name="heroes" xml:space="preserve">
+    <value>heroes</value>
+  </data>
+  <data name="rules_race_demons" xml:space="preserve">
+    <value>demons</value>
+  </data>
+  <data name="rules_spell_Song of War" xml:space="preserve">
+    <value>Song of War</value>
+  </data>
+  <data name="rules_spell_Hangover" xml:space="preserve">
+    <value>Hangover</value>
+  </data>
+  <data name="rules_spell_Sound out" xml:space="preserve">
+    <value>Sound out</value>
+  </data>
+  <data name="rules_spell_Song of fear" xml:space="preserve">
+    <value>Song of fear</value>
+  </data>
+  <data name="rules_spell_Analysis" xml:space="preserve">
+    <value>Analysis</value>
+  </data>
+  <data name="rules_spell_Silence Dissonance" xml:space="preserve">
+    <value>Silence Dissonance</value>
+  </data>
+  <data name="rules_spell_Read Dreams" xml:space="preserve">
+    <value>Read Dreams</value>
+  </data>
+  <data name="rules_spell_Tiredness" xml:space="preserve">
+    <value>Tiredness</value>
+  </data>
+  <data name="rules_spell_Resurrection" xml:space="preserve">
+    <value>Resurrection</value>
+  </data>
+  <data name="rules_spell_Analyse Dreams" xml:space="preserve">
+    <value>Analyse Dreams</value>
+  </data>
+  <data name="rules_spell_Analysis_tip" xml:space="preserve">
+    <value>Like creatures ships, buildings and even regions also have their own song, even though it's faint and harder to hear. Like it can be discerned from the life song of a person, if the person is affected by a spell, it can also be done for ships, buildings and regions</value>
+  </data>
+  <data name="rules_spell_Analyse Dreams_tip" xml:space="preserve">
+    <value>With this spell the mentalist can attempt to detect enchantments on a target unit. He will get an idea of the effect of all spells that don't exceed his own abilities. If a spell is stronger, it takes a little luck for a successful analysis</value>
+  </data>
+  <data name="rules_spell_Hangover_tip" xml:space="preserve">
+    <value>Transcript to the lecture of Selen Ard'Ragorn in Bar'Glingal: 'It is said, this spell had its beginnings in the drinking holes of the Westgassen, but every other disreputable quarter is just as likely. Its most important ingredient is about a cask of terrible wine, the cheaper and more unbecoming, the more effective will be the essence. The art to distill this wine into pure essence is far more demanding than the simple brewery of an alchemist. Even more so to bind and conserve it, preventing its natural tendency to evaporate. This can only be accomplished by a master of Cerddor. Say, you manage to produce a vial of this ruby red, shimmering - well, not fluid, but also not exactly vapor - let's call it elixir. More challenges still lie ahead. The effective properties of the elixir are quick to dissipate. Therefore it has to be dribbled into the drink of the chosen victim within days. That is when you masters of infatuation and seduction can truly proof your worth. But take care not to drink of the concoction yourselves, for one taste will ensnare you to the tastes of wine and you will spend a full week on a bender. And as sure as day follows night, a dreadful agony will claim your head afterwards. You will lose knowledge of your best skill, two weeks worth of study just gone. Another word of warning: this spell is very complex. Should you try further spells during the same week, they will be far more difficult to perform</value>
+  </data>
+  <data name="rules_spell_Read Dreams_tip" xml:space="preserve">
+    <value>This spell enables the mentalist to penetrate the dreams of a target unit and gather information about that unit's surroundings. He will receive a report from the corresponding region</value>
+  </data>
+  <data name="rules_spell_Resurrection_tip" xml:space="preserve">
+    <value>When a warrior dies in a battle, his soul begins its long journey to the stars. With the help of this ritual, the mentalist can try to catch those escaping souls and bring them back to their bodies. The spell does not heal physical injuries, but an affected person will survive the battle</value>
+  </data>
+  <data name="rules_spell_Silence Dissonance_tip" xml:space="preserve">
+    <value>Every enchantment influences the life song, weakens and distorts it. The skillful bard can try to catch the life song, to strengthen it and cleanse the alteration from the song</value>
+  </data>
+  <data name="rules_spell_Song of fear_tip" xml:space="preserve">
+    <value>This war song sows panic among the enemy front line and weakens their fighting strength significantly. Fear will weaken their sword arm and dread will freeze their shield arm</value>
+  </data>
+  <data name="rules_spell_Song of War_tip" xml:space="preserve">
+    <value>Like many magic chants this one also originates from the ancient knowledge of the cats who always were aware of the powerful effect of the voice. This song inflames the temper of the warriors, enrages them even, into a murderous frenzy. Ignoring their own pain, they fight until death and will never flee from battle. They fight with little regard for themselves</value>
+  </data>
+  <data name="rules_spell_Sound out_tip" xml:space="preserve">
+    <value>Should the unit succumb to the spell, they will tell the mage everything they know about the region is question. Is no unit of their faction in that region, they'll have nothing to report. Also, they can only report, what they themselves could see</value>
+  </data>
+  <data name="rules_spell_Tiredness_tip" xml:space="preserve">
+    <value>This combat spell causes several enemies to suffer from an unnatural tiredness during combat. The soldiers will defend themselves worse than normal and sometimes sink into a slumber instead of attacking</value>
+  </data>
 </root>
