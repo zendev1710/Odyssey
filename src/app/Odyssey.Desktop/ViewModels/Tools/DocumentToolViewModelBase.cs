@@ -67,7 +67,7 @@ namespace Odyssey.ViewModels.Tools
         protected ISelector? InnerSelector { get; set; }
 
         /// <summary>
-        /// Constructor for Avalonia XAML Designer.
+        /// Constructor.
         /// </summary>
         protected DocumentToolViewModelBase(IEventAggregator? eventAggregator) {
             _eventAggregator = eventAggregator;

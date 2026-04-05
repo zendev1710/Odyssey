@@ -102,6 +102,7 @@ public partial class BattlesViewModel : DocumentToolViewModelBase
     /// found.</remarks>
     protected void CollectData()
     {
+        Clear();
         // LATER: maybe should use CRDocument.Battles property instead of collecting data here by iterating through all the blocks.
         List<BattleModel> battles = [];
         DataBlock? startBlock = Report.FirstBlock?.Value;

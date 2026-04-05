@@ -55,6 +55,7 @@ public partial class ReportInfoViewModel : MessagesListViewModel
     protected void CollectDataFromReport()
     {
         Debug.WriteLine("[VM-REPORT--] Rebuild tree...");
+        Clear();
         int factionsMessagesNumber = 0;
         CRDocument cr = GetDocument();
         DataBlock? startBlock = cr.FirstBlock?.Value;
