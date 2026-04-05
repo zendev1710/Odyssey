@@ -1060,7 +1060,7 @@
     <value>Pourriture de sable</value>
   </data>
   <data name="rules_effect_Wundsalbe" xml:space="preserve">
-    <value>Pommade</value>
+    <value>Onguent de soin</value>
   </data>
   <data name="rules_effect_Heiltrank" xml:space="preserve">
     <value>Potion de guérison</value>
@@ -1096,7 +1096,7 @@
     <value>Bottes magiques</value>
   </data>
   <data name="rules_effect_Siebenmeilentee" xml:space="preserve">
-    <value>Thé des 7 miles</value>
+    <value>Thé des sept lieues</value>
   </data>
   <data name="rules_item_Würziger Wagemut" xml:space="preserve">
     <value>Témérité piquante</value>
@@ -1111,10 +1111,10 @@
     <value>Sang de paysan</value>
   </data>
   <data name="rules_effect_Gehirnschmalz" xml:space="preserve">
-    <value>Cire de cerveau</value>
+    <value>Huile de cervelle</value>
   </data>
   <data name="rules_effect_Schaffenstrunk" xml:space="preserve">
-    <value>Bière créative</value>
+    <value>Breuvage de labeur</value>
   </data>
   <data name="rules_spell_Wunderdoktor" xml:space="preserve">
     <value>Docteur miracle</value>
@@ -1123,7 +1123,7 @@
     <value>Vol d'aura</value>
   </data>
   <data name="rules_spell_Fluch brechen" xml:space="preserve">
-    <value>Briser la malédiction</value>
+    <value>Brise‑malédiction</value>
   </data>
   <data name="rules_spell_Astraler Ausgang" xml:space="preserve">
     <value>Sortie de l'Astral</value>
@@ -1180,13 +1180,13 @@
     <value>Protection contre la magie</value>
   </data>
   <data name="rules_spell_Schutzzauber" xml:space="preserve">
-    <value>Résister à la magie</value>
+    <value>Résistance à la magie</value>
   </data>
   <data name="rules_spell_Auratransfer" xml:space="preserve">
     <value>Transfert d'aura</value>
   </data>
   <data name="rules_spell_Beute Bewahren" xml:space="preserve">
-    <value>Préserver le butin</value>
+    <value>Préservation du butin</value>
   </data>
   <data name="rules_spell_Schleieraura" xml:space="preserve">
     <value>Dissimulation d'aura</value>
@@ -1228,7 +1228,7 @@
     <value>Créer des Golems de fer</value>
   </data>
   <data name="rules_spell_Firun's Coat" xml:space="preserve">
-    <value>Le manteau de Firun</value>
+    <value>Manteau de Firun</value>
   </data>
   <data name="rules_spell_Mountain Guardian" xml:space="preserve">
     <value>Gardien de la Montagne</value>
@@ -1258,7 +1258,7 @@
     <value>Gardien de la Montagne</value>
   </data>
   <data name="rules_spell_Firuns Fell" xml:space="preserve">
-    <value>Le manteau de Firun</value>
+    <value>Manteau de Firun</value>
   </data>
   <data name="emapdetailspanel_node_weight_info" xml:space="preserve">
     <value>Poids : {0}</value>
@@ -1384,10 +1384,10 @@
     <value>Potion de vérité</value>
   </data>
   <data name="rules_effect_Dumpfbackenbrot" xml:space="preserve">
-    <value>Pain terne</value>
+    <value>Pain d'andouille</value>
   </data>
   <data name="rules_effect_Pferdeglück" xml:space="preserve">
-    <value>Bonheur de cheval</value>
+    <value>Potion de bien-être équin</value>
   </data>
   <data name="rules_effect_Berserkerblut" xml:space="preserve">
     <value>Sang de Berserker</value>
@@ -1399,7 +1399,7 @@
     <value>Élixir de pouvoir</value>
   </data>
   <data name="rules_item_Wundsalbe" xml:space="preserve">
-    <value>Pommade</value>
+    <value>Onguent de soin</value>
   </data>
   <data name="rules_item_Wasser des Lebens" xml:space="preserve">
     <value>Eau de vie</value>
@@ -1408,13 +1408,13 @@
     <value>Potion de vérité</value>
   </data>
   <data name="rules_item_Siebenmeilentee" xml:space="preserve">
-    <value>Thé des 7 miles</value>
+    <value>Thé des sept lieues</value>
   </data>
   <data name="rules_item_Schaffenstrunk" xml:space="preserve">
-    <value>Bière créative</value>
+    <value>Breuvage de labeur</value>
   </data>
   <data name="rules_item_Pferdeglück" xml:space="preserve">
-    <value>Bonheur de cheval</value>
+    <value>Potion de bien-être équin</value>
   </data>
   <data name="rules_item_Nestwärme" xml:space="preserve">
     <value>Potion de chaleur du nid</value>
@@ -1426,13 +1426,13 @@
     <value>Eau de Goliath</value>
   </data>
   <data name="rules_item_Gehirnschmalz" xml:space="preserve">
-    <value>Cire de cerveau</value>
+    <value>Huile de cervelle</value>
   </data>
   <data name="rules_item_Elixier der Macht" xml:space="preserve">
     <value>Élixir de pouvoir</value>
   </data>
   <data name="rules_item_Dumpfbackenbrot" xml:space="preserve">
-    <value>Pain terne</value>
+    <value>Pain d'andouille</value>
   </data>
   <data name="rules_item_Berserkerblut" xml:space="preserve">
     <value>Sang de Berserker</value>
@@ -1480,7 +1480,7 @@
     <value>Boule de feu</value>
   </data>
   <data name="rules_spell_Fluch der Pestilenz" xml:space="preserve">
-    <value>Malédictoin de la peste</value>
+    <value>Malédiction de la peste</value>
   </data>
   <data name="rules_spell_Chaosfluch" xml:space="preserve">
     <value>Malédiction du Chaos</value>
@@ -1504,7 +1504,7 @@
     <value>Sac à vent</value>
   </data>
   <data name="rules_item_Wasserfinder" xml:space="preserve">
-    <value>Chercheur d'eau</value>
+    <value>Chercheuse d'eau</value>
   </data>
   <data name="rules_item_Kakteenschwitz" xml:space="preserve">
     <value>Peyote</value>
@@ -1597,7 +1597,7 @@
     <value>Regard du Basilic</value>
   </data>
   <data name="rules_spell_Heilung" xml:space="preserve">
-    <value>Guérir</value>
+    <value>Guérison</value>
   </data>
   <data name="rules_spell_Heiliger Boden" xml:space="preserve">
     <value>Terre Sacrée</value>
@@ -1636,7 +1636,7 @@
     <value>Invocation du Feu</value>
   </data>
   <data name="rules_spell_Beschwöre Schattendämonen" xml:space="preserve">
-    <value>Invocation dfes Démons de l'Ombre</value>
+    <value>Invocation des Démons de l'Ombre</value>
   </data>
   <data name="rules_item_Kräuterbeutel" xml:space="preserve">
     <value>Sac à herbe</value>
@@ -2167,7 +2167,7 @@
     <value>Rêve</value>
   </data>
   <data name="rules_spell_Heal" xml:space="preserve">
-    <value>Guérir</value>
+    <value>Guérison</value>
   </data>
   <data name="rules_spell_Whirlwind" xml:space="preserve">
     <value>Tourbillon</value>
@@ -2323,13 +2323,13 @@
     <value>Ce sort améliore la résistance à la magie naturelle. Les unités protégées sont moins vulnérables à la magie de combat. Le sort protège 5 personnes par niveau.</value>
   </data>
   <data name="rules_spell_Resist Magic" xml:space="preserve">
-    <value>Résister à la magie</value>
+    <value>Résistance à la magie</value>
   </data>
   <data name="rules_spell_Resist Magic_tip" xml:space="preserve">
     <value>Ce sort améliore la résistance à la magie naturelle. Les unités protégées sont moins vulnérables à la magie de combat. Le sort protège 5 personnes par niveau.</value>
   </data>
   <data name="rules_spell_Save Spoils" xml:space="preserve">
-    <value>Préserver le butin</value>
+    <value>Préservation du butin</value>
   </data>
   <data name="rules_spell_Save Spoils_tip" xml:space="preserve">
     <value>Ce sort prévient les dégâts subis par une partie des objets qui seraient autrement perdus au combat. La perte d'objets est réduite de 5 % par niveau du sort, jusqu'à un minimum de 25 %</value>
@@ -2572,7 +2572,7 @@
     <value>Avant un combat, le mentaliste crée des illusions terrifiantes de créatures hideuses qui sèment la panique parmi les ennemis. Ceux qui croient à ces illusions tenteront de fuir le combat.</value>
   </data>
   <data name="rules_spell_Eternal Rest" xml:space="preserve">
-    <value>[FR]</value>
+    <value>Repos éternel</value>
   </data>
   <data name="rules_spell_Eternal Rest_tip" xml:space="preserve">
     <value>Ce rituel apaise les âmes torturées de ceux qui ont connu une mort violente et les libère enfin dans les Autres Terres. Environ 50 âmes par niveau du sort seront libérées. Le sort n'affecte pas les morts-vivants existants, car ils sont trop étroitement liés au Monde Matériel.</value>
@@ -2791,7 +2791,7 @@
     <value>Ce chant magique trouve son origine dans les chants ancestraux des chats et, utilisé avant une bataille, il peut procurer des avantages stratégiques décisifs.</value>
   </data>
   <data name="rules_spell_Hymn of Aura Sharing" xml:space="preserve">
-    <value>Transfert d'aura</value>
+    <value>Chant du partage d'aura</value>
   </data>
   <data name="rules_spell_Hymn of Aura Sharing_tip" xml:space="preserve">
     <value>Avec ce sort, le mage peut transférer sa propre aura à un mage de la même école avec un taux de 2:1 ou à un mage d'une école différente avec un taux de 3:1.</value>
@@ -2809,7 +2809,7 @@
     <value>Ce chant peut ensorceler un groupe, le contraignant à léguer une grande partie de ses biens au barde. Il conservera toutefois le nécessaire à sa propre survie</value>
   </data>
   <data name="rules_spell_Calm Monster" xml:space="preserve">
-    <value>Rend les monstres paisibles</value>
+    <value>Monstres paisibles</value>
   </data>
   <data name="rules_spell_Calm Monster_tip" xml:space="preserve">
     <value>Ce chant désarmant peut apprivoiser presque n'importe quel monstre intelligent. Il s'abstiendra d'attaquer le mage et ses compagnons. Mais il ne faut pas se leurrer quant à la nature toujours imprévisible de la créature</value>
@@ -2851,17 +2851,23 @@
   <data name="rules_spell_Blabbermouth_tip" xml:space="preserve">
     <value>Les personnes ensorcelées se mettent à parler de façon incohérente et incontrôlable, évoquant leurs talents, les objets qu'elles possèdent ou portent, et si elles sont magiciennes, elles iront même jusqu'à énumérer les sorts qu'elles connaissent. Malheureusement, ce sort n'affecte pas la mémoire des sujets et, par la suite, les ensorcelées réaliseront qu'elles ont probablement trop parlé</value>
   </data>
-  <data name="parm_inf_explorer_active_faction_units_at_top" xml:space="preserve">
-    <value>Les unités de la faction active sont les premiers éléments du nœud de région</value>
-  </data>
   <data name="heroes" xml:space="preserve">
     <value>héros</value>
   </data>
   <data name="rules_race_demons" xml:space="preserve">
     <value>démons</value>
   </data>
+  <data name="rules_spell_Song of War" xml:space="preserve">
+    <value>Chant de guerre</value>
+  </data>
   <data name="rules_spell_Hangover" xml:space="preserve">
     <value>Gueule de bois</value>
+  </data>
+  <data name="rules_spell_Sound out" xml:space="preserve">
+    <value>Écoute clandestine</value>
+  </data>
+  <data name="rules_spell_Song of fear" xml:space="preserve">
+    <value>Chant d'effroi</value>
   </data>
   <data name="rules_spell_Analysis" xml:space="preserve">
     <value>Analyses</value>
@@ -2895,5 +2901,12 @@
   </data>
   <data name="rules_spell_Silence Dissonance_tip" xml:space="preserve">
     <value>Chaque enchantement influence le chant de vie, l'affaiblit et le déforme. Le barde habile peut tenter de capter le chant de vie, de le renforcer et de purifier le chant de toute altération</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="rules_spell_Song of fear_tip" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="parm_inf_explorer_active_faction_units_at_top" xml:space="preserve">
+    <value>Les unités de la faction active sont les premiers éléments du nœud de région</value>
   </data>
 </root>

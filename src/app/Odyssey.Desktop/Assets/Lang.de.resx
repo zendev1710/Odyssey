@@ -1225,7 +1225,7 @@
     <value>Erschaffe Steingolems</value>
   </data>
   <data name="rules_spell_Create Iron Golems" xml:space="preserve">
-    <value>Erschaffe Steingolems</value>
+    <value>Erschaffe Eisenolems</value>
   </data>
   <data name="rules_spell_Firun's Coat" xml:space="preserve">
     <value>Firuns Fell</value>
@@ -2566,13 +2566,13 @@
     <value>Mächte des Todes</value>
   </data>
   <data name="rules_spell_Unspeakable Horrors" xml:space="preserve">
-    <value>[DE]</value>
+    <value>Grauen der Schlacht</value>
   </data>
   <data name="rules_spell_Unspeakable Horrors_tip" xml:space="preserve">
     <value>Vor einer Schlacht erschafft der Mentalist furchterregende Illusionen von abscheulichen Kreaturen, die bei den Feinden Panik auslösen. Wer an die Illusionen glaubt, versucht, aus der Schlacht zu fliehen.</value>
   </data>
   <data name="rules_spell_Eternal Rest" xml:space="preserve">
-    <value>[DE]</value>
+    <value>Seelenfrieden</value>
   </data>
   <data name="rules_spell_Eternal Rest_tip" xml:space="preserve">
     <value>[DE]</value>
@@ -2791,7 +2791,7 @@
     <value>Aus den uralten Gesängen der Katzen entstammt dieses magisches Lied, welches vor einem Kampfe eingesetzt, einem entscheidende strategische Vorteile bringen kann.</value>
   </data>
   <data name="rules_spell_Hymn of Aura Sharing" xml:space="preserve">
-    <value>Auratransfer</value>
+    <value>Gesang des Auratransfers</value>
   </data>
   <data name="rules_spell_Hymn of Aura Sharing_tip" xml:space="preserve">
     <value>Mit Hilfe dieses Zaubers kann der Magier eigene Aura im Verhältnis 2:1 auf einen anderen Magier des gleichen Magiegebietes oder im Verhältnis 3:1 auf einen Magier eines anderen Magiegebietes übertragen.</value>
@@ -2820,19 +2820,55 @@
   <data name="rules_spell_Epic Heroes_tip" xml:space="preserve">
     <value>Dieser alte Schlachtengesang hebt die Moral der eigenen Truppen und und hilft ihnen auch der angsteinflößenden Aura dämonischer und untoter Wesen zu widerstehen</value>
   </data>
+  <data name="rules_spell_Song of Courting" xml:space="preserve">
+    <value>Gesang des Werbens</value>
+  </data>
   <data name="rules_spell_Analyze Song of Life" xml:space="preserve">
     <value>Lebenslied festigen</value>
   </data>
   <data name="rules_spell_Analyze Song of Life_tip" xml:space="preserve">
     <value>Jede Verzauberung beeinflußt das Lebenslied, schwächt und verzerrt es</value>
   </data>
-  <data name="parm_inf_explorer_active_faction_units_at_top" xml:space="preserve">
-    <value>Aktive Parteieinheiten werden als erste Elemente des Regionsknotens angezeigt</value>
+  <data name="rules_spell_Countersong" xml:space="preserve">
+    <value>Bannlied</value>
+  </data>
+  <data name="rules_spell_Jugglery" xml:space="preserve">
+    <value>Gaukeleien</value>
+  </data>
+  <data name="rules_spell_Blabbermouth" xml:space="preserve">
+    <value>Plappermaul</value>
   </data>
   <data name="heroes" xml:space="preserve">
     <value>helden</value>
   </data>
   <data name="rules_race_demons" xml:space="preserve">
     <value>dämonen</value>
+  </data>
+  <data name="rules_spell_Song of War" xml:space="preserve">
+    <value>Kriegsgesang</value>
+  </data>
+  <data name="rules_spell_Hangover" xml:space="preserve">
+    <value>Schaler Wein</value>
+  </data>
+  <data name="rules_spell_Sound out" xml:space="preserve">
+    <value>Aushorchen</value>
+  </data>
+  <data name="rules_spell_Silence Dissonance" xml:space="preserve">
+    <value>Lebenslied festigen</value>
+  </data>
+  <data name="rules_spell_Read Dreams" xml:space="preserve">
+    <value>Traumlesen</value>
+  </data>
+  <data name="rules_spell_Tiredness" xml:space="preserve">
+    <value>Schwere Glieder</value>
+  </data>
+  <data name="rules_spell_Resurrection" xml:space="preserve">
+    <value>Wiederbelebung</value>
+  </data>
+  <data name="rules_spell_Analyse Dreams" xml:space="preserve">
+    <value>Traumbilder analysieren</value>
+  </data>
+  <data name="parm_inf_explorer_active_faction_units_at_top" xml:space="preserve">
+    <value>Aktive Parteieinheiten werden als erste Elemente des Regionsknotens angezeigt</value>
   </data>
 </root>

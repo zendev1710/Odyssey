@@ -1255,7 +1255,7 @@
     <value>Winds of rust</value>
   </data>
   <data name="rules_spell_Bergwächter" xml:space="preserve">
-    <value>Moutain Guardian</value>
+    <value>Mountain Guardian</value>
   </data>
   <data name="rules_spell_Firuns Fell" xml:space="preserve">
     <value>Firun's coat</value>
@@ -1387,7 +1387,7 @@
     <value>Duncebun</value>
   </data>
   <data name="rules_effect_Pferdeglück" xml:space="preserve">
-    <value>Horsepower potion</value>
+    <value>horsepower potion</value>
   </data>
   <data name="rules_effect_Berserkerblut" xml:space="preserve">
     <value>Berserkers blood</value>
@@ -1537,7 +1537,7 @@
     <value>Rock weed</value>
   </data>
   <data name="rules_item_Knotiger Saugwurz" xml:space="preserve">
-    <value>knotroot</value>
+    <value>Knotroot</value>
   </data>
   <data name="rules_item_Mallornarmbrust" xml:space="preserve">
     <value>Mallorn crossbow</value>
@@ -2389,7 +2389,7 @@
     <value>The sorcerer hurls a ball of concentrated chaos into the ranks of his enemies. It will seriously hurt anyone who gets hit.</value>
   </data>
   <data name="rules_spell_Hex" xml:space="preserve">
-    <value>Imprecation</value>
+    <value>Hex</value>
   </data>
   <data name="rules_spell_Hex_tip" xml:space="preserve">
     <value>The target of this spell becomes subject to a harmless curse.</value>
@@ -2798,6 +2798,7 @@
   </data>
   <data name="rules_spell_Appeasing Song" xml:space="preserve">
     <value>Appeasing Song</value>
+    <comment>BAD !?</comment>
   </data>
   <data name="rules_spell_Appeasing Song_tip" xml:space="preserve">
     <value>This little melody calms even the wildest orc to a gentle and serene creature who will not even think about putting the singer to harm. The magician may travel to a neighboring region without being harassed by annoying troublemakers</value>

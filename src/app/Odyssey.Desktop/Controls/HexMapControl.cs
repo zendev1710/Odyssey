@@ -155,7 +155,7 @@ public class HexMapControl : Control
         ToolTip.SetShowDelay(this, 500);
         
         // Load directional wake image (add a PNG at Assets/Map/Effects/boat_wake.png)
-        _boatWakeBitmap = LoadBitmap("/Assets/Map/Effects/boat_wake.png", -1, false);
+        //_boatWakeBitmap = LoadBitmap("/Assets/Map/Effects/boat_wake.png", -1, false);
     }
 
     private void OnSeasonChanged()
