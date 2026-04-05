@@ -15,6 +15,7 @@
              mc:Ignorable="d"
              d:DesignWidth="1000" d:DesignHeight="550"
              x:DataType="vm:MainWindowViewModel" x:CompileBindings="True"
+			 x:Name="RootView"
              FontFamily="avares://Avalonia.Fonts.Inter/Assets#Inter">
 	<Design.DataContext>
 		<vm:MainWindowViewModel />
@@ -47,21 +48,37 @@
 				<MenuItem Header="{x:Static a:Lang.mainmenu_file_save_as}" Command="{Binding SaveFileAsCommand}" HotKey="Ctrl+Shift+S" InputGesture="Ctrl+Shift+S" />
 				<MenuItem Header="{x:Static a:Lang.mainmenu_file_save_orders}" Command="{Binding SaveOrdersCommand}" />
 				<Separator />
+
+				<MenuItem Header="Fichiers récents" ItemsSource="{Binding RecentFiles}">
+					<MenuItem.ItemTemplate>
+						<DataTemplate>
+							<!-- On lie le texte au nom du fichier -->
+							<!-- Le Command est lié à une méthode dans votre ViewModel -->
+							<MenuItem Header="{Binding}"
+									Command="{Binding #RootView.DataContext.OpenRecentFileCommand}"
+									CommandParameter="{Binding}" />
+						</DataTemplate>
+					</MenuItem.ItemTemplate>
+
+								<!--Command="{Binding OpenRecentFileCommand}"-->
+								<!--MenuItem Header="{Binding .}" Command="{Binding DataContext.OpenRecentFileCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding .}" /-->
+
+				</MenuItem>
+
 				<!--MenuItem Header="Recent Files" ItemsSource="{Binding RecentFiles}"-->
+				<!--
 				<MenuItem Header="Recent Files" x:Name="RecentFiles">
-					<!-- problems in binding: Items anf Commad => could not resolve -->
 					<ItemsControl ItemsSource="{Binding RecentFiles}">
 						<ItemsControl.ItemTemplate>
 							<DataTemplate>
 								<MenuItem Header="{Binding .}"
 										  Command="{Binding #RecentFiles.DataContext.OpenRecentFileCommand}"
 										  CommandParameter="{Binding .}" />
-								<!--Command="{Binding OpenRecentFileCommand}"-->
-								<!--MenuItem Header="{Binding .}" Command="{Binding DataContext.OpenRecentFileCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding .}" /-->
 							</DataTemplate>
 						</ItemsControl.ItemTemplate>
 					</ItemsControl>
 				</MenuItem>
+				-->
 				<Separator />
 				<!-- close active document -->
 				<MenuItem Header="{x:Static a:Lang.mainmenu_file_close}" Command="{Binding CloseFileCommand}"  HotKey="Ctrl+F4" InputGesture="Ctrl+F4"/>

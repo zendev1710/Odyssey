@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input;
 using Avalonia.Platform.Storage;
+using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Dock.Model.Controls;
@@ -45,7 +46,6 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     private RecentFilesManager _recentFilesManager = new RecentFilesManager("Odyssey");
 
     public ObservableCollection<string> RecentFiles { get; } = new();
-    //public IReadOnlyList<string> RecentFiles => _recentFilesManager.RecentFiles;
 
     private string? InitialDocumentPathname { get; set; } = string.Empty;
 
@@ -276,13 +276,26 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
                 InitialDocumentPathname = RecentFiles.FirstOrDefault(predicate);
             }
         }
+
+        //OpenRecentFileCommand = new RelayCommand<string>(OpenRecentFile);
     }
 
-    [RelayCommand(CanExecute = nameof(CanOpenRecentFile))]
-    private void OpenRecentFile(string pathname)
+    [RelayCommand]
+    private async Task OpenRecentFileAsync(string pathname)
     {
+        // Close the menu by forcing execution priority
+        // This allows the "Recent files" popup/sub-menu to close before starting OpenDocument
+        await Dispatcher.UIThread.InvokeAsync(() => { }, DispatcherPriority.Background);
+
+        // Perform the heavy loading
         OpenDocument(pathname);
     }
+
+    //[RelayCommand]
+    // private void OpenRecentFile(string pathname)
+    // {
+    //     OpenDocument(pathname);
+    // }
 
     public void OpenInitialDocumentIfNeeded()
     {
@@ -457,10 +470,9 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
     private void OnReportDocumentLoaded(CRDocument report)
     {
-        //UpdateReportInformation(new CRDocument());
-        // How to get the current document (report) file view model to publish the closed event for it before loading the new one ?
         if (HasReport(out CRDocument? previousReport))
         {
+            // Send event to be able to remove previous report global data
             EventAggregator?.GetEvent<ActiveDocumentClosedEvent>().Publish(previousReport!);
         }
 
@@ -472,6 +484,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         {
             // TODO: get active region from CRDocument and set as selection
         }
+
         ISelection sel = Selection ?? new SimpleItemSelection(report, 0, 0);
         // map changed, let selection function handle this
         if (report.IsEmpty())
@@ -708,23 +721,6 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         return null;
     }
 
-    /*
-    private bool GetActiveReportDocument(out DocumentType docFileType, out CRDocument activeDocument)
-    {
-
-        foreach (var dock in _factory.GetDockable<IDocumentDock>("Files"))
-        {             
-            if (dock is FileViewModel fvm && fvm.Document is CRDocument)
-            {
-                docFileType = fvm.DocumentType;
-                return true;
-            }
-        }
-
-        return false;
-    }
-    */
-
     private bool HasReport(out CRDocument? report)
     {
         FileViewModel? fileViewModel;
@@ -877,7 +873,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
     private bool OpenDocument(string pathname, DocumentType fileType, out FileViewModel? fileViewModel)
     {
-        // TODO: in case a CR should be opened here, remove previous CR document data if exist 
+        // TODO: in case a CR should be opened here, remove previous CR document data if exist
         // See OnDockableClosed
         fileViewModel = null;
         try
@@ -1079,7 +1075,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
                 // TODO:
                 // var layout = await JsonSerializer.DeserializeAsync(
-                //     stream, 
+                //     stream,
                 //     AvaloniaDockSerializer.s_serializerContext.RootDock);
                 /*
                 if (layout is { })
@@ -1554,16 +1550,6 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         EresseaDocument? d = GetActiveDocument(out DocumentType docFileType);
         return d != null && docFileType != DocumentType.ERESSEA_REPORT_FROM_ZIP && d.IsModified;
     }
-
-    private bool CanOpenRecentFile(string pathname)
-    {
-        // TODO
-        //GetActiveFileViewModel(out fileViewModel)
-        //EresseaDocument? d = GetActiveDocument(out DocumentType docFileType);
-        //return d != null && d.GetActiveFileViewModel;
-        return true;
-    }
-
 
     /// <summary>
     /// Indicates if SaveOrders command can be executed.
