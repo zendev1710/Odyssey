@@ -1,5 +1,4 @@
-﻿//using AvaloniaEdit.TextMate.Grammars;
-using Odyssey.TextMate;
+﻿using Odyssey.TextMate;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -19,6 +18,8 @@ public class EresseaOrdersRegistryOptions : IRegistryOptions
 
     public string GrammarScopeName { get; } = "source.eressea";
     public string DefaultThemeScopeName { get; } = "dark_plus";
+
+    private readonly Dictionary<string, IRawGrammar> _grammarsCache = new();
 
     private readonly Dictionary<string, IRawTheme> _themesCache = new();
 
@@ -50,39 +51,29 @@ public class EresseaOrdersRegistryOptions : IRegistryOptions
         { "visual-studio-light-theme", "visual-studio-light-theme" },
     };
 
-    private IRawTheme _cachedTheme;
-    private IRawGrammar _cachedGrammar;
-
     public EresseaOrdersRegistryOptions(string grammarResourceName)
     {
         _assembly = Assembly.GetExecutingAssembly();
         _grammarResourceName = grammarResourceName;
-        //string extension = ".txt";
-        //List<TextMateSharp.Grammars.Language> languages = GetAvailableLanguages();
-        //IEnumerable<TextMateSharp.Grammars.GrammarDefinition> grammarDefinitions = GetAvailableGrammarDefinitions();
-        //TextMateSharp.Grammars.Language language = GetLanguageByExtension(extension);
-        //string scope = GetScopeByExtension(extension);
-        //string scopeByLanguageId = GetScopeByLanguageId("eresseaorders");
     }
 
     public IRawGrammar GetGrammar(string scopeName)
     {
-        if (scopeName != GrammarScopeName)
-            return null;
+        //if (scopeName != GrammarScopeName)
+        //   return null;
 
-        if (_cachedGrammar != null)
-            return _cachedGrammar;
-
-        // tmp: to list embedded resources :
-        var names = _assembly.GetManifestResourceNames();
+        // Si déjà chargé, renvoyer le cache
+        if (_grammarsCache.TryGetValue(scopeName, out var cached))
+            return cached;
 
         var stream = _assembly.GetManifestResourceStream(_grammarResourceName);
         if (stream == null)
             return null;
 
         var reader = new StreamReader(stream);
-        _cachedGrammar = GrammarReader.ReadGrammarSync(reader);
-        return _cachedGrammar;
+        var grammar = GrammarReader.ReadGrammarSync(reader);
+        _grammarsCache[scopeName] = grammar;
+        return grammar;
     }
 
     public IRawTheme GetTheme(string scopeName)
@@ -113,9 +104,6 @@ public class EresseaOrdersRegistryOptions : IRegistryOptions
 
         // TODO: get namespace (Odyssey.Resources)
         resourceName = "Odyssey.Resources.Themes." + resourceName + ".json";
-
-        // to list embedded resources :
-        var names = _assembly.GetManifestResourceNames();
 
         // Charger depuis les ressources embarquées
         using var stream = _assembly.GetManifestResourceStream(resourceName);
@@ -169,47 +157,5 @@ public class EresseaOrdersRegistryOptions : IRegistryOptions
         ExtendedThemeName.TomorrowNight => "tomorrow_night",
         ExtendedThemeName.Magellan => "magellan",
         _ => "dark_plus",
-    };/*
-        public enum AvaloniaEdit.TextMate.Grammars.ExtendedThemeName
-        {
-            Abbys,
-            Dark,
-            DarkPlus,
-            DimmedMonokai,
-            KimbieDark,
-            Light,
-            LightPlus,
-            Monokai,
-            QuietLight,
-            Red,
-            SolarizedDark,
-            SolarizedLight,
-            TomorrowNightBlue
-        }
-
-        public enum TextMateSharp.Grammars.ExtendedThemeName
-        {
-            Abbys,
-            Dark,
-            DarkPlus,
-            DimmedMonokai,
-            KimbieDark,
-            Light,
-            LightPlus,
-            OneDark,
-            Monokai,
-            QuietLight,
-            Red,
-            SolarizedDark,
-            SolarizedLight,
-            TomorrowNightBlue,
-            HighContrastLight,
-            HighContrastDark,
-            Dracula,
-            AtomOneLight,
-            AtomOneDark,
-            VisualStudioLight,
-            VisualStudioDark
-        }
-         */// magellan//{ "one_dark_color_theme", "AvaloniaEdit.Demo.Resources.Themes.one_dark_color_theme.json" },//{ "tomorrow_night", "AvaloniaEdit.Demo.Resources.Themes.tomorrow_night.json" },//{ "tomorrow", "AvaloniaEdit.Demo.Resources.Themes.tomorrow.json" },
+    };
 }
