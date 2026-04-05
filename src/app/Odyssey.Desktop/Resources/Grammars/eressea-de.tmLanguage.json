@@ -1,6 +1,6 @@
 {
-  "name": "Eressea Orders (English)",
-  "scopeName": "orders.eressea",
+  "name": "Eressea Orders File (German)",
+  "scopeName": "orders-file-de.eressea",
   "patterns": [
     { "include": "#unit-orders" },
     { "include": "#faction-orders" },
@@ -22,7 +22,7 @@
     "unit-orders": {
       "patterns": [
         {
-          "begin": "^\\s*(@?)(?i:(ATTACK))\\b",
+          "begin": "^\\s*(@?)(?i:(ATTACKIERE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -34,7 +34,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(BUY))\\b",
+          "begin": "^\\s*(@?)(?i:(KAUFE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -47,7 +47,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(CLAIM))\\b",
+          "begin": "^\\s*(@?)(?i:(BEANSPRUCHE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -60,7 +60,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(CARRY))\\b",
+          "begin": "^\\s*(@?)(?i:(TRANSPORTIERE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -72,7 +72,7 @@
           ]
         },
         {
-          "begin": "\\s*(@?)(?i:(CAST))\\b",
+          "begin": "\\s*(@?)(?i:(ZAUBERE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -104,7 +104,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(COMBAT))\\b",
+          "begin": "^\\s*(@?)(?i:(KÄMPFE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -112,7 +112,7 @@
           "end": "$",
           "patterns": [
             {
-              "match": "(?i)\\b(AGGRESSIVE|DEFENSIVE|FLEE|REAR|HELP)\\b",
+              "match": "(?i)\\b(AGGRESSIVE|DEFENSIVE|FLEE|REAR|HELFE)\\b",
               "name": "keyword.mode.eressea"
             },
             {
@@ -123,7 +123,7 @@
           ]
         },
         {
-          "begin": "\\s*(@?)(?i:(COMBATSPELL))\\b",
+          "begin": "\\s*(@?)(?i:(KAMPFZAUBER))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -142,14 +142,14 @@
             },
             { "include": "#item" },
             {
-              "match": "\\b(?i:NOT)\\b",
+              "match": "\\b(?i:NICHT)\\b",
               "name": "keyword.logical.eressea"
             },
             { "include": "#comment-inline" }
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(CONTACT))\\b",
+          "begin": "^\\s*(@?)(?i:(KONTAKTIERE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -157,7 +157,7 @@
           "end": "$",
           "patterns": [
             {
-              "match": "(?i)\\b(UNIT|FACTION)\\b",
+              "match": "(?i)\\b(EINHEIT|FACTION)\\b",
               "name": "keyword.entity.eressea"
             },
             {
@@ -183,7 +183,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(DESCRIBE))\\b",
+          "begin": "^\\s*(@?)(?i:(BESCHREIBE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -191,7 +191,7 @@
           "end": "$",
           "patterns": [
             {
-              "match": "(?i)\\b(BUILDING|PRIVATE|REGION|SHIP|UNIT)\\b",
+              "match": "(?i)\\b(GEBÄUDE|PRIVAT|REGION|SCHIFF|EINHEIT)\\b",
               "name": "keyword.entity.eressea"
             },
             {
@@ -202,7 +202,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(DESTROY))\\b",
+          "begin": "^\\s*(@?)(?i:(ZERSTÖRE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -219,7 +219,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(END))\\b",
+          "begin": "^\\s*(@?)(?i:(ENDE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -230,7 +230,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(ENTER))\\b",
+          "begin": "^\\s*(@?)(?i:(BETRETE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -238,7 +238,7 @@
           "end": "$",
           "patterns": [
             {
-              "match": "(?i)\\b(BUILDING|CASTLE|SHIP)\\b",
+              "match": "(?i)\\b(GEBÄUDE|BURG|SCHIFF)\\b",
               "name": "keyword.entity.eressea"
             },
             {
@@ -249,7 +249,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(ENTERTAIN))\\b",
+          "begin": "^\\s*(@?)(?i:(UNTERHALTE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -261,7 +261,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(FOLLOW))\\b",
+          "begin": "^\\s*(@?)(?i:(FOLGE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -269,7 +269,7 @@
           "end": "$",
           "patterns": [
             {
-              "match": "(?i)\\b(SHIP|UNIT)\\b",
+              "match": "(?i)\\b(SCHIFF|EINHEIT)\\b",
               "name": "keyword.entity.eressea"
             },
             { "include": "#element-id" },
@@ -277,7 +277,7 @@
           ]
         },
         {
-          "begin": "\\s*(@?)(?i:(FORGET))\\b",
+          "begin": "\\s*(@?)(?i:(VERGISS))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -289,7 +289,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(GIVE))\\b",
+          "begin": "^\\s*(@?)(?i:(GIB))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -303,7 +303,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(GROUP))\\b",
+          "begin": "^\\s*(@?)(?i:(GRUPPE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -318,7 +318,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(GROW))\\b",
+          "begin": "^\\s*(@?)(?i:(ZÜCHTE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -326,7 +326,7 @@
           "end": "$",
           "patterns": [
             {
-              "match": "(?i:\\b(HORSES|HERBS)\\b)",
+              "match": "(?i:\\b(HORSES|KRÄUTER)\\b)",
               "name": "support.constant.eressea.resource"
             },
             { "include": "#element-id" },
@@ -334,7 +334,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(GUARD))\\b",
+          "begin": "^\\s*(@?)(?i:(BEWACHE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -342,14 +342,14 @@
           "end": "$",
           "patterns": [
             {
-              "match": "\\b(?i:NOT)\\b",
+              "match": "\\b(?i:NICHT)\\b",
               "name": "keyword.logical.eressea"
             },
             { "include": "#comment-inline" }
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(HIDE))\\b",
+          "begin": "^\\s*(@?)(?i:(TARNE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -357,7 +357,7 @@
           "end": "$",
           "patterns": [
             {
-              "match": "(?i)\\b(FACTION|NUMBER)\\b",
+              "match": "(?i)\\b(FACTION|NUMMER)\\b",
               "name": "keyword.entity.eressea"
             },
             {
@@ -370,7 +370,7 @@
           ]
         },
         {
-          "begin": "\\s*(@?)(?i:(LEARN))\\b",
+          "begin": "\\s*(@?)(?i:(LERNE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -382,7 +382,7 @@
           ]
         },
         {
-          "begin": "\\s*(@?)(?i:(LEARN AUTO))\\b",
+          "begin": "\\s*(@?)(?i:(LERNE AUTO))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -394,7 +394,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(LEAVE))\\b",
+          "begin": "^\\s*(@?)(?i:(VERLASSE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -405,7 +405,7 @@
           ]
         },
         {
-          "begin": "\\s*(@?)(?i:(MAKE))\\b",
+          "begin": "\\s*(@?)(?i:(MACHE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -413,7 +413,7 @@
           "end": "$",
           "patterns": [
             {
-              "match": "\\b(?i:HERBS)\\b",
+              "match": "\\b(?i:KRÄUTER)\\b",
               "name": "support.constant.eressea.resource"
             },
             {
@@ -436,12 +436,12 @@
               ]
             },
             {
-              "match": "\\b(?i:STREET)\\b",
+              "match": "\\b(?i:STRASSE)\\b",
               "name": "support.constant.eressea.resource"
             },
             { "include": "#direction" },
             {
-              "match": "\\b(?i:(BUILDING|CASTLE|SHIP))\\b",
+              "match": "\\b(?i:(GEBÄUDE|BURG|SCHIFF))\\b",
               "name": "keyword.entity.eressea"
             },
             { "include": "#element-id" },
@@ -449,7 +449,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(MESSAGE))\\b",
+          "begin": "^\\s*(@?)(?i:(BOTSCHAFT))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -457,7 +457,7 @@
           "end": "$",
           "patterns": [
             {
-              "match": "(?i:\\b(REGION|BUILDING|CASTLE|FACTION|SHIP|UNIT)\\b)",
+              "match": "(?i:\\b(REGION|GEBÄUDE|BURG|FACTION|SCHIFF|EINHEIT)\\b)",
               "name": "keyword.entity.eressea"
             },
             { "include": "#element-id" },
@@ -466,7 +466,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(MOVE))\\b",
+          "begin": "^\\s*(@?)(?i:(NACH))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -478,7 +478,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(NAME))\\b",
+          "begin": "^\\s*(@?)(?i:(BENENNE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -486,7 +486,7 @@
           "end": "$",
           "patterns": [
             {
-              "match": "\\b(FOREIGNUNIT|FOREIGN|BUILDING|CASTLE|FACTION|GROUP|REGION|UNIT)\\b",
+              "match": "\\b(FOREIGNUNIT|FOREIGN|GEBÄUDE|BURG|FACTION|GRUPPE|REGION|EINHEIT)\\b",
               "name": "keyword.entity.eressea"
             },
             { "include": "#element-id" },
@@ -495,7 +495,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(NUMBER))\\b",
+          "begin": "^\\s*(@?)(?i:(NUMMER))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -503,7 +503,7 @@
           "end": "$",
           "patterns": [
             {
-              "match": "\\b(UNIT|SHIP|BUILDING|FACTION)\\b",
+              "match": "\\b(EINHEIT|SCHIFF|GEBÄUDE|FACTION)\\b",
               "name": "keyword.entity.eressea"
             },
             { "include": "#element-id" },
@@ -511,7 +511,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(PAY\\s+NOT))\\b",
+          "begin": "^\\s*(@?)(?i:(BEZAHLE\\s+NICHT))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -523,7 +523,7 @@
           ]
         },
         {
-          "begin": "\\s*(@?)(?i:(PIRACY))\\b",
+          "begin": "\\s*(@?)(?i:(PIRATERIE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -535,7 +535,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(PLANT))\\b",
+          "begin": "^\\s*(@?)(?i:(PFLANZE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -544,14 +544,14 @@
           "patterns": [
             { "include": "#quantity" },
             {
-              "match": "(?i)\\b(TREES|HERBS|SEEDS|MALLORNSEEDS)\\b",
+              "match": "(?i)\\b(TREES|KRÄUTER|SEEDS|MALLORNSEEDS)\\b",
               "name": "support.constant.eressea.resource"
             },
             { "include": "#comment-inline" }
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(PROMOTION))\\b",
+          "begin": "^\\s*(@?)(?i:(BEFÖRDERE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -562,7 +562,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(RECRUIT))\\b",
+          "begin": "^\\s*(@?)(?i:(REKRUTIERE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -574,7 +574,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(RESEARCH))\\b",
+          "begin": "^\\s*(@?)(?i:(FORSCHE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -589,7 +589,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(RESERVE))\\b",
+          "begin": "^\\s*(@?)(?i:(RESERVIERE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -606,7 +606,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(RIDE))\\b",
+          "begin": "^\\s*(@?)(?i:(FAHRE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -634,7 +634,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(SELL))\\b",
+          "begin": "^\\s*(@?)(?i:(VERKAUFE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -647,7 +647,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(SHOW))\\b",
+          "begin": "^\\s*(@?)(?i:(ZEIGE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -663,7 +663,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(SORT))\\b",
+          "begin": "^\\s*(@?)(?i:(SORTIERE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -679,7 +679,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(SPY))\\b",
+          "begin": "^\\s*(@?)(?i:(SPIONIERE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -691,7 +691,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(STEAL))\\b",
+          "begin": "^\\s*(@?)(?i:(BEKLAUE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -703,7 +703,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(TAX))\\b",
+          "begin": "^\\s*(@?)(?i:(TREIBE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -715,7 +715,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(TEACH))\\b",
+          "begin": "^\\s*(@?)(?i:(LEHRE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -727,7 +727,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(USE))\\b",
+          "begin": "^\\s*(@?)(?i:(BENUTZE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -740,7 +740,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(WORK))\\b",
+          "begin": "^\\s*(@?)(?i:(ARBEITE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -782,7 +782,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(HELP))\\b",
+          "begin": "^\\s*(@?)(?i:(HELFE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.faction-order" }
@@ -791,7 +791,7 @@
           "patterns": [
             { "include": "#element-id" },
             {
-              "match": "(?i)\\b(ALL|COMBAT|GIVE|GUARD|FACTIONSTEALTH|SILVER)\\b",
+              "match": "(?i)\\b(ALL|KÄMPFE|GIB|GUARD|FACTIONSTEALTH|SILVER)\\b",
               "name": "keyword.mode.eressea"
             },
             {
@@ -802,7 +802,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(LANGUAGE))\\s+(?i:(DE))\\b",
+          "begin": "^\\s*(@?)(?i:(SPRACHE))\\s+(?i:(DE))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.faction-order" }
@@ -844,14 +844,14 @@
               "name": "constant.language.option.eressea"
             },
             {
-              "match": "\\b(?i:NOT)\\b",
+              "match": "\\b(?i:NICHT)\\b",
               "name": "keyword.logical.eressea"
             },
             { "include": "#comment-inline" }
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(ORIGIN))\\s+(-?\\d+)\\s+(-?\\d+)\\b",
+          "begin": "^\\s*(@?)(?i:(URSPRUNG))\\s+(-?\\d+)\\s+(-?\\d+)\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.faction-order" },
@@ -864,7 +864,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(PASSWORD))\\s+\"([A-Za-z0-9]+)\"",
+          "begin": "^\\s*(@?)(?i:(PASSWORT))\\s+\"([A-Za-z0-9]+)\"",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.faction-order" },
@@ -876,7 +876,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(PREFIX))\\b",
+          "begin": "^\\s*(@?)(?i:(PRÄFIX))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.faction-order" }
@@ -922,7 +922,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(NEXT))\\b",
+          "begin": "^\\s*(@?)(?i:(NÄCHSTER))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.meta-order" }
@@ -933,7 +933,7 @@
           ]
         },
         {
-          "begin": "\\s*(@?)(?i:(QUIT))\\b",
+          "begin": "\\s*(@?)(?i:(STIRB))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.meta-order" }
@@ -970,7 +970,7 @@
           ]
         },
         {
-          "begin": "^\\s*(@?)(?i:(UNIT))\\b",
+          "begin": "^\\s*(@?)(?i:(EINHEIT))\\b",
           "beginCaptures": {
             "1": { "name": "punctuation.definition.priority.eressea" },
             "2": { "name": "keyword.command.eressea.unit-order" }
@@ -1020,7 +1020,7 @@
     "direction": {
       "patterns": [
         {
-          "match": "\\b(?i:(NORTHE|NORTHEAST|NE|NORTHW|NORTHWEST|NW|EAST|E|WEST|W|SOUTHE|SOUTHEAST|SE|SOUTHW|SOUTHWEST|SW))\\b",
+          "match": "\\b(?i:(NORDO|NORDOSTEN|NO|NORDW|NORDWESTEN|NW|OSTEN|O|WESTEN|W|SÜDO|SÜDOSTEN|SO|SÜDW|SÜDWESTEN|SW))\\b",
           "name": "constant.language.direction.eressea"
         }
       ]

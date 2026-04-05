@@ -34,15 +34,12 @@ Upcoming feature:
 
 ### Theming
 
-- Fluent theme
-- Light and dark modes
-
-Upcoming features:
-
-- simple theme
-- combobox to select a theme bet ween default, simple, light and dark themes
-- default used theme in application settings
-- user prefered theme in user settings
+- Fluent theme (light and dark)
+- Simple theme (light and dark)
+- Light and dark modes switching and usage
+- Default used theme in application settings
+- User prefered theme in user settings
+- Combobox to select a theme between default, simple, and fluent theme
 
 ## Settings management
 

@@ -1,6 +1,6 @@
 {
-  "name": "Eressea Orders (English)",
-  "scopeName": "orders.eressea",
+  "name": "Eressea Orders",
+  "scopeName": "source.eressea",
   "patterns": [
     { "include": "#unit-orders" },
     { "include": "#faction-orders" },
@@ -1027,7 +1027,7 @@
     },
     "element-id": {
       "name": "variable.base36.eressea.element-id",
-      "match": "\\b(?!(?i:(iron|wood|oil|balm|bow|gem|silk|cart|laen|herb|axe|seed|life|wax|all))\\b)(?!\\d{3,4}\\b)(?i:[A-Z0-9]{3,4})\\b"
+      "match": "\\b(?!(?i:(iron|wood|oil|balm|bow|gem|silk|cart|laen|herb|axe|seed|all))\\b)(?!\\d{3,4}\\b)(?i:[A-Z0-9]{3,4})\\b"
     },
     "level": {
       "name": "constant.numeric.eressea.level",

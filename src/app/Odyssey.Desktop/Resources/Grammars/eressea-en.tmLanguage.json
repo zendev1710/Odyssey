@@ -1,6 +1,6 @@
 {
-  "name": "Eressea Orders (English)",
-  "scopeName": "orders.eressea",
+  "name": "Eressea Orders File (English)",
+  "scopeName": "orders-file-en.eressea",
   "patterns": [
     { "include": "#unit-orders" },
     { "include": "#faction-orders" },
