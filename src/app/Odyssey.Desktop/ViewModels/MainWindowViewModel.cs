@@ -457,6 +457,13 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
     private void OnReportDocumentLoaded(CRDocument report)
     {
+        //UpdateReportInformation(new CRDocument());
+        // How to get the current document (report) file view model to publish the closed event for it before loading the new one ?
+        if (HasReport(out CRDocument? previousReport))
+        {
+            EventAggregator?.GetEvent<ActiveDocumentClosedEvent>().Publish(previousReport!);
+        }
+
         UpdateReportInformation(report);
         ResetPlanes();
 
@@ -702,8 +709,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     }
 
     /*
-    // TODO
-    private bool GetActiveReportDocument(out DocumentType docFileType)
+    private bool GetActiveReportDocument(out DocumentType docFileType, out CRDocument activeDocument)
     {
 
         foreach (var dock in _factory.GetDockable<IDocumentDock>("Files"))
@@ -718,6 +724,18 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         return false;
     }
     */
+
+    private bool HasReport(out CRDocument? report)
+    {
+        FileViewModel? fileViewModel;
+        report = null;
+        if (GetActiveFileViewModel(out fileViewModel, out _) && (fileViewModel is not null && fileViewModel.DocumentType.IsReportType()))
+        {
+           report = fileViewModel.Document as CRDocument;
+           return report is not null;
+        }
+        return false;
+    }
 
     /// <summary>
     /// Gets the active opened document or null if no document is opened.
@@ -859,6 +877,8 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
     private bool OpenDocument(string pathname, DocumentType fileType, out FileViewModel? fileViewModel)
     {
+        // TODO: in case a CR should be opened here, remove previous CR document data if exist 
+        // See OnDockableClosed
         fileViewModel = null;
         try
         {
@@ -978,10 +998,11 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
         // LATER: notify map change if an orders file has been loaded ?
         //FileViewModel? lastFileViewModel = lastReportFileViewModel ?? lastOrdersFileViewModel;
-        if (lastReportFileViewModel is not null)
-        {
-            OnReportDocumentLoaded((lastReportFileViewModel.Document as CRDocument)!);
-        }
+        // Note: OpenDocument does OnReportDocumentLoaded, so no need here
+        //if (lastReportFileViewModel is not null)
+        //{
+        //    OnReportDocumentLoaded((lastReportFileViewModel.Document as CRDocument)!);
+        //}
     }
 
     private void OpenFiles(IEnumerable<IStorageItem> storageItems)
@@ -1653,6 +1674,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         if (args.Dockable is FileViewModel fileViewModel && fileViewModel.DocumentType.IsReportType())
         {
             UpdateReportInformation(new CRDocument());
+            // Note: fileViewModel.Document is not used at this moment in subscribers (OnActiveDocumentClosed)
             EventAggregator?.GetEvent<ActiveDocumentClosedEvent>().Publish((fileViewModel.Document as CRDocument)!);
         }
     }
