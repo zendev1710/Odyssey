@@ -26,10 +26,6 @@ public enum ExtendedThemeName
     AtomOneDark = TextMateSharp.Grammars.ThemeName.AtomOneDark,
     VisualStudioLight = TextMateSharp.Grammars.ThemeName.VisualStudioLight,
     VisualStudioDark = TextMateSharp.Grammars.ThemeName.VisualStudioDark,
-    // Others extra themes
-    OneDarkOther = 21,
-    Tomorrow = 22,
-    TomorrowNight = 23,
-    // Magellan theme
-    Magellan = 24,
+    // Magellan Light theme
+    MagellanLight = 24,
 }

@@ -4,9 +4,12 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
+using Odyssey.TextMate;
+using Odyssey.Views;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
 
@@ -33,6 +36,11 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
     [ObservableProperty]
     private bool _canEditOrders;
 
+    public ObservableCollection<ColorThemeViewModel> AllThemes { get; set; } = [];
+
+    [ObservableProperty]
+    private ColorThemeViewModel _selectedTheme = new(ExtendedThemeName.DarkPlus);
+
     public TextDocument Document { get; set; }
 
     public UnitOrdersViewModel() : this(null)
@@ -50,6 +58,16 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         Document = new TextDocument { Text = "" };
         CanEditOrders = false;
         Reset();
+
+        foreach (ExtendedThemeName themeName in Enum.GetValues<ExtendedThemeName>())
+        {
+            var themeViewModel = new ColorThemeViewModel(themeName);
+            AllThemes.Add(themeViewModel);
+            if (themeName == ExtendedThemeName.DarkPlus)
+            {
+                SelectedTheme = themeViewModel;
+            }
+        }
     }
 
     /// <summary>
