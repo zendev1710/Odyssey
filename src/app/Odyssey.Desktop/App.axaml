@@ -131,7 +131,8 @@
 		</ResourceDictionary>
 	</Application.Resources>
 	<Application.Styles>
-		<StyleInclude Source="avares://ShowMeTheXaml.Avalonia/XamlDisplay.xaml"/>
+		<!-- compile error since Avalonia 12 --> 
+		<!--StyleInclude Source="avares://ShowMeTheXaml.Avalonia/XamlDisplay.xaml"/-->
 		<StyleInclude Source="avares://AsyncImageLoader.Avalonia/AdvancedImage.axaml" />
 		<Style Selector="DockControl">
 			<Setter Property="(ControlRecyclingDataTemplate.ControlRecycling)" Value="{StaticResource ControlRecyclingKey}" />

@@ -1,7 +1,6 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
-using Avalonia.Xaml.Interactions.DragAndDrop;
 using Odyssey.ViewModels;
 using Dock.Settings;
 using System.ComponentModel;
