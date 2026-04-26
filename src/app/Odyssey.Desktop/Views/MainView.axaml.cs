@@ -1,7 +1,6 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
-using Avalonia.Xaml.Interactions.DragAndDrop;
 using Odyssey.ViewModels;
 using Dock.Settings;
 using System.ComponentModel;
@@ -53,7 +52,7 @@ public partial class MainView : UserControl
     }
 
     /// <summary>
-    /// Called when a property in the ViewModel changes. 
+    /// Called when a property in the ViewModel changes.
     /// Toggles the window fullscreen state when the value of ViewModel IsFullscreen property changed.
     /// </summary>
     /// <param name="sender">This window</param>
@@ -71,13 +70,13 @@ public partial class MainView : UserControl
                     // Store the window state before going fullscreen
                    // this._previousWindowState = this.WindowState;
                     //this.WindowState = WindowState.FullScreen;
-                    //this.SystemDecorations = SystemDecorations.None;
+                    //this.WindowDecorations = WindowDecorations.None;
                 }
                 else
                 {
                     // Set the Window state to the previous one, stored on the last toggle fullscreen command
                     //this.WindowState = this._previousWindowState;
-                    //this.SystemDecorations = SystemDecorations.Full;
+                    //this.WindowDecorations = WindowDecorations.Full;
                 }
             }
         }

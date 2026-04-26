@@ -26,9 +26,12 @@
 		Height="680"
 		Width="1200"
         ExtendClientAreaToDecorationsHint="True"
-        ExtendClientAreaChromeHints="PreferSystemChrome"
         ids:DockProperties.IsDragEnabled="True"
 		ids:DockProperties.IsDropEnabled="True">
+  <!-- Avalonia 12:
+  ExtendClientAreaChromeHints are removed because they didn't work properly with newer OSes anyway.
+  So ExtendClientAreaChromeHints="PreferSystemChrome" removed
+  -->
   <Window.Resources>
     <ExperimentalAcrylicMaterial 
 		BackgroundSource="Digger"

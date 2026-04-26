@@ -396,7 +396,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
     public void DragOver(object? sender, DragEventArgs e)
     {
-        if (!e.Data.Contains(DataFormats.Files))
+        if (!e.DataTransfer.Contains(DataFormat.File))
         {
             e.DragEffects = DragDropEffects.None;
             e.Handled = true;
@@ -405,9 +405,9 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
     public void Drop(object? sender, DragEventArgs e)
     {
-        if (e.Data.Contains(DataFormats.Files))
+        if (e.DataTransfer.Contains(DataFormat.File))
         {
-            var result = e.Data.GetFiles();
+            var result = e.DataTransfer.TryGetFiles();
             if (result is { })
             {
                 // Drop with Ctrl key pressed => merge requested
@@ -795,7 +795,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
             StorageService.All
         };
     }
-    
+
     private static List<FilePickerFileType> GetOpenEresseaFilesTypes()
     {
         return new List<FilePickerFileType>

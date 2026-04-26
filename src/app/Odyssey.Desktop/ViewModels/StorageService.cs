@@ -103,7 +103,7 @@ internal static class StorageService
 
         if (Application.Current?.ApplicationLifetime is ISingleViewApplicationLifetime { MainView: { } mainView })
         {
-            var visualRoot = mainView.GetVisualRoot();
+            var visualRoot = mainView.GetPresentationSource().RootVisual;
             if (visualRoot is TopLevel topLevel)
             {
                 return topLevel.StorageProvider;

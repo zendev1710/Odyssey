@@ -11,7 +11,7 @@ namespace Odyssey.Views;
 public partial class MainWindow : Window
 {
     private WindowState _previousWindowState = WindowState.Normal;
-    private SystemDecorations _previousSystemDecorations = SystemDecorations.Full;
+    private WindowDecorations _previousWindowDecorations = WindowDecorations.Full;
 
     public MainWindow()
     {
@@ -35,7 +35,7 @@ public partial class MainWindow : Window
     }
 
     /// <summary>
-    /// Called when a property in the ViewModel changes. 
+    /// Called when a property in the ViewModel changes.
     /// Toggles the window fullscreen state when the value of ViewModel IsFullscreen property changed.
     /// </summary>
     /// <param name="sender">This window</param>
@@ -48,15 +48,15 @@ public partial class MainWindow : Window
             {
                 // Store the window state before going fullscreen
                 this._previousWindowState = this.WindowState;
-                this._previousSystemDecorations = this.SystemDecorations;
+                this._previousWindowDecorations = this.WindowDecorations;
                 this.WindowState = WindowState.FullScreen;
-                this.SystemDecorations = SystemDecorations.None;
+                this.WindowDecorations = WindowDecorations.None;
             }
             else
             {
                 // Set the Window state to the previous one, stored on the last toggle fullscreen command
                 this.WindowState = this._previousWindowState;
-                this.SystemDecorations = _previousSystemDecorations;
+                this.WindowDecorations = _previousWindowDecorations;
             }
         }
     }

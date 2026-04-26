@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-	<TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
+	<TargetFrameworks>net10.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -45,7 +45,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <AvaloniaXaml Remove="Views\InventoryView.axaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="TextMate\EresseaRegistryOptions.cs" />
+    <Compile Remove="Views\InventoryView.axaml.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -114,38 +119,37 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AsyncImageLoader.Avalonia" Version="3.7.0" />
-	<PackageReference Include="Avalonia" Version="11.3.13" />
-	<PackageReference Include="Avalonia.AvaloniaEdit" Version="11.4.1" />
-	<PackageReference Include="Avalonia.Controls.DataGrid" Version="11.3.13" />
-	<PackageReference Include="Avalonia.Desktop" Version="11.3.13" />
-	<PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.13" />
-	<PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.13" />
+    <PackageReference Include="AsyncImageLoader.Avalonia" Version="3.8.0" />
+	<PackageReference Include="Avalonia" Version="12.0.1" />
+	<PackageReference Include="Avalonia.AvaloniaEdit" Version="12.0.0" />
+	<PackageReference Include="Avalonia.Controls.DataGrid" Version="12.0.0" />
+	<PackageReference Include="Avalonia.Desktop" Version="12.0.1" />
+	<PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.1" />
+	<PackageReference Include="Avalonia.Fonts.Inter" Version="12.0.1" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-	<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.3.13" />
-	<PackageReference Include="Avalonia.Themes.Simple" Version="11.3.13" />
-    <PackageReference Include="AvaloniaEdit.TextMate" Version="11.4.1" />
+	<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.3.14" />
+	<PackageReference Include="Avalonia.Themes.Simple" Version="12.0.1" />
+    <PackageReference Include="AvaloniaEdit.TextMate" Version="12.0.0" />
     <PackageReference Include="AvaloniaEdit.TextMate.Grammars" Version="0.10.12" />
-    <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.0" />
+    <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.1" />
     <PackageReference Include="CommunityToolkit.Common" Version="8.4.2" />
     <PackageReference Include="CommunityToolkit.Diagnostics" Version="8.4.2" />
     <PackageReference Include="CommunityToolkit.HighPerformance" Version="8.4.2" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-    <PackageReference Include="ConfigFactory" Version="0.5.0" />
-    <PackageReference Include="ConfigFactory.Avalonia" Version="0.5.0" />
-    <PackageReference Include="ConfigFactory.Core" Version="0.5.0" />
-	<PackageReference Include="Dock.Avalonia" Version="11.3.11.22" />
-	<PackageReference Include="Dock.Avalonia.Themes.Fluent" Version="11.3.11.22" />
-	<PackageReference Include="Dock.Model.Mvvm" Version="11.3.11.22" />
-    <PackageReference Include="Dock.Avalonia.Themes.Simple" Version="11.3.11.22" />
+    <PackageReference Include="ConfigFactory" Version="0.6.0" />
+    <PackageReference Include="ConfigFactory.Avalonia" Version="0.6.0" />
+    <PackageReference Include="ConfigFactory.Core" Version="0.6.0" />
+	<PackageReference Include="Dock.Avalonia" Version="12.0.0.2" />
+	<PackageReference Include="Dock.Avalonia.Themes.Fluent" Version="12.0.0.2" />
+	<PackageReference Include="Dock.Model.Mvvm" Version="12.0.0.2" />
+    <PackageReference Include="Dock.Avalonia.Themes.Simple" Version="12.0.0.2" />
     <PackageReference Include="Dock.Serializer" Version="11.3.0.12" />
     <PackageReference Include="Markdown.Avalonia" Version="11.0.3-a1" />
-    <PackageReference Include="Microsoft.Win32.SystemEvents" Version="10.0.5" />
+    <PackageReference Include="Microsoft.Win32.SystemEvents" Version="10.0.7" />
     <PackageReference Include="Prism.Avalonia" Version="9.0.537.11130" />
     <PackageReference Include="Prism.DryIoc.Avalonia" Version="9.0.537.11130" />
     <PackageReference Include="Projektanker.Icons.Avalonia" Version="9.6.2" />
     <PackageReference Include="Projektanker.Icons.Avalonia.FontAwesome" Version="9.6.2" />
-    <PackageReference Include="ShowMeTheXaml.Avalonia.Generator" Version="1.5.3" />
     <PackageReference Include="Splat" Version="19.3.1" />
     <PackageReference Include="TextMateSharp" Version="2.0.3" />
     <PackageReference Include="TextMateSharp.Grammars" Version="2.0.3" />
@@ -162,6 +166,9 @@
     <Compile Update="Views\Tools\ReportInfoView.axaml.cs">
       <DependentUpon>ReportInfoView.axaml</DependentUpon>
     </Compile>
+	<Compile Update="Views\Tools\UnitStripView.axaml.cs">
+	  <DependentUpon>UnitStripView.axaml</DependentUpon>
+	</Compile>
     <Compile Update="Views\Tools\RegionInfoView.axaml.cs">
       <DependentUpon>RegionInfoView.axaml</DependentUpon>
     </Compile>
@@ -192,6 +199,9 @@
     <Compile Update="Views\Tools\UnitOrdersView.axaml.cs">
       <DependentUpon>UnitOrdersView.axaml</DependentUpon>
     </Compile>
+	<Compile Update="Views\Tools\UnitInspectorView.axaml.cs">
+	  <DependentUpon>UnitInspectorView.axaml</DependentUpon>
+	</Compile>
 	<Compile Update="Views\Tools\DetailsView.axaml.cs">
 	  <DependentUpon>DetailsView.axaml</DependentUpon>
 	</Compile>

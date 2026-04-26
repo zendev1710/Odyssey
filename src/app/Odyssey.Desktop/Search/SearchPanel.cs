@@ -500,7 +500,7 @@ namespace Odyssey.Search
             base.OnPointerMoved(e);
         }
 
-        protected override void OnGotFocus(GotFocusEventArgs e)
+        protected override void OnGotFocus(FocusChangedEventArgs e)
         {
             e.Handled = true;
 

@@ -137,7 +137,7 @@ public class App : PrismApplication
 
         base.OnFrameworkInitializationCompleted();
 #if DEBUG
-        this.AttachDevTools();
+        this.AttachDeveloperTools();
 #endif
     }
 
@@ -151,14 +151,14 @@ public class App : PrismApplication
 
         // Wire-up services and navigation Views here.
 
-        // Resolve to get an instance of the service        
+        // Resolve to get an instance of the service
         //containerRegistry.RegisterSingleton<IMySQervice, MyService>();
     }
 
     // Prism
     /// <summary>User interface entry point, called after Register and ConfigureModules.</summary>
     /// <returns>Startup View.</returns>
-    /// 
+    ///
     protected override AvaloniaObject CreateShell()
     {
         Debug.WriteLine("[APPLICATION] Create shell");
