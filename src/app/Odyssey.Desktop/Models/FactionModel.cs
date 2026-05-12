@@ -15,14 +15,14 @@ public class FactionModel
 
     public Dictionary<int, DataBlock> Alliances { get; private set; } = [];
 
-    public FactionModel(DataBlock dataBlock)
+    public FactionModel(DataBlock data)
     {
-        Data = dataBlock;
-        Recruitment = Data.ValueInt(KeyType.RECRUITMENTCOST);
-        string name = Data.Value(KeyType.FACTIONNAME);
-        Name = string.IsNullOrEmpty(name) ? Labels.Localize(Labels.DISGUISED) : $"{name} ({Data.IdToString()})";
-        IsActive = CRDocument.FactionIsActive(Data);
-        Id = Data.GetId();
+        Data = data;
+        Recruitment = data.ValueInt(KeyType.RECRUITMENTCOST);
+        string name = data.Value(KeyType.FACTIONNAME);
+        Name = string.IsNullOrEmpty(name) ? Labels.Localize(Labels.DISGUISED) : $"{name} ({data.IdToString()})";
+        IsActive = CRDocument.FactionIsActive(data);
+        Id = data.GetId();
     }
 
     public void AddAlliance(DataBlock ally, int blockId)

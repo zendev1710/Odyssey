@@ -23,6 +23,9 @@ namespace Odyssey.ViewModels
         public const string RegionProperties = "region_properties";
         public const string RegionStatistics = "region_statistics";
         public const string Details = "details";
+        public const string UnitsInspector = "units_inspector";
+        public const string UnitStrip = "unit_strip";
+        public const string UnitInspector = "unit_inspector";
         public const string UnitOrders = "unit_orders";
         public const string RegionInfo = "region_info";
         public const string Battles = "battles";

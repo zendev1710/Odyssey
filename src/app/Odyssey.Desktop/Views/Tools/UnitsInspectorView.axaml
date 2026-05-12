@@ -1,0 +1,37 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:views="using:Odyssey.Views.Tools"
+             x:Class="Odyssey.Views.Tools.UnitsInspectorView"
+             mc:Ignorable="d">
+	<!--
+    Composite view that places a vertical UnitStrip on the left and the UnitInspector on the right.
+    The DataContext is expected to be provided by the host (Dock manager / DI).
+  -->
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="220" />
+			<!-- strip column -->
+			<ColumnDefinition Width="6" />
+			<!-- splitter -->
+			<ColumnDefinition Width="*" />
+			<!-- inspector -->
+		</Grid.ColumnDefinitions>
+
+		<!-- Left: vertical strip -->
+		<views:UnitStripView Grid.Column="0" />
+
+		<!-- Splitter -->
+		<GridSplitter Grid.Column="1"
+					  Width="6"
+					  Background="Transparent"
+					  HorizontalAlignment="Stretch"
+					  VerticalAlignment="Stretch"
+					  ShowsPreview="True"
+					  ResizeDirection="Columns" />
+
+		<!-- Right: inspector details -->
+		<views:UnitInspectorView Grid.Column="2" />
+	</Grid>
+</UserControl>

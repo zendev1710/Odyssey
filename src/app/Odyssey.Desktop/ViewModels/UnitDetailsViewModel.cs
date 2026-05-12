@@ -11,11 +11,14 @@ using static Odyssey.Utils.Converters;
 using static Odyssey.Models.Tools.DataProperty;
 using static Odyssey.Models.Tools.UnitModel;
 using Odyssey.Models;
+using Odyssey.ViewModels.Tools;
+using Odyssey.Services;
 
 namespace Odyssey.ViewModels;
 
 public partial class UnitDetailsViewModel : ViewModelBase
 {
+    public ObservableCollection<UnitItemViewModel> InventoryItems { get; } = new();
     private readonly NodeViewModel _root = new();
 
     protected NodeViewModel Root { get { return _root; } }
@@ -89,10 +92,10 @@ public partial class UnitDetailsViewModel : ViewModelBase
 
     [ObservableProperty]
     private int _weight;
-    public UnitDetailsViewModel() : this(null) 
-    { 
+    public UnitDetailsViewModel() : this(null)
+    {
     }
-    public UnitDetailsViewModel(IEventAggregator? eventAggregator) : base(Ids.UnitDetails, eventAggregator)
+    public UnitDetailsViewModel(/*ISelectionService selectionService*/IEventAggregator? eventAggregator) : base(Ids.UnitDetails, eventAggregator)
     {
         Items = Root.Children;
 
@@ -277,7 +280,7 @@ public partial class UnitDetailsViewModel : ViewModelBase
 
         ///////
         // UNIT
-     
+
         string raceName = string.IsNullOrEmpty(unitModel.Race) ? Labels.PERSONS : unitModel.Race;
         string raceLabel = Labels.LocalizeCountable(Categories.Race, raceName, unitModel.PeopleNumber == 1);
         if (!string.IsNullOrEmpty(unitModel.Prefix))
@@ -390,7 +393,7 @@ public partial class UnitDetailsViewModel : ViewModelBase
             }
         }
 
-        if (unitModel.Effects != null) 
+        if (unitModel.Effects != null)
         {
             string effectsLabel = Labels.Localize(Categories.Node, Labels.EFFECTS);
             DataProperty effectsProperty = new(Categories.Node, Labels.EFFECTS, string.Empty, effectsLabel);
@@ -434,7 +437,23 @@ public partial class UnitDetailsViewModel : ViewModelBase
 
         ////////
         // ITEMS
-
+        InventoryItems.Clear();
+        //List<DataProperty> itemsProperties = [];
+        if (unitModel.CollectItems(ref itemsProperties))
+        {
+            foreach (var itemProp in itemsProperties)
+            {
+                // Supposons que itemProp.Label soit le nom et itemProp.Value soit la quantité
+                // Adaptez selon votre structure de données DataProperty
+                var itemVm = new UnitItemViewModel(
+                    itemProp.Label,
+                    int.TryParse(itemProp.Value, out int q) ? q : 0,
+                    itemProp.Category.ToString()
+                );
+                InventoryItems.Add(itemVm);
+            }
+        }
+        /*
         if (unitModel.CollectItems(ref itemsProperties))
         {
             string itemsLabel = Labels.Localize(Categories.Node, Labels.ITEMS);
@@ -445,6 +464,7 @@ public partial class UnitDetailsViewModel : ViewModelBase
                 _ = AddItem(itemsNode, itemProperty, $"{itemProperty.Value} {itemProperty.Label}");
             }
         }
+        */
 
         int walkCapacity;
         int rideCapacity;
@@ -604,7 +624,6 @@ public partial class UnitDetailsViewModel : ViewModelBase
     /// Normally called by a double-click or a space key pressed on the currently selected item of this tree messages list in the corresponding view.
     /// Event is published only if the selected item is linked to a DataBlock (selection state has changed).
     /// </summary>
-    /// <param name="node"></param>
     public void DispatchSelectedNode(NodeViewModel? node)
     {
         if (node == null)
@@ -642,10 +661,6 @@ public partial class UnitDetailsViewModel : ViewModelBase
     /// <summary>
     /// Append item under parent if index is -1; otherwise insert item at the specified index.
     /// </summary>
-    /// <param name="parent"></param>
-    /// <param name="label"></param>
-    /// <param name="block"></param>
-    /// <returns></returns>
     private static TreeNodeViewModel AddItem(NodeViewModel parent, DataProperty? property, string header = "", int index = -1)
     {
         return new(parent, property, header, index);
@@ -653,11 +668,6 @@ public partial class UnitDetailsViewModel : ViewModelBase
     /// <summary>
     /// Insert item just before the specified brother node.
     /// </summary>
-    /// <param name="parent"></param>
-    /// <param name="brother"></param>
-    /// <param name="property"></param>
-    /// <param name="header"></param>
-    /// <returns></returns>
     private static TreeNodeViewModel InsertItem(NodeViewModel parent, NodeViewModel brother, DataProperty? property, string header = "")
     {
         return new(parent, property, header, parent.Children.IndexOf(brother));

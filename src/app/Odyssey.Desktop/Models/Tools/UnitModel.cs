@@ -85,6 +85,13 @@ public class UnitModel : EntityModel
         _containerDataProperties = [];
     }
 
+    // Dans UnitModel.cs, vous pourriez ajouter une méthode utilitaire :
+    public bool PrepareAndCollectItems(ref List<DataProperty> itemsProperties)
+    {
+        CollectCategoriesData();
+        return CollectItems(ref itemsProperties);
+    }
+
     public void CollectCategoriesData()
     {
         int minDepth = DataBlock.GetDepth();

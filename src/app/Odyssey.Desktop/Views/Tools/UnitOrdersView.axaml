@@ -65,16 +65,13 @@
 		<AvalonEdit:TextEditor 
 			Name="Editor"
 			Grid.Row="1"
-			FontFamily="Cascadia Code,Consolas,Menlo,Monospace"
-			HorizontalScrollBarVisibility="Auto"
-			VerticalScrollBarVisibility="Visible"
-			FontWeight="Light"
-			FontSize="14"
-			IsEnabled="True"
-			IsVisible="True"
-			ShowLineNumbers="True"
+			IsVisible="{Binding CanEditOrders}"
 			Document="{Binding Document}"
 			>
+            <!-- above :
+            IsEnabled="{Binding CanEditOrders}"
+            IsReadOnly="{Binding CanEditOrders}"
+            -->
 		</AvalonEdit:TextEditor>
 		<Grid Name="StatusBar" Grid.Row="2" >
 			<Grid.ColumnDefinitions>

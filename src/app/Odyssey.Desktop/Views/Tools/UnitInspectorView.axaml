@@ -1,0 +1,52 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="using:Odyssey.ViewModels.Tools"
+             x:Class="Odyssey.Views.Tools.UnitInspectorView"
+             mc:Ignorable="d"
+             x:DataType="vm:UnitInspectorViewModel">
+	<Border Padding="8">
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+
+			<!-- Header -->
+			<StackPanel Orientation="Horizontal" Spacing="8">
+				<TextBlock Text="{Binding SelectedUnit.Name}" FontSize="16" FontWeight="Bold"/>
+				<TextBlock Text="(" Foreground="#FF888888"/>
+				<TextBlock Text="{Binding SelectedUnit.Id}" Foreground="#FF888888"/>
+				<TextBlock Text=")" Foreground="#FF888888"/>
+			</StackPanel>
+
+			<TabControl Grid.Row="1" Margin="0,8,0,0" SelectedIndex="0">
+				<TabItem Header="Info">
+					<StackPanel Margin="8" Spacing="6">
+						<TextBlock Text="Faction:" FontWeight="SemiBold"/>
+						<TextBlock Text="{Binding SelectedUnit.FactionId}" />
+						<TextBlock Text="Confirmed:" FontWeight="SemiBold" Margin="0,6,0,0"/>
+						<TextBlock Text="{Binding SelectedUnit.IsConfirmed}" />
+						<TextBlock Text="Summary:" FontWeight="SemiBold" Margin="0,6,0,0"/>
+						<TextBlock Text="{Binding SelectedUnit.Summary}" TextWrapping="Wrap"/>
+					</StackPanel>
+				</TabItem>
+
+				<TabItem Header="Items">
+					<!-- Replace with your Items collection when available -->
+					<TextBlock Margin="8" Text="Items: (not implemented)"/>
+				</TabItem>
+
+				<TabItem Header="Orders">
+					<!-- Could show history + Insert button that appends into Editor document -->
+					<TextBlock Margin="8" Text="Orders: (use OrdersDocument / Commands overlay)"/>
+				</TabItem>
+
+				<TabItem Header="Skills">
+					<TextBlock Margin="8" Text="Skills: (not implemented)"/>
+				</TabItem>
+			</TabControl>
+		</Grid>
+	</Border>
+</UserControl>
