@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using Odyssey.Models.Data;
+using Odyssey.Models.Localization;
 using Odyssey.Settings;
 using System.Diagnostics;
 
@@ -36,7 +37,7 @@ namespace Odyssey.Models.Documents
             IsReadOnly = GlobalSettings.Get<bool>(GlobalSettings.IS_READONLY_MODE);
             IsModified = false;
             Text = "";
-            Locale = GameLanguage.UNKNOWN;
+            Locale = GameLanguage.Unknown;
         }
         /// <summary>
         /// Mark the document as the specified modified status.

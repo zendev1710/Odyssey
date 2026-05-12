@@ -16,6 +16,7 @@ using Prism.Ioc;
 using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
+using Odyssey.Core.Services;
 
 namespace Odyssey;
 
@@ -51,6 +52,8 @@ public class App : PrismApplication
         var currentCultureAfter = CultureInfo.CurrentCulture;
         var currentUICultureAfter = CultureInfo.CurrentUICulture;
         Debug.WriteLine($"[APPLICATION] Culture after={currentCultureAfter} UICulture after={currentUICultureAfter}");
+
+        ServiceLocator.Initialize();
 
         ThemeModeManager = new ModeThemeManager();
 
@@ -109,6 +112,8 @@ public class App : PrismApplication
 
     public override void OnFrameworkInitializationCompleted()
     {
+        //ServiceLocator.Initialize();
+
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             // TODO: handle Args as a file to open

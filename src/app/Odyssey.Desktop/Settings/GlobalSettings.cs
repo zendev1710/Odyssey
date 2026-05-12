@@ -52,7 +52,7 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
         Description = "parm_inf_language",
         Category = "parm_cat_general",
         Group = "parm_grp_appearance")]
-    private string _language = Models.Localization.Language.en.ToString();
+    private string _language = SupportedUILanguage.English.ToIsoCode();
 
     [ObservableProperty]
     [property: DropdownConfig(
@@ -167,9 +167,9 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
     public ObservableCollection<KeyValuePair<string, string>> GetLanguages()
     {
         var languages = (new KeyValuePair<string, string>[] {
-            new("parm_key_lang_english", Models.Localization.Language.en.ToString()),
-            new("parm_key_lang_french", Models.Localization.Language.fr.ToString()),
-            new("parm_key_lang_german", Models.Localization.Language.de.ToString()),
+            new("parm_key_lang_english", SupportedUILanguage.English.ToIsoCode()),
+            new("parm_key_lang_french", SupportedUILanguage.French.ToIsoCode()),
+            new("parm_key_lang_german", SupportedUILanguage.German.ToIsoCode()),
             // TODO: add system if it belongs to one of the above three languages
             //new("parm_key_system", "system"),
         }).Select(x => new KeyValuePair<string, string>(Translate(x.Key), x.Value));

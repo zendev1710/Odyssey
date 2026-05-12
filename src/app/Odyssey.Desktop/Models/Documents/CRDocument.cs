@@ -1,4 +1,5 @@
-﻿using Odyssey.Extensions;
+﻿using Odyssey.Core.Parsing;
+using Odyssey.Extensions;
 using Odyssey.Models.Data;
 using Odyssey.Models.Localization;
 using Odyssey.Models.Tools;
@@ -16,7 +17,7 @@ public enum OwnerType
     ENEMY,
     OWN,
     ALLY,
-} 
+}
 
 public class CRDocument : EresseaDocument
 {
@@ -121,7 +122,7 @@ public class CRDocument : EresseaDocument
         OptimizeDataConsuming = true;
         Version = string.Empty;
         // LATER : use default locale settings
-        Locale = GameLanguage.UNKNOWN;
+        Locale = GameLanguage.Unknown;
         Name = name;
         Blocks = blocks;
         OrdersDocument = new OrdersDocument();
@@ -204,7 +205,7 @@ public class CRDocument : EresseaDocument
 
         // build hierarchy from hierarchy configuration.
         // Parent block types size == depth in hierarchy.
-        Stack parents = [];                      
+        Stack parents = [];
         foreach (var block in Blocks)
         {
             BlockType blockType = block.GetBlockType();
@@ -261,7 +262,7 @@ public class CRDocument : EresseaDocument
     */
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="unit">Unit </param>
     /// <returns></returns>
@@ -588,7 +589,7 @@ public class CRDocument : EresseaDocument
             if (b.GetDepth() <= depth)
             {
                 break;
-            }   
+            }
             if (b.GetBlockType() == type) {
                 child = b;
                 return true;
@@ -1157,7 +1158,7 @@ m_blocks.push_back(*old_r);
             {
                 Turn = b.ValueInt(KeyType.TURN, Turn);
                 Version = b.Value(Strings.EN_VERSION_BUILD);
-                Locale = b.Value(Strings.EN_VERSION_LOCALE).ToLocaleType();
+                Locale = GameLanguageParser.FromCR(b.Value(Strings.CR_VERSION_LOCALE));
             }
             else if (t == BlockType.FACTION)
             {
@@ -1188,6 +1189,7 @@ m_blocks.push_back(*old_r);
     /// </summary>
     public static bool FactionIsActive(DataBlock factionBlock)
     {
+        // TODO: to be sure what defines an active faction in the report
         string option = factionBlock.Value(KeyType.OPTIONS);
         int factionPeople = factionBlock.ValueInt(Strings.DE_FACTION_PEOPLE_NUMBER, -1);
         // An active faction must have some people (to be fixed in CxMapFx EN and DE)
@@ -1238,6 +1240,10 @@ m_blocks.push_back(*old_r);
             Debug.WriteLine("[DOCUMENT] ERROR ! There is no active faction.");
             return;
         }
+
+        // Clear indexing structures before rebuild
+        UnitsByRegion.Clear();
+        UnitsByKey.Clear();
 
         Dictionary<int, DataBlock> ships = [];
         Dictionary<int, List<DataBlock>> shipsCrossedRegions = [];
@@ -1404,6 +1410,37 @@ m_blocks.push_back(*old_r);
                 case BlockType.UNIT:
                     Units[blockId] = b;
                     int factionId = b.ValueInt(KeyType.FACTION, (int)SpecialFaction.ANONYMOUS);
+                    // Index unit by region (if we have a current region)
+                    if (region != null)
+                    {
+                        int regionKey = Coordinates.GetId(region.GetX(), region.GetY(), (PlaneType)region.GetId());
+                        if (regionKey > 0)
+                        {
+                            if (!UnitsByRegion.TryGetValue(regionKey, out var list))
+                            {
+                                list = new List<int>();
+                                UnitsByRegion[regionKey] = list;
+                            }
+                            list.Add(blockId);
+                        }
+                    }
+
+                    // Index unit by common keys (BUILDING, SHIP, OWNER) for fast lookup
+                    foreach (var kt in new[] { KeyType.BUILDING, KeyType.SHIP, KeyType.OWNER })
+                    {
+                        int v = b.ValueInt(kt, -1);
+                        if (v > 0)
+                        {
+                            var tupleKey = (kt, v);
+                            if (!UnitsByKey.TryGetValue(tupleKey, out var lst))
+                            {
+                                lst = new List<int>();
+                                UnitsByKey[tupleKey] = lst;
+                            }
+                            lst.Add(blockId);
+                        }
+                    }
+
                     if (!factionId.IsKnownFaction())
                     {
                         // Unknown faction is a monster or a disguised unit; a mountain guard (Bergwächter)...
@@ -1602,7 +1639,7 @@ m_blocks.push_back(*old_r);
                     if (b.Value(KeyType.TYPE) == Strings.DE_REGION_BUILDING_VALUE_WORMHOLE)
                     {
                         // a wormhole is in the region
-                        region.AddFlags((int)Flag.WORMHOLE);     
+                        region.AddFlags((int)Flag.WORMHOLE);
                     }
                 }
                 else if (btype == BlockType.SHIP)
@@ -1656,7 +1693,7 @@ m_blocks.push_back(*old_r);
         foreach (var shipId in shipsCrossedRegions.Keys.ToList())
         {
             if (FindShip(shipId, out var shipModel))
-            {                 
+            {
                 shipModel!.AddCrossedRegions(shipsCrossedRegions[shipId]);
             }
 
@@ -1708,6 +1745,11 @@ m_blocks.push_back(*old_r);
         Debug.WriteLine($"[DOCUMENT] Battles number : {Battles.Count} ");
         Debug.WriteLine($"[DOCUMENT] Islands number : {Islands.Count} ");
         Debug.WriteLine($"[DOCUMENT] Groups number : {Groups.Count} ");
+
+        foreach (var elt in UnitsByRegion)
+        {
+            Debug.WriteLine($"[DOCUMENT] {elt.Value.Count} units in region {Regions[elt.Key]}");
+        }
     }
 
     private void AddBuildingInRegion(DataBlock buildingDataBlock, int buildingId, DataBlock region)
@@ -1999,5 +2041,18 @@ m_blocks.push_back(*old_r);
     public override string ToString()
     {
         return Name;
+    }
+
+    public Dictionary<int, List<int>> UnitsByRegion { get; } = new();
+    public Dictionary<(KeyType key, int value), List<int>> UnitsByKey { get; } = new();
+
+    public IReadOnlyList<int> GetUnitIdsInRegion(int regionKey)
+    {
+        return UnitsByRegion.TryGetValue(regionKey, out var list) ? list : Array.Empty<int>();
+    }
+
+    public IReadOnlyList<int> GetUnitIdsByKey(KeyType key, int value)
+    {
+        return UnitsByKey.TryGetValue((key, value), out var list) ? list : Array.Empty<int>();
     }
 }

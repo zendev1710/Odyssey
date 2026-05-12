@@ -23,8 +23,8 @@ namespace Odyssey.Models.Tools
         public string Value { get; private set; }
         /// <summary>
         /// The label of the property, using if needed the translated resource string based on Name/Value pair.
-        /// </summary>        
-        public string Label { get; private set; } 
+        /// </summary>
+        public string Label { get; private set; }
         /// <summary>
         /// The description of the property. Could be used for tooltips.
         /// </summary>
@@ -52,6 +52,7 @@ namespace Odyssey.Models.Tools
             Building,
             Ship,
             Race,
+            HelpTopic
         }
         public DataProperty(string name)
         {

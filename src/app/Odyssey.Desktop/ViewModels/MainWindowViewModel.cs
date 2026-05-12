@@ -9,6 +9,7 @@ using CommunityToolkit.Mvvm.Input;
 using Dock.Model.Controls;
 using Dock.Model.Core;
 using Dock.Model.Core.Events;
+using Odyssey.Core.Services;
 using Odyssey.Events;
 using Odyssey.Extensions;
 using Odyssey.Help;
@@ -1356,6 +1357,13 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
                 break;
         }
 
+        if (loaded && eresseaDocument is not null && fileType != DocumentType.ERESSEA_ORDERS)
+        {
+            // set the current game language according to the report locale,
+            // e.g. by using a dedicated service for report metadata or by initializing ServiceLocator.LanguageService before loading the report document
+            ServiceLocator.LanguageService.CurrentGameLanguage = eresseaDocument.Locale;
+        }
+
         return loaded;
     }
 
@@ -1436,7 +1444,8 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     [RelayCommand]
     private void ShowHelp(string? topicId = null)
     {
-        _ = HelpSystem.Instance.ShowHelp(topicId);
+        // TODO
+        //_ = HelpSystem.Instance.ShowHelp(topicId);
     }
 
     /// <summary>

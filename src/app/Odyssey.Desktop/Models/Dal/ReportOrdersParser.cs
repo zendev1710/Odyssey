@@ -1,6 +1,7 @@
 ﻿using Avalonia.Controls.Shapes;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
+using Odyssey.Models.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,12 +33,12 @@ namespace Odyssey.Models.Dal
             RegionOrders = new OrdersAttachment();
             UnitOrders = new OrdersAttachment();
             Locale = Report.Locale;
-            if (Locale == GameLanguage.UNKNOWN)
+            if (Locale == GameLanguage.Unknown)
             {
                 Locale = locale;
             }
-            UnitKeyword = Locale == GameLanguage.DE ? "EINHEIT" : "UNIT";
-            NextKeyword = Locale == GameLanguage.DE ? "NAECHSTER" : "NEXT";
+            UnitKeyword = Locale == GameLanguage.German ? "EINHEIT" : "UNIT";
+            NextKeyword = Locale == GameLanguage.German ? "NAECHSTER" : "NEXT";
         }
 
         public bool ProcessLine(string fullLine, out string errorMessage)

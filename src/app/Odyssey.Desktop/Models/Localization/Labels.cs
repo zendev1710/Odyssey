@@ -1,10 +1,5 @@
 ﻿using Odyssey.Assets;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Odyssey.Models.Tools.DataProperty;
 
 namespace Odyssey.Models.Localization
@@ -13,7 +8,7 @@ namespace Odyssey.Models.Localization
     {
         private const string contextPrefix = "emapdetailspanel";
 
-        ///////////////////  
+        ///////////////////
         // Labels constants. Used as resource translation keys.
 
         public const string AURA_FROM_AURAMAX = "aura_from_auramax";
@@ -155,6 +150,9 @@ namespace Odyssey.Models.Localization
                     break;
                 case Categories.CombatStatus:
                     localizationKey = $"combatstatus_{name}";
+                    break;
+                case Categories.HelpTopic:
+                    localizationKey = $"helptopic_{name}";
                     break;
                 default: break;
             }

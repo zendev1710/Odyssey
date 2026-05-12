@@ -1,8 +1,10 @@
 ﻿using Avalonia.Controls.Shapes;
 using Avalonia.Metadata;
 using AvaloniaEdit.Editing;
+using Odyssey.Core.Parsing;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
+using Odyssey.Models.Localization;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,7 +29,7 @@ namespace Odyssey.Models.Dal
         public string Text { get; private set; }
         public List<string> PrefixLines { get; private set; }
 
-        public OrdersParser(GameLanguage locale = GameLanguage.UNKNOWN)
+        public OrdersParser(GameLanguage locale = GameLanguage.Unknown)
         {
             UnitId = 0;
             Text = "";
@@ -38,8 +40,8 @@ namespace Odyssey.Models.Dal
             StringBuilder = new StringBuilder();
 
             // English by default if not german
-            UnitKeyword = locale == GameLanguage.DE ? "EINHEIT" : "UNIT";
-            NextKeyword = locale == GameLanguage.DE ? "NAECHSTER" : "NEXT";
+            UnitKeyword = locale == GameLanguage.German ? "EINHEIT" : "UNIT";
+            NextKeyword = locale == GameLanguage.German ? "NAECHSTER" : "NEXT";
 
             LinesNumber = 0;
             PrefixLines = [];
@@ -57,7 +59,7 @@ namespace Odyssey.Models.Dal
             List<string> prefixLines;
             GameLanguage locale = Locale;
             string firstlineWithStatement = ReadPrefixLines(reader, ref locale, out prefixLines);
-            if (Locale != GameLanguage.UNKNOWN)
+            if (Locale != GameLanguage.Unknown)
             {
                 if (locale != Locale)
                 {
@@ -232,7 +234,7 @@ namespace Odyssey.Models.Dal
             }
             // TODO: cumbersome, but reading orders without a `; bestaetigt` comment must do this.
             Report.SetConfirmed(ref unit, false);
-            
+
             DataBlock? commandsBlock = null;
             if (!CRDocument.GetCommands(ref commandsBlock, unit.Node))
             {
@@ -313,7 +315,7 @@ namespace Odyssey.Models.Dal
                 switch (cmd)
                 {
                     case "LOCALE":
-                        locale = words[1].ToLocaleType();
+                        locale = GameLanguageParser.FromCR(words[1]);
                         break;
                     case "REGION":
                     case "UNIT":

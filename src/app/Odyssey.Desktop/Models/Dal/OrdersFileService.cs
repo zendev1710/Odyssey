@@ -1,5 +1,7 @@
-﻿using Odyssey.Models.Data;
+﻿using Odyssey.Core.Parsing;
+using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
+using Odyssey.Models.Localization;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -65,7 +67,6 @@ namespace Odyssey.Models.Dal
                         {
                             return false;
                         }
-                        
                     }
                     loaded = true;
                 }
@@ -126,8 +127,8 @@ namespace Odyssey.Models.Dal
                 return false;
             }
             if (report.IsEmpty())
-            { 
-                return false; 
+            {
+                return false;
             }
             if (!report.HasActiveFaction())
             {
@@ -135,7 +136,7 @@ namespace Odyssey.Models.Dal
             }
 
             GameLanguage reportLocale = report.Locale;
-            if (reportLocale == GameLanguage.UNKNOWN)
+            if (reportLocale == GameLanguage.Unknown)
             {
                 return false;
             }
@@ -169,11 +170,11 @@ namespace Odyssey.Models.Dal
                 DataBlock firstBlock = firstBlockNode!.Value;
 
                 // CSMAP_APP_TITLE_VERSION = // Title / Copyright / Version
-                string headerLine = $"Odyssey 0.9"; 
+                string headerLine = $"Odyssey 0.9";
                 string spielValue = firstBlock.Value(Strings.DE_GAME);
                 string firstWord = spielValue == "Eressea" || spielValue == "E3" ? "ERESSEA" : "PARTEI";
-                string UnitKeyword = reportLocale == GameLanguage.EN ? "UNIT" : "EINHEIT";
-                string NextKeyword = reportLocale == GameLanguage.EN ? "NEXT" : "NAECHSTER";
+                string UnitKeyword = reportLocale == GameLanguage.English ? "UNIT" : "EINHEIT";
+                string NextKeyword = reportLocale == GameLanguage.English ? "NEXT" : "NAECHSTER";
                 string factionId = Utils.Converters.IdToString(activeFactionId);
                 writer.Write($"{firstWord} {factionId} ");
                 writer.WriteLine($"\" {password} \"");
@@ -398,7 +399,7 @@ namespace Odyssey.Models.Dal
                 string cmd = words[0].ToUpper();
                 if (cmd == "LOCALE")
                 {
-                    locale = words[1].ToLocaleType();
+                    locale = GameLanguageParser.FromCR( words[1] );
                 }
                 if (cmd == UnitKeyWord || cmd == "REGION")
                 {

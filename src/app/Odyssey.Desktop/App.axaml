@@ -17,8 +17,10 @@
 					<ControlRecycling x:Key="ControlRecyclingKey" />
 				</ResourceDictionary>
 				<ResourceDictionary>
+					
 					<ResourceDictionary.ThemeDictionaries>
 						<ResourceDictionary x:Key='Default'>
+							<!--ResourceInclude Source="avares://LiveMarkdown.Avalonia/Defaults.axaml"/-->
 							<!---->
 							<SolidColorBrush x:Key="TextControlBackground">#EFEFEF</SolidColorBrush>
 							<SolidColorBrush x:Key="TextControlBackgroundFocused">#EFEFEF</SolidColorBrush>
@@ -131,6 +133,7 @@
 		</ResourceDictionary>
 	</Application.Resources>
 	<Application.Styles>
+		<StyleInclude Source="avares://LiveMarkdown.Avalonia/Styles.axaml"/>
 		<StyleInclude Source="avares://AsyncImageLoader.Avalonia/AdvancedImage.axaml" />
 		<Style Selector="DockControl">
 			<Setter Property="(ControlRecyclingDataTemplate.ControlRecycling)" Value="{StaticResource ControlRecyclingKey}" />
