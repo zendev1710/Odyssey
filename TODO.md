@@ -1,14 +1,8 @@
 # TODO
 
+Content moved in [zendev monday Odyssey workspace](https://zendev-team.monday.com/).
+
 ## Features in progress
-
-### Keyboard shortcuts
-
-- which one for 'Save Orders'?
-
-### Menu system
-
-TO BE FINISHED.
 
 ### Bookmarks system
 
@@ -27,11 +21,9 @@ TO BE DONE.
 
 ### Settings system
 
-TO BE REWRITTEN.
-
 - [x] Use [ConfigFactory.Avalonia](https://www.nuget.org/packages/ConfigFactory.Avalonia) for GUI settings pages
 - [x] Restore/save settings by (de)serializing into an application settings JSON file (config.json)
-- [ ] Restore/override settings by (de)serializing into an user settings JSON file (config.json)
+- [x] Restore/override settings by (de)serializing into an user settings JSON file (config.json)
 
 ### Translation system
 

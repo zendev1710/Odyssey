@@ -20,7 +20,8 @@ TO BE FINISHED.
 
 - [x] Use [ConfigFactory.Avalonia](https://www.nuget.org/packages/ConfigFactory.Avalonia) for GUI settings pages
 - [x] Restore/save settings by (de)serializing into an application settings JSON file (config.json)
-- [ ] Restore/override settings by (de)serializing into an user settings JSON file (config.json)
+- [x] Restore/override settings by (de)serializing into an user settings JSON file (config.json)
+- [ ] Makes settings page visually correct in Simple theme
 
 ### Translation system
 
@@ -40,15 +41,17 @@ TO BE FINISHED.
 ## File system
 
 - [x] Drag and drop to open a Report .cr file
-- [ ] Drag and drop to open an Orders .txt file
-- [x] Drag and drop to open a Report .cr file coming embedded in a zip file
-- [x] Drag and drop to open several Report .cr files
-- [ ] Drag and drop to open several Orders .txt files
-- [x] Drag and drop to open several Report .cr files, each one embedded in a zip file
-- [ ] Drag and drop to open mixed types files (.txt; .cr, .zip coming)
+- [x] Drag and drop to open a Report .cr file embedded in a zip file
 - [ ] Extract report .cr file from the active opened zip => extract and transform zip document as CR document
-- [ ] Extract report .cr file from each opened zip
+- [ ] Drag and drop to open mixed types files (.txt; .cr, .zip coming)
 - [ ] Merge and save CR files
+
+Optional:
+- [ ] Extract report .cr file from each opened zip
+- [ ] Drag and drop to open an Orders .txt file
+- [ ] Drag and drop to open several Report .cr files, each one embedded in a zip file
+- [ ] Drag and drop to open several Report .cr files
+- [ ] Drag and drop to open several Orders .txt files
 
 ## Factions management
 
@@ -57,10 +60,7 @@ TO BE FINISHED.
 
 ## Features upcoming
 
-- Multi-CR file open system using drag and drop
 - Add the default theme based on system theme (theming)
-- Add a combobox in a settings panel to select a theme among the 4 themes: default simple, dark, light (theming)
-- Closed dock windows display handling
 - Copy/Paste from/to clipboard for data
 - Persisten layout system (save/load layout)
 - App-wide persistent settings system, with :
@@ -69,8 +69,7 @@ TO BE FINISHED.
   - `Show only map` option (maximize and hide other dock windows / restore layout) - Ctrl + Shift + K
   - Map/minimap display options
   - Theme selection
-- Recently opened CR system
-- Map simple display (regions/islands/oceans...) - using OpenGL ?
+- Map simple display (regions/islands/oceans...)
 - Orders check system
 - Toolbar with theme icons
 - Translations system (language selection, resources files...)
@@ -78,6 +77,7 @@ TO BE FINISHED.
 - Add the simple theme for a lighter app (theming)
 - Overview map (minimap)
 - Send Orders
+- Multi-CR file open system using drag and drop
 
 ### Information view
 
