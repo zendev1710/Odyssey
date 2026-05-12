@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
+using Odyssey.Models.Tools;
 using Odyssey.TextMate;
 using Odyssey.Views;
 using Prism.Events;
@@ -11,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 
 using static Odyssey.Models.Documents.CRDocument;
@@ -20,6 +22,13 @@ namespace Odyssey.ViewModels.Tools;
 
 public partial class UnitOrdersViewModel : DocumentToolViewModelBase
 {
+    // Collections mises à jour par HandleSelection
+    public ObservableCollection<UnitViewModel> UnitsInRegion { get; } = new();
+    //public ObservableCollection<ItemViewModel> UnitItems { get; } = new();
+
+    // Ajoutez cette propriété dans UnitOrdersViewModel
+    public ObservableCollection<UnitItemViewModel> InventoryItems { get; } = new();
+
     private static int FreeTempUnitNumber { get; set; } = 1;
 
     private bool IsWrapModeEnabled { get; set; }
@@ -32,6 +41,9 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
 
     [ObservableProperty]
     private string? _makeTempUnitSnippet;
+
+    [ObservableProperty]
+    private string _currentUnitId;
 
     [ObservableProperty]
     private bool _canEditOrders;
@@ -66,6 +78,65 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
             if (themeName == ExtendedThemeName.DarkPlus)
             {
                 SelectedTheme = themeViewModel;
+            }
+        }
+
+        Document.TextChanged += (sender, args) =>
+        {
+            RecalculateInventoryProjections();
+            // IsModified = true;
+        };
+    }
+
+    // <summary>
+    /// Parses the editor text to calculate the impact of GIVE/USE commands on the inventory.
+    /// </summary>
+    private void RecalculateInventoryProjections()
+    {
+        // 1. Reset all deltas
+        foreach (var item in InventoryItems)
+        {
+            item.DeltaQuantity = 0;
+        }
+
+        // 2. Parse the text line by line
+        var lines = Document.Text.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+        foreach (var line in lines)
+        {
+            var upperLine = line.ToUpper().Trim();
+
+            // Handle GIVE
+            if (upperLine.StartsWith("GIVE"))
+            {
+                var parts = upperLine.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                // Syntax: GIVE <unit id> <number> <item>
+                if (parts.Length >= 4 && int.TryParse(parts[2], out int quantity))
+                {
+                    string itemName = parts[3];
+                    var itemVm = InventoryItems.FirstOrDefault(i => i.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase));
+                    if (itemVm != null)
+                    {
+                        itemVm.DeltaQuantity -= quantity;
+                    }
+                }
+            }
+            // Handle USE
+            else if (upperLine.StartsWith("USE"))
+            {
+                var parts = upperLine.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                // Syntax: USE [<number>] potion
+                if (parts.Length >= 2)
+                {
+                    int quantity = 1; // Default
+                    if (parts.Length >= 3 && int.TryParse(parts[1], out int q)) quantity = q;
+
+                    string itemName = parts.Length >= 3 ? parts[2] : parts[1];
+                    var itemVm = InventoryItems.FirstOrDefault(i => i.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase));
+                    if (itemVm != null)
+                    {
+                        itemVm.DeltaQuantity -= quantity;
+                    }
+                }
             }
         }
     }
@@ -347,9 +418,9 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
     /// <summary>
     /// Creates a MAKE TEMP UNIT order and returns the result string.
     /// an internal counter is used to generate a unique number for the temporary unit.
-    /// The result string wil be like: 
+    /// The result string wil be like:
     /// MAKE TEMP
-    /// ...    
+    /// ...
     /// END
     /// </summary>
     private static string CreateMakeTempUnitOrder()
@@ -416,11 +487,13 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         string unitName = "";
         bool editable = false;
         bool isConfirmed = false;
+        InventoryItems.Clear();
         if (HasDocument && Selection.IsUnitSelected())
         {
             // Only a selected unit is handled for orders
             DataBlock unit = Selection.Item!;
             unitName = unit.GetUILabel();
+            CurrentUnitId = unit.GetStringId();
             DataBlock cmd = new();
             if (GetSeenCommands(ref cmd!, unit!))
             {
@@ -428,8 +501,24 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
                 editable = true;
                 isConfirmed  = Report.IsConfirmed(unit);
             }
+
+            UnitModel unitModel = new(unit);
+            // Collecter les items
+            List<DataProperty> itemsProperties = [];
+            if (unitModel.PrepareAndCollectItems(ref itemsProperties))
+            {
+                foreach (var prop in itemsProperties)
+                {
+                    // 'prop.Label' contient le nom localisé, 'prop.Value' la quantité
+                    int quantity = int.TryParse(prop.Value, out int q) ? q : 0;
+                    InventoryItems.Add(new UnitItemViewModel(prop.Label, quantity, "Item"));
+                }
+            }
         }
+
+        // TODO: when set from false to true, isenabled and isreadonly are not set
         CanEditOrders = editable;
+
         IsConfirmed = isConfirmed;
         Title = string.IsNullOrEmpty(unitName) ? "Unit orders" : $"Unit orders for {unitName}";
 
@@ -439,5 +528,50 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         SelectPreviousUnitCommand.NotifyCanExecuteChanged();
         SelectNextUnitCommand.NotifyCanExecuteChanged();
         ToggleConfirmedStatusCommand.NotifyCanExecuteChanged();
+
+        // mettre à jour les données de contexte utilisées par les OrderDefinition.DynamicProvider (completion)
+        UpdateContextData();
+        // Notify that the orders content has changed, to update completion proposals if necessary
+    }
+
+    private void UpdateContextData()
+    {
+        // TODO: optimize : do not clear and compute UnitsInRegion if we are on the same region
+        UnitsInRegion.Clear();
+
+        if (Selection?.Item == null)
+            return;
+
+        DataBlock? region = null;
+        // prefer explicit region selection, otherwise resolve region of selected unit
+        if (Selection.IsRegionSelected())
+        {
+            region = Selection.Region;
+        }
+        else if (Selection.IsUnitSelected())
+        {
+            // uses CRDocument helper to find the seen parent region of a unit
+            Report.GetSeenRegion(ref region, Selection.Item);
+        }
+
+        if (region == null)
+            return;
+
+        // compute the same region key used for indexing in CRDocument
+        int x = region.GetX();
+        int y = region.GetY();
+        //int regionKey1 = region.GetId();
+
+        int regionKey = Coordinates.GetId(x, y, PlaneType.WORLD);
+
+        // FIXME: does not return anything
+        var ids = Report.GetUnitIdsInRegion(regionKey);
+        // If the region contains many units, consider creating only a page/virtualized subset here.
+        foreach (var id in ids)
+        {
+            UnitsInRegion.Add(UnitViewModel.FromDocument(Report, id/*, x, y*/));
+        }
     }
 }
+
+

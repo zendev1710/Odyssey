@@ -23,7 +23,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <AvaloniaResource Include="Assets\**" />
+	<AvaloniaResource Include="Assets\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,6 +42,10 @@
     <None Remove="Assets\full\**" />
     <None Remove="Localization\**" />
     <None Remove="ViewModels\Views\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Remove="Assets\Help\help-topics.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -120,15 +124,15 @@
 
   <ItemGroup>
     <PackageReference Include="AsyncImageLoader.Avalonia" Version="3.8.0" />
-	<PackageReference Include="Avalonia" Version="12.0.1" />
+	<PackageReference Include="Avalonia" Version="12.0.2" />
 	<PackageReference Include="Avalonia.AvaloniaEdit" Version="12.0.0" />
 	<PackageReference Include="Avalonia.Controls.DataGrid" Version="12.0.0" />
-	<PackageReference Include="Avalonia.Desktop" Version="12.0.1" />
-	<PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.1" />
-	<PackageReference Include="Avalonia.Fonts.Inter" Version="12.0.1" />
+	<PackageReference Include="Avalonia.Desktop" Version="12.0.2" />
+	<PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.2" />
+	<PackageReference Include="Avalonia.Fonts.Inter" Version="12.0.2" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
 	<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.3.14" />
-	<PackageReference Include="Avalonia.Themes.Simple" Version="12.0.1" />
+	<PackageReference Include="Avalonia.Themes.Simple" Version="12.0.2" />
     <PackageReference Include="AvaloniaEdit.TextMate" Version="12.0.0" />
     <PackageReference Include="AvaloniaEdit.TextMate.Grammars" Version="0.10.12" />
     <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.1" />
@@ -144,6 +148,7 @@
 	<PackageReference Include="Dock.Model.Mvvm" Version="12.0.0.2" />
     <PackageReference Include="Dock.Avalonia.Themes.Simple" Version="12.0.0.2" />
     <PackageReference Include="Dock.Serializer" Version="11.3.0.12" />
+    <PackageReference Include="LiveMarkdown.Avalonia" Version="2.0.0" />
     <PackageReference Include="Markdown.Avalonia" Version="11.0.3-a1" />
     <PackageReference Include="Microsoft.Win32.SystemEvents" Version="10.0.7" />
     <PackageReference Include="Prism.Avalonia" Version="9.0.537.11130" />
@@ -157,6 +162,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\HelpView.axaml.cs">
+      <DependentUpon>HelpView.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Tools\MapView.axaml.cs">
       <DependentUpon>MapView.axaml</DependentUpon>
     </Compile>
@@ -246,6 +254,15 @@
  <ItemGroup>
    <Folder Include="Assets\Help\Content\en\reference\" />
    <Folder Include="Models\Configuration\" />
+ </ItemGroup>
+
+ <ItemGroup>
+   <None Update="Config\help-topics.json">
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </None>
+   <None Update="Help\help-topics.json">
+     <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+   </None>
  </ItemGroup>
 
   <PropertyGroup>

@@ -1,13 +1,14 @@
-﻿using Odyssey.Models.Localization;
-using Odyssey.Models.Tools;
-using Odyssey.ViewModels.Docks;
-using Odyssey.ViewModels.Documents;
-using Odyssey.ViewModels.Tools;
-using Dock.Avalonia.Controls;
+﻿using Dock.Avalonia.Controls;
 using Dock.Model.Controls;
 using Dock.Model.Core;
 using Dock.Model.Mvvm;
 using Dock.Model.Mvvm.Controls;
+using Odyssey.Core.Services;
+using Odyssey.Models.Localization;
+using Odyssey.Models.Tools;
+using Odyssey.ViewModels.Docks;
+using Odyssey.ViewModels.Documents;
+using Odyssey.ViewModels.Tools;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
@@ -59,6 +60,8 @@ public class DockFactory : Factory
         // As HideToolsOnClose was set to true, close action just hide a tool, that can be restored
         bool canCloseTool = true;
 
+        var helpViewModel = new HelpViewModel(ServiceLocator.LanguageService);
+
         // all these models are ITool
         var mapViewModel = new MapViewModel(EventAggregator) { Id = Ids.Map, Title = LocalizedTitle(Ids.Map), CanClose = canCloseTool /*false*/ };
         var miniMapViewModel = new MiniMapViewModel(EventAggregator) { Id = Ids.MiniMap, Title = LocalizedTitle(Ids.MiniMap), CanClose = canCloseTool };
@@ -68,6 +71,9 @@ public class DockFactory : Factory
         var regionPropertiesViewModel = new RegionPropertiesViewModel(EventAggregator) {Id = Ids.RegionProperties, Title = LocalizedTitle(Ids.RegionProperties), CanClose = canCloseTool };
         var regionStatisticsViewModel = new RegionStatsViewModel(EventAggregator) {Id = Ids.RegionStatistics, Title = LocalizedTitle(Ids.RegionStatistics), CanClose = canCloseTool };
         var detailsViewModel = new DetailsViewModel(EventAggregator) {Id = Ids.Details, Title = LocalizedTitle(Ids.Details), CanClose = canCloseTool };
+        var unitsInspectorViewModel = new UnitsInspectorViewModel(EventAggregator) { Id = Ids.UnitsInspector, Title = LocalizedTitle(Ids.UnitsInspector), CanClose = canCloseTool };
+        //var unittripViewModel = new UnitStripViewModel(EventAggregator) { Id = Ids.UnitStrip, Title = LocalizedTitle(Ids.UnitStrip), CanClose = canCloseTool };
+        //var unitInspectorViewModel = new UnitInspectorViewModel(EventAggregator) { Id = Ids.UnitInspector, Title = LocalizedTitle(Ids.UnitInspector), CanClose = canCloseTool };
         var unitOrdersViewModel = new UnitOrdersViewModel(EventAggregator) { Id = Ids.UnitOrders, Title = LocalizedTitle(Ids.UnitOrders), CanClose = canCloseTool };
         var regionInfoViewModel = new RegionInfoViewModel(EventAggregator) {Id = Ids.RegionInfo, Title = LocalizedTitle(Ids.RegionInfo), CanClose = canCloseTool };
         var battlesViewModel = new BattlesViewModel(EventAggregator) {Id = Ids.Battles, Title = LocalizedTitle(Ids.Battles), CanClose = canCloseTool };
@@ -113,7 +119,7 @@ public class DockFactory : Factory
         };
 
         /////////////////////////////
-        
+
         var documentDock = new FilesDocumentDock
         {
             IsCollapsable = false,
@@ -185,7 +191,7 @@ public class DockFactory : Factory
             )
         };
 
-        // contains the properties and so on, until orders at the bottom 
+        // contains the properties and so on, until orders at the bottom
         var rightDock = new ProportionalDock
         {
             Proportion = 0.25,
@@ -195,13 +201,21 @@ public class DockFactory : Factory
             (
                 new ToolDock
                 {
-                    Proportion = 0.75,
+                    Proportion = 0.5,
                     ActiveDockable = detailsViewModel,
-                    VisibleDockables = CreateList<IDockable>(detailsViewModel, regionStatisticsViewModel),
+                    VisibleDockables = CreateList<IDockable>(detailsViewModel, /*unitInspectorViewModel,*/ regionStatisticsViewModel),
                 },
                 new ProportionalDockSplitter(),
                 new ToolDock
                 {
+                    Proportion = 0.25,
+                    ActiveDockable = unitsInspectorViewModel,
+                    VisibleDockables = CreateList<IDockable>(unitsInspectorViewModel),
+                },
+                new ProportionalDockSplitter(),
+                new ToolDock
+                {
+                    Proportion = 0.25,
                     ActiveDockable = unitOrdersViewModel,
                     VisibleDockables = CreateList<IDockable>(unitOrdersViewModel),
                 }
