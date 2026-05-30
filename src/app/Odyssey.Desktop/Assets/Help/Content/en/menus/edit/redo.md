@@ -1,5 +1,5 @@
-# Wiederherstellen
+# Restore
 
-STRG-Shift-Z
+CTRL-Shift-Z
 
-Stellt die letzte zurückgenommene Eingabe im Befehlsfenster wieder her. Derzeit ist diese Funktion deaktiviert.
+Restores the last cancelled entry in the command window. This function is currently deactivated.

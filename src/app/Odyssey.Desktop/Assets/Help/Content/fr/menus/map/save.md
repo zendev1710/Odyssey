@@ -1,6 +1,6 @@
-# Save selection
+# Sauvegarder la sélection
 
-This menu item opens a dialogue and saves the information about the currently selected regions in a Selections file. This file can be reloaded with [Open selection](open.md).
+Cet élément de menu ouvre une boîte de dialogue et enregistre les informations relatives aux régions actuellement sélectionnées dans un fichier de sélection. Ce fichier peut être rechargé avec [Ouvrir la sélection] (open.md).
 
 **Note:**
-If you save a CR with selected regions, this information is stored in the CR. If you export a report in compatibility mode, this information is not stored.
+Si vous enregistrez un CR avec des régions sélectionnées, ces informations sont stockées dans le CR. Si vous exportez un rapport en mode de compatibilité, ces informations ne sont pas stockées.

@@ -1,15 +1,15 @@
 # Options
 
-Almost all presettings for Magellan can be made in the options. Almost all displays are flexibly configurable, so that everyone can configure "their" Magellan as they wish.
+Presque tous les préréglages du Magellan peuvent être effectués dans les options. Presque tous les affichages sont configurables de manière flexible, afin que chacun puisse configurer "son" Magellan comme il le souhaite.
 
-Due to the large number of setting options, the options dialogue is divided into several sections:
+En raison du grand nombre d'options de réglage, la boîte de dialogue des options est divisée en plusieurs sections :
 
-* [System](options_system.md)
-* [Desktop](options_desktop.md)
-* [Region overview](options_region.md)
-* [Detail display](options_detail.md)
-* [Map](options_map.md)
-* [Open problems](options_tasks.md)
-* [Icons](options_icons.md)
-* [Resources](options_resources.md)
+* [Système](options_system.md)
+* [Bureau](options_desktop.md)
+* [Aperçu de la région](options_region.md)
+* [Affichage détaillé](options_detail.md)
+* [Carte](options_map.md)
+* [Problèmes ouverts](options_tasks.md)
+* [Icônes](options_icons.md)
+* [Ressources](options_resources.md)
 * [Plugins](options_plugins.md)

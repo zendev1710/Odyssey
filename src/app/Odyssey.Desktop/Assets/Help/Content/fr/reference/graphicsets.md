@@ -1,6 +1,6 @@
-# Graphic sets
+# Ensembles graphiques
 
-This feature has not been tested for a long time. If you use it successfully, have alternative graphics sets, or have ideas on how to use it, please share your experiences with the development team.
+Cette fonctionnalité n'a pas été testée depuis longtemps. Si vous l'utilisez avec succès, si vous avez d'autres jeux graphiques ou si vous avez des idées sur la manière de l'utiliser, veuillez faire part de votre expérience à l'équipe de développement.
 
-* [Installation of graphics sets](graphicsets_install.md)
-* [Creating graphics sets](graphicsets_making.md)
+* [Installation des jeux graphiques](graphicsets_install.md)
+* [Création de jeux graphiques](graphicsets_making.md)

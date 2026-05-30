@@ -1,3 +1,3 @@
-# Delete all
+# Effacer tout
 
-Clears the bookmark list.
+Efface la liste des signets.

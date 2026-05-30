@@ -1,6 +1,6 @@
-# Auswahl speichern
+# Save selection
 
-Dieser Menüpunkt öffnet einen Dialog und speichert die Informationen über die gerade gewählten Regionen in einer Selections Datei ab. Diese Datei kann mit [Auswahl öffnen](open.md) wieder geladen werden.
+This menu item opens a dialogue and saves the information about the currently selected regions in a Selections file. This file can be reloaded with [Open selection](open.md).
 
-**Hinweis:**  
-Speichert man einen CR mit ausgewählten Regionen, so wird diese Information im CR hinterlegt. Exportiert man einen Report im Kompatibilitätsmodus, so werden diese Informationen nicht hinterlegt.
+**Note:**
+If you save a CR with selected regions, this information is stored in the CR. If you export a report in compatibility mode, this information is not stored.

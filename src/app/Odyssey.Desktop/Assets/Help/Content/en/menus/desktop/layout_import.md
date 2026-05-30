@@ -1,3 +1,3 @@
-# Importiere Layouts
+# Import layouts
 
-Nach dem Wählen dieses Menüpunkts, fragt Magellan nach einer XML Datei, in der die Beschreibungen für Layouts enthalten sind. Magellan lädt dann die Einstellungen und zeigt die neuen Layouts im Menü an.
+After selecting this menu item, Magellan asks for an XML file containing the descriptions for layouts. Magellan then loads the settings and displays the new layouts in the menu.

@@ -1,5 +1,5 @@
-# Jump forwards
+# Sauter vers l'avant
 
 F2
 
-Jumps to the next saved bookmark in the list of bookmarks.
+Permet de passer au signet enregistré suivant dans la liste des signets.

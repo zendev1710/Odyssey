@@ -1,11 +1,11 @@
-# Bookmark menu
+# Menu des signets
 
-The bookmark menu has the following items:
+Le menu des signets comprend les éléments suivants :
 
-* [Bookmark on/off](enable.md)
-* [Jump forward](forward.md)
-* [Jump backward](backward.md)
-* [Show bookmark list](show.md)
-* [Delete all](delete.md)
+* [Activation/désactivation des signets](enable.md)
+* [Sauter en avant](forward.md)
+* [Sauter en arrière](backward.md)
+* [Afficher la liste des signets](show.md)
+* [Supprimer tout](delete.md)
 
-Bookmarks can be used to mark regions and units and can be quickly accessed again via the bookmark list. This allows you to compile a list of favourites that are particularly important to you (for example, the "collection" units per region that store all resources).
+Les signets peuvent être utilisés pour marquer des régions et des unités et sont rapidement accessibles via la liste des signets. Vous pouvez ainsi dresser une liste de favoris particulièrement importants pour vous (par exemple, les unités de "collecte" par région qui stockent toutes les ressources).

@@ -1,13 +1,13 @@
-# Kommandozeilen-Parameter
+# Command line parameters
 
-Magellan akzeptiert folgende beim [Starten](../faq.html#Kommandozeilenstart) angegebenen Parameter:
+Magellan accepts the following parameters specified in [Start](../faq.html#Command line start):
 
-* \-d <Verzeichnis>: Gibt das Verzeichnis an, in dem Magellan nach seinen Ressourcen sucht, also Bildern, Übersetzungen etc.
-* \-s <Verzeichnis>: Gibt das Verzeichnis an, in dem Magellan nach seinen Einstellungen sucht (profiles.ini). In dessen Unterverzeichnisse sind die _Profile_ mit den Konfigurationsdateien (magellan.ini, magellan\_desktop.ini) und der Datei errors.txt mit den Fehlermeldungen.
-* \-p <Profil>: Startet Magellan mit einem bestimmten Profil, das in den Profileinstellungen definiert wurde.
-* \-pm: Zeigt den Profilmanager beim Start.
-* \-log <X>: Setzt die Detailstufe des Logs. Mögliche Werte für X sind: O - aus, E - nur Fehler, W - auch Warnungen, I - auch Infomeldungen.
-* \--help: Zeigt nur die Magellan-Hilfe an.
-* <CR-Datei>: Der angegebene CR wird direkt nach dem Start geladen.
+* \-d &lt;directory&gt;: Specifies the directory in which Magellan searches for its resources, i.e. images, translations, etc.
+\-s &lt;directory&gt;: Specifies the directory in which Magellan searches for its settings (profiles.ini). In its subdirectories are the _profiles_ with the configuration files (magellan.ini, magellan\_desktop.ini) and the errors.txt file with the error messages.
+\-p &lt;profile&gt;: Starts Magellan with a specific profile defined in the profile settings.
+\-pm: Shows the profile manager at startup.
+\-log &lt;X&gt;: Sets the detail level of the log. Possible values for X are: O - off, E - only errors, W - also warnings, I - also info messages.
+\--help: Displays only the Magellan help.
+&lt;CR file&gt;: The specified CR is loaded directly after the start.
 
-Der gesamte Aufruf von Magellan sieht folgendermaßen aus: java -jar magellan.jar \[-d Verzeichnis\] \[-s Profile\] \[-pm\] \[-log \[O|E|W|I\]\] \[--help\] \[CR-Datei\]
+The entire Magellan call looks like this: java -jar magellan.jar \[-d directory\] \[-s profiles\] \[-pm\] \[-log \[O|E|W|I\]\] \[--help\] \[CR-file\]

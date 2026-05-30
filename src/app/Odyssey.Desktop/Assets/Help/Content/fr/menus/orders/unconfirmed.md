@@ -1,5 +1,5 @@
-# Next/Previous unconfirmed unit
+# Unité suivante/précédente non confirmée
 
-**STRG-N** or **STRG-Shift-N**
+**STRG-N** ou **STRG-Shift-N**
 
-Jumps to the next or previous unconfirmed unit.
+Passe à l'unité non confirmée suivante ou précédente.

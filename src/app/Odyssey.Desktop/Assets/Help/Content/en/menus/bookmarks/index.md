@@ -1,11 +1,11 @@
-# Menü Lesezeichen
+# Bookmark menu
 
-Das Lesezeichen-Menü hat folgende Punkte:
+The bookmark menu has the following items:
 
-* [Lesezeichen ein/aus](enable.md)
-* [Vorwärts springen](forward.md)
-* [Zurück springen](backward.md)
-* [Lesezeichenliste anzeigen](show.md)
-* [Alle löschen](delete.md)
+* [Bookmark on/off](enable.md)
+* [Jump forward](forward.md)
+* [Jump backward](backward.md)
+* [Show bookmark list](show.md)
+* [Delete all](delete.md)
 
-Mit Hilfe von Lesezeichen können Regionen und Einheiten markiert werden und über die Lesezeichenliste schnell wieder angesprungen werden. So kann man sich eine Liste von Favoriten zusammenstellen, die einen besonders wichtig sind (zum Beispiel die "Sammel"-Einheiten pro Region, die alle Ressourcen bunkern).
+Bookmarks can be used to mark regions and units and can be quickly accessed again via the bookmark list. This allows you to compile a list of favourites that are particularly important to you (for example, the "collection" units per region that store all resources).

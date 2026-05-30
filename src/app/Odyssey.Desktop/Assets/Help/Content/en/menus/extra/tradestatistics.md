@@ -1,13 +1,13 @@
-# Handelsstatistik
+# Trade statistics
 
-In der Handelsstatistik kann man schauen, in welcher Region man welche Preise für welches Luxusgut erhält.
+In the trade statistics you can see in which region you receive which prices for which luxury goods.
 
-Das Tool hilft einem dabei, die Region mit dem besten Preis für eine Ware zu finden. Hinschaffen muss man sie dann nur noch selbst... :-)
+The tool helps you to find the region with the best price for a good. Then you just have to get there yourself... :-)
 
-Wenn man vor dem Öffnen folgende Aktionen ausführt, kann man so die Anzahl der Regionen einschränken, die der Handelsplaner anzeigt
+If you carry out the following actions before opening the tool, you can limit the number of regions displayed by the trade planner
 
-* Eine einzelne Region auf der Insel seiner Wahl markieren/auswählen
-* Dann unter "Auswahl & Insel auswählen" die gesamte Insel markieren/auswählen
-* Zuletzt den Handelsplaner öffnen
+* Mark/select a single region on the island of your choice
+* Then mark/select the entire island under "Selection & Select island"
+* Finally, open the trade planner
 
-Der Handelsplaner zeigt also entweder alle Regionen an, oder diejenigen, die ausgewählt sind.
+The trade planner either shows all regions or those that are selected.

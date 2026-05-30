@@ -1,5 +1,5 @@
-# Vorwärts springen
+# Jump forwards
 
 F2
 
-Springt zum nächsten gespeicherten Lesezeichen in der Liste der Lesezeichen.
+Jumps to the next saved bookmark in the list of bookmarks.

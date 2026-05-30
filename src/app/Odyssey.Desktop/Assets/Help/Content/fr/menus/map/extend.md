@@ -1,3 +1,3 @@
-# Extend selection
+# Étendre la sélection
 
-Extends the selection by one region in each direction. This can be used, for example, to also select the surrounding ocean regions for a selected island.
+Étend la sélection d'une région dans chaque direction. Cela peut être utilisé, par exemple, pour sélectionner également les régions océaniques environnantes pour une île sélectionnée.

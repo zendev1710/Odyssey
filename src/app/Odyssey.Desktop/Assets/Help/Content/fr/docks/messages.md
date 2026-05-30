@@ -1,9 +1,9 @@
 # Messages
 
-Messages are shown here.
+Les messages sont affichés ici.
 
 ![windows_messages](../images/windows_messages.gif)
 
-Messages are shown here depending on the context. If a unit is selected, this window shows messages that relate to this unit (transactions, errors, messages to this unit, effects). If your faction is selected, all messages in the whole report are displayed. For a selected region this window shows the region messages (effects, silver received, unit that traveled through the region). For a selected building or ship the effects, if any, are shown.
+Les messages sont affichés ici en fonction du contexte. Si une unité est sélectionnée, cette fenêtre affiche les messages relatifs à cette unité (transactions, erreurs, messages à cette unité, effets). Si votre faction est sélectionnée, tous les messages de l'ensemble du rapport sont affichés. Pour une région sélectionnée, cette fenêtre affiche les messages relatifs à la région (effets, argent reçu, unité ayant traversé la région). Pour un bâtiment ou un navire sélectionné, les effets éventuels sont affichés.
 
-With every message the corresponding units can be shown, and by double clicking you can jump to these units.
+Pour chaque message, les unités correspondantes peuvent être affichées, et un double clic permet d'accéder à ces unités.

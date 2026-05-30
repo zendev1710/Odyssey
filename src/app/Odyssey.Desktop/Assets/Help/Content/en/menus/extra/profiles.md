@@ -1,7 +1,7 @@
-# Profile
+# Profiles
 
-![Profile](../../images/profiles.gif)
+![Profiles](../../images/profiles.gif)
 
-Dieser Dialog wird auch angezeigt, wenn Magellan zum ersten Mal gestartet wird. Hiermit ist es möglich, mehrere Profile anzulegen, jedes mit seinen eigenen Einstellungen. So können zum Beispiel mehrere Personen mit verschiedenen Vorlieben Magellan benutzen oder man kann verschiedene Einstellungen für verschiedene Spielvarianten oder bestimmte Aufgaben anlegen.
+This dialogue is also displayed when Magellan is started for the first time. This allows you to create several profiles, each with its own settings. For example, several people with different preferences can use Magellan or you can create different settings for different game variants or specific tasks.
 
-Zwischen den Profilen kann man nur durch einen Neustart von Magellan tatsächlich wechseln. Man muss also das neue Profil auswählen, Magellan beenden und dann neu starten.
+You can only actually switch between the profiles by restarting Magellan. You must therefore select the new profile, exit Magellan and then restart it.

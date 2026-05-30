@@ -1,5 +1,5 @@
-# Bestätigung invertieren
+# Invert confirmation
 
-Die Bestätigungsstati der Einheiten werden invertiert. Bestätigte Einheiten werden unbestätigt gesetzt und umgekehrt.
+The confirmation statuses of the units are inverted. Confirmed units are set to unconfirmed and vice versa.
 
-Diese Funktion ermöglicht folgende Arbeitsweise: Nachdem alle Befehle geschrieben und verschickt sind, ändern sich unvorhergesehenerweise nochmals Befehle mehrerer bereits bestätigter Einheiten. Diese Einheiten können nach dem Ändern der Befehle auf "unbestätigt" gesetzt werden. Nachdem alle Änderungen gemacht sind, invertiert man die Bestätigungsstati und verschickt nur noch die bestätigten Befehle. So werden nur die nachträglich geänderten Einheiten nochmals verschickt.
+This function enables the following mode of operation: After all commands have been written and sent, commands of several already confirmed units change again unexpectedly. These units can be set to "unconfirmed" after the commands have been changed. Once all changes have been made, the confirmation statuses are inverted and only the confirmed commands are sent. In this way, only the subsequently changed units are sent again.

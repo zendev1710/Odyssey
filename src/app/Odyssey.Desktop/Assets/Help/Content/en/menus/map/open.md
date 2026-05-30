@@ -1,6 +1,6 @@
-# Auswahl öffnen
+# Open selection
 
-Dieser Menüpunkt öffnet einen Dialog und fragt nach einer Auswahldatei, die mit [Auswahl speichern](save.md) erstellt wurde. So kann man eine Auswahl wieder herstellen.
+This menu item opens a dialogue and asks for a selection file that was created with [Save selection](save.md). This allows you to restore a selection.
 
-**Hinweis:**  
-Speichert man einen CR mit ausgewählten Regionen, so wird diese Information im CR hinterlegt. Exportiert man einen Report im Kompatibilitätsmodus, so werden diese Informationen nicht hinterlegt.
+**Note:**
+If you save a CR with selected regions, this information is stored in the CR. If you export a report in compatibility mode, this information is not saved.

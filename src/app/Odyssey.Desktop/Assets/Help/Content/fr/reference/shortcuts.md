@@ -1,67 +1,67 @@
-# Keyboard shortcut
+# Raccourci clavier
 
-The keyboard shortcuts can be viewed and changed in the options. Plugins can define additional shortcuts. Some of the less obvious ones by default:
+Les raccourcis clavier peuvent être visualisés et modifiés dans les options. Les plugins peuvent définir des raccourcis supplémentaires. Certains des raccourcis les moins évidents sont définis par défaut :
 
-## Unit selection
+## Sélection de l'unité
 
-* Ctrl+N: Switch to the next unit without confirmed commands
-* Ctrl+Shift+N: Switch to the previous unit without confirmed commands
-* Ctrl+Up/Down Arrow: Switch between units or their command editors
-* Ctrl+Comma and Alt+Left Arrow: Jump back to the last selected object
-* Ctrl+dot and Alt+right arrow: Jump back to the originally selected object after Ctrl+ or Alt+left arrow
-* Ctrl+B: Confirm or do not confirm commands for the selected unit or all units in the selected region
+* Ctrl+N : Passage à l'unité suivante sans confirmation de commande
+* Ctrl+Shift+N : Passer à l'unité précédente sans confirmation de commande
+* Ctrl+flèche haut/bas : Passer d'une unité à l'autre ou à leur éditeur de commande
+* Ctrl+Comma et Alt+Flèche gauche : Retourner au dernier objet sélectionné
+* Ctrl+point et Alt+flèche droite : Ctrl+point et Alt+flèche droite : Retour à l'objet sélectionné à l'origine après Ctrl+ ou Alt+flèche gauche
+* Ctrl+B : Confirmer ou non les commandes pour l'unité sélectionnée ou toutes les unités de la région sélectionnée.
 
-## Bookmark
+## Signet
 
-* Ctrl+F2: Places a bookmark on the current object or removes it
-* F2: Jumps to the next object with a bookmark
-* Shift-F2: Jumps back to the last object with a bookmark
+* Ctrl+F2 : Place un signet sur l'objet en cours ou le supprime.
+* F2 : Sauter à l'objet suivant avec un signet
+* Shift-F2 : Retourne au dernier objet avec un signet
 
-## Window selection
+## Sélection de la fenêtre
 
-* Ctrl+1 or Alt+1: Gives the [Region overview](../docks/regions.md) the input focus
-* Ctrl+2 or Alt+2: Gives the [Map](../docks/map.md) the input focus
-* Ctrl+3 or Alt+3: Gives the [Detail display](../docks/details.md) the input focus
-* Ctrl+4 or Alt+4: Gives the input focus to the library of extended commands
-* Ctrl+Shift-4: Gives the extended commands of the currently selected object the input focus
-* Ctrl+P: Gives the [Open-Problems-Dock](../docks/problems.md) the input focus
-* Ctrl+E: Gives the [ECheck-Dock](../docks/echeck.md) the input focus
+* Ctrl+1 ou Alt+1 : Donne à la [Vue d'ensemble de la région](../docks/regions.md) le focus d'entrée.
+* Ctrl+2 ou Alt+2 : donne à la [Carte](../docks/map.md) le focus d'entrée.
+* Ctrl+3 ou Alt+3 : donne à [Affichage détaillé](../docks/details.md) le focus de saisie.
+* Ctrl+4 ou Alt+4 : donne le focus de saisie à la bibliothèque de commandes étendues.
+* Ctrl+Shift-4 : donne le focus de saisie aux commandes étendues de l'objet sélectionné.
+* Ctrl+P : Donne le focus de saisie au [Open-Problems-Dock](../docks/problems.md)
+* Ctrl+E : donne à [ECheck-Dock](../docks/echeck.md) le focus d'entrée.
 
-## Card
+## Carte
 
-* Ctrl+Shift-A: Select between [ATR settings](../menus/extras/options_map.html#Labelling)
-* Ctrl+Shift-P: Choose between tooltip settings
-* Ctrl+Shift-R: Choose between ARR settings
-* Ctrl+W: "Fog of War" on/off
-* Alt+Plus: Zoom into the map
-* Alt+Minus: Zoom out of the map
+* Ctrl+Shift-A : Sélectionne entre [Paramètres ATR](../menus/extras/options_map.html#Labelling)
+* Ctrl+Shift-P : Choisir parmi les paramètres de l'infobulle
+* Ctrl+Shift-R : Choisir les paramètres de l'ARR
+* Ctrl+W : Activation/désactivation du brouillard de guerre
+* Alt+Plus : Zoom sur la carte
+* Alt+Minus : Zoom arrière sur la carte
 
-If the map has the input focus, you can use the arrow keys and the keys on the numeric keypad to switch between the regions and use the space bar to select and deselect regions.
+Si la carte est en cours de saisie, vous pouvez utiliser les touches fléchées et les touches du pavé numérique pour passer d'une région à l'autre et utiliser la barre d'espacement pour sélectionner et désélectionner des régions.
 
-## Command editor
+## Éditeur de commandes
 
-* Ctrl+Spacebar: Show suggestions for command completion
-* Ctrl+Down Arrow: Move down in the list
-* Ctrl+Up Arrow: Move up in the list
-* Tab: Insert current suggestion
-* Esc: Hide list
-* Ctrl+T: Creates a TEMP unit below the currently active unit
-* Ctrl+Shift-T: Deletes a currently selected TEMP unit
+* Ctrl+barre d'espacement : Affiche des suggestions pour compléter la commande.
+* Ctrl+flèche du bas : Descendre dans la liste
+* Ctrl+Flèche vers le haut : Déplacement vers le haut de la liste
+* Tab : Insérer la suggestion actuelle
+* Esc : Cacher la liste
+* Ctrl+T : Crée une unité TEMP sous l'unité active.
+* Ctrl+Shift-T : Supprime l'unité TEMP actuellement sélectionnée
 
-## Open problems
+## Problèmes ouverts
 
-* Context menu: Action menu
-* Spacebar: Jump to the object of the currently selected line
-* Enter: Show details of the currently selected line
-* Del: Hide currently selected problems
-* Ctrl+Del: Permanently hide currently selected problem types
+* Menu contextuel : Menu d'action
+* Barre d'espacement : Sauter à l'objet de la ligne actuellement sélectionnée
+* Entrée : Afficher les détails de la ligne sélectionnée
+* Del : Cacher les problèmes actuellement sélectionnés
+* Ctrl+Del : Masquer définitivement les types de problèmes sélectionnés
 
-## Miscellaneous
+## Divers
 
-* Ctrl+C: In the region overview: Copy currently selected lines to the clipboard.
-* Ctrl+R: Command completion of "MACHEN" only shows items for which the necessary resources are available.
-* Ctrl+Shift-B Dialogue for converting from base 36 to base 10
-* Ctrl+F Search
-* Ctrl+G Quick search for units, ships and buildings by number
-* Shift-F5: Reload graphics
-* F5: Redraw all
+* Ctrl+C : Dans l'aperçu de la région : Copier les lignes actuellement sélectionnées dans le presse-papiers.
+* Ctrl+R : La complétion de la commande "MACHEN" n'affiche que les éléments pour lesquels les ressources nécessaires sont disponibles.
+* Ctrl+Shift-B : Dialogue pour la conversion de la base 36 à la base 10.
+* Ctrl+F Recherche
+* Ctrl+G : Recherche rapide d'unités, de navires et de bâtiments par numéro.
+* Shift-F5 : Recharger les graphiques
+* F5 : Redessiner tout

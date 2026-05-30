@@ -1,3 +1,3 @@
-# Map Edit Plugin
+# Plugin d'édition de cartes
 
-This plugin is a standard feature of Magellan 2.0 and allows you to add, remove or change the type (plain, forest, glacier, ...) of regions on the map.
+Ce plugin est une fonctionnalité standard de Magellan 2.0 et vous permet d'ajouter, de supprimer ou de modifier le type (plaine, forêt, glacier, ...) des régions sur la carte.

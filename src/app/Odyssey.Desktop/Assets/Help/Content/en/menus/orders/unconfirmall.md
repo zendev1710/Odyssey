@@ -1,3 +1,3 @@
-# Alle aufheben
+# Cancel all
 
-Hier kann man die Befehlsbestätigung aller Einheiten einer bestimmten Partei oder aller Parteien aufheben.
+Here you can cancel the command confirmation of all units of a specific faction or all factions.

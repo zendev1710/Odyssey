@@ -1,14 +1,14 @@
-# Army statistics
+# Statistiques de l'armée
 
-This menu item opens a dialogue in which Magellan collects all army information.
+Cet élément de menu ouvre une boîte de dialogue dans laquelle Magellan recueille toutes les informations relatives à l'armée.
 
-This dialogue is divided into two sections. In the upper section you can select individual islands and below you will see all the information about the soldiers in the corresponding regions.
+Cette boîte de dialogue est divisée en deux sections. Dans la partie supérieure, vous pouvez sélectionner des îles individuelles et, dans la partie inférieure, vous verrez toutes les informations sur les soldats dans les régions correspondantes.
 
-Magellan defines a soldier as a unit,
+Magellan définit un soldat comme une unité,
 
-* that either has weapons and no talents (foreign unit where no talents are known)
-* or a unit that has at least one weapon and has learnt a corresponding weapon talent.
-* Unarmed soldiers are those who possess a weapon skill but do not have a weapon in their hands.
+* qui a des armes et pas de talents (unité étrangère où aucun talent n'est connu)
+* soit une unité qui possède au moins une arme et qui a appris un talent d'arme correspondant.
+* Les soldats désarmés sont ceux qui possèdent un talent d'arme mais n'ont pas d'arme dans les mains.
 
 **Note:**
-It is very possible that Magellan is mistaken in this calculation. Not all enemy units have to be soldiers. It is also possible that the weapon does not match the weapon talent correctly (this is a bug).
+Il est très possible que Magellan se soit trompé dans ce calcul. Toutes les unités ennemies ne sont pas forcément des soldats. Il est également possible que l'arme ne corresponde pas correctement au talent de l'arme (il s'agit d'un bug).

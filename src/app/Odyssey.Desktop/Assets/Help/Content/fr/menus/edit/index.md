@@ -1,10 +1,10 @@
-# Edit menu
+# Menu d'édition
 
-The Edit menu has the following items:
+Le menu Édition comprend les éléments suivants :
 
 * [Undo](undo.md)
-* [Redo](redo.md)
-* [Search](search.md)
-* [Search ID](quicksearch.md)
+* [Refaire](redo.md)
+* [Rechercher](search.md)
+* [ID de recherche](quicksearch.md)
 
-This menu item is mainly used to provide help functions for entries in Magellan. These include the UNDO and REDO functions, as well as a search function that can be used to search for regions, ships, buildings and units.
+Cet élément de menu est principalement utilisé pour fournir des fonctions d'aide pour les entrées dans Magellan. Il s'agit notamment des fonctions UNDO et REDO, ainsi que d'une fonction de recherche qui peut être utilisée pour rechercher des régions, des navires, des bâtiments et des unités.

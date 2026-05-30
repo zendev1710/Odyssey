@@ -1,3 +1,3 @@
 # Extended Commands Plugin
 
-Dieses Plugin gehört zum Standardumfang von Magellan 2.0. Es ist ein Plugin zum Script-basierten Erstellen von Einheitenbefehlen. Nähere Informationen sind auf der Magellan-Homepage und der integrierten Hilfe verfügbar.
+This plugin is part of the standard scope of Magellan 2.0. It is a plugin for the script-based creation of unit commands. More information is available on the Magellan homepage and the integrated help.

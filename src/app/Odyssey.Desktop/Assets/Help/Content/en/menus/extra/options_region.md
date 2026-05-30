@@ -1,32 +1,33 @@
-# Regionsübersicht
+# Region overview
 
-In diesem Dialog kann man die Optionen der [Regionsübersicht](../../docks/regions.md) einstellen:
+In this dialogue you can set the options for the [Region overview](../../docks/regions.md):
 
-![Optionen - Regionsanzeige](../../images/menu_extras_options_region.gif)
+![Options - Region display](../../images/menu_extras_options_region.gif)
 
-* **Regionssortierung**  
-    Hier kann man die Anzeige der Regionsnamen nach Koordinaten oder nach Inselzugehörigkeit einstellen. Wird zusätzlich die Option _Inseln anzeigen_ aktiviert, wird den Regionen noch ein "Ordnungsknoten" für die Insel vorangestellt, der auf- und zugeklappt werden kann.
+**Region sorting**
+    Here you can set the display of region names according to coordinates or island affiliation. If the option _Display islands_ is also activated, the regions are preceded by an "order node" for the island, which can be expanded and collapsed.
 
-    Magellan kann die Regionen eines Reports in Inseln einteilen und sie in der Regionübersicht nach Insel geordnet darstellen. Prinzipiell sind auch weitere Einsatzmöglichkeiten für Inseln denkbar.
+    Magellan can divide the regions of a report into islands and display them by island in the region overview. In principle, other possible uses for islands are also conceivable.
 
-    Mit dem Menüpunkt '[Inseln erfassen](menu_map_island.md)' im Menü 'Extras' wird die Zuordnung von Inseln zu Regionen vorgenommen. Dies ist Voraussetzung, um die Regionen nach Inseln sortieren zu können.
+    The menu item '[Create islands](menu_map_island.md)' in the 'Extras' menu is used to assign islands to regions. This is a prerequisite for being able to sort the regions by islands.
 
-    Um die Regionsübersicht nach Inseln sortieren zu lassen, sind in diesem Dialog folgende Einstellungen zu machen:
-    1. _Regionen sortieren_ aktiviert
-    2. _Nach Insel_ ausgewählt
-    3. _Inseln anzeigen_ legt fest, ob die Inseln auch tatsächlich in der Übersichtsanzeige dargestellt werden. Nur wenn diese Option aktiviert ist, kann man die Inselnamen und -beschreibungen ändern.
-* **Hierarchische Baumstruktur**  
-    Hier kann eingestellt werden, welche Gliederungsebenen es in der Regionsübersicht gibt. Voreinstellung sind Partei und Gruppe. Um weitere Ebenen hinzuzufügen, muss man sie in der linken Auswahlbox auswählen und per Pfeil nach rechts übernehmen. Um Ebenen zu entfernen muss man sie rechts auswählen und per Pfeil nach links löschen. Zusätzlich kann man über die "Höher"- und "Tiefer"-Knöpfe die Reihenfolge in der Hierarchie verändern.
-* **Einheitensortierung**  
-    Die Ausgabe der Einheiten kann hier nach Reportreihenfolge (Reihenfolge der Einheiten im CR), Talentname oder Einheitenname sortiert werden. Bei der Sortierung nach Talenten hat man noch weitere Einstellmöglichkeiten. Voreingestellt ist die Sortierung nach dem besten Talent, d.h. eine Einheit mit Hiebwaffen T6 und Taktik T3 wird also bei den anderen Hiebwafflern einsortiert, und Reihenfolge nach dem Alphabet, d.h. die Holzfäller folgen auf die Hiebwaffler.
+    To sort the region overview by islands, the following settings must be made in this dialogue:
+    1. _Sort regions_ activated
+    2. select _By island
+    3. _Display islands_ determines whether the islands are actually shown in the overview display. The island names and descriptions can only be changed if this option is activated.
 
-    Will man diese Reihenfolge ändern, so kann man im Unterpunkt Talentreihenfolge die Sortierreihenfolge der Talente angeben und so z.B. alle Kampf- oder Produktionstalente in Blöcken anzeigen lassen. Auch ist es möglich mit der Aktivierung des Punktes _Nach höchsten Talent in der Talentreihenfolge_, die Einsortierung von Einheiten mit mehreren Talenten zu beeinflussen. Hat man den Punkt aktiviert und gleichzeitig Taktik in der Talentliste vor Hiebwaffen stehen, so würde die Einheit mit Hiebwaffen T6 und Taktik T3 bei Taktik einsortiert werden.
+* Hierarchical tree structure
+    Here you can set which organisation levels are available in the region overview. The default settings are Faction and Group. To add further levels, select them in the selection box on the left and click on the arrow pointing to the right. To remove levels, select them on the right and delete them using the left arrow. You can also use the "Higher" and "Lower" buttons to change the order in the hierarchy.
+* Unit sorting
+    The output of the units can be sorted here according to report order (order of the units in the CR), talent name or unit name. There are further setting options for sorting by talent. The default setting is sorting according to the best talent, i.e. a unit with slashing weapons T6 and tactics T3 is sorted with the other slashing weapons, and sorting according to the alphabet, i.e. the lumberjacks follow the slashing weapons.
 
-* **Baum-Expansion**  
-    Mittels dieser Optionen lässt sich bestimmen, ob und wie weit der Regionsbaum aufklappt, wenn eine Region auf der [Karte](../../docks/map.md) aktiviert wird. Die Optionen der rechten Spalte beeinflussen dabei das Öffnungsverhalten und die der linken Spalte das Schließverhalten vorher aufgeklappter Regionsinformationen.
+    If you want to change this order, you can specify the sorting order of the talents in the Talent order sub-item and thus display all combat or production talents in blocks, for example. It is also possible to influence the sorting of units with several talents by activating the item _By highest talent in the talent order_. If the item is activated and Tactics is placed before Slashing Weapons in the talent list, the unit with Slashing Weapons T6 and Tactics T3 would be sorted under Tactics.
 
-## Talentreihenfolge
+**Tree expansion**
+    These options can be used to determine whether and how far the region tree expands when a region is activated on the [Map](../../docks/map.md). The options in the right-hand column influence the opening behaviour and those in the left-hand column influence the closing behaviour of previously expanded region information.
 
-![Optionen - Regionsanzeige - Talentreihenfolge](../../images/menu_extras_options_region_skills.gif)
+## Talent order
 
-Die Änderung der Talentreihenfolge erfolgt durch Auswahl des entsprechenden Talentes mit der Maus anschließendes Verschieben durch die Schaltflächen _Höher_ bzw. _Tiefer_.
+![Options - Region display - Skill order](../../images/menu_extras_options_region_skills.gif)
+
+The talent order is changed by selecting the corresponding talent with the mouse and then moving it using the _Higher_ or _Lower_ buttons.

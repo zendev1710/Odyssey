@@ -1,16 +1,16 @@
-# Menu layout
+# Présentation du menu
 
-Magellan is able to manage several layouts. A layout describes the position and size of the individual [docks](../../docks/index.md). Only one layout can be active at a time.
+Magellan est capable de gérer plusieurs présentations. Une disposition décrit la position et la taille des différents [docks](../../docks/index.md). Une seule disposition peut être active à la fois.
 
-The layout menu has the following items:
+Le menu "Disposition" comprend les éléments suivants :
 
 * [Standard](layout_standard.md)
-* Export layouts](layout_export.md)
-* [Import layouts](layout_import.md)
-* [Create new layout](layout_new.md)
-* [Save layouts](layout_save.md)
-* [Delete this layout](layout_delete.md)
+* [Exporter les mises en page](layout_export.md)
+* [Importer des mises en page](layout_import.md)
+* [Créer une nouvelle mise en page](layout_new.md)
+* [Sauvegarder les mises en page](layout_save.md)
+* [Supprimer cette mise en page](layout_delete.md)
 
-You may also see further menu entries directly below "Standard". These are further layout versions for Magellan.
+Vous pouvez également voir d'autres entrées de menu directement sous "Standard". Il s'agit d'autres versions de mise en page pour Magellan.
 
-If you select one of these other layouts, Magellan will immediately be reorganised accordingly and you will see a completely different layout. For example, you can quickly and easily switch between an input mode and a presentation mode.
+Si vous sélectionnez l'une de ces autres mises en page, Magellan sera immédiatement réorganisé en conséquence et vous verrez une mise en page complètement différente. Par exemple, vous pouvez rapidement et facilement passer d'un mode de saisie à un mode de présentation.

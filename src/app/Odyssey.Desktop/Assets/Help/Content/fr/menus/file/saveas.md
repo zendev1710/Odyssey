@@ -1,5 +1,5 @@
-# Save as
+# Enregistrer sous
 
-CTRL-Shift-S
+CTRL-Maj-S
 
-Here you can save the open CR under a different file name and path.
+Vous pouvez ici enregistrer le CR ouvert sous un autre nom de fichier et un autre chemin d'accès.

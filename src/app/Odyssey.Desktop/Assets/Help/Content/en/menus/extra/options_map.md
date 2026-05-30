@@ -1,104 +1,105 @@
-# Karte
+# Map
 
-Hier lässt sich die Art der Anzeige auf der Karte und der Übersichtskarte konfigurieren. Die Karte wird von verschiedenen "Renderern" gezeichnet, die sich hier getrennt voneinander konfigurieren und abschalten lassen.
+The type of display on the map and the overview map can be configured here. The map is drawn by different "renderers", which can be configured and switched off separately here.
 
-![Optionen - Karte](../../images/menu_extras_options_map.gif)
+![Options - Map](../../images/menu_extras_options_map.gif)
 
-**Anzeige der Navigationsleiste am oberen Kartenrand.**  
-Oberhalb der Hauptkarte können einige Einstellmöglichkeiten eingeblendet werden. Zum einen ein Regler für die Vergrößerung oder Zoom der Karte, weiterhin eine Auswahlmöglichkeit des angezeigten Levels bzw. der angezeigten Ebene und abschließend kann, falls Hotspots definiert wurden, zu diesen Hotspots gesprungen werden.
+**Display of the navigation bar at the top edge of the map.
+A number of setting options can be displayed above the main map. On the one hand, there is a slider for enlarging or zooming the map, a selection option for the level or layer displayed and finally, if hotspots have been defined, you can jump to these hotspots.
 
-Diese Möglichkeiten nehmen ein wenig Platz ein und können deaktiviert werden, die Funktionalität ist dann lediglich über einen Rechtsklick in die Karte nutzbar. Das erscheinende PopUp-Menu (Kontextmenü) enthält die entsprechenden Menüpunkte.
+These options take up a little space and can be deactivated; the functionality can then only be used by right-clicking on the map. The pop-up menu (context menu) that appears contains the corresponding menu items.
 
-**Zeige zusätzliche zur Jahreszeit passende Bilder an** Schneebedeckte Berge im Winter und Eisschollen an den Meeresküsten - werden nur angezeigt, wenn diese Einstellung ausgewählt worden ist. Ist sie nicht aktiviert, wird das Standardgrafikset für alle Jahreszeiten benutzt.
+**Display additional seasonal images** Snow-covered mountains in winter and ice floes on the coast are only displayed if this setting has been selected. If it is not activated, the standard graphics set is used for all seasons.
 
-**Karte sofort zeichnen, ohne Grafiken vollständig zu laden**  
-Ist diese Option aktiviert, wird nach dem Laden des CR sofort mit dem Zeichnen der Karte begonnen ohne zunächst alle Regionsgrafiken in den Cache zu laden. Damit ist die initiale Darstellung der Karte etwas schneller, allerdings werden nur die Grafiken von Regionstypen geladen, die auf dem aktuellen Kartenabschnitt vorkommen. Somit kann es beim Verschieben des Kartenausschnittes zu Verzögerungen kommen wenn noch Regionsgrafiken nachgeladen werden müssen.
+**Draw map immediately without loading graphics completely**
+If this option is activated, the map is drawn immediately after loading the CR without first loading all region graphics into the cache. This means that the initial display of the map is slightly faster, but only the graphics of region types that occur on the current map section are loaded. This can lead to delays when moving the map section if region graphics still need to be loaded.
 
-**Tooltips anzeigen**  
-Wenn diese Option aktiviert ist, werden beim Verweilen der Maus über Regionen auf der Karte Tooltips dargestellt in denen Regionsnamen, Typ, Bauern und Poolsilber angezeigt werden.
+**Show tooltips**
+If this option is activated, tooltips are displayed when the mouse hovers over regions on the map, showing the region name, type, farmers and pool silver.
 
-## Hauptkarte
+## Main map
 
-Die Rendering-Ebene unterteilt die Darstellung in logische Unterobjekte, wie Regionen, Straßen, Gebäude etc., deren jeweilige Einstellmöglichkeiten, dann im Kasten unterhalb eingeblendet werden.
+The rendering layer divides the display into logical sub-objects, such as regions, roads, buildings, etc., whose respective setting options are then displayed in the box below.
 
-### Regionen
+### Regions
 
-* <inaktiv>  
-    Regionen werden nicht dargestellt.
-* **Regionsrenderer**  
-    Dies ist die Default-Einstellung, bei der die Regionen mit Grafiken dargestellt werden.
-* **Regionsrenderer (geometrisch/politisch)**  
-    Dieser Modus stellt die Regionen als unterschiedlich farbige Flächen dar. Folgende Darstellungsmodi sind möglich
-  * **Regionstyp**  
-        Hier läßt sich jeden Regionstyp (Berg, Sumpf etc.) eine Farbe zuordnen.
-  * **Politisch**  
-        Ist dieser Modus aktiv, so wird die Region in der Farbe eingefärbt, die der Partei mit den meisten Personen in der Region zugeordnet ist.
-  * **Alle Parteien**  
-        Hier kann man jeder im Report vorhandenen Partei eine Farbe zuordnen. Die Regionen werden, sofern mehr als eine Partei in ihnen vorhanden ist, durch senkrechte Unterteilungen in den den jeweiligen Parteien entsprechenden Farben angezeigt.
-  * **Vertrauenslevel**  
-        Anzeige der Regionsfarben nach Vertrauenslevel der dortigen Parteien.
-  * **Vertrauenslevel (Bewachung)**  
-        Anzeige der Regionsfarben nach Vertrauenslevel der bewachenden Parteien.
-* **ARR (advanced region renderer)**  
-    Dieser Modus gibt einen die Möglichkeit die Darstellung der Region in Abhängigkeit von selbst erstellten Bedingungen zu gestalten. Mehr Informationen findest du in der [Beschreibung des Ersetzersystems](../../reference/atr_arr.md).
+&lt;inactive&gt;
+    Regions are not displayed.
+**Region renderer**
+    This is the default setting in which the regions are displayed with graphics.
+  **Region renderer (geometric/political)**
+    This mode displays the regions as differently coloured areas. The following display modes are possible
+  **Region type**
+        Here you can assign a colour to each region type (mountain, swamp etc.).
+  **Political**
+        If this mode is active, the region is coloured in the colour assigned to the faction with the most people in the region.
+  **All factions**
+        Here you can assign a colour to each faction in the report. If there is more than one faction in a region, the regions are displayed by vertical subdivisions in the colours corresponding to the respective factions.
+  Confidence level
+        Display of the region colours according to the trust level of the factions there.
+  **Trust level (guarding)**
+        Display of the region colours according to the trust level of the guarding factions.
+  **ARR (advanced region renderer)**
+    This mode allows you to customise the display of the region depending on the conditions you create. You can find more information in the [Description of the replacement system](../../reference/atr_arr.md).
 
-    Bei allen Einstellungen ist zu beachten, dass die Farbzuordnung der Parteien für alle unterschiedlichen Darstellungsmodi identisch ist.
+    For all settings, please note that the colour assignment of the factions is identical for all different display modes.
 
-### Straßen
+### Streets
 
-* <inaktiv>  
-    Straßen werden nicht dargestellt.
-* **Straßenrenderer**  
-    Dies ist die Default-Einstellung, bei der die Straßen mit Grafiken dargestellt werden.
+&lt;inactive&gt;
+    Roads are not displayed.
+**Street renderer**
+    This is the default setting in which the roads are displayed with graphics.
 
-### Gebäude
+### Buildings
 
-* <inaktiv>  
-    Gebäude werden nicht dargestellt.
-* **Gebäuderenderer**  
-    Dies ist die Default-Einstellung, bei der die Burgen mit Grafiken dargestellt werden.
+&lt;inactive&gt;
+    Buildings are not displayed.
+**Building renderer**
+    This is the default setting in which the castles are displayed with graphics.
 
-### Schiffe
+### Ships
 
-* <inaktiv>  
-    Schiffe werden nicht dargestellt.
-* **Schiffsrenderer**  
-    Ist diese Option aktiv, so werden vorhandene Schiffe auf der Karte dargestellt. Angelegte Schiffe werden an der jeweiligen Anlegeküste dargestellt, Schiffe im Bau und auf dem Ozean in der Mitte der Region.
+&lt;inactive&gt;
+    Ships are not displayed.
+**Ship renderer**
+    If this option is active, existing ships are displayed on the map. Docked ships are displayed on the respective docking coast, ships under construction and on the ocean in the centre of the region.
 
-### Beschriftungen
+### Labelling
 
-* <inaktiv>  
-    Regionsnamen werden nicht dargestellt.
-* **Regionsnamenrenderer**  
-    Ist diese Option aktiv, so wird der Name über der jeweiligen Region eingeblendet. Zusätzlich besteht hier die Möglichkeit Schriftart und -typ einzustellen.
-* **Handelsrenderer** Ist diese Option ausgewählt, werden das Handelsgut und -menge angezeigt.
-* **ATR** Hiermit kann man eine Beschriftung selbst definieren. Mehr Informationen findest du in der [Beschreibung des Ersetzersystems](../../reference/atr_arr.md).
+&lt;inactive&gt;
+    Region names are not displayed.
+**Region name renderer**
+    If this option is active, the name is displayed above the respective region. It is also possible to set the font and font type here.
 
-### Pfade
+* Trade renderer** If this option is selected, the trade good and quantity are displayed.
+* **ATR** Here you can define your own labelling. You can find more information in the [Description of the replacement system](../../reference/atr_arr.md).
 
-* <inaktiv>  
-    Pfade werden nicht dargestellt.
-* **Pfadrenderer**  
-    Ist diese Option aktiv, so werden Pfeile auf der Karte eingeblendet, wenn eine gerade aktive Einheit einen NACH oder ROUTE Befehl hat.
+### Paths
 
-### Markierungen
+&lt;inactive&gt;
+    Paths are not displayed.
+**Path renderer**
+    If this option is active, arrows are shown on the map if a currently active unit has a NEXT or ROUTE command.
 
-* <inaktiv>  
-    Markierungen werden nicht dargestellt.
-* **Markierungsrenderer**  
-    Ist diese Option aktiv, so wird die gerade aktive Region durch einen weißen Umriß hervorgehoben und markierte Regionen werden mit einem diffusen Nebel versehen (je nach geladenem [Grafikset](../../reference/graphicsets.md) unterschiedlich).
-* **Markierungsrenderer (geometrisch)**  
-    Ist diese Option aktiv, so wird die gerade aktive Region durch einen roten Umriss hervorgehoben und markierte Regionen werden mit einem weißen Umriss versehen.
+### Markers
 
-### Zusätzl. Markierungen
+&lt;inactive&gt;
+    Markers are not displayed.
+**Marker renderer**
+    If this option is active, the currently active region is highlighted with a white outline and marked regions are provided with a diffuse fog (differs depending on the loaded [graphics set](../../reference/graphicsets.md)).
+**Marker renderer (geometric)**
+    If this option is active, the currently active region is highlighted with a red outline and marked regions are outlined in white.
 
-* <inaktiv>  
-    Zusätzliche Markierungen werden nicht dargestellt.
-* **Zusätzl. Bilder**  
-    Ist diese Option aktiv, so können eigene Bilder auf der Karte eingeblendet werden. Dazu muss muss z.B. mit Vorlage innerhalb des Regionskontextes das tag _"Bildname";regionicon_ gesetzt werden. Die Bilder selber müssen sich unterhalb des magellan.jar Verzeichnisses im Pfad /res/images/map befinden und dem unter [Grafikset erstellen](../../reference/graphicsets_making.md) beschriebenen Format entsprechen.
+### Additional markings
+
+&lt;inactive&gt;
+    Additional markers are not displayed.
+**Additional images**
+    If this option is active, you can display your own images on the map. To do this, the tag _"image name";regionicon_ must be set within the region context, e.g. with template. The images themselves must be located below the magellan.jar directory in the path /res/images/map and correspond to the format described under [Create graphics set](../../reference/graphicsets_making.md).
 
 ## MiniMap
 
-![Optionen - Übersichtskarte](../../images/menu_extras_options_map_minimap.gif)
+![Options - Overview map](../../images/menu_extras_options_map_minimap.gif)
 
-Die Übersichtskarte beherrscht alle Darstellungsmodi des Regionsrenderers (geometrisch/politisch). Die Farbzuordnung ist demnach auch bei diesem einzustellen. Auch die Skalierung der MiniMap kann hier eingestellt werden.
+The overview map supports all display modes of the region renderer (geometric/political). The colour assignment can therefore also be set for this. The scaling of the MiniMap can also be set here.

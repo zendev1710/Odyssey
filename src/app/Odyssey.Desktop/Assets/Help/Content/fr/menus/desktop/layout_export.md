@@ -1,3 +1,3 @@
-# Export layouts
+# Exporter la mise en page
 
-If you select this menu item, Magellan opens a save dialogue and you can save all existing layouts in an XML file and offer them to friends and acquaintances for exchange.
+Si vous sélectionnez cet élément de menu, Magellan ouvre une boîte de dialogue d'enregistrement et vous pouvez enregistrer toutes les mises en page existantes dans un fichier XML et les proposer à des amis et à des connaissances pour les échanger.

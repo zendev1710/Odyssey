@@ -1,32 +1,33 @@
-# Open Tasks
+# Tâches ouvertes
 
 ![windows_problems](../images/windows_problems.gif)
 
-In this list Magellan shows all problems it has recognized. This list can be used as a starting point for orders still to be edited. Please note that Magellan is not able to find and report all problems that may occur. Nevertheless, this is a powerful tool that makes other tools like ECheck redundant.
+Dans cette liste, Magellan affiche tous les problèmes qu'il a reconnus. Cette liste peut être utilisée comme point de départ pour les commandes qui doivent encore être éditées. Veuillez noter que Magellan n'est pas en mesure de trouver et de signaler tous les problèmes qui peuvent survenir. Néanmoins, il s'agit d'un outil puissant qui rend d'autres outils comme ECheck redondants.
 
-You can sort the problems by clicking on column headings. If you press control and then click on a different heading, you can sort by multiple columns.
+Vous pouvez trier les problèmes en cliquant sur les titres des colonnes. Si vous appuyez sur la touche Ctrl et que vous cliquez ensuite sur un autre titre, vous pouvez effectuer un tri sur plusieurs colonnes.
 
-There are further option for configuring shown problems at the bottom:
+D'autres options de configuration des problèmes affichés sont disponibles en bas de page :
 
-* **S** Show only problems from regions that are marked in the map. If there are no marked regions, this has no effect.
-* **R** Show only problems of the currently active region.
-* **G** Additionaly show global problems, which do not belong to a particular region.
-* **Refresh** It can occasionally happen that problems are not calculated completely. You can re-start the calculation with this button.
+**S** Afficher uniquement les problèmes des régions marquées sur la carte. Si aucune région n'est marquée, cette option n'a aucun effet.
+**R** Afficher uniquement les problèmes de la région active.
+**G** Affiche également les problèmes globaux, qui n'appartiennent pas à une région particulière.
+**Refresh** Il peut arriver que les problèmes ne soient pas calculés complètement. Vous pouvez relancer le calcul à l'aide de ce bouton.
 
-By double-clicking a line you can jump to the affected unit or region if applicable.
+En double-cliquant sur une ligne, vous pouvez passer à l'unité ou à la région concernée, le cas échéant.
 
-You can configure the problems further with the context menu (right click on a line):
+Vous pouvez configurer davantage les problèmes à l'aide du menu contextuel (clic droit sur une ligne) :
 
-* **Show full text** (also by pressing CTRL and double clicking on a line): Shows the full text, which may not always fit into the table column.
-* **Select object** Same as double click
-* **Refresh** Same as the button
-* **Suppress problem** This will hide this concrete problem for the report. This usually adds a special comment to the affected unit.
-* **Show hidden problems** Shows all hidden problems again and removes the added comments
-* **Permanently ignore similar problems** This suppresses all problems of a certain type also in future reports. This enables you to hide certain problems and concentrate on the important ones. For example, you may hide all warnings of empty buildings.
+**Afficher le texte intégral** (également en appuyant sur CTRL et en double-cliquant sur une ligne) : Affiche le texte complet, qui ne tient pas toujours dans la colonne du tableau.
 
-There are two major types of problems:
+* **Sélectionner l'objet** Identique au double clic
+* **Refresh** Identique au bouton
+**Supprimer le problème** Cette option permet de masquer ce problème concret dans le rapport. Cela ajoute généralement un commentaire spécial à l'unité concernée.
+**Afficher les problèmes cachés** Affiche à nouveau tous les problèmes cachés et supprime les commentaires ajoutés.
+* Ignorer de façon permanente les problèmes similaires** Cette option permet de supprimer tous les problèmes d'un certain type dans les rapports futurs. Cela vous permet de masquer certains problèmes et de vous concentrer sur les plus importants. Par exemple, vous pouvez masquer tous les avertissements concernant les bâtiments vides.
 
-* Report messages, for example messages about buildings that have not been paid
-* Messages created by Magellan, for example warnings of missing maintenance silver
+Il existe deux grands types de problèmes :
 
-You can view suppressed problem types in the option section for the Open Problems. You can also re-enable suppressed problem types there.
+* les messages de rapport, par exemple les messages concernant les bâtiments qui n'ont pas été payés
+* les messages créés par Magellan, par exemple les avertissements concernant l'absence d'argent pour l'entretien.
+
+Vous pouvez visualiser les types de problèmes supprimés dans la section d'option pour les problèmes ouverts. Vous pouvez également réactiver les types de problèmes supprimés à cet endroit.

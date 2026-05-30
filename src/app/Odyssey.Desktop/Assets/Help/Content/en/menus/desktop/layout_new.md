@@ -1,6 +1,6 @@
-# Neues Layout anlegen
+# Create new layout
 
-Mit Hilfe dieses Menüpunkts wird ein neues Layout auf Basis des Standard-Layouts angelegt. Man kann im folgenden Dialog einen Namen wählen und Magellan springt dann in das neu angelegt Layout.
+This menu item is used to create a new layout based on the standard layout. You can select a name in the following dialogue and Magellan then jumps to the newly created layout.
 
-**Hinweis**  
-Eventuell hat man den Eindruck, dass nichts passiert. Das liegt dann daran, dass die Layouts gleich sind.
+**Note**
+You may have the impression that nothing is happening. This is because the layouts are the same.

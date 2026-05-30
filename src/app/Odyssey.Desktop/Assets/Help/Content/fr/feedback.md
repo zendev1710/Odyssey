@@ -1,16 +1,16 @@
-# Feedback and Support
+# Retour d'information et soutien
 
-## Bugs in Magellan
+## Bugs dans Magellan
 
-For us as developers the error messages are a good start when tackling a problem. These can be found in the errors.txt file in the Magellan folder; please include these error messages if you have a problem with Magellan. To reproduce an error it may prove necessary to send in (an excerpt of) the used CR. These CRs are of course handled confidentially, and will be deleted after the issue has been resolved.
+Pour nous, développeurs, les messages d'erreur sont un bon point de départ pour résoudre un problème. Ils se trouvent dans le fichier errors.txt dans le dossier Magellan ; veuillez inclure ces messages d'erreur si vous avez un problème avec Magellan. Pour reproduire une erreur, il peut s'avérer nécessaire d'envoyer (un extrait) du CR utilisé. Ces CR sont bien entendu traités de manière confidentielle et seront supprimés une fois le problème résolu.
 
-Please refer to this page if you want to report errors:  
+Veuillez vous référer à cette page si vous souhaitez signaler des erreurs :  
 [https://magellan2.github.io/bugs](https://magellan2.github.io/bugs)
 
-### Feature wishes = further development
+### Souhaits de fonctionnalités = poursuite du développement
 
-We try to develop Magellan according to the wishes of its users. Our bug tracker helps enormously in this, because all feature wishes are centrally and publicly available.
+Nous essayons de développer Magellan en fonction des souhaits de ses utilisateurs. Notre système de suivi des bogues nous aide énormément à cet égard, car tous les souhaits de fonctionnalités sont centralisés et accessibles au public.
 
-## Eressea Community
+## Communauté Eressea
 
-Please leave your questions and remarks with the Eressea community channels. For the best way to do this - forum, IRC, Discord or whatnot - check the [Eressea home page](https://www.eressea.de).
+Veuillez laisser vos questions et remarques sur les canaux de la communauté Eressea. Pour connaître la meilleure façon de le faire - forum, IRC, Discord ou autre - consultez la [page d'accueil d'Eressea] (https://www.eressea.de).

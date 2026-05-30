@@ -1,23 +1,23 @@
-# Faction statistics
+# Statistiques des factions
 
-The faction statistics provide an overview of the factions in the report. If you select one or more regions beforehand, the statistics are only displayed for these regions.
+Les statistiques des factions donnent une vue d'ensemble des factions présentes dans le rapport. Si vous sélectionnez au préalable une ou plusieurs régions, les statistiques ne sont affichées que pour ces régions.
 
-With the button **_Password and other properties_** you can enter a password for the selected faction. You can only write and export commands for this faction once a password has been set. You can also set **Report owner** and **Coordinate translations** here.
+Le bouton **_Mot de passe et autres propriétés_** permet de saisir un mot de passe pour la faction sélectionnée. Vous ne pouvez écrire et exporter des commandes pour cette faction qu'une fois le mot de passe défini. Vous pouvez également définir ici **Propriétaire du rapport** et **Traductions des coordonnées**.
 
-The **_Set trust_** button can be used to set the trust level for the selected faction(s). This is used, for example, for the display of political maps (see [Map settings](options_map.md)) and for sorting the factions in the [Region overview](../../docks/regions.md). If nothing is entered here, Magellan calculates the confidence levels itself using the HELFE states that are set for this faction.
+Le bouton **Set trust_** permet de définir le niveau de confiance pour la ou les factions sélectionnées. Ceci est utilisé, par exemple, pour l'affichage des cartes politiques (voir [Map settings](options_map.md)) et pour le tri des factions dans le [Region overview](../../docks/regions.md). Si rien n'est saisi ici, Magellan calcule lui-même les niveaux de confiance en utilisant les états HELFE définis pour cette faction.
 
-With the button **_Delete faction from report_** you can completely remove a faction from the report, provided that no units of this faction appear in the report in the current turn and there are no other relationships (e.g. alliances) to this faction. This function is used to remove "faction oaks" that were previously encountered but no longer appear in the current report.
+Le bouton **_Supprimer la faction du rapport_** permet de supprimer complètement une faction du rapport, à condition qu'aucune unité de cette faction n'apparaisse dans le rapport pendant le tour en cours et qu'il n'y ait pas d'autres relations (par exemple, des alliances) avec cette faction. Cette fonction est utilisée pour supprimer les "chênes de faction" qui ont été rencontrés précédemment mais qui n'apparaissent plus dans le rapport actuel.
 
-## Statistics
+## Statistiques
 
 ![faction_statistics](../../images/menu_extras_factiontatistics.gif)
 
-If one or more factions are selected in the left-hand window, a statistical list of all goods and units that can currently be seen from this/these faction(s) appears in the right-hand window. In the case of your own faction, this is of course the complete inventory.
+Si une ou plusieurs factions sont sélectionnées dans la fenêtre de gauche, une liste statistique de tous les biens et unités qui peuvent actuellement être vus de cette/ces faction(s) apparaît dans la fenêtre de droite. Dans le cas de votre propre faction, il s'agit bien sûr de l'inventaire complet.
 
-For all items, the unit that owns them is indicated. If you click on a unit, it is displayed in the main window and you can issue commands for this unit directly.
+Pour tous les objets, l'unité qui les possède est indiquée. Si vous cliquez sur une unité, elle s'affiche dans la fenêtre principale et vous pouvez lui donner des ordres directement.
 
-## Talent statistics
+## Statistiques sur les talents
 
 ![faction_stat](../../images/menu_extras_factiontatistics_skills.gif)
 
-Here you can see how many people have a particular skill and at what level. To do this, simply select the desired skill from the drop-down menu at the bottom left. The other drop-down menus are for information purposes only, you cannot set anything here. They show the number of people with the talent, the total learning days and the total talent points.
+Vous pouvez voir ici combien de personnes possèdent une compétence particulière et à quel niveau. Pour cela, il suffit de sélectionner la compétence souhaitée dans le menu déroulant en bas à gauche. Les autres menus déroulants sont fournis à titre d'information uniquement, vous ne pouvez rien y définir. Ils indiquent le nombre de personnes possédant le talent, le nombre total de jours d'apprentissage et le nombre total de points de talent.

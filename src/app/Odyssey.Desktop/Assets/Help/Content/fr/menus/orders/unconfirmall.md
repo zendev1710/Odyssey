@@ -1,3 +1,3 @@
-# Cancel all
+# Annuler tout
 
-Here you can cancel the command confirmation of all units of a specific faction or all factions.
+Vous pouvez ici annuler la confirmation de commande de toutes les unités d'une faction spécifique ou de toutes les factions.

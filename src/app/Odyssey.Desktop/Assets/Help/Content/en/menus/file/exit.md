@@ -1,3 +1,3 @@
-# Beenden
+# Exit
 
-Bei Klick auf diesen Menüpunkt wird Magellan beendet. Die aktuellen Einstellungen werden dabei in der magellan.ini gesichert und sind beim nächsten Start von Magellan aktiv.
+Click on this menu item to exit Magellan. The current settings are saved in magellan.ini and will be active the next time Magellan is started.

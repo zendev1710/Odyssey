@@ -1,7 +1,7 @@
-# Desktop configuration
+# Configuration du bureau
 
-The Magellan user interface can be flexibly customised to your own requirements. In the past, this was done by writing your own layout configurations. Today there is the so-called docking layout. With its help, each window element (dock) can be freely positioned. Each dock can either be closed (because it is not needed), hidden behind other docks (because it is rarely needed) or its size can be adapted to current requirements. This also makes it possible to use Magellan on multiple screens. The number of possibilities is actually unlimited.
+L'interface utilisateur de Magellan peut être adaptée de manière flexible à vos propres besoins. Dans le passé, cela se faisait en écrivant vos propres configurations de mise en page. Aujourd'hui, il existe ce que l'on appelle le "docking layout". Grâce à elle, chaque élément de fenêtre (dock) peut être positionné librement. Chaque dock peut être fermé (parce qu'il n'est pas nécessaire), caché derrière d'autres docks (parce qu'il est rarement nécessaire) ou sa taille peut être adaptée aux besoins actuels. Cela permet également d'utiliser Magellan sur plusieurs écrans. Le nombre de possibilités est en fait illimité.
 
-It is also possible to define certain presets. In other words, you can switch back and forth between different dock configurations. This allows you to quickly switch from a presentation view for friends and fellow players to a view for editing the commands of a specific region.
+Il est également possible de définir certains préréglages. En d'autres termes, vous pouvez passer d'une configuration de dock à l'autre. Vous pouvez ainsi passer rapidement d'une vue de présentation pour vos amis et autres joueurs à une vue permettant d'éditer les commandes d'une région spécifique.
 
-For a closer look at this, take a look at the [Desktop menu](../menus/desktop/index.md).
+Pour en savoir plus, consultez le [Menu du bureau] (../menus/desktop/index.md).

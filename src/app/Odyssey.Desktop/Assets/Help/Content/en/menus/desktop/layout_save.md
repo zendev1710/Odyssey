@@ -1,3 +1,3 @@
-# Speichere Layouts
+# Save layouts
 
-Dieser Menüpunkt speichert augenblicklich die Einstellungen zu den Layouts in der Datei dock\_default.xml im Magellan Arbeitsverzeichnis. Beim Beenden werden die Einstellen aber auch gespeichert.
+This menu item immediately saves the settings for the layouts in the dock\_default.xml file in the Magellan working directory. The settings are also saved when exiting.

@@ -1,6 +1,6 @@
-# Grafiksets
+# Graphic sets
 
-_Dieses Feature wurde seit langem nicht mehr getestet. Falls du es erfolgreich benutzt, alternative Grafikssets hast, oder Ideen zur Benutzung hast, teile deine Erfahrungen gerne mit dem Entwicklerteam!_
+This feature has not been tested for a long time. If you use it successfully, have alternative graphics sets, or have ideas on how to use it, please share your experiences with the development team.
 
-* [Installation von Grafiksets](graphicsets_install.md)
-* [Erstellen von Grafiksets](graphicsets_making.md)
+* [Installation of graphics sets](graphicsets_install.md)
+* [Creating graphics sets](graphicsets_making.md)

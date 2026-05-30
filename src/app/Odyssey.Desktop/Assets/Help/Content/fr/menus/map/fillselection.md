@@ -1,5 +1,5 @@
-# Fill selection
+# Remplir la sélection
 
-Fills the selection between two or more corner points.
+Remplit la sélection entre deux ou plusieurs points d'angle.
 
-To do this, two or more regions that form the corner points of the selection must be selected. Clicking on this menu item selects all regions with coordinates between these regions.
+Pour ce faire, deux régions ou plus formant les points d'angle de la sélection doivent être sélectionnées. En cliquant sur cet élément de menu, toutes les régions dont les coordonnées se trouvent entre ces régions sont sélectionnées.

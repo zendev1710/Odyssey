@@ -1,5 +1,5 @@
-# Speichern unter
+# Save as
 
-STRG-Shift-S
+CTRL-Shift-S
 
-Hier kann der geöffnete CR unter einem anderen Dateinamen und Pfad abgespeichert werden.
+Here you can save the open CR under a different file name and path.

@@ -1,5 +1,5 @@
-# Show bookmark list
+# Afficher la liste des signets
 
 ALT+F2
 
-Opens a window with a list of all bookmarked regions, units, etc...
+Ouvre une fenêtre avec une liste de toutes les régions, unités, etc... mises en favoris.

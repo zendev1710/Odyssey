@@ -1,21 +1,21 @@
-# Template
+# Gabarit
 
-This is a graphical frontend for Template. Template is a powerful move template generator for Eressea and other compatible games, which also offers a meta language for automation. You can download Vorlage at [http://www.gulrak.de/etools.html](http://www.gulrak.de/etools.html). Documentation can also be found there.
+Il s'agit d'une interface graphique pour Template. Template est un puissant générateur de modèles de mouvements pour Eressea et d'autres jeux compatibles, qui offre également un méta-langage pour l'automatisation. Vous pouvez télécharger Vorlage à [http://www.gulrak.de/etools.html](http://www.gulrak.de/etools.html). La documentation est également disponible sur ce site.
 
-After selecting the menu item, the following dialogue opens:
+Après avoir sélectionné l'élément de menu, la boîte de dialogue suivante s'ouvre :
 
 ![menu_extras_template](../../images/menu_extras_template.gif)
 
-In the **_source CR(s)_** field, enter the path to one or more CRs that are to be edited by the template. Normally this is the CR that was sent by the Eressea server.
+Dans le champ **_source CR(s)_**, entrez le chemin d'accès à un ou plusieurs CR qui doivent être édités par le modèle. Normalement, il s'agit du CR envoyé par le serveur Eressea.
 
-The **_target_file_** field is used to specify the file to which the template should write its output.
+Le champ **_fichier_cible_** est utilisé pour spécifier le fichier dans lequel le modèle doit écrire sa sortie.
 
-The file specified in the **_Script file_** field uses Template to integrate external functions and procedures for processing the meta commands. More information on template scripts can be found in the template documentation.
+Le fichier spécifié dans le champ **_Script file_** utilise Template pour intégrer des fonctions et des procédures externes pour le traitement des méta-commandes. Vous trouverez plus d'informations sur les scripts de modèle dans la documentation du modèle.
 
-Finally, the **_template_** field contains the path to the template.
+Enfin, le champ **_template_** contient le chemin d'accès au modèle.
 
-In the **_Options_** block, you can specify command line options for template. The switch **_Output as computer report_** creates the -cr option. Further options can be entered in the corresponding field if required.
+Dans le bloc **_Options_**, vous pouvez spécifier des options de ligne de commande pour le modèle. Le commutateur **_Sortie sous forme de rapport informatique_** crée l'option -cr. D'autres options peuvent être saisies dans le champ correspondant si nécessaire.
 
-Click on **_Ok_** to call up the template with the set options. The generated CR or command file can now be loaded into Magellan and processed further.
+Cliquez sur **_Ok_** pour appeler le modèle avec les options définies. Le CR généré ou le fichier de commande peut maintenant être chargé dans Magellan et traité ultérieurement.
 
-The output of the template is displayed in the **_Output_** window so that you can see any error messages.
+La sortie du modèle est affichée dans la fenêtre **_Sortie_** afin que vous puissiez voir les éventuels messages d'erreur.

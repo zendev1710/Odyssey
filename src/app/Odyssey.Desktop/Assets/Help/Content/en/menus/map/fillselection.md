@@ -1,5 +1,5 @@
-# Auswahl füllen
+# Fill selection
 
-Füllt die Auswahl zwischen zwei oder mehr Eckpunkten.
+Fills the selection between two or more corner points.
 
-Hierzu müssen zwei oder mehr Regionen selektiert werden, die die Eckpunkte der Auswahl bilden. Bei Klick auf diesen Menüpunkt werden alle Regionen mit Koordinaten zwischen diesen Regionen ausgewählt.
+To do this, two or more regions that form the corner points of the selection must be selected. Clicking on this menu item selects all regions with coordinates between these regions.

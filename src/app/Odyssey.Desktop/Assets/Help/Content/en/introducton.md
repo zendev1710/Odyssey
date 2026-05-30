@@ -10,7 +10,7 @@ This documentation is built up around the following chapters:
 - FAQ
 - Feedback and Support
 
-In this documentation there are some additional tables and descriptions of the orders from the Eressea manual. These may, however, not be complete or completely up-to-date. When in doubt use the official rules at https://wiki.eressea.de.  
+In this documentation there are some additional tables and descriptions of the orders from the Eressea manual. These may, however, not be complete or completely up-to-date. When in doubt use the official rules at <https://wiki.eressea.de>.  
 
 Unfortunately this documentation is incomplete.
 Several parts are missing or have to be expanded on.

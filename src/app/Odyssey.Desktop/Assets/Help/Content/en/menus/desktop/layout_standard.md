@@ -1,3 +1,3 @@
 # Standard
 
-Dieser Menüpunkt ist eigentlich kein Menüpunkt, sondern der Titel eines Layouts. Wenn Magellan das erste Mal startet, legt es automatisch ein Standardlayout an. Wenn mehrere Layouts erstellt wurden, kann man dieses Standard-Layout auch löschen. Allerdings wird immer, wenn man ein neues Layout erstellt, das Standard-Layout als Vorlage verwendet.
+This menu item is not actually a menu item, but the title of a layout. When Magellan starts for the first time, it automatically creates a default layout. If several layouts have been created, you can also delete this default layout. However, the default layout is always used as a template when a new layout is created.

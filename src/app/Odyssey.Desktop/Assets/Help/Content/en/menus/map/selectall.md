@@ -1,3 +1,3 @@
-# Alles Auswählen
+# Select all
 
-Wählt alle Regionen in der aktuellen Ebene der Karte aus.
+Selects all regions in the current layer of the map.

@@ -1,78 +1,78 @@
-# Detail display
+# Affichage détaillé
 
-The options for the detailed display and the command supplement can be configured in this dialogue:
+Les options pour l'affichage détaillé et le supplément de commande peuvent être configurées dans cette boîte de dialogue :
 
-![Options - Detail display](../../images/menu_extras_options_detail.gif)
+![Options - Affichage détaillé](../../images/menu_extras_options_detail.gif)
 
-## Data display
+## Affichage des données
 
-**Show tag buttons**
-    If this option is activated, two buttons for adding and removing additional CR tags are displayed in the detailed display, which can then be analysed using a template, for example.
-**Allow own icons**
-    This allows you to assign your own icons to your own units and factions. These icons must be stored in the `etc/images/icons/custom` subdirectory.  
+**Afficher les boutons de balises**
+    Si cette option est activée, deux boutons permettant d'ajouter et de supprimer des balises CR supplémentaires sont affichés dans l'affichage détaillé, qui peut ensuite être analysé à l'aide d'un modèle, par exemple.
+**Autoriser ses propres icônes**
+    Cette option vous permet d'attribuer vos propres icônes à vos unités et factions. Ces icônes doivent être stockées dans le sous-répertoire `etc/images/icons/custom`.  
 
-* For factions, a GIF file must be stored as follows: `etc/images/icons/custom/factions/<faction number>.gif`.
-* For units, a GIF file must be stored as follows: `etc/images/icons/custom/units/<unitnumber>.gif`
-**Region short info**
-    This field can be used to define the region content that is permanently displayed in the grey area above the detailed display. This text uses the same replacement system as the ATR. Here is [a more detailed description of the replacement system](../../reference/atr_arr.md).
+* Pour les factions, un fichier GIF doit être stocké comme suit : `etc/images/icons/custom/factions/<numéro de faction>.gif`.
+* Pour les unités, un fichier GIF doit être stocké comme suit : `etc/images/icons/custom/factions/<numéro de la faction>.gif` : `etc/images/icons/custom/units/<numéro d'unité>.gif`.
+**Info courte sur la région**
+    Ce champ peut être utilisé pour définir le contenu de la région qui est affiché en permanence dans la zone grise au-dessus de l'affichage détaillé. Ce texte utilise le même système de remplacement que l'ATR. Voici [une description plus détaillée du système de remplacement](../../reference/atr_arr.md).
 
-## Command editor
+## Éditeur de commandes
 
-![Options - Detail display - Order editor](../../images/menu_extras_options_detail_orders.gif)
+![Options - Affichage détaillé - Editeur de commandes](../../images/menu_extras_options_detail_orders.gif)
 
-**Multi-Editor Layout**
-    If this option is activated, the orders of all units in the region are displayed one below the other in the order window.  
-    If the multi-editor layout is deactivated, only the commands of the currently selected unit are displayed in the command window.
+**Mise en page multi-éditeurs**
+    Si cette option est activée, les ordres de toutes les unités de la région sont affichés les uns à la suite des autres dans la fenêtre d'ordre.  
+    Si cette option est désactivée, seules les commandes de l'unité sélectionnée sont affichées dans la fenêtre de commande.
 
-* Hide buttons**
-    If you select this function, the TEMP buttons are not displayed at the bottom and you gain some space.
-**All factions editable**
-    Normally, only commands from factions that are _privileged_ can be seen and edited. Normally, this is the faction whose password is known and for which commands are created.  
-    For special constellations, it may be desirable to view and edit the commands of other factions as well, for example to simulate a planned transfer and check the resulting weight. This function must be activated to display and change the commands of non-privileged files.
-* Colours
-    The background of the command box can be coloured differently for the active unit than for the other units. To do this, simply click on the respective colour field.
-* **Syntax highlighting**
-    Here you can activate syntax highlighting (syntax-dependent colouring of commands) and set the colours.
-** **Editor list**
-    The settings influence the number of units displayed in the command list. The number of units displayed can be limited to islands, regions and factions.
+* Cacher les boutons**
+    Si vous sélectionnez cette fonction, les boutons TEMP ne sont pas affichés en bas et vous gagnez de l'espace.
+**Toutes les factions sont modifiables
+    Normalement, seules les commandes des factions _privilégiées_ peuvent être vues et modifiées. Normalement, il s'agit de la faction dont le mot de passe est connu et pour laquelle les commandes sont créées.  
+    Pour des constellations spéciales, il peut être souhaitable de voir et d'éditer les commandes d'autres factions, par exemple pour simuler un transfert planifié et vérifier le poids qui en résulte. Cette fonction doit être activée pour afficher et modifier les commandes des fichiers non privilégiés.
+* Couleurs
+    Le fond de la boîte de commande peut être coloré différemment pour l'unité active et pour les autres unités. Pour ce faire, il suffit de cliquer sur le champ de couleur correspondant.
+**Mise en évidence de la syntaxe**
+    Vous pouvez ici activer la coloration syntaxique (coloration des commandes en fonction de la syntaxe) et définir les couleurs.
+**Liste de l'éditeur**
+    Les paramètres influencent le nombre d'unités affichées dans la liste des commandes. Le nombre d'unités affichées peut être limité aux îles, aux régions et aux factions.
 
-### Command completion
+### Achèvement de la commande
 
-![Options - Order completion](../../images/menu_extras_options_detail_ordercompletion.gif)
+![Options - Exécution des commandes](../../images/menu_extras_options_detail_ordercompletion.gif)
 
-Automatic command completion makes it easier to enter commands for the units. Depending on the context, useful or possible commands are suggested and can be selected with just a few keystrokes or clicks.
+La complétion automatique des commandes facilite la saisie des commandes pour les unités. En fonction du contexte, des commandes utiles ou possibles sont suggérées et peuvent être sélectionnées en quelques frappes ou clics.
 
-Example:
-You type a "G". All commands beginning with "G" are now displayed for selection. After selecting the command "GIB", a list of all units in the region is displayed. Once the unit number has been entered, a list of all items that the unit has appears.
+Exemple : vous tapez un "G" :
+Vous tapez un "G". Toutes les commandes commençant par "G" sont alors affichées et peuvent être sélectionnées. Après avoir sélectionné la commande "GIB", une liste de toutes les unités de la région s'affiche. Une fois le numéro de l'unité saisi, une liste de tous les éléments dont dispose l'unité s'affiche.
 
-* Activate autocomplete:**
-    Here you can activate and deactivate the automatic command completion.
-* **Restrict command completion:**
-    If this option is selected, only items for which the necessary resources are available are suggested for the MAKE command.
-* **Immediate display:**
-    Activates the immediate display of command suggestions after entering a command. This means that the next partial command is suggested before the beginning of the word has been typed. If this option is deactivated, at least 1 character must be typed before the command suggestion.
-**Time:**
-    In the _Time_ field, you can set the delay for displaying the command suggestion in milliseconds.
+* Activer l'autocomplétion:**
+    Vous pouvez ici activer et désactiver l'exécution automatique des commandes.
+**Restreindre l'exécution de la commande:**
+    Si cette option est sélectionnée, seuls les éléments pour lesquels les ressources nécessaires sont disponibles sont proposés pour la commande MAKE.
+**Affichage immédiat:**
+    Active l'affichage immédiat des suggestions de commande après la saisie d'une commande. Cela signifie que la commande partielle suivante est suggérée avant que le début du mot n'ait été tapé. Si cette option est désactivée, au moins un caractère doit être tapé avant la suggestion de commande.
+**Heure:**
+    Dans le champ _Time_, vous pouvez définir le délai d'affichage de la suggestion de commande en millisecondes.
 * Mode:**
-    Two modes are available for auto-completion:
-  * List
-        As soon as one or more characters have been entered, a list of possible additions appears. Each further entry of characters further restricts the selection.  
-        Example:
-        L -> "TEACH, LEARN, DELIVER"
-        LE -> "TEACH, LEARN"
-        LEH -> "TEACH"
-        You can scroll up and down the list using the cursor keys. Pressing the TAB key or double-clicking on the entry completes the command.  
+    Deux modes sont disponibles pour l'auto-complétion :
+  * Liste
+        Dès qu'un ou plusieurs caractères ont été saisis, une liste d'ajouts possibles apparaît. Chaque nouvelle entrée de caractères restreint davantage la sélection.  
+        Exemple :
+        L -> "ENSEIGNER, APPRENDRE, DÉLIVRER"
+        LE -> "ENSEIGNER, APPRENDRE"
+        LEH -> "ENSEIGNER"
+        Vous pouvez faire défiler la liste vers le haut ou vers le bas à l'aide des touches du curseur. Une pression sur la touche TAB ou un double-clic sur l'entrée complète la commande.  
 
-  * Selected text
-        Instead of the selection list, the word is completed up to the next distinction option. The inserted text is highlighted and is overwritten when you continue typing. The suggestion is also accepted here with the TAB key.  
+  * Texte sélectionné
+        Au lieu de la liste de sélection, le mot est complété jusqu'à l'option de distinction suivante. Le texte inséré est mis en évidence et est écrasé lorsque vous continuez à taper. La suggestion est également acceptée ici avec la touche TAB.  
 
-  * No display
-        Switches off the display of suggestions. It is still possible to insert (invisible) suggestions.
-* In the input fields for **Forward, Backward, Insert** and **Cancel**, you can set the key combinations for the respective functions. **Forward** jumps forward one suggestion, **Backward** jumps back one suggestion, **Insert** inserts the current suggestion and **Cancel** cancels the entry.  
+  * Pas d'affichage
+        Désactive l'affichage des suggestions. Il est toujours possible d'insérer des suggestions (invisibles).
+* Dans les champs de saisie pour **Avancer, Reculer, Insérer** et **Annuler**, vous pouvez définir les combinaisons de touches pour les fonctions respectives. **Avancer** permet d'avancer d'une suggestion, Reculer** permet de reculer d'une suggestion, Insérer** permet d'insérer la suggestion en cours et Annuler** permet d'annuler la saisie.  
 
-**Self-defined command additions**
-    In the lower area of the window, you have the option of defining your own abbreviations, which are then displayed before the normal commands in the command supplements. For example, if you have defined the abbreviation _lh_ for _learn slashing weapons_, this is displayed as follows, similar to the example above:
+**Ajouts de commandes auto-définies
+    Dans la partie inférieure de la fenêtre, vous avez la possibilité de définir vos propres abréviations, qui s'affichent alors avant les commandes normales dans les suppléments de commande. Par exemple, si vous avez défini l'abréviation _lh_ pour _apprendre les armes tranchantes_, elle s'affiche comme suit, comme dans l'exemple ci-dessus :
     L -> "lh, TEACH, LEARN, DELIVER"
-    LE -> "TEACH, LEARN"
-    If the abbreviation is selected during command creation, the defined text module is used instead of the abbreviation. This module can also be longer than one line.  
-    On the left-hand side of the display is a list of the abbreviations defined so far. If you select one of the abbreviations with the mouse, the corresponding text module is displayed on the right-hand side of the screen. The _**Add**_ button can be used to define new abbreviations, while the _**Remove**_ button deletes the currently selected abbreviation from the list.
+    LE -> "ENSEIGNER, APPRENDRE"
+    Si l'abréviation est sélectionnée lors de la création de la commande, l'élément de texte défini est utilisé à la place de l'abréviation. Ce module peut également être plus long qu'une ligne.  
+    La liste des abréviations définies jusqu'à présent s'affiche sur le côté gauche de l'écran. Si vous sélectionnez l'une des abréviations avec la souris, l'élément de texte correspondant s'affiche à droite de l'écran. Le bouton _**Add**_ permet de définir de nouvelles abréviations, tandis que le bouton _**Remove**_ supprime de la liste l'abréviation actuellement sélectionnée.

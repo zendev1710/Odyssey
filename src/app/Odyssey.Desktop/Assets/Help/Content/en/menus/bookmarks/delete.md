@@ -1,3 +1,3 @@
-# Alle löschen
+# Delete all
 
-Leert die Lesezeichenliste.
+Clears the bookmark list.

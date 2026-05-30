@@ -43,6 +43,7 @@ Bullet list with different markers:
 - Hyphen item
 
 Task list:
+
 - [x] Completed task
 - [ ] Incomplete task
 

@@ -1,35 +1,35 @@
-# Orders
+# Commandes
 
-This window is used to give units new orders.
+Cette fenêtre est utilisée pour donner de nouveaux ordres aux unités.
 
 ![windows_orders](../images/windows_orders.gif)
 
-If a unit is selected, this unit's orders are shown here and can be edited. Magellan only shows orders for units that belong to a faction that has a password set. Therefore, if no orders are shown, you should enter a password for your faction under [Faction statistics](../menus/extras/factionstatistics.html).
+Si une unité est sélectionnée, les ordres de cette unité sont affichés ici et peuvent être modifiés. Magellan n'affiche que les ordres des unités qui appartiennent à une faction dont le mot de passe est défini. Par conséquent, si aucun ordre n'est affiché, vous devez entrer un mot de passe pour votre faction dans [Faction statistics](../menus/extras/factionstatistics.html).
 
-Order-editing is supported by a handy order-completion, which can be adjusted to your [preference](../menus/extras/options_detail.html). To enter an order you only need to type its first letter. Using the cursor keys or CTRL-up / CTRL-down you can select the desired order from the displayed list of suggestions and enter it with the TAB-key. You can configure the order-completion under [Extras/Options/Details](../menus/extras/options_detail.html).
+L'édition des ordres est assistée par un formulaire d'ordre pratique, qui peut être ajusté selon vos [préférences](../menus/extras/options_detail.html). Pour saisir une commande, il suffit de taper sa première lettre. À l'aide des touches du curseur ou des touches CTRL haut / CTRL bas, vous pouvez sélectionner la commande souhaitée dans la liste de suggestions affichée et la saisir à l'aide de la touche TAB. Vous pouvez configurer l'exécution des commandes sous [Extras/Options/Détails](../menus/extras/options_detail.html).
 
-With **_Orders confirmed_** (Ctrl+B) you can confirm the orders of the active unit. The unit will then no longer be shown bold in the region window. Through this functions you can mark the units that you have already edited.
+Avec **_Ordres confirmés_** (Ctrl+B) vous pouvez confirmer les ordres de l'unité active. L'unité ne sera alors plus affichée en gras dans la fenêtre de la région. Cette fonction vous permet de marquer les unités que vous avez déjà modifiées.
 
-## TEMP-units
+## Unités TEMP
 
-Magellan offers an easy way to work with TEMP-units. These are shown as regular units under the units that created them. Transactions of men and items, as well as skills and weights are shown in the details window, the same as for normal units. The necessary orders to create a TEMP-unit (MAKE TEMP \[...\] END) are created by Magellan when the orders are exported. Within Magellan TEMP-units are treated the same as any other unit.
+Magellan offre un moyen facile de travailler avec les unités TEMP. Celles-ci sont affichées comme des unités régulières sous les unités qui les ont créées. Les transactions d'hommes et d'articles, ainsi que les compétences et les poids sont affichés dans la fenêtre de détails, de la même manière que pour les unités normales. Les ordres nécessaires à la création d'une unité TEMP (MAKE TEMP \[...\] END) sont créés par Magellan lorsque les ordres sont exportés. Dans Magellan, les unités TEMP sont traitées de la même manière que n'importe quelle autre unité.
 
-### Creating TEMP-units (CTRL+T)
+### Création d'unités TEMP (CTRL+T)
 
 ![windows_orders_button_maketemp](../images/windows_orders_button_maketemp.gif)
 
-With a click on this button you can create a TEMP-unit. In the resulting dialog you can enter the unit's name and TEMP-ID. The corresponding orders are created automatically.
+En cliquant sur ce bouton, vous pouvez créer une unité TEMP. Dans la boîte de dialogue qui s'ouvre, vous pouvez saisir le nom de l'unité et l'ID TEMP. Les commandes correspondantes sont créées automatiquement.
 
 ![windows_orders_maketemp](../images/windows_orders_maketemp.gif)
 
-Clicking on _More..._ results in the following dialog:
+En cliquant sur _Plus..._, vous obtenez la boîte de dialogue suivante :
 
 ![windows_orders_maketempmore](../images/windows_orders_maketempmore.gif)
 
-Here you can enter the number of men to be recruited, an order and the unit's description.
+Vous pouvez y entrer le nombre d'hommes à recruter, un ordre et la description de l'unité.
 
-### Deleting TEMP-units (Ctrl+Shift+T)
+### Suppression des unités TEMP (Ctrl+Shift+T)
 
 ![windows_orders_button_deltemp](../images/windows_orders_button_deltemp.gif)
 
-By clicking this button you can delete the current TEMP-unit.
+En cliquant sur ce bouton, vous pouvez supprimer l'unité TEMP en cours.

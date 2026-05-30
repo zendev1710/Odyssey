@@ -1,65 +1,65 @@
-# Befehle speichern
+# Save commands
 
-![Befehle speichern](../../images/menu_file_saveorders.gif)
+![Save commands](../../images/menu_file_saveorders.gif)
 
-Zum Speichern oder Verschicken der Befehle stehen folgende Optionen (Reiter) zur Verfügung:
+The following options (tabs) are available for saving or sending commands:
 
-* **E-Mail**  
-    Verschickt die Befehle direkt per Mail. Magellan kann für einige populäre Mailprovider die nötigen Einstellungen erraten. Dann müssen Sie nur noch das Passwort eingeben. Sollte dies nicht möglich sein können Sie die restlichen Einstellungen selber ausfüllen. Falls Sie die Einstellungen nicht kennen, hilft häufig eine einfache Internetsuche nach "SMTP-Einstellungen für Providername". Bei manchen Providern muss man diese Funktion erst in den Emaileinstellungen freischalten. Besuchen Sie dazu die Internetseite Ihres Providers. Diese Einstellungen haben nichts mit Eressea zu tun, aber die Eressea-Community hilft in solchen Fragen gerne weiter, wenn man nett fragt.  
-    ![Befehle speichern](../../images/menu_file_saveorders_email.gif)
-  * **Einstellungen erraten**  
-        Versucht die Servereinstellungen aus der Absenderadresse zu erraten oder bietet die Möglichkeit, aus einer Liste populärer Anbieter auszuwählen.
-  * **Absenderadresse**  
-        Ihre Emailadresse, von der aus die Befehle verschickt werden sollen.
-  * **SMTP-Server**  
-        Hier trägt man den Mailserver seines Internetproviders ein (zum Beispiel smtp.provider.de).
-  * **Port**  
-        Diese Einstellungen müssen Sie über ihren Provider in Erfahrung bringen. Gängige Werte sind 25, 465 oder 587.
-  * **Verwende SSL / Verwende TLS**  
-        Diese Einstellungen hängen vom Protokoll ab, die ihr Provider verwendet. Versuchen Sie im Zweifel, beide auszuwählen.
-  * **Authentifizierung verwenden**  
-        Für die meisten Provider muss dieses Kästchen heutzutage aktiviert sein.
-  * **Benutzername**  
-        Häufig identisch mit der Absenderadresse, aber auch dies hängt vom Provider ab.
-  * **Passwort**  
-        Magellan kann ihr Passwort speichern. Dies bedeutet ein gewisses Risiko, falls jemand mit unlauteren Absichten Zugriff auf ihren Computer erlangt. Sie können das Häkchen bei "immer nachfragen" setzen, dann müssen Sie das Passwort jedes Mal neu eingeben, dafür ist es sicherer.
-  * **Empfängeradresse**  
-        Hier wird die Mail-Adresse des Eressea-Servers angegeben. Magellan kann sie normalerweise aus dem Report auslesen, aber sollte dies nicht gelingen, können Sie sie hier eingeben (zum Beispiel <eressea-server@eressea.kn-bremen.de>).
-  * **Betreff**  
-        Der Betreff der Mail (zum Beispiel Eressea Befehle).
-  * **CC**  
-        Hier können sie eine oder mehrere Adressen (getrennt durch Kommas) eingeben, an die der Report ebenfalls geschickt werden soll.
-* **Datei**  
-    Speichert die Befehle in eine Datei mit dem angegebenen Namen. Wählen Sie die Box Auto-Dateiname um spezielle Kürzel als Teil des Dateinamens zu verwenden. So bewirkt etwa 'befehle-{round}.txt', dass der Name die aktuelle Runde enthält, zum Beispiel befehle-123.txt.  
+* **Email**
+    Sends the commands directly by e-mail. Magellan can guess the necessary settings for some popular mail providers. Then you only have to enter the password. If this is not possible, you can fill in the remaining settings yourself. If you do not know the settings, a simple Internet search for "SMTP settings for provider name" often helps. With some providers, this function must first be activated in the e-mail settings. To do this, visit your provider's website. These settings have nothing to do with Eressea, but the Eressea community will be happy to help with such questions if you ask nicely.  
+    ![Save commands](../../images/menu_file_saveorders_email.gif)
+  * **Settings guess**
+        Attempts to guess the server settings from the sender address or offers the option of selecting from a list of popular providers.
+  * **Sender address**
+        Your email address from which the commands are to be sent.
+  * **SMTP server**
+        Here you enter the mail server of your Internet provider (for example smtp.provider.de).
+  * **Port**
+        You must find out these settings from your provider. Common values are 25, 465 or 587.
+  **Use SSL / Use TLS**
+        These settings depend on the protocol used by your provider. If in doubt, try selecting both.
+  * **Use authentication**
+        Most providers nowadays require this box to be ticked.
+  * **User name**
+        Often identical to the sender address, but this also depends on the provider.
+  * **Password**
+        Magellan can save your password. This means a certain risk if someone with dishonest intentions gains access to your computer. You can tick the "Always ask" box, in which case you will have to re-enter the password each time, but it is more secure.
+  **Recipient address**
+        The email address of the Eressea server is entered here. Magellan can normally read it from the report, but if this does not work, you can enter it here (for example <eressea-server@eressea.kn-bremen.de>).
+  * Subject
+        The subject of the mail (e.g. Eressea commands).
+  * **CC**
+        Here you can enter one or more addresses (separated by commas) to which the report should also be sent.
+* **File**
+    Saves the commands in a file with the specified name. Select the Auto file name box to use special abbreviations as part of the file name. For example, 'commands-{round}.txt' causes the name to contain the current round, e.g. commands-123.txt.  
 
-* **Zwischenablage**  
-    Kopiert die Befehlsdatei in die Zwischenablage. Von dort kann sie z.B. sehr einfach in ein Mailprogramm übernommen werden.  
+**Clipboard**
+    Copies the command file to the clipboard. From there it can be easily copied into a mail programme, for example.  
 
-* **Serverupload**  
-    Lädt die Befehle direkt auf den Server, ohne Umweg über Email. Die Befehle werden nicht (durch ECheck) überprüft. Die voreingestellte Adresse funktionert für Eressea, aber möglicherweise nicht für andere Spiele. Sie ist, falls vorgesehen, bei der Spielleitung zu erfragen.
+* **Server upload**
+    Uploads the commands directly to the server, without a diversion via email. The commands are not checked (by ECheck). The default address works for Eressea, but may not work for other games. If required, please ask the game management.
 
-* **Schließen**  
-    Schließt den Dialog und speichert alle Einstellungen.
-* **Abbrechen**  
-    Schließt den Dialog ohne die Einstellungen zu speichern.
+**Close**
+    Closes the dialogue and saves all settings.
+**Cancel**
+    Closes the dialogue without saving the settings.
 
-## Ausgabeoptionen
+## Output options
 
-Durch Klicken auf "Details" erhalten Sie Zugriff auf weitere Funktionen, die das genaue Aussehen der exportierten Befehle bestimmen.
+Clicking on "Details" gives you access to further functions that determine the exact appearance of the exported commands.
 
-![Ausgabeoptionen](../../images/menu_file_saveorders_details.gif)
+![Output options](../../images/menu_file_saveorders_details.gif)
 
-* **Automatischer Zeilenumbruch**  
-    Bricht die Befehlsdatei nach _n_ Zeichen um. Längere Zeilen (Beschreibungen, Botschaften, etc.) werden dabei automatisch mit " \\" getrennt. Vermeidet Probleme mit dem automatischen Zeilenumbruch von Mailprogrammen.
-* **ECheck-Kommentare**  
-    Fügt Kommentare für das Zugcheckerprogramm ECheck (wie Angaben über Silber und Personen) in die Befehlsdatei ein.
-* **Mit ';' beginnende Kommentare entfernen**  
-    Entfernt nichtpersistente Kommentare aus der Befehlsdatei. Nach Möglichkeit sollte diese Option zum Verschicken der Mail an den Eressea-Server angewählt sein, um die Befehlsdatei so klein wie möglich zu machen. Allerdings gehen hierbei auch die Informationen über die Bestätigung der Befehle der Einheiten verloren, da diese in ';'-Kommentaren abgelegt werden.
-* **Mit '//' beginnende Kommentare entfernen**  
-    Entfernt persistente Kommentare aus der Befehlsdatei. Vorlage-Benutzer sollten diese Option tunlichst nicht benutzen, da so auch alle Metabefehle gelöscht werden.
-* **Nur Einheiten mit bestätigten Befehlen**  
-    Nur Befehle bestätigter Einheiten werden geschrieben. Unbestätigte Einheiten werden ignoriert. Diese Option ist sehr praktisch für Spieler, die sich eine Partei teilen.
-* **Ausgewählte Regionen**  
-    Hiermit kann man festlegen, dass nur Befehle für Einheiten verschickt werden, die gerade in der Karte ausgewählt (selektiert) sind. So kann man stückweise Befehle an den Server schicken.
-* **Unbekannte Tags als Vorlage einfügen**  
-    Damit werden unbekannte Tags in die Befehlsdatei geschrieben. Diese Option ergibt wahrscheinlich nur für Benutzer des Zugautomatisierungsprogramms Vorlage einen Sinn.
+* **Automatic line break**
+    Breaks the command file after _n_ characters. Longer lines (descriptions, messages, etc.) are automatically separated with " \\" in the process. Avoids problems with the automatic line break of mail programmes.
+**ECheck comments**
+    Inserts comments for the train checker programme ECheck (such as information about silver and persons) into the command file.
+* **Remove comments beginning with ';'**
+    Removes non-persistent comments from the command file. If possible, this option should be selected when sending the mail to the Eressea server in order to make the command file as small as possible. However, the information about the confirmation of the units' commands is also lost, as this is stored in ';' comments.
+* **Remove comments beginning with '//'**
+    Removes persistent comments from the command file. Template users should avoid using this option as far as possible, as all meta commands will also be deleted.
+**Only units with confirmed commands**
+    Only commands of confirmed units are written. Unconfirmed units are ignored. This option is very useful for players who share a faction.
+* Selected regions**
+    Here you can specify that commands are only sent for units that are currently selected on the map. This allows you to send commands to the server piece by piece.
+**Insert unknown tags as template**
+    This writes unknown tags to the command file. This option probably only makes sense for users of the train automation programme Template.

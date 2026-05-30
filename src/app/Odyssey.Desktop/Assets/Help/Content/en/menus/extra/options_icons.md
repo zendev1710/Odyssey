@@ -1,63 +1,63 @@
 # Icons
 
-## Iconeinstellungen
+## Icon settings
 
-![Optionen - Icons](../../images/menu_extras_options_icons.gif)
+![Options - Icons](../../images/menu_extras_options_icons.gif)
 
-**Zeige Kurzinfo:** Ist diese Option aktiviert, erhält man bei etwas längerem Verweilen des Mauszeigers über einem Icon den dazugehörigen Talent- oder Gebäudenamen, den das Icon repräsentiert.
+**Show short info:** If this option is activated, you will receive the corresponding talent or building name that the icon represents if you hover the mouse pointer over an icon for a longer period of time.
 
-**Nachrichten/Details/Regionen**: In dem jeweiligen Bereich sind die Optionen zusammenfefasst, die sich auf der jeweilige Panel beziehen.
+**Messages/Details/Regions**: The options relating to the respective panel are summarised in the respective area.
 
-In Abhängigkeit von dem jeweiligen Bereich werden verschiedene Unteroptionen in der Form von Reitern am linken Rand zur Verfügung gestellt. Die Feineinstellung der jeweiligen Unteroptionen erfolgt in einem extra Fenster, das sich durch Betätigung der Schaltfläche _**Details**_ öffnen lässt.
+Depending on the respective area, various sub-options are made available in the form of tabs on the left-hand side. The fine adjustment of the respective sub-options takes place in a separate window, which can be opened by pressing the _**Details**_ button.
 
-* **Einheiten-Reiter**  
-    Dieser Reiter bezieht sich auf die Zeile, in der der Name der Einheit steht. Zusätzlich zu dem Namen können noch weitere Informationen angezeigt werden.
-  * **Zeige zusätzliche Icons und Texte**  
-        zeigt Icons für Talente, Gegenstände und Aufenthaltsort der Einheit an.
-  * **Talentänderungen anzeigen**  
-        wenn man einen zusätzlich einen Report der Vorwoche geladen hat, lassen sich damit Talentänderungen anzeigen.
-  * **Gegenstände kategorisieren**  
-        Fasst unterschiedliche Gegenstände zusammen, z.B. alle Waffen.
-* **Talente-Reiter**  
-    Dieser Reiter bezieht sich auf die aufklappbaren Zeilen unterhalt des Einheitennamens im Detailfenster, die die unterschiedlichen Talente der Einheit beinhalten.
-  * **Zeige Informationen zum nächsten Level**  
-        zeigt an wie lange noch bis zum nächsten Level gelern werden muss, sofern dies vom Spiel unterstützt wird.
-  * **Talentänderungen anzeigen**  
-        wenn man einen zusätzlich einen Report der Vorwoche geladen hat, lassen sich damit Talentänderungen anzeigen.
-* **Gegenstände-Reiter**  
-    Dieser Reiter bezieht sich auf die aufklappbaren Zeilen unterhalt des Einheitennamens im Detailfenster, die die Gegenstände der Einheit auflisten.
-  * **Regionsanzahl anzeigen**  
-        zeigt hinter den Gegenständen die Gesamtanzahl der Gegenstände in der Region an.
-* **Einfach-Reiter**  
-    Dieser Reiter bezieht sich auf die sonstigen Zeilen im Detailfenster.
-  * **Zeige Icons**  
-        zeigt zu Beginn der Zeile ein Icon, sofern für die angezeigte Information eins existiert.
+**Unit tab**
+    This tab refers to the line containing the name of the unit. In addition to the name, further information can be displayed.
+  **Show additional icons and texts**
+        Displays icons for talents, items and the unit's location.
+  **Display talent changes**
+        if you have also loaded a report from the previous week, you can use it to display talent changes.
+  **Categorise items**
+        Summarises different items, e.g. all weapons.
+**Talent tab**
+    This tab refers to the expandable lines below the unit name in the detail window, which contain the different talents of the unit.
+  **Show next level information**
+        shows how long it will take to learn the next level, if this is supported by the game.
+  **Display talent changes**
+        if you have also loaded a report from the previous week, you can use it to display talent changes.
+**Items tab**
+    This tab refers to the expandable lines below the unit name in the detail window, which list the items of the unit.
+**Display number of regions**
+        shows the total number of items in the region behind the items.
+**Simple tab**
+    This tab refers to the other lines in the detail window.
+  **Show icons**
+        shows an icon at the beginning of the line if one exists for the displayed information.
 
-## Wert->Farbmapping
+## Value->Colour mapping
 
-![Optionen - Farbzuordnung](../../images/menu_extras_options_icons_colour.gif)
+![Options - Colour mapping](../../images/menu_extras_options_icons_colour.gif)
 
-Hier kann die Schriftfarbe für die Talentwertanzeige im Regionsfenster nach Talentwerten konfiguriert werden. Sind hier keine Farben definiert, so wird schwarz verwendet.
+The font colour for the talent value display in the region window can be configured here according to talent values. If no colours are defined here, black is used.
 
-## Iconstile
+## Icon style
 
-![Optionen - Iconstile](../../images/menu_extras_options_icons_iconstyle.gif)
+![Options - Iconstile](../../images/menu_extras_options_icons_iconstyle.gif)
 
-Hier lässt sich die Art der Anzeige im Regionsfenster konfigurieren.
+The type of display in the region window can be configured here.
 
-* **Einfach**  
-    bezieht sich auf Icons denen kein eigener Stil zugeordnet ist, die Default-Einstellung.
-* **Hauptteil**  
-    bezieht sich auf Regionsnamen und Parteinamen.
-* **Zusatzteil**  
-    bezieht sich auf die Einheiten.
+* **Simple**
+    refers to icons that are not assigned their own style, the default setting.
+**Main**
+    refers to region names and faction names.
+**Additional part**
+    refers to the units.
 
-Die Einstellmöglichkeiten gliedern sich in folgende Punkte auf:
+The setting options are divided into the following points:
 
-* Lage des Namens oder Textwertes in Bezug auf das Icon
-* vom Standardvorgaben abweichende Schriftarten und -größen
-* vom Standard abweichende Hintergrund- und Vordergrund/Schrift-Farbe
+* Position of the name or text value in relation to the icon
+* Fonts and font sizes that differ from the default settings
+* Background and foreground/font colours that differ from the standard
 
-Des weiteren hat man hier mittels der Schaltfläche _**Hinzufügen**_ die Möglichkeit, eigene Iconstile zu definieren, die man dann z.B. mit Vorlage aktivieren kann. Im CR müssen sie im Kontext von Einheiten in der Form _"Iconstilname";magStyle_ stehen. Mit der Schaltfläche _**Löschen**_ lassen sich die selbstdefinierten Iconstile wieder löschen.
+Furthermore, you can use the _**Add**_ button to define your own icon styles, which you can then activate with Template, for example. In the CR, they must be in the context of units in the form _"Icon style name";magStyle_. The self-defined icon styles can be deleted again using the _**Delete**_ button.
 
-Wenn man die Talentänderungen per Stylesheet anzeigen lässt, so befinden sich die dafür benötigten Iconstile ebenfalls in dieser Liste, und zwar unter dem Namen _Talentx_, wobei x die Zahl zu der entsprechenden Stufenänderung ist.
+If the talent changes are displayed using a stylesheet, the icon styles required for this are also in this list, under the name _Talentx_, where x is the number for the corresponding level change.

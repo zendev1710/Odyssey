@@ -1,3 +1,3 @@
-# Hide tabs
+# Cacher les onglets
 
-The [Docks](../../docks/index.md) are characterised by a title bar and small icons per dock by default. These icons can be used to close, move and enlarge the dock. If you do not need these icons and the title bar, you can use this menu item to make the title bar and icons disappear and thus gain a little more space on the screen.
+Les [Docks] (../../docks/index.md) sont caractérisés par une barre de titre et de petites icônes par dock par défaut. Ces icônes peuvent être utilisées pour fermer, déplacer et agrandir le dock. Si vous n'avez pas besoin de ces icônes et de la barre de titre, vous pouvez utiliser cet élément de menu pour faire disparaître la barre de titre et les icônes et ainsi gagner un peu de place sur l'écran.

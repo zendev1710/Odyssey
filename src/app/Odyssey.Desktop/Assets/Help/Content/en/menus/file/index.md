@@ -1,15 +1,15 @@
-# Menü Datei
+# File menu
 
-Das Datei-Menü hat folgende Punkte:
+The file menu has the following items:
 
-* [Öffnen](open.md)
-* [Hinzufügen](add.md)
-* [Befehle öffnen](openorders.md)
-* [Speichern](save.md)
-* [Speichern unter](saveas.md)
-* [Befehle speichern](saveorders.md)
-* [CR exportieren](crexport.md)
-* [Abbrechen](abort.md)
-* [Beenden](exit.md)
+* [Open](open.md)
+* [Add](add.md)
+* [Open orders](openorders.md)
+* [Save](save.md)
+* [Save as](saveas.md)
+* [Save orders](saveorders.md)
+* [Export CR](crexport.md)
+* [Cancel](abort.md)
+* [Exit](exit.md)
 
-Dieser Menüpunkt bietet einem alle Funktionen Magellans, um Dateien zu laden, zusammenzuführen und zu speichern. Außerdem können Reports exportiert werden und Befehle gespeichert werden.
+This menu item offers all of Magellan's functions for loading, merging and saving files. Reports can also be exported and commands can be saved.

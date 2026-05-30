@@ -1,5 +1,5 @@
-# Name/Description
+# Nom/Description
 
 ![windows_name](../images/windows_name.gif)
 
-This window displays the name and description of the active object, i.e. of islands, regions, buildings, ships, units and factions. Names and descriptions can be edited, changes are automatically entered as NAME or DESCRIBE orders for the corresponding unit. If the name or description of a building or ship is changed, these orders are added to its owner. For region names and descriptions the orders go to the owner of the largest castle, etc.
+Cette fenêtre affiche le nom et la description de l'objet actif, c'est-à-dire des îles, des régions, des bâtiments, des navires, des unités et des factions. Les noms et les descriptions peuvent être modifiés, et les changements sont automatiquement saisis sous forme d'ordres NAME ou DESCRIBE pour l'unité correspondante. Si le nom ou la description d'un bâtiment ou d'un navire est modifié, ces ordres sont ajoutés à son propriétaire. Pour les noms et les descriptions de régions, les ordres vont au propriétaire du plus grand château, etc.

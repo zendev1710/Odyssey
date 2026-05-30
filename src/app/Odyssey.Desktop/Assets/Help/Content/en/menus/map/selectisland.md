@@ -1,3 +1,3 @@
-# Insel(n) auswählen
+# Select island(s)
 
-Erweitert die Auswahl bis an die Inselgrenze. Sind Regionen auf mehreren Inseln selektiert, werden alle diese Inseln ausgewählt.
+Extends the selection to the island boundary. If regions on several islands are selected, all these islands are selected.

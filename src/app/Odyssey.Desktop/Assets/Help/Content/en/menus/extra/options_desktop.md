@@ -1,15 +1,15 @@
 # Desktop
 
-Hier stellt man den Desktop-Modus von Magellan ein.
+Here you can set the desktop mode of Magellan.
 
-![Optionen - Desktop](../../images/menu_extras_options_desktop.gif)
+![Options - Desktop](../../images/menu_extras_options_desktop.gif)
 
-* **Desktop Einstellungen**  
-    Hier kannst Du festlegen, ob die [Tabs](../desktop/hidetabs.md) angezeigt werden sollen, oder nicht.  
-    Die Funktion Workspace Auswahl Dialog anzeigen, ist momentan noch nicht aktiv nutzbar.
+* **Desktop settings**
+    Here you can specify whether the [Tabs](../desktop/hidetabs.md) should be displayed or not.  
+    The function Show workspace selection dialogue cannot be used actively at the moment.
 
-![Optionen - Desktop - Shortcuts](../../images/menu_extras_options_desktop_shortcuts.gif)
+![Options - Desktop - Shortcuts](../../images/menu_extras_options_desktop_shortcuts.gif)
 
-## Abkürzungen
+## Shortcuts
 
-Hier sind alle Tastenkürzel angezeigt, die innerhalb von Magellan Verwendung finden. Durch einen Doppelklick auf die gewünschte Option/Tastenkombination öffnet sich ein Fenster, in dem die neue Tastenkombination eingegeben werden kann.
+All shortcuts used within Magellan are displayed here. Double-click on the desired option/key combination to open a window in which the new key combination can be entered.

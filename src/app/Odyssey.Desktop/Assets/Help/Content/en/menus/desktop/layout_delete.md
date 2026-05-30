@@ -1,3 +1,3 @@
-# Lösche dieses Layout
+# Delete this layout
 
-Mit Hilfe dieses Menüpunkts kann man das gerade aktive Layout löschen. Magellan verwendet dann das vorherige Layout. Gibt es nur ein Layout, so kann man dieses nicht löschen und der Menüpunkt ist deaktiviert.
+This menu item can be used to delete the currently active layout. Magellan then uses the previous layout. If there is only one layout, it cannot be deleted and the menu item is deactivated.

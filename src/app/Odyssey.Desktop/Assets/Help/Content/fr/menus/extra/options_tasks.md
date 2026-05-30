@@ -1,10 +1,10 @@
-# Outstanding problems
+# Problèmes en suspens
 
-Here you can select which problems are to be displayed in the [Open problems](../../docks/problems.md) window.  
+Vous pouvez sélectionner ici les problèmes à afficher dans la fenêtre [Ouvrir les problèmes](../../docks/problems.md).  
 
-* _Only problems of the owner faction_: Restricts the output to problems that affect the faction that is marked as the report owner. This faction can be set via [Faction statistics](factionstatistics.md).
-* _TODO issues_: If the commands contain a comment line that begins with TODO, for example ; TODO laundry, this is displayed as a message in the issue view. This can be activated or deactivated here.
-* Movement problems: All problems that have to do with movement.
-* Ship problems: All problems that have to do with ships.
-* Attack problems: Problems that have to do with ATTACKERS.
-* Command syntax problems: Problems that indicate misspelled commands.
+* Uniquement les problèmes de la faction propriétaire : Restreint l'affichage aux problèmes qui affectent la faction marquée comme propriétaire du rapport. Cette faction peut être définie via [Faction statistics](factionstatistics.md).
+* _TODO issues_ : Si les commandes contiennent une ligne de commentaire qui commence par TODO, par exemple ; TODO blanchisserie, ceci est affiché comme un message dans la vue des problèmes. Ce message peut être activé ou désactivé ici.
+* Problèmes de mouvement : Tous les problèmes liés au mouvement.
+* Problèmes de navires : Tous les problèmes liés aux navires.
+* Problèmes d'attaque : Problèmes liés aux ATTACKERS.
+* Problèmes de syntaxe des commandes : Problèmes liés à des commandes mal orthographiées.

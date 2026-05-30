@@ -1,5 +1,5 @@
-# Restore
+# Restaurer
 
-CTRL-Shift-Z
+CTRL-Maj-Z
 
-Restores the last cancelled entry in the command window. This function is currently deactivated.
+Restaure la dernière entrée annulée dans la fenêtre de commande. Cette fonction est actuellement désactivée.

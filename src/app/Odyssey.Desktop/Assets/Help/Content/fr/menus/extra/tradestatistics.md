@@ -1,13 +1,13 @@
-# Trade statistics
+# Statistiques commerciales
 
-In the trade statistics you can see in which region you receive which prices for which luxury goods.
+Dans les statistiques commerciales, vous pouvez voir dans quelle région vous recevez quels prix pour quels produits de luxe.
 
-The tool helps you to find the region with the best price for a good. Then you just have to get there yourself... :-)
+L'outil vous aide à trouver la région où le prix d'un bien est le plus avantageux. Il ne vous reste plus qu'à vous y rendre vous-même... :-)
 
-If you carry out the following actions before opening the tool, you can limit the number of regions displayed by the trade planner
+Si vous effectuez les actions suivantes avant d'ouvrir l'outil, vous pouvez limiter le nombre de régions affichées par le planificateur de commerce
 
-* Mark/select a single region on the island of your choice
-* Then mark/select the entire island under "Selection & Select island"
-* Finally, open the trade planner
+* Marquez/sélectionnez une seule région sur l'île de votre choix.
+* Ensuite, marquez/sélectionnez l'île entière sous "Sélection & Sélectionner l'île".
+* Enfin, ouvrez le planificateur de commerce.
 
-The trade planner either shows all regions or those that are selected.
+Le planificateur de commerce affiche soit toutes les régions, soit celles qui sont sélectionnées.

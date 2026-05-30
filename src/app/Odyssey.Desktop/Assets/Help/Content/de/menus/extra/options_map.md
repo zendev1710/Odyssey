@@ -23,7 +23,7 @@ Die Rendering-Ebene unterteilt die Darstellung in logische Unterobjekte, wie Reg
 
 ### Regionen
 
-* <inaktiv>  
+* &lt;inaktiv&gt;  
     Regionen werden nicht dargestellt.
 * **Regionsrenderer**  
     Dies ist die Default-Einstellung, bei der die Regionen mit Grafiken dargestellt werden.
@@ -46,28 +46,28 @@ Die Rendering-Ebene unterteilt die Darstellung in logische Unterobjekte, wie Reg
 
 ### Straßen
 
-* <inaktiv>  
+* &lt;inaktiv&gt;  
     Straßen werden nicht dargestellt.
 * **Straßenrenderer**  
     Dies ist die Default-Einstellung, bei der die Straßen mit Grafiken dargestellt werden.
 
 ### Gebäude
 
-* <inaktiv>  
+* &lt;inaktiv&gt;  
     Gebäude werden nicht dargestellt.
 * **Gebäuderenderer**  
     Dies ist die Default-Einstellung, bei der die Burgen mit Grafiken dargestellt werden.
 
 ### Schiffe
 
-* <inaktiv>  
+* &lt;inaktiv&gt;  
     Schiffe werden nicht dargestellt.
 * **Schiffsrenderer**  
     Ist diese Option aktiv, so werden vorhandene Schiffe auf der Karte dargestellt. Angelegte Schiffe werden an der jeweiligen Anlegeküste dargestellt, Schiffe im Bau und auf dem Ozean in der Mitte der Region.
 
 ### Beschriftungen
 
-* <inaktiv>  
+* &lt;inaktiv&gt;  
     Regionsnamen werden nicht dargestellt.
 * **Regionsnamenrenderer**  
     Ist diese Option aktiv, so wird der Name über der jeweiligen Region eingeblendet. Zusätzlich besteht hier die Möglichkeit Schriftart und -typ einzustellen.
@@ -76,14 +76,14 @@ Die Rendering-Ebene unterteilt die Darstellung in logische Unterobjekte, wie Reg
 
 ### Pfade
 
-* <inaktiv>  
+* &lt;inaktiv&gt;  
     Pfade werden nicht dargestellt.
 * **Pfadrenderer**  
     Ist diese Option aktiv, so werden Pfeile auf der Karte eingeblendet, wenn eine gerade aktive Einheit einen NACH oder ROUTE Befehl hat.
 
 ### Markierungen
 
-* <inaktiv>  
+* &lt;inaktiv&gt;  
     Markierungen werden nicht dargestellt.
 * **Markierungsrenderer**  
     Ist diese Option aktiv, so wird die gerade aktive Region durch einen weißen Umriß hervorgehoben und markierte Regionen werden mit einem diffusen Nebel versehen (je nach geladenem [Grafikset](../../reference/graphicsets.md) unterschiedlich).
@@ -92,7 +92,7 @@ Die Rendering-Ebene unterteilt die Darstellung in logische Unterobjekte, wie Reg
 
 ### Zusätzl. Markierungen
 
-* <inaktiv>  
+* &lt;inaktiv&gt;  
     Zusätzliche Markierungen werden nicht dargestellt.
 * **Zusätzl. Bilder**  
     Ist diese Option aktiv, so können eigene Bilder auf der Karte eingeblendet werden. Dazu muss muss z.B. mit Vorlage innerhalb des Regionskontextes das tag _"Bildname";regionicon_ gesetzt werden. Die Bilder selber müssen sich unterhalb des magellan.jar Verzeichnisses im Pfad /res/images/map befinden und dem unter [Grafikset erstellen](../../reference/graphicsets_making.md) beschriebenen Format entsprechen.

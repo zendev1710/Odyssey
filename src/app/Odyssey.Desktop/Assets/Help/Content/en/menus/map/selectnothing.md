@@ -1,3 +1,3 @@
-# Auswahl aufheben
+# Cancel selection
 
-Hebt die Auswahl aller Regionen in der Karte auf.
+Cancels the selection of all regions on the map.

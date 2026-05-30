@@ -1,3 +1,3 @@
-# Confirm all
+# Confirmer tout
 
-Here you can confirm the commands of all units of a specific faction or all factions at once.
+Vous pouvez ici confirmer les commandes de toutes les unités d'une faction spécifique ou de toutes les factions à la fois.

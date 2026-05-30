@@ -1,3 +1,3 @@
-# Save layouts
+# Sauvegarder la mise en page
 
-This menu item immediately saves the settings for the layouts in the dock\_default.xml file in the Magellan working directory. The settings are also saved when exiting.
+Cet élément de menu enregistre immédiatement les paramètres des présentations dans le fichier dock\_default.xml dans le répertoire de travail du Magellan. Les paramètres sont également sauvegardés lorsque l'on quitte l'application.

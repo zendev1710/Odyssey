@@ -1,12 +1,12 @@
-# Menü Befehle
+# Menu Commands
 
-Das Befehle-Menü hat folgende Punkte:
+The Commands menu has the following items:
 
-* [Nächste unbestätigte Einheit](unconfirmed.md)
-* [Vorherige Unbestätigte Einheit](unconfirmed.md)
-* [Bestätigungsstatus ändern](confirm.md)
-* [Alle bestätigen](confirmall.md)
-* [Alle aufheben](unconfirmall.md)
-* [Bestätigung invertieren](invertconfirmation.md)
+* [Next unconfirmed unit](unconfirmed.md)
+* [Previous unconfirmed unit](unconfirmed.md)
+* [Change confirmation status](confirm.md)
+* [Confirm all](confirmall.md)
+* [Unconfirm all](unconfirmall.md)
+* [Invert confirmation](invertconfirmation.md)
 
-Dieser Menüpunkt dient als Navigationshilfe für die Befehle, die mit Magellan gemacht werden. Es kann zwischen den bestätigten und unbestätigten Einheiten hin und hergesprungen werden und für ganze Parteien der Bestätigungsstatus geändert werden.
+This menu item serves as a navigation aid for the commands made with Magellan. You can jump back and forth between the confirmed and unconfirmed units and change the confirmation status for entire factions.

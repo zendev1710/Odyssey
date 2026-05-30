@@ -1,18 +1,18 @@
-# Menu card
+# Carte de menu
 
-The "Map" menu has the following items:
+Le menu "Carte" comporte les rubriques suivantes :
 
-* [Set origin](origin.md)
-* [Capture island](island.md)
-* [Save as image](image.md)
-* [Select all](selectall.md)
-* [Cancel selection](selectnothing.md)
-* [Invert selection](invertselection.md)
-* [Select island(s)](selectisland.md)
-* [Fill selection](fillselection.md)
-* [extend selection](extend.md)
-* [open selection](open.md)
-* [Add selection](add.md)
+* [Définir l'origine](origin.md)
+* [Capturer l'île](island.md)
+* [Enregistrer comme image](image.md)
+* [Sélectionner tout](selectall.md)
+* [Annuler la sélection](selectnothing.md)
+* [Inverser la sélection](invertselection.md)
+* [Sélectionner île(s)](selectisland.md)
+* [Remplir la sélection](fillselection.md)
+* [étendre la sélection](extend.md)
+* [Ouvrir la sélection](open.md)
+* [Ajouter une sélection](add.md)
 * [save selection](save.md)
 
-This menu item contains all the functions for controlling the map. This primarily includes the option of selecting one or more regions, adding islands and setting the origin of the map.
+Cet élément de menu contient toutes les fonctions permettant de contrôler la carte. Il s'agit principalement de la possibilité de sélectionner une ou plusieurs régions, d'ajouter des îles et de définir l'origine de la carte.

@@ -1,5 +1,5 @@
-# Change confirmation status
+# Modifier l'état de confirmation
 
 CTRL-B
 
-Confirms the commands of the current unit. Confirming only serves to provide an overview of commands that have already been made. Unconfirmed units are highlighted in bold in the [Region overview](../../docks/regions.md).
+Confirme les commandes de l'unité actuelle. La confirmation ne sert qu'à donner un aperçu des commandes qui ont déjà été effectuées. Les unités non confirmées sont mises en évidence en gras dans la [Vue d'ensemble de la région] (../../docks/regions.md).

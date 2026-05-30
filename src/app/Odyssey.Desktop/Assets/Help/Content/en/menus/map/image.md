@@ -1,10 +1,10 @@
-# Als Bild speichern
+# Save as image
 
-Mit dieser Funktion kann man die Karte als Bild abspeichern. Dabei wird der aktuelle Darstellungsmodus und die Zoomstufe wird dabei übernommen. In folgendem Dialog kann man den Bildexport anpassen:
+This function can be used to save the map as an image. The current display mode and zoom level are adopted. You can adjust the image export in the following dialogue:
 
 ![map_image](../../images/menu_map_image.gif)
 
-Hier kann man die Anzahl der Dateien in x/y-Richtung bzw. die Größe des Bildes in Pixeln einstellen. Durch Auswahl des Formats JPEG oder PNG erstellt Magellan die Dateien im angegebenen Format. Ist PNG gewählt, wird die Qualitätsangabe ignoriert. Nach Klick auf "Speichern" kann man in einer Dateiauswahlbox den Dateinamen angeben.
+Here you can set the number of files in x/y direction or the size of the image in pixels. By selecting the JPEG or PNG format, Magellan creates the files in the specified format. If PNG is selected, the quality specification is ignored. After clicking on "Save", you can specify the file name in a file selection box.
 
-**Achtung:**  
-Bei sehr großen Karten kann diese Funktion enorm viel Speicher verbrauchen (mehrere 100MB). In diesem Fall sollte man kleinere Karten erstellen, indem man eine maximale Größe pro Datei festlegt.
+**Attention:**
+With very large maps, this function can consume an enormous amount of memory (several 100MB). In this case, you should create smaller maps by specifying a maximum size per file.

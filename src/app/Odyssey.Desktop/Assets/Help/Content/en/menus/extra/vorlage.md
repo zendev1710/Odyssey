@@ -1,21 +1,21 @@
-# Vorlage
+# Template
 
-Dies ist ein grafisches Frontend für Vorlage. Vorlage ist ein leistungsfähiger Zugvorlage-Generator für Eressea und andere kompatible Spiele, der auch eine Metasprache zur Automatisierung bietet. Man kann Vorlage unter [http://www.gulrak.de/etools.html](http://www.gulrak.de/etools.html) downloaden. Eine Dokumentation findet sich ebenfalls dort.
+This is a graphical frontend for Template. Template is a powerful move template generator for Eressea and other compatible games, which also offers a meta language for automation. You can download Vorlage at [http://www.gulrak.de/etools.html](http://www.gulrak.de/etools.html). Documentation can also be found there.
 
-Nach Auswahl des Menüpunktes öffnet sich folgender Dialog:
+After selecting the menu item, the following dialogue opens:
 
-![menu_extras_vorlage](../../images/menu_extras_vorlage.gif)
+![menu_extras_template](../../images/menu_extras_template.gif)
 
-Im Feld **_Quell-CR(s)_** gibt man den Pfad zu einem oder mehreren CRs an, die von Vorlage bearbeitet werden sollen. Normalerweise ist dies der CR, der vom Eressea-Server geschickt wurde.
+In the **_source CR(s)_** field, enter the path to one or more CRs that are to be edited by the template. Normally this is the CR that was sent by the Eressea server.
 
-Das Feld **_Ziel-Datei_** dient zur Bestimmung des Files in das Vorlage seine Ausgebe schreiben soll.
+The **_target_file_** field is used to specify the file to which the template should write its output.
 
-Die im Feld **_Script-Datei_** angegebene Datei verwendet Vorlage zur Einbindung externer Funktionen und Prozeduren zur Bearbeitung der Metabefehle. Näheres zu Vorlage-Scripts findet man in der Vorlage-Dokumentation.
+The file specified in the **_Script file_** field uses Template to integrate external functions and procedures for processing the meta commands. More information on template scripts can be found in the template documentation.
 
-Das Feld **_Vorlage_** enthält schließlich den Pfad zu Vorlage.
+Finally, the **_template_** field contains the path to the template.
 
-Im Block **_Optionen_** kann man Kommandozeilenoptionen für Vorlage angeben. Der Schalter **_Ausgabe als Computerreport_** erzeugt dabei die -cr Option. Weitere Optionen kann man bei Bedarf in das entsprechende Feld eintragen.
+In the **_Options_** block, you can specify command line options for template. The switch **_Output as computer report_** creates the -cr option. Further options can be entered in the corresponding field if required.
 
-Bei Klick auf **_Ok_** wird Vorlage mit den eingestellten Optionen aufgerufen. Den dabei erzeugten CR bzw. die erzeugte Befehlsdatei kann man nun in Magellan laden und weiterbearbeiten.
+Click on **_Ok_** to call up the template with the set options. The generated CR or command file can now be loaded into Magellan and processed further.
 
-Im Fenster **_Ausgabe_** wird die Ausgabe von Vorlage dargestellt, so dass man eventuelle Fehlermeldungen sehen kann.
+The output of the template is displayed in the **_Output_** window so that you can see any error messages.

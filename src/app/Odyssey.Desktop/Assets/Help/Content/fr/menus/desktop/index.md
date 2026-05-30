@@ -1,21 +1,21 @@
-# Desktop menu
+# Menu du bureau
 
-The desktop menu has the following items:
+Le menu du bureau comprend les éléments suivants :
 
 * [Layout](layout.md)
-* [Hide tabs](hidetabs.md)
+* [Cacher les onglets](hidetabs.md)
 
-Within the desktop menu you will find functions to customise the appearance of Magellan to your own wishes. Since Magellan 2.0 there is a new layout concept based on so-called [Docks](../../docks/index.md). Individual elements of the window can be moved freely and can even be detached from the main Magellan window in order to place them on a second screen, for example.
+Dans le menu du bureau, vous trouverez des fonctions pour personnaliser l'apparence de Magellan selon vos propres souhaits. Depuis Magellan 2.0, il existe un nouveau concept de présentation basé sur ce que l'on appelle les [Docks](../../docks/index.md). Les éléments individuels de la fenêtre peuvent être déplacés librement et peuvent même être détachés de la fenêtre principale de Magellan afin de les placer sur un deuxième écran, par exemple.
 
-Below the menu items mentioned above, you can see all the [Docks](../../docks/index.md) currently known for Magellan. Each of these docks represents a specific part of Magellan. This can be the region overview, the commands or the map. Each of these docks has some function buttons at the top right, which we will explain in more detail below.
+Sous les éléments de menu mentionnés ci-dessus, vous pouvez voir tous les [Docks](../../docks/index.md) actuellement connus pour Magellan. Chacun de ces docks représente une partie spécifique de Magellan. Il peut s'agir de la vue d'ensemble de la région, des commandes ou de la carte. Chacun de ces docks possède des boutons de fonction en haut à droite, que nous expliquerons plus en détail ci-dessous.
 
-![decoration](../../images/windows_decorations.gif)
+![décoration](../../images/windows_decorations.gif)
 
-The buttons may look slightly different depending on the system. Their meaning is (from left to right):
+Les boutons peuvent avoir un aspect légèrement différent selon le système. Leur signification est la suivante (de gauche à droite) :
 
-* The name of the dock. You can also drag this dock to another location by clicking and dragging. A distinction must be made here as to whether the tab is dragged into an area - this causes the docks to be displayed above or next to each other - or whether it is dragged to the header area of another dock - this causes the docks to be displayed as tabs "one behind the other", i.e. only one dock is visible at a time.
-**Undock** This allows the dock to be displayed "floating", i.e. as a separate window. In this case, this button changes to **Dock**, allowing it to be integrated back into the main window.
-* Minimise** The dock is reduced to a small button at the bottom of the main window. The button changes to **Restore**, which restores the dock to normal.
-**Close** The dock is hidden and can be displayed again via the desktop menu.
+* Le nom du dock. Vous pouvez également déplacer ce dock à un autre endroit en cliquant dessus et en le faisant glisser. Il convient de distinguer ici si l'onglet est glissé dans une zone - les docks sont alors affichés l'un au-dessus de l'autre ou l'un à côté de l'autre - ou s'il est glissé dans la zone d'en-tête d'un autre dock - les docks sont alors affichés comme des onglets "l'un derrière l'autre", c'est-à-dire qu'un seul dock est visible à la fois.
+**Cette option permet d'afficher le dock "flottant", c'est-à-dire sous la forme d'une fenêtre distincte. Dans ce cas, ce bouton devient **Dock**, ce qui permet de le réintégrer dans la fenêtre principale.
+* Minimiser** Le dock est réduit à un petit bouton au bas de la fenêtre principale. Le bouton se transforme en **Restaurer**, ce qui rétablit le dock à son état normal.
+**Fermer** Le dock est caché et peut être réaffiché via le menu du bureau.
 
-The buttons in the top left-hand corner only affect a single dock, while those in the top right-hand corner affect an entire tab group.
+Les boutons dans le coin supérieur gauche n'affectent qu'un seul dock, tandis que ceux dans le coin supérieur droit affectent un groupe d'onglets entier.

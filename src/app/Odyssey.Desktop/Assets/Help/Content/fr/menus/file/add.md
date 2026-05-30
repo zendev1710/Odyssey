@@ -2,17 +2,17 @@
 
 CTRL-D
 
-Here you can add CRs to the one in the memory. The CR in the memory is expanded or updated with the new information. The round tag in the CR is of particular importance. A distinction is made between the following cases:
+Cette fonction permet d'ajouter des CR à celui qui se trouve dans la mémoire. Le CR de la mémoire est complété ou mis à jour avec les nouvelles informations. La balise ronde dans le CR est particulièrement importante. Une distinction est faite entre les cas suivants :
 
-1. the CR to be added is newer than the one in the memory (new round):  
-    All data on units and ships is deleted and the newer data is transferred. Region data, castles, roads, etc. are retained.  
+1. le CR à ajouter est plus récent que celui qui se trouve dans la mémoire (nouvelle série) :  
+    Toutes les données relatives aux unités et aux navires sont effacées et les données plus récentes sont transférées. Les données relatives aux régions, châteaux, routes, etc. sont conservées.  
 
-2. the CR to be added is from the same turn as the one in memory:
-    The existing unit and region data are retained and may be supplemented.  
+2. le CR à ajouter est du même tour que celui en mémoire :
+    Les données d'unité et de région existantes sont conservées et peuvent être complétées.  
 
-3. the CR to be added is older than the CR in the memory:
-    Only the region data is transferred - of course only if more recent data is not already available. Unfortunately, I have to say that this function does not always work 100% perfectly. In particular, merging maps that only overlap to a very limited extent usually leads to a completely incorrectly merged map. However, there is a tip: If the report to be merged is older than the one currently loaded, simply turn the tables and load the new report into the old one. Alternatively, you can also change the lap tag in the CR report itself.
+3. le CR à ajouter est plus ancien que le CR en mémoire :
+    Seules les données de la région sont transférées - bien sûr seulement si des données plus récentes ne sont pas déjà disponibles. Malheureusement, je dois dire que cette fonction ne fonctionne pas toujours parfaitement à 100 %. En particulier, la fusion de cartes qui ne se chevauchent que dans une mesure très limitée conduit généralement à une carte fusionnée complètement incorrecte. Il existe toutefois une astuce : si le rapport à fusionner est plus ancien que celui qui est actuellement chargé, il suffit d'inverser les rôles et de charger le nouveau rapport dans l'ancien. Vous pouvez également modifier l'étiquette lap dans le rapport CR lui-même.
 
-Magellan automatically tries to fit matching map parts together. Magellan compares the sequence of different region types according to identical patterns. If two maps overlap, there is a good chance that Magellan will fit the maps together correctly. Problems can arise especially when regions in the added report are not clearly identifiable. Many astral regions or ocean regions, for example, are like two peas in a pod and are therefore difficult to identify.
+Magellan tente automatiquement d'assembler les parties de carte correspondantes. Magellan compare la séquence des différents types de régions selon des modèles identiques. Si deux cartes se chevauchent, il y a de bonnes chances que Magellan les ajuste correctement. Des problèmes peuvent survenir surtout lorsque les régions du rapport ajouté ne sont pas clairement identifiables. De nombreuses régions astrales ou océaniques, par exemple, se ressemblent comme deux gouttes d'eau et sont donc difficiles à identifier.
 
-Further information on this function can be found in the "Reference" section under [Computer reports](../../reference/cr.md).
+De plus amples informations sur cette fonction sont disponibles dans la section "Référence" sous [Rapports informatiques](../../reference/cr.md).

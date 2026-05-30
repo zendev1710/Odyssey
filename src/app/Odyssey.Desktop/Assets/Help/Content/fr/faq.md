@@ -1,227 +1,227 @@
 # FAQ
 
-Frequently Asked Questions:
+Questions fréquemment posées :
 
-## 1\. Questions about the installation
+## 1\. Questions sur l'installation
 
-1. [What is required to start Magellan?](#Installation)
-2. [Even though I have enough RAM, Magellan reports a lack of memory. Why?](#Speichermangel)
+1. [Qu'est-ce qui est nécessaire pour démarrer Magellan ?] (#Installation)
+2. [Bien que je dispose de suffisamment de mémoire vive, Magellan signale un manque de mémoire. Pourquoi ?](#Speichermangel)
 
-## 2\. Questions about Magellan
+## 2\. Questions sur Magellan
 
-1. [How to run ECheck?](#ECheck)
-2. [What is this § stuff in the ARR, ATR, or the tooltips even doing!?](#ARR)
+1. [Comment lancer ECheck ?](#ECheck)
+2. [Que font ces § dans l'ARR, l'ATR ou les infobulles ?](#ARR)
 
-## 2\. Questions about Java
+## 2\. Questions sur Java
 
-1. [What is Java and why is it important?](#Java)
-2. [What Java version, exactly, should I download?](#Javaversion)
-3. [JRE or JDK?](#jdk)
-4. [What version of Java do I have?](#myversion)
-5. [II get this error message: 'Error: A JNI Error has occured, please check your installation and try again.'](#JNI_ERROR)
-6. [But the latest version on java.com is Java 8](#java8)
-7. [But I need Java 8 for a different software. What can I do?](#needJava8)
+1. [Qu'est-ce que Java et pourquoi est-ce important ?
+2. [Quelle version de Java dois-je télécharger exactement ? (#Javersion)
+3. [JRE ou JDK ?](#jdk)
+4. [Quelle version de Java ai-je ?](#myversion)
+5. [Je reçois ce message d'erreur : 'Error : Une erreur JNI s'est produite, veuillez vérifier votre installation et réessayer.'](#JNI_ERROR)
+6. [Mais la dernière version sur java.com est Java 8](#java8)
+7. [Mais j'ai besoin de Java 8 pour un autre logiciel. Que puis-je faire ?](#needJava8)
 
-## 4\. Questions about older Magellan versions
+## 4\. Questions sur les anciennes versions de Magellan
 
-1. [What does "Installer JAR" mean?](#Installer)
-2. [magellan-client.jar? Shouldn't the file be called magellan.exe?](#Dateiname)
-3. [Why does another program (e.g. WinZip or PowerArchiver) start, when I try to start Magellan by double-clicking?](#Verknuepfung)
-4. [Why doesn't Magellan start when I click the file magellan-client.jar?](#keinStart)
-5. [Even though I have enough RAM, Magellan reports a lack of memory. Why?](#Speichermangel_legacy)
-6. [How do I make Magellan the default program for CR-files under Windows2000/XP?](#CRVerknuepfung)
-7. [How do I start Magellan from the command prompt?](#Kommandozeilenstart)
-8. [How do I get Magellan to run on a Mac?](#MacMagellan)
-9. [How do I handle resource paths?](#Resourcenpfade)
-10. [Why does Magellan all of a sudden not use Base-36 numbers for the units anymore?](#base36nummern)
-11. [How can I use Vorlage to automatically confirm the orders of units?](#VorlageBefehlsbestaetigung)
+1. [Que signifie "Installer JAR" ?](#Installer)
+2. [magellan-client.jar ? le fichier ne devrait-il pas s'appeler magellan.exe ?](#Dateiname)
+3. [Pourquoi un autre programme (par exemple WinZip ou PowerArchiver) démarre-t-il lorsque j'essaie de lancer Magellan en double-cliquant ?](#Verknuepfung)
+4. [Pourquoi Magellan ne démarre-t-il pas lorsque je clique sur le fichier magellan-client.jar ?
+5. [Bien que j'aie suffisamment de RAM, Magellan signale un manque de mémoire. Pourquoi ?](#Speichermangel_legacy)
+6. [Comment faire de Magellan le programme par défaut pour les fichiers CR sous Windows2000/XP ?](#CRVerknuepfung)
+7. [Comment démarrer Magellan à partir de l'invite de commande ? (#Kommandozeilenstart)
+8. [Comment faire fonctionner Magellan sur un Mac ?](#MacMagellan)
+9. [Comment gérer les chemins de ressources (#Resourcenpfade)
+10. [Pourquoi Magellan n'utilise-t-il soudainement plus les numéros de base 36 pour les unités ?](#base36nummern)
+11. [Comment puis-je utiliser Vorlage pour confirmer automatiquement les ordres des unités ?
 
-## Answers
+## Réponses
 
-### Q: What is required to start Magellan?
+### Q : Que faut-il pour démarrer Magellan ?
 
-**A:** Since version 2.1, only a single file is required to download to install Magellan. You can find the right Version on the [Magellan homepage](https://magellan2.github.io) in the download section. You will find versions for different operation systems (Windows, Linux, MacOS). You will likely need administrator rights to install Magellan under Windows. This will install all you need including a [Java](#Java) version. Updates from older versions should work without issues, but there may be problems with older Plugins. In this case you must disable those plugins or install a newer version.
+**R:** Depuis la version 2.1, un seul fichier est nécessaire pour télécharger et installer Magellan. Vous trouverez la bonne version sur la [page d'accueil de Magellan] (https://magellan2.github.io) dans la section téléchargement. Vous trouverez des versions pour différents systèmes d'exploitation (Windows, Linux, MacOS). Vous aurez probablement besoin de droits d'administrateur pour installer Magellan sous Windows. Cela installera tout ce dont vous avez besoin, y compris une version [Java](#Java). Les mises à jour à partir de versions antérieures devraient fonctionner sans problème, mais il peut y avoir des problèmes avec les anciens plugins. Dans ce cas, vous devez désactiver ces plugins ou installer une version plus récente.
 
-If you have installed Java already, you may also just download and unpack a zip file and start Magellan directly (preferably using magellan.bat or magellan.sh). But this method is not recommended or supported officially.
+Si vous avez déjà installé Java, vous pouvez également télécharger et décompresser un fichier zip et lancer Magellan directement (de préférence en utilisant magellan.bat ou magellan.sh). Mais cette méthode n'est pas recommandée ou supportée officiellement.
 
-### Q: What is Java and why is it important?
+### Q : Qu'est-ce que Java et pourquoi est-ce important ?
 
-**A:** Java is the programming language used to write Magellan. The special thing about it is that it runs on many platforms (Windows, Linux, Mac, ...). Since version 2.1, Magellan comes with its own version of java. No need to require any additional thing.
+**A:** Java est le langage de programmation utilisé pour écrire Magellan. La particularité de ce langage est qu'il fonctionne sur de nombreuses plateformes (Windows, Linux, Mac, ...). Depuis la version 2.1, Magellan est livré avec sa propre version de Java. Il n'est donc pas nécessaire d'avoir recours à quoi que ce soit d'autre.
 
-### What Java version, exactly, should I download?
+### Quelle version de Java, exactement, dois-je télécharger ?
 
-**A:** Earlier versions of Magellan required you to install Java first. One of the easiest ways to install Java right now is to download an installer from [AdoptOpenJDK](https://adoptopenjdk.net/releases.html). There are several Java distributions. We recommend, for example, [Open JDK](https://openjdk.java.net/) oder [Oracle Java SE](https://www.oracle.com/java/).
+**Les versions antérieures de Magellan nécessitaient l'installation préalable de Java. L'une des façons les plus simples d'installer Java est de télécharger un programme d'installation à partir de [AdoptOpenJDK] (https://adoptopenjdk.net/releases.html). Il existe plusieurs distributions Java. Nous recommandons, par exemple, [Open JDK](https://openjdk.java.net/) ou [Oracle Java SE](https://www.oracle.com/java/).
 
-At this moment (summer 2021) we recommend the following version, that should work for most users:
+À l'heure actuelle (été 2021), nous recommandons la version suivante, qui devrait convenir à la plupart des utilisateurs :
 
-* AdoptOpenJDK
-* You operating, naturally (Windows for most)
-* OpenJDK 11 (LTS), or, by autumn 2021, OpenJDK 17 (LTS)
-* HotSpot JVM
-* usually x64
+* AdopterOpenJDK
+* Votre système d'exploitation, naturellement (Windows pour la plupart)
+* OpenJDK 11 (LTS), ou, à l'automne 2021, OpenJDK 17 (LTS)
+* JVM HotSpot
+* généralement x64
 
-### JRE or JDK?
+### JRE ou JDK ?
 
-JDK is usually targeted at Java developers, JRE at end users. If you intend to use the ExtendedCommands of Magellan, you will need a JDK! The only disadvantage of getting a JDK is its size. So if you are not running short on disc space, a JDK is recommended.
+Le JDK est généralement destiné aux développeurs Java, le JRE aux utilisateurs finaux. Si vous avez l'intention d'utiliser les commandes étendues de Magellan, vous aurez besoin d'un JDK ! Le seul inconvénient du JDK est sa taille. Par conséquent, si vous ne manquez pas d'espace disque, il est recommandé d'utiliser un JDK.
 
-### What version of Java do I have?
+### Quelle version de Java ai-je ?
 
-1. Open a terminal (command line):
-    * **On Windows:** Press the windows key to open the start menu. Type cmd to open the command line.
-    * **On MacOsX:** Open Spotlight (Command + Space or click on the magnifying glass in the upper right), then enter 'terminal'.
-    * **On Linux:** Open a terminal (depending on your Linux distribution open the program menu, for example by pressing the windows key and enter "terminal").
-2. In the terminal type `java -version` und press `Enter`. An output like `'openjdk version "11.0.10" 2021-04-20'` means that you are running version 11. An output like "java is not recognized" or "command not found" means that you apparently don't have java.
+1. Ouvrez un terminal (ligne de commande) :
+    **Sous Windows:** Appuyez sur la touche Windows pour ouvrir le menu Démarrer. Tapez cmd pour ouvrir la ligne de commande.
+    * **Sous MacOsX:** Ouvrez Spotlight (Commande + Espace ou cliquez sur la loupe en haut à droite), puis entrez 'terminal'.
+    **Sous Linux:** Ouvrez un terminal (selon votre distribution Linux, ouvrez le menu des programmes, par exemple en appuyant sur la touche Windows et entrez "terminal").
+2. Dans le terminal, tapez `java -version` et appuyez sur `Entrée`. Une sortie comme `'openjdk version "11.0.10" 2021-04-20'` signifie que vous utilisez la version 11. Une sortie comme "java is not recognized" ou "command not found" signifie que vous n'avez apparemment pas java.
 
-### Q: I get this error message: 'Error: A JNI Error has occured, please check your installation and try again.'
+### Q : Je reçois ce message d'erreur : 'Error : Une erreur JNI s'est produite, veuillez vérifier votre installation et réessayer.'
 
-**A:**You probably have Java 8 instead of Java 11! Install Java 11 (see above).
+**A:**Vous avez probablement Java 8 au lieu de Java 11 ! Installez Java 11 (voir ci-dessus).
 
-### But the latest version on java.com is Java 8
+### Mais la dernière version sur java.com est Java 8.
 
-Since Oracle acquired Java from Sun Microsystems, there is a new license system that complicated the release of Java implementations for end users. Therefore [java.com](https://java.com) is no longer the site of choice. Please get Java from one of the sources mentioned above.
+Depuis qu'Oracle a racheté Java à Sun Microsystems, il existe un nouveau système de licence qui complique la publication des implémentations Java pour les utilisateurs finaux. Par conséquent, [java.com] (https://java.com) n'est plus le site de choix. Veuillez vous procurer Java auprès de l'une des sources mentionnées ci-dessus.
 
-### I need Java 8 for a different software
+### J'ai besoin de Java 8 pour un autre logiciel
 
-You can use several versions of java simultaneously, but this requires some work.
+Vous pouvez utiliser plusieurs versions de Java simultanément, mais cela nécessite un certain travail.
 
-**On Windows:**
+**Sur Windows:**
 
-1. Install Java 11, then Java 8. Your other software should now work normally.
-2. Locate the path of your Java 11 installation (for example C:\\Program Files\\jdk-11.0.1).
-3. Locate the file magellan.bat (usually in C:\\Program Files\\Magellan\\magellan.bat).
-4. Edit this file as administrator. This should work roughly as follows: Locate the entry for "notepad" in the start menu. Right click it and choose "More ... Run as administrator".
-5. Open the file magellan.bat in the notepad.
-6. Add this line at the start of the file (adapt it to your path from step 2):  
-    `SET JAVA_HOME=C:\Program Files\jdk-11.0.1`
-7. Save the file magellan.bat.
-8. Magellan should now be started with Java 11.
+1. Installez Java 11, puis Java 8. Vos autres logiciels devraient maintenant fonctionner normalement.
+2. Localisez le chemin de votre installation Java 11 (par exemple C:\NProgram Files\Njdk-11.0.1).
+3. Localisez le fichier magellan.bat (généralement dans C:\NProgram Files\NMagellan\Nmagellan.bat).
+4. Modifiez ce fichier en tant qu'administrateur. Cela devrait fonctionner à peu près comme suit : Localisez l'entrée "notepad" dans le menu de démarrage. Cliquez dessus avec le bouton droit de la souris et choisissez "More ... Exécuter en tant qu'administrateur".
+5. Ouvrez le fichier magellan.bat dans le bloc-notes.
+6. Ajoutez cette ligne au début du fichier (adaptez-la à votre chemin d'accès de l'étape 2) :  
+    `SET JAVA_HOME=C:\NProgram Files\Njdk-11.0.1`
+7. Enregistrez le fichier magellan.bat.
+8. Magellan devrait maintenant être lancé avec Java 11.
 
-**On Linux:**
+**Sur Linux:**
 
-1. Install sowohl 11 as well as Java 8.
-2. Execute this command in a terminal: `update-alternatives --config java`. Choose the java version you need for your other program.
-3. Remember the path to Java 11 displayed by the previous command (for instance, `/usr/lib/jvm/java-11-openjkd-amd64`).
-4. Locate the file magellan.sh (usually at $HOME/Magellan/magellan.sh).
-5. Edit this file as follows: Add this line at the start of the file (adapted to the path recorded in step 3 above):  
+1. Installez à la fois Java 11 et Java 8.
+2. Exécutez cette commande dans un terminal : `update-alternatives --config java`. Choisissez la version de Java dont vous avez besoin pour votre autre programme.
+3. Souvenez-vous du chemin vers Java 11 affiché par la commande précédente (par exemple, `/usr/lib/jvm/java-11-openjkd-amd64`).
+4. Localisez le fichier magellan.sh (habituellement dans $HOME/Magellan/magellan.sh).
+5. Modifiez ce fichier comme suit : Ajoutez cette ligne au début du fichier (adaptée au chemin enregistré à l'étape 3 ci-dessus) :  
     `export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64`
-6. Change the last line from  
-    `java -Xmx1200m -jar "magellan-client.jar" "$@"` to  
+6. Changez la dernière ligne de
+    `java -Xmx1200m -jar "magellan-client.jar" "$@"` en
     `$JAVA_HOME/bin/java -Xmx1200m -jar "magellan-client.jar" "$@"`.
-7. Save the file magellan.sh.
-8. Magellan should now be executed with Java 11.
+7. Enregistrez le fichier magellan.sh.
+8. Magellan devrait maintenant être exécuté avec Java 11.
 
-### Q: Even though I have enough RAM, Magellan reports a lack of memory. Why?
+### Q : Bien que je dispose de suffisamment de RAM, Magellan signale un manque de mémoire. Pourquoi ?
 
-**A:** Due to the architecture of Java, Magellan cannot always allocate as much memory as it needs. In the installation directory of Magellan (on Windows this is usually C:\\Program Files\\Magellan ) there is a file called magellan\_launcher.vmoptions . You should edit this file (this may require administrative rights) and add a line like \-Xmx1G . This tells Java to allocate up to 1 Gigabyte of memory for Magellan.
+**A:** En raison de l'architecture de Java, Magellan ne peut pas toujours allouer autant de mémoire qu'il en a besoin. Dans le répertoire d'installation de Magellan (sous Windows, il s'agit généralement de C:\NProgram Files\NMagellan) se trouve un fichier appelé magellan\Nlauncher.vmoptions . Vous devez éditer ce fichier (cela peut nécessiter des droits d'administrateur) et ajouter une ligne comme \-Xmx1G . Cela indique à Java d'allouer jusqu'à 1 gigaoctet de mémoire pour Magellan.
 
-It should usually be no problem to give up to half of your memory or more to Magellan. Don't worry: Magellan will always only allocate as much memory as it requires. So if your machine has 4 gigabytes of RAM, a setting of \-Xmx2G should be fine. If your whole system freezes on loading a big report, you may want to reduce this value and you can try to reduce the size of your report by not loading the whole map or not adding all your allies' reports. The MemoryWatch plugin from the Magellan homepage may provide further insights.
+En général, il n'y a pas de problème à allouer jusqu'à la moitié de votre mémoire ou plus à Magellan. Ne vous inquiétez pas : Magellan n'allouera toujours que la quantité de mémoire dont il a besoin. Ainsi, si votre machine dispose de 4 gigaoctets de mémoire vive, un réglage de \-Xmx2G devrait suffire. Si votre système entier se bloque lors du chargement d'un rapport volumineux, vous pouvez réduire cette valeur et vous pouvez essayer de réduire la taille de votre rapport en ne chargeant pas toute la carte ou en n'ajoutant pas tous les rapports de vos alliés. Le plugin MemoryWatch de la page d'accueil de Magellan peut fournir des informations supplémentaires.
 
-For other ways to allocate memory, especially for older versions of Magellan, see [this section](#Speichermangel_legacy).
+Pour d'autres façons d'allouer de la mémoire, en particulier pour les anciennes versions de Magellan, voir [cette section](#Speichermangel_legacy).
 
-### Q: How do i run ECheck?
+### Q : Comment lancer ECheck ?
 
-**A:**First of all: Why do you think you need ECheck? Virtually all functions of ECheck are fulfilled by Magellan itself. Syntax errors detected by ECheck, and some more, are detected by Magellan and are highlighted in the orders. Additional errors are shown in the [open problems](docks/problems.html) dock. You can configure which (potential) problems to show and which you would rather ignore.
+**A:**Tout d'abord : Pourquoi pensez-vous avoir besoin d'ECheck ? Pratiquement toutes les fonctions d'ECheck sont remplies par Magellan lui-même. Les erreurs de syntaxe détectées par ECheck, et quelques autres, sont détectées par Magellan et sont mises en évidence dans les commandes. D'autres erreurs sont affichées dans le dock [open problems](docks/problems.html). Vous pouvez configurer les problèmes (potentiels) à afficher et ceux que vous préférez ignorer.
 
-If you really want to run ECheck, you can do this from the [ECheck dock](docks/echeck.html). Magellan comes with its own ECheck version and is usually configured to use it, so that you only have to click on "Run". If this should not work, maybe because you are using settings from an earlier version, you can configure this in the [options dialog](menus/extras/options_resources.html) under "Resources". Just set the resource path to point to your ECheck installation (something like C:\\Program Files\\Magellan\\echeck\\echeck.exe ).
+Si vous souhaitez vraiment exécuter ECheck, vous pouvez le faire à partir du [dock ECheck](docks/echeck.html). Magellan est livré avec sa propre version d'ECheck et est généralement configuré pour l'utiliser, de sorte que vous n'avez qu'à cliquer sur "Exécuter". Si cela ne fonctionne pas, peut-être parce que vous utilisez les paramètres d'une version antérieure, vous pouvez le configurer dans la [boîte de dialogue des options](menus/extras/options_resources.html) sous "Ressources". Il vous suffit de définir le chemin d'accès aux ressources de manière à ce qu'il pointe vers votre installation ECheck (quelque chose comme C:\NProgram Files\NMagellan\NCheck\Necheck.exe).
 
-Should you experience funny symbols or messages like "Unknown order: N?CHSTER", there is likely a problem with text encoding. You can adjust the according setting in the [Options](menus/extras/options_system.html#Textkodierung).
+Si vous rencontrez des symboles bizarres ou des messages tels que "Unknown order : N?CHSTER", il y a probablement un problème avec l'encodage du texte. Vous pouvez ajuster le paramètre correspondant dans les [Options] (menus/extras/options_system.html#Textkodierung).
 
-### Q: What does "Installer JAR" mean?
+### Q : Que signifie "Installer JAR" ?
 
-**A:** Starting from Version 2, Magellan does not consist of just one file any more. We have divided it into several files. In order to keep the installation of Magellan simple, we have packaged the program into one file called "Installer JAR". It's a Java program, just like Magellan itself. It unpacks its content to a location you can specify during installation.  
-Starting from version 2 it is also possible to copy a new version over an old version without first de-installing the old version. The configuration files are conserved and adjusted when you start magellan the next time.
+**A:** À partir de la version 2, Magellan n'est plus constitué d'un seul fichier. Nous l'avons divisé en plusieurs fichiers. Afin de simplifier l'installation de Magellan, nous avons regroupé le programme dans un fichier appelé "Installer JAR". Il s'agit d'un programme Java, tout comme Magellan lui-même. Il décompresse son contenu à un emplacement que vous pouvez spécifier lors de l'installation.  
+À partir de la version 2, il est également possible de copier une nouvelle version sur une ancienne version sans désinstaller cette dernière au préalable. Les fichiers de configuration sont conservés et ajustés lors du prochain démarrage de Magellan.
 
-### Q: magellan-client.jar? Shouldn't the file be called magellan.exe?
+### Q : magellan-client.jar ? Le fichier ne devrait-il pas s'appeler magellan.exe ?
 
-**A:** No. To be honest, it is (almost) nothing more than a renamed ZIP-file, but one that Java can handle and that you therefore don't need to unpack with WinZip or a similar program. Magellan really consists of a lot of files that are simply gathered within magellan-client.jar, but Magellan should start when the JAR-file is double-clicked.
+**Pour être honnête, ce n'est (presque) rien d'autre qu'un fichier ZIP renommé, mais un fichier que Java peut gérer et que vous n'avez donc pas besoin de décompresser avec WinZip ou un programme similaire. Magellan consiste en fait en un grand nombre de fichiers qui sont simplement rassemblés dans magellan-client.jar, mais Magellan devrait démarrer lorsque l'on double-clique sur le fichier JAR.
 
-### Q: Why does another program (e.g. WinZip or PowerArchiver) start, when I try to start Magellan by double-clicking?
+### Q : Pourquoi un autre programme (par exemple WinZip ou PowerArchiver) démarre-t-il lorsque j'essaie de lancer Magellan en double-cliquant ?
 
-**A:** Because it is set to be the default program for the .jar extension instead of Java. In PowerArchiver and WinZip you can undo that in these programs' options, otherwise some manual action is needed:
+**A:** Parce qu'il est configuré pour être le programme par défaut pour l'extension .jar au lieu de Java. Dans PowerArchiver et WinZip, vous pouvez annuler ce réglage dans les options de ces programmes, sinon une action manuelle est nécessaire :
 
-1. In the Start menu click 'Run'
-2. Type 'regedit' and click OK
-3. In the tree on the left click the 'HKEY\_CLASSES\_ROOT' entry and click on the entry '.jar'
-4. In the window on the right, doubleclick on '(Default)'
-5. Type jarfile and click OK
-6. Close the regedit program - done.
+1. Dans le menu Démarrer, cliquez sur "Exécuter
+2. Tapez 'regedit' et cliquez sur OK
+3. Dans l'arborescence de gauche, cliquez sur l'entrée HKEY_CLASSES\_ROOT et cliquez sur l'entrée '.jar'
+4. Dans la fenêtre de droite, double-cliquez sur '(Default)'
+5. Tapez jarfile et cliquez sur OK
+6. Fermez le programme regedit - terminé.
 
-### Q: Why doesn't Magellan start when I click the file magellan-client.jar?
+### Q : Pourquoi Magellan ne démarre-t-il pas lorsque je clique sur le fichier magellan-client.jar ?
 
-**A:** A possible cause for this is that the file magellan-client.jar is in a folder with a name that has spaces in it. This isn't a problem that is caused by an error in Magellan, but by an inconvenience in the default link between .jar -files with java.
+**A:** Une cause possible est que le fichier magellan-client.jar se trouve dans un dossier dont le nom contient des espaces. Il ne s'agit pas d'un problème causé par une erreur dans Magellan, mais d'un inconvénient dans le lien par défaut entre les fichiers .jar et java.
 
-The simple solution is of course to move Magellan to a different folder. The complex solution is as follows:
+La solution simple est bien sûr de déplacer Magellan dans un autre dossier. La solution complexe est la suivante :
 
-1. In the Start menu click 'Run'
-2. Type 'regedit' and click OK
-3. In the tree on the left click the 'HKEY\_CLASSES\_ROOT' entry and click on the entry 'jarfile'
-4. Open the subentries 'shell', 'open' and finally 'command'
-5. In the window on the right, doubleclick '(Default)', and something like (path to Java)\\javaw.exe -jar %1 should appear.
-6. Replace %1 with "%1"
-7. Close the regedit program - done.
+1. Dans le menu Démarrer, cliquez sur "Exécuter
+2. Tapez 'regedit' et cliquez sur OK
+3. Dans l'arborescence de gauche, cliquez sur l'entrée "HKEY_CLASSES\_ROOT" et cliquez sur l'entrée "jarfile".
+4. Ouvrez les sous-entrées 'shell', 'open' et enfin 'command'
+5. Dans la fenêtre de droite, double-cliquez sur "(Default)", et quelque chose comme (chemin d'accès à Java)\javaw.exe -jar %1 devrait apparaître.
+6. Remplacez %1 par "%1"
+7. Fermez le programme regedit - c'est fait.
 
-Background: If Magellan is in C:\\My Documents\\magellan-client.jar , then the regedit entry would try to initiate java to call (Path to Java)\\javaw.exe -jar C:\\My Documents\\magellan-client.jar , which means that java would try to run the file C:\\My with parameters Documents\\magellan-client.jar , which doesn't quite work out right. With the quotes this looks like this: (Path to java)\\javaw.exe -jar "C:\\My Documents\\magellan-client.jar" , and here the actual magellan-client.jar file is started.
+Contexte : Si Magellan se trouve dans C:\NMy Documents\Nmagellan-client.jar, l'entrée de regedit essaierait d'inciter Java à appeler (Path to Java)\Njavaw.exe -jar C:\NMy Documents\Nmagellan-client.jar, ce qui signifie que Java essaierait d'exécuter le fichier C:\NMy avec les paramètres Documents\Nmagellan-client.jar, ce qui ne fonctionne pas tout à fait comme il le faudrait. Avec les guillemets, cela ressemble à ceci : (Chemin d'accès à java)\Njavaw.exe -jar "C:\NMy Documents\Nmagellan-client.jar" , et ici le fichier magellan-client.jar est lancé.
 
-If this didn't help you can try to [start Magellan from the command prompt](#4) to be able to read possible error messages.
+Si cela ne vous a pas aidé, vous pouvez essayer de [démarrer Magellan à partir de l'invite de commande](#4) pour pouvoir lire les éventuels messages d'erreur.
 
-### Q: How do I make Magellan the default program for CR-files under Windows2000/XP?
+### Q : Comment faire de Magellan le programme par défaut pour les fichiers CR sous Windows2000/XP ?
 
-**A:** To do this you need to set up a link between Magellan and the "CR" filetype. You can do this in Explorer under Extras, Folderoptions, Filetypes:
+**R:** Pour ce faire, vous devez établir un lien entre Magellan et le type de fichier "CR". Vous pouvez le faire dans l'Explorateur sous Extras, Folderoptions, Filetypes :
 
-1. Choose filetype "CR"
-2. Click the "Advanced" button
-3. In the "Edit filetype" window click the "New" button
-4. In the "Action" field, enter Magellan
-5. In the "Program for this action" field enter "(Path to java)\\javaw.exe" -jar "(Path to magellan)\\magellan-client.jar" "%1". javaw.exe and magellan-client.jar have to be entered with the complete path (e.g. "c:\\games\\eressea\\magellan-client.jar"). If the path contains spaces, the surrounding quotes are mandatory.
-6. Click "OK"
-7. In the "Edit filetype" window choose the "Magellan" entry from the list "Actions".
-8. Click the "As standard" button. The Magellan entry is now shown in bold font.
-9. Done :-)
+1. Choisissez le type de fichier "CR"
+2. Cliquez sur le bouton "Avancé".
+3. Dans la fenêtre "Modifier le type de fichier", cliquez sur le bouton "Nouveau".
+4. Dans le champ "Action", entrez Magellan
+5. Dans le champ "Programme pour cette action", entrez "(Chemin d'accès à java)\Njavaw.exe" -jar "(Chemin d'accès à magellan)\Nmagellan-client.jar" "%1". javaw.exe et magellan-client.jar doivent être entrés avec le chemin d'accès complet (par exemple, "c:\Ngames\Neressea\Nmagellan-client.jar"). Si le chemin contient des espaces, les guillemets sont obligatoires.
+6. Cliquez sur "OK"
+7. Dans la fenêtre "Edit filetype", choisissez l'entrée "Magellan" dans la liste "Actions".
+8. Cliquez sur le bouton "As standard". L'entrée Magellan est maintenant affichée en caractères gras.
+9. C'est fait :-)
 
-### Q: How do I start Magellan from the command prompt?
+### Q : Comment démarrer Magellan à partir de l'invite de commande ?
 
-**A:** Magellan (or Java) often only gives error messages at the command prompt, therefore it can be useful to start Magellan from here.
+**A:** Magellan (ou Java) ne donne souvent que des messages d'erreur à l'invite de commande, il peut donc être utile de démarrer Magellan à partir de là.
 
-To do this you first start the command prompt (in Windows ME under Start menu open 'Run', type command and click OK, under Windows 2000/XP the command is cmd ). Then enter the following command: javaw -jar "(Path to Magellan)\\magellan-client.jar" , so e.g. javaw -jar "C:\\My Documents\\magellan-client.jar" .
+Pour ce faire, lancez d'abord l'invite de commande (sous Windows ME, dans le menu Démarrer, ouvrez "Exécuter", tapez commande et cliquez sur OK, sous Windows 2000/XP, la commande est cmd). Saisissez ensuite la commande suivante : javaw -jar "(Chemin d'accès à Magellan)\Nmagellan-client.jar", c'est-à-dire par exemple javaw -jar "C:\NMy Documents\Nmagellan-client.jar".
 
-The command prompt parameters for Magellan are listed in the [Reference](reference/commandline.html).
+Les paramètres de l'invite de commande pour Magellan sont listés dans la [Référence](reference/commandline.html).
 
-### Q: How do I get Magellan to run on a Mac?
+### Q : Comment faire fonctionner Magellan sur un Mac ?
 
-**A:** Unfortunately Apple has only with the Mac OS X just released a current Java-version that will support Magellan. To run Magellan use the console the same as under Windows at the [command prompt](#4).
+**A:** Malheureusement, Apple n'a publié qu'une version actuelle de Java pour Mac OS X qui supportera Magellan. Pour lancer Magellan, utilisez la console comme sous Windows à l'[invite de commande](#4).
 
-### Q: How do I handle resource paths?
+### Q : Comment gérer les chemins d'accès aux ressources ?
 
-**A:** Resource paths are described on [their own site](reference/resources.html).
+**R:** Les chemins de ressources sont décrits sur [leur propre site] (reference/resources.html).
 
-### Q: Even though I have enough RAM, Magellan reports a lack of memory. Why?
+### Q : Bien que je dispose de suffisamment de RAM, Magellan signale un manque de mémoire. Pourquoi ?
 
-**A:** Simply allocate a bit more memory for the Java Virtual Machine (VM). Magellan requests memory from the VM, and when VM does not have any to give, Magellan simply fails.
+**A:** Il suffit d'allouer un peu plus de mémoire à la machine virtuelle Java (VM). Magellan demande de la mémoire à la VM, et lorsque la VM n'en a pas à offrir, Magellan échoue tout simplement.
 
-You can allocate memory as follows:
+Vous pouvez allouer de la mémoire comme suit :
 
-Edit the text file magellan.bat (under Windows) or magellan.sh (Linux and Mac) and change all occurences of the form \-Xmx000m to a larger value, for example \-Xmx2000M , to allocate about 2 Gigabytes for Magellan.
+Modifiez le fichier texte magellan.bat (sous Windows) ou magellan.sh (Linux et Mac) et remplacez toutes les occurrences de la forme \-Xmx000m par une valeur plus grande, par exemple \-Xmx2000M , afin d'allouer environ 2 gigaoctets à Magellan.
 
-_or_
+Il n'y a pas d'autre solution que d'utiliser le système d'exploitation de Magellan.
 
-Under Windows:  
-Create an icon for Magellan on your desktop, right-click on it and go to "Properties". Under "Target" enter the following (the path should of course match your particular setup):  
-C:\\Program Files\\Java\\jre6\\bin\\javaw.exe -Xms128M -Xmx512M -jar "c:\\Program Files\\Eressea\\Magellan\\magellan-client.jar" or simply  
-javaw -Xms128M -Xmx512M -jar "c:\\Program Files\\Eressea\\Magellan\\magellan-client.jar"
+Sous Windows :
+Créez une icône pour Magellan sur votre bureau, cliquez dessus avec le bouton droit de la souris et allez dans "Propriétés". Sous "Cible", entrez ce qui suit (le chemin d'accès doit bien sûr correspondre à votre configuration particulière) :  
+C:\NProgram Files\NJava\Njre6\Nbin\Njavaw.exe -Xms128M -Xmx512M -jar "c:\NProgram Files\NEressea\NMagellan\Nmagellan-client.jar" ou simplement
+javaw -Xms128M -Xmx512M -jar "c:\NProgram Files\NEressea\NMagellan\Nmagellan-client.jar"
 
-Under Linux simply type (in the shell, in the magellan directory):  
+Sous Linux, tapez simplement (dans le shell, dans le répertoire magellan) :  
 java -Xms128M -Xmx512M -jar magellan-client.jar
 
-This tells the Java-VM to allocate a minimum of 128MB and a maximum of 512MB. You can change these values according to your own setup.
+Cela indique au Java-VM d'allouer un minimum de 128 Mo et un maximum de 512 Mo. Vous pouvez modifier ces valeurs en fonction de votre propre configuration.
 
-### Q: Why does Magellan all of a sudden not use Base-36 numbers for the units anymore?
+### Q : Pourquoi Magellan n'utilise-t-il soudainement plus les nombres de base 36 pour les unités ?
 
-**A:**Most likely the 36;Basis tag is missing in the CR. This basic tag defines the number base that Magellan uses. For Eressea-CRs this usually is 36, other PBeMs using older CR-versions (e.g. Verdanon) use decimal (base 10) and don't know this tag. That's why Magellan assumes base 10 when there is no mention of another number base in the CR.
+**A:**Il est très probable que la balise 36;Basis soit manquante dans le CR. Cette balise de base définit la base numérique utilisée par Magellan. Pour les CR Eressea, il s'agit généralement de la base 36, tandis que d'autres PBeM utilisant des versions plus anciennes du CR (par exemple Verdanon) utilisent la base décimale (base 10) et ne connaissent pas cette balise. C'est pourquoi Magellan utilise la base 10 lorsqu'il n'y a pas de mention d'une autre base numérique dans le CR.
 
-### Q: How can I use Vorlage to automatically confirm the orders of units?
+### Q : Comment puis-je utiliser Vorlage pour confirmer automatiquement les ordres des unités ?
 
-**A:** With // #tag EINHEIT ejcOrdersConfirmed 1
+**A:** Avec // #tag EINHEIT ejcOrdersConfirmed 1
 
-### Q: What is this § stuff in the ARR, ATR, or the tooltips even doing!?
+### Q : A quoi servent ces § dans l'ARR, l'ATR ou les infobulles ?
 
-**A:** A good help to ARR, ATR and the Tooltips can be found [in the Magellan help.](reference/atr_arr.html)
+**A:** Une bonne aide sur l'ARR, l'ATR et les infobulles se trouve [dans l'aide de Magellan] (reference/atr_arr.html).

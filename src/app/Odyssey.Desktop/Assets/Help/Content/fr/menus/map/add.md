@@ -1,6 +1,6 @@
-# Add selection
+# Ajouter une sélection
 
-This menu item opens a dialogue and asks for a selection file that was created with [save selection](save.md). This allows you to restore a selection. This function leaves already selected regions selected.
+Cet élément de menu ouvre une boîte de dialogue et demande un fichier de sélection qui a été créé avec [save selection](save.md). Cela vous permet de restaurer une sélection. Cette fonction laisse les régions déjà sélectionnées sélectionnées.
 
 **Note:**
-If you save a CR with selected regions, this information is stored in the CR. If you export a report in compatibility mode, this information is not stored.
+Si vous enregistrez un CR avec des régions sélectionnées, cette information est stockée dans le CR. Si vous exportez un rapport en mode de compatibilité, cette information n'est pas stockée.

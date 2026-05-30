@@ -1,41 +1,41 @@
-# Arbeiten mit Computerreporten
+# Working with computer reports
 
-Um mit Magellan seine Züge machen zu können, muss man die Auswertung als Computerreport (CR) beziehen. Diesen bekommt man normalerweise automatisch. Falls doch nicht, kann man einer Einheit den Befehl OPTION COMPUTER geben.
+In order to make your moves with Magellan, you must obtain the evaluation as a computer report (CR). This is normally obtained automatically. If not, you can give a unit the OPTION COMPUTER command.
 
-Meist ist der CR in einer Zipdatei enthalten. Diese muss man nicht extra entpacken, sondern kann sie direkt mit Magellan öffnen. Dies geschieht über das Menü [Datei -> Öffnen...](../menus/file/open.md). Dasselbe gilt auch für die manchmal noch vorhandenen Reports mit den Endungen .cr.bz2 oder cr.gz. Die eventuelle Frage, ob man das Passwort für eine Partei übernehmen will, sollte man bejahen. Im Nachhinein kann man in der [Parteistatistik](../menus/extras/factionstatistics.md) seine Partei auswählen und mittels der Schaltfläche **_Passwort und andere Eigenschaften_** Magellan sein Passwort mitteilen, da es erst mit gesetztem Passwort möglich ist, seine Befehle zu schreiben.
+The CR is usually contained in a zip file. You do not have to unpack this file, but can open it directly with Magellan. This is done via the menu [File -> Open...](../menus/file/open.md). The same also applies to the sometimes still existing reports with the extensions .cr.bz2 or cr.gz. If you are asked whether you want to accept the password for a file, you should answer in the affirmative. Afterwards, you can select your faction in the [Faction statistics](../menus/extras/factionstatistics.md) and use the **_Password and other properties_** button to tell Magellan your password, as it is only possible to write your commands once the password has been set.
 
-Bekommt man seine erste Auswertung, so befindet sich das Passwort auch in der Datei mit der Endung .nr. Dort sollte es irgendwo in den ersten Zeilen stehen.
+When you receive your first evaluation, the password is also in the file with the extension .nr. It should be somewhere in the first few lines.
 
-## Benutzen eines Zug-CRs
+## Using a train CR
 
-Um alle Funktionen von Magellan nutzen zu können, ist es sinnvoll, immer mit dem "gleichen" CR zu arbeiten und den neuen CR hinzuzuladen. Man beginnt damit sinnvollerweise, indem man seinen ersten CR unter einem anderen Namen speichert, z.B. zug.cr. Erhält man nun eine neue Auswertung, so lädt man den alten zug.cr und fügt den neuen Report per [Datei -> Hinzufügen...](../menus/file/add.md) hinzu.
+To be able to use all the functions of Magellan, it makes sense to always work with the "same" CR and add the new CR. It makes sense to start by saving your first CR under a different name, e.g. train.cr. If you now receive a new evaluation, load the old zug.cr and add the new report via [File -> Add...](../menus/file/add.md).
 
-Zu den Funktionen, die so erst möglich sind, gehören:
+The functions that are only possible in this way include
 
-* Veränderungsanzeigen zur Vorwoche
-* Regionsinformationen zur Zeit des letzten Besuchs einer Region, von der man mit der aktuellen Auswertung keine Informationen bekommen hat. Dazu gehören:
-* * Straßen
-    * Gebäude
-    * Bauern
-    * Silber
-    * Resourcen
+* Change displays for the previous week
+* Region information at the time of the last visit to a region from which no information was obtained with the current evaluation. This includes:
+* * Streets
+    * Buildings
+    * Farmers
+    * Silver
+    * Resources
 
-Zu den Informationen, die dadurch erhalten bleiben und somit nicht neu eingegeben werden müssen (so das überhaupt möglich ist), gehören:
+The information that is retained and therefore does not have to be re-entered (if this is possible at all) includes
 
-* zugewiesene Inselnamen
-* selbsterstellte Regionskommentare
-* Informationen über wachsende Kräuter
-* Informationen über Trankrezepte
-* Informationen über Zaubersprüche
+* Assigned island names
+* self-created region comments
+* Information about growing herbs
+* Information about potion recipes
+* information about spells
 
-## Austausch von CRs
+## Exchange of CRs
 
-Beim Austausch von CRs mit anderen Spielern sollte man sich zuerst Gedanken machen, was man überhaupt tauschen will. So sollte man beim Tauschen von Kartenmaterial es tunlichst vermeiden, seine Einheiten und Gebäude im CR zu lassen, schließlich muss man ja nicht gleich seine Stärken und Schwächen offen legen. Magellan bietet hierzu unter dem Menüpunkt [Datei -> CR exportieren...](../menus/file/crexport.md) mehrere Optionen an, was in einem CR gespeichert werden soll.
+When exchanging CRs with other players, you should first think about what you want to exchange. When exchanging map material, for example, you should avoid leaving your units and buildings in the CR as far as possible. After all, you don't have to reveal your strengths and weaknesses straight away. Magellan offers several options under the menu item [File -> Export CR...](../menus/file/crexport.md) as to what should be saved in a CR.
 
-Will man fremde Reporte (Karten o.a.) dem eigenen hinzufügen, so versucht Magellan automatisch, die beste Übereinstimmung zu erkennen, falls das Koordinatensysteme der Reporte nicht übereinstimmen. Falls dies allerdings wider Erwarten zu einem unkorrekten Ergebnis führen sollte, so muss man den hinzuzufügenden Report normal laden und dann selbst den [Ursprung anpassen](../menus/map/origin.md), den Report speichern und ihn dann zum Hauptreport hinzufügen.
+If you want to add external reports (maps, etc.) to your own, Magellan automatically tries to recognise the best match if the coordinate systems of the reports do not match. If, contrary to expectations, this should lead to an incorrect result, the report to be added must be loaded normally and then the [Adjust origin](../menus/map/origin.md), the report saved and then added to the main report.
 
-## Arbeiten mit mehreren CRs der gleichen Runde
+## Working with several CRs of the same round
 
-Arbeitet man mit mehreren Reporten aus der gleichen Runde (z.B. Reporte von Verbündeten), empfiehlt es sich, immer seinen eigenen Report zuerst zu laden und diesem die fremden Reporte hinzuzufügen. Dadurch ist sichergestellt, dass das Koordinatensystem des eigenen Reports beibehalten wird.
+If you are working with several reports from the same round (e.g. reports from allies), it is recommended that you always load your own report first and add the other reports to it. This ensures that the coordinate system of your own report is retained.
 
-Beim schrittweisen Hinzufügen von Verbündetenreporten kann es passieren, dass z.B. Veränderungsinformationen nicht erfasst werden. Um das zu vermeiden, kann man versuchen, zunächst alle Verbündetenreporte zu einem einzigen Report zusammenzufügen und dann diesen Bündnisreport dem eigenen hinzufügen.
+When adding ally reports step by step, it can happen that, for example, change information is not recorded. To avoid this, you can first try to merge all ally reports into a single report and then add this alliance report to your own.

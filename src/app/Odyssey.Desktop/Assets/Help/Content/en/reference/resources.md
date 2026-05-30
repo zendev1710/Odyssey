@@ -1,57 +1,57 @@
-# Ressourcen
+# Resources
 
-_Achtung! Diese Informationen sind veraltet und werden in Teilen so nicht mehr funktionieren!_
+Attention! This information is outdated and parts of it will no longer work.
 
-Hier wird erläutert, wie man Magellan um zusätzliche Features erweitert und die mitgelieferten Standarddateien austauscht, um beispielsweise alternative Grafiken zu verwenden oder zur Anpassung an ein anderes PBeM.
+This section explains how to add additional features to Magellan and how to replace the standard files supplied, for example to use alternative graphics or to adapt to a different PBeM.
 
-## Wie setze ich eine Ressourcenpfad?
+## How do I set a resource path?
 
-Um Plug-Ins, Grafiksets etc. in Magellan einzubinden, müssen sie in einen Ressourcenpfad aufgenommen werden. Dazu ruft man die Optionen über das Menü Extras auf, wählt den Reiter 'Ressourcen' und klickt auf 'Neuer Pfad...'. Nun erscheint ein Dateiauswahldialog, in dem nur noch die betreffende JAR oder ZIP Datei (oder das entsprechende Verzeichnis) angegeben werden muss.
+To integrate plug-ins, graphic sets etc. into Magellan, they must be included in a resource path. To do this, call up the options via the Extras menu, select the 'Resources' tab and click on 'New path...'. A file selection dialogue now appears in which only the relevant JAR or ZIP file (or the corresponding directory) needs to be specified.
 
-Um die Änderungen wirksam werden zu lassen, muss Magellan neu gestartet werden.
+Magellan must be restarted for the changes to take effect.
 
-## Plug-Ins
+## Plug-ins
 
-Einige Funktionen von Magellan sind nicht in der Standardversion enthalten, dennoch kann sie nachgerüstet werden. Als Beispiel seien hier die Skinnable Look&Feels angeführt.
+Some Magellan functions are not included in the standard version, but can be retrofitted. One example is the skinnable look & feel.
 
-Um die Skins nutzen können, benötigt Magellan zusätzliche Java-Klassen, die diese Funktionalität bieten. Sie sind in der Datei skinlf.jar enthalten, von der Magellan aber zunächst nichts weiß. Erst indem man in Magellan in den Optionen die Datei skinlf.jar als einen neuen Ressourcenpfad anlegt, kann Magellan die neuen Klassen finden und nutzen (siehe auch [Optionen/System](../menus/extras/options_system.md)).
+To be able to use the skins, Magellan requires additional Java classes that offer this functionality. They are contained in the skinlf.jar file, which Magellan is initially unaware of. Only by creating the skinlf.jar file as a new resource path in the options in Magellan can Magellan find and use the new classes (see also [Options/System](../menus/extras/options_system.md)).
 
-## Veränderbare Objekte
+## Modifiable objects
 
-Folgende Elemente, sogenannte Ressourcen, lassen sich in Magellan anpassen:
+The following elements, so-called resources, can be customised in Magellan:
 
-* Alle Icons, die in den baumartigen Anzeigen auftauchen (z.B. Talente)
-* Die Grafiken, die für die Darstellung der Regionen und anderer Objekte auf der Karte verwendet werden
-* Die Regeldatei, die grundlegende Informationen über ein Spiel enthält (z.B. die Rekrutierungskosten jeder Rasse)
+* All icons that appear in the tree-like displays (e.g. talents)
+* The graphics used to display the regions and other objects on the map
+* The rules file, which contains basic information about a game (e.g. the recruitment costs of each race)
 
-## Verzeichnisstruktur
+## Directory structure
 
-Alle Ressourcen liegen je nach Verwendungszweck in einem bestimmten Verzeichnis:
+All resources are located in a specific directory depending on their intended use:
 
-* about: betrifft den Info Dialog von Magellan
-* images: enthält Icons und Kartengrafiken
-* lang: enthält die sprachabhängigen Übersetzungstabellen
-* rules: enthält die Regeldateien
+* about: concerns the info dialogue of Magellan
+* images: contains icons and map graphics
+* lang: contains the language-dependent translation tables
+* rules: contains the rules files
 
-Wenn man eigene Ressourcen für Magellan erstellt, ist es notwendig, dass sie im jeweils richtigen Verzeichnis untergebracht sind, damit Magellan sie finden kann.
+If you create your own resources for Magellan, it is necessary that they are located in the correct directory so that Magellan can find them.
 
-## Ressourcenpfade
+## Resource paths
 
-Im Normalfall findet Magellan alle notwendigen Ressourcen in der Datei magellen.jar selbst. Es wäre jedoch sehr unpraktisch, wenn man diese Datei verändern müsste, um eigene Ressourcen zu verwenden. Deshalb ist es möglich, Ressourcenpfade anzugeben, die der Reihe nach und zwar vor den Inhalten der jar Datei nach den Ressourcen durchsucht werden.
+Normally, Magellan finds all the necessary resources in the magellen.jar file itself. However, it would be very impractical if you had to change this file in order to use your own resources. It is therefore possible to specify resource paths that are searched for resources in sequence before the contents of the jar file.
 
-Die Ressourcenpfade kann man in Magellan in den Optionen hinzufügen, löschen oder editieren (Menü Extras, Optionen, Reiter 'Ressourcen'). Ressourcenpfade müssen nicht unbedingt Verzeichnisse sein, sie können auch auf eine URL im Internet verweisen oder in eine JAR Datei zeigen.
+The resource paths can be added, deleted or edited in the options in Magellan (Tools menu, Options, 'Resources' tab). Resource paths do not necessarily have to be directories, they can also refer to a URL on the Internet or point to a JAR file.
 
-Soll beispielsweise das Icon für das Reiten-Talent ausgetauscht werden, legt man die Datei reiten.gif im Verzeichnis C:\\Ressourcen\\images\\icons ab und gibt Magellan den neuen Ressourcenpfad C:\\Ressourcen. Da Magellan nun nach der Datei 'images\\icons\\reiten.gif' sucht, beginnt es bei den Ressourcenpfaden, in diesem Fall C:\\Ressourcen, und findet die Datei, indem der Ressourcenpfad und der Dateiname mit den Unterverzeichnissen aneinandergehängt werden.
+For example, if you want to replace the icon for the riding talent, place the file reiten.gif in the directory C:\\Ressourcen\\images\\icons and give Magellan the new resource path C:\\Ressourcen. As Magellan is now looking for the file 'images\\icons\\riding.gif', it starts with the resource paths, in this case C:\\Resources, and finds the file by appending the resource path and the file name with the subdirectories.
 
-Die genaue Ladereihenfolge von Ressourcen ist wie folgt:
+The exact loading sequence of resources is as follows
 
-1. Ressourcenpfade der Reihe nach
-2. Im aktuellen Verzeichnis (in der Regel das Verzeichnis, in dem sich auch die Datei magellan.ini befindet) das Unterverzeichnis 'res'
-3. Laden per SystemClassLoader, was im wesentlichen bedeutet, dass die in der CLASSPATH Umgebungsvariable angegebenen Verzeichnisse und JAR Dateien durchsucht werden
-4. Laden per SystemClassLoader mit vorangestelltem res Verzeichnis, was die Resource, falls vorhanden, in der JAR Datei finden sollte, aus der heraus Magellan ausgeführt wird
+1. resource paths in sequence
+2. in the current directory (usually the directory in which the magellan.ini file is also located) the subdirectory 'res'
+3. loading via SystemClassLoader, which essentially means that the directories and JAR files specified in the CLASSPATH environment variable are searched
+4. loading via SystemClassLoader with the res directory in front, which should find the resource, if available, in the JAR file from which Magellan is executed
 
-Anhand dieser Ladereihenfolge ist ersichtlich, dass man neue Ressourcen auch ohne die Angabe eines Ressourcenpfades einbinden kann, indem man sie einfach im gleichen Verzeichnis wie Magellan selbst speichert (die Verzeichnisstruktur für die jeweilge Resource, z.B. images/icons muss natürlich eingehalten werden). Diese Verzeichnisstruktur kann man herausfinden, indem man das Magellan.jar in Magellan.zip umbenennt und entpackt.
+This loading sequence shows that new resources can also be integrated without specifying a resource path by simply saving them in the same directory as Magellan itself (the directory structure for the respective resource, e.g. images/icons, must of course be observed). You can find out this directory structure by renaming the Magellan.jar to Magellan.zip and unpacking it.
 
-## Grafiksets
+## Graphic sets
 
-Auf der Seite zum [Erstellen von eigenen Grafiksets](graphicsets_making.md) finden sich ebenfalls Informationen zu den Ressourcenpfaden.
+On the page for [creating your own graphics sets](graphicsets_making.md) you will also find information on the resource paths.

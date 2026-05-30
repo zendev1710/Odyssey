@@ -1,3 +1,3 @@
 # Exit
 
-Click on this menu item to exit Magellan. The current settings are saved in magellan.ini and will be active the next time Magellan is started.
+Cliquer sur cet élément de menu pour quitter Magellan. Les paramètres actuels sont sauvegardés dans magellan.ini et seront actifs lors du prochain démarrage de Magellan.

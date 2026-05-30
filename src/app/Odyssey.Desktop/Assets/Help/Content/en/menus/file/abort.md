@@ -1,3 +1,3 @@
-# Abbrechen
+# Cancel
 
-Bei Klick auf diesen Menüpunkt wird Magellan beendet ohne evtl. geänderte Einstellungen (wie zum Beispiel Passwörter, Fensterlayout und alle Optionen) in der Konfigurationsdatei magellan.ini zu speichern, so dass sie beim nächsten Start von Magellan wieder aktiv sind.
+Clicking on this menu item closes Magellan without saving any changed settings (such as passwords, window layout and all options) in the magellan.ini configuration file so that they are active again the next time Magellan is started.

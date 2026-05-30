@@ -1,13 +1,13 @@
-# Befehle öffnen
+# Open commands
 
-Hier kann man eine Eressea-Befehlsdatei hinzuladen, die auch mit anderen Tools erstellt werden kann. Bei Auswahl des Menüpunktes erscheint folgende Dialogbox:
+Here you can add an Eressea command file, which can also be created with other tools. The following dialogue box appears when the menu item is selected:
 
-![Befehle öffnen](../../images/menu_file_openorders.gif)
+![Open orders](../../images/menu_file_openorders.gif)
 
-Sie entspricht weitgehend dem bekannten Dateiauswahldialog. Es gibt jedoch zwei zusätzliche Optionen:
+It largely corresponds to the familiar file selection dialogue. However, there are two additional options:
 
-* **Automatische Befehlsbestätigung**:  
-    Wird diese Option gewählt, werden die Befehle beim Import gleich bestätigt.  
+**Automatic command confirmation**:
+    If this option is selected, the commands are confirmed immediately during import.  
 
-* **';'-Kommentare ignorieren**:  
-    Kommentare die mit einem ';' beginnen werden nicht importiert. Dabei wird natürlich auch der Bestätigungsstatus der Einheiten ignoriert, da diese als ;-Kommentar gespeichert werden.
+* Ignore **';' comments**:
+    Comments beginning with a ';' are not imported. Of course, the confirmation status of the units is also ignored, as these are saved as ;-comments.

@@ -1,12 +1,12 @@
-# Menu Commands
+# Commandes du menu
 
-The Commands menu has the following items:
+Le menu Commandes comprend les éléments suivants :
 
-* [Next unconfirmed unit](unconfirmed.md)
-* [Previous unconfirmed unit](unconfirmed.md)
-* [Change confirmation status](confirm.md)
-* [Confirm all](confirmall.md)
+* [Unité suivante non confirmée](unconfirmed.md)
+* [Unité précédente non confirmée](unconfirmed.md)
+* [Changer l'état de confirmation](confirm.md)
+* [Confirmer tout](confirmall.md)
 * [Unconfirm all](unconfirmall.md)
-* [Invert confirmation](invertconfirmation.md)
+* [Inverser la confirmation](invertconfirmation.md)
 
-This menu item serves as a navigation aid for the commands made with Magellan. You can jump back and forth between the confirmed and unconfirmed units and change the confirmation status for entire factions.
+Cet élément de menu sert d'aide à la navigation pour les commandes effectuées avec Magellan. Vous pouvez aller et venir entre les unités confirmées et non confirmées et changer le statut de confirmation pour des factions entières.

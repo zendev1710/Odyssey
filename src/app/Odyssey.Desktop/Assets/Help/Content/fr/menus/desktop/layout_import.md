@@ -1,3 +1,3 @@
-# Import layouts
+# Importer des modèles
 
-After selecting this menu item, Magellan asks for an XML file containing the descriptions for layouts. Magellan then loads the settings and displays the new layouts in the menu.
+Après avoir sélectionné cet élément de menu, Magellan demande un fichier XML contenant les descriptions des présentations. Magellan charge ensuite les paramètres et affiche les nouvelles présentations dans le menu.

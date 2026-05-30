@@ -1,85 +1,85 @@
-# Create graphic sets
+# Créer des jeux de graphiques
 
-This feature has not been tested for a long time. If you use it successfully, have alternative graphic sets, or have ideas on how to use it, please share your experiences with the development team.
+Cette fonctionnalité n'a pas été testée depuis longtemps. Si vous l'utilisez avec succès, si vous avez d'autres jeux graphiques ou si vous avez des idées sur la manière de l'utiliser, veuillez faire part de votre expérience à l'équipe de développement.
 
-Why yet another new graphics set format?_ This is precisely the question that arose when designing the new map module; the result is not actually another graphics set format, because the concept presented here allows adaptation to any format as long as the necessary information about the cell geometry is available. This means, for example, that existing graphics sets from other clients can also be adopted unchanged if the graphics are in GIF or PNG format. All you have to do is create a suitable cellgeometry.txt file that contains the geometry information about the existing graphics set.
+Pourquoi encore un nouveau format de jeu graphique ? _ C'est précisément la question qui s'est posée lors de la conception du nouveau module cartographique ; le résultat n'est pas en fait un nouveau format de jeu graphique, car le concept présenté ici permet de s'adapter à n'importe quel format pour autant que les informations nécessaires sur la géométrie de la cellule soient disponibles. Cela signifie, par exemple, que les jeux graphiques existants d'autres clients peuvent également être repris tels quels si les graphiques sont au format GIF ou PNG. Il suffit de créer un fichier cellgeometry.txt approprié qui contient les informations sur la géométrie du jeu de graphiques existant.
 
-## Resource paths
+## Chemins de ressources
 
-The [resources page](resources.md) contains basic information on resources and resource paths.
+La page [resources](resources.md) contient des informations de base sur les ressources et les chemins d'accès aux ressources.
 
-Magellan always loads files (e.g. graphics) from specific directories that indicate the purpose of the file. For the graphics files for the map this is 'images/map/', a graphics set therefore always consists of a directory or an archive (ZIP or JAR file) containing the map graphics in these subdirectories.
+Magellan charge toujours les fichiers (par exemple les graphiques) à partir de répertoires spécifiques qui indiquent le but du fichier. Pour les fichiers graphiques de la carte, il s'agit de 'images/map/', un jeu de graphiques est donc toujours constitué d'un répertoire ou d'une archive (fichier ZIP ou JAR) contenant les graphiques de la carte dans ces sous-répertoires.
 
-A resource path is a reference to such a resource source, e.g. when loading the file Ebene.png, the resource path, the directory 'images/map' and the file name 'Ebene.png' are simply appended together to access the file, e.g. 'C:\\Grafiksets\\images\\map\\Ebene.gif" if "C:\\Grafiksets" is set as the resource path. When accessing, all resource paths are first searched and then, if they could not be found in any resource path, the standard graphics in the Magellan Jar file are accessed.
+Par exemple, lors du chargement du fichier Ebene.png, le chemin de la ressource, le répertoire "images/map" et le nom du fichier "Ebene.png" sont simplement ajoutés ensemble pour accéder au fichier, par exemple "C:\Grafiksets\images\\map\Ebene.gif" si "C:\Grafiksets" est défini en tant que chemin de la ressource. Lors de l'accès, tous les chemins de ressources sont d'abord recherchés, puis, s'ils ne peuvent être trouvés dans aucun chemin de ressources, les graphiques standard du fichier Magellan Jar sont accédés.
 
-A graphics set can also be passed on to others as an archive (ZIP or JAR file) to simplify handling. All you have to do is pack the set, i.e. the graphics files and cellgeometry.txt, into a ZIP file or JAR file. However, the files must always be located within this archive in an 'images/map/' subdirectory. Then every Magellan user can use the graphics set by entering this archive as a resource path in the Magellan options dialogue.
+Un jeu de graphiques peut également être transmis à d'autres sous forme d'archive (fichier ZIP ou JAR) pour simplifier la manipulation. Il suffit d'emballer l'ensemble, c'est-à-dire les fichiers graphiques et cellgeometry.txt, dans un fichier ZIP ou JAR. Toutefois, les fichiers doivent toujours se trouver dans cette archive dans un sous-répertoire 'images/map/'. Ensuite, chaque utilisateur de Magellan peut utiliser le jeu de graphiques en entrant cette archive comme chemin de ressource dans la boîte de dialogue des options de Magellan.
 
-## File names
+## Nom des fichiers
 
-The names of the files used by the existing renderers to display certain objects are listed here. The extension ".png", ".gif" and/or "-alpha.gif" must be appended to the full name that the file must actually have.
+Les noms des fichiers utilisés par les moteurs de rendu existants pour afficher certains objets sont listés ici. L'extension ".png", ".gif" et/ou "-alpha.gif" doit être ajoutée au nom complet du fichier.
 
-The file names must all be in lower case, otherwise Magellan will not be able to access them!
+Les noms de fichiers doivent tous être en minuscules, sinon Magellan ne pourra pas y accéder !
 
-* Regions: All region names without umlauts (e.g. "wueste"), additionally "nebel" for the Fog-of-War
-* Borders: "strasse0" (NW) to "strasse5" (SW, clockwise) and "strasse\_incomplete0" (NW) to "strasse\_incomplete5" (SW, clockwise). If there are no graphics for incomplete streets, the graphics for completed streets are used.
-* Buildings: All building names without umlauts (e.g. "saegewerk")
-* Ships: "schiff0" (no coast), "schiff1" (NW) to "schiff6" (SW, clockwise)
-* Direction indicators: "arrow0" (NW) to "arrow5" (SW, clockwise)
-* Selection markers: "active", "selected"
+* Régions : Tous les noms de régions sans tréma (par exemple "wueste"), en plus de "nebel" pour le brouillard de guerre.
+* Frontières : "strasse0" (NW) à "strasse5" (SW, dans le sens des aiguilles d'une montre) et "strasse_incomplete0" (NW) à "strasse_incomplete5" (SW, dans le sens des aiguilles d'une montre). S'il n'y a pas de graphiques pour les rues incomplètes, les graphiques des rues achevées sont utilisés.
+* Bâtiments : Tous les noms de bâtiments sans tréma (par exemple "saegewerk").
+* Navires : "schiff0" (pas de côte), "schiff1" (NW) à "schiff6" (SW, dans le sens des aiguilles d'une montre)
+* Indicateurs de direction : "flèche0 (NW) à flèche5 (SW, sens des aiguilles d'une montre)
+* Marqueurs de sélection : "actif", "sélectionné"
 
-All files should be stored together with the file cellgeometry.txt (see 'Cell geometry') in a common directory 'images/map/'.
+Tous les fichiers doivent être stockés avec le fichier cellgeometry.txt (voir "Géométrie des cellules") dans un répertoire commun "images/map/".
 
-## File format
+## Format du fichier
 
-The graphic files may be in PNG or GIF format; alpha channels and transparency are used in different ways:
+Les fichiers graphiques peuvent être au format PNG ou GIF ; les canaux alpha et la transparence sont utilisés de différentes manières :
 
-PNG: If a file with the extension .png is found, it is used and the alpha channel information it contains is used directly. PNG files have the advantage that they allow 24-bit colour depth and an integrated 8-bit alpha channel. Unfortunately, Java 1.2 does not yet support PNG graphics, so only users with a JRE >= 1.3 can use such graphic sets.
+PNG : si un fichier portant l'extension .png est trouvé, il est utilisé et les informations du canal alpha qu'il contient sont utilisées directement. Les fichiers PNG ont l'avantage de permettre une profondeur de couleur de 24 bits et un canal alpha intégré de 8 bits. Malheureusement, Java 1.2 ne prend pas encore en charge les graphiques PNG, de sorte que seuls les utilisateurs disposant d'un JRE >= 1.3 peuvent utiliser de tels jeux de graphiques.
 
-GIF + alpha channel: If no file with the extension ".png" is found, the renderer searches for a file with the extension ".gif", which contains the RGB information of the image and a file with the extension "-alpha.gif", which is interpreted as a greyscale image and used as the alpha channel for the other GIF.
+GIF + canal alpha : Si aucun fichier portant l'extension ".png" n'est trouvé, le moteur de rendu recherche un fichier portant l'extension ".gif", qui contient les informations RVB de l'image et un fichier portant l'extension "-alpha.gif", qui est interprété comme une image en niveaux de gris et utilisé comme canal alpha pour l'autre GIF.
 
-GIF: If there is no file with the extension "-alpha.gif", but there is a standard GIF file, the RGB and transparency information it contains is used.
+GIF : S'il n'y a pas de fichier avec l'extension "-alpha.gif", mais qu'il existe un fichier GIF standard, les informations RVB et de transparence qu'il contient sont utilisées.
 
-## Size of the graphics / cell geometry
+## Taille des graphiques / géométrie des cellules
 
-In principle, the size of the graphics is arbitrary, but must be the same for all images within a graphics set. The client also requires information about the geometry of the region hexagon, i.e. its corner coordinates, as well as its position in the graphic and the total size of the graphic. This then looks something like this:
+En principe, la taille des graphiques est arbitraire, mais elle doit être la même pour toutes les images d'un ensemble de graphiques. Le client a également besoin d'informations sur la géométrie de l'hexagone de la région, c'est-à-dire les coordonnées de ses coins, ainsi que sa position dans le graphique et la taille totale du graphique. Voici à quoi cela ressemble :
 
 ![cell_geometry](../images/reference_graphicsets_cellgeometry.gif)
 
-x0=32 <- x-coordinate of the corner point at 12 o'clock
-x1=63 <- x-coordinate of the corner point at 2 o'clock
+x0=32 <- coordonnée x du point d'angle à 12 heures
+x1=63 <- coordonnée x du point d'angle à 2 heures
 x2=63
 x3=32
-x4=0 <- x-coordinate of the corner point at 8 o'clock (hexagon coordinates, i.e. always 0!)
-x5=0 <- x-coordinate of the corner point at 10 o'clock (hexagon coordinates, i.e. always 0!)
-y0=0 <- y-coordinate of the corner point at 12 o'clock (hexagon coordinates, i.e. always 0!)
-y1=16 <- y-coordinate of the corner point at 2 o'clock
+x4=0 <- coordonnée x du point d'angle à 8 heures (coordonnées hexagonales, c'est-à-dire toujours 0 !)
+x5=0 <- coordonnée x du point d'angle à 10 heures (coordonnées hexagonales, c'est-à-dire toujours 0 !)
+y0=0 <- coordonnée y du point d'angle à 12 heures (coordonnées hexagonales, c'est-à-dire toujours 0 !)
+y1=16 <- coordonnée y du point d'angle à 2 heures
 y2=47
 y3=63
 y4=47
 y5=16
-imgOffsetx=8 <- distance between left hexagon edge and graphic edge
-imgOffsety=8 <- Distance between upper hexagon border and graphic border
-imgSizex=80 <- Width of the graphic file
-imgSizey=80 <- Height of the graphic file
+imgOffsetx=8 <- distance entre le bord gauche de l'hexagone et le bord du graphique
+imgOffsety=8 <- Distance entre le bord supérieur de l'hexagone et le bord du graphique
+imgSizex=80 <- Largeur du fichier graphique
+imgSizey=80 <- Hauteur du fichier graphique
 
-All values are in pixels. If the width and height of the region hexagon correspond to those of the graphics file, there will be no overlaps when drawing the individual graphics. However, if the graphic size is larger than that of the region hexagon, there will be overlaps when drawing the graphics, depending on the value imgOffsetx/y above, below, left or right of the region hexagon. Together with the utilisation of transparency information in the graphics, all kinds of effects can be created, e.g. barely noticeable transitions between regions. It should be noted that the regions are drawn line by line from top left to bottom right on all rendering layers.
+Toutes les valeurs sont exprimées en pixels. Si la largeur et la hauteur de l'hexagone de la région correspondent à celles du fichier graphique, il n'y aura pas de chevauchement lors du dessin des différents graphiques. Toutefois, si la taille du graphique est supérieure à celle de l'hexagone de la région, il y aura des chevauchements lors du dessin des graphiques, en fonction de la valeur imgOffsetx/y au-dessus, au-dessous, à gauche ou à droite de l'hexagone de la région. L'utilisation d'informations de transparence dans les graphiques permet de créer toutes sortes d'effets, par exemple des transitions à peine perceptibles entre les régions. Il convient de noter que les régions sont dessinées ligne par ligne, du haut à gauche au bas à droite, sur toutes les couches de rendu.
 
-The file with this information must be called "cellgeometry.txt" and be located in the same directory (images/map/) as the graphics. The content of this file may seem somewhat obscure, but its meaning should quickly become clear if you look at its content in existing graphics sets.
+Le fichier contenant ces informations doit s'appeler "cellgeometry.txt" et se trouver dans le même répertoire (images/map/) que les graphiques. Le contenu de ce fichier peut sembler quelque peu obscur, mais sa signification devrait rapidement devenir claire si vous regardez son contenu dans les jeux de graphiques existants.
 
 ## Renderer
 
-Magellan supports different 'renderers' for each sub-layer of the map, i.e. sub-modules that bring the graphics files to the screen. They are arranged in several layers in order to have a fixed order for rendering, which is reflected in the depth arrangement of the drawn graphics. The order is currently:
+Magellan prend en charge différents "moteurs de rendu" pour chaque sous-couche de la carte, c'est-à-dire des sous-modules qui affichent les fichiers graphiques à l'écran. Ils sont disposés en plusieurs couches afin d'avoir un ordre fixe pour le rendu, ce qui se reflète dans la disposition en profondeur des graphiques dessinés. L'ordre est actuellement le suivant :
 
-1. regions
-2. borders (roads)
-3. buildings
-4. ships
-5. region names
-6. direction arrows
-7. selection markers
+1. régions
+2. frontières (routes)
+3. bâtiments
+4. les navires
+5. noms des régions
+6. flèches de direction
+7. marqueurs de sélection
 
-This means that earlier layers are covered by later layers. At the moment there is only one standard renderer for each of the layers, but these should be flexible enough for most purposes.
+Cela signifie que les couches antérieures sont couvertes par les couches ultérieures. Pour l'instant, il n'existe qu'un seul moteur de rendu standard pour chacune des couches, mais il devrait être suffisamment souple pour répondre à la plupart des besoins.
 
-When designing the graphics and defining any overlaps between the graphics, it should be noted that the regions are drawn line by line from top left to bottom right on all rendering layers.
+Lors de la conception des graphiques et de la définition des chevauchements entre les graphiques, il convient de noter que les régions sont dessinées ligne par ligne, du haut à gauche vers le bas à droite, sur toutes les couches de rendu.
 
-It is also very easy to programme new renderers, e.g. to display additional objects on the map or certain region properties.
+Il est également très facile de programmer de nouveaux rendus, par exemple pour afficher des objets supplémentaires sur la carte ou certaines propriétés de la région.

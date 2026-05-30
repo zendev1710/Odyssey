@@ -1,5 +1,5 @@
-# Lesezeichenliste anzeigen
+# Show bookmark list
 
 ALT+F2
 
-Öffnet ein Fenster mit einer Liste aller markierten Regionen, Einheiten, etc...
+Opens a window with a list of all bookmarked regions, units, etc...

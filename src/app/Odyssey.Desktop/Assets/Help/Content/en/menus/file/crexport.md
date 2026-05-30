@@ -1,66 +1,66 @@
-# CR exportieren
+# Export CR
 
 ![menu_file_crexport](../../images/menu_file_crexport.gif)
 
-Folgende Möglichkeiten zum Export eines CR stehen zur Verfügung:
+The following options are available for exporting a CR:
 
-* **Speichern**:  
-    speichert die Befehlsdatei am angegebenen Ort.
-* **Zwischenablage**:  
-    kopiert die Befehlsdatei in die Zwischenablage. Von dort kann sie z.B. sehr einfach in ein Mailprogramm übernommen werden.
-* **Schließen**:  
-    schließt den Dialog.
+* **Save**:
+    Saves the command file to the specified location.
+**Clipboard**:
+    Copies the command file to the clipboard. From there it can easily be copied into a mail programme, for example.
+**Close**:
+    Closes the dialogue.
 
-## Exportoptionen
+## Export options
 
-Für alle Bedingungen gilt eine UND-Verknüpfung (wobei Kompatibilität negiert werden muss), bei Inseln "an" und Kompatibilität "an" werden also keine Inseln exportiert.
+An AND link applies to all conditions (whereby compatibility must be negated), so if islands are "on" and compatibility is "on", no islands are exported.
 
-|                                                                                                                                                                                                 |                                    |            |
-|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------|------------|
-| **Gebäude**                                                                                                                                                                                     | **an**                             | **aus**    |
-| Gebäude                                                                                                                                                                                         | x                                  | \-         |
-| Lohn                                                                                                                                                                                            | tatsächlicher Betrag               | 10 Silber  |
-|                                                                                                                                                                                                 |                                    |            |
-| **Inseln**                                                                                                                                                                                      | **an**                             | **aus**    |
-| Inselblöcke und Inseltags                                                                                                                                                                       | x                                  | \-         |
-|                                                                                                                                                                                                 |                                    |            |
-| **Meldungen**                                                                                                                                                                                   | **an**                             | **aus**    |
-| Parteimeldungen                                                                                                                                                                                 | x                                  | \-         |
-| Kämpfe                                                                                                                                                                                          | x                                  | \-         |
-| Kommentare                                                                                                                                                                                      | x                                  | \-         |
-| Effekte                                                                                                                                                                                         | x                                  | \-         |
-| Regionsereignisse (veraltet)                                                                                                                                                                    | x                                  | \-         |
-| Regionsbotschaften (veraltet)                                                                                                                                                                   | x                                  | \-         |
-| Einheitenbotschaften (veraltet)                                                                                                                                                                 | x                                  | \-         |
-| Umgebung (veraltet)                                                                                                                                                                             | x                                  | \-         |
-| Durchreise (veraltet)                                                                                                                                                                           | x                                  | \-         |
-| Meldungstypen                                                                                                                                                                                   | x                                  | \-         |
-|                                                                                                                                                                                                 |                                    |            |
-| **Regionsdetails**                                                                                                                                                                              | **an**                             | **aus**    |
-| Bauern, Pferde, Bäume, Mallorn, Silber, Unterhalt, Rekruten, Lohn, Eisen, Laen, Kräuter, Effekte, Kommentare, Regionsereignisse, Regionsbotschaften, Einheitenbotschaften, Umgebung, Durchreise | x                                  | \-         |
-| Grenzen (Strassen)                                                                                                                                                                              | x                                  | \-         |
-|                                                                                                                                                                                                 |                                    |            |
-| **Regionen**                                                                                                                                                                                    | **an**                             | **aus**    |
-|                                                                                                                                                                                                 | offensichtlich, keine Nebeneffekte |            |
-|                                                                                                                                                                                                 |                                    |            |
-| **Schiffe**                                                                                                                                                                                     | **an**                             | **aus**    |
-|                                                                                                                                                                                                 | offensichtlich, keine Nebeneffekte |            |
-|                                                                                                                                                                                                 |                                    |            |
-| **Zaubersprüche und Tränke**                                                                                                                                                                    | **an**                             | **aus**    |
-| ZAUBER und TRANK Blöcke                                                                                                                                                                         | x                                  | \-         |
-| Die Sprüche, die eine Einheit beherrscht, werden in beiden Fällen exportiert.                                                                                                                   |                                    |            |
-|                                                                                                                                                                                                 |                                    |            |
-| **Einheiten**                                                                                                                                                                                   | **an**                             | **aus**    |
-| Parteien und Einheiten                                                                                                                                                                          | x                                  | \-         |
-|                                                                                                                                                                                                 |                                    |            |
-| **Kompatibilität**                                                                                                                                                                              | **an**                             | **aus**    |
-| Konfiguration-Tag                                                                                                                                                                               | Standard                           | Java-Tools |
-| trustlevel-Tag                                                                                                                                                                                  | \-                                 | x          |
-| Kommentare                                                                                                                                                                                      | \-                                 | x          |
-| ejcOrdersConfirmed-Tag                                                                                                                                                                          | \-                                 | x          |
-| Insel-Tag                                                                                                                                                                                       | \-                                 | x          |
-| Insel-Blöcke                                                                                                                                                                                    | \-                                 | x          |
-| herb-Tag (Regionskräuter)                                                                                                                                                                       | \-                                 | x          |
-| Hot-Spots                                                                                                                                                                                       | \-                                 | x          |
+| a                                                                                                                                                                           | b                          | c            |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------|--------------|
+| **Building**                                                                                                                                                                | **on**                     | **off**      |
+| building                                                                                                                                                                    | x                          | \-           |
+| salary                                                                                                                                                                      | actual amount              | 10 silver    |
+|                                                                                                                                                                             |                            |              |
+| **islands**                                                                                                                                                                 | **on**                     | **off**      |
+| island blocks and island tags                                                                                                                                               | x                          | \-           |
+|                                                                                                                                                                             |                            |              |
+| **messages**                                                                                                                                                                | **on**                     | **off**      |
+| Faction news                                                                                                                                                                | x                          | \-           |
+| fights                                                                                                                                                                      | x                          | \-           |
+| Comments                                                                                                                                                                    | x                          | \-           |
+| Effects                                                                                                                                                                     | x                          | \-           |
+| Region events (deprecated)                                                                                                                                                  | x                          | \-           |
+| Region messages (obsolete)                                                                                                                                                  | x                          | \-           |
+| Unit messages (obsolete)                                                                                                                                                    | x                          | \-           |
+| Environment (obsolete)                                                                                                                                                      | x                          | \-           |
+| Transit (deprecated)                                                                                                                                                        | x                          | \-           |
+| message types                                                                                                                                                               | x                          | \-           |
+| -                                                                                                                                                                           |                            |              |
+| **Region details**                                                                                                                                                          | **on**                     | **off**      |
+| Farmers, horses, trees, mallorn, silver, upkeep, recruits, wages, iron, laen, herbs, effects, comments, region events, region messages, unit messages, environment, transit | x                          | \-           |
+| Borders (roads)                                                                                                                                                             | x                          | \-           |
+| -------------------------------------------------------------                                                                                                               | -------------------------- | ------------ |
+| **regions**                                                                                                                                                                 | **on**                     | **off**      |
+|                                                                                                                                                                             | obvious, no side effects   |              |
+|                                                                                                                                                                             |                            |              |
+| **ships**                                                                                                                                                                   | **on**                     | **off**      |
+|                                                                                                                                                                             | obvious, no side effects   |              |
+|                                                                                                                                                                             |                            |              |
+| **spells and potions**                                                                                                                                                      | **on**                     | **off**      |
+| Spell and potion blocks                                                                                                                                                     | x                          | \-           |
+| The spells that a unit can cast are exported in both cases.                                                                                                                 |                            |              |
+| -                                                                                                                                                                           |                            |              |
+| **Units**                                                                                                                                                                   | **on**                     | **off**      |
+| factions and units                                                                                                                                                          | x                          | \-           |
+|                                                                                                                                                                             | -                          | -            |
+| **Compatibility**                                                                                                                                                           | **on**                     | **off**      |
+| configuration tag                                                                                                                                                           | standard                   | Java tools   |
+| trustlevel tag                                                                                                                                                              | \-                         | x            |
+| comments                                                                                                                                                                    | \-                         | x            |
+| ejcOrdersConfirmed tag                                                                                                                                                      | \-                         | x            |
+| island tag                                                                                                                                                                  | \-                         | x            |
+| island blocks                                                                                                                                                               | \-                         | x            |
+| Herb Day (regional herbs)                                                                                                                                                   | \-                         | x            |
+| Hot spots                                                                                                                                                                   | \-                         | x            |
 
-Der Schalter **_Ausgewählte Regionen_** ist nur aktiv, wenn in der Karte Regionen mit Rechtsklick angewählt wurden. Ist er aktiviert, werden nur die gewählten Regionen exportiert.
+The **_Selected regions_** button is only active if regions have been selected in the map by right-clicking. If it is activated, only the selected regions are exported.

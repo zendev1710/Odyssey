@@ -1,5 +1,5 @@
-# Save
+# Sauvegarde
 
 CTRL-S
 
-This saves the opened CR under the current name. The previous file is renamed to something like &lt;file&gt;.~1~. So if something goes wrong, you can restore the file this way.
+Cette commande permet d'enregistrer le fichier CR ouvert sous le nom actuel. Le fichier précédent est renommé en quelque chose comme &lt;file&gt ;.~1~. Ainsi, en cas de problème, vous pouvez restaurer le fichier de cette manière.

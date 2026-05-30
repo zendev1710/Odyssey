@@ -1,5 +1,5 @@
-# Lesezeichen ein/aus
+# Bookmark on/off
 
-STRG+F2
+CTRL+F2
 
-Macht die gerade markierte Region bzw. Einheit zu einem Lesezeichen bzw. wenn es schon ein Lesezeichen ist, entfernt es dieses aus der Lesezeichenliste.
+Makes the currently selected region or unit a bookmark or, if it is already a bookmark, removes it from the bookmark list.

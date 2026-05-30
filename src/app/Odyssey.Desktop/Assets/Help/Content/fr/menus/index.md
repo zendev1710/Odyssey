@@ -1,14 +1,14 @@
 # Menüs
 
-Die Magellan-Menüstruktur gliedert sich wie folgt:
+La structure du menu Magellan se présente comme suit :
 
 * [Datei](file/index.md)
 * [Bearbeiten](edit/index.md)
 * [Befehle](orders/index.md)
-* [Lesezeichen](bookmarks/index.md)
+* [Lesezeichen](signets/index.md)
 * [Karte](map/index.md)
 * [Desktop](desktop/index.md)
 * [Plugins](plugins/index.md)
 * [Extras](extras/index.md)
 
-Klicke auf einen der oberen Punkte, um Hilfe zu den entsprechenden Menüpunkten zu erhalten.
+Cliquez sur l'un des boutons précédents pour obtenir de l'aide sur les différents points de menu.

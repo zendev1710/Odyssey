@@ -1,43 +1,43 @@
-# System
+# Système
 
-Some global system settings can be set here.
+Certains paramètres globaux du système peuvent être définis ici.
 
-![Options menu - System](../../images/menu_extras_options_system.gif)
+![Menu Options - Système](../../images/menu_extras_options_system.gif)
 
-**Language settings**
-    Here you can set the language used for the Magellan interface and the commands. For technical reasons, the change will only take effect after a restart of Magellan.
+**Réglages de la langue**
+    Vous pouvez régler ici la langue utilisée pour l'interface Magellan et les commandes. Pour des raisons techniques, le changement ne sera effectif qu'après un redémarrage de Magellan.
 
-* Temp units**
-    Here you can define the behaviour of Magellan when creating temp units. If a value is entered in the **_Start value_** field, Magellan numbers all the temp units created starting with this number, either decimally or in the Base36 system, depending on the setting selected next to the box. This is useful, for example, in an alliance in which each player has been assigned a reserved number range for temp units so that temp units with the same numbers are not created in the same region.  
-    If the **Display dialogue when creating temp units** option is selected, an additional window is displayed when temp units are created in which some settings can be made.
-* Check for newer version at start **.
-    If this option is selected, Magellan checks at startup whether a new version of Magellan is available for download. This requires a connection to the Internet. If a new version is available, the following dialogue is displayed at startup:
+* Unités temp
+    Vous pouvez définir ici le comportement de Magellan lors de la création d'unités temporaires. Si une valeur est saisie dans le champ **_Valeur de départ**, Magellan numérote toutes les unités temporaires créées à partir de ce nombre, soit de manière décimale, soit dans le système Base36, en fonction du paramètre sélectionné à côté de la case. Ceci est utile, par exemple, dans une alliance où chaque joueur s'est vu attribuer une plage de numéros réservés pour les unités temporaires, afin que des unités temporaires portant les mêmes numéros ne soient pas créées dans la même région.  
+    Si l'option **Afficher le dialogue lors de la création d'unités temporaires** est sélectionnée, une fenêtre supplémentaire s'affiche lors de la création d'unités temporaires, dans laquelle certains réglages peuvent être effectués.
+* Vérifier la présence d'une version plus récente au démarrage **.
+    Si cette option est sélectionnée, Magellan vérifie au démarrage si une nouvelle version de Magellan est disponible au téléchargement. Cela nécessite une connexion à Internet. Si une nouvelle version est disponible, la boîte de dialogue suivante s'affiche au démarrage :
 
     ![version](../../images/dialog_version.gif)
 
-    [https://magellan2.github.io](https://magellan2.github.io) is the current developer website.
-**Load the last report at startup**
-    This controls whether the last loaded report is loaded in Magellan when Magellan is started.
-* **Display regions "Empty" where regions are missing**
-    If this option is set, unknown regions are marked with a question mark.
-**Progress indicator**
-    If this option is activated, the percentage progress is displayed in the title area of the Magellan window, i.e. the number of units already confirmed.
+    [https://magellan2.github.io](https://magellan2.github.io) est le site web actuel du développeur.
+**Charger le dernier rapport au démarrage**
+    Ceci contrôle si le dernier rapport chargé est chargé dans Magellan lorsque Magellan est démarré.
+**Afficher les régions "vides" lorsque des régions sont manquantes**
+    Si cette option est activée, les régions inconnues sont marquées d'un point d'interrogation.
+**Indicateur de progression
+    Si cette option est activée, le pourcentage d'avancement est affiché dans la zone de titre de la fenêtre Magellan, c'est-à-dire le nombre d'unités déjà confirmées.
 
 ## Look & Feel
 
-![Options menu - System - Look&Feel](../../images/menu_extras_options_system_lookfeel.gif)
+![Menu Options - Système - Look&Feel](.../../images/menu_extras_options_system_lookfeel.gif)
 
 **Look & Feel:**
 
-* Here you can select the look & feel of the Magellan interface. A number of look & feels are already available here by default.
+* Vous pouvez ici sélectionner l'aspect et la convivialité de l'interface du Magellan. Un certain nombre d'aspects et de sensations sont déjà disponibles par défaut.
 
   * CDE/Motif
   * Plastic
   * Liquird LnF
-  * Metal
+  * Métal
   * Metouia (sf)
   * PGs LnF
-  * Plastic (JGoodies)
+  * Plastique (JGoodies)
   * Plastic 3D (JGoodies)
   * Plastic XP (JGoodies)
   * SH Farr
@@ -46,46 +46,46 @@ Some global system settings can be set here.
   * Windows
   * Windows XP
 
-    Magellan can also be customised with so-called skins. This requires so-called theme packs, which must be placed in the 'skins' subdirectory. (For example, if magellan.jar is in the directory C:\\magellan\\, then skinlf.jar must also be placed in the directory C:\\magellan\\ and the theme pack whistlertheme.zip in the directory C:\\magellan\\skins\\). Suitable theme packs can be found at [www.mylookandfeel.com](http://mylookandfeel.l2fprod.com/portal.php3?action=plaf&id=skinlf).
-**Font size**
-    Here you can set the relative size of the system font. For technical reasons, the change will only take effect after a restart of Magellan.
-* **Display handles at top tree level**
-    This means that you can still see the topmost tree node (e.g. in the [Region overview](../../docks/regions.md)) and thus collapse the tree completely. If this node is not displayed, the nodes of the top level must be expanded by double-clicking.
+    Magellan peut également être personnalisé avec des "skins". Pour ce faire, il faut utiliser des packs de thèmes, qui doivent être placés dans le sous-répertoire "skins". (Par exemple, si magellan.jar se trouve dans le répertoire C:\Nmagellan\N, skinlf.jar doit également être placé dans le répertoire C:\Nmagellan\Net le theme pack whistlertheme.zip dans le répertoire C:\Nmagellan\Nskins\N). Des packs de thèmes appropriés sont disponibles à l'adresse [www.mylookandfeel.com](http://mylookandfeel.l2fprod.com/portal.php3?action=plaf&id=skinlf).
+**Taille de la police**
+    Vous pouvez définir ici la taille relative de la police du système. Pour des raisons techniques, la modification ne prendra effet qu'après un redémarrage de Magellan.
+**Afficher les poignées au niveau de l'arbre supérieur**
+    Cela signifie que vous pouvez toujours voir le nœud le plus haut de l'arbre (par exemple dans la [Vue d'ensemble de la région](../../docks/regions.md)) et donc réduire complètement l'arbre. Si ce nœud n'est pas affiché, les nœuds du niveau supérieur doivent être développés en double-cliquant.
 
-## File history
+## Historique du fichier
 
-![Options menu - System - History](../../images/menu_extras_options_system_history.gif)
+![Menu Options - Système - Historique](../../images/menu_extras_options_system_history.gif)
 
-The value entered here determines how many recently loaded reports appear in the file menu.
+La valeur saisie ici détermine combien de rapports récemment chargés apparaissent dans le menu des fichiers.
 
-## File name generation
+## Génération du nom de fichier
 
-If you enter something here, a file name is suggested in the [dialogue for saving the commands](../file/saveorders.md). An example would be {round}-{factionnr}-new.txt .
+Si vous saisissez quelque chose ici, un nom de fichier est suggéré dans le [dialogue d'enregistrement des commandes] (../file/saveorders.md). Un exemple serait {round}-{factionnr}-new.txt .
 
-## Name generator
+## Générateur de nom
 
-![Options menu - System - Name generator](../../images/menu_extras_options_system_generator.gif)
+![Menu Options - Système - Générateur de noms](../../images/menu_extras_options_system_generator.gif)
 
-If you activate this option and include a text file in which names are listed line by line, you can select these when creating new units.
+Si vous activez cette option et que vous incluez un fichier texte dans lequel les noms sont listés ligne par ligne, vous pouvez les sélectionner lors de la création de nouvelles unités.
 
-## Text coding
+## Codage du texte
 
-![Options menu - System - Text encoding](../../images/menu_extras_options_system_textencoding.gif)
+![Menu Options - Système - Codage du texte](../../images/menu_extras_options_system_textencoding.gif)
 
-Here you can define how Magellan encodes the reports and commands. There are basically three types of coding.
+Vous pouvez définir ici comment Magellan encode les rapports et les commandes. Il existe trois types de codage.
 
-* System - is the encoding of the system and today usually corresponds to UTF-8.
-* ISO-8859-1 - is the standard format for most files in Central Europe
-* UTF-8 - is the future.
+* Système - est le codage du système et correspond généralement à UTF-8.
+* ISO-8859-1 - est le format standard pour la plupart des fichiers en Europe centrale.
+* UTF-8 - c'est l'avenir.
 
-We highly recommend encoding all reports and commands in UTF-8. The Eressea server now supports this throughout. Only a few tools have a problem with this.
+Nous recommandons vivement d'encoder tous les rapports et commandes en UTF-8. Le serveur Eressea prend désormais en charge ce format dans son ensemble. Seuls quelques outils posent problème.
 
 ## Messages
 
-![Options menu - System - Messages](../../images/menu_extras_options_messages.gif)
+![Menu Options - Système - Messages](../../images/menu_extras_options_messages.gif)
 
-**Line break**
-    If you activate the option _Activate line break_, the messages that are too long for the width of the message window are wrapped. This means that there is no horizontal scroll bar.
+**Saut de ligne**
+    Si vous activez l'option _Activer le saut de ligne_, les messages qui sont trop longs pour la largeur de la fenêtre de message sont enveloppés. Cela signifie qu'il n'y a pas de barre de défilement horizontale.
 
-* Colours
-    Here you can define different background colours for the different message types to attract attention. The default background colour is white.
+* Couleurs
+    Vous pouvez définir ici différentes couleurs d'arrière-plan pour les différents types de messages afin d'attirer l'attention. La couleur d'arrière-plan par défaut est le blanc.

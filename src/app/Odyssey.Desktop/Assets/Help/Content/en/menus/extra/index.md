@@ -1,23 +1,23 @@
-# Menü Extras
+# Extras menu
 
-Das Extras-Menü hat folgende Punkte:
+The Extras menu has the following items:
 
-* [Parteistatistik](factionstatistics.md)
-* [Heeresstatistik](armystatistics.md)
-* [Handelsstatistik](tradestatistics.md)
-* [Alchemieplaner](alchemystatistics.md)
-* [Vorlage](vorlage.md)
-* Base 36 to Base 10  
-    Öffnet einen Dialog zur Umrechnung von Basis-36-Nummern (ii) nach Basis 10 (666) und umgekehrt.
-* Neuzeichnen  
-    Löst das Neuzeichnen der Karte bei Darstellungsproblemen aus.
-* Grafikset neuladen  
-    Löst das Neuladen des Grafiksets aus. Vor allem nützlich beim Erstellen von Grafiksets um das Ergebnis zu kontrollieren.
-* [Optionen](options.md)
-* [Profile](profiles.md)
-* Hilfe  
-    Zeigt diese Hilfe an.
-* [Tipp des Tages](tips.md)
-* InfoZeigt den Infodialog vom Magellan in dem u. a. die Version steht.
+* [Faction statistics](factionstatistics.md)
+* [Army statistics](armystatistics.md)
+* [Trade statistics](tradestatistics.md)
+* [Alchemy planner](alchemystatistics.md)
+* [Template](template.md)
+* Base 36 to Base 10
+    Opens a dialogue for converting base 36 numbers (ii) to base 10 (666) and vice versa.
+* Redraw
+    Triggers the redrawing of the map in the event of display problems.
+* Reload graphics set
+    Triggers the reloading of the graphics set. Particularly useful when creating graphics sets to check the result.
+* Options](options.md)
+* Profiles](profiles.md)
+* Help
+    Displays this help.
+* [Tip of the day](tips.md)
+* InfoDisplays the info dialogue of Magellan in which, among other things, the version is displayed.
 
-Dieser Menüpunkt enthält eine Reihe von Werkzeugen und Auswertungen, die während des Arbeitens mit Magellan hilfreich sein können.
+This menu item contains a range of tools and analyses that can be helpful when working with Magellan.

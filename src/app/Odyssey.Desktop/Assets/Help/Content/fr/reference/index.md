@@ -1,17 +1,17 @@
-# Reference
+# Référence
 
-This chapter describes the basic working methods and relationships in Magellan.
+Ce chapitre décrit les méthodes de travail et les relations de base dans Magellan.
 
-These are
+Ces méthodes et relations sont les suivantes
 
-* [Desktop settings](desktop.md)
-    Customise the Magellan interface to your own needs
-* Graphic sets](graphicsets.md)
-    Integration and creation of region graphics
-* Resources](resources.md)
-    Integration of external modifications and extensions in Magellan
-* [Computer reports](cr.md)
-    Working with computer reports in Magellan
-* [Shortcuts](shortcuts.md)
-* [ATR, ATR, tooltips and region short info](atr_arr.md)
-* [Command line parameters](commandline.md)
+* [Paramètres du bureau](desktop.md)
+    Personnaliser l'interface de Magellan en fonction de vos propres besoins.
+* [Jeux graphiques](graphicsets.md)
+    Intégration et création de graphiques régionaux
+* [Ressources](resources.md)
+    Intégration de modifications et d'extensions externes dans Magellan
+* [Rapports informatiques](cr.md)
+    Travailler avec des rapports informatiques dans Magellan
+* [Raccourcis](shortcuts.md)
+* [ATR, ATR, infobulles et infos courtes sur les régions](atr_arr.md)
+* [Paramètres de la ligne de commande](commandline.md)

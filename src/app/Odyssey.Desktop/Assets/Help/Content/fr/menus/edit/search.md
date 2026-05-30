@@ -1,15 +1,15 @@
-# Search
+# Recherche
 
 CTRL-F
 
-This function allows you to search the report for keywords to find "lost" units, ships, etc. You can set the search range in the following dialogue. You can set the search range in the following dialogue:
+Cette fonction vous permet de rechercher des mots-clés dans le rapport afin de trouver des unités, des navires, etc. "perdus". Vous pouvez définir l'étendue de la recherche dans la boîte de dialogue suivante. Vous pouvez définir la plage de recherche dans la boîte de dialogue suivante :
 
 ![menu_extras_search](../../images/menu_extras_search.gif)
 
-The **_Search_pattern_** field can also remain empty. Searching for an empty search pattern and the search area "Ships", for example, returns all ships that appear in the report.
+Le champ **Modèle_de_recherche** peut également rester vide. La recherche d'un motif de recherche vide et de la zone de recherche "Navires", par exemple, renvoie tous les navires qui apparaissent dans le rapport.
 
-In the **_Attribute search area_** block, you can set which attributes of an object are to be taken into account in the search. You can also restrict the search to a specific faction here. 'Search words individually' searches for all objects that contain one of the words entered as a part. 'Whole words only' only finds objects that contain the search pattern as a whole. 'Regular expressions' searches for such, for example ' `.*bauer` ' finds farmer, mountain farmer and bird farmer and ' `^B.*auer$` ' finds farmer and mountain farmer, but not bird farmer.
+Dans le bloc **_Zone de recherche d'attributs_**, vous pouvez définir les attributs d'un objet qui doivent être pris en compte dans la recherche. Vous pouvez également limiter la recherche à une faction spécifique. L'option "Rechercher les mots individuellement" permet de rechercher tous les objets qui contiennent l'un des mots saisis en tant que partie. L'option "Mots entiers uniquement" permet de rechercher uniquement les objets qui contiennent le motif de recherche dans son ensemble. Les expressions régulières permettent d'effectuer des recherches, par exemple ' `.*bauer`' permet de trouver des agriculteurs, des éleveurs de montagne et des éleveurs d'oiseaux, et ' `^B.*auer$`' permet de trouver des agriculteurs et des éleveurs de montagne, mais pas d'éleveurs d'oiseaux.
 
-The **_Object Search Area_** block allows you to restrict the search to units, buildings, ships, regions and traitors.
+Le bloc **_Zone de recherche d'objets_** vous permet de restreindre la recherche aux unités, aux bâtiments, aux navires, aux régions et aux traîtres.
 
-Click on the search result to display the corresponding object in the main window.
+Cliquez sur le résultat de la recherche pour afficher l'objet correspondant dans la fenêtre principale.

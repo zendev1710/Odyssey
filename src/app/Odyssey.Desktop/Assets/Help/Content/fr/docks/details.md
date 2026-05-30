@@ -1,27 +1,27 @@
-# Details
+# Détails
 
-The details window is probably the most important source of information in Magellan. The details of the currently selected objects are shown here.
+La fenêtre des détails est probablement la source d'information la plus importante de Magellan. Les détails des objets actuellement sélectionnés sont affichés ici.
 
 ![Detailfenster](../images/windows_detail.gif)
 
-The most important information about the region the object is in is shown at the top. This includes: Number of peasants, maximum number of recruits, income of the peasants (possible tax), entertainment limit, pool silver (the silver of all factions with a password entered), trade volume, available trees, horses and iron/laen. The information in the lower part differs depending on the selected object and is shown in a tree, so that information can easily be called upon or hidden at will.
+Les informations les plus importantes concernant la région dans laquelle se trouve l'objet sont affichées en haut. Il s'agit des informations suivantes : Le nombre de paysans, le nombre maximum de recrues, le revenu des paysans (taxe éventuelle), la limite de divertissement, la réserve d'argent (l'argent de toutes les factions avec un mot de passe), le volume du commerce, les arbres disponibles, les chevaux et le fer/l'argent. Les informations de la partie inférieure diffèrent en fonction de l'objet sélectionné et sont représentées sous forme d'arbre, de sorte que les informations peuvent être facilement appelées ou cachées à volonté.
 
-Depending on the kind of object currently selected, the details window shows different information.
+La fenêtre de détails affiche des informations différentes selon le type d'objet sélectionné.
 
-**Island:** No information.
+**Île :** Pas d'information.
 
-**Region:** All information about a region, like the guarding factions, are compared to previous reports', which makes it possible to show the changes since the last report as well. Right-clicking in the details shows a context menu which allows you to write comments on the region (ownership, etc.) These comments can later be changed, removed or expanded on with another right-click.
+**Toutes les informations relatives à une région, comme les factions de gardiens, sont comparées à celles des rapports précédents, ce qui permet également de montrer les changements intervenus depuis le dernier rapport. En cliquant avec le bouton droit de la souris sur les détails, un menu contextuel s'affiche et permet d'écrire des commentaires sur la région (propriété, etc.). Ces commentaires peuvent être modifiés, supprimés ou complétés par la suite en cliquant à nouveau avec le bouton droit de la souris.
 
-**Faction:** A summary of all known information on this faction in the region, divided in categories weapons, armor, resources, luxury goods, herbs, potions, miscellaneous and skills. The options of adding comments by right-clicking also exists for factions.
+**Faction :** Un résumé de toutes les informations connues sur cette faction dans la région, divisé en catégories : armes, armures, ressources, produits de luxe, herbes, potions, divers et compétences. La possibilité d'ajouter des commentaires par un clic droit existe également pour les factions.
 
-**Ships:** Load (as known), ownership and captain, as well as the units that are on board. Ships can also be commented on by right-clicking.
+**Navires :** Chargement (si connu), propriétaire et capitaine, ainsi que les unités à bord. Les navires peuvent également être commentés par un clic droit.
 
-**Buildings:** Owner, size, inmates as well as required upkeep. The comment function is also available here.
+**Bâtiments :** Propriétaire, taille, détenus ainsi que l'entretien nécessaire. La fonction de commentaire est également disponible ici.
 
-**Streets:** Direction and status of construction.
+**Rues :** Direction et état de la construction.
 
-**Unit:** Here all information on the currently selected unit is shown. This includes load, free capacity when moving, items and skill level. Teacher and student units are also shown. Values in parentheses show the number of items/persons in the next round. If it is impossible to calculate this value a question mark is shown. If the unit is teaching other units, the students' orders can be confirmed with a right-click on the teacher node.
+**Unité :** Toutes les informations relatives à l'unité sélectionnée sont affichées ici. Il s'agit notamment de la charge, de la capacité libre en cas de déplacement, des objets et du niveau de compétence. Les unités d'enseignants et d'élèves sont également affichées. Les valeurs entre parenthèses indiquent le nombre d'objets/personnes dans le prochain tour. S'il est impossible de calculer cette valeur, un point d'interrogation est affiché. Si l'unité enseigne à d'autres unités, les commandes des élèves peuvent être confirmées par un clic droit sur le nœud de l'enseignant.
 
-If the unit as a mage the known spells are listed. With a click on a spell you can see its description, if this is saved within the CR. If this is not the case, these can be requested from the server with the SHOW ALL SPELLS command. In the next turn they will be available. Using **_Back_** you return to the unit.
+Si l'unité est un mage, les sorts connus sont listés. En cliquant sur un sort, vous pouvez voir sa description, si elle est enregistrée dans le CR. Si ce n'est pas le cas, ces descriptions peuvent être demandées au serveur avec la commande SHOW ALL SPELLS. Ils seront disponibles au tour suivant. En utilisant **_Back_** vous retournez à l'unité.
 
-All of the units shown in the details window (teachers, students, inmates) can be selected with a mouse click, which makes it relatively simple to jump e.g. from a student to the corresponding teacher unit.
+Toutes les unités affichées dans la fenêtre de détails (enseignants, élèves, détenus) peuvent être sélectionnées par un clic de souris, ce qui rend relativement simple le passage, par exemple, d'un élève à l'unité correspondante de l'enseignant.

@@ -1,63 +1,63 @@
-# Icons
+# Icônes
 
-## Icon settings
+## Paramètres des icônes
 
-![Options - Icons](../../images/menu_extras_options_icons.gif)
+![Options - Icônes](../../images/menu_extras_options_icons.gif)
 
-**Show short info:** If this option is activated, you will receive the corresponding talent or building name that the icon represents if you hover the mouse pointer over an icon for a longer period of time.
+**Afficher l'info courte:** Si cette option est activée, vous obtiendrez le talent correspondant ou le nom du bâtiment que l'icône représente si vous passez le pointeur de la souris sur une icône pendant une longue période de temps.
 
-**Messages/Details/Regions**: The options relating to the respective panel are summarised in the respective area.
+**Messages/Détails/Régions** : Les options relatives à chaque panneau sont résumées dans la zone correspondante.
 
-Depending on the respective area, various sub-options are made available in the form of tabs on the left-hand side. The fine adjustment of the respective sub-options takes place in a separate window, which can be opened by pressing the _**Details**_ button.
+Selon la zone concernée, diverses sous-options sont disponibles sous forme d'onglets sur le côté gauche. Le réglage fin des sous-options correspondantes s'effectue dans une fenêtre séparée, qui peut être ouverte en appuyant sur le bouton _**Détails**_.
 
-**Unit tab**
-    This tab refers to the line containing the name of the unit. In addition to the name, further information can be displayed.
-  **Show additional icons and texts**
-        Displays icons for talents, items and the unit's location.
-  **Display talent changes**
-        if you have also loaded a report from the previous week, you can use it to display talent changes.
-  **Categorise items**
-        Summarises different items, e.g. all weapons.
-**Talent tab**
-    This tab refers to the expandable lines below the unit name in the detail window, which contain the different talents of the unit.
-  **Show next level information**
-        shows how long it will take to learn the next level, if this is supported by the game.
-  **Display talent changes**
-        if you have also loaded a report from the previous week, you can use it to display talent changes.
-**Items tab**
-    This tab refers to the expandable lines below the unit name in the detail window, which list the items of the unit.
-**Display number of regions**
-        shows the total number of items in the region behind the items.
-**Simple tab**
-    This tab refers to the other lines in the detail window.
-  **Show icons**
-        shows an icon at the beginning of the line if one exists for the displayed information.
+**Onglet Unité
+    Cet onglet fait référence à la ligne contenant le nom de l'unité. Outre le nom, d'autres informations peuvent être affichées.
+  **Afficher les icônes et les textes supplémentaires**
+        Affiche les icônes des talents, des objets et de l'emplacement de l'unité.
+  **Afficher les changements de talents**
+        si vous avez également chargé un rapport de la semaine précédente, vous pouvez l'utiliser pour afficher les changements de talents.
+  **Classer les éléments par catégorie
+        Résume les différents objets, par exemple toutes les armes.
+**Onglet Talent
+    Cet onglet fait référence aux lignes extensibles situées sous le nom de l'unité dans la fenêtre de détail, qui contiennent les différents talents de l'unité.
+  **Afficher les informations sur le niveau suivant**
+        indique le temps nécessaire pour apprendre le niveau suivant, si le jeu le permet.
+  **Afficher les changements de talents**
+        si vous avez également chargé un rapport de la semaine précédente, vous pouvez l'utiliser pour afficher les changements de talents.
+**Onglet Articles
+    Cet onglet fait référence aux lignes extensibles situées sous le nom de l'unité dans la fenêtre de détail, qui répertorient les éléments de l'unité.
+**Affichage du nombre de régions**
+        affiche le nombre total d'éléments dans la région située derrière les éléments.
+**Onglet simple
+    Cet onglet renvoie aux autres lignes de la fenêtre de détail.
+  **Afficher les icônes**
+        affiche une icône au début de la ligne s'il en existe une pour l'information affichée.
 
-## Value->Colour mapping
+## Correspondance valeur->couleur
 
-![Options - Colour mapping](../../images/menu_extras_options_icons_colour.gif)
+![Options - Correspondance des couleurs](../../images/menu_extras_options_icons_colour.gif)
 
-The font colour for the talent value display in the region window can be configured here according to talent values. If no colours are defined here, black is used.
+La couleur de la police pour l'affichage des valeurs de talent dans la fenêtre de la région peut être configurée ici en fonction des valeurs de talent. Si aucune couleur n'est définie ici, le noir est utilisé.
 
-## Icon style
+## Style de l'icône
 
 ![Options - Iconstile](../../images/menu_extras_options_icons_iconstyle.gif)
 
-The type of display in the region window can be configured here.
+Le type d'affichage dans la fenêtre de la région peut être configuré ici.
 
-* **Simple**
-    refers to icons that are not assigned their own style, the default setting.
-**Main**
-    refers to region names and faction names.
-**Additional part**
-    refers to the units.
+**Simple**
+    se réfère aux icônes qui n'ont pas de style propre, c'est le réglage par défaut.
+**Principale**
+    renvoie aux noms des régions et des factions.
+**Partie supplémentaire**
+    fait référence aux unités.
 
-The setting options are divided into the following points:
+Les options de paramétrage sont réparties entre les points suivants :
 
-* Position of the name or text value in relation to the icon
-* Fonts and font sizes that differ from the default settings
-* Background and foreground/font colours that differ from the standard
+* Position du nom ou de la valeur textuelle par rapport à l'icône
+* Polices et tailles de polices différentes des paramètres par défaut
+* Couleurs d'arrière-plan et d'avant-plan/police différentes de la norme
 
-Furthermore, you can use the _**Add**_ button to define your own icon styles, which you can then activate with Template, for example. In the CR, they must be in the context of units in the form _"Icon style name";magStyle_. The self-defined icon styles can be deleted again using the _**Delete**_ button.
+En outre, vous pouvez utiliser le bouton _**Add**_ pour définir vos propres styles d'icônes, que vous pouvez ensuite activer avec Template, par exemple. Dans le CR, ils doivent se trouver dans le contexte des unités sous la forme _"Nom du style d'icône";magStyle_. Les styles d'icônes définis par l'utilisateur peuvent être supprimés à nouveau à l'aide du bouton _**Delete**_.
 
-If the talent changes are displayed using a stylesheet, the icon styles required for this are also in this list, under the name _Talentx_, where x is the number for the corresponding level change.
+Si les changements de talent sont affichés à l'aide d'une feuille de style, les styles d'icônes nécessaires à cet effet figurent également dans cette liste, sous le nom _Talentx_, où x est le numéro du changement de niveau correspondant.

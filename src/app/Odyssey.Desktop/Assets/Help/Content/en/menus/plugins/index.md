@@ -1,11 +1,11 @@
-# Menü Plugins
+# Plugins menu
 
-Dieser Menüpunkt erscheint nur dann, wenn Magellan sogenannte Plugins (also externe Erweiterungen) gefunden hat und diese einen eigenen Menüpunkt in Magellan wünschen. Unterhalb dieses Punktes erscheinen dann deren Menüpunkte.
+This menu item only appears if Magellan has found so-called plugins (i.e. external extensions) and these require their own menu item in Magellan. Their menu items then appear below this point.
 
-Falls Du Magellan gerade erst installiert hast, stehen Dir drei Standard-PlugIns zur Verfügung. Diese werden Dir bei der Installation zur Auswahl angeboten und es lohnt sich, ein Blick dort hinein zu werfen. Hier ein kurzer Einblick in diese Plugins:
+If you have just installed Magellan, there are three standard plug-ins available to you. These are offered for selection during installation and it is worth taking a look at them. Here is a brief insight into these plug-ins:
 
-* Das Plugin [MapEdit](../../reference/plugins_mapedit.md) erlaubt Dir das Verändern des Kartenmaterials. Es tritt in Erscheinung, wenn Du auf der Karte mit der rechten Maustaste eine Region wählst. Im sich öffnenden Kontextmenü kannst Du unten die angegeben Region bearbeiten und so zum Beispiel fehlende Regionen hinzufügen.
-* Die erweiterten Befehle (kurz [ExtCmds](../../reference/plugins_extcmds.md)) sind ein PlugIn, dass Magellan um Scripting Funktionen für Regionen, Schiffe, Burgen und Einheiten erweitert. Damit kann man scriptbasiert Runde für Runde widerkehrende Befehle geben. ExtCmds steht damit in direkter Konkurrenz zu "Vorlage".
-* Der [Gruppeneditor](../../reference/plugins_groupeditor.md) ermöglicht es, einfach und schnell die HELFE-Stati der Gruppen einer Partei zu setzen. Auf Basis einer Matrix kann so für jede Gruppe eine HELFE-Beziehung zu einer Partei definiert werden.
+* The [MapEdit](../../reference/plugins_mapedit.md) plugin allows you to change the map material. It appears when you select a region on the map with the right mouse button. In the context menu that opens, you can edit the specified region below and add missing regions, for example.
+* The extended commands (short [ExtCmds](../../reference/plugins_extcmds.md)) are a plug-in that extends Magellan with scripting functions for regions, ships, castles and units. This allows you to give recurring commands on a turn-by-turn basis. ExtCmds is therefore in direct competition with "Template".
+* The [group editor](../../reference/plugins_groupeditor.md) makes it possible to quickly and easily set the HELFE statuses of a faction's groups. A HELFE relationship to a faction can be defined for each group on the basis of a matrix.
 
-Es gibt noch viele weitere Plugins. Eine Sammlung bekannter Plugins findest Du auf der Seite [http://magellan.log-out.net/plugins\_de.php](http://magellan.log-out.net/plugins_de.php).
+There are many more plugins. You can find a collection of known plugins on the page [http://magellan.log-out.net/plugins\_en.php](http://magellan.log-out.net/plugins_de.php).

@@ -1,5 +1,5 @@
-# Bookmark on/off
+# Signet activé/désactivé
 
 CTRL+F2
 
-Makes the currently selected region or unit a bookmark or, if it is already a bookmark, removes it from the bookmark list.
+Fait de la région ou de l'unité sélectionnée un signet ou, s'il s'agit déjà d'un signet, le supprime de la liste des signets.

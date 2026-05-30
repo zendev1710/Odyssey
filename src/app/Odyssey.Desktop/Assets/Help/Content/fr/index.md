@@ -1,28 +1,28 @@
-# Magellan Help
+# Aide Magellan
 
-Magellan is a complete client for Eressea. You can view your map, search, give orders, and you almost only need to leave the program to send mails to your allies. Almost...
+Magellan est un client complet pour Eressea. Vous pouvez consulter votre carte, faire des recherches, donner des ordres, et vous n'avez pratiquement besoin de quitter le programme que pour envoyer des mails à vos alliés. Presque...
 
-This documentation is built up around the following chapters:
+Cette documentation s'articule autour des chapitres suivants :
 
-* [The menus](menus/index.html)
-* [The docks](docks/index.html)
-* [Reference](reference/index.html)
+* [Les menus](menus/index.html)
+* [Les docks](docks/index.html)
+* [Référence](reference/index.html)
 * [FAQ](faq.html)
-* [Feedback and Support](feedback.html)
+* [Feedback et support](feedback.html)
 
-In the JavaHelp version there are some additional tables and descriptions of the orders from the Eressea manual. These may, however, not be complete or completely up-to-date. When in doubt use the official rules at [https://wiki.eressea.de](https://wiki.eressea.de/index.php/Regeln).
+La version JavaHelp contient quelques tableaux et descriptions supplémentaires des commandes du manuel Eressea. Il se peut toutefois qu'ils ne soient pas complets ou complètement à jour. En cas de doute, utilisez les règles officielles à l'adresse [https://wiki.eressea.de](https://wiki.eressea.de/index.php/Regeln).
 
-Unfortunately this documentation is incomplete. Several parts are missing or have to be expanded on. It may also happen that this documentation is not completely up-to-date, since Magellan is under constant development. If you miss anything, leave us a note at the [Magellan bug tracker](feedback.html#bugs). Of course any kind of help is welcome. The most important resource for recent information is our Website:  
+Malheureusement, cette documentation est incomplète. Plusieurs parties sont manquantes ou doivent être complétées. Il se peut également que cette documentation ne soit pas complètement à jour, étant donné que Magellan est en développement constant. Si quelque chose vous échappe, laissez-nous une note sur le [Magellan bug tracker](feedback.html#bugs). Bien entendu, toute forme d'aide est la bienvenue. La ressource la plus importante pour des informations récentes est notre site web :  
 [https://magellan2.github.io](https://magellan2.github.io)
 
-## Thank you
+## Merci
 
-to Stefan Götz and all other Magellan-developers for a very cool Eressa-client and the support for this online help and to Matthias Müller, who helped me with texts and tests.
+à Stefan Götz et à tous les autres développeurs de Magellan pour un client Eressa très cool et pour le support de cette aide en ligne, ainsi qu'à Matthias Müller, qui m'a aidé avec des textes et des tests.
 
 ### Disclaimer
 
-This documentation was put together with the greatest care. Even so, the authors can not take responsibility for any errors or misinformation within it, or any damages that may occur through the use or non-use of this documentation. So whatever happens, dear reader: It's your own fault!
+Cette documentation a été rédigée avec le plus grand soin. Néanmoins, les auteurs ne peuvent être tenus responsables des erreurs ou des informations erronées qu'elle contient, ni des dommages qui pourraient résulter de l'utilisation ou de la non-utilisation de cette documentation. Alors, quoi qu'il arrive, cher lecteur, chère lectrice : C'est de votre faute !
 
-This documentation is distributed under the [GNU Public License (GPL)](license.html).
+Cette documentation est distribuée sous la [Licence publique GNU (GPL)](license.html).
 
-Mark Gerritsen (English translation), Doetinchem, the Netherlands, 03/15/2008
+Mark Gerritsen (traduction anglaise), Doetinchem, Pays-Bas, 15/03/2008

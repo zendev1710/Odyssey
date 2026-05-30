@@ -1,9 +1,9 @@
-# Ursprung setzen
+# Set origin
 
-Hier kann man den Koordinatenursprung der Karte anpassen. Bei Wahl des Menüpunktes erscheint folgender Dialog:
+Here you can adjust the coordinate origin of the map. The following dialogue appears when the menu item is selected:
 
 ![map_origin](../../images/menu_map_origin.gif)
 
-Hier trägt man einfach die Koordinaten der Region ein, die künftig auf 0,0 liegen soll sowie die CR-Ebene (falls vorhanden) für die die Änderung gelten soll. Die Koordinaten aller Regionen werden dann automatisch angepasst.
+Here you simply enter the coordinates of the region that should be at 0,0 in future and the CR level (if available) for which the change should apply. The coordinates of all regions are then automatically adjusted.
 
-**Vorsicht:** Diese Funktion ersetzt nicht den URSPRUNG-Befehl! Der Eressea-Server liefert also ungeachtet der Einstellungen in Magellan weiter CRs mit den alten Koordinaten.
+**Caution:** This function does not replace the URSPRUNG command! The Eressea server therefore continues to deliver CRs with the old coordinates regardless of the settings in Magellan.

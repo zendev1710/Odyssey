@@ -1,3 +1,3 @@
-# Tabs verbergen
+# Hide tabs
 
-Die [Docks](../../docks/index.md) zeichnen sich standardmäßig durch eine Titelleiste und kleine Icons pro Dock aus. Mit diesen Icons lässt sich das Dock schließen, verschieben und vergrößern. Benötigt man diese Icons und die Titelleiste nicht, so kann man mit diesem Menüpunkt die Titelleiste und Icons verschwinden lassen und gewinnt so etwas mehr Platz auf dem Bildschirm.
+The [Docks](../../docks/index.md) are characterised by a title bar and small icons per dock by default. These icons can be used to close, move and enlarge the dock. If you do not need these icons and the title bar, you can use this menu item to make the title bar and icons disappear and thus gain a little more space on the screen.

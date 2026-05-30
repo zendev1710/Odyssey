@@ -1,5 +1,5 @@
-# Rückgängig
+# Undo
 
-STRG-Z
+CTRL-Z
 
-Macht die letzte Eingabe im Befehlsfenster rückgängig. Derzeit ist diese Funktion deaktiviert.
+Undoes the last entry in the command window. This function is currently deactivated.

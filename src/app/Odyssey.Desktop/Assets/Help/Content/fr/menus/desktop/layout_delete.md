@@ -1,3 +1,3 @@
-# Delete this layout
+# Supprimer ce modèle
 
-This menu item can be used to delete the currently active layout. Magellan then uses the previous layout. If there is only one layout, it cannot be deleted and the menu item is deactivated.
+Cet élément de menu permet d'effacer la disposition actuellement active. Magellan utilise alors la disposition précédente. S'il n'y a qu'une seule disposition, elle ne peut pas être supprimée et l'élément de menu est désactivé.

@@ -1,3 +1,3 @@
-# Record islands
+# Îlots d'enregistrement
 
-When this menu item is selected, Magellan assigns contiguous land regions to an island. For the islands to be displayed, the corresponding setting in [Options](../extras/options_region.md) must be activated. Islands can be named by selecting the corresponding entry in the [Region overview](../../docks/regions.md) and editing it in the [Name view](../../docks/name.md).
+Lorsque cet élément de menu est sélectionné, Magellan attribue des régions terrestres contiguës à une île. Pour que les îles soient affichées, le réglage correspondant dans [Options](../extras/options_region.md) doit être activé. Les îles peuvent être nommées en sélectionnant l'entrée correspondante dans la [Vue d'ensemble des régions] (../../docks/regions.md) et en la modifiant dans la [Vue du nom] (../../docks/name.md).

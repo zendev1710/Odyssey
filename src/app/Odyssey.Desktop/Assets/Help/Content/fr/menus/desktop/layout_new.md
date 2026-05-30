@@ -1,6 +1,6 @@
-# Create new layout
+# Création d'une nouvelle mise en page
 
-This menu item is used to create a new layout based on the standard layout. You can select a name in the following dialogue and Magellan then jumps to the newly created layout.
+Cet élément de menu est utilisé pour créer une nouvelle disposition basée sur la disposition standard. Vous pouvez sélectionner un nom dans la boîte de dialogue suivante et Magellan passe alors à la nouvelle disposition créée.
 
 **Note**
-You may have the impression that nothing is happening. This is because the layouts are the same.
+Vous pouvez avoir l'impression que rien ne se passe. Cela est dû au fait que les présentations sont les mêmes.

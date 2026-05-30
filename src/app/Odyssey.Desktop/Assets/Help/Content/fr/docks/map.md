@@ -1,27 +1,28 @@
 # Karte
 
-Here the map of the known world is displayed.
+La carte du monde connu est affichée ici.
 
 ![windows_map](../images/windows_map.gif)
 
-When "Fog of War" (FOW) is enabled, regions that do not contain units or have not been traveled through, as well as ocean regions that can not be glimpsed from atop a lighthouse, are displayed darker. This mode can be toggled with shortcut key Ctrl+W .
+Lorsque le mode "Brouillard de guerre" (FOW) est activé, les régions qui ne contiennent pas d'unités ou qui n'ont pas été traversées, ainsi que les régions océaniques qui ne peuvent pas être aperçues du haut d'un phare, sont affichées en plus sombre. Ce mode peut être activé à l'aide du raccourci clavier Ctrl+W .
 
-If you click on the map the selected region is opened in the region view. By holding down the mouse button you can pan the map.
+Si vous cliquez sur la carte, la région sélectionnée s'ouvre dans la vue régionale. En maintenant le bouton de la souris enfoncé, vous pouvez effectuer un panoramique sur la carte.
 
-Above the map there is a zoom bar that controls the magnification of the map. Additionally you might find two drop-down menus here. One for planes, if you happen to have units in several planes, and one that allows you to choose so-called hotspots. You can add a hotspot by pressing Ctrl+H and entering a name. By doing this you save the current map position and can go back to it at any time through the drop-down menu. If you are at an existing hotspot, you can delete it by pressing Ctrl+ALT+H .
+Au-dessus de la carte, une barre de zoom permet de contrôler l'agrandissement de la carte. Vous trouverez également deux menus déroulants. L'un pour les avions, si vous avez des unités dans plusieurs avions, et l'autre qui vous permet de choisir ce que l'on appelle des hotspots. Vous pouvez ajouter un hotspot en appuyant sur Ctrl+H et en entrant un nom. Ce faisant, vous sauvegardez la position actuelle de la carte et vous pouvez y revenir à tout moment grâce au menu déroulant. Si vous vous trouvez dans un hotspot existant, vous pouvez le supprimer en appuyant sur Ctrl+ALT+H .
 
-You can select a region with Ctrl+right click , or several with the mouse button held down. This way you can for example select regions to export as a CR. To deselect, use Ctrl+right click again. You may also select the current region by pressing the space bar.
+Vous pouvez sélectionner une région en appuyant sur Ctrl+clic droit, ou plusieurs en maintenant le bouton de la souris enfoncé. De cette manière, vous pouvez par exemple sélectionner des régions pour les exporter sous forme de CR. Pour désélectionner, utilisez à nouveau Ctrl+clic droit. Vous pouvez également sélectionner la région actuelle en appuyant sur la barre d'espacement.
 
-Right clicking a region results in a context menu that has the following options:
+En cliquant avec le bouton droit de la souris sur une région, un menu contextuel s'affiche avec les options suivantes :
 
-* **Change selection state**  
-    Allows you to select and deselect the current region as with Ctrl+right click.
-* **Copy name and coordinates**  
-    Copies the name and coordinates to the clipboard.
-* **Set origin to this region**  
-    Sets the origin of the coordinate system to the current region. This only applies to the display, a matching ORIGIN order is not issued to any unit.
-* **Set or delete hotspot**  
-    Sets or deletes a hotspot corresponding to the current region. The name of the hotspot is set to the region's name.
-* **Signs**  
-    You may add signs to a region on the map. Signs are displayed on the map and may help you to remember important information.
-* **Tooltips and Renderer** You can select which tooltip is displayed while hovering over a map region. You can also select how regions are rendered in the map. You can find more information on map renderers in the section about[map options](../menus/extras/options_map.html). You may also choose between available tooltips, texts, and region renderers quickly by pressing Alt+Shift+P, Alt+Shift+A , and Alt+Shift+R, respectively.
+**Changer l'état de la sélection**
+    Vous permet de sélectionner et de désélectionner la région actuelle comme avec Ctrl+clic droit.
+**Copier le nom et les coordonnées**
+    Copie le nom et les coordonnées dans le presse-papiers.
+
+* Définir l'origine de cette région
+    Définit l'origine du système de coordonnées pour la région actuelle. Ceci ne s'applique qu'à l'affichage, un ordre d'ORIGINE correspondant n'est donné à aucune unité.
+**Définir ou supprimer un point chaud**
+    Définit ou supprime une zone sensible correspondant à la région actuelle. Le nom du hotspot est défini sur le nom de la région.
+**Signes**
+    Vous pouvez ajouter des panneaux à une région sur la carte. Les panneaux sont affichés sur la carte et peuvent vous aider à vous souvenir d'informations importantes.
+* Vous pouvez sélectionner l'info-bulle à afficher lorsque vous survolez une région de la carte. Vous pouvez également choisir le mode de rendu des régions sur la carte. Vous trouverez plus d'informations sur le rendu des cartes dans la section about[map options](../menus/extras/options_map.html). Vous pouvez également choisir rapidement entre les infobulles, les textes et les rendus de région disponibles en appuyant respectivement sur Alt+Shift+P, Alt+Shift+A et Alt+Shift+R.

@@ -1,5 +1,5 @@
-# Tipp des Tages
+# Tip of the day
 
-Zeigt einen Dialog mit Tipps an, die die Entwickler von Magellan Euch Nutzern anbietet, um noch mehr mit Magellan machen zu können.
+Displays a dialogue with tips that the developers of Magellan offer you users to do even more with Magellan.
 
-![dialog_tips](../../images/dialog_tips.gif)
+![dialogue_tips](../../images/dialog_tips.gif)

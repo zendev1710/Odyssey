@@ -1,11 +1,11 @@
-# Resources
+# Ressources
 
-In this dialogue you can integrate external files into Magellan. These include, for example, alternative graphics sets, external plugins, customisations for other games (e.g. Verdanon) etc.
+Dans cette boîte de dialogue, vous pouvez intégrer des fichiers externes dans Magellan. Il s'agit, par exemple, de jeux graphiques alternatifs, de plugins externes, de personnalisations pour d'autres jeux (par exemple, Verdanon), etc.
 
-![Options - Resources](../../images/menu_extras_options_resources.gif)
+![Options - Ressources](../../images/menu_extras_options_resources.gif)
 
-Here you can set the paths/directories in which the additional programmes Template, for creating move templates, and ECheck, the syntax checker for Eressea, are located.
+Vous pouvez définir ici les chemins/répertoires dans lesquels se trouvent les programmes supplémentaires Template, pour créer des modèles de déplacement, et ECheck, le vérificateur de syntaxe pour Eressea.
 
-Clicking on the button opens a file selection dialogue in which the executable files of the respective programs can be selected.
+En cliquant sur le bouton, vous ouvrez une boîte de dialogue de sélection de fichiers dans laquelle les fichiers exécutables des programmes respectifs peuvent être sélectionnés.
 
-The dialogue allows you to create, edit and delete resource paths. For most resources, it is sufficient to select the corresponding .jar or .zip file in the file selection box. More detailed information can be found in the documentation of the respective extension and in the chapter [Resources](../../reference/resources.md).
+La boîte de dialogue permet de créer, d'éditer et de supprimer des chemins d'accès aux ressources. Pour la plupart des ressources, il suffit de sélectionner le fichier .jar ou .zip correspondant dans la boîte de sélection des fichiers. Des informations plus détaillées peuvent être trouvées dans la documentation de l'extension respective et dans le chapitre [Ressources](../../reference/resources.md).

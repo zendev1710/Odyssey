@@ -1,3 +1,3 @@
-# Select all
+# Sélectionner tout
 
-Selects all regions in the current layer of the map.
+Sélectionne toutes les régions de la couche courante de la carte.

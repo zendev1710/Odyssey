@@ -1,9 +1,9 @@
-# Open
+# Ouvrir
 
 CTRL-O
 
-This item is used to open CRs (Eressea Computerreports). After clicking, the following dialogue appears:
+Cet élément est utilisé pour ouvrir les CR (Eressea Computererreports). Après avoir cliqué, la boîte de dialogue suivante apparaît :
 
 ![Fileselector](../../images/menu_file_open.gif)
 
-The dialogue is largely self-explanatory and should correspond to a normal file open dialogue on your computer.
+Le dialogue est largement explicite et devrait correspondre à un dialogue normal d'ouverture de fichier sur votre ordinateur.

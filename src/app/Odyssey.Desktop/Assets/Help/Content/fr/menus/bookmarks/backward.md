@@ -1,5 +1,5 @@
-# Jump back
+# Sauter en arrière
 
 Toggle+F2
 
-Jumps to the previous saved bookmark in the list of bookmarks.
+Permet de revenir au signet enregistré précédent dans la liste des signets.

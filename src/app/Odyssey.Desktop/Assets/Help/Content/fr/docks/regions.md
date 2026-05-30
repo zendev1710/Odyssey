@@ -1,33 +1,33 @@
-# Region Overview
+# Vue d'ensemble de la région
 
-In the region window all units and regions are displayed in a tree. The tree's structure is set up as follows, in descending order:
+Dans la fenêtre des régions, toutes les unités et régions sont affichées sous forme d'arbre. La structure de l'arbre est la suivante, par ordre décroissant :
 
-1. Islands
-2. Regions
-3. Factions / Buildings / Ships / Streets
-4. Units
+1. Îles
+2. Les régions
+3. Factions / Bâtiments / Navires / Rues
+4. Unités
 
 ![windows_region](../images/windows_region.gif)
 
-Nodes that have units with [unconfirmed orders](orders.html) are shown in bold. The display of the region window can be adjusted to your tastes in the [options](../menus/extras/options_region.html).
+Les nœuds dont les unités ont des [ordres non confirmés](orders.html) sont affichés en gras. L'affichage de la fenêtre de la région peut être ajusté selon vos goûts dans les [options](../menus/extras/options_region.html).
 
-Units have a context menu that can be opened by right-clicking on them. This menu has the following options:
+Les unités disposent d'un menu contextuel que l'on peut ouvrir en cliquant dessus avec le bouton droit de la souris. Ce menu propose les options suivantes :
 
-* **Copy ID** Copies the unit's ID to the clipboard.
-* **Copy ID and name** Copies the unit's ID and name to the clipboard.
-* **Copy ID and name and person count** Copies the unit's ID and name, as well as the number of persons in it to the clipboard.
-* **Disguise unit** Creates the following orders to disguise the unit: NUMBER UNIT  
-    NAME UNIT ""  
-    DESCRIBE UNIT ""  
-    HIDE FACTION  
-    The old values are inserted as persistent comments, so that you can fairly easily undo this action.
-* **Add to island/Remove from island**  
-    This may be used to group regions.
-* **Order ships**  
-    You can give orders to the captains of one or more ships.
-* **Ship route planner**  
-    Used to create one-time or repeating route orders for one or more ships.
+* **Copier ID** Copie l'ID de l'unité dans le presse-papiers.
+* Copier l'ID et le nom** Copie l'ID et le nom de l'unité dans le presse-papiers.
+* Copier l'ID, le nom et le nombre de personnes** Copie l'ID et le nom de l'unité, ainsi que le nombre de personnes qu'elle contient, dans le presse-papiers.
+**Déguiser l'unité** Crée les ordres suivants pour déguiser l'unité : NUMERO UNITE
+    NOM UNITE ""
+    DÉCRIRE L'UNITÉ ""
+    CACHER LA FACTION
+    Les anciennes valeurs sont insérées sous forme de commentaires persistants, de sorte que vous pouvez facilement annuler cette action.
+* **Ajouter à l'île/supprimer de l'île**
+    Ceci peut être utilisé pour regrouper des régions.
+**Ordre des navires**
+    Vous pouvez donner des ordres aux capitaines d'un ou plusieurs navires.
+* **Planificateur d'itinéraire de navire**
+    Permet de créer des itinéraires ponctuels ou répétitifs pour un ou plusieurs navires.
 
-The faction node has an **alliance status icon** that shows your HELP status to this faction. Green squares mean this HELP status is set, red squares mean it's not. The squares have the following meaning: silver, combat, give, guard, faction stealth. Your own faction's squares are shown in blue.
+Le nœud de faction a une **icône de statut d'alliance** qui montre votre statut d'AIDE à cette faction. Les carrés verts signifient que ce statut d'AIDE est activé, les carrés rouges signifient qu'il ne l'est pas. Les carrés ont la signification suivante : argent, combat, donner, garde, furtivité de la faction. Les cases de votre propre faction sont en bleu.
 
-When you select several units, the context menu (right click) contains the entry "Add orders". This opens a dialog to add the same orders to all units.
+Lorsque vous sélectionnez plusieurs unités, le menu contextuel (clic droit) contient l'entrée "Ajouter des ordres". Cela ouvre une boîte de dialogue permettant d'ajouter les mêmes ordres à toutes les unités.

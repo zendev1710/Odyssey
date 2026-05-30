@@ -1,67 +1,67 @@
-# Tastenkürzel
+# Keyboard shortcut
 
-Die Tastenkürzel können in den Optionen eingesehen und geändert werden. Plugins können weitere Kürzel definieren. Einige der weniger offensichtlichen in der Voreinstellung:
+The keyboard shortcuts can be viewed and changed in the options. Plugins can define additional shortcuts. Some of the less obvious ones by default:
 
-## Einheitenauswahl
+## Unit selection
 
-* Strg+N: Zur nächsten Einheit ohne bestätigte Befehle wechseln
-* Strg+Shift+N: Zur vorherigen Einheit ohne bestätigte Befehle wechseln
-* Strg+Pfeil-nach-oben/unten: Zwischen Einheiten bzw. deren Befehlseditoren wechseln
-* Strg+Komma und Alt+Pfeil-links: Das zuletzt ausgewählte Objekt wieder anspringen
-* Strg+Punkt und Alt+Pfeil-rechts: Nach Strg+, oder Alt+Pfeil links zum ursprünglich ausgewählten Objekt zurückspringen
-* Strg+B: Befehle der ausgewählten Einheit oder aller Einheiten in der ausgewählten Region bestätigen bzw. nicht bestätigen
+* Ctrl+N: Switch to the next unit without confirmed commands
+* Ctrl+Shift+N: Switch to the previous unit without confirmed commands
+* Ctrl+Up/Down Arrow: Switch between units or their command editors
+* Ctrl+Comma and Alt+Left Arrow: Jump back to the last selected object
+* Ctrl+dot and Alt+right arrow: Jump back to the originally selected object after Ctrl+ or Alt+left arrow
+* Ctrl+B: Confirm or do not confirm commands for the selected unit or all units in the selected region
 
-## Lesezeichen
+## Bookmark
 
-* Strg+F2: Setzt ein Lesezeichen auf das aktuelle Objekt oder entfernt es
-* F2: Springt zum nächsten Objekt mit Lesezeichen
-* Umschalt-F2: Springt zum letzten Objekt mit Lesezeichen zurück
+* Ctrl+F2: Places a bookmark on the current object or removes it
+* F2: Jumps to the next object with a bookmark
+* Shift-F2: Jumps back to the last object with a bookmark
 
-## Fensterauswahl
+## Window selection
 
-* Strg+1 oder Alt+1: Gibt der [Regionsübersicht](../docks/regions.md) den Eingabefokus
-* Strg+2 oder Alt+2: Gibt der [Karte](../docks/map.md) den Eingabefokus
-* Strg+3 oder Alt+3: Gibt der [Detailanzeige](../docks/details.md) den Eingabefokus
-* Strg+4 oder Alt+4: Gibt der Bibliothek der Erweiterten Befehle den Eingabefokus
-* Strg+Umschalt-4: Gibt den Erweiterten Befehlen des aktuell ausgewählten Objekts den Eingabefokus
-* Strg+P: Gibt dem [Offene-Probleme-Dock](../docks/problems.md) den Eingabefokus
-* Strg+E: Gibt dem [ECheck-Dock](../docks/echeck.md) den Eingabefokus
+* Ctrl+1 or Alt+1: Gives the [Region overview](../docks/regions.md) the input focus
+* Ctrl+2 or Alt+2: Gives the [Map](../docks/map.md) the input focus
+* Ctrl+3 or Alt+3: Gives the [Detail display](../docks/details.md) the input focus
+* Ctrl+4 or Alt+4: Gives the input focus to the library of extended commands
+* Ctrl+Shift-4: Gives the extended commands of the currently selected object the input focus
+* Ctrl+P: Gives the [Open-Problems-Dock](../docks/problems.md) the input focus
+* Ctrl+E: Gives the [ECheck-Dock](../docks/echeck.md) the input focus
 
-## Karte
+## Card
 
-* Strg+Umschalt-A: Wähle zwischen [ATR-Einstellungen](../menus/extras/options_map.html#Beschriftungen)
-* Strg+Umschalt-P: Wähle zwischen Tooltip-Einstellungen
-* Strg+Umschalt-R: Wähle zwischen ARR-Einstellungen
-* Strg+W: "Fog of War" an/aus
-* Alt+Plus: In die Karte hineinzoomen
-* Alt+Minus: Aus der Karte hinauszoomen
+* Ctrl+Shift-A: Select between [ATR settings](../menus/extras/options_map.html#Labelling)
+* Ctrl+Shift-P: Choose between tooltip settings
+* Ctrl+Shift-R: Choose between ARR settings
+* Ctrl+W: "Fog of War" on/off
+* Alt+Plus: Zoom into the map
+* Alt+Minus: Zoom out of the map
 
-Wenn die Karte den Eingabefokus besitzt, kann man mit Hilfe der Pfeiltasten und der Tasten auf dem Ziffernblock zwischen den Regionen wechseln und mit der Leertaste Regionen aus- und wieder abwählen.
+If the map has the input focus, you can use the arrow keys and the keys on the numeric keypad to switch between the regions and use the space bar to select and deselect regions.
 
-## Befehlseditor
+## Command editor
 
-* Strg+Leertaste: Vorschläge zur Befehlsvervollständigung anzeigen
-* Strg+Pfeil-nach-unten: In der Liste nach unten
-* Strg+Pfeil-nach-oben: In der Liste nach oben
-* Tab: Aktuellen vorschlag einfügen
-* Esc: Liste ausblenden
-* Strg+T: Erzeugt eine TEMP-Einheit unterhalb der gerade aktiven Einheit
-* Strg+Umschalt-T: Löscht eine gerade ausgewählte TEMP-Einheit
+* Ctrl+Spacebar: Show suggestions for command completion
+* Ctrl+Down Arrow: Move down in the list
+* Ctrl+Up Arrow: Move up in the list
+* Tab: Insert current suggestion
+* Esc: Hide list
+* Ctrl+T: Creates a TEMP unit below the currently active unit
+* Ctrl+Shift-T: Deletes a currently selected TEMP unit
 
-## Offene Probleme
+## Open problems
 
-* Kontextmenü: Aktionsmenü
-* Leertaste: Zum Objekt der aktuell ausgewählten Zeile springen
-* Enter: Details der aktuell ausgewählten Zeile anzeigen
-* Entf: Aktuell ausgewählte Probleme ausblenden
-* Strg+Entf: Aktuell ausgewählte Problemtypen dauerhaft ausblenden
+* Context menu: Action menu
+* Spacebar: Jump to the object of the currently selected line
+* Enter: Show details of the currently selected line
+* Del: Hide currently selected problems
+* Ctrl+Del: Permanently hide currently selected problem types
 
-## Verschiedenes
+## Miscellaneous
 
-* Strg+C: In der Regionsübersicht: Derzeit ausgewählte Zeilen in die Zwischenablage kopieren.
-* Strg+R: Befehlsergänzung von "MACHEN" zeigt nur Gegenstände, für die die nötigen Ressourcen vorhanden sind.
-* Strg+Umschalt-B Dialog zur Umrechnung von Basis 36 nach Basis 10
-* Strg+F Suchen
-* Strg+G Schnellsuche nach Einheiten, Schiffen und Gebäuden anhand der Nummern
-* Umschalt-F5: Grafiken neu laden
-* F5: Alles neu zeichnen
+* Ctrl+C: In the region overview: Copy currently selected lines to the clipboard.
+* Ctrl+R: Command completion of "MACHEN" only shows items for which the necessary resources are available.
+* Ctrl+Shift-B Dialogue for converting from base 36 to base 10
+* Ctrl+F Search
+* Ctrl+G Quick search for units, ships and buildings by number
+* Shift-F5: Reload graphics
+* F5: Redraw all

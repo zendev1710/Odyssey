@@ -1,5 +1,5 @@
-# Undo
+# Annuler
 
 CTRL-Z
 
-Undoes the last entry in the command window. This function is currently deactivated.
+Annule la dernière entrée dans la fenêtre de commande. Cette fonction est actuellement désactivée.

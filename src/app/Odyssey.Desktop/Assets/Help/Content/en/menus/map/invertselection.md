@@ -1,3 +1,3 @@
-# Auswahl invertieren
+# Invert selection
 
-Die Auswahl wird invertiert. Selektierte Regionen werden unselektiert und umgekehrt.
+The selection is inverted. Selected regions are unselected and vice versa.

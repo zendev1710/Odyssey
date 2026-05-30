@@ -1,7 +1,7 @@
-# Gruppeneditor Plugin
+# Group editor plugin
 
-Dieses Plugin gehört zum Standardumfang von Magellan 2.0. Es ermöglicht, einfach und schnell die HELFE-Stati der Gruppen einer Partei zu setzen. Auf Basis einer Matrix kann so für jede Gruppe eine HELFE-Beziehung zu einer Partei definiert werden.
+This plugin is part of the standard scope of Magellan 2.0 and allows you to quickly and easily set the HELFE statuses of a faction's groups. A HELFE relationship to a faction can be defined for each group on the basis of a matrix.
 
-Dieses Plugin ist als Dock konzipiert und kann auch deshalb nur auf diese Weise geöffnet werden. Wählt dazu an einer beliebigen freien Stelle des Magellan Hauptfensters die rechte Maustaste oder wählt im Menü "Desktop" den Eintrag "Gruppen HELFE-Status Editor". Es öffnet sich ein neues Dock.
+This plugin is designed as a dock and can therefore only be opened in this way. To do this, right-click anywhere in the Magellan main window or select "Group HELFE Status Editor" from the "Desktop" menu. A new dock will open.
 
-Dieses Dock ist in drei Teile geteilt. Oben seht Ihr eine Liste der Parteien für die Ihr die Helfe Stati ändern könnt. Wählt dort - falls nötig - Eure Partei aus. In der Mitte seht Ihr dann alle Gruppen (in der X-Achse) und alle Parteien (in der Y-Achse). Jede Zelle definiert also die Beziehung einer Gruppe zu einer Partei. Ändert diese Beziehungen wie Ihr wollt. Achtet dabei auf die Regeln des jeweiligen PbEM. Im unteren Bereich des Fensters gibt es einen Button zum Übernehmen der Einstellungen. Wenn Ihr auf ihn klickt, werden die Helfe-Stati an die erste bekannte Einheit der Gruppe gesetzt.
+This dock is divided into three parts. At the top you will see a list of the factions for which you can change the helper statuses. Select your faction there if necessary. In the centre you will see all groups (in the X-axis) and all factions (in the Y-axis). Each cell defines the relationship between a group and a faction. Change these relationships as you wish. Pay attention to the rules of the respective PbEM. At the bottom of the window there is a button to apply the settings. If you click on it, the helper states will be set to the first known unit of the group.

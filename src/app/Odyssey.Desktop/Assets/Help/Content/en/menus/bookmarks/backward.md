@@ -1,5 +1,5 @@
-# Zurück springen
+# Jump back
 
-Umschalt+F2
+Toggle+F2
 
-Springt zum vorherigen gespeicherten Lesezeichen in der Liste der Lesezeichen.
+Jumps to the previous saved bookmark in the list of bookmarks.

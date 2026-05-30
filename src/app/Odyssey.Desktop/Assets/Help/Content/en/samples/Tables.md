@@ -6,13 +6,15 @@
 | Spain   | Madrid  | ...        |
 
 Bullet list
+
 * Table 1
 
   | Header 1       | Header 2       |
-      |----------------|----------------|
+  |----------------|----------------|
   | Row 1 Column 1 | Row 1 Column 2 |
 
 * Table 2
+
   | Header 1       | Header 2       |
   |----------------|----------------|
   | Row 1 Column 1 | Row 1 Column 2 |
@@ -20,12 +22,13 @@ Bullet list
 * Table 3
   Lorem ipsum ...
   Lorem ipsum ...
+
   | Header 1       | Header 2       |
   |----------------|----------------|
   | Row 1 Column 1 | Row 1 Column 2 |
 
-
 Ordered list
+
 1. Table 1
 
    | Header 1       | Header 2       |

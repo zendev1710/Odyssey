@@ -1,12 +1,12 @@
 # Plugins
 
-Hier sieht man, welche Plugins Magellan erkannt und gestartet hat.
+Here you can see which plugins Magellan has recognised and started.
 
-![Optionen - Plugins](../../images/menu_extras_options_plugins.gif)
+![Options - Plugins](../../images/menu_extras_options_plugins.gif)
 
-In der aktuellen Installationsversion sind dies nur zwei Plugins.
+In the current installation version, these are only two plugins.
 
-* [MapEditPlugin](../../reference/plugins_mapedit.md)  
-    zum Bearbeiten der Karte (Hinzufügen, Entfernen von Regionen)
-* [Extended Commands](../../reference/plugins_extcmds.md)  
-    zum Script-basierten Erstellen von Befehlen (ähnlich Vorlage)
+* MapEditPlugin](../../reference/plugins_mapedit.md)
+    for editing the map (adding, removing regions)
+* Extended Commands](../../reference/plugins_extcmds.md)
+    for script-based creation of commands (similar to template)

@@ -1,10 +1,10 @@
-# Menü Bearbeiten
+# Edit menu
 
-Das Bearbeiten-Menü hat folgende Punkte:
+The Edit menu has the following items:
 
-* [Rückgängig](undo.md)
-* [Wiederherstellen](redo.md)
-* [Suchen](search.md)
-* [ID Suchen](quicksearch.md)
+* [Undo](undo.md)
+* [Redo](redo.md)
+* [Search](search.md)
+* [Search ID](quicksearch.md)
 
-Dieser Menüpunkt dient hauptsächlich dazu, Hilfsfunktionen für Eingaben in Magellan anzubieten. Dazu gehören die UNDO und REDO Funktionen, sowie eine Suche, mit der man nach Regionen, Schiffen, Gebäuden und Einheiten suchen kann.
+This menu item is mainly used to provide help functions for entries in Magellan. These include the UNDO and REDO functions, as well as a search function that can be used to search for regions, ships, buildings and units.
