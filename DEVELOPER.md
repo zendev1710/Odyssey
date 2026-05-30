@@ -69,4 +69,3 @@ Some parts of this code have been inspired from other works available in the fol
 
 - [CsMapFX](https://github.com/ennorehling/csmapfx) for report data management (document loading and saving, data retrieving process...)
 - [DevToys](https://github.com/DevToys-app/DevToys) (settings management, in particular theme handling)
-

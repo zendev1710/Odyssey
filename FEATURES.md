@@ -13,7 +13,6 @@
 
 ## User interface
 
-
 ### Settings system
 
 TO BE FINISHED.
@@ -47,6 +46,7 @@ TO BE FINISHED.
 - [ ] Merge and save CR files
 
 Optional:
+
 - [ ] Extract report .cr file from each opened zip
 - [ ] Drag and drop to open an Orders .txt file
 - [ ] Drag and drop to open several Report .cr files, each one embedded in a zip file
@@ -82,17 +82,18 @@ Optional:
 ### Information view
 
 Information view (Ctrl + I in CsMapFx) - display information about the world data (11 tabs in a navigation view ... on central area ?) :
-  - alchemy 
-  - buildings
-  - resources
-  - calendar (winter...)
-  - battles modifiers
-  - Races
-  - Regions
-  - Production
-  - Navigation
-  - Weapons
-  - Waren ?
+
+- alchemy
+- buildings
+- resources
+- calendar (winter...)
+- battles modifiers
+- Races
+- Regions
+- Production
+- Navigation
+- Weapons
+- Waren ?
 
 ### Orders view additional features
 
@@ -101,7 +102,6 @@ Information view (Ctrl + I in CsMapFx) - display information about the world dat
 - Implement syntax color using [TextMateSharp](https://github.com/danipen/TextMateSharp), see [AvaloniaEdit](https://github.com/AvaloniaUI/AvaloniaEdit/)
 - Implement auto-completion using [TextMateSharp](https://github.com/danipen/TextMateSharp), see [AvaloniaEdit](https://github.com/AvaloniaUI/AvaloniaEdit/)
 - Add a "navigate between unconfirmed only/editable units" toggle fluent icon button
-
 
 ## Known limitations
 

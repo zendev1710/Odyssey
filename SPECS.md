@@ -6,12 +6,12 @@
 
 * Key Ctrl+F2
 * Bookmarks menu with "toggle bookmark" item
-* an icon/image in the status bar that can be clicked to toggle bookmark (only if selected objet is bookmarkable; otherwise it(s grayed)
+* an icon/image in the status bar that can be clicked to toggle bookmark (only if selected objet is bookmarkable; otherwise it's grayed)
 
 The corresponding command toggles bookmark on the current selected object from :
 
-** hex map control selected region (hex) 
-** tree selected object from tree view (tree in Explorer view model), except faction items (so every other node can be bookmarked, i.e. region, building, ship, unit)
+* hex map control selected region (hex)
+* tree selected object from tree view (tree in Explorer view model), except faction items (so every other node can be bookmarked, i.e. region, building, ship, unit)
 
 Bookmarking means adding (at first position)/removing the object to/from bookmarks list (BookmarksViewModel Items colleciton).
 Items collection has a SelectedItem, binded to a ListBox SelectedItem in the bookmarks view.
@@ -29,6 +29,7 @@ Auto-loading is done like this: for a `<turn> - <cr short name>`.cr loaded file,
 if exists, the `<cr short name>-default.xml` is laded and the current one used, otherwise the first found file is loaded.
 
 File example:
+
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <Bookmarks>
@@ -42,6 +43,3 @@ File example:
 Bookmarks files are saved in the same folder as main save file, with the same name but with `bookmarks-<pattern>.xml` extension.
 Global settings have a default bookmarks location.
 Global settings have a bookmarks auto-save option (if enabled, bookmarks are saved automatically each time bookmarks list is modified).
-
-
- 
