@@ -26,6 +26,7 @@ using Avalonia.Input;
 using Avalonia.Media;
 using Odyssey.Models.Documents;
 using CsMaxX;
+using AvaloniaEdit.Utils;
 
 //using Odyssey.Document;
 //using Odyssey.Editing;
