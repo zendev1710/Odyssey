@@ -19,15 +19,7 @@ public abstract partial class MessagesListViewModel : DocumentToolViewModelBase
 
     public ObservableCollection<MessageEntry> Items { get; } = [];
 
-    public MessagesListViewModel() : this(null)
-    {
-        if (!Design.IsDesignMode)
-        {
-            throw new InvalidOperationException("This constructor should only be used in design mode.");
-        }
-    }
-
-    protected MessagesListViewModel(IEventAggregator? eventAggregator) : base(eventAggregator)
+    protected MessagesListViewModel(IEventAggregator? eventAggregator = null) : base(eventAggregator)
     {
         // LATER: use filter on filePath to update the list only if different
         EventAggregator?.GetEvent<ReportDocumentChangedEvent>().Subscribe(OnEventActiveDocumentChanged, ThreadOption.UIThread);

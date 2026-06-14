@@ -12,19 +12,13 @@ namespace Odyssey.ViewModels.Tools;
 
 public class SearchResultsViewModel : DocumentToolViewModelBase
 {
-    public SearchResultsViewModel() : this(null)
-    {
-        if (!Design.IsDesignMode)
-        {
-            throw new InvalidOperationException("This constructor should only be used in design mode.");
-        }
-    }
+
     protected override void OnSelectionChanged(ISelectionChange selectionChange)
     {
         // This view does not handle any selection changes.
     }
 
-    public SearchResultsViewModel(IEventAggregator? eventAggregator): base(eventAggregator)
+    public SearchResultsViewModel(IEventAggregator? eventAggregator = null): base(eventAggregator)
     {
         // TODO: use filter on filePath to update the list only if different
         //EventAggregator?.GetEvent<ActiveDocumentChangedEvent>().Subscribe(OnActiveDocumentChanged, ThreadOption.UIThread);

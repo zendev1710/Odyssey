@@ -1950,6 +1950,9 @@
   <data name="win_battles" xml:space="preserve">
     <value>Battles</value>
   </data>
+  <data name="win_units_inspector" xml:space="preserve">
+    <value>Units inspector</value>
+  </data>
   <data name="mainmenu_view_win_battles" xml:space="preserve">
     <value>Battles</value>
   </data>
@@ -2798,7 +2801,6 @@
   </data>
   <data name="rules_spell_Appeasing Song" xml:space="preserve">
     <value>Appeasing Song</value>
-    <comment>BAD !?</comment>
   </data>
   <data name="rules_spell_Appeasing Song_tip" xml:space="preserve">
     <value>This little melody calms even the wildest orc to a gentle and serene creature who will not even think about putting the singer to harm. The magician may travel to a neighboring region without being harassed by annoying troublemakers</value>
@@ -2920,5 +2922,53 @@
   </data>
   <data name="rules_spell_Tiredness_tip" xml:space="preserve">
     <value>This combat spell causes several enemies to suffer from an unnatural tiredness during combat. The soldiers will defend themselves worse than normal and sometimes sink into a slumber instead of attacking</value>
+  </data>
+  <data name="helptopic_Menus" xml:space="preserve">
+    <value>Menus</value>
+  </data>
+  <data name="helptopic_Gettting started" xml:space="preserve">
+    <value>Gettting started</value>
+  </data>
+  <data name="helptopic_Advanced features" xml:space="preserve">
+    <value>Advanced features</value>
+  </data>
+  <data name="helptopic_Markdig" xml:space="preserve">
+    <value>Markdig (samples)</value>
+  </data>
+  <data name="helptopic_Link" xml:space="preserve">
+    <value>Link (samples)</value>
+  </data>
+  <data name="helptopic_LaTeX" xml:space="preserve">
+    <value>LaTeX (samples)</value>
+  </data>
+  <data name="helptopic_Headings" xml:space="preserve">
+    <value>Headings (sample)</value>
+  </data>
+  <data name="helptopic_Everywhere" xml:space="preserve">
+    <value>Everywhere (sample)</value>
+  </data>
+  <data name="helptopic_Emphasis" xml:space="preserve">
+    <value>Emphasis (sample)</value>
+  </data>
+  <data name="helptopic_Samples" xml:space="preserve">
+    <value>Samples  (sample)</value>
+  </data>
+  <data name="helptopic_Keyboard Shortcuts" xml:space="preserve">
+    <value>Keyboard Shortcuts</value>
+  </data>
+  <data name="helptopic_Help" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="helptopic_Window" xml:space="preserve">
+    <value>Window</value>
+  </data>
+  <data name="helptopic_View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="helptopic_Bookmarks" xml:space="preserve">
+    <value>Bookmarks</value>
+  </data>
+  <data name="helptopic_File" xml:space="preserve">
+    <value>File</value>
   </data>
 </root>

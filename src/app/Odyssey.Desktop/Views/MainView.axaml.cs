@@ -1,10 +1,21 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using Odyssey.ViewModels;
+using Avalonia.Platform.Storage;
+using Dock.Model;
+using Dock.Model.Controls;
+using Dock.Model.Core;
+using Dock.Serializer;
 using Dock.Settings;
+using Odyssey.ViewModels;
+using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace Odyssey.Views;
 
@@ -12,6 +23,7 @@ public partial class MainView : UserControl
 {
     public MainView()
     {
+        Debug.WriteLine("[MAIN VIEW] BEGIN");
         InitializeComponent();
         InitializeThemes();
         InitializeMenu();
@@ -28,12 +40,10 @@ public partial class MainView : UserControl
                 vm.PropertyChanged += ViewModel_PropertyChanged;
             }
         };
+        Debug.WriteLine("[MAIN VIEW] END");
     }
 
-    private void InitializeComponent()
-    {
-        AvaloniaXamlLoader.Load(this);
-    }
+    /////// Drag and drop management ///////
 
     private void DragOverHandler(object? sender, DragEventArgs e)
     {
@@ -84,6 +94,7 @@ public partial class MainView : UserControl
 
     private void InitializeThemes()
     {
+        // TODO: like Dock sample or not ?
         var theme = this.Find<Button>("ThemeButton");
         if (theme is { })
         {
@@ -102,5 +113,12 @@ public partial class MainView : UserControl
             window.SetValue(DockProperties.IsDragEnabledProperty, true);
             window.SetValue(DockProperties.IsDropEnabledProperty, true);
         }
+    }
+
+    /////// Other view features management ///////
+
+    private void InitializeComponent()
+    {
+        AvaloniaXamlLoader.Load(this);
     }
 }

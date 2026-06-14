@@ -87,15 +87,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         public string Name { get; set; } = "";
     }
 
-    public ExplorerViewModel() : this(null)
-    {
-        if (!Design.IsDesignMode)
-        {
-            throw new InvalidOperationException("This constructor should only be used in design mode.");
-        }
-    }
-
-    public ExplorerViewModel(IEventAggregator? eventAggregator) : base(eventAggregator)
+    public ExplorerViewModel(IEventAggregator? eventAggregator = null) : base(eventAggregator)
     {
         _root = new ExplorerNodeViewModel();
 

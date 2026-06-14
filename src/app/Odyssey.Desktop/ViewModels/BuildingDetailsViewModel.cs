@@ -20,15 +20,7 @@ public partial class BuildingDetailsViewModel : ContainerViewModel
 
     public ObservableCollection<NodeViewModel> Items { get; }
 
-    public BuildingDetailsViewModel(): this(null)
-    {
-        if (!Design.IsDesignMode)
-        {
-            throw new InvalidOperationException("This constructor should only be used in design mode.");
-        }
-    }
-
-    public BuildingDetailsViewModel(IEventAggregator? eventAggregator) : base(Ids.BuildingDetails, eventAggregator)
+    public BuildingDetailsViewModel(IEventAggregator? eventAggregator = null) : base(Ids.BuildingDetails, eventAggregator)
     {
         Items = Root.Children;
     }

@@ -26,15 +26,7 @@ public partial class HistoryViewModel : DocumentToolViewModelBase
 
     public ObservableCollection<SelectionEntry> Items { get; } = [];
 
-    public HistoryViewModel() : this(null)
-    {
-        if (!Design.IsDesignMode)
-        {
-            throw new InvalidOperationException("This constructor should only be used in design mode.");
-        }
-    }
-
-    public HistoryViewModel(IEventAggregator? eventAggregator) : base(eventAggregator)
+    public HistoryViewModel(IEventAggregator? eventAggregator = null) : base(eventAggregator)
     {
     }
 

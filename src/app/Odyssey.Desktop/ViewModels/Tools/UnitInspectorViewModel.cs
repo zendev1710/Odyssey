@@ -16,14 +16,7 @@ public partial class UnitInspectorViewModel : DocumentToolViewModelBase //: Obse
     [ObservableProperty]
     private UnitViewModel? _selectedUnit;
 
-    public UnitInspectorViewModel() : this(null)
-    {
-        if (!Design.IsDesignMode)
-        {
-            throw new InvalidOperationException("This constructor should only be used in design mode.");
-        }
-    }
-    public UnitInspectorViewModel(IEventAggregator? eventAggregator) : base(eventAggregator)
+    public UnitInspectorViewModel(IEventAggregator? eventAggregator = null) : base(eventAggregator)
     {
         //_report = report;
         // subscribe to selection changes

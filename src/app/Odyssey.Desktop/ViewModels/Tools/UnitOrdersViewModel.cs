@@ -55,14 +55,7 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
 
     public TextDocument Document { get; set; }
 
-    public UnitOrdersViewModel() : this(null)
-    {
-        if (!Design.IsDesignMode)
-        {
-            throw new InvalidOperationException("This constructor should only be used in design mode.");
-        }
-    }
-    public UnitOrdersViewModel(IEventAggregator? eventAggregator) : base(eventAggregator)
+    public UnitOrdersViewModel(IEventAggregator? eventAggregator = null) : base(eventAggregator)
     {
         // when enabled, next/previous unit commands traverse the explorer view in circular mode, i.e.
         // the previous of the first editable unit is the last matching one, the next of the last editable unit is the first matching one

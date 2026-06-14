@@ -32,14 +32,7 @@ public partial class ShipDetailsViewModel : ContainerViewModel
     [ObservableProperty]
     private int _capacity;
 
-    public ShipDetailsViewModel(): this(null)
-    {
-        if (!Design.IsDesignMode)
-        {
-            throw new InvalidOperationException("This constructor should only be used in design mode.");
-        }
-    }
-    public ShipDetailsViewModel(IEventAggregator? eventAggregator) : base(Ids.ShipDetails, eventAggregator)
+    public ShipDetailsViewModel(IEventAggregator? eventAggregator = null) : base(Ids.ShipDetails, eventAggregator)
     {
         Items = Root.Children;
     }

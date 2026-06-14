@@ -90,15 +90,7 @@ public partial class MapViewModel : DocumentToolViewModelBase
     private IEnumerable<KeyValuePair<int, BuildingModel>> _buildings = [];
     private IEnumerable<KeyValuePair<int, RegionModel>> _regionsWithContainer = [];
 
-    public MapViewModel() : this(null)
-    {
-        if (!Design.IsDesignMode)
-        {
-            throw new InvalidOperationException("This constructor should only be used in design mode.");
-        }
-    }
-
-    public MapViewModel(IEventAggregator? eventAggregator) : base(eventAggregator)
+    public MapViewModel(IEventAggregator? eventAggregator = null) : base(eventAggregator)
     {
     }
 

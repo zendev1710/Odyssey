@@ -16,15 +16,8 @@ namespace Odyssey.ViewModels.Tools
         public UnitInspectorViewModel InspectorViewModel { get; }
 
         // Parameterless ctor for design time
-        public UnitsInspectorViewModel() : this(null)
-        {
-            if (!Design.IsDesignMode)
-            {
-                throw new InvalidOperationException("This constructor should only be used in design mode.");
-            }
-        }
 
-        public UnitsInspectorViewModel(IEventAggregator? eventAggregator) : base(eventAggregator)
+        public UnitsInspectorViewModel(IEventAggregator? eventAggregator = null) : base(eventAggregator)
         {
             // create child viewmodels; they will get the real Report later via SetMapFile
             StripViewModel = new UnitStripViewModel(eventAggregator);

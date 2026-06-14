@@ -44,17 +44,10 @@ namespace Odyssey.ViewModels
         /// </summary>
         //public SimpleItemSelection Selection { get { return _selection; } }
 
-        public ViewModelBase() : this(string.Empty, null)
-        {
-            if (!Design.IsDesignMode)
-            {
-                throw new InvalidOperationException("This constructor should only be used in design mode.");
-            }
-        }
-        protected ViewModelBase(string id, IEventAggregator? eventAggregator)
+        protected ViewModelBase(string id, IEventAggregator? eventAggregator = null)
         {
             Id = id;
-            _eventAggregator = eventAggregator;
+            _eventAggregator = eventAggregator ?? Prism.Events.EventAggregator.Current;
             HasDocument = false;
             Report = new CRDocument();
             Selection = new SimpleItemSelection();

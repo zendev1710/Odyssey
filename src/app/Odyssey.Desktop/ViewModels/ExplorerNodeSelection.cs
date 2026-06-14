@@ -26,6 +26,12 @@ namespace Odyssey.ViewModels
 
         private void Init(ExplorerNodeViewModel nodeViewModel)
         {
+            // FIXME: nodeViewModel is null when loading from OpenLayout() deserialization
+            if (nodeViewModel is null)
+            {
+                return;
+            }
+
             NodeViewModelSubtree = ExplorerNodeViewModel.GetNodeSubTree(nodeViewModel, true, true, false).ToList();
             RegionNodeViewModel = NodeViewModelSubtree.LastOrDefault();
             DataBlock? item = nodeViewModel.Block;

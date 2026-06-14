@@ -25,18 +25,11 @@ namespace Odyssey.ViewModels
 
         protected CRDocument Report { get; private set; }
 
-        protected ClientAreaDockBase() : this(null)
-        {
-            if (!Design.IsDesignMode)
-            {
-                throw new InvalidOperationException("This constructor should only be used in design mode.");
-            }
-        }
         /// <summary>
         /// Constructor for Avalonia XAML Designer.
         /// </summary>
-        protected ClientAreaDockBase(IEventAggregator? eventAggregator) {
-            _eventAggregator = eventAggregator;
+        protected ClientAreaDockBase(IEventAggregator? eventAggregator = null) {
+            _eventAggregator = eventAggregator ?? Prism.Events.EventAggregator.Current;
             HasDocument = false;
             // links to an empty report document
             Report = new CRDocument();

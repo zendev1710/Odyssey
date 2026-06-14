@@ -22,10 +22,6 @@ namespace Odyssey.ViewModels
 
         private readonly ISelectionService _selectionService;
 
-        //private readonly IEventAggregator? _eventAggregator;
-
-        //protected IEventAggregator? EventAggregator { get { return _eventAggregator; } }
-
         protected CRDocument Report { get; private set; }
 
         public string Id { get; }
@@ -47,14 +43,7 @@ namespace Odyssey.ViewModels
         /// </summary>
         //public SimpleItemSelection Selection { get { return _selection; } }
 
-        public ExtendedViewModelBase() : this(string.Empty, null)
-        {
-            if (!Design.IsDesignMode)
-            {
-                throw new InvalidOperationException("This constructor should only be used in design mode.");
-            }
-        }
-        protected ExtendedViewModelBase(string id/*, IEventAggregator? eventAggregator*/, ISelectionService selectionService)
+        protected ExtendedViewModelBase(string id/*, IEventAggregator? eventAggregator = null*/, ISelectionService selectionService = null)
         {
             Id = id;
             //_eventAggregator = eventAggregator;

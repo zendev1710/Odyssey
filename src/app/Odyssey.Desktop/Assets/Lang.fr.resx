@@ -1950,6 +1950,9 @@
   <data name="win_battles" xml:space="preserve">
     <value>Batailles</value>
   </data>
+  <data name="win_units_inspector" xml:space="preserve">
+    <value>Inspecteur d'unités</value>
+  </data>
   <data name="mainmenu_view_win_battles" xml:space="preserve">
     <value>Batailles</value>
   </data>
@@ -2755,7 +2758,7 @@
     <value>Afficher l'aide</value>
   </data>
   <data name="mainmenu_window_help_getting_started" xml:space="preserve">
-    <value>Démarrer</value>
+    <value>Premiers pas</value>
   </data>
   <data name="disguised" xml:space="preserve">
     <value>Déguisée</value>
@@ -2878,6 +2881,9 @@
   <data name="rules_spell_Read Dreams" xml:space="preserve">
     <value>Lecture des rêves</value>
   </data>
+  <data name="rules_spell_Tiredness" xml:space="preserve">
+    <value>Affaiblissement</value>
+  </data>
   <data name="rules_spell_Resurrection" xml:space="preserve">
     <value>Résurrection</value>
   </data>
@@ -2906,7 +2912,72 @@
   <data name="rules_spell_Song of fear_tip" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
+  <data name="rules_spell_Song of War_tip" xml:space="preserve">
+    <value>Comme beaucoup de chansons magiques, celle-ci vient également de la connaissance ancienne des chats, qui connaissent depuis toujours les puissants effets de la voix. Cette chanson attise l'humeur des guerriers, les plongeant même dans une frénésie sauvage et une soif de sang. Indépendamment de leur propre souffrance, ils se battront jusqu’à la mort et ne fuiront jamais. Alors que leur attaque s’intensifie, ils ne prêtent que peu d’attention à eux-mêmes.
+
+</value>
+  </data>
+  <data name="rules_spell_Sound out_tip" xml:space="preserve">
+    <value>Si l'unité succombe au sort, elle dira au mage tout ce qu'elle sait sur la région en question. S’il n’y a personne de sa faction dans la région, elle n’a rien à signaler. Elle ne peut également dire que ce qu'elle a pu voir elle-même.</value>
+  </data>
+  <data name="rules_spell_Tiredness_tip" xml:space="preserve">
+    <value>Ce sort de combat provoque une fatigue intense chez certains ennemis pendant le combat. Les soldats tardent parfois à attaquer et se défendent mal.</value>
+  </data>
+  <data name="helptopic_Menus" xml:space="preserve">
+    <value>Menus</value>
+  </data>
+  <data name="helptopic_Gettting started" xml:space="preserve">
+    <value>Premiers pas</value>
+  </data>
+  <data name="helptopic_Advanced features" xml:space="preserve">
+    <value>Fonctionnalités avancées</value>
+  </data>
+  <data name="helptopic_Markdig" xml:space="preserve">
+    <value>Markdig (samples)</value>
+  </data>
+  <data name="helptopic_Link" xml:space="preserve">
+    <value>Link (samples)</value>
+  </data>
+  <data name="helptopic_LaTeX" xml:space="preserve">
+    <value>LaTeX (samples)</value>
+  </data>
+  <data name="helptopic_Headings" xml:space="preserve">
+    <value>Headings (sample)</value>
+  </data>
+  <data name="helptopic_Everywhere" xml:space="preserve">
+    <value>Everywhere (sample)</value>
+  </data>
+  <data name="helptopic_Emphasis" xml:space="preserve">
+    <value>Emphasis (sample)</value>
+  </data>
+  <data name="helptopic_Samples" xml:space="preserve">
+    <value>Samples  (sample)</value>
+  </data>
+  <data name="helptopic_Keyboard Shortcuts" xml:space="preserve">
+    <value>Raccourcis clavier</value>
+  </data>
+  <data name="helptopic_Help" xml:space="preserve">
+    <value>Aide</value>
+  </data>
+  <data name="helptopic_Window" xml:space="preserve">
+    <value>Fenêtre</value>
+  </data>
+  <data name="helptopic_View" xml:space="preserve">
+    <value>Affichage</value>
+  </data>
+  <data name="helptopic_Bookmarks" xml:space="preserve">
+    <value>Signets</value>
+  </data>
+  <data name="helptopic_File" xml:space="preserve">
+    <value>Fichier</value>
+  </data>
   <data name="parm_inf_explorer_active_faction_units_at_top" xml:space="preserve">
     <value>Les unités de la faction active sont les premiers éléments du nœud de région</value>
+  </data>
+  <data name="helptopic_Test" xml:space="preserve">
+    <value>Test (samples)</value>
+  </data>
+  <data name="helptopic_Tables" xml:space="preserve">
+    <value>Tables (samples)</value>
   </data>
 </root>

@@ -23,14 +23,7 @@ public abstract partial class MessagesViewModel : DocumentToolViewModelBase
 
     public ObservableCollection<Node> Items { get; } = [];
 
-    public MessagesViewModel() : this(null)
-    {
-        if (!Design.IsDesignMode)
-        {
-            throw new InvalidOperationException("This constructor should only be used in design mode.");
-        }
-    }
-    protected MessagesViewModel(IEventAggregator? eventAggregator) : base(eventAggregator)
+    protected MessagesViewModel(IEventAggregator? eventAggregator = null) : base(eventAggregator)
     {
         SelectedItem = Root;
         Items = Root.Children;

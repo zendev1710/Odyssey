@@ -40,14 +40,7 @@ public partial class ContainerViewModel : ViewModelBase
 
     protected DataBlock? Region { get; set; }
 
-    public ContainerViewModel() : this(string.Empty, null)
-    {
-        if (!Design.IsDesignMode)
-        {
-            throw new InvalidOperationException("This constructor should only be used in design mode.");
-        }
-    }
-    public ContainerViewModel(string id, IEventAggregator? eventAggregator) : base(id, eventAggregator)
+    public ContainerViewModel(string id, IEventAggregator? eventAggregator = null) : base(id, eventAggregator)
     {
         _ownerName = string.Empty;
         _description = string.Empty;

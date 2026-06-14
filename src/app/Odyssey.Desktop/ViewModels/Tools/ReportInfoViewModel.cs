@@ -17,14 +17,7 @@ namespace Odyssey.ViewModels.Tools;
 /// provides functionality to manage and rebuild a tree structure based on document changes.</remarks>
 public partial class ReportInfoViewModel : MessagesListViewModel
 {
-    public ReportInfoViewModel() : this(null)
-    {
-        if (!Design.IsDesignMode)
-        {
-            throw new InvalidOperationException("This constructor should only be used in design mode.");
-        }
-    }
-    public ReportInfoViewModel(IEventAggregator? eventAggregator) : base(eventAggregator)
+    public ReportInfoViewModel(IEventAggregator? eventAggregator = null) : base(eventAggregator)
     {
     }
 

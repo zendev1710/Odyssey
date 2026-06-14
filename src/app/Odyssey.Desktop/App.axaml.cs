@@ -9,18 +9,19 @@ using Odyssey.Core.Theme;
 using Odyssey.Settings;
 using Odyssey.Themes;
 using Odyssey.Views;
+using Dock.Avalonia.Diagnostics.Controls;
+using Dock.Avalonia.Diagnostics;
 using Dock.Avalonia.Themes.Fluent;
 using Dock.Avalonia.Themes.Simple;
-using Prism.DryIoc;
-using Prism.Ioc;
 using System.Diagnostics;
 using System.Globalization;
-using System.Reflection;
 using Odyssey.Core.Services;
+using Avalonia.Input;
+using Odyssey.ViewModels;
 
 namespace Odyssey;
 
-public class App : PrismApplication
+public class App : Application
 {
     private readonly Styles _themeStylesContainer = new();
 
@@ -85,15 +86,16 @@ public class App : PrismApplication
 
         UpdateThemeResources(initialTheme, initialThemeMode);
 
-        //AvaloniaXamlLoader.Load(this);
-
         // Note: Simple theme does not exist for ConfigFactory, so Settings view will not be styled when Simple theme is used
         SetThemes(initialTheme);
 
         ThemeModeManager.SetMode(initialThemeMode);
 
-        // With it, create a MainWindowViewModel via Prism application initialization
-        base.Initialize();
+#if DOCK_USE_GENERATED_APP_INITIALIZE_COMPONENT
+        InitializeComponent();
+#else
+        AvaloniaXamlLoader.Load(this);
+#endif
     }
 
     private void UpdateThemeResources(Theme theme, ApplicationThemeMode themeMode)
@@ -112,62 +114,26 @@ public class App : PrismApplication
 
     public override void OnFrameworkInitializationCompleted()
     {
+        Debug.WriteLine($"[APPLICATION] OnFrameworkInitializationCompleted");
         //ServiceLocator.Initialize();
 
-        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopLifetime)
         {
-            // TODO: handle Args as a file to open
-            //this.
-            //desktop.Args;
-            /*
-            DataContext = Container.Resolve<<IMainWindowViewModel>();
-            desktop.MainWindow = new MainWindow
-            {
-                DataContext = DataContext
-            };
-            */
+            MainWindowViewModel mainWindowViewModel = new MainWindowViewModel();
+            var mainWindow = new MainWindow { DataContext = mainWindowViewModel };
 
-            /*
 #if DEBUG
             mainWindow.AttachDockDebug(() => mainWindowViewModel.Layout, new KeyGesture(Key.F11));
             mainWindow.AttachDockDebugOverlay(new KeyGesture(Key.F9));
 #endif
-            */
-            // CHECK: DataContext for MainWindow and closing system (cf Dock examples apps)
-            // var mainWindow = Container.Resolve<MainWindow>();
-            // mainWindow.Closing += (_, _) => { mainWindowViewModel.CloseLayout(); };
-            // desktopLifetime.MainWindow = mainWindow;
-            // desktopLifetime.Exit += (_, _) => { mainWindowViewModel.CloseLayout();};
+
+            mainWindow.Closing += (_, _) => { mainWindowViewModel.CloseLayout(); };
+            desktopLifetime.MainWindow = mainWindow;
+            desktopLifetime.Exit += (_, _) => { mainWindowViewModel.CloseLayout();};
         }
 
         base.OnFrameworkInitializationCompleted();
-#if DEBUG
-        this.AttachDeveloperTools();
-#endif
-    }
-
-    /// <summary>
-    /// Prism feature. Register types in the container.
-    /// </summary>
-    /// <param name="containerRegistry"></param>
-    protected override void RegisterTypes(IContainerRegistry containerRegistry)
-    {
-        Debug.WriteLine("[APPLICATION] RegisterTypes");
-
-        // Wire-up services and navigation Views here.
-
-        // Resolve to get an instance of the service
-        //containerRegistry.RegisterSingleton<IMySQervice, MyService>();
-    }
-
-    // Prism
-    /// <summary>User interface entry point, called after Register and ConfigureModules.</summary>
-    /// <returns>Startup View.</returns>
-    ///
-    protected override AvaloniaObject CreateShell()
-    {
-        Debug.WriteLine("[APPLICATION] Create shell");
-        return Container.Resolve<MainWindow>();
+        Debug.WriteLine($"[APPLICATION] OnFrameworkInitializationCompleted done");
     }
 
     /// <summary>
@@ -175,7 +141,9 @@ public class App : PrismApplication
     /// </summary>
     private static void LoadSettings()
     {
+        Debug.WriteLine($"[APPLICATION] LoadSettings...");
         ConfigFactory.ConfigFactory.Build<GlobalSettings>();
+        Debug.WriteLine($"[APPLICATION] LoadSettings done");
     }
 
     private Theme _prevTheme;

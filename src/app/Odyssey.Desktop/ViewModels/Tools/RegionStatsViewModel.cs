@@ -75,14 +75,8 @@ public partial class RegionStatsViewModel : DocumentToolViewModelBase
     public ObservableCollection<FactionItem> Factions => _factions ??= [];
 
     public ObservableCollection<string> Domains => _domains ??= [];
-    public RegionStatsViewModel() : this(null)
-    {
-        if (!Design.IsDesignMode)
-        {
-            throw new InvalidOperationException("This constructor should only be used in design mode.");
-        }
-    }
-    public RegionStatsViewModel(IEventAggregator? eventAggregator): base(eventAggregator)
+
+    public RegionStatsViewModel(IEventAggregator? eventAggregator = null): base(eventAggregator)
     {
         SelectedFactionId = -1;
         _statItems = [];

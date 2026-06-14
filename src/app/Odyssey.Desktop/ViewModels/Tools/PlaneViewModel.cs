@@ -16,17 +16,7 @@ public partial class PlaneViewModel : DocumentToolViewModelBase
     [ObservableProperty]
     public string name;
 
-    private readonly IEventAggregator? _eventAggregator;
-
-    public PlaneViewModel() : this(null)
-    {
-        if (!Design.IsDesignMode)
-        {
-            throw new InvalidOperationException("This constructor should only be used in design mode.");
-        }
-    }
-
-    public PlaneViewModel(IEventAggregator? eventAggregator) : base(eventAggregator)
+    public PlaneViewModel(IEventAggregator? eventAggregator = null) : base(eventAggregator)
     {
         // Astral or world
         Name = string.Empty;

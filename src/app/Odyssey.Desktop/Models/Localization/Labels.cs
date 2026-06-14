@@ -90,7 +90,7 @@ namespace Odyssey.Models.Localization
                 label = Lang.ResourceManager.GetString(localizationKey, Lang.Culture);
                 if (string.IsNullOrEmpty(label))
                 {
-                    Debug.WriteLine($"[NOT FOUND] {label} / {localizationKey}");
+                    Debug.WriteLine($"[TRANSLAT] WARNING | coudl not find resource. name={name} key={localizationKey}");
                     int index = name.LastIndexOf('_');
                     label = index != -1 ? name.Substring(index + 1) : $"--- {name} ---";
                     translationFailed = true;

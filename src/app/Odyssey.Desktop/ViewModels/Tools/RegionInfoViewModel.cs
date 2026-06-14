@@ -75,15 +75,7 @@ public partial class RegionInfoViewModel : MessagesViewModel
     private Node? GuardsMessages { get { return _guardsMessages; } }
     private Node? UnitMessages { get { return _unitMessages; } }
 
-    public RegionInfoViewModel() : this(null)
-    {
-        if (!Design.IsDesignMode)
-        {
-            throw new InvalidOperationException("This constructor should only be used in design mode.");
-        }
-    }
-
-    public RegionInfoViewModel(IEventAggregator? eventAggregator) : base(eventAggregator)
+    public RegionInfoViewModel(IEventAggregator? eventAggregator = null) : base(eventAggregator)
     {
         // TODO: check if an unseen region can have some messages
         // anyway, handle unseen regions with specific info here, isn't it ?

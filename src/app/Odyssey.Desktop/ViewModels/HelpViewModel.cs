@@ -62,13 +62,6 @@ public partial class HelpViewModel : ObservableObject
         TocItems = LoadTocItems(path);
 
         /*
-        if (!Design.IsDesignMode)
-        {
-            throw new InvalidOperationException("This constructor should only be used in design mode.");
-        }
-        */
-
-        /*
         // We don't use embedded resources here to allow easy modification of sample files.
         var markdownFolderPath = Path.Combine(AppContext.BaseDirectory, "samples");
         foreach (var markdownFilePath in Directory.EnumerateFiles(markdownFolderPath, "*.md")

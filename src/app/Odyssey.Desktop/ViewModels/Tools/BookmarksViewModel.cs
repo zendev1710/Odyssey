@@ -66,15 +66,8 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
 
     private bool LoadingBookmarksInProgress { get; set; }
 
-    public BookmarksViewModel() : this(null)
-    {
-        if (!Design.IsDesignMode)
-        {
-            throw new InvalidOperationException("This constructor should only be used in design mode.");
-        }
-    }
 
-    public BookmarksViewModel(IEventAggregator? eventAggregator) : base(eventAggregator)
+    public BookmarksViewModel(IEventAggregator? eventAggregator=null) : base(eventAggregator)
     {
         Bookmarks.CollectionChanged += (_, _) => HasBookmark = Bookmarks.Count > 0;
     }

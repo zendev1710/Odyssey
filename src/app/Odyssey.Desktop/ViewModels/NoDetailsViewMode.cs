@@ -18,15 +18,7 @@ namespace Odyssey.ViewModels;
 
 public partial class NoDetailsViewModel : ContainerViewModel
 {
-    public NoDetailsViewModel(): this(null)
-    {
-        if (!Design.IsDesignMode)
-        {
-            throw new InvalidOperationException("This constructor should only be used in design mode.");
-        }
-    }
-
-    public NoDetailsViewModel(IEventAggregator? eventAggregator) : base(Ids.NoDetails, eventAggregator)
+    public NoDetailsViewModel(IEventAggregator? eventAggregator = null) : base(Ids.NoDetails, eventAggregator)
     {
     }
 

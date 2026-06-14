@@ -257,14 +257,7 @@ public partial class RegionPropertiesViewModel : DocumentToolViewModelBase
     [ObservableProperty]
     private int _incense;
 
-    public RegionPropertiesViewModel() : this(null)
-    {
-        if (!Design.IsDesignMode)
-        {
-            throw new InvalidOperationException("This constructor should only be used in design mode.");
-        }
-    }
-    public RegionPropertiesViewModel(IEventAggregator? eventAggregator): base(eventAggregator)
+    public RegionPropertiesViewModel(IEventAggregator? eventAggregator = null): base(eventAggregator)
     {
         _opacity = GlobalSettings.EnableTerrainBackgroundColor ? 0.9 : 1;
     }

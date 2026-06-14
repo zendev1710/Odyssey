@@ -6,9 +6,11 @@ using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Dock.Model;
 using Dock.Model.Controls;
 using Dock.Model.Core;
 using Dock.Model.Core.Events;
+using Dock.Serializer;
 using Odyssey.Core.Services;
 using Odyssey.Events;
 using Odyssey.Extensions;
@@ -21,6 +23,7 @@ using Odyssey.Utils;
 using Odyssey.ViewModels.Documents;
 using Odyssey.ViewModels.Tools;
 using Prism.Events;
+using PrismEventAggregator = Prism.Events.EventAggregator;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -116,6 +119,9 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     [ObservableProperty]
     private bool _isErrorsListViewVisible;
 
+    private IDockSerializer? _serializer;
+    private IDockState? _dockState;
+
     private static readonly Dictionary<string, Action<MainWindowViewModel, bool>> _viewVisibilitySetters = new()
     {
         { Ids.Map,                (vm, v) => vm.IsMapViewVisible = v },
@@ -145,6 +151,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     private readonly IFactory _factory;
     private readonly IEventAggregator? _eventAggregator;
     private IRootDock? _layout;
+    private string _globalStatus = "Global: (none)";
 
     private readonly bool _singleReportMode = true;
 
@@ -166,6 +173,12 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     // SelectedPlaneName should be the name of the selected plane in the combobox.
     public ObservableCollection<WorldPlane> Planes { get; private set; } = [];
 
+    public string GlobalStatus
+    {
+        get => _globalStatus;
+        set => SetProperty(ref _globalStatus, value);
+    }
+
     public IRootDock? Layout
     {
         get => _layout;
@@ -184,17 +197,12 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
     public string Id { get; } = Ids.MainWindowVmId;
 
-    public MainWindowViewModel():this(null)
+    public MainWindowViewModel()
     {
-        if (!Design.IsDesignMode)
-        {
-            throw new InvalidOperationException("This constructor should only be used in design mode.");
-        }
-    }
-    public MainWindowViewModel(IEventAggregator? eventAggregator)
-    {
-        _eventAggregator = eventAggregator;
-        _factory = new DockFactory(eventAggregator, new CRDocument());
+        // TODO: check with "if (!Design.IsDesignMode)" if we do not want to do some actions in design mode
+
+        _eventAggregator = PrismEventAggregator.Current;
+        _factory = new DockFactory(_eventAggregator, new CRDocument());
         _isFullscreen = false;
         bool hideInProgressFeatures = GlobalSettings.Get<bool>(GlobalSettings.HIDE_IN_PROGRESS_FEATURES);
         _enableSearchFeature = !hideInProgressFeatures;
@@ -208,21 +216,19 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         //_serializer = new DockSerializer(typeof(AvaloniaList<>));
         //_dockState = new DockState();
 
-        Layout = _factory.CreateLayout();
-        if (Layout is { })
-        {
-            _factory.InitLayout(Layout);
-            if (Layout is { } root)
-            {
-                // Display the home view, which embeds all the layout docked windows
-                root.Navigate.Execute(Ids.Home);
-            }
-        }
+        Layout = _factory?.CreateLayout();
+        InitLayout();
+        GlobalStatus = Layout is null
+            ? "Global: (none)"
+            : FormatGlobalStatus(_factory?.GlobalDockTrackingState ?? GlobalDockTrackingState.Empty);
 
-        var layout = Layout;
-        if (layout is { })
+        // TODO: check where it should be called exactly
+        InitializeDockState();
+
+        if (Layout is { } root)
         {
-            //_dockState.Save(layout);
+            // Display the home view, which embeds all the layout docked windows
+            root.Navigate.Execute(Ids.Home);
         }
 
         _bookmarksViewModel = _factory.GetDockable<IDockable>(Ids.Bookmarks) as BookmarksViewModel;
@@ -279,6 +285,16 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         }
 
         //OpenRecentFileCommand = new RelayCommand<string>(OpenRecentFile);
+    }
+
+    private void InitializeDockState()
+    {
+        _serializer = new DockSerializer(typeof(ObservableCollection<>));
+        _dockState = new DockState();
+        if (Layout is not null)
+        {
+            _dockState.Save(Layout);
+         }
     }
 
     [RelayCommand]
@@ -357,13 +373,35 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
     public void CloseLayout()
     {
+        Debug.WriteLine("[MAINWINDOW] CloseLayout...");
         if (Layout is IDock dock)
         {
             if (dock.Close.CanExecute(null))
             {
+                Debug.WriteLine("[MAINWINDOW] Closing dock...");
                 dock.Close.Execute(null);
+                Debug.WriteLine("[MAINWINDOW] dock closed");
             }
         }
+        Layout = null;
+        Debug.WriteLine("[MAINWINDOW] CloseLayout ended.");
+    }
+
+    private void ResetLayout()
+    {
+        Debug.WriteLine("[MAINWINDOW] ResetLayout...");
+        if (Layout is not null)
+        {
+            if (Layout.Close.CanExecute(null))
+            {
+                Layout.Close.Execute(null);
+            }
+        }
+
+        Layout = _factory.CreateLayout();
+        InitLayout();
+
+        Debug.WriteLine("[MAINWINDOW] ResetLayout ended.");
     }
 
     public void ActivateFindArea()
@@ -375,24 +413,6 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         // - findtextbox.Focus() called when this property changes to true
         // - IsActiveFind set to false when focus is changed/lost
         Debug.WriteLine("[MAINWINDOW] Activate find area");
-    }
-
-    public void ResetLayout()
-    {
-        if (Layout is not null)
-        {
-            if (Layout.Close.CanExecute(null))
-            {
-                Layout.Close.Execute(null);
-            }
-        }
-
-        var layout = _factory.CreateLayout();
-        if (layout is not null)
-        {
-            _factory.InitLayout(layout);
-            Layout = layout;
-        }
     }
 
     public void DragOver(object? sender, DragEventArgs e)
@@ -1047,8 +1067,23 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         }
     }
 
+    private void InitLayout()
+    {
+        if (Layout is null)
+        {
+            return;
+        }
+
+        _factory?.InitLayout(Layout);
+    }
+
     private async Task OpenLayout()
     {
+        if (_serializer is null || _dockState is null)
+        {
+            return;
+        }
+
         var storageProvider = StorageService.GetStorageProvider();
         if (storageProvider is null)
         {
@@ -1071,20 +1106,13 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
             {
                 await using var stream = await file.OpenReadAsync();
                 using var reader = new StreamReader(stream);
-
-                //var layout = _serializer.Load<IDock?>(stream);
-
-                // TODO:
-                // var layout = await JsonSerializer.DeserializeAsync(
-                //     stream,
-                //     AvaloniaDockSerializer.s_serializerContext.RootDock);
-                /*
-                if (layout is { })
+                var layout = _serializer.Load<IRootDock?>(stream);
+                if (layout is not null)
                 {
-                    // TODO
-                    //dock.Layout = layout;
                     _dockState.Restore(layout);
-                }*/
+                     Layout = layout;
+                    _factory?.InitLayout(Layout);
+                }
             }
             catch (Exception e)
             {
@@ -1095,6 +1123,11 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
     private async Task SaveLayout()
     {
+        if (_serializer is null || _dockState is null)
+        {
+            return;
+        }
+
         var storageProvider = StorageService.GetStorageProvider();
         if (storageProvider is null)
         {
@@ -1116,14 +1149,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
             try
             {
                 await using var stream = await file.OpenWriteAsync();
-                if (Layout is { })
-                {
-                    //_serializer.Save(stream, Layout);
-                    // TODO:
-                    // await JsonSerializer.SerializeAsync(
-                    //     stream, 
-                    //     (RootDock)dock.Layout, AvaloniaDockSerializer.s_serializerContext.RootDock);
-                }
+                _serializer.Save(stream, Layout);
             }
             catch (Exception e)
             {
@@ -1773,5 +1799,14 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         {
             Debug.WriteLine($"[MAINWINDOW] WindowMoveDragEnd Title='{args.Window?.Title}', X='{args.Window?.X}', Y='{args.Window?.Y}");
         };
+    }
+
+    private static string FormatGlobalStatus(GlobalDockTrackingState state)
+    {
+        var dockableTitle = state.Dockable?.Title ?? "(none)";
+        var rootId = state.RootDock?.Id ?? "(none)";
+        var windowTitle = state.Window?.Title ?? "(main)";
+        var host = state.HostWindow?.GetType().Name ?? "(main)";
+        return $"Dockable: {dockableTitle} | Root: {rootId} | Window: {windowTitle} | Host: {host}";
     }
 }

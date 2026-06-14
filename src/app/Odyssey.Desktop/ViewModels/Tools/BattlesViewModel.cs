@@ -22,15 +22,7 @@ public partial class BattlesViewModel : DocumentToolViewModelBase
 
     public ObservableCollection<BattleModel> Battles { get; } = [];
 
-    public BattlesViewModel() : this(null)
-    {
-        if (!Design.IsDesignMode)
-        {
-            throw new InvalidOperationException("This constructor should only be used in design mode.");
-        }
-    }
-
-    public BattlesViewModel(IEventAggregator? eventAggregator) : base(eventAggregator)
+    public BattlesViewModel(IEventAggregator? eventAggregator = null) : base(eventAggregator)
     {
         Clear();
     }

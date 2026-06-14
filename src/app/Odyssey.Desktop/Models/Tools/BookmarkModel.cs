@@ -20,9 +20,13 @@ public class BookmarkModel
 
     public BookmarkModel(string type, DataBlock dt)
     {
-        Id = dt.GetStringId();
-        Name = dt.GetUIName();
-        Label = dt.GetUILabel();
+        // FIXME: dt is null when loading from OpenLayout() deserialization
+        if (dt is not null)
+        {
+            Id = dt.GetStringId();
+            Name = dt.GetUIName();
+            Label = dt.GetUILabel();
+        }
         Type = type;
         Target = dt;
     }

@@ -7,7 +7,6 @@ using Odyssey.Core.Services;
 using Odyssey.Models.Localization;
 using Odyssey.Models.Tools;
 using Odyssey.ViewModels.Docks;
-using Odyssey.ViewModels.Documents;
 using Odyssey.ViewModels.Tools;
 using Prism.Events;
 using System;
@@ -55,7 +54,7 @@ public class DockFactory : Factory
 
     public override IRootDock CreateLayout()
     {
-        Debug.WriteLine("[DOCK-FACTO] Layout creation");
+        Debug.WriteLine("[DOCK-FACTO] CreateLayout...");
 
         // As HideToolsOnClose was set to true, close action just hide a tool, that can be restored
         bool canCloseTool = true;
@@ -279,7 +278,7 @@ public class DockFactory : Factory
         _reportInfoViewModel = reportInfoViewModel;
         _errorListViewModel = errorListViewModel;
 
-        Debug.WriteLine("[DOCK-FACTO] Layout creation done");
+        Debug.WriteLine("[DOCK-FACTO] CreateLayout done");
         return rootDock;
     }
 
@@ -295,6 +294,8 @@ public class DockFactory : Factory
 
     public override void InitLayout(IDockable layout)
     {
+        Debug.WriteLine("[DOCK-FACTO] InitLayout...");
+
         // ContextLocator is used by FactoryBase::GetContext("<context-id>") 
         ContextLocator = new Dictionary<string, Func<object?>>
         {
@@ -341,6 +342,8 @@ public class DockFactory : Factory
         };
 
         base.InitLayout(layout);
+
+        Debug.WriteLine("[DOCK-FACTO] InitLayout done");
     }
 
     private static string LocalizedTitle(string id)

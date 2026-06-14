@@ -25,15 +25,7 @@ public partial class DetailsViewModel : DocumentToolViewModelBase
     [ObservableProperty]
     private ViewModelBase? _currentPage;
 
-    public DetailsViewModel() : this(null) 
-    {
-        if (!Design.IsDesignMode)
-        {
-            throw new InvalidOperationException("This constructor should only be used in design mode.");
-        }
-    }
-
-    public DetailsViewModel(IEventAggregator? eventAggregator) : base(eventAggregator)
+    public DetailsViewModel(IEventAggregator? eventAggregator = null) : base(eventAggregator)
     {
         _noDetailsViewModel = new NoDetailsViewModel(eventAggregator);
         _unitDetailsViewModel = new UnitDetailsViewModel(eventAggregator);

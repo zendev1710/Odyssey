@@ -21,15 +21,8 @@ public partial class MiniMapViewModel : DocumentToolViewModelBase
     public int MiniMapNumber { get { return 0; } } // MiniMap.Count; } }
 
     //public ObservableCollection<BookmarkModel> MiniMap { get; }
-    public MiniMapViewModel() : this(null)
-    {
-        if (!Design.IsDesignMode)
-        {
-            throw new InvalidOperationException("This constructor should only be used in design mode.");
-        }
-    }
 
-    public MiniMapViewModel(IEventAggregator? eventAggregator) : base(eventAggregator)
+    public MiniMapViewModel(IEventAggregator? eventAggregator = null) : base(eventAggregator)
     {
         _selectedBookmarkIndex = -1;
         _selectedBookmarkText = string.Empty;

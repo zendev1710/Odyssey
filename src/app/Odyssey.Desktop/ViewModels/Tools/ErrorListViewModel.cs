@@ -18,16 +18,10 @@ namespace Odyssey.ViewModels.Tools;
 /// </summary>
 public class ErrorListViewModel : DocumentToolViewModelBase
 {
-    public ErrorListViewModel(): this(null)
-    {
-        if (!Design.IsDesignMode)
-        {
-            throw new InvalidOperationException("This constructor should only be used in design mode.");
-        }
-    }
-    public ErrorListViewModel(IEventAggregator? eventAggregator): base(eventAggregator)
+    public ErrorListViewModel(IEventAggregator? eventAggregator = null): base(eventAggregator)
     {
     }
+
     protected override void OnActiveDocumentChanged(CRDocument cr)
     {
         Debug.WriteLine($"[VM-ERRORS--] DOCUMENT CHANGED {cr} -> BEGIN");

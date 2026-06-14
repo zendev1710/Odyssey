@@ -77,15 +77,8 @@ namespace Odyssey.ViewModels
         private bool _includeFactions;
 
         public ObservableCollection<string> Domains => _domains ??= [];
-        public SearchViewModel() : this(null)
-        {
-            if (!Design.IsDesignMode)
-            {
-                throw new InvalidOperationException("This constructor should only be used in design mode.");
-            }
-        }
 
-        public SearchViewModel(IEventAggregator? eventAggregator): base(eventAggregator)
+        public SearchViewModel(IEventAggregator? eventAggregator = null): base(eventAggregator)
         {
             _isCaseSensitive = true;
             _isMatchingWholeWord = false;

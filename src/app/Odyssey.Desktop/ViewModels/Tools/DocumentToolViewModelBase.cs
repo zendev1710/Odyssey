@@ -1,13 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Odyssey.Events;
-using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Dock.Model.Mvvm.Controls;
 using Prism.Events;
 using System.Collections.Generic;
 using System.Diagnostics;
-using static Odyssey.Models.Documents.CRDocument;
-using static Odyssey.Models.Documents.SimpleItemSelection;
 
 namespace Odyssey.ViewModels.Tools
 {
@@ -69,8 +66,8 @@ namespace Odyssey.ViewModels.Tools
         /// <summary>
         /// Constructor.
         /// </summary>
-        protected DocumentToolViewModelBase(IEventAggregator? eventAggregator) {
-            _eventAggregator = eventAggregator;
+        protected DocumentToolViewModelBase(IEventAggregator? eventAggregator = null) {
+            _eventAggregator = eventAggregator ?? Prism.Events.EventAggregator.Current;
             HasDocument = false;
             // links to an empty report document
             Report = new CRDocument();
@@ -141,7 +138,6 @@ namespace Odyssey.ViewModels.Tools
         {
             // IMPROVE: use rather a unique Id for the document
             bool result = cr.Name == Report.Name;
-            Debug.WriteLine($"[DOCTOOL-] IsSameDocument {result}");
             return result;
         }
 
