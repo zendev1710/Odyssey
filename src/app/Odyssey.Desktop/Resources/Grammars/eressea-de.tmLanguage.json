@@ -1,0 +1,1099 @@
+{
+  "name": "Eressea Orders File (German)",
+  "scopeName": "orders-file-de.eressea",
+  "patterns": [
+    { "include": "#unit-orders" },
+    { "include": "#faction-orders" },
+    { "include": "#meta-orders" },
+    { "include": "#comment" },
+    { "include": "#comment-inline" },
+    { "include": "#coords-comma" },
+    { "include": "#coords-whitespace" },
+    { "include": "#direction" },
+    { "include": "#element-id" },
+    { "include": "#item" },
+    { "include": "#level" },
+    { "include": "#quantity" },
+    { "include": "#skills" },
+    { "include": "#string-line" },
+    { "include": "#string-multi-lines" }
+  ],
+  "repository": {
+    "unit-orders": {
+      "patterns": [
+        {
+          "begin": "^\\s*(@?)(?i:(ATTACKIERE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#element-id" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(KAUFE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#quantity" },
+            { "include": "#item" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(BEANSPRUCHE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#quantity" },
+            { "include": "#item" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(TRANSPORTIERE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#element-id" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "\\s*(@?)(?i:(ZAUBERE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "begin": "\\b(?i:REGION)\\b",
+              "beginCaptures": {
+                "0": { "name": "keyword.entity.eressea" }
+              },
+              "end": "(?=\\s|$)",
+              "patterns": [
+                { "include": "#coords-whitespace" }
+              ]
+            },
+            {
+              "begin": "\\b(?i:LEVEL)\\b",
+              "beginCaptures": {
+                "0": { "name": "keyword.mode.eressea" }
+              },
+              "end": "(?=\\s|$)",
+              "patterns": [
+                { "include": "#level" }
+              ]
+            },
+            { "include": "#item" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(KÄMPFE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "match": "(?i)\\b(AGGRESSIVE|DEFENSIVE|FLEE|REAR|HELFE)\\b",
+              "name": "keyword.mode.eressea"
+            },
+            {
+              "match": "(?i)\\bNOT\\b",
+              "name": "keyword.logical.eressea"
+            },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "\\s*(@?)(?i:(KAMPFZAUBER))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "begin": "\\b(?i:LEVEL)\\b",
+              "beginCaptures": {
+                "0": { "name": "keyword.mode.eressea" }
+              },
+              "end": "(?=\\s|$)",
+              "patterns": [
+                { "include": "#level" }
+              ]
+            },
+            { "include": "#item" },
+            {
+              "match": "\\b(?i:NICHT)\\b",
+              "name": "keyword.logical.eressea"
+            },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(KONTAKTIERE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "match": "(?i)\\b(EINHEIT|FACTION)\\b",
+              "name": "keyword.entity.eressea"
+            },
+            {
+              "match": "\\b[UF]\\d+\\b",
+              "name": "variable.base36.eressea.element-id"
+            },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "\\s*(@?)(?i:(DEFAULT))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "name": "string.quoted.order.eressea",
+              "match": "\"[^\"]+\""
+            },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(BESCHREIBE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "match": "(?i)\\b(GEBÄUDE|PRIVAT|REGION|SCHIFF|EINHEIT)\\b",
+              "name": "keyword.entity.eressea"
+            },
+            {
+              "match": "\"[^\"]*\"",
+              "name": "string.quoted.eressea.description"
+            },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(ZERSTÖRE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "match": "(?i)\\bSTREET\\b",
+              "name": "support.constant.eressea.resource"
+            },
+            { "include": "#level" },
+            { "include": "#direction" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(ENDE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(BETRETE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "match": "(?i)\\b(GEBÄUDE|BURG|SCHIFF)\\b",
+              "name": "keyword.entity.eressea"
+            },
+            {
+              "match": "\\b[BS]\\d+\\b",
+              "name": "variable.base36.eressea.element-id"
+            },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(UNTERHALTE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#quantity" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(FOLGE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "match": "(?i)\\b(SCHIFF|EINHEIT)\\b",
+              "name": "keyword.entity.eressea"
+            },
+            { "include": "#element-id" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "\\s*(@?)(?i:(VERGISS))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#skills" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(GIB))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#element-id" },
+            { "include": "#quantity" },
+            { "include": "#item" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(GRUPPE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "match": "\"[^\"]*\"",
+              "name": "string.quoted.eressea.group-name"
+            },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(ZÜCHTE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "match": "(?i:\\b(HORSES|KRÄUTER)\\b)",
+              "name": "support.constant.eressea.resource"
+            },
+            { "include": "#element-id" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(BEWACHE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "match": "\\b(?i:NICHT)\\b",
+              "name": "keyword.logical.eressea"
+            },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(TARNE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "match": "(?i)\\b(FACTION|NUMMER)\\b",
+              "name": "keyword.entity.eressea"
+            },
+            {
+              "match": "(?i)\\bNOT\\b",
+              "name": "keyword.logical.eressea"
+            },
+            { "include": "#quantity" },
+            { "include": "#element-id" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "\\s*(@?)(?i:(LERNE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#skills" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "\\s*(@?)(?i:(LERNE AUTO))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#skills" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(VERLASSE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "\\s*(@?)(?i:(MACHE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "match": "\\b(?i:KRÄUTER)\\b",
+              "name": "support.constant.eressea.resource"
+            },
+            {
+              "match": "\\b(\\d+)\\b",
+              "name": "constant.numeric.eressea"
+            },
+            { "include": "#item" },
+            {
+              "begin": "\\b(?i:TEMP)\\b",
+              "beginCaptures": {
+                "0": { "name": "keyword.mode.eressea" }
+              },
+              "end": "(?=\\s|$)",
+              "patterns": [
+                { "include": "#element-id" },
+                {
+                  "name": "string.quoted.name.eressea",
+                  "match": "\"[^\"]+\""
+                }
+              ]
+            },
+            {
+              "match": "\\b(?i:STRASSE)\\b",
+              "name": "support.constant.eressea.resource"
+            },
+            { "include": "#direction" },
+            {
+              "match": "\\b(?i:(GEBÄUDE|BURG|SCHIFF))\\b",
+              "name": "keyword.entity.eressea"
+            },
+            { "include": "#element-id" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(BOTSCHAFT))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "match": "(?i:\\b(REGION|GEBÄUDE|BURG|FACTION|SCHIFF|EINHEIT)\\b)",
+              "name": "keyword.entity.eressea"
+            },
+            { "include": "#element-id" },
+            { "include": "#string-multi-lines" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(NACH))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#direction" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(BENENNE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "match": "\\b(FOREIGNUNIT|FOREIGN|GEBÄUDE|BURG|FACTION|GRUPPE|REGION|EINHEIT)\\b",
+              "name": "keyword.entity.eressea"
+            },
+            { "include": "#element-id" },
+            { "include": "#string-line" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(NUMMER))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "match": "\\b(EINHEIT|SCHIFF|GEBÄUDE|FACTION)\\b",
+              "name": "keyword.entity.eressea"
+            },
+            { "include": "#element-id" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(BEZAHLE\\s+NICHT))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#element-id" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "\\s*(@?)(?i:(PIRATERIE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#element-id" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(PFLANZE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#quantity" },
+            {
+              "match": "(?i)\\b(TREES|KRÄUTER|SEEDS|MALLORNSEEDS)\\b",
+              "name": "support.constant.eressea.resource"
+            },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(BEFÖRDERE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(REKRUTIERE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#quantity" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(FORSCHE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "match": "(?i)\\bHERBS\\b",
+              "name": "support.constant.eressea.resource"
+            },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(RESERVIERE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "match": "(?i)\\bEACH\\b",
+              "name": "keyword.mode.eressea"
+            },
+            { "include": "#quantity" },
+            { "include": "#item" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(FAHRE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#element-id" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(ROUTE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#direction" },
+            {
+              "match": "(?i)\\b(PAUSE|P)\\b",
+              "name": "keyword.mode.eressea"
+            },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(VERKAUFE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#quantity" },
+            { "include": "#item" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(ZEIGE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "match": "(?i)ALL\\s+(POTIONS?|SPELLS?)",
+              "name": "keyword.mode.eressea"
+            },
+            { "include": "#item" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(SORTIERE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "match": "(?i)\\b(BEFORE|AFTER)\\b",
+              "name": "keyword.mode.eressea"
+            },
+            { "include": "#element-id" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(SPIONIERE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#element-id" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(BEKLAUE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#element-id" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(TREIBE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#quantity" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(LEHRE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#element-id" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(BENUTZE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#quantity" },
+            { "include": "#item" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(ARBEITE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#comment-inline" }
+          ]
+        }
+      ]
+    },
+    "faction-orders": {
+      "patterns": [
+        {
+          "begin": "^\\s*(@?)(?i:(BANNER))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.faction-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#string-multi-lines" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(EMAIL))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.faction-order" }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "match": "\"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\"",
+              "name": "string.quoted.eressea.email"
+            },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(HELFE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.faction-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#element-id" },
+            {
+              "match": "(?i)\\b(ALL|KÄMPFE|GIB|GUARD|FACTIONSTEALTH|SILVER)\\b",
+              "name": "keyword.mode.eressea"
+            },
+            {
+              "match": "(?i)\\bNOT\\b",
+              "name": "keyword.logical.eressea"
+            },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(SPRACHE))\\s+(?i:(DE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.faction-order" }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "match": "(?i)\\bDE\\b",
+              "name": "constant.language.value.eressea"
+            },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(LOCALE))\\s+(?i:(DE))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.faction-order" }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "match": "(?i)\\bDE\\b",
+              "name": "constant.language.value.eressea"
+            },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "\\s*(@?)(?i:(OPTION))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.faction-order" }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "match": "(?i:(ADRESSEN|COMPUTER|PLAINTEXT|SCORE|STATISTICS|TEMPLATE))\\b",
+              "name": "constant.language.option.eressea"
+            },
+            {
+              "match": "\\b(?i:NICHT)\\b",
+              "name": "keyword.logical.eressea"
+            },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(URSPRUNG))\\s+(-?\\d+)\\s+(-?\\d+)\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.faction-order" },
+            "3": { "name": "constant.numeric.eressea.coordinate" },
+            "4": { "name": "constant.numeric.eressea.coordinate" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(PASSWORT))\\s+\"([A-Za-z0-9]+)\"",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.faction-order" },
+            "3": { "name": "string.quoted.eressea.password" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(PRÄFIX))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.faction-order" }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "match": "(?i)\\b(dark|light|shadow|gray|gloomy|small|high|hill|mountain|forest|swamp|snow|sun|moon|fog|frost|lake|valley|cave|blood|wild|chaos|night)\\b",
+              "name": "constant.language.value.eressea"
+            },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(FACTION))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.faction-order" }
+          },
+          "end": "$"
+        }
+      ]
+    },
+    "meta-orders": {
+      "patterns": [
+        {
+          "begin": "^\\s*(@?)(?i:(ERESSEA))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.meta-order" }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "match": "\\bF\\d+\\b",
+              "name": "constant.numeric.eressea.faction-id"
+            },
+            {
+              "match": "\"[^\"]*\"",
+              "name": "string.quoted.eressea.password"
+            },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(NÄCHSTER))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.meta-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "\\s*(@?)(?i:(STIRB))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.meta-order" }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "name": "string.quoted.password.eressea",
+              "match": "\"[A-Za-z0-9]+\""
+            },
+            {
+              "begin": "\\b(?i:FACTION)\\b",
+              "beginCaptures": {
+                "0": { "name": "keyword.entity.eressea" }
+              },
+              "end": "(?=\\s|$)",
+              "patterns": [
+                { "include": "#element-id" }
+              ]
+            },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(REGION))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.meta-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#coords-comma" },
+            { "include": "#comment-inline" }
+          ]
+        },
+        {
+          "begin": "^\\s*(@?)(?i:(EINHEIT))\\b",
+          "beginCaptures": {
+            "1": { "name": "punctuation.definition.priority.eressea" },
+            "2": { "name": "keyword.command.eressea.unit-order" }
+          },
+          "end": "$",
+          "patterns": [
+            { "include": "#element-id" },
+            { "include": "#comment-inline" }
+          ]
+        }
+      ]
+    },
+    "comment": {
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.eressea",
+          "match": "^\\s*//\\s.*$"
+        }
+      ]
+    },
+    "comment-inline": {
+      "name": "comment.line.semicolon.eressea",
+      "match": "(?<!\\\\)(?<!\")\\s*;.*$"
+    },
+    "coords-comma": {
+      "patterns": [
+        {
+          "match": "\\b(-?\\d+),(-?\\d+)\\b",
+          "captures": {
+            "1": { "name": "constant.numeric.eressea.coordinate" },
+            "2": { "name": "constant.numeric.eressea.coordinate" }
+          }
+        }
+      ]
+    },
+    "coords-whitespace": {
+      "patterns": [
+        {
+          "match": "\\b(-?\\d+)\\s+(-?\\d+)\\b",
+          "captures": {
+            "1": { "name": "constant.numeric.eressea.coordinate" },
+            "2": { "name": "constant.numeric.eressea.coordinate" }
+          }
+        }
+      ]
+    },
+    "direction": {
+      "patterns": [
+        {
+          "match": "\\b(?i:(NORDO|NORDOSTEN|NO|NORDW|NORDWESTEN|NW|OSTEN|O|WESTEN|W|SÜDO|SÜDOSTEN|SO|SÜDW|SÜDWESTEN|SW))\\b",
+          "name": "constant.language.direction.eressea"
+        }
+      ]
+    },
+    "element-id": {
+      "name": "variable.base36.eressea.element-id",
+      "match": "\\b(?!(?i:(iron|wood|oil|balm|bow|gem|silk|cart|laen|herb|axe|seed|life|wax|all))\\b)(?!\\d{3,4}\\b)(?i:[A-Z0-9]{3,4})\\b"
+    },
+    "level": {
+      "name": "constant.numeric.eressea.level",
+      "match": "\\b\\d+\\b"
+    },
+    "quantity": {
+      "name": "constant.numeric.eressea.quantity",
+      "match": "\\b(?:\\d+|(?i:ALL))\\b"
+    },
+    "item": {
+      "name": "support.constant.eressea.item",
+      "match": "\\b(?:\"[A-Za-z0-9_ ]+\"|[A-Za-z0-9_]+(?:~[A-Za-z0-9_]+)*)\\b"
+    },
+    "skills": {
+      "patterns": [
+        {
+          "match": "(?i:(alchemy|crossbow|endurance|mining|bow|masonry|trade|melee|forestry|catapult|herbalism|magic|taming|riding|armoursmithing|shipcraft|sailing|espionage|polearm|quarrying|taxation|roadwork|tactics|stealth|entertainment|weaponsmithing|unarmed combat|cartmaking|perception))\\b",
+          "name": "support.constant.eressea.skill"
+        }
+      ]
+    },
+    "string-multi-lines": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.multiline.eressea",
+          "begin": "\"",
+          "beginCaptures": {
+            "0": { "name": "punctuation.definition.string.begin.eressea" }
+          },
+          "end": "(?<!\\\\)\"",
+          "endCaptures": {
+            "0": { "name": "punctuation.definition.string.end.eressea" }
+          },
+          "patterns": [
+            {
+              "name": "constant.character.escape.eressea",
+              "match": "\\\\."
+            },
+            {
+              "name": "constant.character.escape.line-continuation.eressea",
+              "match": "\\\\$"
+            }
+          ]
+        }
+      ]
+    },
+    "string-line": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.eressea",
+          "begin": "\"",
+          "beginCaptures": {
+            "0": { "name": "punctuation.definition.string.begin.eressea" }
+          },
+          "end": "(?<!\\\\)\"",
+          "endCaptures": {
+            "0": { "name": "punctuation.definition.string.end.eressea" }
+          },
+          "patterns": [
+            {
+              "name": "constant.character.escape.eressea",
+              "match": "\\\\."
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

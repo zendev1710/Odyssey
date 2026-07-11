@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="Odyssey.Views.NoDetailsView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="using:Odyssey.ViewModels"
+             mc:Ignorable="d"
+             d:DesignWidth="300"
+			 d:DesignHeight="400"
+             x:DataType="vm:NoDetailsViewModel"
+			 x:CompileBindings="True"
+			 DataContext="vm:NoDetailsViewModel"
+			 >
+	<Design.DataContext>
+		<vm:NoDetailsViewModel />
+	</Design.DataContext>
+	<Grid Focusable="True" IsVisible="True">
+		<!--DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></DockPanel-->
+	</Grid>
+</UserControl>

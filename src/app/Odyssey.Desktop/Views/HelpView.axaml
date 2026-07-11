@@ -1,0 +1,123 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:md="clr-namespace:LiveMarkdown.Avalonia;assembly=LiveMarkdown.Avalonia"
+        xmlns:vm="using:Odyssey.ViewModels"
+        x:Class="Odyssey.Views.HelpView"
+        x:DataType="vm:HelpViewModel"
+        Width="1200"
+		Height="800"
+        MinWidth="900"
+		MinHeight="600"
+>
+  <!-- TODO: should be a UserControl -->
+<Design.DataContext>
+  <vm:HelpViewModel/>
+</Design.DataContext>
+<DockPanel>
+    <!-- Toolbar -->
+    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Background="#1e293b">
+        <Button Content="☰" Command="{Binding ToggleSidebarCommand}" />
+        <!-- Header/Toolbar area -->
+		<!--  Toolbar Area  - DockPanel.Dock="Top" -->
+        <Border
+             Padding="16,12"
+            BorderBrush="{DynamicResource BorderColor}"
+            BorderThickness="0,0,0,1">
+            <Grid ColumnDefinitions="Auto, *, Auto">
+              <TextBlock
+                Classes="h3" Grid.Column="0"
+                VerticalAlignment="Center" Text="Help"/>
+              <StackPanel
+                Grid.Column="2" HorizontalAlignment="Right" Orientation="Horizontal" Spacing="12">
+                <!-- TODO: add search area -->
+              </StackPanel>
+            </Grid>
+        </Border>
+    </StackPanel> 
+    <Grid ColumnDefinitions="Auto, 4, *">
+        <Panel Grid.Column="0" IsVisible="{Binding IsSidebarVisible}">
+            <TreeView ItemsSource="{Binding TocItems}"
+                          SelectedItem="{Binding SelectedItem}" >
+            <TreeView.ItemTemplate>
+        <TreeDataTemplate ItemsSource="{Binding Children}">
+            <TextBlock Text="{Binding Title}" />
+        </TreeDataTemplate>
+    </TreeView.ItemTemplate>
+                </TreeView>
+
+        </Panel>
+        <GridSplitter Grid.Column="1" IsVisible="{Binding IsSidebarVisible}" ResizeDirection="Columns"
+                              ShowsPreview="True"
+                              HorizontalAlignment="Right"
+                              Width="4"/>
+        <Panel Grid.Column="2">
+            <ScrollViewer
+          x:Name="MarkdownRendererScrollViewer" Grid.Row="0"
+          Grid.Column="2"
+          Background="{DynamicResource CardBackgroundColor}"
+          BorderBrush="{DynamicResource BorderColor}"
+          BorderThickness="1" CornerRadius="4">
+            <!-- CodeBlockColorTheme="{Binding SelectedColorTheme}" -->
+          <md:MarkdownRenderer
+            x:Name="MarkdownRenderer" Margin="12,12"
+            LinkCommand="{Binding OpenUriCommand}"
+            MarkdownBuilder="{Binding MarkdownBuilder}">
+            <md:MarkdownRenderer.ContextFlyout>
+              <MenuFlyout Placement="Bottom">
+                <MenuItem
+                  x:Name="MarkdownRendererContextFlyoutCopyItem"
+                  Command="{Binding $parent[md:MarkdownRenderer].Copy}"
+                  Cursor="Hand" Header="Copy"
+                  InputGesture="{Binding $parent[md:MarkdownRenderer].CopyGesture}"
+                  IsEnabled="{Binding $parent[md:MarkdownRenderer].CanCopy}"/>
+              </MenuFlyout>
+            </md:MarkdownRenderer.ContextFlyout>
+            <md:MarkdownRenderer.LinkContextMenu>
+              <ContextMenu>
+                <MenuItem
+                  Command="{Binding OpenCommand, DataType=md:Link}"
+                  Cursor="Hand" Header="Open Link"/>
+                <MenuItem
+                  Command="{Binding CopyCommand, DataType=md:Link}"
+                  Cursor="Hand" Header="Copy Link"/>
+                <MenuItem
+                  Command="{Binding CopyTextCommand, DataType=md:Link}"
+                  Cursor="Hand" Header="Copy Text"/>
+              </ContextMenu>
+            </md:MarkdownRenderer.LinkContextMenu>
+          </md:MarkdownRenderer>
+        </ScrollViewer>
+        </Panel>
+
+        
+        <!-- 
+        <Border Grid.Row="0" Background="{DynamicResource SystemAccentColor}" Padding="16">
+
+            <Grid ColumnDefinitions="*,Auto">
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="12">
+                    <TextBlock Text="📚" FontSize="24" VerticalAlignment="Center" />
+                    <TextBlock Text="Help Center" FontSize="18" FontWeight="Bold" 
+                               Foreground="White" VerticalAlignment="Center" />
+                </StackPanel>
+                
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                    <ComboBox x:Name="LanguageComboBox" 
+                              MinWidth="120"
+                              SelectionChanged="OnLanguageChanged">
+                        <ComboBoxItem Content="🇺🇸 English" Tag="en" />
+                        <ComboBoxItem Content="🇫🇷 Français" Tag="fr" />
+                        <ComboBoxItem Content="🇩🇪 Deutsch" Tag="de" />
+                        <ComboBoxItem Content="🇪🇸 Español" Tag="es" />
+                    </ComboBox>
+
+					<Button x:Name="RefreshButton" Content="🔄" 
+                            ToolTip.Tip="Refresh content"
+                            Click="OnRefreshClicked" />
+                </StackPanel>
+            </Grid>
+        </Border>
+        -->
+		<!---->
+        </Grid>
+    </DockPanel>
+</UserControl>

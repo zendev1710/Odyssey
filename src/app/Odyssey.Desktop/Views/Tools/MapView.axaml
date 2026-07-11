@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="Odyssey.Views.Tools.MapView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:vm="using:Odyssey.ViewModels.Tools"
+			 xmlns:controls="clr-namespace:Odyssey.Controls"
+			 x:DataType="vm:MapViewModel" x:CompileBindings="True"
+             mc:Ignorable="d"
+             d:DesignWidth="300" d:DesignHeight="400">
+  <Grid RowDefinitions="Auto,*">
+    <!-- Zoom Slider -->
+    <Slider Minimum="10"
+            Maximum="100"
+            Value="{Binding ElementName=HexMap, Path=HexSize, Mode=TwoWay}"
+            TickFrequency="5"
+            TickPlacement="BottomRight"
+            Margin="8"
+            ToolTip.Tip="Zoom" />
+
+    <!-- Map with ScrollViewer -->
+    <ScrollViewer x:Name="MapScrollViewer"
+                  Grid.Row="1"
+                  HorizontalScrollBarVisibility="Auto"
+                  VerticalScrollBarVisibility="Auto">
+		<!-- 		Season="{Binding Season}"-->
+      <controls:HexMapControl
+        x:Name="HexMap"
+		Season="{Binding Season}"
+        Regions="{Binding Regions}"
+		SelectedRegion="{Binding SelectedRegion, Mode=TwoWay}"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch" />
+    </ScrollViewer>
+  </Grid>
+</UserControl>

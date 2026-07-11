@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-label="Odyssey icon">
+  <defs>
+    <linearGradient id="oceanGrad" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#3ab0e0"/>
+      <stop offset="1" stop-color="#0a75b8"/>
+    </linearGradient>
+    <linearGradient id="sailGrad" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#ffd27f"/>
+      <stop offset="1" stop-color="#ff9a4a"/>
+    </linearGradient>
+    <linearGradient id="hullGrad" x1="0" x2="1">
+      <stop offset="0" stop-color="#6b3f1f"/>
+      <stop offset="1" stop-color="#472816"/>
+    </linearGradient>
+    <filter id="softShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="10" stdDeviation="20" flood-color="#000" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- background circle -->
+  <rect width="100%" height="100%" rx="160" ry="160" fill="url(#oceanGrad)"/>
+
+  <!-- sun -->
+  <circle cx="820" cy="160" r="90" fill="#ffd86b" opacity="0.95"/>
+
+  <!-- stylized waves (foreground) -->
+  <g transform="translate(0,700)" fill="#ffffff" opacity="0.12">
+    <path d="M0 120 Q80 60 160 120 T320 120 T480 120 T640 120 T800 120 T960 120 L1024 200 L0 200 Z"/>
+  </g>
+  <g transform="translate(0,740)" fill="#ffffff" opacity="0.08">
+    <path d="M0 80 Q80 20 160 80 T320 80 T480 80 T640 80 T800 80 T960 80 L1024 160 L0 160 Z"/>
+  </g>
+
+  <!-- drakkar group -->
+  <g transform="translate(120,420) scale(0.7)" filter="url(#softShadow)">
+    <!-- hull -->
+    <path d="M50 220 C150 260 350 260 520 220 C650 200 740 185 820 160 L820 180 C740 210 650 225 520 245 C350 285 150 285 50 245 Z"
+          fill="url(#hullGrad)" stroke="#2d1608" stroke-width="6" stroke-linejoin="round"/>
+
+    <!-- dragon prow (simple head) -->
+    <g transform="translate(860,120) rotate(-12)">
+      <path d="M0 0 C12 -6 34 -12 52 -6 C58 -4 62 6 58 12 C46 36 12 32 0 18 Z" fill="#472816" stroke="#2d1608" stroke-width="4"/>
+      <circle cx="40" cy="0" r="3" fill="#ffd86b"/>
+    </g>
+
+    <!-- mast -->
+    <rect x="420" y="20" width="12" height="220" fill="#3b2b20" rx="6"/>
+
+    <!-- sail -->
+    <path d="M430 40 C520 60 620 90 580 200 C540 310 430 300 430 40 Z"
+          fill="url(#sailGrad)" stroke="#8a4b18" stroke-width="6" stroke-linejoin="round"/>
+
+    <!-- sail emblem (stylized O) -->
+    <g transform="translate(500,140) scale(1)" fill="none" stroke="#7b2f00" stroke-width="10" stroke-linecap="round">
+      <circle cx="0" cy="0" r="28" fill="#fff" opacity="0.06"/>
+      <circle cx="0" cy="0" r="18" />
+    </g>
+
+    <!-- oars (simplified) -->
+    <g stroke="#3b2b20" stroke-width="8" stroke-linecap="round" opacity="0.95">
+      <line x1="160" y1="240" x2="80" y2="300"/>
+      <line x1="240" y1="245" x2="160" y2="310"/>
+      <line x1="320" y1="250" x2="240" y2="320"/>
+    </g>
+
+    <!-- small highlight -->
+    <path d="M70 220 C170 250 350 250 520 220" stroke="#ffffff" stroke-opacity="0.08" stroke-width="6" fill="none"/>
+
+  </g>
+
+  <!-- subtle vignette -->
+  <rect width="100%" height="100%" fill="black" opacity="0.02"/>
+</svg>

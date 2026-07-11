@@ -1,0 +1,392 @@
+﻿<UserControl x:Class="Odyssey.Views.Tools.RegionPropertiesView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+             xmlns:vm="using:Odyssey.ViewModels.Tools"
+			 xmlns:conv="using:Odyssey.Converters"
+			 xmlns:a="clr-namespace:Odyssey.Assets"
+             mc:Ignorable="d"
+             d:DesignWidth="600" d:DesignHeight="600"
+             x:DataType="vm:RegionPropertiesViewModel" x:CompileBindings="True">
+	<UserControl.Resources>
+		<conv:BoolToForegroundColor x:Key="BoolToForegroundColorConverter" />
+		<conv:BoolToBoldFontWeigthConverter x:Key="BoolToBoldFontWeigthConverter" />
+		<conv:TerainToBackgroundConverter x:Key="TerainToBackgroundConverter" />
+		<conv:ItemAmountToString x:Key="ItemAmountConverter" />
+	</UserControl.Resources>
+	<Grid Focusable="True" Opacity="0.9" IsVisible="{Binding HasDocument}" Background="{Binding TerrainType, Converter={StaticResource TerainToBackgroundConverter}}" >
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<!-- * means that vertical scrollbar will be automatically managed when a node has a lot of children -->
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		<!-- TODO: make scrollbar appear when information is not fully visible on the height -->
+		<!--Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0"
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				--><!-- * means that vertical scrollbar will be automatically managed when a node has a lot of children -->
+		<!--<RowDefinition Height="*" />
+			</Grid.RowDefinitions> -->
+		<!--Border Background="#101010" -->
+		<!--StackPanel Orientation="Vertical"-->
+			<!-- first expander -->
+			<Expander IsExpanded="True"
+					  ExpandDirection="Down"
+					  HorizontalAlignment="Stretch"
+					  Grid.Row="0"
+				>
+				<Expander.Header>
+					<Grid ColumnDefinitions="Auto,*,Auto">
+						<!--TODO add terrain map icon -->
+						<SelectableTextBlock Text="{Binding FullRegionName}" ToolTip.Tip="{Binding Description}" />
+					</Grid>
+				</Expander.Header>
+				<Expander.Content>
+					<!-- region resources items -->
+					<Grid HorizontalAlignment ="Stretch" VerticalAlignment="Stretch">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="*" MinWidth="8" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+						</Grid.RowDefinitions>
+						<Grid Grid.Column="0" Grid.Row="0" >
+							<Grid.ColumnDefinitions>
+								<!-- set width for the whole parent grid first column (left side) -->
+								<ColumnDefinition Width="100" />
+								<ColumnDefinition Width="*" MinWidth="8" />
+								<ColumnDefinition Width="100" />
+							</Grid.ColumnDefinitions>
+							<SelectableTextBlock Grid.Column="0" Padding="2" HorizontalAlignment="Left" ToolTip.Tip="{x:Static a:Lang.emapdetailspanel_node_peasants_tip}" Text="{x:Static a:Lang.emapdetailspanel_node_peasants}"/>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Peasants}"/>
+						</Grid>
+						<Grid Grid.Column="2" Grid.Row="0">
+							<Grid.ColumnDefinitions>
+								<!-- set width for the whole parent grid third column (right side) -->
+								<ColumnDefinition Width="100" />
+								<ColumnDefinition Width="*" MinWidth="8" />
+								<ColumnDefinition Width="100" />
+							</Grid.ColumnDefinitions>
+							<!-- Trees or mallorn trees -->
+							<StackPanel Grid.Column="0" Orientation="Horizontal">
+								<!--mallornbaeume -->
+								<asyncImageLoader:AdvancedImage Source="/Assets/resources/de/baeume.gif" Margin="0,0,5,0"/>
+								<SelectableTextBlock Name="TreesLabel" Foreground="{Binding HasMallorn, Converter={StaticResource BoolToForegroundColorConverter}}" FontWeight="{Binding HasMallorn, Converter={StaticResource BoolToBoldFontWeigthConverter}}" Padding="2" HorizontalAlignment="Left" Text="{Binding TreesType}"/>
+							</StackPanel>
+							<SelectableTextBlock Foreground="{Binding #TreesLabel.Foreground}" FontWeight="{Binding #TreesLabel.FontWeight}" Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Trees, Converter={StaticResource ItemAmountConverter}}"/>
+						</Grid>
+						<Grid Grid.Column="0" Grid.Row="1" >
+							<SelectableTextBlock Grid.Column="0" Padding="2" HorizontalAlignment="Left" ToolTip.Tip="{x:Static a:Lang.emapdetailspanel_node_recruit_tip}" Text="{x:Static a:Lang.emapdetailspanel_node_recruit}"/>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Recruits}"/>
+						</Grid>
+						<Grid Grid.Column="2" Grid.Row="1">
+							<!-- Saplings or mallorn saplings -->
+							<StackPanel Grid.Column="0" Orientation="Horizontal">
+								<!--mallornschoesslinge	-->
+								<asyncImageLoader:AdvancedImage Source="/Assets/resources/de/schoesslinge.gif" Margin="0,0,5,0"/>
+								<SelectableTextBlock Foreground="{Binding #TreesLabel.Foreground}" FontWeight="{Binding #TreesLabel.FontWeight}" Padding="2" HorizontalAlignment="Left" Text="{Binding SaplingsType}"/>
+							</StackPanel>
+							<SelectableTextBlock Foreground="{Binding #TreesLabel.Foreground}" FontWeight="{Binding #TreesLabel.FontWeight}" Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Saplings, Converter={StaticResource ItemAmountConverter}}"/>
+						</Grid>
+						<Grid Grid.Column="0" Grid.Row="2">
+							<SelectableTextBlock Grid.Column="0" Padding="2" HorizontalAlignment="Left" ToolTip.Tip="{x:Static a:Lang.Entertainment_tip}" Text="{x:Static a:Lang.emapdetailspanel_node_entertainment}"/>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Entertainment}"/>
+						</Grid>
+						<Grid Grid.Column="2" Grid.Row="2">
+							<StackPanel Grid.Column="0" Orientation="Horizontal">
+								<asyncImageLoader:AdvancedImage Source="/Assets/resources/de/pferd.gif" Margin="0,0,5,0"/>
+								<SelectableTextBlock Padding="2" HorizontalAlignment="Left"  ToolTip.Tip="{x:Static a:Lang.Horses_tip}" Text="{x:Static a:Lang.emapdetailspanel_node_horses}"/>
+							</StackPanel>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Horses, Converter={StaticResource ItemAmountConverter}}"/>
+						</Grid>
+						<Grid Grid.Column="0" Grid.Row="3" >
+							<SelectableTextBlock Grid.Column="0" Padding="2" HorizontalAlignment="Left" ToolTip.Tip="{x:Static a:Lang.emapdetailspanel_node_silver_tip}" Text="{x:Static a:Lang.emapdetailspanel_node_silver}"/>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Silver}"/>
+						</Grid>
+						<Grid Grid.Column="2" Grid.Row="3">
+							<StackPanel Grid.Column="0" Orientation="Horizontal">
+								<asyncImageLoader:AdvancedImage Source="/Assets/resources/de/eisen.gif" Margin="0,0,5,0"/>
+								<SelectableTextBlock Padding="2" HorizontalAlignment="Left" Text="{x:Static a:Lang.rules_item_Eisen}"/>
+							</StackPanel>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Iron, Converter={StaticResource ItemAmountConverter}}"/>
+						</Grid>
+						<Grid Grid.Column="0" Grid.Row="4" >
+							<SelectableTextBlock Grid.Column="0" Padding="2" HorizontalAlignment="Left" ToolTip.Tip="{x:Static a:Lang.People_tip}" Text="{x:Static a:Lang.People}"/>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding People}"/>
+						</Grid>
+						<Grid Grid.Column="2" Grid.Row="4" >
+							<StackPanel Grid.Column="0" Orientation="Horizontal">
+								<asyncImageLoader:AdvancedImage Source="/Assets/resources/de/stein.gif" Margin="0,0,5,0"/>
+								<SelectableTextBlock Padding="2" HorizontalAlignment="Left" Text="{x:Static a:Lang.rules_item_Stein}"/>
+							</StackPanel>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Stone, Converter={StaticResource ItemAmountConverter}}"/>
+						</Grid>
+						<Grid Grid.Column="0" Grid.Row="5" >
+							<SelectableTextBlock Grid.Column="0" Padding="2" HorizontalAlignment="Left" Text="{x:Static a:Lang.Faction_people}"/>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding FactionPeople}"/>
+						</Grid>
+						<Grid Grid.Column="2" Grid.Row="5" >
+							<StackPanel Grid.Column="0" Orientation="Horizontal">
+								<asyncImageLoader:AdvancedImage Source="/Assets/resources/de/kraeuter.gif" Margin="0,0,5,0"/>
+								<SelectableTextBlock Grid.Column="0" Padding="2" HorizontalAlignment="Left" Text="{x:Static a:Lang.emapdetailspanel_node_herb}"/>
+							</StackPanel>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Herb, Converter={StaticResource ItemAmountConverter}}"/>
+						</Grid>
+						<Grid Grid.Column="0" Grid.Row="6" >
+							<SelectableTextBlock Grid.Column="0" Padding="2" HorizontalAlignment="Left" Text="{x:Static a:Lang.Faction_silver}"/>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding FactionSilver}"/>
+						</Grid>
+						<Grid Grid.Column="2" Grid.Row="6" IsVisible="{Binding HasLaen}">
+							<StackPanel Grid.Column="0" Orientation="Horizontal">
+								<asyncImageLoader:AdvancedImage Source="/Assets/resources/de/laen.gif" Margin="0,0,5,0"/>
+								<SelectableTextBlock Padding="2" HorizontalAlignment="Left" FontWeight="Bold" Foreground="#FF9800" Text="{x:Static a:Lang.Laen}"/>
+							</StackPanel>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" FontWeight="Bold" Foreground="#FF9800" Text="{Binding Laen, Converter={StaticResource ItemAmountConverter}}"/>
+						</Grid>
+					</Grid>
+				</Expander.Content>
+			</Expander>
+			<!-- second expander -->
+			<Expander IsExpanded="True"
+					ExpandDirection="Down"
+					HorizontalAlignment="Stretch"
+					Grid.Row="1"
+					Header="{x:Static a:Lang.Revenues_and_taxes}"
+				>
+				<!-- second expander content : incomes and cost information -->
+				<Expander.Content>
+					<Grid HorizontalAlignment ="Stretch" VerticalAlignment="Stretch">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="*" MinWidth="8" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+						</Grid.RowDefinitions>
+						<Grid Grid.Column="0" Grid.Row="0" >
+							<Grid.ColumnDefinitions>
+								<!-- set width for the whole parent grid first column (left side) -->
+								<ColumnDefinition Width="100" />
+								<ColumnDefinition Width="*" MinWidth="8" />
+								<ColumnDefinition Width="100" />
+							</Grid.ColumnDefinitions>
+							<!-- surplus/farm yield -->
+							<SelectableTextBlock Grid.Column="0" Padding="2" HorizontalAlignment="Left" ToolTip.Tip="{x:Static a:Lang.emapdetailspanel_node_surplus_tip}" Text="{x:Static a:Lang.emapdetailspanel_node_surplus}"/>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Surplus}"/>
+						</Grid>
+						<Grid Grid.Column="2" Grid.Row="0">
+							<Grid.ColumnDefinitions>
+								<!-- set width for the whole parent grid third column (right side) -->
+								<ColumnDefinition Width="100" />
+								<ColumnDefinition Width="*" MinWidth="8" />
+								<ColumnDefinition Width="100" />
+							</Grid.ColumnDefinitions>
+							<SelectableTextBlock Grid.Column="0" Padding="2" HorizontalAlignment="Left" ToolTip.Tip="{x:Static a:Lang.Entertain_tip}" Text="{x:Static a:Lang.Entertain}"/>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding EntertainRevenue}"/>
+						</Grid>
+						<Grid Grid.Column="0" Grid.Row="1" >
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+							<!-- salary / peasant wage -->
+							<SelectableTextBlock Grid.Column="0" Padding="2" HorizontalAlignment="Left" ToolTip.Tip="{x:Static a:Lang.Wages_for_work}" Text="{x:Static a:Lang.Salary}"/>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Salary}"/>
+						</Grid>
+						<Grid Grid.Column="2" Grid.Row="1">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+							<SelectableTextBlock Grid.Column="0" Padding="2" HorizontalAlignment="Left" ToolTip.Tip="{x:Static a:Lang.emapdetailspanel_node_trade_tip}" Text="{x:Static a:Lang.emapdetailspanel_node_trade}"/>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding TradeRevenue}"/>
+						</Grid>
+						<Grid Grid.Column="0" Grid.Row="2" >
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+							<SelectableTextBlock Grid.Column="0" Padding="2" HorizontalAlignment="Left" ToolTip.Tip="{x:Static a:Lang.Sorcery_tip}" Text="{x:Static a:Lang.Sorcery}"/>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Sorcery}"/>
+						</Grid>
+						<Grid Grid.Column="2" Grid.Row="2">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+							<SelectableTextBlock Grid.Column="0" Padding="2" HorizontalAlignment="Left" ToolTip.Tip="{x:Static a:Lang.Theft_tip}" Text="{x:Static a:Lang.Theft}"/>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Theft}"/>
+						</Grid>
+						<Grid Grid.Column="0" Grid.Row="3" >
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+							<SelectableTextBlock Grid.Column="0" Padding="2" HorizontalAlignment="Left" ToolTip.Tip="{x:Static a:Lang.Taxes_income_tip}" Text="{x:Static a:Lang.Taxes_income}"/>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Taxes}"/>
+						</Grid>
+						<Grid Grid.Column="2" Grid.Row="3">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+							<SelectableTextBlock Grid.Column="0" Padding="2" HorizontalAlignment="Left" ToolTip.Tip="{x:Static a:Lang.Misc_revenue_tip}" Text="{x:Static a:Lang.Misc_revenue}"/>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding MiscRevenue}"/>
+						</Grid>
+						<Grid Grid.Column="0" Grid.Row="4" >
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+							<SelectableTextBlock Grid.Column="0" Padding="2" HorizontalAlignment="Left" ToolTip.Tip="{x:Static a:Lang.Learning_cost_tip}" Text="{x:Static a:Lang.Learning_costs}"/>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding LearningCosts}"/>
+						</Grid>
+						<Grid Grid.Column="2" Grid.Row="4">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+							<SelectableTextBlock Grid.Column="0" Padding="2" HorizontalAlignment="Left" ToolTip.Tip="{x:Static a:Lang.Trade_duties_tip}" Text="{x:Static a:Lang.Trade_duties}"/>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding TradeDuties}"/>
+						</Grid>
+
+					</Grid>
+				</Expander.Content>
+			</Expander>
+			<!-- third expander -->
+			<Expander IsExpanded="True"
+					  ExpandDirection="Down"
+					  HorizontalAlignment="Stretch"
+					  Grid.Row="2"
+				>
+				<!--Header="{Binding TradeCategoryLabel}"-->
+				<!--Header must have the trade value = luxury goods at the stated price -->
+				<Expander.Header>
+					<TextBlock Text="{x:Static a:Lang.emapdetailspanel_node_trade}" />
+				</Expander.Header>
+				<!--<Expander.Header>Trade</Expander.Header>-->
+				<Expander.Content>
+					<!-- Trade luxuries items -->
+					<Grid HorizontalAlignment ="Stretch" VerticalAlignment="Stretch">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="*" MinWidth="8" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+						</Grid.RowDefinitions>
+						<Grid Grid.Column="0" Grid.Row="0" >
+							<Grid.ColumnDefinitions>
+								<!-- set width for the whole parent grid first column (left side) -->
+								<ColumnDefinition Width="100" />
+								<ColumnDefinition Width="*" MinWidth="8" />
+								<ColumnDefinition Width="100" />
+							</Grid.ColumnDefinitions>
+							<StackPanel Grid.Column="0" Orientation="Horizontal">
+								<asyncImageLoader:AdvancedImage Source="/Assets/trade/de/balsam.gif" Margin="0,0,5,0"/>
+								<SelectableTextBlock Padding="2" HorizontalAlignment="Left" Text="{x:Static a:Lang.rules_item_Balsam}" />
+							</StackPanel>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Balm}"/>
+						</Grid>
+						<Grid Grid.Column="2" Grid.Row="0">
+							<Grid.ColumnDefinitions>
+								<!-- set width for the whole parent grid third column (right side) -->
+								<ColumnDefinition Width="100" />
+								<ColumnDefinition Width="*" MinWidth="8" />
+								<ColumnDefinition Width="100" />
+							</Grid.ColumnDefinitions>
+							<StackPanel Grid.Column="0" Orientation="Horizontal">
+								<asyncImageLoader:AdvancedImage Source="/Assets/trade/de/myrrhe.gif" Margin="0,0,5,0"/>
+								<SelectableTextBlock Padding="2" HorizontalAlignment="Left" Text="{x:Static a:Lang.rules_item_Myrrhe}"/>
+							</StackPanel>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Myrrh}"/>
+						</Grid>
+						<Grid Grid.Column="0" Grid.Row="1" >
+							<StackPanel Grid.Column="0" Orientation="Horizontal">
+								<asyncImageLoader:AdvancedImage Source="/Assets/trade/de/gewuerz.gif" Margin="0,0,5,0"/>
+								<SelectableTextBlock Padding="2" HorizontalAlignment="Left" Text="{x:Static a:Lang.rules_item_Gewürz}"/>
+							</StackPanel>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Spice}"/>
+						</Grid>
+						<Grid Grid.Column="2" Grid.Row="1">
+							<StackPanel Grid.Column="0" Orientation="Horizontal">
+								<asyncImageLoader:AdvancedImage Source="/Assets/trade/de/oel_en.gif" Margin="0,0,5,0"/>
+								<SelectableTextBlock Padding="2" HorizontalAlignment="Left" Text="{x:Static a:Lang.rules_item_Öl}"/>
+							</StackPanel>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Oil}"/>
+						</Grid>
+						<Grid Grid.Column="0" Grid.Row="2" >
+							<StackPanel Grid.Column="0" Orientation="Horizontal">
+								<asyncImageLoader:AdvancedImage Source="/Assets/trade/de/juwel.gif" Margin="0,0,5,0"/>
+								<SelectableTextBlock Padding="2" HorizontalAlignment="Left" Text="{x:Static a:Lang.rules_item_Juwel}"/>
+							</StackPanel>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Gem}"/>
+						</Grid>
+						<Grid Grid.Column="2" Grid.Row="2">
+							<StackPanel Grid.Column="0" Orientation="Horizontal">
+								<asyncImageLoader:AdvancedImage Source="/Assets/trade/de/seide.gif" Margin="0,0,5,0"/>
+								<SelectableTextBlock Padding="2" HorizontalAlignment="Left" Text="{x:Static a:Lang.rules_item_Seide}"/>
+							</StackPanel>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Silk}"/>
+						</Grid>
+						<Grid Grid.Column="0" Grid.Row="3" >
+							<StackPanel Grid.Column="0" Orientation="Horizontal">
+								<asyncImageLoader:AdvancedImage Source="/Assets/trade/de/weihrauch.gif" Margin="0,0,5,0"/>
+								<SelectableTextBlock Padding="2" HorizontalAlignment="Left" Text="{x:Static a:Lang.rules_item_Weihrauch}"/>
+							</StackPanel>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Incense}"/>
+						</Grid>
+						<Grid Grid.Column="2" Grid.Row="3" ColumnSpan="2" >
+							<!--
+							<SelectableTextBlock Grid.Column="0" Padding="2" HorizontalAlignment="Left" >Trade</SelectableTextBlock>
+							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Trade}"/>
+							-->
+						</Grid>
+					</Grid>
+				</Expander.Content>
+			</Expander>
+		<TextBox Grid.Row="3" Text="{Binding Description}" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True" IsVisible="{Binding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+		<!-- TODO: use a StaticResource from fluentTheme -->
+		<TextBlock Grid.Row="4" Background="#2F2F2F" HorizontalAlignment="Stretch" ></TextBlock>
+		<!--/StackPanel-->
+		<!--/Border-->
+		<!--/Grid-->
+	</Grid>
+</UserControl>

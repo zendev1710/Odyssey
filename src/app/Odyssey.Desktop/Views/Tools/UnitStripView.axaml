@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:vm="using:Odyssey.ViewModels.Tools"
+             x:Class="Odyssey.Views.Tools.UnitStripView"
+             x:Name="Root"
+             x:DataType="vm:UnitStripViewModel">
+  <Border Padding="6" Background="{DynamicResource PanelBackgroundBrush}">
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+      <ItemsControl ItemsSource="{Binding Units}">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <StackPanel Orientation="Horizontal" Spacing="6"/>
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+               <!--Button Command="{Binding DataContext.SelectUnitCommand, ElementName=Root}"
+               CommandParameter="{Binding}"-->
+            <Button 
+                    Width="160" Height="64" Margin="0"
+                    Padding="6">
+              <Border CornerRadius="4" Padding="4">
+                <StackPanel Orientation="Vertical">
+                  <TextBlock Text="{Binding Name}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" />
+                  <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding Id}" FontSize="11" Foreground="#FF888888" />
+                    <TextBlock Text="{Binding Summary}" FontSize="11" Foreground="#FF666666" TextTrimming="CharacterEllipsis" />
+                  </StackPanel>
+                </StackPanel>
+              </Border>
+            </Button>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
+  </Border>
+</UserControl>

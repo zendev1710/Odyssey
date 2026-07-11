@@ -1,0 +1,71 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="using:Odyssey.ViewModels"
+			 xmlns:a="clr-namespace:Odyssey.Assets"
+             mc:Ignorable="d" d:DesignWidth="540" d:DesignHeight="520"
+             x:Class="Odyssey.Views.SearchView"
+			 x:DataType="vm:SearchViewModel"
+			 x:CompileBindings="True"
+			 >
+	<Design.DataContext>
+		<vm:SearchViewModel />
+	</Design.DataContext>
+	<Grid Focusable="True" Margin="5,5,5,5">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"></ColumnDefinition>
+			<ColumnDefinition Width="50"></ColumnDefinition>
+			<ColumnDefinition Width="*"></ColumnDefinition>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="*"></RowDefinition>
+		</Grid.RowDefinitions>
+		<TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Text="{x:Static a:Lang.search_for}" Margin="0,5,5,5" />
+		<TextBox Grid.Row="1" Grid.ColumnSpan="3" AcceptsReturn="False" HorizontalAlignment="Stretch" />
+		<CheckBox IsChecked="{Binding IsCaseSensitive}" Grid.Row="2" Grid.ColumnSpan="3" Content="{x:Static a:Lang.search_opt_match_case}" />
+		<CheckBox IsChecked="{Binding IsMatchingWholeWord}" Grid.Row="3" Grid.ColumnSpan="3" Content="{x:Static a:Lang.search_opt_whole_word}" />
+		<CheckBox IsChecked="{Binding IsUsingRegularExpression}" Grid.Row="4" Grid.ColumnSpan="3" Content="{x:Static a:Lang.search_opt_use_regular_expression}" />
+		<Separator Grid.Row="5" Grid.ColumnSpan="3" Margin="0,5,0,5"></Separator>
+		<Grid Grid.Row="6" Grid.ColumnSpan="3"  Margin="0,5,0,5" >
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="Auto"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+			</Grid.RowDefinitions>
+			<TextBlock Grid.Column="0" HorizontalAlignment="Left" Grid.Row="0" Text="{x:Static a:Lang.search_look_in}" Margin="0,5,5,5" />
+			<!-- what is better : ItemsSource or DataTemplate ? -->
+			<ComboBox ItemsSource="{Binding Domains}" SelectedIndex="{Binding SelectedDomainIndex}" HorizontalAlignment="Stretch" MinWidth="200" Grid.Row="0" Grid.Column="2">
+			</ComboBox>
+			<CheckBox IsChecked="{Binding IncludeDescriptions}" Grid.Row="1" Grid.Column="2" Content="{x:Static a:Lang.search_opt_include_desc}" />
+			<CheckBox IsChecked="{Binding IncludeFactions}" Grid.Row="2" Grid.Column="2" Content="{x:Static a:Lang.search_opt_include_factions}" />
+		</Grid>
+			<DataGrid ItemsSource="{Binding Results}" Grid.Row="7" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True" IsReadOnly="True" GridLinesVisibility="All" CanUserResizeColumns="True" CanUserSortColumns="True" BorderThickness="1" BorderBrush="Gray">
+			</DataGrid>
+		<StackPanel Grid.Row="8" Grid.ColumnSpan="3" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+			<Button Content="{x:Static a:Lang.search_btn_find_previous}" Command="{Binding FindPreviousCommand}" Margin="0,5,5,5"/>
+			<Button Content="{x:Static a:Lang.search_btn_find_next}" Command="{Binding FindNextCommand}" Margin="0,5,5,5" />
+			<Button Content="{x:Static a:Lang.search_btn_find_all}" Command="{Binding FindAllCommand}" Margin="5,5,5,5"/>
+			<Button Content="{x:Static a:Lang.search_btn_close}" Command="{Binding GoHomeCommand}" Margin="0,5,5,5"/>
+			<!-- should work, but button is disabled by default ! -->
+			<!-- <Button Content="Close" DataContext="Context" Command="{Binding Navigate}" CommandParameter="Home" Margin="0,5,5,5"/> -->
+		</StackPanel>
+	</Grid>
+</UserControl>

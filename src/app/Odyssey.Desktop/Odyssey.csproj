@@ -1,0 +1,275 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+	<TargetFrameworks>net10.0</TargetFrameworks>
+    <Nullable>enable</Nullable>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <StartupObject>Odyssey.Program</StartupObject>
+    <Platforms>AnyCPU</Platforms>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <WarningLevel>9999</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <WarningLevel>9999</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <WarningLevel>9999</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <WarningLevel>9999</WarningLevel>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Remove="Assets\full\**" />
+    <AdditionalFiles Remove="Localization\**" />
+      <AvaloniaResource Remove="Assets\full\**" />
+    <AvaloniaXaml Remove="Assets\full\**" />
+    <AvaloniaXaml Remove="Localization\**" />
+    <AvaloniaXaml Remove="ViewModels\Views\**" />
+    <Compile Remove="Assets\full\**" />
+    <Compile Remove="Localization\**" />
+    <Compile Remove="ViewModels\Views\**" />
+    <EmbeddedResource Remove="Assets\full\**" />
+    <EmbeddedResource Remove="Localization\**" />
+    <EmbeddedResource Remove="ViewModels\Views\**" />
+    <None Remove="Assets\full\**" />
+    <None Remove="Localization\**" />
+    <None Remove="ViewModels\Views\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Remove="Assets\Help\help-topics.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaXaml Remove="Views\InventoryView.axaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="TextMate\EresseaRegistryOptions.cs" />
+    <Compile Remove="Views\InventoryView.axaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Assets\Resource1.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Grammars\eressea-de.tmLanguage.json" />
+    <None Remove="Resources\Grammars\eressea-en.tmLanguage.json" />
+    <None Remove="Resources\Grammars\eressea-orders-de.tmLanguage.json" />
+    <None Remove="Resources\Grammars\eressea-orders-en.tmLanguage.json" />
+    <None Remove="Resources\Grammars\eressea-orders.tmLanguage.json" />
+    <None Remove="Resources\Grammars\eressea.tmLanguage.json" />
+    <None Remove="Resources\Themes\abyss-color-theme.json" />
+    <None Remove="Resources\Themes\atom-one-dark-color-theme.json" />
+    <None Remove="Resources\Themes\atom-one-light-color-theme.json" />
+    <None Remove="Resources\Themes\dark_plus.json" />
+    <None Remove="Resources\Themes\dark_vs.json" />
+    <None Remove="Resources\Themes\dimmed-monokai-color-theme.json" />
+    <None Remove="Resources\Themes\dracula-color-theme.json" />
+    <None Remove="Resources\Themes\hc_black.json" />
+    <None Remove="Resources\Themes\hc_light.json" />
+    <None Remove="Resources\Themes\kimbie-dark-color-theme.json" />
+    <None Remove="Resources\Themes\light_plus.json" />
+    <None Remove="Resources\Themes\light_vs.json" />
+    <None Remove="Resources\Themes\monokai-color-theme.json" />
+    <None Remove="Resources\Themes\onedark-color-theme.json" />
+    <None Remove="Resources\Themes\quietlight-color-theme.json" />
+    <None Remove="Resources\Themes\Red-color-theme.json" />
+    <None Remove="Resources\Themes\solarized-dark-color-theme.json" />
+    <None Remove="Resources\Themes\solarized-light-color-theme.json" />
+    <None Remove="Resources\Themes\tomorrow-night-blue-color-theme.json" />
+    <None Remove="Resources\Themes\visual-studio-dark-theme.json" />
+    <None Remove="Resources\Themes\visual-studio-light-theme.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Grammars\eressea-de.tmLanguage.json" />
+    <EmbeddedResource Include="Resources\Grammars\eressea-en.tmLanguage.json" />
+    <EmbeddedResource Include="Resources\Grammars\eressea-orders-de.tmLanguage.json" />
+    <EmbeddedResource Include="Resources\Grammars\eressea-orders-en.tmLanguage.json" />
+    <EmbeddedResource Include="Resources\Grammars\eressea-orders.tmLanguage.json" />
+    <EmbeddedResource Include="Resources\Grammars\eressea.tmLanguage.json" />
+    <EmbeddedResource Include="Resources\Themes\abyss-color-theme.json" />
+    <EmbeddedResource Include="Resources\Themes\atom-one-dark-color-theme.json" />
+    <EmbeddedResource Include="Resources\Themes\atom-one-light-color-theme.json" />
+    <EmbeddedResource Include="Resources\Themes\dark_plus.json" />
+    <EmbeddedResource Include="Resources\Themes\dark_vs.json" />
+    <EmbeddedResource Include="Resources\Themes\dimmed-monokai-color-theme.json" />
+    <EmbeddedResource Include="Resources\Themes\dracula-color-theme.json" />
+    <EmbeddedResource Include="Resources\Themes\hc_black.json" />
+    <EmbeddedResource Include="Resources\Themes\hc_light.json" />
+    <EmbeddedResource Include="Resources\Themes\kimbie-dark-color-theme.json" />
+    <EmbeddedResource Include="Resources\Themes\light_plus.json" />
+    <EmbeddedResource Include="Resources\Themes\light_vs.json" />
+    <EmbeddedResource Include="Resources\Themes\magellan-light-color-theme.json" />
+    <EmbeddedResource Include="Resources\Themes\monokai-color-theme.json" />
+    <EmbeddedResource Include="Resources\Themes\onedark-color-theme.json" />
+    <EmbeddedResource Include="Resources\Themes\quietlight-color-theme.json" />
+    <EmbeddedResource Include="Resources\Themes\Red-color-theme.json" />
+    <EmbeddedResource Include="Resources\Themes\solarized-dark-color-theme.json" />
+    <EmbeddedResource Include="Resources\Themes\solarized-light-color-theme.json" />
+    <EmbeddedResource Include="Resources\Themes\tomorrow-night-blue-color-theme.json" />
+    <EmbeddedResource Include="Resources\Themes\visual-studio-dark-theme.json" />
+    <EmbeddedResource Include="Resources\Themes\visual-studio-light-theme.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AsyncImageLoader.Avalonia" Version="3.8.0" />
+	<PackageReference Include="Avalonia" Version="12.0.5" />
+	<PackageReference Include="Avalonia.AvaloniaEdit" Version="12.0.0" />
+	<PackageReference Include="Avalonia.Controls.DataGrid" Version="12.0.1" />
+	<PackageReference Include="Avalonia.Desktop" Version="12.0.5" />
+	<PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.5" />
+	<PackageReference Include="Avalonia.Fonts.Inter" Version="12.0.5" />
+	<PackageReference Include="Avalonia.Themes.Simple" Version="12.0.5" />
+    <PackageReference Include="AvaloniaEdit.TextMate" Version="12.0.0" />
+    <PackageReference Include="AvaloniaEdit.TextMate.Grammars" Version="0.10.12" />
+    <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
+	<!--PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.2" /-->
+    <PackageReference Include="CommunityToolkit.Common" Version="8.4.2" />
+    <PackageReference Include="CommunityToolkit.Diagnostics" Version="8.4.2" />
+    <PackageReference Include="CommunityToolkit.HighPerformance" Version="8.4.2" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageReference Include="ConfigFactory" Version="0.6.0" />
+    <PackageReference Include="ConfigFactory.Avalonia" Version="0.6.0" />
+    <PackageReference Include="ConfigFactory.Core" Version="0.6.0" />
+	<PackageReference Include="Dock.Avalonia" Version="12.0.0.2" />
+	<PackageReference Include="Dock.Avalonia.Diagnostics" Version="12.0.0.2" />
+	<PackageReference Include="Dock.Avalonia.Themes.Fluent" Version="12.0.0.2" />
+	<PackageReference Include="Dock.Model.Mvvm" Version="12.0.0.2" />
+    <PackageReference Include="Dock.Avalonia.Themes.Simple" Version="12.0.0.2" />
+    <PackageReference Include="Dock.Serializer" Version="11.3.0.12" />
+    <PackageReference Include="LiveMarkdown.Avalonia" Version="2.2.0" />
+    <PackageReference Include="Markdown.Avalonia" Version="11.0.3" />
+    <PackageReference Include="Microsoft.Win32.SystemEvents" Version="10.0.9" />
+    <PackageReference Include="Prism.Avalonia" Version="9.0.537.11130" />
+    <PackageReference Include="Prism.DryIoc.Avalonia" Version="9.0.537.11130" />
+    <PackageReference Include="Projektanker.Icons.Avalonia" Version="9.6.2" />
+    <PackageReference Include="Projektanker.Icons.Avalonia.FontAwesome" Version="9.6.2" />
+    <PackageReference Include="Splat" Version="20.0.0" />
+    <PackageReference Include="TextMateSharp" Version="2.0.4" />
+    <PackageReference Include="TextMateSharp.Grammars" Version="2.0.4" />
+    <PackageReference Include="WebView.Avalonia" Version="11.0.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\HelpView.axaml.cs">
+      <DependentUpon>HelpView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Tools\MapView.axaml.cs">
+      <DependentUpon>MapView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Tools\ErrorListView.axaml.cs">
+      <DependentUpon>ErrorListView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Tools\ReportInfoView.axaml.cs">
+      <DependentUpon>ReportInfoView.axaml</DependentUpon>
+    </Compile>
+	<Compile Update="Views\Tools\UnitStripView.axaml.cs">
+	  <DependentUpon>UnitStripView.axaml</DependentUpon>
+	</Compile>
+    <Compile Update="Views\Tools\RegionInfoView.axaml.cs">
+      <DependentUpon>RegionInfoView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Tools\ExplorerView.axaml.cs">
+      <DependentUpon>ExplorerView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Tools\RegionStatsView.axaml.cs">
+      <DependentUpon>RegionStatsView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Tools\RegionPropertiesView.axaml.cs">
+      <DependentUpon>RegionPropertiesView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Tools\SearchResultsView.axaml.cs">
+      <DependentUpon>SearchResultsView.axaml</DependentUpon>
+    </Compile>
+	<Compile Update="Views\Tools\BattlesView.axaml.cs">
+	  <DependentUpon>BattlesView.axaml</DependentUpon>
+	</Compile>
+	<Compile Update="Views\Tools\BookmarksView.axaml.cs">
+	  <DependentUpon>BookmarksView.axaml</DependentUpon>
+	</Compile>
+	<Compile Update="Views\Tools\HistoryView.axaml.cs">
+		<DependentUpon>HistoryView.axaml</DependentUpon>
+	</Compile>
+    <Compile Update="Views\TextEditorView.axaml.cs">
+      <DependentUpon>TextEditorView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Tools\UnitOrdersView.axaml.cs">
+      <DependentUpon>UnitOrdersView.axaml</DependentUpon>
+    </Compile>
+	<Compile Update="Views\Tools\UnitInspectorView.axaml.cs">
+	  <DependentUpon>UnitInspectorView.axaml</DependentUpon>
+	</Compile>
+	<Compile Update="Views\Tools\DetailsView.axaml.cs">
+	  <DependentUpon>DetailsView.axaml</DependentUpon>
+	</Compile>
+	<Compile Update="Views\BuildingDetailsView.axaml.cs">
+	  <DependentUpon>BuildingDetailsView.axaml</DependentUpon>
+	</Compile>
+	<Compile Update="Views\ShipDetailsView.axaml.cs">
+	  <DependentUpon>ShipDetailsView.axaml</DependentUpon>
+	</Compile>
+	<Compile Update="Views\NoDetailsView.axaml.cs">
+      <DependentUpon>NoDetailsView.axaml</DependentUpon>
+	</Compile>
+	<Compile Update="Views\SearchView.axaml.cs">
+      <DependentUpon>SearchView.axaml</DependentUpon>
+	</Compile>
+	<Compile Update="Views\UnitOrdersTextEditorView.axaml.cs">
+	  <DependentUpon>UnitOrdersTextEditorView.axaml</DependentUpon>
+	</Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Update="Resources\ResourceDictionary.axaml">
+      <SubType>Designer</SubType>
+    </AdditionalFiles>
+    <AdditionalFiles Update="Views\HelpWindow.axaml">
+      <SubType>Designer</SubType>
+    </AdditionalFiles>
+  </ItemGroup>
+
+ <ItemGroup>
+		<Compile Update="Assets\Lang.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Lang.resx</DependentUpon>
+		</Compile>
+		<EmbeddedResource Update="Assets\Lang.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>Lang.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+
+ <ItemGroup>
+   <Folder Include="Assets\Help\Content\en\reference\" />
+   <Folder Include="Models\Configuration\" />
+ </ItemGroup>
+
+ <ItemGroup>
+   <None Update="Config\help-topics.json">
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </None>
+   <None Update="Help\help-topics.json">
+     <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+   </None>
+ </ItemGroup>
+
+  <PropertyGroup>
+    <Version>0.10.3</Version>
+    <AssemblyVersion>0.10.3.0</AssemblyVersion>
+    <FileVersion>0.10.3.0</FileVersion>
+    <InformationalVersion>0.10.3</InformationalVersion>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+  </PropertyGroup>
+</Project>

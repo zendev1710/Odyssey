@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="Odyssey.Views.Tools.ExplorerView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+			 xmlns:vm="using:Odyssey.ViewModels"
+             xmlns:vmtools="using:Odyssey.ViewModels.Tools"
+             xmlns:conv="using:Odyssey.Converters"
+             mc:Ignorable="d"
+             d:DesignWidth="300" d:DesignHeight="400"
+             x:DataType="vmtools:ExplorerViewModel" x:CompileBindings="True">
+	<UserControl.Resources>
+		<conv:RegionItemAdditionalInfoToResourceUriConverter x:Key="ResourceUriConverter" />
+		<conv:RegionItemAdditionalInfoToForegroundConverter x:Key="ForegroundConverter" />
+		<conv:BoolToBoldFontWeigthConverter x:Key="BoolToBoldFontWeigthConverter" />
+	</UserControl.Resources>
+	<Grid Focusable="True" IsVisible="{Binding HasDocument}">
+		<TreeView x:Name="TreeView" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" Focusable="True" >
+			<TreeView.Styles>
+				<Style Selector="TreeViewItem" x:DataType="vm:ExplorerNodeViewModel">
+					<Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
+				</Style>
+			</TreeView.Styles>
+			<TreeView.ItemTemplate>
+				<!--ContextMenu ItemsSource="{Binding NodeMenuItems}"/-->
+				<TreeDataTemplate ItemsSource="{Binding Children}">
+					<StackPanel Orientation="Horizontal">
+						<asyncImageLoader:AdvancedImage Source="{Binding AdditionalInfo, Converter={StaticResource ResourceUriConverter}}" IsVisible="{Binding AdditionalInfo, Converter={x:Static ObjectConverters.IsNotNull}}" Margin="0,0,5,0"/>
+						<TextBlock Text="{Binding Header}" Foreground="{Binding AdditionalInfo, Converter={StaticResource ForegroundConverter}}" FontWeight="{Binding Unconfirmed, Converter={StaticResource BoolToBoldFontWeigthConverter}}" />
+					</StackPanel>
+				</TreeDataTemplate>
+			</TreeView.ItemTemplate>
+		</TreeView>
+	</Grid>
+</UserControl>

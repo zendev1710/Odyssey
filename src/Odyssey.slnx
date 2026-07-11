@@ -1,0 +1,23 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="ARM" />
+    <Platform Name="ARM64" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Solution Items/">
+    <File Path="../.github/workflows/release-with-msix.yml" />
+    <File Path="../.github/workflows/release.yml" />
+    <File Path="../BUILD.md" />
+    <File Path="../DEVELOPER.md" />
+    <File Path="../FEATURES.md" />
+    <File Path="../README.md" />
+    <File Path="../SPECS.md" />
+    <File Path="../TODO.md" />
+  </Folder>
+  <Project Path="app/Odyssey.Desktop/Odyssey.csproj">
+    <Build Solution="Release|Any CPU" Project="false" />
+  </Project>
+  <Project Path="tools/cropper/cropper.csproj" />
+</Solution>

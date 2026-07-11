@@ -1,0 +1,75 @@
+name: Build and Release Odyssey
+
+on:
+  push:
+    tags:
+      - 'v*' # Triggers on version tags like v1.0.0
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore app/Odyssey.Desktop/Odyssey.csproj
+
+      - name: Set version from tag
+        run: |
+          $version = "${{ github.ref_name }}".TrimStart("v")
+          (Get-Content app/Odyssey.Desktop/Odyssey.csproj) -replace '<Version>.*</Version>', "<Version>$version</Version>" `
+            -replace '<AssemblyVersion>.*</AssemblyVersion>', "<AssemblyVersion>$version.0</AssemblyVersion>" `
+            -replace '<FileVersion>.*</FileVersion>', "<FileVersion>$version.0</FileVersion>" `
+            -replace '<InformationalVersion>.*</InformationalVersion>', "<InformationalVersion>$version</InformationalVersion>" |
+            Set-Content app/Odyssey.Desktop/Odyssey.csproj
+
+      - name: Build for .NET 8.0
+        run: dotnet build app/Odyssey.Desktop/Odyssey.csproj --configuration Release -f net8.0
+
+      - name: Publish for .NET 8.0
+        run: dotnet publish app/Odyssey.Desktop/Odyssey.csproj --configuration Release -f net8.0 --output ./publish/net8.0
+
+      - name: Build for .NET 9.0
+        run: dotnet build app/Odyssey.Desktop/Odyssey.csproj --configuration Release -f net9.0
+
+      - name: Publish for .NET 9.0
+        run: dotnet publish app/Odyssey.Desktop/Odyssey.csproj --configuration Release -f net9.0 --output ./publish/net9.0
+
+      - name: Zip .NET 8.0 published files
+        run: Compress-Archive -Path ./publish/net8.0/* -DestinationPath ./Odyssey-net8.0-${{ github.ref_name }}.zip
+
+      - name: Zip .NET 9.0 published files
+        run: Compress-Archive -Path ./publish/net9.0/* -DestinationPath ./Odyssey-net9.0-${{ github.ref_name }}.zip
+
+      - name: Install WiX Toolset
+        run: choco install wix --version=3.11.2 -y
+
+      - name: Build MSI Installer
+        run: |
+          candle installer/OdysseyInstaller.wxs -out installer/OdysseyInstaller.wixobj
+          light installer/OdysseyInstaller.wixobj -out OdysseyInstaller.msi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            Odyssey-net8.0-${{ github.ref_name }}.zip
+            Odyssey-net9.0-${{ github.ref_name }}.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload MSI to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: OdysseyInstaller.msi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

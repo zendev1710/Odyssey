@@ -1,0 +1,87 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:md="https://github.com/whistyun/Markdown.Avalonia">
+
+	<!-- Help Button Style -->
+	<Style Selector="Button.help-button">
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="BorderBrush" Value="White" />
+		<Setter Property="BorderThickness" Value="1" />
+		<Setter Property="Foreground" Value="White" />
+		<Setter Property="Padding" Value="8" />
+		<Setter Property="CornerRadius" Value="4" />
+	</Style>
+
+	<Style Selector="Button.help-button:pointerover">
+		<Setter Property="Background" Value="#33FFFFFF" />
+	</Style>
+
+	<!-- Help Content Markdown Styles -->
+	<!--<Style Selector="MarkdownScrollViewer.help-content">
+		<Setter Property="Margin" Value="0" />
+	</Style>-->
+
+	<!-- Custom styles for markdown elements --><!--
+	<Style Selector="MarkdownScrollViewer.help-content TextBlock">
+		<Setter Property="TextWrapping" Value="Wrap" />
+		<Setter Property="LineHeight" Value="1.5" />
+	</Style>
+	<Style Selector="MarkdownScrollViewer.help-content Border">
+		<Setter Property="CornerRadius" Value="8" />
+		<Setter Property="Padding" Value="16" />
+		<Setter Property="Margin" Value="0,8" />
+	</Style>-->
+
+	<!-- Code blocks -->
+	<!--<Style Selector= "MarkdownScrollViewer.help-content Border.CodeBlock">
+		<Setter Property="Background" Value="{DynamicResource SystemControlBackgroundChromeMediumBrush}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource SystemControlForegroundBaseMediumLowBrush}" />
+		<Setter Property="BorderThickness" Value="1" />
+	</Style>-->
+
+	<!-- Headers -->
+	<!--<Style Selector="MarkdownScrollViewer.help-content TextBlock.Heading1">
+		<Setter Property="FontSize" Value="32" />
+		<Setter Property="FontWeight" Value="Bold" />
+		<Setter Property="Margin" Value="0,24,0,16" />
+		<Setter Property="Foreground" Value="{DynamicResource SystemAccentColor}" />
+	</Style>-->
+
+	<!--<Style Selector="MarkdownScrollViewer.help-content TextBlock.Heading2">
+		<Setter Property="FontSize" Value="24" />
+		<Setter Property="FontWeight" Value="SemiBold" />
+		<Setter Property="Margin" Value="0,20,0,12" />
+	</Style>
+
+	<Style Selector="MarkdownScrollViewer.help-content TextBlock.Heading3">
+		<Setter Property="FontSize" Value="18" />
+		<Setter Property="FontWeight" Value="SemiBold" />
+		<Setter Property="Margin" Value="0,16,0,8" />
+	</Style>-->
+
+	<!-- Links -->
+	<!--<Style Selector="MarkdownScrollViewer.help-content TextBlock.Hyperlink">
+		<Setter Property="Foreground" Value="{DynamicResource SystemAccentColor}" />
+		<Setter Property="TextDecorations" Value="Underline" />
+	</Style>-->
+
+	<!-- Lists -->
+	<!--<Style Selector="avalonia:MarkdownScrollViewer.help-content StackPanel.List">
+		<Setter Property="Margin" Value="16,8" />
+	</Style>-->
+
+	<!-- Tables -->
+	<!--<Style Selector="MarkdownScrollViewer.help-content Grid.Table">
+		<Setter Property="Margin" Value="0,16" />
+	</Style>-->
+
+	<!-- Blockquotes -->
+	<!--<Style Selector="MarkdownScrollViewer.help-content Border.BlockQuote">
+		<Setter Property="Background" Value="{DynamicResource SystemControlBackgroundChromeMediumBrush}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource SystemAccentColor}" />
+		<Setter Property="BorderThickness" Value="4,0,0,0" />
+		<Setter Property="Padding" Value="16" />
+		<Setter Property="Margin" Value="0,8" />
+	</Style>-->
+
+</Styles>

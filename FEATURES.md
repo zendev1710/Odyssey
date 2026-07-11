@@ -13,24 +13,16 @@
 
 ## User interface
 
-
-
-
-
-
-
-
 ### Settings system
 
 TO BE FINISHED.
 
 - [x] Use [ConfigFactory.Avalonia](https://www.nuget.org/packages/ConfigFactory.Avalonia) for GUI settings pages
 - [x] Restore/save settings by (de)serializing into an application settings JSON file (config.json)
-- [ ] Restore/override settings by (de)serializing into an user settings JSON file (config.json)
+- [x] Restore/override settings by (de)serializing into an user settings JSON file (config.json)
+- [ ] Makes settings page visually correct in Simple theme
 
 ### Translation system
-
-TO BE FINISHED.
 
 - [x] Main view
 - [x] Building details view
@@ -48,22 +40,27 @@ TO BE FINISHED.
 ## File system
 
 - [x] Drag and drop to open a Report .cr file
-- [ ] Drag and drop to open an Orders .txt file
-- [x] Drag and drop to open a Report .cr file coming embedded in a zip file
-- [x] Drag and drop to open several Report .cr files
-- [ ] Drag and drop to open several Orders .txt files
-- [x] Drag and drop to open several Report .cr files, each one embedded in a zip file
-- [ ] Drag and drop to open mixed types files (.txt; .cr, .zip coming)
+- [x] Drag and drop to open a Report .cr file embedded in a zip file
 - [ ] Extract report .cr file from the active opened zip => extract and transform zip document as CR document
-- [ ] Extract report .cr file from each opened zip
+- [ ] Drag and drop to open mixed types files (.txt; .cr, .zip coming)
 - [ ] Merge and save CR files
+
+Optional:
+
+- [ ] Extract report .cr file from each opened zip
+- [ ] Drag and drop to open an Orders .txt file
+- [ ] Drag and drop to open several Report .cr files, each one embedded in a zip file
+- [ ] Drag and drop to open several Report .cr files
+- [ ] Drag and drop to open several Orders .txt files
+
+## Factions management
+
+- [x] Multi active factions management
+- [ ] Report owner taken into account when opening a Report .cr file
 
 ## Features upcoming
 
-- Multi-CR file open system using drag and drop
 - Add the default theme based on system theme (theming)
-- Add a combobox in a settings panel to select a theme among the 4 themes: default simple, dark, light (theming)
-- Closed dock windows display handling
 - Copy/Paste from/to clipboard for data
 - Persisten layout system (save/load layout)
 - App-wide persistent settings system, with :
@@ -72,8 +69,7 @@ TO BE FINISHED.
   - `Show only map` option (maximize and hide other dock windows / restore layout) - Ctrl + Shift + K
   - Map/minimap display options
   - Theme selection
-- Recently opened CR system
-- Map simple display (regions/islands/oceans...) - using OpenGL ?
+- Map simple display (regions/islands/oceans...)
 - Orders check system
 - Toolbar with theme icons
 - Translations system (language selection, resources files...)
@@ -81,21 +77,23 @@ TO BE FINISHED.
 - Add the simple theme for a lighter app (theming)
 - Overview map (minimap)
 - Send Orders
+- Multi-CR file open system using drag and drop
 
 ### Information view
 
 Information view (Ctrl + I in CsMapFx) - display information about the world data (11 tabs in a navigation view ... on central area ?) :
-  - alchemy 
-  - buildings
-  - resources
-  - calendar (winter...)
-  - battles modifiers
-  - Races
-  - Regions
-  - Production
-  - Navigation
-  - Weapons
-  - Waren ?
+
+- alchemy
+- buildings
+- resources
+- calendar (winter...)
+- battles modifiers
+- Races
+- Regions
+- Production
+- Navigation
+- Weapons
+- Waren ?
 
 ### Orders view additional features
 
@@ -105,14 +103,40 @@ Information view (Ctrl + I in CsMapFx) - display information about the world dat
 - Implement auto-completion using [TextMateSharp](https://github.com/danipen/TextMateSharp), see [AvaloniaEdit](https://github.com/AvaloniaUI/AvaloniaEdit/)
 - Add a "navigate between unconfirmed only/editable units" toggle fluent icon button
 
-
 ## Known limitations
 
-- No map view
-- No minimap/overtview view
-- No statistics view
-- No search view
-- No information view
-- *No bookmarks view 'like in Magellan)*
-- No search results view
-- No errors view
+Here are main missing features compared to Magellan:
+
+- minimap view
+- statistics view
+- search view
+- information view
+- search results view
+- errors view
+- profiles management
+- islands management
+- map other planes display (astral...)
+- reports merging management
+
+Here are main missing features compared to CsMapFx:
+
+- minimap view
+- region statistics view
+- search view
+- information view
+- search results view
+- errors view
+- islands management
+- map other planes display (astral...)
+- map regions/islands multiselection
+- map region borders/buildings/boats... display
+- reports merging management
+
+## Known issues
+
+- Overview : tree badly sorted according to the content. In a region node, it should be :
+  - Buildings
+  - Ships
+  - Active Factions
+  - Allied Factions
+  - Other Factions

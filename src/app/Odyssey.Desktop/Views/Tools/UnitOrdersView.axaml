@@ -1,0 +1,93 @@
+﻿<UserControl x:Class="Odyssey.Views.Tools.UnitOrdersView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:AvalonEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
+             xmlns:vmt="using:Odyssey.ViewModels.Tools"
+			 xmlns:vm="using:Odyssey.ViewModels"
+			 xmlns:views="using:Odyssey.Views"
+			 xmlns:a="clr-namespace:Odyssey.Assets"
+             mc:Ignorable="d"
+             d:DesignWidth="300" d:DesignHeight="400"
+             x:DataType="vmt:UnitOrdersViewModel"
+			 x:CompileBindings="True"
+		>
+		<Grid Name="UnitOrders" Focusable="True" IsVisible="true" RowDefinitions="Auto,*,Auto" ColumnDefinitions="*,Auto">
+			<StackPanel Grid.Row="0" Orientation="Horizontal"
+                    Spacing="5"
+                    Margin="3">
+            <!--ToggleButton Name="wordWrap" ToolTip.Tip="Word wrap" IsChecked="{Binding #Editor.WordWrap}">
+                <ToggleButton.Content>
+                    <Path Fill="{Binding $parent[ToggleButton].Foreground}" Data="M2.75 5C2.33579 5 2 5.33579 2 5.75C2 6.16421 2.33579 6.5 2.75 6.5H21.25C21.6642 6.5 22 6.16421 22 5.75C22 5.33579 21.6642 5 21.25 5H2.75Z M2.75 11.5C2.33579 11.5 2 11.8358 2 12.25C2 12.6642 2.33579 13 2.75 13H19C20.3807 13 21.5 14.1193 21.5 15.5C21.5 16.8807 20.3807 18 19 18H14.5607L15.2803 17.2803C15.5732 16.9874 15.5732 16.5126 15.2803 16.2197C14.9874 15.9268 14.5126 15.9268 14.2197 16.2197L12.2197 18.2197C11.9268 18.5126 11.9268 18.9874 12.2197 19.2803L14.2197 21.2803C14.5126 21.5732 14.9874 21.5732 15.2803 21.2803C15.5732 20.9874 15.5732 20.5126 15.2803 20.2197L14.5607 19.5H19C21.2091 19.5 23 17.7091 23 15.5C23 13.2909 21.2091 11.5 19 11.5H2.75Z M2 18.75C2 18.3358 2.33579 18 2.75 18H9.25C9.66421 18 10 18.3358 10 18.75C10 19.1642 9.66421 19.5 9.25 19.5H2.75C2.33579 19.5 2 19.1642 2 18.75Z" />
+                </ToggleButton.Content>
+            </ToggleButton-->
+            <!--ToggleButton Name="viewTabs" Content="View tabs" IsChecked="{Binding #Editor.Options.ShowTabs}" VerticalAlignment="Stretch" VerticalContentAlignment="Center"/-->
+            <!--ToggleButton Name="viewSpaces" Content="View spaces" IsChecked="{Binding #Editor.Options.ShowSpaces}" VerticalAlignment="Stretch" VerticalContentAlignment="Center"/-->
+            <!--ToggleButton Name="viewEOL" Content="View EOL" IsChecked="{Binding #Editor.Options.ShowEndOfLine}" VerticalAlignment="Stretch" VerticalContentAlignment="Center"/-->
+            <!--
+            <ToggleButton Name="viewColumnRules" Content="View columns rulers" IsChecked="{Binding #Editor.Options.ShowColumnRulers}" VerticalAlignment="Stretch" VerticalContentAlignment="Center"/>
+            <Button Name="addControlBtn" Content="Add Button" VerticalAlignment="Stretch" VerticalContentAlignment="Center"/>
+            <Button Name="clearControlBtn" Content="Clear Buttons" VerticalAlignment="Stretch" VerticalContentAlignment="Center"/>
+            <ComboBox Name="syntaxModeCombo" VerticalAlignment="Stretch" VerticalContentAlignment="Center"/>
+            -->
+            <DropDownButton Content="Change theme" >
+            <!-- DropDownButton Content="Change theme" VerticalAlignment="Stretch" VerticalContentAlignment="Center"-->
+                <Button.Flyout>
+                    <Flyout>
+                        <ListBox ItemsSource="{Binding AllThemes}" SelectedItem="{Binding SelectedTheme}">
+                            <ListBox.DataTemplates>
+                                <DataTemplate x:DataType="vm:ColorThemeViewModel">
+                                    <TextBlock Text="{Binding DisplayName}"/>
+                                </DataTemplate>
+                            </ListBox.DataTemplates>
+                        </ListBox>    
+                    </Flyout>
+                </Button.Flyout>
+            </DropDownButton>
+            <!--
+            <Button Name="insertSnippetBtn" Content="Insert Snippet" />
+            <StackPanel Orientation="Horizontal" Spacing="5">
+                <TextBlock VerticalAlignment="Center">LineHeight factor</TextBlock>
+                <NumericUpDown Name="lineHeightFactorNumericUpDown"
+                               Minimum="1"
+                               Increment="0.1"
+                               Value="{Binding Path=#Editor.Options.LineHeightFactor}"
+                               VerticalAlignment="Center"
+                               VerticalContentAlignment="Center" />
+            </StackPanel>
+            -->
+        </StackPanel>
+        <!--
+        <StackPanel Name="StatusBar" Background="Purple" Height="25" DockPanel.Dock="Bottom" Orientation="Horizontal">
+            <TextBlock Name="StatusText" Text="Ready" Margin="5 0 0 0" VerticalAlignment="Center" FontSize="12"/>
+        </StackPanel>-->
+		<AvalonEdit:TextEditor 
+			Name="Editor"
+			Grid.Row="1"
+			IsVisible="{Binding CanEditOrders}"
+			Document="{Binding Document}"
+			>
+            <!-- above :
+            IsEnabled="{Binding CanEditOrders}"
+            IsReadOnly="{Binding CanEditOrders}"
+            -->
+		</AvalonEdit:TextEditor>
+		<Grid Name="StatusBar" Grid.Row="2" >
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+			<StackPanel Grid.Column="0" Margin="5,0,2,2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+				<CheckBox IsChecked="{Binding IsConfirmed, Mode=TwoWay}" IsEnabled="{Binding CanEditOrders}" Command="{Binding ToggleConfirmedStatusCommand}" Content="{x:Static a:Lang.opt_confirmed_orders}" ToolTip.Tip="{x:Static a:Lang.opt_confirmed_orders_tip}" Margin="5 0 10 0" FontSize="12" />
+				<Button Content="{x:Static a:Lang.btn_previous_unit}" ToolTip.Tip="{x:Static a:Lang.btn_previous_unit_tip}" Margin="5 0 0 0" FontSize="12" Command="{Binding SelectPreviousUnitCommand}" />
+				<Button Content="{x:Static a:Lang.btn_next_unit}" ToolTip.Tip="{x:Static a:Lang.btn_next_unit_tip}" Margin="5 0 0 0" FontSize="12" Command="{Binding SelectNextUnitCommand}" />
+			</StackPanel>
+			<!--StackPanel Grid.Column="2" Margin="5,0,2,2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" -->
+				<!--TextBlock Name="StatusText" Text="Ready" Margin="5 0 0 0" FontSize="12" /-->
+				<!--TextBlock Name="StatusUnitName" Text="{Binding UnitName}" Margin="5 0 0 0" FontSize="12" /-->
+			<!--/StackPanel-->
+		</Grid>
+	</Grid>
+</UserControl>
+

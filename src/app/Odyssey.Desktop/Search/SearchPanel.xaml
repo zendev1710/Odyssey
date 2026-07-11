@@ -1,0 +1,206 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ae="using:Odyssey"
+                    xmlns:search="using:Odyssey.Search"
+                    x:ClassModifier="internal">
+
+  <Design.PreviewWith>
+    <Border Padding="20">
+      <search:SearchPanel />
+    </Border>
+  </Design.PreviewWith>
+
+  <StreamGeometry x:Key="ChevronRightIconPath">m384 780-15-15 189-189-189-189 15-15 204 204-204 204Z</StreamGeometry>
+  <StreamGeometry x:Key="CaseSensitiveIconPath">m186 768 140-380h30l143 380h-32l-40-113H257l-40 113h-31Zm80-139h151l-75-209h-1l-75 209Zm398 148q-40 0-62.5-21.5T579 697q0-41 27-65.5t74-24.5q18 0 39.5 5t32.5 11v-24q0-39-20-60t-56-21q-20 0-35.5 6T605 544l-17-19q20-16 42.5-23.5T677 494q50 0 75 27.5t25 81.5v164h-26v-39h-4q-17 27-36 38t-47 11Zm-2-26q40 0 64.5-29.5T751 646q-13-8-29.5-12.5T684 629q-35 0-56.5 18.5T606 696q0 26 15 40.5t41 14.5Z</StreamGeometry>
+  <StreamGeometry x:Key="CompleteWordIconPath">M124 764V650h20v94h672v-94h20v114H124Zm266.903-93v-39H387q-17 27-36 38t-46.737 11q-38.789 0-62.026-21.695Q219 637.611 219 601q0-41 27-65.5t73-24.5q18 0 39.5 5t33.5 11v-24q0-39-19.5-60T318 422q-21 0-37 6t-36 20l-17-19q20-16 42.5-23.5t47.84-7.5q49.66 0 74.16 27.284 24.5 27.283 24.5 81.974V671h-26.097ZM324 533q-34 0-56 18.5T246 599q0 27 15.667 41.5Q277.333 655 303 655q40 0 64-29.706t24-75.576Q378 542 361.5 537.5T324 533Zm197 139V285h25v136.182L543 460h2q15-23 37.083-34t49.189-11Q679 415 707 450.5q28 35.5 28 98.5 0 61-28.073 96.5-28.072 35.5-76.53 35.5Q603 681 580 669t-35-33h-2v36h-22Zm108-229q-36 0-61 30.159t-25 76.523Q543 596 568 626.5t61 30.5q36 0 57.5-29t21.5-78q0-49-21.5-78T629 443Z</StreamGeometry>
+  <StreamGeometry x:Key="RegularExpressionIconPath">M251 817q-49-48-76.5-109.5T147 577q0-69 27-131.5T251 335l16 14q-48 44-74 103t-26 124q0 64 26 122.5T266 803l-15 14Zm121-27q-14 0-24-10t-10-24q0-14 10-24t24-10q14 0 24 10t10 24q0 14-10 24t-24 10Zm158-192V496l-88 51-10-16 88-51-88-51 10-16 88 51V362h20v102l88-51 10 16-88 51 88 51-10 16-88-51v102h-20Zm178 219-15-14q47-44 73-103t26-124q0-65-25.5-123.5T693 349l15-14q49 49 76.5 111T812 577q0 69-27.5 131.5T708 817Z</StreamGeometry>
+  <StreamGeometry x:Key="FindPreviousIconPath">M470 824V367L247 590l-15-14 248-248 248 248-15 14-223-223v457h-20Z</StreamGeometry>
+  <StreamGeometry x:Key="FindNextIconPath">M480 824 232 576l15-14 223 223V328h20v457l223-223 15 14-248 248Z</StreamGeometry>
+  <StreamGeometry x:Key="CloseIconPath">M19.25,3.99813 C20.7125481,3.99813 21.9084055,5.13983743 21.9949813,6.58060798 L22,6.74813 L22,17.2518 C22,18.7143481 20.8583111,19.9102055 19.4175241,19.9967813 L19.25,20.0018 L4.75,20.0018 C3.28747111,20.0018 2.09159594,18.8601111 2.00501881,17.4193241 L2,17.2518 L2,6.74813 C2,5.28559148 3.14170743,4.08972523 4.58247798,4.00314877 L4.75,3.99813 L19.25,3.99813 Z M19.25,5.49813 L15.9959,5.49813 L15.9958,18.5018 L19.25,18.5018 C19.89725,18.5018 20.4295391,18.0099641 20.4935469,17.3796125 L20.5,17.2518 L20.5,6.74813 C20.5,6.1009175 20.0081641,5.56859563 19.3778125,5.50458356 L19.25,5.49813 Z M14.4959,5.49813 L4.75,5.49813 C4.10279688,5.49813 3.5704668,5.99000109 3.50645367,6.62032409 L3.5,6.74813 L3.5,17.2518 C3.5,17.89905 3.99187109,18.4313391 4.62219409,18.4953469 L4.75,18.5018 L14.4959,18.5018 L14.4959,5.49813 Z M10.3508,9.14531 L12.85,11.6446 C13.0453,11.8398 13.0453,12.1564 12.85,12.3517 L10.3508,14.8509 C10.1555,15.0462 9.83891,15.0462 9.64365,14.8509 C9.44839,14.6557 9.44839,14.3391 9.64365,14.1438 L11.2892,12.4982 L6.50492,12.5 C6.22877,12.5001 6.00483,12.2763 6.00472993,12.0002 C6.00463,11.724 6.22841,11.5001 6.50455,11.5 L11.2895,11.4982 L9.64365,9.85241 C9.44839,9.65715 9.44839,9.34057 9.64365,9.14531 C9.83891,8.95004 10.1555,8.95004 10.3508,9.14531 Z</StreamGeometry>
+  <ControlTheme x:Key="SearchPanelExpanderToggle" TargetType="ToggleButton"
+                BasedOn="{StaticResource {x:Type ToggleButton}}">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Background="Transparent" Padding="5">
+          <Path Data="{StaticResource ChevronRightIconPath}"
+                Stretch="Uniform"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Height="13"
+                Fill="{TemplateBinding Foreground}"
+                Stroke="{TemplateBinding Foreground}"
+                StrokeThickness="1" />
+        </Border>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:checked /template/ Path">
+      <Setter Property="RenderTransform">
+        <TransformGroup>
+          <RotateTransform Angle="90" />
+          <TranslateTransform X="-2" />
+        </TransformGroup>
+      </Setter>
+    </Style>
+  </ControlTheme>
+
+  <ControlTheme x:Key="SearchPanelTextBoxButton" TargetType="ToggleButton"
+                BasedOn="{StaticResource {x:Type ToggleButton}}">
+    <Setter Property="Padding" Value="4"></Setter>
+    <Setter Property="MinWidth" Value="22"></Setter>
+    <Setter Property="MinHeight" Value="20"></Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type search:SearchPanel}" TargetType="search:SearchPanel">
+    <Setter Property="BorderThickness" Value="1 0 1 1" />
+    <Setter Property="CornerRadius" Value="0 0 4 4" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SearchPanelBorderBrush}" />
+    <Setter Property="Background" Value="{DynamicResource SearchPanelBackgroundBrush}" />
+    <Setter Property="Focusable" Value="True" />
+    <Setter Property="Margin" Value="0 0 18 0" />
+    <Setter Property="FontSize" Value="{DynamicResource SearchPanelFontSize}" />
+    <Setter Property="FontFamily" Value="{DynamicResource SearchPanelFontFamily}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Name="PART_Border"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="{TemplateBinding CornerRadius}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                Background="{TemplateBinding Background}"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Padding="10">
+          <Grid ColumnDefinitions="Auto,Auto,Auto"
+                RowDefinitions="Auto,Auto,Auto">
+            <ToggleButton Name="Expander"
+                          Theme="{StaticResource SearchPanelExpanderToggle}"
+                          VerticalAlignment="Center"
+                          IsVisible="True"
+                          IsChecked="False"
+                          Grid.Column="0"
+                          Grid.Row="0"
+                          Width="16"
+                          Margin="0, 0, 5, 0">
+            </ToggleButton>
+            <StackPanel Orientation="Horizontal"
+                        Grid.Column="2"
+                        Grid.Row="0">
+              <TextBox Watermark="Find..."
+                       Name="PART_searchTextBox"
+                       Grid.Column="1"
+                       Grid.Row="0"
+                       Width="265"
+                       Margin="0,0,0,0"
+                       Text="{Binding SearchPattern, RelativeSource={RelativeSource TemplatedParent}}">
+                <TextBox.InnerRightContent>
+                  <StackPanel Orientation="Horizontal">
+                    <ToggleButton Theme="{StaticResource SearchPanelTextBoxButton}"
+                                  IsChecked="{Binding $parent[search:SearchPanel].MatchCase, Mode=TwoWay}"
+                                  ToolTip.Tip="Find..."
+                                  VerticalAlignment="Center">
+                      <Path Data="{StaticResource CaseSensitiveIconPath}"
+                            Stretch="UniformToFill"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Width="12"
+                            Fill="{Binding $parent[ToggleButton].Foreground}"
+                            Stroke="{Binding $parent[ToggleButton].Foreground}"
+                            StrokeThickness="1" />
+                    </ToggleButton>
+                    <ToggleButton Theme="{StaticResource SearchPanelTextBoxButton}"
+                                  IsChecked="{Binding $parent[search:SearchPanel].WholeWords, Mode=TwoWay}"
+                                  ToolTip.Tip="Match whole words"
+                                  Margin="3,0,0,0"
+                                  VerticalAlignment="Center">
+                      <Path Data="{StaticResource CompleteWordIconPath}"
+                            Stretch="Uniform"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Width="14"
+                            Fill="{Binding $parent[ToggleButton].Foreground}"
+                            Stroke="{Binding $parent[ToggleButton].Foreground}"
+                            StrokeThickness="1" />
+                    </ToggleButton>
+                    <ToggleButton Theme="{StaticResource SearchPanelTextBoxButton}"
+                                  IsChecked="{Binding $parent[search:SearchPanel].UseRegex, Mode=TwoWay}"
+                                  ToolTip.Tip="Use regular expressions"
+                                  Margin="3,0,5,0"
+                                  VerticalAlignment="Center">
+                      <Path Data="{StaticResource RegularExpressionIconPath}"
+                            Stretch="Uniform"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Width="12"
+                            Fill="{Binding $parent[ToggleButton].Foreground}"
+                            Stroke="{Binding $parent[ToggleButton].Foreground}"
+                            StrokeThickness="1" />
+                    </ToggleButton>
+                  </StackPanel>
+                </TextBox.InnerRightContent>
+              </TextBox>
+              <Button Margin="5,0,0,0"
+                      MinWidth="34"
+                      VerticalAlignment="Stretch"
+                      Command="{x:Static search:SearchCommands.FindPrevious}">
+                <ToolTip.Tip>
+                  <TextBlock Text="Find previous (Shift+F3)" />
+                </ToolTip.Tip>
+                <Path Data="{StaticResource FindPreviousIconPath}"
+                      Stretch="Uniform"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      Width="16"
+                      Fill="{Binding $parent[Button].Foreground}"
+                      Stroke="{Binding $parent[Button].Foreground}"
+                      StrokeThickness="1" />
+              </Button>
+              <Button Margin="3,0,0,0"
+                      VerticalAlignment="Stretch"
+                      MinWidth="34"
+                      Command="{x:Static search:SearchCommands.FindNext}">
+                <ToolTip.Tip>
+                  <TextBlock Text="Find next (F3)" />
+                </ToolTip.Tip>
+                <Path Data="{StaticResource FindNextIconPath}"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      Stretch="Uniform"
+                      Width="16"
+                      Fill="{Binding $parent[Button].Foreground}"
+                      Stroke="{Binding $parent[Button].Foreground}"
+                      StrokeThickness="1" />
+              </Button>
+              <Button Margin="3,0,0,0"
+                      VerticalAlignment="Stretch"
+                      MinWidth="34"
+                      Command="{x:Static search:SearchCommands.CloseSearchPanel}"
+                      Focusable="True">
+                <Path Data="{StaticResource CloseIconPath}"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      Stretch="Uniform"
+                      Width="12"
+                      Fill="{Binding $parent[ToggleButton].Foreground}"
+                      Stroke="{Binding $parent[ToggleButton].Foreground}"
+                      StrokeThickness="1" />
+              </Button>
+            </StackPanel>
+            <StackPanel Name="PART_MessageView"
+                        IsVisible="False"
+                        Orientation="Horizontal"
+                        Margin="0 5 0 0 "
+                        Grid.Column="2"
+                        Grid.Row="2">
+              <TextBlock Name="PART_MessageContent"
+                         FontSize="11" />
+            </StackPanel>
+          </Grid>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+
+    <Style Selector="^/template/ Button">
+      <Setter Property="BorderThickness" Value="0" />
+    </Style>
+
+  </ControlTheme>
+</ResourceDictionary>

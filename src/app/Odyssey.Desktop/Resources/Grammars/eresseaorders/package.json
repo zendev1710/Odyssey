@@ -1,0 +1,45 @@
+{
+  "name": "eresseaorders",
+  "displayName": "%displayName%",
+  "description": "%description%",
+  "version": "0.1.0",
+  "publisher": "zendev",
+  "license": "MIT",
+  "engines": {
+    " eresseaorders": "0.1.x"
+  },
+  "scripts": {
+    "update-grammar": "node ../node_modules/vscode-grammar-updater/bin eresseaorders/ eresseaorders-tmLanguage grammars/ eresseaorders.tmLanguage ./syntaxes/eresseaorders.tmLanguage.json"
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "eresseaorders",
+        "extensions": [
+          ".txt"
+        ],
+        "aliases": [
+          "orders"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "eresseaorders",
+        "scopeName": "eressea.orders",
+        "path": "./syntaxes/eresseaorders.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "eresseaorders",
+        "path": "./snippets/eresseaorders.code-snippets"
+      }
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zendev1710/Odyssey.git"
+  }
+}

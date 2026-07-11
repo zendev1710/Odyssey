@@ -1,15 +1,15 @@
 # TODO
 
-## Keyboard shortcuts
-
-- which one for 'Save Orders'?
-
+Content moved in [zendev monday Odyssey workspace](https://zendev-team.monday.com/).
 
 ## Features in progress
 
-### Menu system
+### Bookmarks system
 
-TO BE FINISHED.
+- [ ] 'New bookmarks set' item in the status bar's combobox
+- [ ] Manage bookmarks (dialog box)
+- [ ] Combobox control content to up (not bottom), using flyout ?
+- [ ] Bad design preview for starcontrol
 
 ### Statistics view
 
@@ -21,22 +21,14 @@ TO BE DONE.
 
 ### Settings system
 
-TO BE FINISHED.
-
 - [x] Use [ConfigFactory.Avalonia](https://www.nuget.org/packages/ConfigFactory.Avalonia) for GUI settings pages
 - [x] Restore/save settings by (de)serializing into an application settings JSON file (config.json)
-- [ ] Restore/override settings by (de)serializing into an user settings JSON file (config.json)
+- [x] Restore/override settings by (de)serializing into an user settings JSON file (config.json)
 
 ### Translation system
 
-TO BE FINISHED.
-
-- [x] Main view
-- [x] Building details view
-- [x] Ship details view
-- [x] Unit details view
-- [x] Explorer view
-- [x] Region properties view
+- [ ] Achieve missing translations displayed -- xxx -- in the UI and stored in to-translate bookmarks
+- [ ] Achieve missing german translations marked [de]
 
 ### Tooltips system
 
@@ -84,17 +76,18 @@ TO BE FINISHED.
 ### Information view
 
 Information view (Ctrl + I in CsMapFx) - display information about the world data (11 tabs in a navigation view ... on central area ?) :
-  - alchemy 
-  - buildings
-  - resources
-  - calendar (winter...)
-  - batlles modifiers
-  - Races
-  - Regions
-  - Production
-  - Navigation
-  - Weapons
-  - Waren ?
+
+- alchemy
+- buildings
+- resources
+- calendar (winter...)
+- batlles modifiers
+- Races
+- Regions
+- Production
+- Navigation
+- Weapons
+- Waren ?
 
 ### Orders view additional features
 
@@ -106,7 +99,7 @@ Information view (Ctrl + I in CsMapFx) - display information about the world dat
 
 ## Improvements
 
-- [x] Load then 'save as' a CR file without any change create a CR file with exactly the same content as the original one 
+- [x] Load then 'save as' a CR file without any change create a CR file with exactly the same content as the original one
 - 'Expand all' action in explorer view
 - 'Collapse all' action in explorer view
 - Icon for Ships node and each ship node
@@ -115,7 +108,7 @@ Information view (Ctrl + I in CsMapFx) - display information about the world dat
 - Display all messages in report view as a list view (not as a 1-depth tree view)
 - Avoid data view update (tree rebuild and so on) when it's not necessary
 - Unit orders view: prev/next buttons as images to the right side of the status bar
-- Unit orders view: confirmed checkbox as a fluent toggle icon 
+- Unit orders view: confirmed checkbox as a fluent toggle icon
 - Optimize the file loading service
 - Translate GUI in the current language for each view
 - Translate tab contextual menu items

@@ -1,0 +1,11 @@
+﻿<Project Sdk="WixToolset.Sdk/6.0.1">
+  <ItemGroup>
+    <PackageReference Include="WixToolset.UI.wixext" Version="6.0.1" />
+    <PackageReference Include="WixToolset.Util.wixext" Version="6.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\app\Odyssey.Desktop\Odyssey.csproj">
+      <TargetFrameworks>net8.0,net9.0</TargetFrameworks>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
