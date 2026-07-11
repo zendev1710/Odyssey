@@ -382,6 +382,8 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
                 dock.Close.Execute(null);
                 Debug.WriteLine("[MAINWINDOW] dock closed");
             }
+            else
+                Debug.WriteLine("[MAINWINDOW] dock.Close.CanExecute returned false");
         }
         Layout = null;
         Debug.WriteLine("[MAINWINDOW] CloseLayout ended.");

@@ -364,3 +364,7 @@ FodyWeavers.xsd
 
 # Continue.dev
 .continue/
+
+# Local pilot/test workspaces (local only)
+.src/.localpilot/
+.analysis/

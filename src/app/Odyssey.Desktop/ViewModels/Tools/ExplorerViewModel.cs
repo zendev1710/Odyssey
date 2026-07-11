@@ -569,10 +569,6 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
                     factionInfo.Block = factionModel!.Data;
                     factionInfo.Status = factionModel.IsActive ? FactionStatus.ACTIVE : FactionStatus.UNKNOWN;
                 }
-                else
-                {
-
-                }
                 if (Report.HasActiveFaction() && factionInfo.Status != FactionStatus.ACTIVE)
                 {
                     // get first active faction
