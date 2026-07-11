@@ -1125,10 +1125,35 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
     private async Task SaveLayout()
     {
-        if (_serializer is null || _dockState is null)
+        if (_serializer is null || _dockState is null || Layout is null)
         {
             return;
         }
+
+        // Close all docked documents before serializing the layout state.
+        // This prevents DockSerializer from persisting domain object references
+        // (DataBlock, Bookmarks, Explorer selections, ...) that are lost on restore.
+        var filesDock = _factory.GetDockable<IDocumentDock>("Files");
+        
+        List<FileViewModel> filesToClose = [];
+        if (filesDock?.VisibleDockables != null)
+        {
+            foreach (var dockable in filesDock.VisibleDockables)
+            {
+                if (dockable is FileViewModel fvm && fvm.Document is not null)
+                {
+                    filesToClose.Add(fvm);
+                }
+            }
+        }
+
+        foreach (var fvm in filesToClose)
+        {
+            _factory?.RemoveDockable(fvm);
+        }
+
+        // Save the layout to the user-selected file path.
+        Debug.WriteLine($"[MAINWINDOW] SaveLayout: closing {filesToClose.Count} documents");
 
         var storageProvider = StorageService.GetStorageProvider();
         if (storageProvider is null)
@@ -1138,7 +1163,6 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
         var file = await storageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            // TODO: translate title
             Title = "Save layout",
             FileTypeChoices = GetSaveLayoutFileTypes(),
             SuggestedFileName = "layout",
@@ -1152,12 +1176,15 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
             {
                 await using var stream = await file.OpenWriteAsync();
                 _serializer.Save(stream, Layout);
+                Debug.WriteLine("[MAINWINDOW] SaveLayout succeeded to " + file.Path.LocalPath);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
         }
+
+        Debug.WriteLine("[MAINWINDOW] SaveLayout ended.");
     }
 
     /*

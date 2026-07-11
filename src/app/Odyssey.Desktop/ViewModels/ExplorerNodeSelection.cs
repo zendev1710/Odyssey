@@ -2,7 +2,6 @@
 using AvaloniaEdit.Editing;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,19 +18,24 @@ namespace Odyssey.ViewModels
             return range >= 0 && range < NodeViewModelSubtree.Count ? NodeViewModelSubtree.ElementAtOrDefault(range) : null;
         }
 
-        public ExplorerNodeSelection(ExplorerNodeViewModel nodeViewModel)
+        public ExplorerNodeSelection(ExplorerNodeViewModel? nodeViewModel)
         {
-            Init(nodeViewModel);
+            if (nodeViewModel is not null)
+            {
+                Init(nodeViewModel);
+            }
+            else
+            {
+                // Layout deserialization: ExplorerDockSerializer does not restore
+                // the ViewModel reference directly.  The explorer will rebuild its
+                // tree when OnActiveDocumentChanged fires on a fresh CRDocument, at
+                // which point the selection will be rebuilt correctly.
+                SetItem(null, null, null);
+            }
         }
 
         private void Init(ExplorerNodeViewModel nodeViewModel)
         {
-            // FIXME: nodeViewModel is null when loading from OpenLayout() deserialization
-            if (nodeViewModel is null)
-            {
-                return;
-            }
-
             NodeViewModelSubtree = ExplorerNodeViewModel.GetNodeSubTree(nodeViewModel, true, true, false).ToList();
             RegionNodeViewModel = NodeViewModelSubtree.LastOrDefault();
             DataBlock? item = nodeViewModel.Block;

@@ -18,17 +18,26 @@ public class BookmarkModel
     private const string BuildingTypeValue = "BUILDING";
     private const string IslandTypeValue = "ISLAND";
 
-    public BookmarkModel(string type, DataBlock dt)
+    public BookmarkModel(string type, DataBlock? dt)
     {
-        // FIXME: dt is null when loading from OpenLayout() deserialization
+        Id = "";
+        Type = type;
         if (dt is not null)
         {
             Id = dt.GetStringId();
             Name = dt.GetUIName();
             Label = dt.GetUILabel();
+            Target = dt;
         }
-        Type = type;
-        Target = dt;
+        else
+        {
+            // Layout deserialization: DataBlock reference is lost.
+            // The bookmark will be lazily resolved in BookmarksViewModel.AutoLoadBookmarksForDocument
+            // when a new CRDocument becomes active.
+            Name = "Unknown";
+            Label = "Unknown";
+            Target = null;
+        }
     }
 
     public static BookmarkModel? FromObject(DataBlock dt)
