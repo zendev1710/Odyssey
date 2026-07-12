@@ -227,9 +227,9 @@
 			<!-- Window menu -->
 			<MenuItem Header="{x:Static a:Lang.mainmenu_window}" IsVisible="{Binding EnableLayoutFeature}">
 				<MenuItem Header="{x:Static a:Lang.mainmenu_window_layout_save}" Command="{Binding LayoutSave}" />
-				<MenuItem Header="{x:Static a:Lang.mainmenu_window_layout_apply}" Command="{Binding LayoutOpen}" />
-				<MenuItem Header="{x:Static a:Lang.mainmenu_window_layout_manage}" Command="{Binding LayoutNew}" />
-				<MenuItem Header="{x:Static a:Lang.mainmenu_window_layout_restore}" Command="{Binding LayoutClose}" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_window_layout_open}" Command="{Binding LayoutOpen}" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_window_layout_new}" Command="{Binding LayoutNew}" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_window_layout_close}" Command="{Binding LayoutClose}" />
 				<!--TODO : dynamic menu items to navigate from one document to another, with checkbox on current active document -->
 				<!-- Separator /-->
 				<!-- ... /-->

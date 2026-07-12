@@ -2115,14 +2115,14 @@
   <data name="mainmenu_window" xml:space="preserve">
     <value>_Fenêtre</value>
   </data>
-  <data name="mainmenu_window_layout_manage" xml:space="preserve">
-    <value>_Gérer la disposition des fenêtres...</value>
+  <data name="mainmenu_window_layout_new" xml:space="preserve">
+    <value>_Créer une disposition de fenêtres</value>
   </data>
-  <data name="mainmenu_window_layout_restore" xml:space="preserve">
-    <value>_Rétablir la disposition des fenêtres</value>
+  <data name="mainmenu_window_layout_close" xml:space="preserve">
+    <value>_Nettoie le contenu de la disposition des fenêtres</value>
   </data>
-  <data name="mainmenu_window_layout_apply" xml:space="preserve">
-    <value>_Appliquer la disposition des fenêtres</value>
+  <data name="mainmenu_window_layout_open" xml:space="preserve">
+    <value>_Ouvrir une disposition de fenêtres...</value>
   </data>
   <data name="mainmenu_window_layout_save" xml:space="preserve">
     <value>_Enregistrer la disposition des fenêtres</value>

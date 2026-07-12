@@ -2959,34 +2959,34 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Apply layout.
+        ///   Looks up a localized string similar to Close layout.
         /// </summary>
-        public static string mainmenu_window_layout_apply {
+        public static string mainmenu_window_layout_close {
             get {
-                return ResourceManager.GetString("mainmenu_window_layout_apply", resourceCulture);
+                return ResourceManager.GetString("mainmenu_window_layout_close", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _Manage layout....
+        ///   Looks up a localized string similar to _New layout.
         /// </summary>
-        public static string mainmenu_window_layout_manage {
+        public static string mainmenu_window_layout_new {
             get {
-                return ResourceManager.GetString("mainmenu_window_layout_manage", resourceCulture);
+                return ResourceManager.GetString("mainmenu_window_layout_new", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Restore layout.
+        ///   Looks up a localized string similar to Open layout....
         /// </summary>
-        public static string mainmenu_window_layout_restore {
+        public static string mainmenu_window_layout_open {
             get {
-                return ResourceManager.GetString("mainmenu_window_layout_restore", resourceCulture);
+                return ResourceManager.GetString("mainmenu_window_layout_open", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save layout.
+        ///   Looks up a localized string similar to Save layout....
         /// </summary>
         public static string mainmenu_window_layout_save {
             get {

@@ -2115,14 +2115,14 @@
   <data name="mainmenu_window" xml:space="preserve">
     <value>[DE]</value>
   </data>
-  <data name="mainmenu_window_layout_manage" xml:space="preserve">
-    <value>[DE]</value>
+  <data name="mainmenu_window_layout_new" xml:space="preserve">
+    <value>New Layout [DE]</value>
   </data>
-  <data name="mainmenu_window_layout_restore" xml:space="preserve">
-    <value>Restore layout [DE]</value>
+  <data name="mainmenu_window_layout_close" xml:space="preserve">
+    <value>Close layout [DE]</value>
   </data>
-  <data name="mainmenu_window_layout_apply" xml:space="preserve">
-    <value>Apply layout [DE]</value>
+  <data name="mainmenu_window_layout_open" xml:space="preserve">
+    <value>Open layout [DE]</value>
   </data>
   <data name="mainmenu_window_layout_save" xml:space="preserve">
     <value>Save layout [DE]</value>

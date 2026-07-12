@@ -2115,17 +2115,17 @@
   <data name="mainmenu_window" xml:space="preserve">
     <value>_Window</value>
   </data>
-  <data name="mainmenu_window_layout_manage" xml:space="preserve">
-    <value>_Manage layout...</value>
+  <data name="mainmenu_window_layout_new" xml:space="preserve">
+    <value>_New layout</value>
   </data>
-  <data name="mainmenu_window_layout_restore" xml:space="preserve">
-    <value>Restore layout</value>
+  <data name="mainmenu_window_layout_close" xml:space="preserve">
+    <value>Close layout</value>
   </data>
-  <data name="mainmenu_window_layout_apply" xml:space="preserve">
-    <value>Apply layout</value>
+  <data name="mainmenu_window_layout_open" xml:space="preserve">
+    <value>Open layout...</value>
   </data>
   <data name="mainmenu_window_layout_save" xml:space="preserve">
-    <value>Save layout</value>
+    <value>Save layout...</value>
   </data>
   <data name="mainmenu_view_advanced_search" xml:space="preserve">
     <value>_Advanced search</value>
