@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Odyssey.Models.Localization;
+using System;
 
 namespace Odyssey.Models.Data
 {
@@ -12,9 +13,39 @@ namespace Odyssey.Models.Data
         OTHER = 5
     }
 
-    public class WorldPlane(string name, PlaneType planeType)
+    public class WorldPlane
     {
-        public String Name { get; set; } = name;
-        public PlaneType Type { get; set; } = planeType;
+        public string Name { get; }
+        public PlaneType Type { get; }
+
+        public WorldPlane(PlaneType planeType)
+        {
+            Type = planeType;
+            Name = GetName(planeType);
+        }
+
+        public static string GetName(PlaneType planeType)
+        {
+            switch (planeType)
+            {
+                case PlaneType.WORLD:
+                    return Labels.Localize(Labels.PLANE_WORLD);
+                case PlaneType.ASTRAL:
+                    return Labels.Localize(Labels.PLANE_ASTRAL);
+                case PlaneType.ARENA:
+                    return Labels.Localize(Labels.PLANE_ARENA);
+                case PlaneType.ETERNATH:
+                    return Labels.Localize(Labels.PLANE_ETERNATH);
+                case PlaneType.CHRISTMAS_ISLAND:
+                    return Labels.Localize(Labels.PLANE_CHRISTMAS_ISLAND);
+                default:
+                    return Labels.Localize(Labels.PLANE_UNKNOWN, [$"{planeType}"]);
+            }
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

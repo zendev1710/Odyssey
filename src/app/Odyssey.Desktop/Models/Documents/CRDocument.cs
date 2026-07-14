@@ -106,7 +106,7 @@ public class CRDocument : EresseaDocument
     public Dictionary<int, DataBlock> Islands { get; private set; } = [];
     public Dictionary<int, DataBlock> Battles { get; private set; } = [];
     public Dictionary<int, DataBlock> Groups { get; private set; } = [];
-    public List<WorldPlane> Planes { get; private set; } = [];
+    public Dictionary<int, WorldPlane> Planes { get; private set; } = [];
     private Dictionary<int, FactionModel> Factions { get; set; } = [];
 
     public int RegionsNumber { get { return Regions.Count; } }
@@ -287,6 +287,15 @@ public class CRDocument : EresseaDocument
             return "Alliance";
         }
         return GetFactionName(ActiveFaction);
+    }
+
+    public string GetGameName()
+    {
+        if (IsEmpty())
+        {
+            return string.Empty;
+        }
+        return FirstBlock!.Value.Value(Strings.DE_GAME);
     }
 
     public static string GetFactionName(FactionModel? faction)
@@ -1235,6 +1244,8 @@ m_blocks.push_back(*old_r);
 
     private void UpdateHashTables()
     {
+        Planes.Add((int)PlaneType.WORLD, new WorldPlane(PlaneType.WORLD));
+
         if (!CollectGeneralGameData(out var firstActiveFactionNode))
         {
             Debug.WriteLine("[DOCUMENT] ERROR ! There is no active faction.");
@@ -1345,6 +1356,21 @@ m_blocks.push_back(*old_r);
                     }
 
                     Regions[Coordinates.GetId(b.GetX(), b.GetY(), (PlaneType)blockId)] = b;
+                    if (blockId > 0)
+                    {
+                        // region on another plane than the standard one
+                        if (!Planes.ContainsKey(blockId))
+                        {
+                            // TODO: add regions as properties of a special plane block (like ASTRAL, ARENA, ETERNATH, CHRISTMAS_ISLAND, etc.) ?
+                            Planes.Add(blockId, new WorldPlane((PlaneType)blockId));
+                        }
+                    }
+                    else
+                    {
+                        unconfirmed++;
+                    }
+
+
                     // get region owner (E3 only)
                     int ownerFactionId = b.ValueInt(Strings.EN_REGION_OWNER, -1);
                     // TODO: check if -1 can be a region owner (monster...), because in that case it could be a faction with -1 id

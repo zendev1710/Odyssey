@@ -48,6 +48,12 @@ namespace Odyssey.Models.Localization
         public const string MESSAGES = "messages";
         public const string OWNER = "owner";
         public const string PERSONS = "persons";
+        public const string PLANE_WORLD = "plane_world";
+        public const string PLANE_ASTRAL = "plane_astral";
+        public const string PLANE_ARENA = "plane_arena";
+        public const string PLANE_ETERNATH = "plane_eternath";
+        public const string PLANE_CHRISTMAS_ISLAND = "plane_christmas_island";
+        public const string PLANE_UNKNOWN = "plane_unknown";
         public const string RACE_INFO = "race_info";
         public const string ROADS = "roads";
         public const string ROAD_INFO = "road_info";

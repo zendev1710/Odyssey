@@ -736,26 +736,6 @@ namespace Odyssey.Models.Data
             return TRANSLATED_NAMES[Terrains.UNKNOWN];
         }
 
-        // Plane name, is part of name for regions
-        string GetUIPlaneName(int plane)
-        {
-            switch((PlaneType)plane)
-                {
-                case PlaneType.WORLD:
-                    return "Standardebene"; // Standard level
-                case PlaneType.ASTRAL:
-                    return "Astralraum"; // Astral space
-                case PlaneType.ARENA:
-                    return "Arena";
-                case PlaneType.ETERNATH:
-                    return "Eternath";
-                case PlaneType.CHRISTMAS_ISLAND:
-                    return "Weihnachtsinsel"; // Christmas Island
-                default:
-                    return $"Ebene {plane}"; // level {plane}
-            }
-        }
-
         public string GetUIName()
         {
             string name = "";
@@ -795,7 +775,8 @@ namespace Odyssey.Models.Data
                 int id = GetId();
                 if (id > 0)
                 {
-                    return $"{name} ({X}, {Y}, {GetUIPlaneName(id)})";
+                    // Plane name is part of name for regions and battles
+                    return $"{name} ({X}, {Y}, {WorldPlane.GetName((PlaneType)id)})";
                 }
                 return $"{name} ({X}, {Y})";
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 namespace Odyssey.Models.Data
@@ -20,11 +21,18 @@ namespace Odyssey.Models.Data
         public const string DE_CATAPULT = "Katapult";
 
         public const string DE_BORDER_TYPE = "typ";
+
         public const string DE_FACTION_PEOPLE_NUMBER = "Anzahl Personen";
+        public const string DE_FACTION_MAGIC_REALM = "Magiegebiet";
+        public const string DE_FACTION_SCORE_POINTS = "Punkte";
+        public const string DE_FACTION_SCORE_AVERAGE = "Punktedurchschnitt";
+
         public const string DE_GAME = "Spiel";
         public const string DE_GOBLINS = "Goblins";
         public const string DE_GUARDING = "bewacht";
         public const string DE_HORSES = "Pferde";
+
+
 
         public const string DE_MONSTER_TYPE_VALUE_SKELETTE = "Skelette";
         public const string DE_MONSTER_TYPE_VALUE_SKELETTHERREN = "Skelettherren";
@@ -139,7 +147,13 @@ namespace Odyssey.Models.Data
         public const string DE_CMD_WORK = "ARBEITE";
 
         // English language
+
         public const string EN_ALLIANCE_STATUS = "Status";
+
+        public const string EN_FACTION_AGE = "age";
+        public const string EN_FACTION_HEROES = "heroes";
+        public const string EN_FACTION_MAX_HEROES = "max_heroes";
+
         public const string EN_MESSAGE_REGION = "region";
         public const string EN_MESSAGE_RENDERED = "rendered";
         public const string EN_MESSAGE_SHIP = "ship";
@@ -246,8 +260,5 @@ namespace Odyssey.Models.Data
         // Not a specific language
         public const string NEUTRAL_ALIAS = "alias";
         public const string NEUTRAL_TEMP = "temp";
-
-
-
     }
 }
