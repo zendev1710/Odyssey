@@ -2980,4 +2980,22 @@
   <data name="helptopic_Tables" xml:space="preserve">
     <value>Tables (samples)</value>
   </data>
+  <data name="plane_world" xml:space="preserve">
+    <value>Standard</value>
+  </data>
+  <data name="plane_christmas_island" xml:space="preserve">
+    <value>Île de Noël</value>
+  </data>
+  <data name="plane_unknown" xml:space="preserve">
+    <value>Niveau {0}</value>
+  </data>
+  <data name="plane_astral" xml:space="preserve">
+    <value>Astral</value>
+  </data>
+  <data name="plane_arena" xml:space="preserve">
+    <value>Arena</value>
+  </data>
+  <data name="plane_eternath" xml:space="preserve">
+    <value>Eternath</value>
+  </data>
 </root>

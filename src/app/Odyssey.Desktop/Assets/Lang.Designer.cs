@@ -3436,6 +3436,60 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Arena.
+        /// </summary>
+        public static string plane_arena {
+            get {
+                return ResourceManager.GetString("plane_arena", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Astral.
+        /// </summary>
+        public static string plane_astral {
+            get {
+                return ResourceManager.GetString("plane_astral", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Christmas Island.
+        /// </summary>
+        public static string plane_christmas_island {
+            get {
+                return ResourceManager.GetString("plane_christmas_island", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Eternath.
+        /// </summary>
+        public static string plane_eternath {
+            get {
+                return ResourceManager.GetString("plane_eternath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Level {0}.
+        /// </summary>
+        public static string plane_unknown {
+            get {
+                return ResourceManager.GetString("plane_unknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Standard.
+        /// </summary>
+        public static string plane_world {
+            get {
+                return ResourceManager.GetString("plane_world", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} {1}.
         /// </summary>
         public static string race_info {

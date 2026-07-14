@@ -2978,4 +2978,22 @@
   <data name="helptopic_Tables" xml:space="preserve">
     <value>Tables (samples)</value>
   </data>
+  <data name="plane_world" xml:space="preserve">
+    <value>Standardebene</value>
+  </data>
+  <data name="plane_christmas_island" xml:space="preserve">
+    <value>Weihnachtsinsel</value>
+  </data>
+  <data name="plane_unknown" xml:space="preserve">
+    <value>Ebene {0]</value>
+  </data>
+  <data name="plane_astral" xml:space="preserve">
+    <value>Astralraum</value>
+  </data>
+  <data name="plane_arena" xml:space="preserve">
+    <value>Arena</value>
+  </data>
+  <data name="plane_eternath" xml:space="preserve">
+    <value>Eternath</value>
+  </data>
 </root>
