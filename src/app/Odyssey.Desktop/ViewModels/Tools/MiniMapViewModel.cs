@@ -1,18 +1,19 @@
-﻿using Odyssey.Models.Data;
-using Odyssey.Models.Documents;
-using System.Collections.Generic;
-using System.Diagnostics;
-using Prism.Events;
-using Avalonia.Controls;
-using System;
-using System.Collections.ObjectModel;
-using Odyssey.Models.Tools;
+﻿using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
-using static Odyssey.Models.Documents.CRDocument;
-using static Odyssey.Models.Documents.SimpleItemSelection;
-using System.Linq;
 using CommunityToolkit.Mvvm.Input;
 using DryIoc;
+using Odyssey.Models.Data;
+using Odyssey.Models.Documents;
+using Odyssey.Models.Tools;
+using Odyssey.Services;
+using Prism.Events;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
+using static Odyssey.Models.Documents.CRDocument;
+using static Odyssey.Models.Documents.SimpleItemSelection;
 
 namespace Odyssey.ViewModels.Tools;
 
@@ -22,7 +23,7 @@ public partial class MiniMapViewModel : DocumentToolViewModelBase
 
     //public ObservableCollection<BookmarkModel> MiniMap { get; }
 
-    public MiniMapViewModel(IEventAggregator? eventAggregator = null) : base(eventAggregator)
+    public MiniMapViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
     {
         _selectedBookmarkIndex = -1;
         _selectedBookmarkText = string.Empty;
@@ -37,10 +38,8 @@ public partial class MiniMapViewModel : DocumentToolViewModelBase
     */
     protected override void OnActiveDocumentChanged(CRDocument cr)
     {
-        if (SetMapFile(cr))
-        {
-            CollectData();
-        }
+        base.OnActiveDocumentChanged(cr);
+        CollectData();
     }
 
     protected override void OnSelectionChanged(ISelectionChange selectionChange)

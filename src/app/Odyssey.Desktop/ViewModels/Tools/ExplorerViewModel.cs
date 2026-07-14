@@ -5,6 +5,7 @@ using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Localization;
 using Odyssey.Models.Tools;
+using Odyssey.Services;
 using Odyssey.Settings;
 using Prism.Events;
 using System;
@@ -87,7 +88,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         public string Name { get; set; } = "";
     }
 
-    public ExplorerViewModel(IEventAggregator? eventAggregator = null) : base(eventAggregator)
+    public ExplorerViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
     {
         _root = new ExplorerNodeViewModel();
 
@@ -170,17 +171,12 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
     /// <param name="cr"></param>
     protected override void OnActiveDocumentChanged(CRDocument cr)
     {
-        if (SetMapFile(cr))
+        base.OnActiveDocumentChanged(cr);
+        Clear();
+        if (HasDocument)
         {
             RebuildTree();
         }
-    }
-
-    protected override void OnActiveDocumentClosed(CRDocument cr)
-    {
-        Clear();
-        // reset to an empty report document
-        SetMapFile(new CRDocument());
     }
 
     private bool HandleSelection(ISelectionChange selectionChange)
@@ -379,8 +375,6 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         // Clear tree and build a new one from newly opened document data
         Items.Clear();
 
-        CRDocument cr = GetDocument();
-
         ExplorerNodeViewModel? regionNode = null;
         int activeUnitInsertionIndex = 0;
         ExplorerNodeViewModel? firstFactionNode = null;
@@ -391,7 +385,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         bool regionHasBuilding = false;
         bool regionHasShip = false;
 
-        LinkedListNode<DataBlock>? firstBlockNode = cr.FirstBlock;
+        LinkedListNode<DataBlock>? firstBlockNode = Report.FirstBlock;
 
         // OPTIMIZE: pre-filter regions in order to not browse regions excluded from explorer (regions with no people or neighbours, including a lot of oceans)
         int excludedRegionsNumber = 0;
@@ -530,12 +524,12 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
             Debug.WriteLine($"[EXPLORER] WARNING | {excludedRegionsNumber} unknown regions found but iteration should be only on known regions ");
         }
 
-        if (regionsNumber != cr.SeenRegionsNumber)
+        if (regionsNumber != Report.SeenRegionsNumber)
         {
-            Debug.WriteLine($"[EXPLORER] WARNING | {regionsNumber} regions found instead of {cr.SeenRegionsNumber} known regions ");
+            Debug.WriteLine($"[EXPLORER] WARNING | {regionsNumber} regions found instead of {Report.SeenRegionsNumber} known regions ");
         }
 
-        Debug.WriteLine($"[EXPLORER] regions: {regionsNumber} excluded: {excludedRegionsNumber}) known: {cr.SeenRegionsNumber}");
+        Debug.WriteLine($"[EXPLORER] regions: {regionsNumber} excluded: {excludedRegionsNumber}) known: {Report.SeenRegionsNumber}");
         Debug.WriteLine("[EXPLORER] Data collection done");
     }
 

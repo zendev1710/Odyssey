@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using static Odyssey.Models.Documents.CRDocument;
+using Odyssey.Services;
 
 namespace Odyssey.ViewModels.Tools;
 
@@ -18,19 +19,10 @@ namespace Odyssey.ViewModels.Tools;
 /// </summary>
 public class ErrorListViewModel : DocumentToolViewModelBase
 {
-    public ErrorListViewModel(IEventAggregator? eventAggregator = null): base(eventAggregator)
+    public ErrorListViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null): base(eventAggregator, documentService)
     {
     }
 
-    protected override void OnActiveDocumentChanged(CRDocument cr)
-    {
-        Debug.WriteLine($"[VM-ERRORS--] DOCUMENT CHANGED {cr} -> BEGIN");
-        if (SetMapFile(Report)) {
-            // TODO
-            //RebuildItems();
-        }
-        Debug.WriteLine($"[VM-ERRORS--] DOCUMENT CHANGED {cr} -> ENDED");
-    }
     protected override void OnSelectionChanged(ISelectionChange selectionChange)
     {
         // This view does not hadnle any selection changes.

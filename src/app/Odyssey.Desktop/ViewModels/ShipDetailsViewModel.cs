@@ -11,6 +11,7 @@ using System;
 using System.Diagnostics;
 using Odyssey.Models.Documents;
 using Odyssey.Models;
+using Odyssey.Services;
 
 namespace Odyssey.ViewModels;
 
@@ -32,7 +33,7 @@ public partial class ShipDetailsViewModel : ContainerViewModel
     [ObservableProperty]
     private int _capacity;
 
-    public ShipDetailsViewModel(IEventAggregator? eventAggregator = null) : base(Ids.ShipDetails, eventAggregator)
+    public ShipDetailsViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(Ids.ShipDetails, eventAggregator, documentService)
     {
         Items = Root.Children;
     }

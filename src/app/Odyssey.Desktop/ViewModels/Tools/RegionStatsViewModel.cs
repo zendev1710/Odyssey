@@ -1,18 +1,19 @@
 ﻿using Avalonia.Controls;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Odyssey.Models;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
-using Prism.Events;
-using System.Collections.ObjectModel;
-using static Odyssey.Models.Documents.CRDocument;
-using System.Collections.Generic;
-using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using static Odyssey.Models.Documents.SimpleItemSelection;
 using Odyssey.Models.Localization;
+using Odyssey.Services;
+using Prism.Events;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
-using static Odyssey.ViewModels.Tools.RegionStatsViewModel;
 using System.Reflection.Emit;
-using Odyssey.Models;
+using static Odyssey.Models.Documents.CRDocument;
+using static Odyssey.Models.Documents.SimpleItemSelection;
+using static Odyssey.ViewModels.Tools.RegionStatsViewModel;
 
 namespace Odyssey.ViewModels.Tools;
 
@@ -76,7 +77,7 @@ public partial class RegionStatsViewModel : DocumentToolViewModelBase
 
     public ObservableCollection<string> Domains => _domains ??= [];
 
-    public RegionStatsViewModel(IEventAggregator? eventAggregator = null): base(eventAggregator)
+    public RegionStatsViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
     {
         SelectedFactionId = -1;
         _statItems = [];
@@ -119,11 +120,12 @@ public partial class RegionStatsViewModel : DocumentToolViewModelBase
 
         SortedSet<int> factions = [];
         Factions.Clear();
-        CRDocument cr = GetDocument();
+        /*
+
         if (cr == null)
         {
             return false;
-        }
+        }*/
         Debug.WriteLine($"[VM-REG-STAT] Fill faction lists -> handling...");
         bool bFoundCurrentlySelectedFaction = false;
         DataBlock? startBlock = region.GetNextBlock();
@@ -148,7 +150,7 @@ public partial class RegionStatsViewModel : DocumentToolViewModelBase
                     {
                         label = Labels.Localize(Labels.FACTION_DISGUISED);
                     }
-                    else if (cr.GetFaction(ref faction, factionId))
+                    else if (Report.GetFaction(ref faction, factionId))
                     {
                         label = faction!.Name;
                         /*
@@ -172,7 +174,7 @@ public partial class RegionStatsViewModel : DocumentToolViewModelBase
                     }
                     FactionItem factionItem = new FactionItem(label, factionId);
                     int index;
-                    if (cr.IsActiveFaction(factionId))
+                    if (Report.IsActiveFaction(factionId))
                     {
                         Factions.Insert(0, factionItem);
                         index = 0;
@@ -385,8 +387,7 @@ public partial class RegionStatsViewModel : DocumentToolViewModelBase
         bool unitInFaction = false;
         int unitId = 0;
         int personsInUnit = 0;
-        CRDocument cr = GetDocument();
-        if (cr == null)
+        if (Report.IsEmpty())
         {
             return;
         }

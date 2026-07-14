@@ -1,13 +1,15 @@
 ﻿using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Dock.Model.Controls;
+using Dock.Model.Mvvm.Core;
+using Odyssey.Core.Services;
 using Odyssey.Events;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
+using Odyssey.Services;
 using Prism.Events;
 using System;
-using Dock.Model.Mvvm.Core;
-using CommunityToolkit.Mvvm.Input;
-using Dock.Model.Controls;
 
 namespace Odyssey.ViewModels
 {
@@ -19,22 +21,19 @@ namespace Odyssey.ViewModels
         [ObservableProperty]
         private bool hasDocument;
 
-        private readonly IEventAggregator? _eventAggregator;
+        private readonly IActiveDocumentService _documentService;
 
-        protected IEventAggregator? EventAggregator { get { return _eventAggregator; } }
-
-        protected CRDocument Report { get; private set; }
+        protected CRDocument Report => _documentService.ActiveDocument;
 
         /// <summary>
         /// Constructor for Avalonia XAML Designer.
         /// </summary>
-        protected ClientAreaDockBase(IEventAggregator? eventAggregator = null) {
-            _eventAggregator = eventAggregator ?? Prism.Events.EventAggregator.Current;
-            HasDocument = false;
-            // links to an empty report document
-            Report = new CRDocument();
+        protected ClientAreaDockBase(IActiveDocumentService? documentService = null) {
+            _documentService = documentService ?? ServiceLocator.ActiveDocumentService;
 
-            EventAggregator?.GetEvent<ReportDocumentChangedEvent>().Subscribe(OnActiveDocumentChanged, ThreadOption.UIThread);
+            HasDocument = false;
+
+            _documentService.ActiveDocumentChanged += OnActiveDocumentChanged;
         }
 
         /// <summary>
@@ -43,44 +42,7 @@ namespace Odyssey.ViewModels
         /// <param name="cr"></param>
         protected virtual void OnActiveDocumentChanged(CRDocument cr)
         {
-            SetMapFile(cr);
-        }
-
-        /// <summary>
-        /// Links the report document to the view model.
-        /// </summary>
-        /// <param name="cr">the report document to link</param>
-        /// <returns>true if a new report document has been linked to the view model; otherwise false</returns>
-        protected virtual bool SetMapFile(CRDocument cr)
-        {
-            bool result = false;
-            if (!IsSameDocument(cr))
-            {
-                Report = cr;
-                result = true;
-            }
-            HasDocument = Report.HasData();
-            return result;
-        }
-
-        /// <summary>
-        /// Returns true if the specified document is the same as the current document.
-        /// </summary>
-        /// <param name="cr"></param>
-        /// <returns></returns>
-        protected bool IsSameDocument(CRDocument cr)
-        {
-            // IMPROVE: use rather a unique Id for the document
-            bool result = cr.Name == Report.Name;
-            return result;
-        }
-        /// <summary>
-        /// Get the current report document.
-        /// </summary>
-        /// <returns>the report document attached to the view model</returns>
-        protected CRDocument GetDocument()
-        {
-            return Report;
+            HasDocument = cr.HasData();
         }
 
         /// <summary>

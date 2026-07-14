@@ -1,8 +1,10 @@
 ﻿using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Odyssey.Core.Services;
 using Odyssey.Events;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
+using Odyssey.Services;
 using Odyssey.ViewModels.Tools;
 using Prism.Events;
 using System;
@@ -23,7 +25,8 @@ namespace Odyssey.ViewModels
 
         protected IEventAggregator? EventAggregator { get { return _eventAggregator; } }
 
-        protected CRDocument Report { get; private set; }
+        private readonly IActiveDocumentService _documentService;
+        protected CRDocument Report => _documentService.ActiveDocument;
 
         public string Id { get; }
 
@@ -44,16 +47,15 @@ namespace Odyssey.ViewModels
         /// </summary>
         //public SimpleItemSelection Selection { get { return _selection; } }
 
-        protected ViewModelBase(string id, IEventAggregator? eventAggregator = null)
+        protected ViewModelBase(string id, IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null)
         {
             Id = id;
             _eventAggregator = eventAggregator ?? Prism.Events.EventAggregator.Current;
-            HasDocument = false;
-            Report = new CRDocument();
+            _documentService = documentService ?? ServiceLocator.ActiveDocumentService;
+            _documentService.ActiveDocumentChanged += OnActiveDocumentChanged;
+
             Selection = new SimpleItemSelection();
-            
-            EventAggregator?.GetEvent<ReportDocumentChangedEvent>().Subscribe(OnActiveDocumentChanged, ThreadOption.UIThread, false, null);
-            EventAggregator?.GetEvent<ActiveDocumentClosedEvent>().Subscribe(OnActiveDocumentClosed, ThreadOption.UIThread, false, null);
+
             SubscribeToSelectionChangedEvent();
         }
 
@@ -63,17 +65,7 @@ namespace Odyssey.ViewModels
         /// <param name="cr"></param>
         protected virtual void OnActiveDocumentChanged(CRDocument cr)
         {
-            SetMapFile(cr);
-        }
-
-        /// <summary>
-        /// Called when ActiveDocumentClosedEvent is triggered.
-        /// </summary>
-        /// <param name="cr">Report Document</param>
-        protected virtual void OnActiveDocumentClosed(CRDocument cr)
-        {
-            // reset to an empty report document
-            SetMapFile(new CRDocument());
+            HasDocument = Report.HasData();
         }
 
         protected virtual void OnSelectionChanged(ISelectionChange selectionChange)
@@ -102,44 +94,6 @@ namespace Odyssey.ViewModels
         {
             SetSelection(selection);
             return 1;
-        }
-
-        /// <summary>
-        /// Links the report document to the view model.
-        /// </summary>
-        /// <param name="cr">the report document to link</param>
-        /// <returns>true if a new report document has been linked to the view model; otherwise false</returns>
-        protected virtual bool SetMapFile(CRDocument cr)
-        {
-            bool result = false;
-            if (!IsSameDocument(cr))
-            {
-                Report = cr;
-                result = true;
-            }
-            HasDocument = Report.HasData();
-            return result;
-        }
-
-        /// <summary>
-        /// Returns true if the specified document is the same as the current document.
-        /// </summary>
-        /// <param name="cr"></param>
-        /// <returns></returns>
-        protected bool IsSameDocument(CRDocument cr)
-        {
-            // IMPROVE: use rather a unique Id for the document
-            bool result = cr.Name == Report.Name;
-            return result;
-        }
-
-        /// <summary>
-        /// Get the current report document.
-        /// </summary>
-        /// <returns>the report document attached to the view model</returns>
-        protected CRDocument GetDocument()
-        {
-            return Report;
         }
 
         protected void SendSelectionChangedEvent(ISelection sel)

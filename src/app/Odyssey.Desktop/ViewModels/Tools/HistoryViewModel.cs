@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Tools;
+using Odyssey.Services;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ public partial class HistoryViewModel : DocumentToolViewModelBase
 
     public ObservableCollection<SelectionEntry> Items { get; } = [];
 
-    public HistoryViewModel(IEventAggregator? eventAggregator = null) : base(eventAggregator)
+    public HistoryViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
     {
     }
 
@@ -59,19 +60,10 @@ public partial class HistoryViewModel : DocumentToolViewModelBase
         RevealSelection(newValue);
     }
 
-    protected override void OnActiveDocumentClosed(CRDocument cr)
-    {
-        ClearItems();
-        // reset to an empty report document
-        SetMapFile(new CRDocument());
-    }
-
     protected override void OnActiveDocumentChanged(CRDocument cr)
     {
-        if (SetMapFile(cr))
-        {
-            ClearItems();
-        }
+        base.OnActiveDocumentChanged(cr);
+        ClearItems();
     }
 
     protected override void OnSelectionChanged(ISelectionChange selectionChange)

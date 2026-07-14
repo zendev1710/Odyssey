@@ -1,12 +1,16 @@
 ﻿using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Odyssey.Core.Help.Models;
 using Odyssey.Models;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
+using Odyssey.Models.Tools;
+using Odyssey.Services;
 using Odyssey.Utils;
 using Prism.Events;
-using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Odyssey.ViewModels.Tools;
 
@@ -17,6 +21,15 @@ public partial class MapViewModel : DocumentToolViewModelBase
 
     [ObservableProperty]
     Seasons _season = Seasons.UNKNOWN;
+
+    [ObservableProperty]
+    bool _hasSeveralPlanes;
+
+    [ObservableProperty]
+    WorldPlane? _selectedPlane;
+
+    //[ObservableCollection]
+    public ObservableCollection<WorldPlane> Planes { get; } = [];
 
     partial void OnSelectedRegionChanged(DataBlock? oldValue, DataBlock? newValue)
     {
@@ -90,8 +103,17 @@ public partial class MapViewModel : DocumentToolViewModelBase
     private IEnumerable<KeyValuePair<int, BuildingModel>> _buildings = [];
     private IEnumerable<KeyValuePair<int, RegionModel>> _regionsWithContainer = [];
 
-    public MapViewModel(IEventAggregator? eventAggregator = null) : base(eventAggregator)
+    public MapViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
     {
+    }
+
+    partial void OnSelectedPlaneChanged(WorldPlane? value)
+    {
+        if (value != null)
+        {
+            //Clear();
+            //RebuildMap();
+        }
     }
 
     protected override void OnSelectionChanged(ISelectionChange selectionChange)
@@ -119,18 +141,26 @@ public partial class MapViewModel : DocumentToolViewModelBase
     /// <param name="cr"></param>
     protected override void OnActiveDocumentChanged(CRDocument cr)
     {
-        if (SetMapFile(cr))
-        {
-            RebuildMap();
-        }
+        base.OnActiveDocumentChanged(cr);
+        RebuildPlanes();
+        RebuildMap();
     }
 
-    protected override void OnActiveDocumentClosed(CRDocument cr)
+    /// <summary>
+    /// Rebuilds the map from the data in the report document.
+    /// </summary>
+    private void RebuildPlanes()
     {
-        //Clear();
-        // reset to an empty report document
-        SetMapFile(new CRDocument());
-        RebuildMap();
+        Planes.Clear();
+        // Sort the planes by their planeType value (standard, astral...)
+        var sortedPlanes = Report.Planes.OrderBy(p => p.Key).ToList();
+        foreach (var planeElt in sortedPlanes)
+        {
+            Planes.Add(planeElt.Value);
+        }
+
+        HasSeveralPlanes = Report.Planes.Count > 1;
+        SelectedPlane = Report.Planes.FirstOrDefault().Value;
     }
 
     /// <summary>
@@ -138,8 +168,15 @@ public partial class MapViewModel : DocumentToolViewModelBase
     /// </summary>
     private void RebuildMap()
     {
+        // TODO: Reports.Regions is for the standard plane only, we should have a Regions collection for each plane
+        Regions = Report.Regions;
+        Season = DateUtils.GetGameSeason(Report.Turn);
+    }
 
-        Regions = GetDocument().Regions;
-        Season = DateUtils.GetGameSeason(GetDocument().Turn);
+    private void Clear()
+    {
+        // LATER: check about Selection that should be cleared also
+        Regions = [];
+        Season = 0;
     }
 }

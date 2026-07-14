@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using Prism.Events;
-using Avalonia.Controls;
-using Odyssey.Models.Data;
+﻿using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Tools;
+using Odyssey.Services;
+using Prism.Events;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Odyssey.ViewModels.Tools;
 
@@ -17,7 +16,7 @@ namespace Odyssey.ViewModels.Tools;
 /// provides functionality to manage and rebuild a tree structure based on document changes.</remarks>
 public partial class ReportInfoViewModel : MessagesListViewModel
 {
-    public ReportInfoViewModel(IEventAggregator? eventAggregator = null) : base(eventAggregator)
+    public ReportInfoViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
     {
     }
 
@@ -28,17 +27,8 @@ public partial class ReportInfoViewModel : MessagesListViewModel
 
     protected override void OnActiveDocumentChanged(CRDocument cr)
     {
-        if (SetMapFile(cr))
-        {
-            CollectDataFromReport();
-        }
-    }
-
-    protected override void OnActiveDocumentClosed(CRDocument cr)
-    {
-        base.Clear();
-        // reset to an empty report document
-        SetMapFile(new CRDocument());
+        base.OnActiveDocumentChanged(cr);
+        CollectDataFromReport();
     }
 
     /// <summary>
@@ -50,8 +40,7 @@ public partial class ReportInfoViewModel : MessagesListViewModel
         Debug.WriteLine("[VM-REPORT--] Rebuild tree...");
         Clear();
         int factionsMessagesNumber = 0;
-        CRDocument cr = GetDocument();
-        DataBlock? startBlock = cr.FirstBlock?.Value;
+        DataBlock? startBlock = Report.FirstBlock?.Value;
         for (DataBlock? block = startBlock; block != null; block = block.GetNextBlock())
         {
             BlockType type = block.GetBlockType();

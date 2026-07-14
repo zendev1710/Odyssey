@@ -1,7 +1,8 @@
 ﻿using Avalonia.Controls;
+using Dock.Model.Mvvm.Controls;
 using Odyssey.Events;
 using Odyssey.Models.Documents;
-using Dock.Model.Mvvm.Controls;
+using Odyssey.Services;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ public class SearchResultsViewModel : DocumentToolViewModelBase
         // This view does not handle any selection changes.
     }
 
-    public SearchResultsViewModel(IEventAggregator? eventAggregator = null): base(eventAggregator)
+    public SearchResultsViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
     {
         // TODO: use filter on filePath to update the list only if different
         //EventAggregator?.GetEvent<ActiveDocumentChangedEvent>().Subscribe(OnActiveDocumentChanged, ThreadOption.UIThread);

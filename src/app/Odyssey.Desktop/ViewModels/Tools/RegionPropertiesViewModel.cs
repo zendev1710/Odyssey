@@ -1,10 +1,11 @@
 ﻿using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
+using HarfBuzzSharp;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Localization;
+using Odyssey.Services;
 using Odyssey.Settings;
-using HarfBuzzSharp;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
@@ -257,7 +258,7 @@ public partial class RegionPropertiesViewModel : DocumentToolViewModelBase
     [ObservableProperty]
     private int _incense;
 
-    public RegionPropertiesViewModel(IEventAggregator? eventAggregator = null): base(eventAggregator)
+    public RegionPropertiesViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
     {
         _opacity = GlobalSettings.EnableTerrainBackgroundColor ? 0.9 : 1;
     }
@@ -283,16 +284,6 @@ public partial class RegionPropertiesViewModel : DocumentToolViewModelBase
             CollectData(Selection.Region!);
         }
         Debug.WriteLine($"[VM-REG-PROP] SELSTATE CHANGED {sel} -> ENDED");
-    }
-
-    /// <summary>
-    /// Links the report document to the view model.
-    /// </summary>
-    /// <param name="cr">the report document to link</param>
-    /// <returns>true if the report document has been linked to the view model and has data; otherwise false</returns>
-    protected override bool SetMapFile(CRDocument cr)
-    {
-        return base.SetMapFile(cr);
     }
 
     protected static void AddResourceItem(RegionItemCategory category, RegionItemType pid, Dictionary<RegionItemType, RegionItem> items, string name, ulong value, int skill = 0)

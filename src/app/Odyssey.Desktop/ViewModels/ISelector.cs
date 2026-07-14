@@ -1,12 +1,5 @@
-﻿using AvaloniaEdit.Editing;
-using Odyssey.Models.Documents;
-using Dock.Model.Mvvm.Controls;
-using System;
+﻿using Odyssey.Models.Documents;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Odyssey.Models.Documents.CRDocument;
 
 namespace Odyssey.ViewModels;
 

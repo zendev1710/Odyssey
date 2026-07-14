@@ -1,6 +1,7 @@
 ﻿using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Odyssey.Models.Documents;
+using Odyssey.Services;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ public partial class PlaneViewModel : DocumentToolViewModelBase
     [ObservableProperty]
     public string name;
 
-    public PlaneViewModel(IEventAggregator? eventAggregator = null) : base(eventAggregator)
+    public PlaneViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
     {
         // Astral or world
         Name = string.Empty;
@@ -47,17 +48,7 @@ public partial class PlaneViewModel : DocumentToolViewModelBase
     /// <param name="cr"></param>
     protected override void OnActiveDocumentChanged(CRDocument cr)
     {
-        if (SetMapFile(cr))
-        {
-            RebuildMap();
-        }
-    }
-
-    protected override void OnActiveDocumentClosed(CRDocument cr)
-    {
-        //Clear();
-        // reset to an empty report document
-        SetMapFile(new CRDocument());
+        base.OnActiveDocumentChanged(cr);
         RebuildMap();
     }
 

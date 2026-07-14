@@ -5,6 +5,7 @@ using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Localization;
 using Odyssey.Models.Tools;
+using Odyssey.Services;
 using Prism.Events;
 using System;
 using static Odyssey.Models.Tools.DataProperty;
@@ -40,7 +41,7 @@ public partial class ContainerViewModel : ViewModelBase
 
     protected DataBlock? Region { get; set; }
 
-    public ContainerViewModel(string id, IEventAggregator? eventAggregator = null) : base(id, eventAggregator)
+    public ContainerViewModel(string id, IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(id, eventAggregator, documentService)
     {
         _ownerName = string.Empty;
         _description = string.Empty;

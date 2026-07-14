@@ -2,6 +2,7 @@
 using Odyssey.Models;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Tools;
+using Odyssey.Services;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ public partial class BuildingDetailsViewModel : ContainerViewModel
 
     public ObservableCollection<NodeViewModel> Items { get; }
 
-    public BuildingDetailsViewModel(IEventAggregator? eventAggregator = null) : base(Ids.BuildingDetails, eventAggregator)
+    public BuildingDetailsViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(Ids.BuildingDetails, eventAggregator, documentService)
     {
         Items = Root.Children;
     }

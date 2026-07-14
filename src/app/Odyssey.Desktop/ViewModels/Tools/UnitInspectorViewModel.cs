@@ -2,6 +2,7 @@ using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Odyssey.Events;
 using Odyssey.Models.Documents;
+using Odyssey.Services;
 using Odyssey.ViewModels.Tools;
 using Prism.Events;
 using System;
@@ -16,7 +17,7 @@ public partial class UnitInspectorViewModel : DocumentToolViewModelBase //: Obse
     [ObservableProperty]
     private UnitViewModel? _selectedUnit;
 
-    public UnitInspectorViewModel(IEventAggregator? eventAggregator = null) : base(eventAggregator)
+    public UnitInspectorViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
     {
         //_report = report;
         // subscribe to selection changes

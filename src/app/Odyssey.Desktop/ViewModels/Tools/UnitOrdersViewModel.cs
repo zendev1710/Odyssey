@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.Input;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Tools;
+using Odyssey.Services;
 using Odyssey.TextMate;
 using Odyssey.Views;
 using Prism.Events;
@@ -55,7 +56,7 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
 
     public TextDocument Document { get; set; }
 
-    public UnitOrdersViewModel(IEventAggregator? eventAggregator = null) : base(eventAggregator)
+    public UnitOrdersViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
     {
         // when enabled, next/previous unit commands traverse the explorer view in circular mode, i.e.
         // the previous of the first editable unit is the last matching one, the next of the last editable unit is the first matching one
@@ -178,14 +179,14 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
     /// </summary>
     /// <param name="cr">the report document to link</param>
     /// <returns>true if a new report document has been linked to the view model; otherwise false</returns>
-    protected override bool SetMapFile(CRDocument cr)
+    protected override void OnActiveDocumentChanged(CRDocument cr)
     {
         if (!IsSameDocument(cr) && IsModified)
         {
             // LATER: what about if orders were modified (save file) ?
         }
 
-        return base.SetMapFile(cr);
+        base.OnActiveDocumentChanged(cr);
     }
 
     /// <summary>

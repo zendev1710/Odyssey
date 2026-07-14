@@ -5,6 +5,7 @@ using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Localization;
 using Odyssey.Models.Tools;
+using Odyssey.Services;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
@@ -75,7 +76,7 @@ public partial class RegionInfoViewModel : MessagesViewModel
     private Node? GuardsMessages { get { return _guardsMessages; } }
     private Node? UnitMessages { get { return _unitMessages; } }
 
-    public RegionInfoViewModel(IEventAggregator? eventAggregator = null) : base(eventAggregator)
+    public RegionInfoViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
     {
         // TODO: check if an unseen region can have some messages
         // anyway, handle unseen regions with specific info here, isn't it ?
@@ -85,30 +86,6 @@ public partial class RegionInfoViewModel : MessagesViewModel
         _roadsMessages = null;
         _guardsMessages = null;
         _unitMessages = null;
-    }
-
-    private void Clear()
-    {
-        /*
-        Root.Children.Clear();
-        _regionMessages.Children.Clear();
-        _effectsMessages.Children.Clear();
-        _travelMessages.Children.Clear();
-        _roadsMessages = null;
-        _guardsMessages = null;
-        _unitMessages = null;
-        Root.Children.Add(_regionMessages);
-        Root.Children.Add(_effectsMessages);
-        Root.Children.Add(_travelMessages);
-        */
-        base.Clear();
-    }
-
-    protected override void OnActiveDocumentClosed(CRDocument cr)
-    {
-        Clear();
-        // reset to an empty report document
-        SetMapFile(new CRDocument());
     }
 
     protected override void OnSelectionChanged(ISelectionChange selectionChange)
@@ -135,7 +112,6 @@ public partial class RegionInfoViewModel : MessagesViewModel
 
     private void CollectDataFromRegion(bool anotherRegionSelected, bool anotherUnitSelected)
     {
-        CRDocument cr = GetDocument();
         if (anotherRegionSelected)
         {
             RegionMessages.Children.Clear();
@@ -151,7 +127,7 @@ public partial class RegionInfoViewModel : MessagesViewModel
             RemoveItemIfExists(ref _unitMessages);
         }
 
-        if (!cr.HasActiveFaction())
+        if (!Report.HasActiveFaction())
         {
             return;
         }
@@ -246,12 +222,12 @@ public partial class RegionInfoViewModel : MessagesViewModel
                         {
                             if (block.GetBlockType() == BlockType.DURCHSCHIFFUNG)
                             {
-                                if (!cr.GetShip(ref movingShip, id))
+                                if (!Report.GetShip(ref movingShip, id))
                                 {
                                     Debug.WriteLine($"[REGION-INF] WARNING | Ship with {id} id not found");
                                 }
                             }
-                            else if (!cr.GetUnit(ref movingUnit, id))
+                            else if (!Report.GetUnit(ref movingUnit, id))
                             {
                                 Debug.WriteLine($"[REGION-INF] WARNING | Ship with {id} id not found");
                             }
@@ -275,7 +251,7 @@ public partial class RegionInfoViewModel : MessagesViewModel
                 foreach (int id in guardsIds)
                 {
                     FactionModel? factionModel = null;
-                    if (cr.GetFaction(ref factionModel, id))
+                    if (Report.GetFaction(ref factionModel, id))
                     {
                         _ = AppendItem(GuardsMessages!, factionModel!.Name, null);
                     }
@@ -302,7 +278,7 @@ public partial class RegionInfoViewModel : MessagesViewModel
         {
             // Search for first MESSAGE block beginning from ActiveFaction block
             // TODO: check if it's what that should be done
-            DataBlock? firstBlock = cr.ActiveFaction.Data.GetNextBlock();
+            DataBlock? firstBlock = Report.ActiveFaction.Data.GetNextBlock();
             DataBlock? firstMessageBlock = null;
             for (var block = firstBlock; block != null; block = block.GetNextBlock())
             {

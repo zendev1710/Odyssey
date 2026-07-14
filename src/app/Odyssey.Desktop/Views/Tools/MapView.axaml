@@ -9,15 +9,28 @@
              mc:Ignorable="d"
              d:DesignWidth="300" d:DesignHeight="400">
   <Grid RowDefinitions="Auto,*">
-    <!-- Zoom Slider -->
-    <Slider Minimum="10"
+      <!-- IsVisible="{Binding HasDocument}" -->
+    <StackPanel Orientation="Horizontal" IsVisible="{Binding HasDocument}">
+      <!-- Button Content="Zoom In" Command="{Binding ZoomInCommand}" Margin="0,0,4,0" / -->
+      <!-- Button Content="Zoom Out" Command="{Binding ZoomOutCommand}" / -->
+      <!-- Zoom Slider -->
+      <Slider Minimum="10"
             Maximum="100"
             Value="{Binding ElementName=HexMap, Path=HexSize, Mode=TwoWay}"
             TickFrequency="5"
             TickPlacement="BottomRight"
             Margin="8"
-            ToolTip.Tip="Zoom" />
-
+            ToolTip.Tip="Zoom" 
+      />
+      <ComboBox x:Name="PlanesComboBox"
+            ItemsSource="{Binding Planes}"
+            SelectedItem="{Binding SelectedPlane, Mode=TwoWay}"
+            Width="120"
+            Margin="8,0,0,0"
+            IsVisible="{Binding HasSeveralPlanes}"
+            ToolTip.Tip="Select plane"
+      />
+    </StackPanel>
     <!-- Map with ScrollViewer -->
     <ScrollViewer x:Name="MapScrollViewer"
                   Grid.Row="1"

@@ -6,6 +6,7 @@ using Dock.Model.Mvvm.Controls;
 using Odyssey.Core.Services;
 using Odyssey.Models.Localization;
 using Odyssey.Models.Tools;
+using Odyssey.Services;
 using Odyssey.ViewModels.Docks;
 using Odyssey.ViewModels.Tools;
 using Prism.Events;
@@ -18,6 +19,7 @@ namespace Odyssey.ViewModels;
 public class DockFactory : Factory
 {
     private readonly object _context;
+    private readonly IActiveDocumentService? _documentService;
     private readonly IEventAggregator? _eventAggregator;
     private IRootDock? _rootDock;
     private IDocumentDock? _documentDock;
@@ -39,12 +41,16 @@ public class DockFactory : Factory
 
     protected IEventAggregator? EventAggregator { get { return _eventAggregator; } }
 
-    public const string Root = "Root";
+    protected IActiveDocumentService? DocumentService { get { return _documentService; } }
 
-    public DockFactory(IEventAggregator? eventAggregator, object context)
+    public const string RootDockId = "Root";
+    public const string DocumentDockId = "Files";
+
+    public DockFactory(IEventAggregator? eventAggregator, IActiveDocumentService? documentService, object context)
     {
         // Commenting the following line will cause all views to stay empty, due to no publishing nor receiving event from event aggregation 
         _eventAggregator = eventAggregator;
+        _documentService = documentService;
         _context = context;
         // Close action just hide dock
         HideToolsOnClose = true;
@@ -55,6 +61,7 @@ public class DockFactory : Factory
     public override IRootDock CreateLayout()
     {
         Debug.WriteLine("[DOCK-FACTO] CreateLayout...");
+        IDocument? doc = this.GetCurrentDocument();
 
         // As HideToolsOnClose was set to true, close action just hide a tool, that can be restored
         bool canCloseTool = true;
@@ -235,8 +242,8 @@ public class DockFactory : Factory
             )
         };
 
-        var searchView = new SearchViewModel(EventAggregator) { Id = Ids.Search, Title = "Find" };
-        var configurationView = new ConfigurationViewModel(EventAggregator) { Id = Ids.Configuration, Title = "Configuration" };
+        var searchView = new SearchViewModel(DocumentService) { Id = Ids.Search, Title = "Find" };
+        var configurationView = new ConfigurationViewModel(DocumentService) { Id = Ids.Configuration, Title = "Configuration" };
 
         // The home view is the default root view, embedding all docking windows
         var homeView = new HomeViewModel
@@ -296,7 +303,7 @@ public class DockFactory : Factory
     {
         Debug.WriteLine("[DOCK-FACTO] InitLayout...");
 
-        // ContextLocator is used by FactoryBase::GetContext("<context-id>") 
+        // ContextLocator is used by FactoryBase::GetContext(<context-id>) 
         ContextLocator = new Dictionary<string, Func<object?>>
         {
             // TODO: fill all entries
@@ -317,9 +324,8 @@ public class DockFactory : Factory
 
         DockableLocator = new Dictionary<string, Func<IDockable?>>()
         {
-            [Root] = () => _rootDock,
-            ["Documents"] = () => _documentDock,
-            ["Files"] = () => _documentDock,
+            [RootDockId] = () => _rootDock,
+            [DocumentDockId] = () => _documentDock,
             [Ids.Map] = () => _mapViewModel,
             [Ids.MiniMap] = () => _miniMapViewModel,
             [Ids.Explorer] = () => _explorerViewModel,

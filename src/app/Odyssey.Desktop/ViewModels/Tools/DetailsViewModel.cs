@@ -1,6 +1,7 @@
 ﻿using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Odyssey.Models.Documents;
+using Odyssey.Services;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
@@ -25,12 +26,12 @@ public partial class DetailsViewModel : DocumentToolViewModelBase
     [ObservableProperty]
     private ViewModelBase? _currentPage;
 
-    public DetailsViewModel(IEventAggregator? eventAggregator = null) : base(eventAggregator)
+    public DetailsViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
     {
-        _noDetailsViewModel = new NoDetailsViewModel(eventAggregator);
-        _unitDetailsViewModel = new UnitDetailsViewModel(eventAggregator);
-        _buildingDetailsViewModel = new BuildingDetailsViewModel(eventAggregator);
-        _shipDetailsViewModel = new ShipDetailsViewModel(eventAggregator);
+        _noDetailsViewModel = new NoDetailsViewModel(eventAggregator, documentService);
+        _unitDetailsViewModel = new UnitDetailsViewModel(eventAggregator, documentService);
+        _buildingDetailsViewModel = new BuildingDetailsViewModel(eventAggregator, documentService);
+        _shipDetailsViewModel = new ShipDetailsViewModel(eventAggregator, documentService);
         _currentPage = _noDetailsViewModel;
     }
 
@@ -43,7 +44,7 @@ public partial class DetailsViewModel : DocumentToolViewModelBase
     {
         // Exclude this selector from selection change events to avoid reentrancy issues
         List<string> selectorIdsExcludeFilter = [Id];
-        List<string> selectorIdsIncludeFilter = [Ids.Explorer];
+        List<string> selectorIdsIncludeFilter = [Ids.Explorer, "main"];
         if (ShouldIgnoreSelectionChangedEvent(selectionChange, selectorIdsIncludeFilter, selectorIdsExcludeFilter))
         {
             return;
@@ -74,15 +75,5 @@ public partial class DetailsViewModel : DocumentToolViewModelBase
         ISelection sel = selectionChange.Selection;
         SetSelection(sel);
         CurrentPage = page;
-    }
-
-    /// <summary>
-    /// Links the current report document to the view model.
-    /// </summary>
-    /// <param name="cr">the report document to link</param>
-    /// <returns>true if the report document has been linked to the view model and has data; otherwise false</returns>
-    protected override bool SetMapFile(CRDocument cr)
-    {
-        return base.SetMapFile(cr);
     }
 }

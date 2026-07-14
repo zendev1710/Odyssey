@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.Input;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Localization;
+using Odyssey.Services;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
@@ -67,7 +68,7 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
     private bool LoadingBookmarksInProgress { get; set; }
 
 
-    public BookmarksViewModel(IEventAggregator? eventAggregator=null) : base(eventAggregator)
+    public BookmarksViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
     {
         Bookmarks.CollectionChanged += (_, _) => HasBookmark = Bookmarks.Count > 0;
     }
@@ -107,17 +108,9 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
     // Called when the active document changes (CRDocument loaded)
     protected override void OnActiveDocumentChanged(CRDocument cr)
     {
-        if (SetMapFile(cr))
-        {
-            AutoLoadBookmarksForDocument(cr);
-        }
-    }
-
-    protected override void OnActiveDocumentClosed(CRDocument cr)
-    {
+        base.OnActiveDocumentChanged(cr);
         ClearAll();
-        // reset to an empty report document
-        SetMapFile(new CRDocument());
+        AutoLoadBookmarksForDocument(cr);
     }
 
     private void AddBookmark(DataBlock dt)
@@ -239,7 +232,7 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
                 var type = el.Attribute("type")?.Value;
                 var id = el.Attribute("id")?.Value;
                 var name = el.Attribute("name")?.Value;
-                var model = BookmarkModel.FromXml(type, id, name, GetDocument());
+                var model = BookmarkModel.FromXml(type, id, name, Report);
                 if (model != null)
                 {
                     bookmarks.Add(model);

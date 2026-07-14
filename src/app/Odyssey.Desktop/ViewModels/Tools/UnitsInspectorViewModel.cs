@@ -1,8 +1,9 @@
-using System;
-using CommunityToolkit.Mvvm.ComponentModel;
-using Prism.Events;
-using Odyssey.Models.Documents;
 using Avalonia.Controls;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Odyssey.Models.Documents;
+using Odyssey.Services;
+using Prism.Events;
+using System;
 
 namespace Odyssey.ViewModels.Tools
 {
@@ -17,31 +18,11 @@ namespace Odyssey.ViewModels.Tools
 
         // Parameterless ctor for design time
 
-        public UnitsInspectorViewModel(IEventAggregator? eventAggregator = null) : base(eventAggregator)
+        public UnitsInspectorViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
         {
             // create child viewmodels; they will get the real Report later via SetMapFile
             StripViewModel = new UnitStripViewModel(eventAggregator);
             InspectorViewModel = new UnitInspectorViewModel(eventAggregator);
-        }
-
-        /// <summary>
-        /// Propagate document to children when the active document changes.
-        /// </summary>
-        protected override bool SetMapFile(CRDocument cr)
-        {
-            bool changed = base.SetMapFile(cr);
-            /*
-            // forward to children (protected method is accessible because we're a derived class)
-            if (StripViewModel != null)
-            {
-                StripViewModel.SetMapFile(cr);
-            }
-            if (InspectorViewModel != null)
-            {
-                InspectorViewModel.SetMapFile(cr);
-            }
-            */
-            return changed;
         }
 
         /// <summary>

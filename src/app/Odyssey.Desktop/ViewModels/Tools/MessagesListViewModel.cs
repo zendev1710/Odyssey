@@ -5,6 +5,7 @@ using Odyssey.Events;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Tools;
+using Odyssey.Services;
 using Prism.Events;
 using System;
 using System.Collections.ObjectModel;
@@ -19,11 +20,8 @@ public abstract partial class MessagesListViewModel : DocumentToolViewModelBase
 
     public ObservableCollection<MessageEntry> Items { get; } = [];
 
-    protected MessagesListViewModel(IEventAggregator? eventAggregator = null) : base(eventAggregator)
+    protected MessagesListViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
     {
-        // LATER: use filter on filePath to update the list only if different
-        EventAggregator?.GetEvent<ReportDocumentChangedEvent>().Subscribe(OnEventActiveDocumentChanged, ThreadOption.UIThread);
-        //Items = new ObservableCollection<MessageEntry>();
         SelectedItem = null;
     }
 
@@ -38,16 +36,6 @@ public abstract partial class MessagesListViewModel : DocumentToolViewModelBase
         RevealInExplorer(SelectedItem);
     }
 
-    private void OnEventActiveDocumentChanged(CRDocument cr)
-    {
-        OnActiveDocumentChanged(cr);
-    }
-
-    protected override void OnActiveDocumentChanged(CRDocument cr)
-    {
-        SetMapFile(cr);
-    }
-
     private void RevealInExplorer(MessageEntry? messageEntry)
     {
         DataBlock? item = messageEntry?.Selection?.GetDefaultTarget();
@@ -58,6 +46,7 @@ public abstract partial class MessagesListViewModel : DocumentToolViewModelBase
             SendSelectionChangedEvent(sel);
         }
     }
+
     protected void Clear()
     {
         Items.Clear();

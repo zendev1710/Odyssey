@@ -1,18 +1,19 @@
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Dock.Model.Controls;
+using Dock.Model.Mvvm.Core;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Localization;
-using Dock.Model.Controls;
-using Dock.Model.Mvvm.Core;
+using Odyssey.Search;
+using Odyssey.Services;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Odyssey.Search;
 using static Odyssey.Models.Tools.DataProperty;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -78,7 +79,7 @@ namespace Odyssey.ViewModels
 
         public ObservableCollection<string> Domains => _domains ??= [];
 
-        public SearchViewModel(IEventAggregator? eventAggregator = null): base(eventAggregator)
+        public SearchViewModel(IActiveDocumentService? documentService = null) : base(documentService)
         {
             _isCaseSensitive = true;
             _isMatchingWholeWord = false;

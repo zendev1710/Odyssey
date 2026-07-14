@@ -92,10 +92,8 @@ public partial class UnitDetailsViewModel : ViewModelBase
 
     [ObservableProperty]
     private int _weight;
-    public UnitDetailsViewModel() : this(null)
-    {
-    }
-    public UnitDetailsViewModel(/*ISelectionService selectionService*/IEventAggregator? eventAggregator) : base(Ids.UnitDetails, eventAggregator)
+
+    public UnitDetailsViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null/*, ISelectionService selectionService*/) : base(Ids.UnitDetails, eventAggregator, documentService)
     {
         Items = Root.Children;
 

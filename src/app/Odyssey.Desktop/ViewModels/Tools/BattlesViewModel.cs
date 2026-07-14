@@ -1,18 +1,19 @@
-﻿using Odyssey.Models.Data;
-using Odyssey.Models.Documents;
-using System.Collections.Generic;
-using System.Diagnostics;
-using Prism.Events;
-using Avalonia.Controls;
-using System;
-using System.Collections.ObjectModel;
-using Odyssey.Models.Tools;
+﻿using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
-using System.Linq;
 using CommunityToolkit.Mvvm.Input;
+using Odyssey.Models;
+using Odyssey.Models.Data;
+using Odyssey.Models.Documents;
+using Odyssey.Models.Tools;
+using Odyssey.Services;
+using Prism.Events;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 using static Odyssey.Models.Documents.CRDocument;
 using static Odyssey.Models.Documents.SimpleItemSelection;
-using Odyssey.Models;
 
 namespace Odyssey.ViewModels.Tools;
 
@@ -22,7 +23,7 @@ public partial class BattlesViewModel : DocumentToolViewModelBase
 
     public ObservableCollection<BattleModel> Battles { get; } = [];
 
-    public BattlesViewModel(IEventAggregator? eventAggregator = null) : base(eventAggregator)
+    public BattlesViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
     {
         Clear();
     }
@@ -47,17 +48,9 @@ public partial class BattlesViewModel : DocumentToolViewModelBase
     /// <param name="cr">The new active <see cref="CRDocument"/> instance.</param>
     protected override void OnActiveDocumentChanged(CRDocument cr)
     {
-        if (SetMapFile(cr))
-        {
-            CollectData();
-        }
-    }
+        base.OnActiveDocumentChanged(cr);
 
-    protected override void OnActiveDocumentClosed(CRDocument cr)
-    {
-        Clear();
-        // reset to an empty report document
-        SetMapFile(new CRDocument());
+        CollectData();
     }
 
     /// <summary>

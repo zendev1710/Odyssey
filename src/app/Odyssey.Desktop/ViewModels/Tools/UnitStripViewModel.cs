@@ -1,11 +1,12 @@
-using System;
-using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Odyssey.Events;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
+using Odyssey.Services;
 using Prism.Events;
+using System;
+using System.Collections.ObjectModel;
 using static Odyssey.Models.Documents.CRDocument;
 
 namespace Odyssey.ViewModels.Tools;
@@ -21,7 +22,7 @@ public partial class UnitStripViewModel : DocumentToolViewModelBase
     // Public command property exposed to the view
     public IRelayCommand<UnitViewModel?> SelectUnitCommand { get; }
 
-    public UnitStripViewModel(IEventAggregator? eventAggregator) : base(eventAggregator)
+    public UnitStripViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
     {
         // Initialize command so XAML can bind to SelectUnitCommand
         SelectUnitCommand = new RelayCommand<UnitViewModel?>(SelectUnit);

@@ -10,7 +10,9 @@ using Dock.Model;
 using Dock.Model.Controls;
 using Dock.Model.Core;
 using Dock.Model.Core.Events;
+using Dock.Model.Mvvm.Controls;
 using Dock.Serializer;
+using Dock.Settings;
 using Odyssey.Core.Services;
 using Odyssey.Events;
 using Odyssey.Extensions;
@@ -18,12 +20,12 @@ using Odyssey.Help;
 using Odyssey.Models.Dal;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
+using Odyssey.Services;
 using Odyssey.Settings;
 using Odyssey.Utils;
 using Odyssey.ViewModels.Documents;
 using Odyssey.ViewModels.Tools;
 using Prism.Events;
-using PrismEventAggregator = Prism.Events.EventAggregator;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -35,6 +37,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using PrismEventAggregator = Prism.Events.EventAggregator;
 
 namespace Odyssey.ViewModels;
 
@@ -67,6 +70,9 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
     [ObservableProperty]
     private string? _gameDate;
+
+    [ObservableProperty]
+    private string? _gameName; // Name of the game (from report); usually Eressea or E3
 
     [ObservableProperty]
     private string? _reportName;
@@ -149,6 +155,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     ];
 
     private readonly IFactory _factory;
+    private readonly IActiveDocumentService _activeDocumentService;
     private readonly IEventAggregator? _eventAggregator;
     private IRootDock? _layout;
     private string _globalStatus = "Global: (none)";
@@ -202,7 +209,9 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         // TODO: check with "if (!Design.IsDesignMode)" if we do not want to do some actions in design mode
 
         _eventAggregator = PrismEventAggregator.Current;
-        _factory = new DockFactory(_eventAggregator, new CRDocument());
+        _activeDocumentService = ServiceLocator.ActiveDocumentService;
+        _activeDocumentService.ActiveDocumentChanged += OnActiveDocumenChanged;
+        _factory = new DockFactory(_eventAggregator, _activeDocumentService, _activeDocumentService.ActiveDocument);
         _isFullscreen = false;
         bool hideInProgressFeatures = GlobalSettings.Get<bool>(GlobalSettings.HIDE_IN_PROGRESS_FEATURES);
         _enableSearchFeature = !hideInProgressFeatures;
@@ -285,6 +294,13 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         }
 
         //OpenRecentFileCommand = new RelayCommand<string>(OpenRecentFile);
+        
+        // DockSettings.CloseFloatingWindowsOnMainWindowClose
+        // DockSettings.EnableDiagnosticsLogging
+        // DockSettings.UseFloatingDockAdorner
+        // DockSettings.UsePinnedDockWindow
+        // DockSettings.DocumentWindowDragScope
+        // DocumentLayoutMode.Tabbed (not MDI)
     }
 
     private void InitializeDockState()
@@ -307,12 +323,6 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         // Perform the heavy loading
         OpenDocument(pathname);
     }
-
-    //[RelayCommand]
-    // private void OpenRecentFile(string pathname)
-    // {
-    //     OpenDocument(pathname);
-    // }
 
     public void OpenInitialDocumentIfNeeded()
     {
@@ -474,239 +484,92 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         }
     }
 
-    /// <summary>
-    /// Publish a ActiveDocumentChangedEvent to all ViewModel subscribers.
-    /// /// handle(this, FXSEL(SEL_COMMAND, ID_UPDATE), &selection);
-    /// </summary>
-    private void NotifyReportHasChanged(CRDocument cr)
-    {
-        EventAggregator?.GetEvent<ReportDocumentChangedEvent>().Publish(cr);
-    }
-
-    private void ResetPlanes()
+    private void CollectPlanes()
     {
         Planes.Clear();
-        // A dataBlock in a CRDocument contains a plane id for each plane
-        // TODO: add Plane Id property
-        Planes.Add(new WorldPlane("World", PlaneType.WORLD)); // plane matching an empty (map) world
+        Planes.Add(new WorldPlane(PlaneType.WORLD));
+    }
+
+    private void OnActiveDocumenChanged(CRDocument report)
+    {
+        OnActiveReportDocumentChanged(report);
+    }
+
+    private void OnActiveReportDocumentChanged(CRDocument report)
+    {
+        CollectGlobalReportInformation(report);
+        CollectPlanes();
+
+        if (report.IsEmpty())
+        {
+            // TODO
+            //sel.Clear();
+            return;
+        }
+
+        // TODO: Selection id and type should have been saved before (region Id as an automatic bookmark), then cleared
+        if (GlobalSettings.Get<bool>(GlobalSettings.EXPLORER_SELECT_LAST_ACTIVE_REGION_ON_REPORT_OPENING))
+        {
+            // TODO: get active region from CRDocument and set as selection
+        }
+
+        ///////////////////////////// 
+
+        ISelection sel = Selection ?? new SimpleItemSelection(report, 0, 0);
+        // checkCommands();
+
+        /*
+        if (!sel.IsSelected(ItemTypes.REGION | ItemTypes.UNKNOWN_REGION))
+        {
+             sel.SetUnknownRegion();
+        }
+        */
+
+        Selection = sel;
+
+        OnReportChange(sel, report);
+        SendSelectionChangedEvent(Selection!);
     }
 
     private void OnReportDocumentLoaded(CRDocument report)
     {
         if (HasReport(out CRDocument? previousReport))
         {
-            // Send event to be able to remove previous report global data
-            EventAggregator?.GetEvent<ActiveDocumentClosedEvent>().Publish(previousReport!);
-        }
-
-        UpdateReportInformation(report);
-        ResetPlanes();
-
-        // TODO: Selection should have been saved before (region Id as an automatic bookmark), then cleared
-        if (GlobalSettings.Get<bool>(GlobalSettings.EXPLORER_SELECT_LAST_ACTIVE_REGION_ON_REPORT_OPENING))
-        {
-            // TODO: get active region from CRDocument and set as selection
+            // TODO: maybe it should be done before entering here
+            _activeDocumentService.ClearDocument();
         }
 
         ISelection sel = Selection ?? new SimpleItemSelection(report, 0, 0);
-        // map changed, let selection function handle this
-        if (report.IsEmpty())
-        {
-            // TODO
-            //sel.Clear();
-        }
-        else
-        {
-            /*
-            // LATER: retrive and get this information from the report
-            // notify info dialog of new game type
-            string name_of_game;
-            name_of_game = report.blocks().front().Value("Spiel");
-            if (name_of_game.empty())
-                name_of_game = "default";
-            //checkCommands();
-            //infodlg.setGame(name_of_game);
-            */
-
-            // get info about active faction
-            if (report.HasActiveFaction())
-            {
-                //DataBlock? block = report.GetActiveFaction();
-
-                // write faction statistics into faction menu
-                //string name = block.GetValue(BlockType.FACTIONNAME);
-                //string id = block.GetId();
-
-                //menu.name.setText(name + " (" + id + ")");
-
-                /*
-                string race_type = block.Value(TYPE_TYPE);
-                string prefix = block.Value("typprefix");
-                if (prefix.length() && race_type.length())
-                {
-                    race_type[0] = (char)tolower(race_type[0]);
-                    race_type = prefix + race_type;
-                }
-                */
-                // string costs = block.Value("Rekrutierungskosten");
-
-                //menu.type.setText(race_type + " (recruits: " + costs + " Silver)");
-
-                /*
-                string magic = block.Value("Magiegebiet");
-                if (magic.length())
-                    magic[0] = (char)toupper(magic[0]);
-
-                menu.magic.setText("Magic area: " + magic);
-                */
-
-                /*
-                string email = block.Value("Email");
-
-                menu.email.setText("eMail: " + email);
-                */
-                /*
-                string fac_number = block.Value(Strings.DE_FACTION_PEOPLE_NUMBER);
-                string fac_heroes = block.Value("heroes");
-                string fac_maxheroes = block.Value("max_heroes");
-
-                if (fac_heroes.length() || fac_maxheroes.length())
-                {
-                    if (!fac_heroes.length()) fac_heroes = "0";
-                    menu.number.setText(fac_number + " people, of it " + fac_heroes + " Heroes (max. " + fac_maxheroes + ")");
-                }
-                else
-                    menu.number.setText(fac_number + " people");
-                */
-                /*
-                int points = block.valueInt("Punkte");
-                int average = block.valueInt("Punktedurchschnitt");
-                if (points || average)
-                {
-                    float f_points = (float)points;
-                    float f_average = (float)average;
-
-                    string percent = stringVal(int(f_points * 100 / f_average));
-
-                    menu.points.setText("Points: " + stringVal(points) + " (" + percent + "% from " + stringVal(average) + ")");
-                    menu.points.show();
-                }
-                else
-                {
-                    menu.points.hide();
-                }
-                */
-                /*
-                int age = block.ValueInt("age");
-                if (age != 0)
-                {
-                    //menu.age.setText("Faction age: " + stringVal(age) + " Rounds");
-                    //menu.age.show();
-                }
-                else
-                {
-                    //menu.age.hide();
-                }
-                */
-                // list faction pool
-                //bool itemsinpool = false;
-
-                /*
-                while (menu.poolnoitems.getNext())
-                {
-                    delete menu.poolnoitems.getNext();
-                }
-                */
-
-                //++block;
-                /*
-                if (block.GetType() == BlockType.ITEMS)
-                {
-
-                    DataKey.list_type itemlist = block.GetData();
-
-                    for (datakey itor = itemlist.begin(); itor != itemlist.end(); itor++)
-                    {
-                        string label; label.format("%s %s", itor.Value().text(), itor.GetKeyFromType().text());
-
-                        MenuCommand* cmd = new MenuCommand(menu.factionpool, label);
-                        cmd.create();
-
-                        itemsinpool = true;
-                    }
-                }
-                */
-
-                /*
-                if (itemsinpool)
-                    menu.poolnoitems.hide();
-                else
-                {
-                    menu.poolnoitems.show();
-                }
-                */
-
-                // Iterators may be pointing to blocks of the previous report, point to the current report instead
-                Debug.WriteLine("[MAINWINDOW] GetWindow - BEGIN");
-                //sel.UpdateFromReport(report);
-                //sel.RegionsSelected.Clear();
-            }
-
-            // LATER - ADD PLANES MANAGEMENT
-            // get all planes in report
-            /*
-            HashSet<int> planesSet = []; // what planes are in the report
-            foreach (DataBlock r in report.Blocks)
-            {
-                // handle only regions
-                if (r.GetType() != BlockType.REGION)
-                {
-                    continue;
-                }
-
-                // insert plane into set
-                int p = r.GetId();
-                if (p != 0 && planesSet.Insert(p))
-                {
-                    AddPlane(p);
-                }
-            }
-            */
-
-            //planes->setNumVisible(planes->getNumItems());
-
-            /*
-            if (!sel.IsSelected(ItemTypes.REGION | ItemTypes.UNKNOWN_REGION))
-            {
-                 sel.SetUnknownRegion();
-            }
-            */
-        }
-
         Selection = sel;
 
         OnReportChange(sel, report);
-        NotifyReportHasChanged(report);
+        _activeDocumentService.SetActiveDocument(report);
 
         SendSelectionChangedEvent(Selection!);
+    }
 
-        /*
-        searchdlg->setMapFile(report);
-        tradePanel->setMapFile(report);
-        statistics->setMapFile(report);
-        statsPanel->setMapFile(report);
-        regionPanel->setMapFile(report);
-        mathbar->setMapFile(report);
-        map->setMapFile(report);
-        */
-
-        // Update other viewModels and views
-        //NotifyMapHasChanged(activeDocument);
+    private bool FileViewModelExists(string pathname)
+    {
+        var files = _factory.GetDockable<IDocumentDock>(DockFactory.DocumentDockId);
+        if (files is { })
+        {
+            // TODO: Check if a FileViewModel with the same Id and pathname already exists in the document dock
+            /*
+            foreach (var dockable in files)
+            {
+                if (dockable is FileViewModel fvm && fvm.Path == pathname)
+                {
+                    return true;
+                }
+            }
+            */
+        }
+        return false;
     }
 
     private void AddFileViewModel(FileViewModel fileViewModel)
     {
-        var files = _factory.GetDockable<IDocumentDock>("Files");
+        var files = _factory.GetDockable<IDocumentDock>(DockFactory.DocumentDockId);
         if (Layout is { } && files is { })
         {
             _factory.AddDockable(files, fileViewModel);
@@ -721,7 +584,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     /// <returns> the file view model for the active document; null if no document is opened.</returns>
     private bool GetActiveFileViewModel(out FileViewModel? fileViewModel, out bool isModified)
     {
-        var files = _factory.GetDockable<IDocumentDock>("Files");
+        var files = _factory.GetDockable<IDocumentDock>(DockFactory.DocumentDockId);
         fileViewModel = files?.ActiveDockable as FileViewModel;
         bool hasActive = fileViewModel is not null;
         isModified = hasActive ? fileViewModel!.IsModified : false;
@@ -894,31 +757,45 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         return OpenDocument(pathname, fileType, out fileViewModel);
     }
 
+    private void UpdateRecentFiles(string pathname)
+    {
+        // Update RecentFilesManager (handles duplicates and persistence)
+        _recentFilesManager.AddFile(pathname);
+        // Update UI collection
+        // Remove if already present
+        int existingIndex = RecentFiles.IndexOf(pathname);
+        if (existingIndex >= 0)
+            RecentFiles.RemoveAt(existingIndex);
+        // Insert at top
+        RecentFiles.Insert(0, pathname);
+        // Limit to 10 items
+        // TODO: make this limit configurable
+        while (RecentFiles.Count > 10)
+            RecentFiles.RemoveAt(RecentFiles.Count - 1);
+    }
+
     private bool OpenDocument(string pathname, DocumentType fileType, out FileViewModel? fileViewModel)
     {
+        fileViewModel = null;
+        if (FileViewModelExists(pathname))
+        {
+            Debug.WriteLine($"[MAINWINDOW] WARNING | OpenDocument - '{pathname}' is already opened");
+            return false;
+        }
+
         // TODO: in case a CR should be opened here, remove previous CR document data if exist
         // See OnDockableClosed
-        fileViewModel = null;
         try
         {
             fileViewModel = OpenFileViewModel(pathname, fileType);
             if (fileViewModel is not null)
             {
                 AddFileViewModel(fileViewModel);
-
-                // Update RecentFilesManager (handles duplicates and persistence)
-                _recentFilesManager.AddFile(pathname);
-                // Update UI collection
-                // Remove if already present
-                int existingIndex = RecentFiles.IndexOf(pathname);
-                if (existingIndex >= 0)
-                    RecentFiles.RemoveAt(existingIndex);
-                // Insert at top
-                RecentFiles.Insert(0, pathname);
-                // Limit to 10 items
-                while (RecentFiles.Count > 10)
-                    RecentFiles.RemoveAt(RecentFiles.Count - 1);
-                OnReportDocumentLoaded((fileViewModel.Document as CRDocument)!);
+                UpdateRecentFiles(pathname);
+                if (fileType.IsReportType())
+                {
+                    OnReportDocumentLoaded((fileViewModel.Document as CRDocument)!);
+                }
                 return true;
             }
         }
@@ -1133,7 +1010,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         // Close all docked documents before serializing the layout state.
         // This prevents DockSerializer from persisting domain object references
         // (DataBlock, Bookmarks, Explorer selections, ...) that are lost on restore.
-        var filesDock = _factory.GetDockable<IDocumentDock>("Files");
+        var filesDock = _factory.GetDockable<IDocumentDock>(DockFactory.DocumentDockId);
         
         List<FileViewModel> filesToClose = [];
         if (filesDock?.VisibleDockables != null)
@@ -1149,7 +1026,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
         foreach (var fvm in filesToClose)
         {
-            _factory?.RemoveDockable(fvm);
+            _factory?.RemoveDockable(fvm, false);
         }
 
         // Save the layout to the user-selected file path.
@@ -1420,16 +1297,6 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         }
 
         return loaded;
-    }
-
-    private FileViewModel? OpenFileViewModel(string pathname, bool reportOnly)
-    {
-        // open only if it's a report file
-        if (IsSupportedFileType(pathname, out DocumentType fileType) && (!reportOnly || fileType.IsReportType()))
-        {
-            return OpenFileViewModel(pathname, fileType);
-        }
-        return null;
     }
 
     private FileViewModel? OpenFileViewModel(string pathname, DocumentType fileType)
@@ -1723,19 +1590,19 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     {
         if (args.Dockable is FileViewModel fileViewModel && fileViewModel.DocumentType.IsReportType())
         {
-            UpdateReportInformation(new CRDocument());
-            // Note: fileViewModel.Document is not used at this moment in subscribers (OnActiveDocumentClosed)
-            EventAggregator?.GetEvent<ActiveDocumentClosedEvent>().Publish((fileViewModel.Document as CRDocument)!);
+            _activeDocumentService.ClearDocument();
         }
     }
 
-    private void UpdateReportInformation(CRDocument report)
+    private void CollectGlobalReportInformation(CRDocument report)
     {
         HasDocument = report.HasData();
         FactionName = report.GetActiveFactionName();
         ReportName = HasDocument ? report.Name : string.Empty;
+
         GameTurn = HasDocument ? $"[{report.Turn}]" : string.Empty;
         GameDate = HasDocument ? DateUtils.GetGameDateLabel(report.Turn) : string.Empty;
+        GameName = HasDocument ? report.GetGameName() : string.Empty;
     }
 
     private static void DebugFactoryEvents(IFactory factory)
