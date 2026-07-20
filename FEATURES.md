@@ -13,6 +13,13 @@
 
 ## User interface
 
+### Map view
+
+- [x] Center map on the selected region (F8)
+- [x] Center map globally [Ctrl+F8
+- [x] Region selection on mouse left button click release (if in same region as mouse down)
+- [x] Map scrolling using mouse left button down and move
+
 ### Settings system
 
 TO BE FINISHED.
@@ -30,6 +37,7 @@ TO BE FINISHED.
 - [x] Unit details view
 - [x] Explorer view
 - [x] Region properties view
+- [ ] Achieve missing translations displayed -- xxx -- in the UI, translte \[FR\] and \[DE\] messages
 
 ### Tooltips system
 
@@ -134,9 +142,14 @@ Here are main missing features compared to CsMapFx:
 
 ## Known issues
 
-- Overview : tree badly sorted according to the content. In a region node, it should be :
+- Overview: tree badly sorted according to the content. In a region node, it should be :
   - Buildings
   - Ships
   - Active Factions
   - Allied Factions
   - Other Factions
+
+- Map view: 
+  - selected region is badly handled when switching between planes
+  - [x] Region selection using click on map should not recenter the new selected region
+  - drag and drop of the map view (using title bar) hangs
