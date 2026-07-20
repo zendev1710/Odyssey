@@ -148,9 +148,9 @@
 	<PackageReference Include="Dock.Model.Mvvm" Version="12.0.0.2" />
     <PackageReference Include="Dock.Avalonia.Themes.Simple" Version="12.0.0.2" />
     <PackageReference Include="Dock.Serializer" Version="11.3.0.12" />
-    <PackageReference Include="LiveMarkdown.Avalonia" Version="2.2.0" />
+    <PackageReference Include="LiveMarkdown.Avalonia" Version="2.2.1" />
     <PackageReference Include="Markdown.Avalonia" Version="11.0.3" />
-    <PackageReference Include="Microsoft.Win32.SystemEvents" Version="10.0.9" />
+    <PackageReference Include="Microsoft.Win32.SystemEvents" Version="10.0.10" />
     <PackageReference Include="Prism.Avalonia" Version="9.0.537.11130" />
     <PackageReference Include="Prism.DryIoc.Avalonia" Version="9.0.537.11130" />
     <PackageReference Include="Projektanker.Icons.Avalonia" Version="9.6.2" />
@@ -164,6 +164,9 @@
   <ItemGroup>
     <Compile Update="Views\HelpView.axaml.cs">
       <DependentUpon>HelpView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\WorkspaceView.axaml.cs">
+      <DependentUpon>WorkspaceView.axaml</DependentUpon>
     </Compile>
     <Compile Update="Views\Tools\MapView.axaml.cs">
       <DependentUpon>MapView.axaml</DependentUpon>

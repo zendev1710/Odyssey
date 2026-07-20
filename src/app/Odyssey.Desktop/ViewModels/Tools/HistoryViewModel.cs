@@ -60,9 +60,9 @@ public partial class HistoryViewModel : DocumentToolViewModelBase
         RevealSelection(newValue);
     }
 
-    protected override void OnActiveDocumentChanged(CRDocument cr)
+    protected override void OnActiveDocumentChanged(CRDocument report)
     {
-        base.OnActiveDocumentChanged(cr);
+        base.OnActiveDocumentChanged(report);
         ClearItems();
     }
 

@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Odyssey.Extensions;
 
 namespace Odyssey.Models.Data
 {
@@ -772,8 +773,8 @@ namespace Odyssey.Models.Data
             string name = GetUIName();
             if (Type == BlockType.REGION || Type == BlockType.BATTLE)
             {
-                int id = GetId();
-                if (id > 0)
+                int id = Id;
+                if (id.IsSpecialPlane())
                 {
                     // Plane name is part of name for regions and battles
                     return $"{name} ({X}, {Y}, {WorldPlane.GetName((PlaneType)id)})";

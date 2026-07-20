@@ -36,9 +36,10 @@ public partial class MiniMapViewModel : DocumentToolViewModelBase
         SelectedBookmarkText = newValue >= 0 ? MiniMap[newValue].Content : string.Empty;
     }
     */
-    protected override void OnActiveDocumentChanged(CRDocument cr)
+    protected override void OnActiveDocumentChanged(CRDocument report)
     {
-        base.OnActiveDocumentChanged(cr);
+        base.OnActiveDocumentChanged(report);
+
         CollectData();
     }
 

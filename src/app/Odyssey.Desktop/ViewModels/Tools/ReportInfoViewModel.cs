@@ -25,9 +25,10 @@ public partial class ReportInfoViewModel : MessagesListViewModel
         // This view does not handle any selection change.
     }
 
-    protected override void OnActiveDocumentChanged(CRDocument cr)
+    protected override void OnActiveDocumentChanged(CRDocument report)
     {
-        base.OnActiveDocumentChanged(cr);
+        base.OnActiveDocumentChanged(report);
+
         CollectDataFromReport();
     }
 

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Odyssey.Views.HomeView"
+﻿<UserControl x:Class="Odyssey.Views.WorkspaceView"
              xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -6,7 +6,7 @@
              xmlns:vm="using:Odyssey.ViewModels"
              mc:Ignorable="d"
              d:DesignWidth="300" d:DesignHeight="400"
-             x:DataType="vm:HomeViewModel" x:CompileBindings="True">
+             x:DataType="vm:WorkspaceViewModel" x:CompileBindings="True">
   <Grid RowDefinitions="*,25">
     <ContentControl Content="{Binding ActiveDockable}" Margin="4" Grid.Row="0" />
     <TextBlock Text="{Binding FocusedDockable}" Margin="4" Grid.Row="1" />

@@ -169,9 +169,10 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
     /// Rebuilds the tree from the new active document data.
     /// </summary>
     /// <param name="cr"></param>
-    protected override void OnActiveDocumentChanged(CRDocument cr)
+    protected override void OnActiveDocumentChanged(CRDocument report)
     {
-        base.OnActiveDocumentChanged(cr);
+        base.OnActiveDocumentChanged(report);
+
         Clear();
         if (HasDocument)
         {

@@ -22,9 +22,10 @@ namespace Odyssey.ViewModels
             // TODO
         }
 
-        public void GoHome()
+        public void GoBackToWorkspace()
         {
-            base.GoHomeCommand.Execute(null);
+            // TODO: handle Esc key to go back to workspace
+            base.GoBackToWorkspaceCommand.Execute(null);
         }
     }
 }

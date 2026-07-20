@@ -46,10 +46,11 @@ public partial class BattlesViewModel : DocumentToolViewModelBase
     /// <remarks>This method updates the internal state based on the new active document. If a new document is linked to this viewmodel,
     /// it triggers data collection.</remarks>
     /// <param name="cr">The new active <see cref="CRDocument"/> instance.</param>
-    protected override void OnActiveDocumentChanged(CRDocument cr)
+    protected override void OnActiveDocumentChanged(CRDocument report)
     {
-        base.OnActiveDocumentChanged(cr);
+        base.OnActiveDocumentChanged(report);
 
+        Clear();
         CollectData();
     }
 

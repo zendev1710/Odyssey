@@ -83,9 +83,9 @@ namespace Odyssey.ViewModels.Tools
         /// Set Active Document.
         /// </summary>
         /// <param name="cr"></param>
-        protected virtual void OnActiveDocumentChanged(CRDocument cr)
+        protected virtual void OnActiveDocumentChanged(CRDocument report)
         {
-            HasDocument = Report.HasData();
+            HasDocument = report.HasData();
         }
 
         protected abstract void OnSelectionChanged(ISelectionChange selectionChange);

@@ -37,6 +37,8 @@
 	</UserControl.Resources>
 	<UserControl.KeyBindings>
 		<KeyBinding Gesture="Ctrl+F" Command="{Binding FindSetFocus}" />
+        <KeyBinding Gesture="F8" Command="{Binding CenterMapOnSelectedRegionCommand}" />
+        <KeyBinding Gesture="Ctrl+F8" Command="{Binding CenterMapGloballyCommand}" />
 	</UserControl.KeyBindings>
 	<Grid RowDefinitions="Auto,*,25" ColumnDefinitions="Auto,*" Background="Transparent" DragDrop.AllowDrop="True">
 		<!--MENUS -->
@@ -49,7 +51,7 @@
 				<MenuItem Header="{x:Static a:Lang.mainmenu_file_save_orders}" Command="{Binding SaveOrdersCommand}" />
 				<Separator />
 
-				<MenuItem Header="Fichiers récents" ItemsSource="{Binding RecentFiles}">
+				<MenuItem Header="{x:Static a:Lang.mainmenu_file_recent_files}" ItemsSource="{Binding RecentFiles}">
 					<MenuItem.ItemTemplate>
 						<DataTemplate>
 							<!-- On lie le texte au nom du fichier -->
@@ -87,119 +89,120 @@
 			</MenuItem>
 			<!-- View menu -->
 			<MenuItem Header="{x:Static a:Lang.mainmenu_view}" >
-				<MenuItem DataContext="{Binding Layout}" Header="{x:Static a:Lang.mainmenu_view_home}" Command="{Binding Navigate}" CommandParameter="Home" HotKey="Ctrl+Home" InputGesture="Ctrl+Home" />
-				<!-- in German Ctrl in InputGesture should be replace by STRG -->
-				<MenuItem DataContext="{Binding Layout}" Header="{x:Static a:Lang.mainmenu_view_advanced_search}" Command="{Binding Navigate}" CommandParameter="Search" HotKey="Ctrl+Shift+F" InputGesture="Ctrl+Shift+F" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_view_workspace}" DataContext="{Binding Layout}" Command="{Binding Navigate}" CommandParameter="Workspace" HotKey="Ctrl+Home" InputGesture="Ctrl+Home" />
 				<Separator />
-				<MenuItem DataContext="{Binding Layout}" Header="{x:Static a:Lang.mainmenu_view_settings}" Command="{Binding Navigate}" CommandParameter="Configuration" HotKey="Ctrl+," InputGesture="Ctrl+,"/>
-				<Separator />
-				<!-- Toggle view menu items -->
-				<!-- at this moment FileViewModel is the document docked view and cannot be hidden -->
-				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_map}"
-						  IsChecked="{Binding IsMapViewVisible}"
-						  Command="{Binding ToggleViewCommand}"
-						  CommandParameter="map"
-						  ToggleType="CheckBox"
-						  HotKey="Ctrl+W,M"
-						  InputGesture="Ctrl+W,M"/>
-				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_minimap}"
-						  IsChecked="{Binding IsMiniMapViewVisible}"
-						  Command="{Binding ToggleViewCommand}"
-						  CommandParameter="minimap"
-						  ToggleType="CheckBox"
-						  HotKey="Ctrl+W,J"
-						  InputGesture="Ctrl+W,J"/>
-				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_history}"
-						  IsChecked="{Binding IsHistoryViewVisible}"
-						  Command="{Binding ToggleViewCommand}"
-						  CommandParameter="history"
-						  ToggleType="CheckBox"
-						  HotKey="Ctrl+W,T"
-						  InputGesture="Ctrl+W,T"/>
-				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_bookmarks}"
-						  IsChecked="{Binding IsBookmarksViewVisible}"
-						  Command="{Binding ToggleViewCommand}"
-						  CommandParameter="bookmarks"
-						  ToggleType="CheckBox"
-						  HotKey="Ctrl+W,K"
-						  InputGesture="Ctrl+W,K"/>
-				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_region_info}"
-						  IsChecked="{Binding IsRegionInfoViewVisible}"
-						  Command="{Binding ToggleViewCommand}"
-						  CommandParameter="region_info"
-						  ToggleType="CheckBox"
-						  HotKey="Ctrl+W,I"
-						  InputGesture="Ctrl+W,I"/>
-				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_battles}"
-						  IsChecked="{Binding IsBattlesViewVisible}"
-						  Command="{Binding ToggleViewCommand}"
-						  ToggleType="CheckBox"
-						  CommandParameter="battles"
-						  HotKey="Ctrl+W,B"
-						  InputGesture="Ctrl+W,B"/>
-				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_search_results}"
-						  IsChecked="{Binding IsSearchResultsViewVisible}"
-						  Command="{Binding ToggleViewCommand}"
-						  CommandParameter="search_results"
-						  ToggleType="CheckBox"
-						  HotKey="Ctrl+W,F"
-						  InputGesture="Ctrl+W,F"/>
-				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_report_info}"
-						  IsChecked="{Binding IsReportInfoViewVisible}"
-						  Command="{Binding ToggleViewCommand}"
-						  ToggleType="CheckBox"
-						  CommandParameter="report_info"
-						  HotKey="Ctrl+W,R"
-						  InputGesture="Ctrl+W,R"/>
-				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_error_list}"
-						  IsChecked="{Binding IsErrorsListViewVisible}"
-						  Command="{Binding ToggleViewCommand}"
-						  CommandParameter="error_list"
-						  ToggleType="CheckBox"
-						  HotKey="Ctrl+W,E"
-						  InputGesture="Ctrl+W,E"/>
-				<Separator />
-				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_details}"
-						  IsChecked="{Binding IsDetailsViewVisible}"
-						  Command="{Binding ToggleViewCommand}"
-						  CommandParameter="details"
-						  ToggleType="CheckBox"
-						  HotKey="Ctrl+W,D"
-						  InputGesture="Ctrl+W,D"/>
-				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_region_statistics}"
-						  IsChecked="{Binding IsRegionStatisticsViewVisible}"
-						  Command="{Binding ToggleViewCommand}"
-						  CommandParameter="region_statistics"
-						  ToggleType="CheckBox"
-						  HotKey="Ctrl+W,S"
-						  InputGesture="Ctrl+W,S"/>
-				<Separator />
-				<!-- InputGeture bug: Ctrl+<key1>+<key2> displays Ctrl+<key2> -->
-				<!-- InputGeture/HotKey bug: Ctrl+W+O does not work, instead Ctrl+O is called (File/Open) -->
-				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_unit_orders}"
-						  IsChecked="{Binding IsUnitOrdersViewVisible}"
-						  Command="{Binding ToggleViewCommand}"
-						  CommandParameter="unit_orders"
-						  ToggleType="CheckBox"
-						  HotKey="Ctrl+W,O"
-						  InputGesture="Ctrl+W,O"/>
-				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_region_properties}"
-						  IsChecked="{Binding IsRegionPropertiesViewVisible}"
-						  Command="{Binding ToggleViewCommand}"
-						  CommandParameter="region_properties"
-						  ToggleType="CheckBox"
-						  HotKey="Ctrl+W,P"
-						  InputGesture="Ctrl+W,P"/>
-				<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_explorer}"
-						  IsChecked="{Binding IsExplorerViewVisible}"
-						  Command="{Binding ToggleViewCommand}"
-						  CommandParameter="explorer"
-						  ToggleType="CheckBox"
-						  HotKey="Ctrl+W,X"
-						  InputGesture="Ctrl+W,X"/>
+				<MenuItem Header="{x:Static a:Lang.mainmenu_view_map_center_on_selection}" Command="{Binding CenterMapOnSelectedRegionCommand}" HotKey="F8" InputGesture="F8" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_view_map_center_globally}" Command="{Binding CenterMapGloballyCommand}" HotKey="Ctrl+F8" InputGesture="Ctrl+F8" />
 				<Separator />
 				<!-- TODO: restore windows label when isfullscreen is true -->
 				<MenuItem Header="{x:Static a:Lang.mainmenu_view_fullscreen}" Command="{Binding ToggleFullscreenCommand}" HotKey="F11" InputGesture="F11" />
+				<Separator />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_view_panels}" >
+					<!-- Toggle view menu items -->
+					<!-- at this moment FileViewModel is the document docked view and cannot be hidden -->
+					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_map}"
+							  IsChecked="{Binding IsMapViewVisible}"
+							  Command="{Binding ToggleViewCommand}"
+							  CommandParameter="map"
+							  ToggleType="CheckBox"
+							  HotKey="Ctrl+W,M"
+							  InputGesture="Ctrl+W,M"/>
+					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_minimap}"
+							  IsChecked="{Binding IsMiniMapViewVisible}"
+							  Command="{Binding ToggleViewCommand}"
+							  CommandParameter="minimap"
+							  ToggleType="CheckBox"
+							  HotKey="Ctrl+W,J"
+							  InputGesture="Ctrl+W,J"/>
+					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_history}"
+							  IsChecked="{Binding IsHistoryViewVisible}"
+							  Command="{Binding ToggleViewCommand}"
+							  CommandParameter="history"
+							  ToggleType="CheckBox"
+							  HotKey="Ctrl+W,T"
+							  InputGesture="Ctrl+W,T"/>
+					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_bookmarks}"
+							  IsChecked="{Binding IsBookmarksViewVisible}"
+							  Command="{Binding ToggleViewCommand}"
+							  CommandParameter="bookmarks"
+							  ToggleType="CheckBox"
+							  HotKey="Ctrl+W,K"
+							  InputGesture="Ctrl+W,K"/>
+					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_region_info}"
+							  IsChecked="{Binding IsRegionInfoViewVisible}"
+							  Command="{Binding ToggleViewCommand}"
+							  CommandParameter="region_info"
+							  ToggleType="CheckBox"
+							  HotKey="Ctrl+W,I"
+							  InputGesture="Ctrl+W,I"/>
+					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_battles}"
+							  IsChecked="{Binding IsBattlesViewVisible}"
+							  Command="{Binding ToggleViewCommand}"
+							  ToggleType="CheckBox"
+							  CommandParameter="battles"
+							  HotKey="Ctrl+W,B"
+							  InputGesture="Ctrl+W,B"/>
+					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_search_results}"
+							  IsChecked="{Binding IsSearchResultsViewVisible}"
+							  Command="{Binding ToggleViewCommand}"
+							  CommandParameter="search_results"
+							  ToggleType="CheckBox"
+							  HotKey="Ctrl+W,F"
+							  InputGesture="Ctrl+W,F"/>
+					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_report_info}"
+							  IsChecked="{Binding IsReportInfoViewVisible}"
+							  Command="{Binding ToggleViewCommand}"
+							  ToggleType="CheckBox"
+							  CommandParameter="report_info"
+							  HotKey="Ctrl+W,R"
+							  InputGesture="Ctrl+W,R"/>
+					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_error_list}"
+							  IsChecked="{Binding IsErrorsListViewVisible}"
+							  Command="{Binding ToggleViewCommand}"
+							  CommandParameter="error_list"
+							  ToggleType="CheckBox"
+							  HotKey="Ctrl+W,E"
+							  InputGesture="Ctrl+W,E"/>
+					<Separator />
+					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_details}"
+							  IsChecked="{Binding IsDetailsViewVisible}"
+							  Command="{Binding ToggleViewCommand}"
+							  CommandParameter="details"
+							  ToggleType="CheckBox"
+							  HotKey="Ctrl+W,D"
+							  InputGesture="Ctrl+W,D"/>
+					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_region_statistics}"
+							  IsChecked="{Binding IsRegionStatisticsViewVisible}"
+							  Command="{Binding ToggleViewCommand}"
+							  CommandParameter="region_statistics"
+							  ToggleType="CheckBox"
+							  HotKey="Ctrl+W,S"
+							  InputGesture="Ctrl+W,S"/>
+					<Separator />
+					<!-- InputGeture bug: Ctrl+<key1>+<key2> displays Ctrl+<key2> -->
+					<!-- InputGeture/HotKey bug: Ctrl+W+O does not work, instead Ctrl+O is called (File/Open) -->
+					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_unit_orders}"
+							  IsChecked="{Binding IsUnitOrdersViewVisible}"
+							  Command="{Binding ToggleViewCommand}"
+							  CommandParameter="unit_orders"
+							  ToggleType="CheckBox"
+							  HotKey="Ctrl+W,O"
+							  InputGesture="Ctrl+W,O"/>
+					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_region_properties}"
+							  IsChecked="{Binding IsRegionPropertiesViewVisible}"
+							  Command="{Binding ToggleViewCommand}"
+							  CommandParameter="region_properties"
+							  ToggleType="CheckBox"
+							  HotKey="Ctrl+W,P"
+							  InputGesture="Ctrl+W,P"/>
+					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_explorer}"
+							  IsChecked="{Binding IsExplorerViewVisible}"
+							  Command="{Binding ToggleViewCommand}"
+							  CommandParameter="explorer"
+							  ToggleType="CheckBox"
+							  HotKey="Ctrl+W,X"
+							  InputGesture="Ctrl+W,X"/>
+			  </MenuItem>
 			</MenuItem>
 			<!-- Bookmarks menu -->
 			<MenuItem Header="{x:Static a:Lang.mainmenu_bookmarks}" DataContext="{Binding BookmarksViewModel}">
@@ -224,6 +227,14 @@
 					</ItemsControl.ItemTemplate>
 				</ItemsControl-->
 			</MenuItem>
+			<!-- Tools menu DataContext="{Binding xxxViewModel}" -->
+			<MenuItem Header="{x:Static a:Lang.mainmenu_tools}">
+				<!-- in German Ctrl in InputGesture should be replace by STRG -->
+				<MenuItem Header="{x:Static a:Lang.mainmenu_tools_advanced_search}" Command="{Binding NavigateToAdvancedSearchCommand}" HotKey="Ctrl+Shift+F" InputGesture="Ctrl+Shift+F" />
+				<Separator/>
+				<MenuItem Header="{x:Static a:Lang.mainmenu_tools_settings}" DataContext="{Binding Layout}" Command="{Binding Navigate}" CommandParameter="Configuration" HotKey="Ctrl+," InputGesture="Ctrl+,"/>
+				<Separator />
+			</MenuItem>
 			<!-- Window menu -->
 			<MenuItem Header="{x:Static a:Lang.mainmenu_window}" IsVisible="{Binding EnableLayoutFeature}">
 				<MenuItem Header="{x:Static a:Lang.mainmenu_window_layout_save}" Command="{Binding LayoutSave}" />
@@ -238,6 +249,7 @@
 			<MenuItem Header="{x:Static a:Lang.mainmenu_help}">
 				<MenuItem Header="{x:Static a:Lang.mainmenu_window_help_view}" Command="{Binding ShowHelpCommand}" HotKey="F1" InputGesture="F1" />
 				<MenuItem Header="{x:Static a:Lang.mainmenu_window_help_getting_started}" Command="{Binding ShowHelpCommand}" CommandParameter="getting-started" />
+				<!-- TODO : about Odyssey -->
 				<!--TODO : dynamic menu items to navigate from one document to another, with checkbox on current active document -->
 				<!-- Separator /-->
 				<!-- ... /-->

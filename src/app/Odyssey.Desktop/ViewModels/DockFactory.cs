@@ -245,11 +245,11 @@ public class DockFactory : Factory
         var searchView = new SearchViewModel(DocumentService) { Id = Ids.Search, Title = "Find" };
         var configurationView = new ConfigurationViewModel(DocumentService) { Id = Ids.Configuration, Title = "Configuration" };
 
-        // The home view is the default root view, embedding all docking windows
-        var homeView = new HomeViewModel
+        // The workspace view is the default root view (main window), embedding all docking windows
+        var workspaceView = new WorkspaceViewModel
         {
-            Id = Ids.Home,
-            Title = "Home",
+            Id = Ids.Workspace,
+            Title = "Workspace",
             ActiveDockable = mainLayout,
             VisibleDockables = CreateList<IDockable>(mainLayout)
         };
@@ -258,8 +258,8 @@ public class DockFactory : Factory
 
         rootDock.IsCollapsable = false;
         rootDock.ActiveDockable = searchView;
-        rootDock.DefaultDockable = homeView;
-        rootDock.VisibleDockables = CreateList<IDockable>(searchView, configurationView, homeView);
+        rootDock.DefaultDockable = workspaceView;
+        rootDock.VisibleDockables = CreateList<IDockable>(searchView, configurationView, workspaceView);
 
         rootDock.LeftPinnedDockables = CreateList<IDockable>();
         rootDock.RightPinnedDockables = CreateList<IDockable>();
@@ -319,7 +319,7 @@ public class DockFactory : Factory
             // Navigation can be achieved on below views
             [Ids.Search] = () => layout,
             [Ids.Configuration] = () => layout,
-            [Ids.Home] = () => _context
+            [Ids.Workspace] = () => _context
         };
 
         DockableLocator = new Dictionary<string, Func<IDockable?>>()

@@ -8,20 +8,26 @@
 			 x:DataType="vm:MapViewModel" x:CompileBindings="True"
              mc:Ignorable="d"
              d:DesignWidth="300" d:DesignHeight="400">
-  <Grid RowDefinitions="Auto,*">
-      <!-- IsVisible="{Binding HasDocument}" -->
-    <StackPanel Orientation="Horizontal" IsVisible="{Binding HasDocument}">
-      <!-- Button Content="Zoom In" Command="{Binding ZoomInCommand}" Margin="0,0,4,0" / -->
-      <!-- Button Content="Zoom Out" Command="{Binding ZoomOutCommand}" / -->
-      <!-- Zoom Slider -->
-      <Slider Minimum="10"
-            Maximum="100"
-            Value="{Binding ElementName=HexMap, Path=HexSize, Mode=TwoWay}"
-            TickFrequency="5"
-            TickPlacement="BottomRight"
-            Margin="8"
-            ToolTip.Tip="Zoom" 
+  <Grid RowDefinitions="Auto,*" ColumnDefinitions="*,Auto">
+      <!-- ToolTip.Tip="Zoom" -->
+      <Slider x:Name="ZoomSlider"  Minimum="20"  Maximum="200"
+            Value="{Binding ElementName=HexMap, Path=Zoom, Mode=TwoWay}"
+            IsVisible="{Binding HasDocument}"
+            TickFrequency="10"
+            TickPlacement="TopLeft"
+            SmallChange="10"
+            LargeChange="50"
+            Margin="10,10,0,0"
+            Grid.Row="0"
+            Grid.Column="0"
+            PointerPressed="Slider_PointerPressed"
+            PointerReleased="Slider_PointerReleased" 
       />
+      <Popup x:Name="ZoomPopup" IsOpen="{Binding IsDragging, Mode=TwoWay}" PlacementTarget="{Binding ElementName=ZoomSlider}"
+             Placement="Top">
+          <Border Background="Red" Padding="6" CornerRadius="4"> <TextBlock Foreground="Yellow" Text="{Binding Zoom, StringFormat='{}{0:0}%'}"/>
+          </Border>
+      </Popup>
       <ComboBox x:Name="PlanesComboBox"
             ItemsSource="{Binding Planes}"
             SelectedItem="{Binding SelectedPlane, Mode=TwoWay}"
@@ -29,16 +35,21 @@
             Margin="8,0,0,0"
             IsVisible="{Binding HasSeveralPlanes}"
             ToolTip.Tip="Select plane"
+            Grid.Row="0"
+            Grid.Column="1"
       />
-    </StackPanel>
     <!-- Map with ScrollViewer -->
     <ScrollViewer x:Name="MapScrollViewer"
                   Grid.Row="1"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="2" 
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
                   HorizontalScrollBarVisibility="Auto"
                   VerticalScrollBarVisibility="Auto">
-		<!-- 		Season="{Binding Season}"-->
       <controls:HexMapControl
         x:Name="HexMap"
+        IsStandardPlane="{Binding IsStandardPlane}"
 		Season="{Binding Season}"
         Regions="{Binding Regions}"
 		SelectedRegion="{Binding SelectedRegion, Mode=TwoWay}"

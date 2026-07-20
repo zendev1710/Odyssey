@@ -63,7 +63,7 @@
 			<Button Content="{x:Static a:Lang.search_btn_find_previous}" Command="{Binding FindPreviousCommand}" Margin="0,5,5,5"/>
 			<Button Content="{x:Static a:Lang.search_btn_find_next}" Command="{Binding FindNextCommand}" Margin="0,5,5,5" />
 			<Button Content="{x:Static a:Lang.search_btn_find_all}" Command="{Binding FindAllCommand}" Margin="5,5,5,5"/>
-			<Button Content="{x:Static a:Lang.search_btn_close}" Command="{Binding GoHomeCommand}" Margin="0,5,5,5"/>
+			<Button Content="{x:Static a:Lang.search_btn_close}" Command="{Binding GoBackToWorkspaceCommand}" Margin="0,5,5,5"/>
 			<!-- should work, but button is disabled by default ! -->
 			<!-- <Button Content="Close" DataContext="Context" Command="{Binding Navigate}" CommandParameter="Home" Margin="0,5,5,5"/> -->
 		</StackPanel>

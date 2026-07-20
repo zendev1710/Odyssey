@@ -1,26 +1,35 @@
 ﻿using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Odyssey.Core.Help.Models;
+using Odyssey.Extensions;
 using Odyssey.Models;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
-using Odyssey.Models.Tools;
 using Odyssey.Services;
 using Odyssey.Utils;
 using Prism.Events;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Odyssey.ViewModels.Tools;
 
-public partial class MapViewModel : DocumentToolViewModelBase
+public partial class MapViewModel : DocumentToolViewModelBase/*, IRecipient<CenterMapMessage>*/
 {
+    [ObservableProperty]
+    double _zoom = 100.0;
+
+    [ObservableProperty]
+    bool _isDragging;
+
     [ObservableProperty]
     DataBlock? _selectedRegion;
 
     [ObservableProperty]
     Seasons _season = Seasons.UNKNOWN;
+
+    [ObservableProperty]
+    bool _isStandardPlane;
 
     [ObservableProperty]
     bool _hasSeveralPlanes;
@@ -107,12 +116,13 @@ public partial class MapViewModel : DocumentToolViewModelBase
     {
     }
 
-    partial void OnSelectedPlaneChanged(WorldPlane? value)
+    partial void OnSelectedPlaneChanged(WorldPlane? oldValue, WorldPlane? newValue)
     {
-        if (value != null)
+        if (oldValue != newValue && newValue != null)
         {
             //Clear();
-            //RebuildMap();
+            SelectedPlane = newValue;
+            RebuildMap();
         }
     }
 
@@ -139,9 +149,10 @@ public partial class MapViewModel : DocumentToolViewModelBase
     /// Rebuilds the tree from the new active document data.
     /// </summary>
     /// <param name="cr"></param>
-    protected override void OnActiveDocumentChanged(CRDocument cr)
+    protected override void OnActiveDocumentChanged(CRDocument report)
     {
-        base.OnActiveDocumentChanged(cr);
+        base.OnActiveDocumentChanged(report);
+
         RebuildPlanes();
         RebuildMap();
     }
@@ -168,9 +179,10 @@ public partial class MapViewModel : DocumentToolViewModelBase
     /// </summary>
     private void RebuildMap()
     {
-        // TODO: Reports.Regions is for the standard plane only, we should have a Regions collection for each plane
-        Regions = Report.Regions;
+        IsStandardPlane = SelectedPlane is null || ((int)SelectedPlane.Type).IsStandardPlane();
+        Regions = IsStandardPlane ? Report.Regions : SelectedPlane!.Regions;
         Season = DateUtils.GetGameSeason(Report.Turn);
+        Debug.WriteLine($"[MAPVIEWMODEL] RebuildMap::regions number: {Regions.Count()} Plane: {SelectedPlane?.Name}");
     }
 
     private void Clear()

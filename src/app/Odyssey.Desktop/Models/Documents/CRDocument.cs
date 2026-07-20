@@ -65,6 +65,9 @@ public class CRDocument : EresseaDocument
 
     public Dictionary<int, Rectangle> ContentSizes { get; private set; } = [];
 
+    public Rectangle KnownRegionsBound { get; private set; } = new Rectangle();
+    public Rectangle regionsBound { get; private set; } = new Rectangle();
+
     /// <summary>
     /// Returns the short name of the document.
     /// The short name is the trimmed right part of the name after the first dash ('-').
@@ -112,8 +115,7 @@ public class CRDocument : EresseaDocument
     public int RegionsNumber { get { return Regions.Count; } }
     public int SeenRegionsNumber { get; private set; } = 0;
     public int Turn { get; private set; } = -1;
-    //public int GetActiveFactionId() { return ActiveFactionId; }
-    //public DataBlock? GetActiveFaction() { return ActiveFaction; }
+
     public OrdersDocument OrdersDocument { get; private set; }
 
     public CRDocument(string name, LinkedList<DataBlock> blocks)
@@ -283,8 +285,7 @@ public class CRDocument : EresseaDocument
         }
         if (ActiveFactions.Count > 1)
         {
-            // TODO: localize
-            return "Alliance";
+            return Labels.Localize(Labels.FACTION_NAME_ALLIANCE);
         }
         return GetFactionName(ActiveFaction);
     }
@@ -382,6 +383,7 @@ public class CRDocument : EresseaDocument
 
     public DataBlock? FindRegionFromPosition(int x, int y, PlaneType plane = PlaneType.WORLD)
     {
+        // TODO: handle region on other planes (astral...)
         return Regions.TryGetValue(Coordinates.GetId(x, y, plane), out var region) ? region : null;
     }
 
@@ -756,7 +758,7 @@ public class CRDocument : EresseaDocument
                 int x = old_r.x();
                 int y = old_r.y();
                 int plane = old_r.GetId();
-                if (plane == 0)
+                if (plane.IsStandard())
                 {
                     x += x_offset;
                     y += y_offset;
@@ -1303,7 +1305,7 @@ m_blocks.push_back(*old_r);
                     {
                         if (SetRegionStats(region, regionOwn, regionAlly, regionEnemy, unconfirmed))
                         {
-                            AddSeenRegion(region, OptimizeDataConsuming ? blockNodeToChange : null);
+                            SetRegionAsSeen(region, OptimizeDataConsuming ? blockNodeToChange : null);
                             nbSeenRegions++;
                             if (firstSeenRegion == null)
                             {
@@ -1355,18 +1357,21 @@ m_blocks.push_back(*old_r);
                         }
                     }
 
-                    Regions[Coordinates.GetId(b.GetX(), b.GetY(), (PlaneType)blockId)] = b;
-                    if (blockId > 0)
+                    int regionId = Coordinates.GetId(b.GetX(), b.GetY(), (PlaneType)blockId);
+                    if (blockId.IsSpecialPlane())
                     {
                         // region on another plane than the standard one
-                        if (!Planes.ContainsKey(blockId))
+                        if (!Planes.TryGetValue(blockId, out var plane))
                         {
-                            // TODO: add regions as properties of a special plane block (like ASTRAL, ARENA, ETERNATH, CHRISTMAS_ISLAND, etc.) ?
-                            Planes.Add(blockId, new WorldPlane((PlaneType)blockId));
+                            plane = new WorldPlane((PlaneType)blockId);
+                            Planes[blockId] = plane;
                         }
+                        Planes[blockId].AddRegion(b);
+                        //Regions[regionId] = b;
                     }
                     else
                     {
+                        Regions[regionId] = b;
                         unconfirmed++;
                     }
 
@@ -1702,7 +1707,7 @@ m_blocks.push_back(*old_r);
         if (region != null) {
             if (SetRegionStats(region, regionOwn, regionAlly, regionEnemy, unconfirmed))
             {
-                AddSeenRegion(region, OptimizeDataConsuming ? blockNodeToChange : null);
+                SetRegionAsSeen(region, OptimizeDataConsuming ? blockNodeToChange : null);
                 nbSeenRegions++;
             }
             else
@@ -1762,6 +1767,11 @@ m_blocks.push_back(*old_r);
 
 
         Debug.WriteLine($"[DOCUMENT] AllRegions number : {Regions.Count} ");
+        Debug.WriteLine($"[DOCUMENT] Seen regions number : {SeenRegionsNumber} ");
+        if (Planes.Count > 1)
+        {
+            Debug.WriteLine($"[DOCUMENT] Regions in Astral : {Planes[1].Regions.Count}");
+        }
         Debug.WriteLine($"[DOCUMENT] Seen regions number : {SeenRegionsNumber} ");
         Debug.WriteLine($"[DOCUMENT] Factions number : {Factions.Count} ");
         Debug.WriteLine($"[DOCUMENT] Active factions number : {ActiveFactions.Count} ");
@@ -1911,7 +1921,14 @@ m_blocks.push_back(*old_r);
         return ordered;
     }
 
-    private void AddSeenRegion(DataBlock region, LinkedListNode<DataBlock>? previousNode)
+    /// <summary>
+    /// Set the previous and next block references for a region in the linked list, if a previous node is provided.
+    /// In that way, we can optimize regions browing  by skipping unknown regions in the linked list (mainly used by Explorer view).
+    /// Note: a "seen" region is a region that has at least one people (own, ally, enemy or whatever).
+    /// </summary>
+    /// <param name="region">region datablock</param>
+    /// <param name="previousNode">previous node in the linked list, representing a seen region</param>
+    private static void SetRegionAsSeen(DataBlock region, LinkedListNode<DataBlock>? previousNode)
     {
         if (previousNode?.Value != null)
         {

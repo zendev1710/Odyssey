@@ -30,9 +30,6 @@ namespace Odyssey.ViewModels
         /// </summary>
         protected ClientAreaDockBase(IActiveDocumentService? documentService = null) {
             _documentService = documentService ?? ServiceLocator.ActiveDocumentService;
-
-            HasDocument = false;
-
             _documentService.ActiveDocumentChanged += OnActiveDocumentChanged;
         }
 
@@ -40,23 +37,23 @@ namespace Odyssey.ViewModels
         /// Set Active Document.
         /// </summary>
         /// <param name="cr"></param>
-        protected virtual void OnActiveDocumentChanged(CRDocument cr)
+        protected virtual void OnActiveDocumentChanged(CRDocument report)
         {
-            HasDocument = cr.HasData();
+            HasDocument = report.HasData();
         }
 
         /// <summary>
-        /// Display the home view. the SearchView is hidden
+        /// Display the workspace view (main window. the SearchView is hidden
         /// </summary>
         [RelayCommand]
-        private void GoHome()
+        private void GoBackToWorkspace()
         {
             // TODO: move code into NavigationDockBase
             var ctx = this.Context as IRootDock;
             if (ctx is { } root)
             {
-                // Display the home view, which embeds all the layout docked windows
-                root.Navigate.Execute(Ids.Home);
+                // Display the workspace view (main view), which embeds all the layout docked windows
+                root.Navigate.Execute(Ids.Workspace);
             }
         }
     }

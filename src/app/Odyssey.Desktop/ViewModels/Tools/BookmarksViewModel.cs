@@ -106,11 +106,12 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
     }
 
     // Called when the active document changes (CRDocument loaded)
-    protected override void OnActiveDocumentChanged(CRDocument cr)
+    protected override void OnActiveDocumentChanged(CRDocument report)
     {
-        base.OnActiveDocumentChanged(cr);
+        base.OnActiveDocumentChanged(report);
+
         ClearAll();
-        AutoLoadBookmarksForDocument(cr);
+        AutoLoadBookmarksForDocument(report);
     }
 
     private void AddBookmark(DataBlock dt)
@@ -561,7 +562,7 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
 
     private bool CanLoadBookmarksFrom()
     {
-        return true;
+        return HasDocument;
     }
 
     private bool CanSaveBookmarksAs()

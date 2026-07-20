@@ -34,7 +34,7 @@ namespace Odyssey.ViewModels
         public const string ErrorList = "error_list";
 
         // Navigation views view model ids
-        public const string Home = "Home";
+        public const string Workspace = "Workspace";
         public const string Search = "Search";
         public const string Configuration = "Configuration";
 

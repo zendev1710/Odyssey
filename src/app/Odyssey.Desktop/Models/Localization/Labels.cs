@@ -32,6 +32,7 @@ namespace Odyssey.Models.Localization
         public const string FACTION_DISGUISED_AS = "faction_disguised_as";
         public const string FACTION_DISGUISED_AS_FACTION = "faction_disguised_as_faction";
         public const string FACTION_ALL = "faction_all";
+        public const string FACTION_NAME_ALLIANCE = "faction_name_alliance";
         public const string FAMILIAR_INFO = "familiar_info";
         public const string FAMILIAR_MAGE_INFO = "familiar_mage_info";
         public const string GAME_DATE_INFO = "game_date_info";

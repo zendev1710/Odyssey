@@ -59,7 +59,7 @@ public partial class ConfigurationView : UserControl
     {
         if (this.DataContext is ConfigurationViewModel vm)
         {
-            vm.GoHome();
+            vm.GoBackToWorkspace();
         }
     }
 }

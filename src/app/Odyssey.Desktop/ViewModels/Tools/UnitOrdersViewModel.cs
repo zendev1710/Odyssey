@@ -179,14 +179,14 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
     /// </summary>
     /// <param name="cr">the report document to link</param>
     /// <returns>true if a new report document has been linked to the view model; otherwise false</returns>
-    protected override void OnActiveDocumentChanged(CRDocument cr)
+    protected override void OnActiveDocumentChanged(CRDocument report)
     {
-        if (!IsSameDocument(cr) && IsModified)
+        base.OnActiveDocumentChanged(report);
+
+        if (!IsSameDocument(report) && IsModified)
         {
             // LATER: what about if orders were modified (save file) ?
         }
-
-        base.OnActiveDocumentChanged(cr);
     }
 
     /// <summary>

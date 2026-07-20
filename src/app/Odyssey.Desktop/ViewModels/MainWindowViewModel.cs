@@ -6,6 +6,7 @@ using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Dock.Model;
 using Dock.Model.Controls;
 using Dock.Model.Core;
@@ -17,6 +18,7 @@ using Odyssey.Core.Services;
 using Odyssey.Events;
 using Odyssey.Extensions;
 using Odyssey.Help;
+using Odyssey.Messages;
 using Odyssey.Models.Dal;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
@@ -231,13 +233,13 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
             ? "Global: (none)"
             : FormatGlobalStatus(_factory?.GlobalDockTrackingState ?? GlobalDockTrackingState.Empty);
 
-        // TODO: check where it should be called exactly
+        // TODO: check when it should be called exactly
         InitializeDockState();
 
         if (Layout is { } root)
         {
-            // Display the home view, which embeds all the layout docked windows
-            root.Navigate.Execute(Ids.Home);
+            // Display the workspace view (main view), which embeds all the layout docked windows
+            root.Navigate.Execute(Ids.Workspace);
         }
 
         _bookmarksViewModel = _factory.GetDockable<IDockable>(Ids.Bookmarks) as BookmarksViewModel;
@@ -322,6 +324,24 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
         // Perform the heavy loading
         OpenDocument(pathname);
+    }
+
+    [RelayCommand(CanExecute = nameof(CanExecuteIfReportExists))]
+    private void CenterMapOnSelectedRegion()
+    {
+        // On envoie le message globalement dans l'application
+        WeakReferenceMessenger.Default.Send(new CenterMapMessage(IsGlobal: false));
+    }
+
+    [RelayCommand(CanExecute = nameof(CanExecuteIfReportExists))]
+    private void CenterMapGlobally()
+    {
+        WeakReferenceMessenger.Default.Send(new CenterMapMessage(IsGlobal: true));
+    }
+
+    private bool CanExecuteIfReportExists()
+    {
+        return HasDocument;
     }
 
     public void OpenInitialDocumentIfNeeded()
@@ -1327,6 +1347,16 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
             };
         }
         return fileViewModel;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanExecuteIfReportExists))]
+    private void NavigateToAdvancedSearch()
+    {
+
+        if (Layout is { } root)
+        {
+            root.Navigate.Execute(Ids.Search);
+        }
     }
 
     /// <summary>

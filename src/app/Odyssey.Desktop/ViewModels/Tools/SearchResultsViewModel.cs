@@ -28,9 +28,9 @@ public class SearchResultsViewModel : DocumentToolViewModelBase
     }
 
     /*
-    private void OnActiveDocumentChanged(CRDocument cr)
+    private void OnActiveDocumentChanged(CRDocument report)
     {
-        if (SetMapFile(cr))
+        if (SetMapFile(report))
         {
             //RebuildItems();
         }

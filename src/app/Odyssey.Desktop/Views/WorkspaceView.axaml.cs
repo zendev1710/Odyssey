@@ -3,9 +3,9 @@ using Avalonia.Markup.Xaml;
 
 namespace Odyssey.Views;
 
-public partial class HomeView : UserControl
+public partial class WorkspaceView : UserControl
 {
-    public HomeView()
+    public WorkspaceView()
     {
         InitializeComponent();
     }

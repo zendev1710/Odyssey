@@ -1,5 +1,11 @@
-﻿using Odyssey.Models.Localization;
+﻿using Avalonia;
+using Markdig.Syntax;
+using Odyssey.Models.Data.Odyssey.Models.Data;
+using Odyssey.Models.Localization;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
 
 namespace Odyssey.Models.Data
 {
@@ -18,10 +24,65 @@ namespace Odyssey.Models.Data
         public string Name { get; }
         public PlaneType Type { get; }
 
+        public Dictionary<int, DataBlock> Regions { get; private set; } = [];
+
         public WorldPlane(PlaneType planeType)
         {
             Type = planeType;
             Name = GetName(planeType);
+        }
+
+        /// <summary>
+        /// Gets the bounds of the world plane based on the regions added to it.
+        /// It defines an immutable rectangle that encompasses all the regions in the plane.
+        /// </summary>
+        public Bounds Bounds => (Bounds)_rectangle;
+
+        // Mutable rectangle
+        private Rectangle _rectangle = new();
+
+        /// <summary>
+        /// Adds a region to the world plane if it does not already exist.
+        /// At this moment, regions must be added in a plane only for special planes (astral...).
+        /// </summary>
+        /// <param name="region">region data block</param>
+        /// <param name="regionId">region id</param>
+        public void AddRegion(DataBlock region)
+        {
+            int planeId = region.GetId();
+            if (planeId == (int)Type)
+            {
+                int x = region.GetX();
+                int y = region.GetY();
+                int regionId = Coordinates.GetId(x, y, (PlaneType)planeId);
+                if (_rectangle.IsEmpty)
+                {
+                    _rectangle.X = x;
+                    _rectangle.Y = y;
+                    _rectangle.Width = 1;
+                    _rectangle.Height = 1;
+                }
+                else
+                {   
+                    _rectangle.X = Math.Min(_rectangle.X, x);
+                    _rectangle.Width = Math.Max(_rectangle.Width, x - _rectangle.X + 1);
+                    _rectangle.Y = Math.Min(_rectangle.Y, y);
+                    _rectangle.Height = Math.Max(_rectangle.Height, y - _rectangle.Y + 1);
+                }
+                if (!Regions.ContainsKey(regionId))
+                {
+                    Regions.Add(regionId, region);
+
+                }
+                else
+                {
+                    Debug.WriteLine($"[WORLDPLANE] region {region} ({regionId}) already exists !!!");
+                }
+            }
+            else
+            {
+                Debug.WriteLine($"[WORLDPLANE] region {region} ({planeId}) must not be added to {Name} !!!");
+            }
         }
 
         public static string GetName(PlaneType planeType)
