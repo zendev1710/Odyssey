@@ -1728,6 +1728,9 @@
   <data name="faction_all" xml:space="preserve">
     <value>Alles</value>
   </data>
+  <data name="faction_name_alliance" xml:space="preserve">
+    <value>Allianz</value>
+  </data>
   <data name="Dunkel" xml:space="preserve">
     <value>Dunkel</value>
   </data>
@@ -1845,6 +1848,9 @@
   <data name="mainmenu_file_save" xml:space="preserve">
     <value>Speichern</value>
   </data>
+  <data name="mainmenu_file_recent_files" xml:space="preserve">
+    <value>Recent files [DE]</value>
+  </data>
   <data name="Close" xml:space="preserve">
     <value>Schließen</value>
   </data>
@@ -1866,8 +1872,11 @@
   <data name="mainmenu_view_win_map" xml:space="preserve">
     <value>Karte</value>
   </data>
-  <data name="mainmenu_view_win_map1" xml:space="preserve">
-    <value>Karte</value>
+  <data name="mainmenu_view_map_center_on_selection" xml:space="preserve">
+    <value>Center map on selection [DE]</value>
+  </data>
+  <data name="mainmenu_view_map_center_globally" xml:space="preserve">
+    <value>Center map globally [DE]</value>
   </data>
   <data name="mainmenu_view_win_minimap" xml:space="preserve">
     <value>Minikarte</value>
@@ -1892,6 +1901,9 @@
   </data>
   <data name="mainmenu_bookmarks" xml:space="preserve">
     <value>Lesezeichen</value>
+  </data>
+  <data name="mainmenu_tools" xml:space="preserve">
+    <value>Werkzeuge</value>
   </data>
   <data name="mainmenu_bookmarks_next" xml:space="preserve">
     <value>Jump Forward [de]</value>
@@ -2127,17 +2139,20 @@
   <data name="mainmenu_window_layout_save" xml:space="preserve">
     <value>Save layout [DE]</value>
   </data>
-  <data name="mainmenu_view_advanced_search" xml:space="preserve">
+  <data name="mainmenu_tools_advanced_search" xml:space="preserve">
     <value>_Suchen</value>
   </data>
-  <data name="mainmenu_view_home" xml:space="preserve">
-    <value>S_tartseite</value>
+  <data name="mainmenu_view_workspace" xml:space="preserve">
+    <value>_Arbeitsbereich</value>
   </data>
-  <data name="mainmenu_view_settings" xml:space="preserve">
+  <data name="mainmenu_tools_settings" xml:space="preserve">
     <value>_Einstellungen</value>
   </data>
   <data name="mainmenu_view_fullscreen" xml:space="preserve">
     <value>_Vollbild</value>
+  </data>
+  <data name="mainmenu_view_panels" xml:space="preserve">
+    <value>Panels [DE]</value>
   </data>
   <data name="find_watermark" xml:space="preserve">
     <value>Suchen...</value>
@@ -2969,15 +2984,6 @@
   <data name="helptopic_File" xml:space="preserve">
     <value>Datei</value>
   </data>
-  <data name="parm_inf_explorer_active_faction_units_at_top" xml:space="preserve">
-    <value>Aktive Parteieinheiten werden als erste Elemente des Regionsknotens angezeigt</value>
-  </data>
-  <data name="helptopic_Test" xml:space="preserve">
-    <value>Test (samples)</value>
-  </data>
-  <data name="helptopic_Tables" xml:space="preserve">
-    <value>Tables (samples)</value>
-  </data>
   <data name="plane_world" xml:space="preserve">
     <value>Standardebene</value>
   </data>
@@ -2995,5 +3001,14 @@
   </data>
   <data name="plane_eternath" xml:space="preserve">
     <value>Eternath</value>
+  </data>
+  <data name="parm_inf_explorer_active_faction_units_at_top" xml:space="preserve">
+    <value>Aktive Parteieinheiten werden als erste Elemente des Regionsknotens angezeigt</value>
+  </data>
+  <data name="helptopic_Test" xml:space="preserve">
+    <value>Test (samples)</value>
+  </data>
+  <data name="helptopic_Tables" xml:space="preserve">
+    <value>Tables (samples)</value>
   </data>
 </root>

@@ -1728,6 +1728,9 @@
   <data name="faction_all" xml:space="preserve">
     <value>All factions</value>
   </data>
+  <data name="faction_name_alliance" xml:space="preserve">
+    <value>Alliance</value>
+  </data>
   <data name="Dunkel" xml:space="preserve">
     <value>Dark</value>
   </data>
@@ -1845,6 +1848,9 @@
   <data name="mainmenu_file_save" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="mainmenu_file_recent_files" xml:space="preserve">
+    <value>Recent files</value>
+  </data>
   <data name="Close" xml:space="preserve">
     <value>Close</value>
   </data>
@@ -1866,8 +1872,11 @@
   <data name="mainmenu_view_win_map" xml:space="preserve">
     <value>Map</value>
   </data>
-  <data name="mainmenu_view_win_map1" xml:space="preserve">
-    <value>Map</value>
+  <data name="mainmenu_view_map_center_on_selection" xml:space="preserve">
+    <value>Center map on selection</value>
+  </data>
+  <data name="mainmenu_view_map_center_globally" xml:space="preserve">
+    <value>Center map globally</value>
   </data>
   <data name="mainmenu_view_win_minimap" xml:space="preserve">
     <value>Minimap</value>
@@ -1892,6 +1901,9 @@
   </data>
   <data name="mainmenu_bookmarks" xml:space="preserve">
     <value>Bookmarks</value>
+  </data>
+  <data name="mainmenu_tools" xml:space="preserve">
+    <value>Tools</value>
   </data>
   <data name="mainmenu_bookmarks_next" xml:space="preserve">
     <value>Jump Forward</value>
@@ -2127,17 +2139,20 @@
   <data name="mainmenu_window_layout_save" xml:space="preserve">
     <value>Save layout...</value>
   </data>
-  <data name="mainmenu_view_advanced_search" xml:space="preserve">
+  <data name="mainmenu_tools_advanced_search" xml:space="preserve">
     <value>_Advanced search</value>
   </data>
-  <data name="mainmenu_view_home" xml:space="preserve">
-    <value>_Home</value>
+  <data name="mainmenu_view_workspace" xml:space="preserve">
+    <value>_Workspace</value>
   </data>
-  <data name="mainmenu_view_settings" xml:space="preserve">
+  <data name="mainmenu_tools_settings" xml:space="preserve">
     <value>_Settings</value>
   </data>
   <data name="mainmenu_view_fullscreen" xml:space="preserve">
-    <value>_Fullscreen</value>
+    <value>_Toggle fullscreen</value>
+  </data>
+  <data name="mainmenu_view_panels" xml:space="preserve">
+    <value>Panels</value>
   </data>
   <data name="find_watermark" xml:space="preserve">
     <value>Find...</value>
@@ -2988,5 +3003,8 @@
   </data>
   <data name="plane_eternath" xml:space="preserve">
     <value>Eternath</value>
+  </data>
+  <data name="parm_inf_explorer_active_faction_units_at_top" xml:space="preserve">
+    <value>The active faction's units are the first elements of the region node.</value>
   </data>
 </root>

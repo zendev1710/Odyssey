@@ -1728,6 +1728,9 @@
   <data name="faction_all" xml:space="preserve">
     <value>Toutes les factions</value>
   </data>
+  <data name="faction_name_alliance" xml:space="preserve">
+    <value>Alliance</value>
+  </data>
   <data name="Dunkel" xml:space="preserve">
     <value>Ténébreux</value>
   </data>
@@ -1845,6 +1848,9 @@
   <data name="mainmenu_file_save" xml:space="preserve">
     <value>Enregistrer</value>
   </data>
+  <data name="mainmenu_file_recent_files" xml:space="preserve">
+    <value>Fichiers récents</value>
+  </data>
   <data name="Close" xml:space="preserve">
     <value>Fermer</value>
   </data>
@@ -1866,8 +1872,11 @@
   <data name="mainmenu_view_win_map" xml:space="preserve">
     <value>Carte</value>
   </data>
-  <data name="mainmenu_view_win_map1" xml:space="preserve">
-    <value>Carte</value>
+  <data name="mainmenu_view_map_center_on_selection" xml:space="preserve">
+    <value>Centrer la carte sur la sélection</value>
+  </data>
+  <data name="mainmenu_view_map_center_globally" xml:space="preserve">
+    <value>Centrer la carte globalement</value>
   </data>
   <data name="mainmenu_view_win_minimap" xml:space="preserve">
     <value>Minicarte</value>
@@ -1892,6 +1901,9 @@
   </data>
   <data name="mainmenu_bookmarks" xml:space="preserve">
     <value>Signets</value>
+  </data>
+  <data name="mainmenu_tools" xml:space="preserve">
+    <value>Outils</value>
   </data>
   <data name="mainmenu_bookmarks_next" xml:space="preserve">
     <value>Aller au suivant</value>
@@ -2127,17 +2139,20 @@
   <data name="mainmenu_window_layout_save" xml:space="preserve">
     <value>_Enregistrer la disposition des fenêtres</value>
   </data>
-  <data name="mainmenu_view_advanced_search" xml:space="preserve">
+  <data name="mainmenu_tools_advanced_search" xml:space="preserve">
     <value>_Recherche avancée</value>
   </data>
-  <data name="mainmenu_view_home" xml:space="preserve">
-    <value>A_ccueil</value>
+  <data name="mainmenu_view_workspace" xml:space="preserve">
+    <value>_Espace de travail</value>
   </data>
-  <data name="mainmenu_view_settings" xml:space="preserve">
+  <data name="mainmenu_tools_settings" xml:space="preserve">
     <value>_Paramètres</value>
   </data>
   <data name="mainmenu_view_fullscreen" xml:space="preserve">
     <value>_Plein écran</value>
+  </data>
+  <data name="mainmenu_view_panels" xml:space="preserve">
+    <value>Panels [FR]</value>
   </data>
   <data name="find_watermark" xml:space="preserve">
     <value>Rechercher...</value>
@@ -2971,15 +2986,6 @@
   <data name="helptopic_File" xml:space="preserve">
     <value>Fichier</value>
   </data>
-  <data name="parm_inf_explorer_active_faction_units_at_top" xml:space="preserve">
-    <value>Les unités de la faction active sont les premiers éléments du nœud de région</value>
-  </data>
-  <data name="helptopic_Test" xml:space="preserve">
-    <value>Test (samples)</value>
-  </data>
-  <data name="helptopic_Tables" xml:space="preserve">
-    <value>Tables (samples)</value>
-  </data>
   <data name="plane_world" xml:space="preserve">
     <value>Standard</value>
   </data>
@@ -2997,5 +3003,14 @@
   </data>
   <data name="plane_eternath" xml:space="preserve">
     <value>Eternath</value>
+  </data>
+  <data name="parm_inf_explorer_active_faction_units_at_top" xml:space="preserve">
+    <value>Les unités de la faction active sont les premiers éléments du nœud de région</value>
+  </data>
+  <data name="helptopic_Test" xml:space="preserve">
+    <value>Test (samples)</value>
+  </data>
+  <data name="helptopic_Tables" xml:space="preserve">
+    <value>Tables (samples)</value>
   </data>
 </root>

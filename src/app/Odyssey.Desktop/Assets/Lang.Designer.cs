@@ -2716,6 +2716,15 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Recent files.
+        /// </summary>
+        public static string mainmenu_file_recent_files {
+            get {
+                return ResourceManager.GetString("mainmenu_file_recent_files", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string mainmenu_file_save {
@@ -2752,6 +2761,33 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tools.
+        /// </summary>
+        public static string mainmenu_tools {
+            get {
+                return ResourceManager.GetString("mainmenu_tools", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Advanced search.
+        /// </summary>
+        public static string mainmenu_tools_advanced_search {
+            get {
+                return ResourceManager.GetString("mainmenu_tools_advanced_search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Settings.
+        /// </summary>
+        public static string mainmenu_tools_settings {
+            get {
+                return ResourceManager.GetString("mainmenu_tools_settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to _View.
         /// </summary>
         public static string mainmenu_view {
@@ -2761,16 +2797,7 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _Advanced search.
-        /// </summary>
-        public static string mainmenu_view_advanced_search {
-            get {
-                return ResourceManager.GetString("mainmenu_view_advanced_search", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to _Fullscreen.
+        ///   Looks up a localized string similar to _Toggle fullscreen.
         /// </summary>
         public static string mainmenu_view_fullscreen {
             get {
@@ -2779,20 +2806,29 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _Home.
+        ///   Looks up a localized string similar to Center map globally.
         /// </summary>
-        public static string mainmenu_view_home {
+        public static string mainmenu_view_map_center_globally {
             get {
-                return ResourceManager.GetString("mainmenu_view_home", resourceCulture);
+                return ResourceManager.GetString("mainmenu_view_map_center_globally", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _Settings.
+        ///   Looks up a localized string similar to Center map on selection.
         /// </summary>
-        public static string mainmenu_view_settings {
+        public static string mainmenu_view_map_center_on_selection {
             get {
-                return ResourceManager.GetString("mainmenu_view_settings", resourceCulture);
+                return ResourceManager.GetString("mainmenu_view_map_center_on_selection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Panels.
+        /// </summary>
+        public static string mainmenu_view_panels {
+            get {
+                return ResourceManager.GetString("mainmenu_view_panels", resourceCulture);
             }
         }
         
@@ -2860,15 +2896,6 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Map.
-        /// </summary>
-        public static string mainmenu_view_win_map1 {
-            get {
-                return ResourceManager.GetString("mainmenu_view_win_map1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Minimap.
         /// </summary>
         public static string mainmenu_view_win_minimap {
@@ -2928,6 +2955,15 @@ namespace Odyssey.Assets {
         public static string mainmenu_view_win_unit_orders {
             get {
                 return ResourceManager.GetString("mainmenu_view_win_unit_orders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Workspace.
+        /// </summary>
+        public static string mainmenu_view_workspace {
+            get {
+                return ResourceManager.GetString("mainmenu_view_workspace", resourceCulture);
             }
         }
         
