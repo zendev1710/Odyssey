@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\lib\Odyssey.Icons\Odyssey.Icons.csproj" />
     <ProjectReference Include="..\..\tools\icons-generator\Odyssey.Icons.Generator.csproj" />
   </ItemGroup>
 
