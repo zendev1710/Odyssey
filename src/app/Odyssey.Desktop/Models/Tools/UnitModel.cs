@@ -28,7 +28,17 @@ public class UnitModel : EntityModel
         DuringCombat = 1,
         PostCombat = 2,
     }
-    private readonly List<DataProperty> _containerDataProperties;
+    private readonly List<DataProperty> _structureDataProperties;
+    private readonly List<DataProperty> _itemsProperties;
+    private readonly List<DataProperty> _skillsProperties;
+
+    // The data of a unit is collected only once (see CollectData): the collected data is then reused.
+    private bool _isDataCollected;
+    private bool _areCategoriesCollected;
+    private bool _areItemsCollected;
+    private bool _areSkillsCollected;
+    private bool _isContainerDataCollected;
+    private DataProperty? _containerProperty;
 
     private DataBlock? Items { get; set; }
     private DataBlock? Skills { get; set; }
@@ -53,19 +63,20 @@ public class UnitModel : EntityModel
     public string Hungry { get; private set; } = string.Empty;
     public string Hero { get; private set; } = string.Empty;
     public string TrueRaceType { get; private set; } = string.Empty;
-    // CONTAINER - BUILDING OR SHIP - PROPERTIES
+    // STRUCTURE - BUILDING OR SHIP - PROPERTIES
     /// <summary>
-    /// Container is a building or a ship.
+    /// Structure is a building or a ship.
     /// </summary>
-    private DataBlock? Container { get; set; }
-    public KeyType ContainerType { get; private set; }
-    public DataBlock? ContainerOwnerUnit { get; private set; }
-    public string ContainerOwnerName { get; private set; } = string.Empty;
-    public string ContainerName { get; private set; } = string.Empty;
-    public string ContainerTypeName { get; private set; } = string.Empty;
-    public int ContainerSize { get; private set; }
-    public List<string> ContainerEffects { get; private set; } = [];
-    public List<DataProperty> ContainerDataProperties { get { return _containerDataProperties; } }
+    private DataBlock? Structure { get; set; }
+    public KeyType StructureType { get; private set; }
+    public UnitModel? StructureOwnerUnit { get; private set; }
+    //public DataBlock? StructureOwnerUnit { get; private set; }
+    public string StructureOwnerName { get; private set; } = string.Empty;
+    public string StructureName { get; private set; } = string.Empty;
+    public string StructureTypeName { get; private set; } = string.Empty;
+    public int StructureSize { get; private set; }
+    public List<string> StructureEffects { get; private set; } = [];
+    public List<DataProperty> StructureDataProperties { get { return _structureDataProperties; } }
     // SHIP SPECIFIC PROPERTIES
     public int ShipPercentDamage { get; private set; }
     public int ShipCoast { get; private set; } = -1;
@@ -80,9 +91,101 @@ public class UnitModel : EntityModel
     public int CatapultsNumber { get; private set; }
     public int CatapultsNumberMax { get; private set; }
 
-    public UnitModel(DataBlock unitDataBlock): base(unitDataBlock)
+    public bool IsConfirmed { get; private set; }
+
+    public UnitModel(DataBlock unitDataBlock, int locationId): base(unitDataBlock, locationId)
     {
-        _containerDataProperties = [];
+        _structureDataProperties = [];
+        _itemsProperties = [];
+        _skillsProperties = [];
+        PopulateImmediateProperties();
+        // TODO
+        IsConfirmed = false;
+    }
+
+    private bool IsImmediateProperty(DataKey dataKey)
+    {
+        switch (dataKey.GetKeyType())
+        {
+            case KeyType.NAME:
+            case KeyType.FACTION:
+            case KeyType.OTHER_FACTION:
+            case KeyType.NUMBER:
+            case KeyType.TYPE:
+            case KeyType.WEIGHT:
+            case KeyType.GROUP:
+            case KeyType.PREFIX:
+            case KeyType.STATUS:
+            case KeyType.HITPOINTS:
+            case KeyType.GUARDING:
+            case KeyType.HUNGER:
+            case KeyType.HERO:
+                return true;
+            case KeyType.UNKNOWN:
+                return dataKey.GetKeyFromType() == Strings.DE_TRUE_RACE_TYPE;
+            default:
+                return false;
+        }
+    }
+
+    private void PopulateImmediateProperties()
+    {
+        foreach (DataKey udk in DataBlock.GetData())
+        {
+            if (!IsImmediateProperty(udk))
+            {
+                continue;
+            }
+
+            switch (udk.GetKeyType())
+            {
+                case KeyType.NAME:
+                    Name = udk.GetValue();
+                    break;
+                case KeyType.FACTION:
+                    FactionId = StringToInt(udk.GetValue());
+                    break;
+                case KeyType.OTHER_FACTION:
+                    OtherFactionId = StringToInt(udk.GetValue());
+                    break;
+                case KeyType.NUMBER:
+                    PeopleNumber = StringToInt(udk.GetValue());
+                    break;
+                case KeyType.TYPE:
+                    Race = udk.GetValue();
+                    break;
+                case KeyType.WEIGHT:
+                    Weight = StringToInt(udk.GetValue());
+                    break;
+                case KeyType.GROUP:
+                    Group = StringToInt(udk.GetValue());
+                    break;
+                case KeyType.PREFIX:
+                    Prefix = udk.GetValue();
+                    break;
+                case KeyType.STATUS:
+                    CombatStatus = (CombatStatusType)StringToInt(udk.GetValue());
+                    break;
+                case KeyType.HITPOINTS:
+                    Hp = udk.GetValue();
+                    break;
+                case KeyType.GUARDING:
+                    IsGuarding = udk.GetValue() == "1";
+                    break;
+                case KeyType.HUNGER:
+                    Hungry = udk.GetValue();
+                    break;
+                case KeyType.HERO:
+                    Hero = udk.GetValue();
+                    break;
+                case KeyType.UNKNOWN:
+                    if (udk.GetKeyFromType() == Strings.DE_TRUE_RACE_TYPE)
+                    {
+                        TrueRaceType = udk.GetValue();
+                    }
+                    break;
+            }
+        }
     }
 
     // Dans UnitModel.cs, vous pourriez ajouter une méthode utilitaire :
@@ -92,8 +195,23 @@ public class UnitModel : EntityModel
         return CollectItems(ref itemsProperties);
     }
 
+    public void ColelctIsConfirmedStatus()
+    {
+        // TODO: compute IsConfirmed
+    }
+
+    /// <summary>
+    /// Collects the data blocks of the unit categories (items, talents, spells, effects...).
+    /// The collection is done only once: the collected data is then reused.
+    /// </summary>
     public void CollectCategoriesData()
     {
+        if (_areCategoriesCollected)
+        {
+            return;
+        }
+        _areCategoriesCollected = true;
+
         int minDepth = DataBlock.GetDepth();
         DataBlock? unitChild = DataBlock.GetNextBlock();
         for (DataBlock? block = unitChild; block != null && block.GetDepth() > minDepth; block = block.GetNextBlock())
@@ -122,27 +240,32 @@ public class UnitModel : EntityModel
         }
     }
 
-    public void CollectData(List<DataKey> data, CRDocument report)
+    /// <summary>
+    /// Collects the unit data from its data block: its categories (items, talents, spells...)
+    /// and its own properties.
+    /// The collection is done only once: the collected data is then reused by any view model
+    /// displaying this unit.
+    /// </summary>
+    /// <param name="report">the CR report</param>
+    public void CollectData(CRDocument report)
     {
-        foreach (DataKey udk in data)
+        if (_isDataCollected)
         {
+            return;
+        }
+
+        _isDataCollected = true;
+        CollectCategoriesData();
+
+        foreach (DataKey udk in DataBlock.GetData())
+        {
+            if (IsImmediateProperty(udk))
+            {
+                continue;
+            }
+
             switch (udk.GetKeyType())
             {
-                case KeyType.NAME:
-                    Name = udk.GetValue();
-                    break;
-                case KeyType.FACTION:
-                    FactionId = StringToInt(udk.GetValue());
-                    break;
-                case KeyType.OTHER_FACTION:
-                    OtherFactionId = StringToInt(udk.GetValue());
-                    break;
-                case KeyType.NUMBER:
-                    PeopleNumber = StringToInt(udk.GetValue());
-                    break;
-                case KeyType.TYPE:
-                    Race = udk.GetValue();
-                    break;
                 case KeyType.AURA:
                     Aura = udk.GetValue();
                     break;
@@ -151,46 +274,21 @@ public class UnitModel : EntityModel
                     break;
                 case KeyType.BUILDING:
                     DataBlock? building = null;
-                    if (report.GetBuilding(ref building, StringToInt(udk.GetValue()))) 
-                    { 
-                        Container = building;
-                        ContainerType = KeyType.BUILDING;
+                    if (report.GetBuilding(ref building, StringToInt(udk.GetValue())))
+                    {
+                        Structure = building;
+                        StructureType = KeyType.BUILDING;
                     }
                     break;
                 case KeyType.SHIP:
-                    DataBlock? ship = null;
-                    if (report.GetShip(ref ship, StringToInt(udk.GetValue()))) 
+                    if (report.FindShip(StringToInt(udk.GetValue()), out ShipModel? ship))
                     {
-                        Container = ship;
-                        ContainerType = KeyType.SHIP;
+                        Structure = ship.Structure;
+                        StructureType = KeyType.SHIP;
                     }
-                    break;
-                case KeyType.WEIGHT:
-                    Weight = StringToInt(udk.GetValue());
-                    break;
-                case KeyType.GROUP:
-                    Group = StringToInt(udk.GetValue());
-                    break;
-                case KeyType.PREFIX:
-                    Prefix = udk.GetValue();
-                    break;
-                case KeyType.STATUS:
-                    CombatStatus = (CombatStatusType)StringToInt(udk.GetValue());
-                    break;
-                case KeyType.HITPOINTS:
-                    Hp = udk.GetValue();
                     break;
                 case KeyType.FAMILIARMAGE:
                     FamiliarMageId = StringToInt(udk.GetValue());
-                    break;
-                case KeyType.GUARDING:
-                    IsGuarding = udk.GetValue() == "1";
-                    break;
-                case KeyType.HUNGER:
-                    Hungry = udk.GetValue();
-                    break;
-                case KeyType.HERO:
-                    Hero = udk.GetValue();
                     break;
                 case KeyType.ORDERS_CONFIRMED:
                 case KeyType.FACTIONSTEALTH:
@@ -201,102 +299,141 @@ public class UnitModel : EntityModel
                 case KeyType.UNKNOWN:
                     switch (udk.GetKeyFromType())
                     {
-                        // ignored :
                         case Strings.NEUTRAL_ALIAS:
                         case Strings.NEUTRAL_TEMP:
                             break;
-                        case Strings.DE_TRUE_RACE_TYPE:
-                            TrueRaceType = udk.GetValue();
-                            break;
                         default:
-                            AddDataProperty(report, udk);
+                            AddDataProperty(udk);
                             break;
                     }
                     break;
                 default:
-                    AddDataProperty(report, udk);
+                    AddDataProperty(udk);
                     break;
             }
         }
-
     }
+    /// <summary>
+    /// Collects the items carried by the unit. The collection is done only once.
+    /// </summary>
+    /// <param name="itemsProperties">the properties of the collected items</param>
+    /// <returns>true when the unit carries at least one item; otherwise, false</returns>
     public bool CollectItems(ref List<DataProperty> itemsProperties)
     {
-        itemsProperties = [];
-        HorsesNumber = 0;
-        CartsNumber = 0;
-        CatapultsNumber = 0;
-        if (Items != null)
+        if (!_areItemsCollected)
         {
-            foreach (DataKey itemKey in Items.GetData())
+            _areItemsCollected = true;
+            CollectCategoriesData();
+            HorsesNumber = 0;
+            CartsNumber = 0;
+            CatapultsNumber = 0;
+            if (Items != null)
             {
-                string itemName = itemKey.GetKeyFromType();
-                int value = StringToInt(itemKey.GetValue());
-                switch (itemName)
+                foreach (DataKey itemKey in Items.GetData())
                 {
-                    case Strings.DE_HORSE:
-                    case Strings.DE_ELFEN_HORSE:
-                        HorsesNumber += value;
-                        break;
-                    case Strings.DE_CART:
-                    // case "Dare": ???
-                        CartsNumber += value;
-                        break;
-                    case Strings.DE_CATAPULT:
-                        CatapultsNumber += value;
-                        break;
-                    default: break;
+                    string itemName = itemKey.GetKeyFromType();
+                    int value = StringToInt(itemKey.GetValue());
+                    switch (itemName)
+                    {
+                        case Strings.DE_HORSE:
+                        case Strings.DE_ELFEN_HORSE:
+                            HorsesNumber += value;
+                            break;
+                        case Strings.DE_CART:
+                        // case "Dare": ???
+                            CartsNumber += value;
+                            break;
+                        case Strings.DE_CATAPULT:
+                            CatapultsNumber += value;
+                            break;
+                        default: break;
+                    }
+                    string itemLevel = $"{value}";
+                    string itemLabel = Labels.Localize(Categories.Item, itemName, [itemLevel]);
+                    _itemsProperties.Add(new DataProperty(Categories.Item, itemName, itemLevel, itemLabel));
                 }
-                string itemLevel = $"{value}";
-                string itemLabel = Labels.Localize(Categories.Item, itemName, [itemLevel]);
-                itemsProperties.Add(new DataProperty(Categories.Item, itemName, itemLevel, itemLabel));
+                _itemsProperties.Sort(CompareProperties);
             }
-            itemsProperties.Sort(CompareProperties);
         }
-        return itemsProperties.Count > 0;
+        itemsProperties = _itemsProperties;
+        return _itemsProperties.Count > 0;
     }
 
+    /// <summary>
+    /// Collects the skills of the unit. The collection is done only once.
+    /// </summary>
+    /// <param name="skillsProperties">the properties of the collected skills</param>
+    /// <returns>true when the unit has at least one skill; otherwise, false</returns>
     public bool CollectSkills(ref List<DataProperty> skillsProperties)
     {
-        skillsProperties = [];
-        RidingSkill = 0;
-        if (Skills != null)
+        if (!_areSkillsCollected)
         {
-            foreach (DataKey skillKey in Skills.GetData())
+            _areSkillsCollected = true;
+            CollectCategoriesData();
+            RidingSkill = 0;
+            if (Skills != null)
             {
-                string skillName = skillKey.GetKeyFromType();
-                int value = skillKey.GetValueInt(1);
-                string skillLevel = $"{value}";
-                string skillLabel = Labels.Localize(Categories.Skill, skillName, [skillLevel]);
-                skillsProperties.Add(new DataProperty(Categories.Skill, skillName, skillLevel, skillLabel));
-                if (RidingSkill == 0 && skillName == Strings.DE_RIDING) 
+                foreach (DataKey skillKey in Skills.GetData())
                 {
-                    RidingSkill = value;
+                    string skillName = skillKey.GetKeyFromType();
+                    int value = skillKey.GetValueInt(1);
+                    string skillLevel = $"{value}";
+                    string skillLabel = Labels.Localize(Categories.Skill, skillName, [skillLevel]);
+                    _skillsProperties.Add(new DataProperty(Categories.Skill, skillName, skillLevel, skillLabel));
+                    if (RidingSkill == 0 && skillName == Strings.DE_RIDING)
+                    {
+                        RidingSkill = value;
+                    }
                 }
+                _skillsProperties.Sort(CompareProperties);
             }
-            skillsProperties.Sort(CompareProperties);
         }
-        return skillsProperties.Count > 0;
+        skillsProperties = _skillsProperties;
+        return _skillsProperties.Count > 0;
     }
     
-    public bool CollectBuildingData(CRDocument report, /*DataBlock? region,*/ ref DataProperty? buildingProperty)
+    /// <summary>
+    /// Collects the data of the structure (a building or a ship) containing this unit, if any.
+    /// The collection is done only once: the collected data is then reused by any view model.
+    /// </summary>
+    /// <param name="report">the CR report</param>
+    /// <param name="containerProperty">the property to be displayed as the container node</param>
+    /// <returns>true when the unit is inside a building or a ship whose data has been collected</returns>
+    public bool CollectContainerData(CRDocument report, ref DataProperty? containerProperty)
     {
-        if (Container == null || ContainerType != KeyType.BUILDING) { return false; }
+        if (!_isContainerDataCollected)
+        {
+            _containerProperty = null;
+            _isContainerDataCollected = StructureType == KeyType.SHIP
+                ? CollectShipData(report, ref _containerProperty)
+                : CollectBuildingData(report, ref _containerProperty);
+        }
+        containerProperty = _containerProperty;
+        return _isContainerDataCollected;
+    }
+
+    /// <summary>
+    /// Collects the data of the building containing this unit.
+    /// Called once only, by <see cref="CollectContainerData"/>.
+    /// </summary>
+    private bool CollectBuildingData(CRDocument report, /*DataBlock? region,*/ ref DataProperty? buildingProperty)
+    {
+        if (Structure == null || StructureType != KeyType.BUILDING) { return false; }
         BuildingModel? buildingModel = null;
-        if (!report.FindBuilding(Container!.GetId(), out buildingModel))
+        if (!report.FindBuilding(Structure!.GetId(), out buildingModel))
         {
             return false;
         }
-        //BuildingModel buildingModel = new(Container);
+        //BuildingModel buildingModel = new(Structure);
         if (buildingModel.CollectData(report/*, region*/, ref buildingProperty))
         {
-            ContainerOwnerName = buildingModel.OwnerName;
-            ContainerOwnerUnit = buildingModel.OwnerUnit;
-            ContainerName = buildingModel.Name;
-            ContainerTypeName = buildingModel.Type;
-            ContainerSize = buildingModel.Size;
-            ContainerDataProperties.AddRange(buildingModel.DataProperties);
-            ContainerEffects.AddRange(buildingModel.Effects);
+            StructureOwnerName = buildingModel.OwnerName;
+            StructureOwnerUnit = buildingModel.OwnerUnit;
+            StructureName = buildingModel.Name;
+            StructureTypeName = buildingModel.Type;
+            StructureSize = buildingModel.Size;
+            StructureDataProperties.AddRange(buildingModel.DataProperties);
+            StructureEffects.AddRange(buildingModel.Effects);
             // No specific building data
             return true;
         }
@@ -305,29 +442,27 @@ public class UnitModel : EntityModel
     }
 
     /// <summary>
-    /// Collect ship data if unit is inside a ship.
+    /// Collects the data of the ship containing this unit.
+    /// Called once only, by <see cref="CollectContainerData"/>.
     /// </summary>
-    /// <param name="report"></param>
-    /// <param name="shipProperty"></param>
-    /// <returns>true if unit is inside a ship and ship data has benn successfully collectexd; otherwise, false</returns>
-    public bool CollectShipData(CRDocument report, /*DataBlock? region,*/ ref DataProperty? shipProperty)
+    private bool CollectShipData(CRDocument report, /*DataBlock? region,*/ ref DataProperty? shipProperty)
     {
-        if (Container == null || ContainerType != KeyType.SHIP) { return false; }
+        if (Structure == null || StructureType != KeyType.SHIP) { return false; }
         ShipModel? shipModel = null;
-        if (!report.FindShip(Container!.GetId(), out shipModel))
+        if (!report.FindShip(Structure!.GetId(), out shipModel))
         {
             return false;
         }
-        //ShipModel shipModel = new(Container);
+        //ShipModel shipModel = new(Structure);
         if (shipModel!.CollectData(report, /*region,*/ ref shipProperty))
         {
-            ContainerOwnerName = shipModel.OwnerName;
-            ContainerOwnerUnit = shipModel.OwnerUnit;
-            ContainerName = shipModel.Name;
-            ContainerTypeName = shipModel.Type;
-            ContainerSize = shipModel.Size;
-            ContainerDataProperties.AddRange(shipModel.DataProperties);
-            ContainerEffects.AddRange(shipModel.Effects);
+            StructureOwnerName = shipModel.OwnerName;
+            StructureOwnerUnit = shipModel.OwnerUnit;
+            StructureName = shipModel.Name;
+            StructureTypeName = shipModel.Type;
+            StructureSize = shipModel.Size;
+            StructureDataProperties.AddRange(shipModel.DataProperties);
+            StructureEffects.AddRange(shipModel.Effects);
             // Specific ship data
             ShipPercentDamage = shipModel.DamagePercent;
             ShipCoast = shipModel.Coast;

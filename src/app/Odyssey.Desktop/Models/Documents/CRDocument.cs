@@ -1,4 +1,5 @@
-﻿using Odyssey.Core.Parsing;
+﻿using Markdig.Syntax;
+using Odyssey.Core.Parsing;
 using Odyssey.Extensions;
 using Odyssey.Models.Data;
 using Odyssey.Models.Localization;
@@ -8,8 +9,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Numerics;
-
+using System.Text;
+using System.Xml.Linq;
 namespace Odyssey.Models.Documents;
 
 public enum OwnerType
@@ -19,7 +20,7 @@ public enum OwnerType
     ALLY,
 }
 
-public class CRDocument : EresseaDocument
+public class CRDocument : EresseaDocument, ILocationResolver
 {
     private static readonly int HELP_GUARD = 16;
 
@@ -30,35 +31,73 @@ public class CRDocument : EresseaDocument
     private const int MESSAGE_TYPE_INCOME               = 771334452;
     private const int MESSAGE_TYPE_COST                 = 443066738;
 
-    private const int MESSAGE_TYPE_UNIT_NOT_FOUND       = 987417476;
-    private const int MESSAGE_TYPE_RECEIVE_SOMETHING    = 1235024123;
-    private const int MESSAGE_TYPE_GIVE_SOMETHING       = 5281483;
-    private const int MESSAGE_TYPE_TRANSFER_PERSONS     = 815345085;
-    private const int MESSAGE_TYPE_MAKE_SOMETHING       = 2087428775;
-    private const int MESSAGE_TYPE_SELL_SOMETHING       = 1478912224;
+    public const int MESSAGE_TYPE_UNIT_NOT_FOUND       = 987417476;
+    public const int MESSAGE_TYPE_RECEIVE_SOMETHING    = 1235024123;
+    public const int MESSAGE_TYPE_GIVE_SOMETHING       = 5281483;
+    public const int MESSAGE_TYPE_TRANSFER_PERSONS     = 815345085;
+    public const int MESSAGE_TYPE_MAKE_SOMETHING       = 2087428775;
+    public const int MESSAGE_TYPE_SELL_SOMETHING       = 1478912224;
+
     // LATER: Check if find herb or also some other things
-    private const int MESSAGE_TYPE_FIND_SOMETHING       = 1511758069;
+    public const int MESSAGE_TYPE_FIND_SOMETHING       = 1511758069;
+
     // LATER: Check if pay only for luxury items or for some other things
-    private const int MESSAGE_TYPE_PAY_FOR_ITEMS        = 170076;
+    public const int MESSAGE_TYPE_PAY_FOR_ITEMS        = 170076;
+
     // LATER: Check if buy only for luxury items or for some other things
-    private const int MESSAGE_TYPE_BUY_LUXURY_ITEMS     = 1549031288;
+    public const int MESSAGE_TYPE_BUY_LUXURY_ITEMS     = 1549031288;
+
     // LATER: Check if it's also for some other things
     // 1412: This region is guarded by Vuk Karadžić (apg7), a non-allied unit.
     // global_map:  'MOVE nw' - Begleiter (kjuo) is guarding the region.
-    private const int MESSAGE_TYPE_ROUTE_GUARD_ISSUE    = 428515567;
+    public const int MESSAGE_TYPE_ROUTE_GUARD_ISSUE    = 428515567;
+
     // WALK / RIDE / SAIL (ROUTE COMMAND)
-    private const int MESSAGE_TYPE_MOVE                 = 1242100855;
-    private const int MESSAGE_TYPE_SAIL                 = 2026874001;
-    private const int MESSAGE_TYPE_REGENERATE_AUTA      = 442874678;
+    public const int MESSAGE_TYPE_MOVE                 = 1242100855;
+    public const int MESSAGE_TYPE_SAIL                 = 2026874001;
+    public const int MESSAGE_TYPE_REGENERATE_AUTA      = 442874678;
 
     // active factions (could be more than one in case of alliances).
     // An active faction is a faction for which the player has units (and can set commands for them) in the current report.
-    private Dictionary<int, FactionModel> ActiveFactions = [];
+    private readonly Dictionary<int, FactionModel> ActiveFactions = [];
+
+    private readonly List<BattleModel> _battles = [];
 
     public bool IsActiveFaction(int id)
     {
         return ActiveFactions.ContainsKey(id);
     }
+
+    /// <summary>Ids of the factions the player can play in this report (allies may have several).</summary>
+    public IReadOnlyCollection<int> ActiveFactionIds => ActiveFactions.Keys;
+
+    /// <summary>Ids of the factions allied to one of the active factions.</summary>
+    public IReadOnlyCollection<int> AlliedFactionIds
+    {
+        get
+        {
+            if (ActiveFactions.Count == 0)
+            {
+                return Array.Empty<int>();
+            }
+
+            var ids = new HashSet<int>();
+            foreach (FactionModel faction in ActiveFactions.Values)
+            {
+                foreach (int alliedId in faction.Alliances.Keys)
+                {
+                    if (alliedId > 0 && !ActiveFactions.ContainsKey(alliedId))
+                    {
+                        ids.Add(alliedId);
+                    }
+                }
+            }
+
+            return ids.ToArray();
+        }
+    }
+
+    public List<BattleModel> Battles { get { return _battles; } }
 
     // The first active faction encountered in the report.
     public FactionModel ActiveFaction { get; private set; }
@@ -67,6 +106,8 @@ public class CRDocument : EresseaDocument
 
     public Rectangle KnownRegionsBound { get; private set; } = new Rectangle();
     public Rectangle regionsBound { get; private set; } = new Rectangle();
+
+    
 
     /// <summary>
     /// Returns the short name of the document.
@@ -95,25 +136,19 @@ public class CRDocument : EresseaDocument
     public bool HasData() => Blocks.Count > 0;
     public bool IsEmpty() => !HasData();
     private LinkedList<DataBlock> Blocks { get; set; }
-
     private bool OptimizeDataConsuming { get; set; }
+    private Dictionary<int, BattleDataBlock> BattlesBlocks { get; set; } = [];
+    private Dictionary<int, DataBlock> Groups { get; set; } = [];
 
     public LinkedListNode<DataBlock>? FirstBlock { get { return Blocks?.First; } }
     public LinkedListNode<DataBlock>? LastBlock { get { return Blocks?.Last; } }
-    public Dictionary<int, DataBlock> Units { get; private set; } = [];
-    public Dictionary<int, DataBlock> Regions { get; private set; } = [];
+    public Dictionary<int, UnitModel> Units { get; private set; } = [];
     public Dictionary<int, ShipModel> Ships { get; private set; } = [];
     public Dictionary<int, BuildingModel> Buildings { get; private set; } = [];
-
-    public Dictionary<int, RegionModel> RegionsWithContainer { get; private set; } = [];
-    public Dictionary<int, DataBlock> Islands { get; private set; } = [];
-    public Dictionary<int, DataBlock> Battles { get; private set; } = [];
-    public Dictionary<int, DataBlock> Groups { get; private set; } = [];
+    public Dictionary<int, RegionModel> RegionsWithStructure { get; private set; } = [];
+    public Dictionary<int, IslandDataBlock> Islands { get; private set; } = [];
     public Dictionary<int, WorldPlane> Planes { get; private set; } = [];
     private Dictionary<int, FactionModel> Factions { get; set; } = [];
-
-    public int RegionsNumber { get { return Regions.Count; } }
-    public int SeenRegionsNumber { get; private set; } = 0;
     public int Turn { get; private set; } = -1;
 
     public OrdersDocument OrdersDocument { get; private set; }
@@ -135,8 +170,8 @@ public class CRDocument : EresseaDocument
         }
     }
 
-    public CRDocument() : this("", []) 
-    { 
+    public CRDocument() : this("", [])
+    {
     }
 
     // data of selection state (what region, what unit is actually selected?)
@@ -333,20 +368,40 @@ public class CRDocument : EresseaDocument
     }
     */
 
-    public DataBlock? FindUnit(int id)
+    public UnitModel? GetUnit(int id)
     {
-        return Units.TryGetValue(id, out var unit) ? unit : null;
+        if (Units.TryGetValue(id, out UnitModel? unitModel)) { return unitModel; }
+        return null;
+    }
+
+    public bool FindUnit(int id, out UnitModel? unitModel)
+    {
+        return Units.TryGetValue(id, out unitModel);
+    }
+    public ShipModel? GetShip(int id)
+    {
+        if (Ships.TryGetValue(id, out ShipModel? shipModel)) { return shipModel; }
+        return null;
     }
 
     public bool FindShip(int id, out ShipModel? shipModel)
     {
         return Ships.TryGetValue(id, out shipModel);
     }
-
-    public DataBlock? FindShip(int id)
+    
+    public BuildingModel? GetBuilding(int id)
     {
-        return Ships.TryGetValue(id, out var ship) ? ship.Container : null;
+        if (Buildings.TryGetValue(id, out BuildingModel? buildingModel)) { return buildingModel; }
+        return null;
     }
+
+    /*
+    private DataBlock? FindShip(int id)
+    {
+        return Ships.TryGetValue(id, out var ship) ? ship.Structure : null;
+    }
+    */
+
 
     public bool FindBuilding(int id, out BuildingModel? buildingModel)
     {
@@ -355,7 +410,44 @@ public class CRDocument : EresseaDocument
 
     public DataBlock? FindBuilding(int id)
     {
-        return Buildings.TryGetValue(id, out var building) ? building.Container : null;
+        return Buildings.TryGetValue(id, out var building) ? building.Structure : null;
+    }
+
+    /// <summary>
+    /// Resolves the entity model (region, unit, ship or building) identified by the specified id.
+    /// </summary>
+    /// <param name="id">The id of the entity. For regions it is the region id; for units, ships and
+    /// buildings it is the block id.</param>
+    /// <param name="item">When this method returns, contains the resolved entity model if found; otherwise <see langword="null"/>.</param>
+    /// <returns><see langword="true"/> if an entity model matching the id is found; otherwise <see langword="false"/>.</returns>
+    public bool ResolveItem(int id, out EntityModel? item)
+    {
+        if (Units.TryGetValue(id, out UnitModel? unit))
+        {
+            item = unit;
+            return true;
+        }
+        if (Ships.TryGetValue(id, out ShipModel? ship))
+        {
+            item = ship;
+            return true;
+        }
+        if (Buildings.TryGetValue(id, out BuildingModel? building))
+        {
+            item = building;
+            return true;
+        }
+        foreach (WorldPlane plane in Planes.Values)
+        {
+            if (plane.OccupiedRegions.TryGetValue(id, out RegionModel? region) ||
+                plane.UnoccupiedRegions.TryGetValue(id, out region))
+            {
+                item = region;
+                return true;
+            }
+        }
+        item = null;
+        return false;
     }
 
     public DataBlock? FindGroup(int id)
@@ -368,29 +460,101 @@ public class CRDocument : EresseaDocument
         return Islands.TryGetValue(id, out var island) ? island : null;
     }
 
+    /*
     public DataBlock? FindBattleFromPosition(int x, int y)
     {
         // LATER: handle battle on other planes (astral...)
         return Battles.TryGetValue(Coordinates.GetId(x, y), out var battle) ? battle : null;
     }
+    */
 
+    /*
     public bool FindBattleFromPosition(ref DataBlock? battle, int x, int y)
     {
         // LATER: handle battle on other planes (astral...)
         battle = FindBattleFromPosition(x, y);
         return battle != null;
     }
+    */
 
-    public DataBlock? FindRegionFromPosition(int x, int y, PlaneType plane = PlaneType.WORLD)
+    /*
+    public bool FindPlaneRegion(int id, out RegionModel? regionModel)
     {
-        // TODO: handle region on other planes (astral...)
-        return Regions.TryGetValue(Coordinates.GetId(x, y, plane), out var region) ? region : null;
+        // TODO
+  
+        int plane = regionModel.GetPlane();
+        if (Planes[id].OccupiedRegions.TryGetValue(id, out regionModel))
+        {
+            return regionModel.GetPlane()OccupiedRegions.TryGetValue(id, out regionModel);
+        }
+
+        regionModel = null;
+        return false;
+    }
+    */
+
+    public bool FindOccupiedRegion(int x, int y, PlaneType plane, out RegionModel? regionModel)
+    {
+        int p = (int)plane;
+        int regionId = Coordinates.GetId(x, y, plane);
+        if (!Planes[p].OccupiedRegions.TryGetValue(regionId, out regionModel))
+        {
+            regionModel = null;
+            return false;
+        }
+        return true;
     }
 
-    public bool FindRegionFromPosition(ref DataBlock? region, int x, int y, PlaneType plane = PlaneType.WORLD)
+    public bool FindUnoccupiedRegion(int x, int y, PlaneType plane, out RegionModel? regionModel)
+    {
+        int p = (int)plane;
+        int regionId = Coordinates.GetId(x, y, plane);
+        if (!Planes[p].UnoccupiedRegions.TryGetValue(regionId, out regionModel))
+        {
+            regionModel = null;
+            return false;
+        }
+        return true;
+    }
+
+    public bool FindRegion(int x, int y, PlaneType plane, out RegionModel? regionModel)
+    {
+        int p = (int)plane;
+        int regionId = Coordinates.GetId(x, y, plane);
+        if (!Planes[p].OccupiedRegions.TryGetValue(regionId, out regionModel) && !Planes[p].UnoccupiedRegions.TryGetValue(regionId, out regionModel))
+        {
+            regionModel = null;
+            return false;
+        }
+        return true;
+    }
+
+
+    public RegionDataBlock? FindRegionFromPosition(int x, int y, PlaneType plane = PlaneType.WORLD)
+    {
+        if (FindRegion(x, y, plane, out RegionModel? regionModel))
+        { 
+            return regionModel!.DataBlock as RegionDataBlock;
+        }
+        return null;
+    }
+
+    public bool FindRegionFromPosition(ref RegionDataBlock? region, int x, int y, PlaneType plane = PlaneType.WORLD)
     {
         region = FindRegionFromPosition(x, y, plane);
         return region != null;
+    }
+
+    public bool ResolveLocation(int x, int y, PlaneType plane, out ILocation? location)
+    {
+        RegionDataBlock? region = null;
+        if (FindRegionFromPosition(ref region, x, y, plane))
+        {
+            location = region!;
+            return true;
+        }
+        location = null;
+        return false;
     }
 
     public DataBlock? Island(int id)
@@ -428,15 +592,22 @@ public class CRDocument : EresseaDocument
     /// </summary>
     /// <param name="unit"></param>
     /// <param name="confirmed"></param>
-    public void SetConfirmed(ref DataBlock unit, bool confirmed = true)
+    public void SetConfirmed(in DataBlock unit, bool confirmed = true)
     {
         if (confirmed != IsConfirmed(unit))
         {
             RegionAttachment? stats = null;
-            DataBlock? region = null;
-            if (GetSeenParent(ref region, unit))
+            RegionDataBlock? region = null;
+            if (FindRegionFrom(ref region, unit))
             {
-                stats = region!.GetAttachment() as RegionAttachment;
+                if (region is not null)
+                {
+                    stats = region!.GetAttachment() as RegionAttachment;
+                }
+                else
+                {
+                    Debug.WriteLine($"SetConfirmed::region not found for {unit}");
+                }
             }
             if (confirmed)
             {
@@ -466,10 +637,13 @@ public class CRDocument : EresseaDocument
     /// found; otherwise, <see langword="null"/>.</param>
     /// <param name="child">The child <see cref="DataBlock"/> for which to find the parent. This parameter is read-only.</param>
     /// <returns><see langword="true"/> if a parent <see cref="DataBlock"/> is found; otherwise, <see langword="false"/>.</returns>
-    public static bool GetSeenParent(ref DataBlock? parent, in DataBlock child)
+    public static bool FindRegionFrom(ref RegionDataBlock? regionParent, in DataBlock child)
     {
+        // TODO optimize this algorithm by using a dictionary of child-parent relationships (or a dictionary of child-ancestor relationships).
+        // Should be better to use child locationId
         int iterationsNumber = 0;
-        //DataBlock child = child.Node;
+        DataBlock parent;
+        // Remonte au premier parent de profondeur inféreieure en parcourant vers l'arrière (using previous block) la liste chaînée des blocs de données.
         for (parent = child; parent != null; parent = parent.GetPreviousBlock())
         {
             iterationsNumber++;
@@ -480,7 +654,7 @@ public class CRDocument : EresseaDocument
                 return true;
             }
         }
-        Debug.WriteLine("[DOCUMENT] WARNING | GetSeenParent: not found ]");
+        Debug.WriteLine("[DOCUMENT] WARNING | FindRegionFrom: not found ]");
         return false;
     }
 
@@ -511,7 +685,7 @@ public class CRDocument : EresseaDocument
         return false;
     }
 
-    public static bool HasSeenChild(in DataBlock parent, in DataBlock child)
+    public static bool HasSeenChild(in RegionDataBlock parent, in DataBlock child)
     {
         int depth = parent.GetDepth();
         var firstChild = parent?.GetNextBlock();
@@ -644,33 +818,39 @@ public class CRDocument : EresseaDocument
         return GetChild(ref commands, unitNode, BlockType.COMMANDS);
     }
 
+    /*
     public bool GetUnit(ref DataBlock? unit, int id)
     {
         unit = FindUnit(id);
         return unit != null;
     }
-    public bool GetShip(ref DataBlock? ship, int id)
+    */
+    /*
+    public bool GetShip(ref ShipModel? ship, int id)
     {
-        ship = FindShip(id);
+        return FindShip(id);
         return ship != null;
     }
+    */
+
     public bool GetBuilding(ref DataBlock? building, int id)
     {
         building = FindBuilding(id);
         return building != null;
     }
+
     public bool GetGroup(ref DataBlock? group, int id)
     {
         group = FindGroup(id);
         return group != null;
     }
 
-    public bool GetSeenRegion(ref DataBlock? region, in DataBlock block)
+    public bool GetSeenRegion(ref RegionDataBlock? region, in ILocation location)
     {
-        return FindRegionFromPosition(ref region, block.GetX(), block.GetY());
+        return FindRegionFromPosition(ref region, location.X, location.Y);
     }
 
-    public bool GetRegion(ref DataBlock @out, int x, int y, PlaneType plane)
+    public bool GetRegion(ref RegionDataBlock @out, int x, int y, PlaneType plane)
     {
         return FindRegionFromPosition(ref @out, x, y, plane);
     }
@@ -890,12 +1070,12 @@ m_blocks.push_back(*old_r);
         return unit.GetUIName();
     }
 
-    public DataBlock? GetMessageTarget(DataBlock msg)
+    public EntityModel? GetMessageTarget(DataBlock msg)
     {
-        DataBlock? unitTarget = null;
-        DataBlock? shipTarget = null;
-        DataBlock? buildingTarget = null;
-        DataBlock? regionTarget = null;
+        UnitModel? unitTarget = null;
+        ShipModel? shipTarget = null;
+        BuildingModel? buildingTarget = null;
+        RegionModel? regionTarget = null;
         int unitId = 0;
         int shipId = 0;
         int buildingId = 0;
@@ -903,19 +1083,18 @@ m_blocks.push_back(*old_r);
 
         if (msg.GetAllReferences(ref unitId, ref shipId, ref buildingId, ref location))
         {
-            if (unitId > 0 && GetUnit(ref unitTarget, unitId))
+            if (unitId > 0 && FindUnit(unitId, out unitTarget))
             {
                 return unitTarget;
             }
-            if (shipId > 0 && GetShip(ref shipTarget, shipId))
+            if (shipId > 0 && FindShip(shipId, out shipTarget))
             {
                 return shipTarget;
             }
-            if (buildingId > 0 && GetBuilding(ref buildingTarget, buildingId))
+            if (buildingId > 0 && FindBuilding(buildingId, out buildingTarget))
             {
                 return buildingTarget;
             }
-
             //return unitTarget ?? shipTarget ?? buildingTarget /*?? regionTarget*/;
         }
 
@@ -926,7 +1105,9 @@ m_blocks.push_back(*old_r);
             int x = int.Parse(parts[0]);
             int y = int.Parse(parts[1]);
             PlaneType plane = (PlaneType)int.Parse(parts[2]);
-            if (FindRegionFromPosition(ref regionTarget, x, y, plane))
+            // TODO: check if it's only for populated region
+            if (FindOccupiedRegion(x, y, plane, out regionTarget))
+            //if (FindRegionFromPosition(ref regionTarget, x, y, plane))
             {
                 return regionTarget;
             }
@@ -935,12 +1116,63 @@ m_blocks.push_back(*old_r);
         return null;
     }
 
+    public List<EntityModel> GetMessageTargets(DataBlock msg)
+    {
+        RegionDataBlock? regionTarget = null;
+        int unitId = 0;
+        int shipId = 0;
+        int buildingId = 0;
+        string location = string.Empty;
+
+        List<EntityModel> targets = [];
+
+        if (msg.GetAllReferences(ref unitId, ref shipId, ref buildingId, ref location))
+        {
+            if (unitId > 0 && FindUnit(unitId, out UnitModel? unit))
+            {
+                targets.Add(unit!);
+            }
+            if (shipId > 0 && FindShip(shipId, out ShipModel? ship))
+            {
+                targets.Add(ship!);
+            }
+            if (buildingId > 0 && FindBuilding(buildingId, out BuildingModel? building))
+            {
+                targets.Add(building!);
+            }
+        }
+
+        if (!string.IsNullOrEmpty(location))
+        {
+            // TODO LATER: Utils.Converters::ExtractCoordinates should be used
+            var parts = location.Split(' ');
+            int x = int.Parse(parts[0]);
+            int y = int.Parse(parts[1]);
+            PlaneType plane = (PlaneType)int.Parse(parts[2]);
+            // TODO: check if it"s only for populated regions or not 
+
+            //if (FindRegionFromPosition(ref regionTarget, x, y, plane))
+            
+            if (FindOccupiedRegion(x, y, plane, out RegionModel? regionModel))
+            {
+                targets.Add(regionModel!);
+            }
+            else
+            {
+                Debug.WriteLine($"GetMessageTargets::region not found for = {location}");
+            }
+        }
+
+        return targets;
+    }
+
+    /*
     public List<DataBlock> GetMessageTargets(DataBlock msg)
     {
         DataBlock? unitTarget = null;
         DataBlock? shipTarget = null;
         DataBlock? buildingTarget = null;
-        DataBlock? regionTarget = null;
+        RegionDataBlock? regionTarget = null;
         int unitId = 0;
         int shipId = 0;
         int buildingId = 0;
@@ -979,6 +1211,7 @@ m_blocks.push_back(*old_r);
 
         return targets;
     }
+    */
 
     /// <summary>
     /// Parse all messages for the active faction to compute for each region :
@@ -1067,7 +1300,7 @@ m_blocks.push_back(*old_r);
                 List<DataKey> list = block.GetData();
                 int amount = 0;
                 int mode = 0;
-                DataBlock? messageRegion = null;
+                RegionDataBlock? messageRegion = null;
 
                 // Parse the message data keys to find the region (by its coordinates), amount and type of cost
                 foreach (var dataKey in list)
@@ -1146,6 +1379,10 @@ m_blocks.push_back(*old_r);
         CreateHierarchy();
         UpdateHashTables();
         FloodIslandNames();
+
+        // Below collection could be optimized (done while traversing the datablocks) but it is not a big deal for now.
+        // Collect battles by traversing the datablocks from the first to the first encountered region datablock
+        CollectBattles();
     }
 
     /// <summary>
@@ -1268,7 +1505,9 @@ m_blocks.push_back(*old_r);
         Dictionary<int, int> alliedStatus = CollectAlliedStatus(ref currentNode);
         // any temporary faction node (matching a monster or something like that) will be inserted after the last ALLIIANZ block
         LinkedListNode<DataBlock>? insertFactionNode = currentNode;
-        DataBlock? region = null;
+        RegionDataBlock? currentRegion = null;
+        RegionModel? regionModel = null;
+        int regionId = 0;
         int unconfirmed = 0;
         int regionOwn = 0;
         int regionAlly = 0;
@@ -1276,7 +1515,7 @@ m_blocks.push_back(*old_r);
         // Units that got taxes (MSG id 1264208711); the regions will get a coins icon
         HashSet<int> unitGotTaxes = [];
 
-        int nbSeenRegions = 0;
+        int nbOccupiedRegions = 0;
         int nbVisibilityLighthouse = 0;
         int nbVisibilityTraveler = 0;
         int nbVisibilityNeighbours = 0;
@@ -1284,8 +1523,9 @@ m_blocks.push_back(*old_r);
         int nbVisibilityOther = 0;
         LinkedListNode<DataBlock>? blockNodeToChange = null;
         LinkedListNode<DataBlock>? previousNode = null;
-        DataBlock? firstSeenRegion = null;
-        DataBlock? lastSeenRegion = null;
+        DataBlock? firstOccupiedRegion = null;
+        FactionModel? factionModel = null;
+        //DataBlock? lastOccupiedRegion = null;
 
         // Iterate through all blocks from current node
         for (var node = currentNode; node != null; node = node.Next)
@@ -1296,48 +1536,61 @@ m_blocks.push_back(*old_r);
             switch (btype)
             {
                 case BlockType.BATTLE:
-                    // Add battle to list
-                    Battles[Coordinates.GetId(b.GetX(), b.GetY(), (PlaneType)blockId)] = b;
+                    // Note: parent in hierachy is a FACTION or VERSION block 
+                    BattleDataBlock battle = (BattleDataBlock)b;
+                    // TODO: several battleblock can have the same id (there is a battle for each faction present in the region)
+                    BattlesBlocks[Coordinates.GetId(battle.GetX(), battle.GetY(), (PlaneType)blockId)] = battle;
                     break;
                 case BlockType.REGION:
-                    // Add region to region list
-                    if (region != null)
+                    // Add the current region to region list before to set currrent to the new region
+                    if (currentRegion is not null)
                     {
-                        if (SetRegionStats(region, regionOwn, regionAlly, regionEnemy, unconfirmed))
+                        bool isOccupied = false;
+                        if (SetRegionStats(currentRegion, regionOwn, regionAlly, regionEnemy, unconfirmed))
                         {
-                            SetRegionAsSeen(region, OptimizeDataConsuming ? blockNodeToChange : null);
-                            nbSeenRegions++;
-                            if (firstSeenRegion == null)
+                            isOccupied = true;
+                            SetRegionAsExplorable(currentRegion, OptimizeDataConsuming ? blockNodeToChange : null);
+                            nbOccupiedRegions++;
+                            if (firstOccupiedRegion == null)
                             {
-                                firstSeenRegion = region;
+                                firstOccupiedRegion = currentRegion;
                             }
-                            lastSeenRegion = region;
+                            //lastOccupiedRegion = region;
                             blockNodeToChange = null;
                         }
                         else
                         {
                             if (blockNodeToChange == null)
                             {
-                                blockNodeToChange = region.Node?.Previous;
+                                blockNodeToChange = currentRegion.Node?.Previous;
                             }
                         }
+                        
+                        Planes[regionModel!.GetPlane()].AddRegion(regionModel!, isOccupied);
                     }
-                    region = b;
+                    else
+                    {
+                        Debug.WriteLine($"[DOCUMENT] region is null");
+                    }
+
+                    currentRegion = b as RegionDataBlock;
+                    regionModel = new RegionModel(currentRegion!);
+                    regionId = Coordinates.GetId(currentRegion!.GetX(), currentRegion!.GetY(), (PlaneType)blockId);
                     // unset all flags except BLOCKID flags
-                    region.SetFlags(region.GetFlags() & ((int)Flag.BLOCKID_BIT0 | (int)Flag.BLOCKID_BIT1));
+                    currentRegion!.SetFlags(currentRegion.GetFlags() & ((int)Flag.BLOCKID_BIT0 | (int)Flag.BLOCKID_BIT1));
                     unconfirmed = regionOwn = regionAlly = regionEnemy = 0;
 
                     String visibility = b.Value(KeyType.VISIBILITY);
                     if (visibility == Strings.EN_REGION_VISIBILITY_VALUE_LIGHTHOUSE)
                     {
                         // region is seen by lighthouse
-                        region.AddFlags((int)Flag.LIGHTHOUSE);
+                        currentRegion.AddFlags((int)Flag.LIGHTHOUSE);
                         nbVisibilityLighthouse++;
                     }
                     else if (visibility == Strings.EN_REGION_VISIBILITY_VALUE_TRAVEL)
                     {
                         // region is seen by traveling through
-                        region.AddFlags((int)Flag.TRAVEL);
+                        currentRegion.AddFlags((int)Flag.TRAVEL);
                         nbVisibilityTraveler++;
                     }
                     else
@@ -1353,35 +1606,22 @@ m_blocks.push_back(*old_r);
                         else
                         {
                             nbVisibilityOther++;
-                            Debug.WriteLine($"[DOCUMENT] Unknown visibility value '{visibility}' for region {region} ({region.GetId()})");
+                            Debug.WriteLine($"[DOCUMENT] Unknown visibility value '{visibility}' for region {currentRegion} ({currentRegion.GetId()})");
                         }
                     }
 
-                    int regionId = Coordinates.GetId(b.GetX(), b.GetY(), (PlaneType)blockId);
-                    if (blockId.IsSpecialPlane())
+                    if (!Planes.TryGetValue(blockId, out var plane))
                     {
-                        // region on another plane than the standard one
-                        if (!Planes.TryGetValue(blockId, out var plane))
-                        {
-                            plane = new WorldPlane((PlaneType)blockId);
-                            Planes[blockId] = plane;
-                        }
-                        Planes[blockId].AddRegion(b);
-                        //Regions[regionId] = b;
+                        plane = new WorldPlane((PlaneType)blockId);
+                        Planes[blockId] = plane;
                     }
-                    else
-                    {
-                        Regions[regionId] = b;
-                        unconfirmed++;
-                    }
-
 
                     // get region owner (E3 only)
                     int ownerFactionId = b.ValueInt(Strings.EN_REGION_OWNER, -1);
                     // TODO: check if -1 can be a region owner (monster...), because in that case it could be a faction with -1 id
                     if (ownerFactionId != -1)
                     {
-                        Debug.WriteLine($"[DOCUMENT] region {region} ({region.GetId()}) owner faction id: {ownerFactionId}");
+                        Debug.WriteLine($"[DOCUMENT] region {currentRegion} ({currentRegion.GetId()}) owner faction id: {ownerFactionId}");
 
                         // All factions were loaded before any region, so we can check owner now
                         FactionModel? ownerFactionModel = Factions.GetValueOrDefault(ownerFactionId);
@@ -1389,7 +1629,7 @@ m_blocks.push_back(*old_r);
                         {
                             if (ownerFactionModel.IsActive)
                             {
-                                region.AddFlags((int)Flag.REGION_OWN);
+                                currentRegion.AddFlags((int)Flag.REGION_OWN);
                             }
                             else
                             {
@@ -1398,11 +1638,11 @@ m_blocks.push_back(*old_r);
                                     // TODO: change alliedStatus management for multi active factions
                                     if ((alliedStatus[ownerFactionId] & HELP_GUARD) != 0)
                                     {
-                                        region.AddFlags((int)Flag.REGION_ALLY);
+                                        currentRegion.AddFlags((int)Flag.REGION_ALLY);
                                     }
                                     else
                                     {
-                                        region.AddFlags((int)Flag.REGION_ENEMY);
+                                        currentRegion.AddFlags((int)Flag.REGION_ENEMY);
                                     }
                                 }
                             }
@@ -1416,11 +1656,11 @@ m_blocks.push_back(*old_r);
                     break;
 
                 case BlockType.SHIP:
-                    AddShipInRegion(b, blockId, region);
+                    AddShipInRegion((ShipDataBlock)b, blockId, regionModel!);
                     break;
 
                 case BlockType.BUILDING:
-                    AddBuildingInRegion(b, blockId, region);
+                    AddBuildingInRegion((BuildingDataBlock)b, blockId, regionModel!);
                     break;
 
                 case BlockType.MESSAGE:
@@ -1439,12 +1679,30 @@ m_blocks.push_back(*old_r);
                     break;
 
                 case BlockType.UNIT:
-                    Units[blockId] = b;
-                    int factionId = b.ValueInt(KeyType.FACTION, (int)SpecialFaction.ANONYMOUS);
-                    // Index unit by region (if we have a current region)
-                    if (region != null)
+                    //Units[blockId] = (UnitDataBlock)b;
+                    AddUnitInRegion((UnitDataBlock)b, blockId, regionModel!, out var unitModel);
+                    if (unitModel is not null && !string.IsNullOrEmpty(unitModel.Race))
                     {
-                        int regionKey = Coordinates.GetId(region.GetX(), region.GetY(), (PlaneType)region.GetId());
+                        Debug.WriteLine($"[DOCUMENT] unit {unitModel} [{blockId}] has race {unitModel.Race}");
+                    }
+                    int factionId = b.ValueInt(KeyType.FACTION, (int)SpecialFaction.ANONYMOUS);
+                    if (factionModel is not null && factionId != factionModel.Id)
+                    {
+                        Debug.WriteLine($"[DOCUMENT] unit {b} [{blockId}] has a different faction id {factionId} than the current faction {factionModel.Id}");
+                    }
+
+                    if (unitModel is not null && factionId > 0)
+                    {
+                        FactionModel? unitFaction = GetFaction(factionId);
+                        if (unitFaction is not null && unitFaction.Race == FactionRace.Unknown)
+                        {
+                            unitFaction.TrySetRaceFromUnit(unitModel);
+                        }
+                    }
+                    // Index unit by region (if we have a current region)
+                    if (currentRegion is not null)
+                    {
+                        int regionKey = Coordinates.GetId(currentRegion.GetX(), currentRegion.GetY(), (PlaneType)currentRegion.GetId());
                         if (regionKey > 0)
                         {
                             if (!UnitsByRegion.TryGetValue(regionKey, out var list))
@@ -1479,15 +1737,15 @@ m_blocks.push_back(*old_r);
                     }
                     if (!HasFactionWithId(factionId))
                     {
-                        // TODO: check where it's optimal to insert a new faction block
+                        // TODO: check where it's optimal to insert a new faction block for a PARTEI or monster
                         string factionIdStr = Utils.Converters.IntToString(factionId);
-                        DataBlock faction = new();
-                        faction.SetTypeLabel("PARTEI");
-                        faction.SetId(factionIdStr);
+                        // TODO: check if BlockType.FACTION or BlockType.UNKNOWN should be set
+                        DataBlock faction = new DataBlock(BlockType.FACTION, factionIdStr, "PARTEI");
                         string factionName = factionId.IsMonster() ? "Monster" : $"Partei {factionIdStr}";
                         faction.AddKey(new DataKey(DataKey.GetTypeValue(KeyType.FACTIONNAME, false), btype, factionName));
                         AddBlock(faction, insertFactionNode);
                         Factions[factionId] = new FactionModel(faction);
+                        Factions[factionId].TrySetRaceFromUnit(unitModel);
                     }
                     else
                     {
@@ -1503,14 +1761,11 @@ m_blocks.push_back(*old_r);
                                 att?.Add(orders.GetData());
                             }
                         }
-                        else
-                        {
-                        }
                     }
                     break;
 
                 case BlockType.FACTION:
-                    if (AddFaction(b, blockId, out var factionModel))
+                    if (AddFaction(b, blockId, out factionModel))
                     {
                         Debug.WriteLine($"[DOCUMENT] Added faction {factionModel}.");
                         if (factionModel!.IsActive)
@@ -1531,19 +1786,19 @@ m_blocks.push_back(*old_r);
 
                 case BlockType.ISLAND:
                     // add islands to island list
-                    Islands[blockId] = b;
+                    Islands[blockId] = (IslandDataBlock)b;
                     break;
 
                 default: break;
             }
 
-            if (region is not null)
+            if (currentRegion is not null)
             {
                 if (btype == BlockType.UNIT)
                 {
                     DataBlock unitPtr = b;
                     // region has units
-                    region.AddFlags((int)Flag.TROOPS);
+                    currentRegion.AddFlags((int)Flag.TROOPS);
 
                     // count people
                     int peopleNumber = b.ValueInt(KeyType.NUMBER, 0);
@@ -1580,27 +1835,27 @@ m_blocks.push_back(*old_r);
                     {
                         if (owner == OwnerType.OWN)
                         {
-                            region.AddFlags((int)Flag.GUARD_OWN);
+                            currentRegion.AddFlags((int)Flag.GUARD_OWN);
                         }
                         else if (owner == OwnerType.ALLY)
                         {
-                            region.AddFlags((int)Flag.GUARD_ALLY);
+                            currentRegion.AddFlags((int)Flag.GUARD_ALLY);
                         }
                         else
                         {
-                            region.AddFlags((int)Flag.GUARD_ENEMY);
+                            currentRegion.AddFlags((int)Flag.GUARD_ENEMY);
                         }
                     }
 
                     if (unitGotTaxes.Contains(blockId))
-                        region.SetFlags((int)Flag.REGION_TAXES);
+                        currentRegion.SetFlags((int)Flag.REGION_TAXES);
 
                     int unitFactionId = b.ValueInt(KeyType.FACTION, -1);
                     if (unitFactionId.IsMonster())
                     {
-                        region.AddFlags((int)Flag.MONSTER);
+                        currentRegion.AddFlags((int)Flag.MONSTER);
                         string typeName = b.Value(KeyType.TYPE);
-                        Debug.WriteLine($"[DOCUMENT] Monster {b} of type {typeName} on {region}");
+                        Debug.WriteLine($"[DOCUMENT] Monster {b} of type {typeName} on {currentRegion}");
                     }
                     else if (unitFactionId == -1)
                     {
@@ -1618,12 +1873,12 @@ m_blocks.push_back(*old_r);
                             typeName == Strings.DE_MONSTER_TYPE_VALUE_HIRNTOTER)
                         {
                             // monsters in the region
-                            region.AddFlags((int)Flag.MONSTER);
+                            currentRegion.AddFlags((int)Flag.MONSTER);
                         }
                         else if (typeName == Strings.DE_UNIT_TYPE_NAME_VALUE_SEA_SNAKE)
                         {
                             // sea snake in region
-                            region.AddFlags((int)Flag.SEASNAKE);
+                            currentRegion.AddFlags((int)Flag.SEASNAKE);
                         }
                         else
                         {
@@ -1632,11 +1887,11 @@ m_blocks.push_back(*old_r);
                                 typeName == Strings.DE_UNIT_TYPE_NAME_VALUE_DRAGON_WYRM)
                             {
                                 // a dragon is in the region
-                                region.AddFlags((int)Flag.DRAGON);
+                                currentRegion.AddFlags((int)Flag.DRAGON);
                             }
                             else
                             {
-                                Debug.WriteLine($"[DOCUMENT] Disguised unit {b} with no faction and unknown type '{typeName}' on {region}");
+                                Debug.WriteLine($"[DOCUMENT] Disguised unit {b} with no faction and unknown type '{typeName}' on {currentRegion}");
                             }
                         }
                     }
@@ -1644,39 +1899,41 @@ m_blocks.push_back(*old_r);
                 else if (btype == BlockType.DURCHSCHIFFUNG)
                 {
                     // a boat traveled through this region (ocean)
-                    region.AddFlags((int)Flag.SHIPTRAVEL);
-                    // get ship id from first data key information, which is "<name> (<id>)"
-                    var dk = b.GetData().FirstOrDefault();
-                    if (dk != null)
+                    currentRegion.AddFlags((int)Flag.SHIPTRAVEL);
+                    // A DURCHSCHIFFUNG block can list several ships, one data key per ship.
+                    // All of them must be recorded, not only the first one.
+                    foreach (var dk in b.GetData())
                     {
                         int shipId = DataBlock.ExtractId(dk.GetValue());
-                        if (shipId > 0)
+                        if (shipId <= 0)
                         {
-                            // record the region (where DURCHSCHIFFUNG occurred) in ShipTravels
-                            if (!shipsCrossedRegions.TryGetValue(shipId, out var travelList))
-                            {
-                                travelList = new List<DataBlock>();
-                                shipsCrossedRegions[shipId] = travelList;
-                            }
-                            // store the region (not the DURCHSCHIFFUNG child) so sorting by coordinates is straightforward
-                            travelList.Add(region);
+                            continue;
                         }
+
+                        // record the region (where DURCHSCHIFFUNG occurred) in ShipTravels
+                        if (!shipsCrossedRegions.TryGetValue(shipId, out var travelList))
+                        {
+                            travelList = new List<DataBlock>();
+                            shipsCrossedRegions[shipId] = travelList;
+                        }
+                        // store the region (not the DURCHSCHIFFUNG child) so sorting by coordinates is straightforward
+                        travelList.Add(currentRegion);
                     }
                 }
                 else if (btype == BlockType.BUILDING)
                 {
                     // region has a building
-                    region.AddFlags((int)Flag.CASTLE);
+                    currentRegion.AddFlags((int)Flag.CASTLE);
                     if (b.Value(KeyType.TYPE) == Strings.DE_REGION_BUILDING_VALUE_WORMHOLE)
                     {
                         // a wormhole is in the region
-                        region.AddFlags((int)Flag.WORMHOLE);
+                        currentRegion.AddFlags((int)Flag.WORMHOLE);
                     }
                 }
                 else if (btype == BlockType.SHIP)
                 {
                     // region has ships inside
-                    region.AddFlags((int)Flag.SHIP);
+                    currentRegion.AddFlags((int)Flag.SHIP);
                 }
                 else if (btype == BlockType.BORDER)
                 {
@@ -1690,12 +1947,12 @@ m_blocks.push_back(*old_r);
                             if (b.ValueInt(Strings.DE_ROAD_PERCENT) == 100)
                             {
                                 // region has a complete street
-                                region.AddFlags((int)Flag.STREET << direction);
+                                currentRegion.AddFlags((int)Flag.STREET << direction);
                             }
                             else
                             {
                                 // region has an incomplete street
-                                region.AddFlags((int)Flag.STREET_UNDONE << direction);
+                                currentRegion.AddFlags((int)Flag.STREET_UNDONE << direction);
                             }
                         }
                     }
@@ -1704,11 +1961,11 @@ m_blocks.push_back(*old_r);
             previousNode = node;
         }
 
-        if (region != null) {
-            if (SetRegionStats(region, regionOwn, regionAlly, regionEnemy, unconfirmed))
+        if (currentRegion != null) {
+            if (SetRegionStats(currentRegion, regionOwn, regionAlly, regionEnemy, unconfirmed))
             {
-                SetRegionAsSeen(region, OptimizeDataConsuming ? blockNodeToChange : null);
-                nbSeenRegions++;
+                SetRegionAsExplorable(currentRegion, OptimizeDataConsuming ? blockNodeToChange : null);
+                nbOccupiedRegions++;
             }
             else
             {
@@ -1749,9 +2006,18 @@ m_blocks.push_back(*old_r);
             */
         }
 
+        // Resolve ship ownership and infer routes for ships that have no SAIL message
+        // (allied/enemy ships). Active faction ships will later get their exact route from
+        // the SAIL message in ParseMessages().
+        foreach (ShipModel ship in Ships.Values)
+        {
+            ship.ResolveOwnerFaction(this);
+            ship.ResolveInferredRoute();
+        }
+
         // Just to check data consuming optimization is ok
         if (OptimizeDataConsuming) {
-            for (var block = firstSeenRegion; block != null; block = block.GetNextBlock())
+            for (var block = firstOccupiedRegion; block != null; block = block.GetNextBlock())
             {
                 if (block.GetBlockType() == BlockType.REGION)
                 { 
@@ -1762,56 +2028,67 @@ m_blocks.push_back(*old_r);
                 }
             }
         }
-
-        SeenRegionsNumber = nbSeenRegions;
-
-
-        Debug.WriteLine($"[DOCUMENT] AllRegions number : {Regions.Count} ");
-        Debug.WriteLine($"[DOCUMENT] Seen regions number : {SeenRegionsNumber} ");
+        
+        Debug.WriteLine($"[DOCUMENT] Name : {Name} ");
+        Debug.WriteLine($"[DOCUMENT] Occupied regions computed number : {nbOccupiedRegions}");
+        Debug.WriteLine($"[DOCUMENT] Occupied regions number : {Planes[0].OccupiedRegions.Count}");
+        Debug.WriteLine($"[DOCUMENT] Unoccupied regions number : {Planes[0].UnoccupiedRegions.Count}");
+        Debug.WriteLine($"[DOCUMENT] With structure regions number : {RegionsWithStructure.Count}");
         if (Planes.Count > 1)
         {
-            Debug.WriteLine($"[DOCUMENT] Regions in Astral : {Planes[1].Regions.Count}");
+            Debug.WriteLine($"[DOCUMENT] regions in Astral - with-people: {Planes[1].OccupiedRegions.Count} without-people: {Planes[1].UnoccupiedRegions.Count}");
         }
-        Debug.WriteLine($"[DOCUMENT] Seen regions number : {SeenRegionsNumber} ");
-        Debug.WriteLine($"[DOCUMENT] Factions number : {Factions.Count} ");
-        Debug.WriteLine($"[DOCUMENT] Active factions number : {ActiveFactions.Count} ");
-        Debug.WriteLine($"[DOCUMENT] Units number : {Units.Count} ");
-        Debug.WriteLine($"[DOCUMENT] Ships number : {Ships.Count} ");
-        Debug.WriteLine($"[DOCUMENT] Buildings number : {Buildings.Count} ");
-        Debug.WriteLine($"[DOCUMENT] Battles number : {Battles.Count} ");
-        Debug.WriteLine($"[DOCUMENT] Islands number : {Islands.Count} ");
-        Debug.WriteLine($"[DOCUMENT] Groups number : {Groups.Count} ");
+        Debug.WriteLine($"[DOCUMENT] Factions number : {Factions.Count}");
+        Debug.WriteLine($"[DOCUMENT] Active factions number : {ActiveFactions.Count}");
+        Debug.WriteLine($"[DOCUMENT] Units number : {Units.Count}");
+        Debug.WriteLine($"[DOCUMENT] Ships number : {Ships.Count}");
+        Debug.WriteLine($"[DOCUMENT] Buildings number : {Buildings.Count}");
+        Debug.WriteLine($"[DOCUMENT] Battles number : {Battles.Count}");
+        Debug.WriteLine($"[DOCUMENT] Islands number : {Islands.Count}");
+        Debug.WriteLine($"[DOCUMENT] Groups number : {Groups.Count}");
 
         foreach (var elt in UnitsByRegion)
         {
-            Debug.WriteLine($"[DOCUMENT] {elt.Value.Count} units in region {Regions[elt.Key]}");
+            Debug.WriteLine($"[DOCUMENT] {elt.Value.Count} units in region {Planes[0].OccupiedRegions[elt.Key]}");
         }
     }
 
-    private void AddBuildingInRegion(DataBlock buildingDataBlock, int buildingId, DataBlock region)
+    private void AddUnitInRegion(in UnitDataBlock unitDataBlock, int unitId, in RegionModel regionModel, out UnitModel unitModel)
     {
-        int regionId = Coordinates.GetId(region.GetX(), region.GetY());
-        var buildingModel = new BuildingModel(buildingDataBlock, region);
-        Buildings[buildingId] = buildingModel;
-        RegionModel? regionModel = null;
-        if (!RegionsWithContainer.TryGetValue(regionId, out regionModel))
+        Debug.WriteLine($"[DOCUMENT] Add unit {unitDataBlock} in region {regionModel}");
+        string s = $"{unitDataBlock}";
+        if (s == "Elvis (udsz)")
         {
-            regionModel = new RegionModel(region);
-            RegionsWithContainer[regionId] = regionModel;
+            Debug.WriteLine($"[DOCUMENT] Add unit {unitDataBlock} in region {regionModel}");
+        }
+        int regionId = Coordinates.GetId(regionModel.GetX(), regionModel.GetY());
+        unitModel = new UnitModel(unitDataBlock, regionId);
+        Units[unitId] = unitModel;
+    }
+
+    private void AddBuildingInRegion(in BuildingDataBlock buildingDataBlock, int buildingId, in RegionModel regionModel)
+    {
+        Debug.WriteLine($"[DOCUMENT] Add building {buildingDataBlock} in region {regionModel}");
+        int regionId = Coordinates.GetId(regionModel.GetX(), regionModel.GetY());
+        var buildingModel = new BuildingModel(buildingDataBlock, regionId/*region*/);
+        Buildings[buildingId] = buildingModel;
+        if (!RegionsWithStructure.TryGetValue(regionId, out _))
+        {
+            RegionsWithStructure[regionId] = regionModel;
         }
         regionModel.AddBuilding(buildingModel);
     }
 
-    private void AddShipInRegion(DataBlock shipDataBlock, int shipId, DataBlock region)
+    private void AddShipInRegion(in ShipDataBlock shipDataBlock, int shipId, in RegionModel regionModel)
     {
-        int regionId = Coordinates.GetId(region.GetX(), region.GetY());
-        var shipModel = new ShipModel(shipDataBlock, region);
+        Debug.WriteLine($"[DOCUMENT] Add ship {shipDataBlock} in region {regionModel}");
+        int regionId = Coordinates.GetId(regionModel.GetX(), regionModel.GetY());
+        var shipModel = new ShipModel(shipDataBlock, regionId/*region*/);
+        shipModel.SetCurrentRegion(regionModel.Region);
         Ships[shipId] = shipModel;
-        RegionModel? regionModel = null;
-        if (!RegionsWithContainer.TryGetValue(regionId, out regionModel))
+        if (!RegionsWithStructure.TryGetValue(regionId, out _))
         {
-            regionModel = new RegionModel(region);
-            RegionsWithContainer[regionId] = regionModel;
+            RegionsWithStructure[regionId] = regionModel;
         }
         regionModel.AddShip(shipModel);
 
@@ -1844,14 +2121,14 @@ m_blocks.push_back(*old_r);
     /// Order regions by chaining neighbours starting from startRegion. If no direct neighbour is found,
     /// chooses the nearest remaining region (greedy fallback).
     /// </summary>
-    private static List<DataBlock> OrderRegionsChain(DataBlock? startRegion, List<DataBlock> candidates)
+    private static List<RegionDataBlock> OrderRegionsChain(RegionDataBlock? startRegion, List<RegionDataBlock> candidates)
     {
         if (candidates == null || candidates.Count == 0)
-            return new List<DataBlock>();
+            return new List<RegionDataBlock>();
 
         // copy candidates to mutable list
-        var remaining = new List<DataBlock>(candidates);
-        var ordered = new List<DataBlock>();
+        var remaining = new List<RegionDataBlock>(candidates);
+        var ordered = new List<RegionDataBlock>();
 
         // neighbor offsets for pointy-topped axial coords (q,r)
         int[,] offsets = { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 }, { 1, -1 }, { -1, 1 } };
@@ -1866,8 +2143,8 @@ m_blocks.push_back(*old_r);
 
         while (remaining.Count > 0)
         {
-            DataBlock? last = ordered.Count > 0 ? ordered[^1] : null;
-            DataBlock? next = null;
+            RegionDataBlock? last = ordered.Count > 0 ? ordered[^1] : null;
+            RegionDataBlock? next = null;
 
             if (last != null)
             {
@@ -1885,11 +2162,11 @@ m_blocks.push_back(*old_r);
                             break;
                         }
                     }
-                    if (next != null) break;
+                    if (next is null) break;
                 }
             }
 
-            if (next == null)
+            if (next is null)
             {
                 // fallback: choose nearest by hex distance to last (or arbitrary if last null)
                 if (last == null)
@@ -1928,7 +2205,7 @@ m_blocks.push_back(*old_r);
     /// </summary>
     /// <param name="region">region datablock</param>
     /// <param name="previousNode">previous node in the linked list, representing a seen region</param>
-    private static void SetRegionAsSeen(DataBlock region, LinkedListNode<DataBlock>? previousNode)
+    private static void SetRegionAsExplorable(DataBlock region, LinkedListNode<DataBlock>? previousNode)
     {
         if (previousNode?.Value != null)
         {
@@ -1942,11 +2219,12 @@ m_blocks.push_back(*old_r);
         // LATER: check if it's useful (where is islands usage?)
 
         // regions whose island names flood the island
-        List<DataBlock> floodislands = new List<DataBlock> { };
-        foreach (var r in Regions)
+        List<RegionDataBlock> floodIslands = new List<RegionDataBlock> { };
+        foreach (var region in Planes[0].OccupiedRegions)
         {
-            DataBlock b = r.Value;
-            if (b.GetBlockType() != BlockType.REGION)
+            //var r = region.Value.DataBlock;
+            RegionDataBlock? b = region.Value.DataBlock as RegionDataBlock;
+            if (b!.GetBlockType() != BlockType.REGION)
             {
                 continue;
             }
@@ -1964,7 +2242,8 @@ m_blocks.push_back(*old_r);
                     DataBlock? island = Island(islandId);
                     if (island != null)
                     {
-                        name = island.Value(KeyType.NAME);
+                        name = island.Value(KeyType.LOWERCASE_NAME);
+                        //name = island.Value(KeyType.NAME);
                     }
                 }
                 else
@@ -1972,7 +2251,7 @@ m_blocks.push_back(*old_r);
                     // Vorlage-style: string-Island-tags that flood the island
                     name = islandKey.GetValue();
                     // Vorlage-style floods the islands
-                    floodislands.Add(b);
+                    floodIslands.Add(b);
                 }
 
                 if (!string.IsNullOrEmpty(name))
@@ -1981,13 +2260,13 @@ m_blocks.push_back(*old_r);
                     stats!.Island = name;
                 }
             }
-
         }
 
         // Flood island names. add regions that get a name to list so that they also flood.
         int[,] offsets = { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 }, { 1, -1 }, { -1, 1 } };
+        List<RegionDataBlock> newFloodIslands = new List<RegionDataBlock> { };
 
-        foreach (var b in floodislands)
+        foreach (var b in floodIslands)
         {
             string name = "";
             RegionAttachment? stats = b.GetAttachment() as RegionAttachment;
@@ -2004,7 +2283,7 @@ m_blocks.push_back(*old_r);
             {
                 int nx = x + offsets[i, 0];
                 int ny = y + offsets[i, 1];
-                DataBlock? neighbour = FindRegionFromPosition(nx, ny, (PlaneType)z);
+                RegionDataBlock? neighbour = FindRegionFromPosition(nx, ny, (PlaneType)z);
                 if (neighbour != null)
                 {
                     // Only flood to "Festland"
@@ -2016,15 +2295,20 @@ m_blocks.push_back(*old_r);
                     RegionAttachment? neighbourStats = neighbour.GetAttachment() as RegionAttachment;
                     if (string.IsNullOrEmpty(neighbourStats!.Island)) {
                         neighbourStats.Island = name;
-                        floodislands.Add(neighbour);
+                        // fixed: modify collection being enumerated throw an exception, so add to a list and then add them after the loop
+                        //floodIslands.Add(neighbour);
+                        newFloodIslands.Add(neighbour);
                     }
                 }
             }
         }
+
+        // TODO: use newFloodIslands ??? maybe neighbours should be updated with island name
     }
 
     private bool AddFaction(DataBlock data, int id, out FactionModel? factionModel)
     {
+        Debug.WriteLine($"[DOCUMENT] Add faction {id}...");
         if (Factions.ContainsKey(id))
         {
             factionModel = Factions[id];
@@ -2032,6 +2316,7 @@ m_blocks.push_back(*old_r);
         else
         {
             factionModel = new FactionModel(data);
+            Debug.WriteLine($"[DOCUMENT] Add faction {factionModel}...");
             Factions[id] = factionModel;
         }
         if (factionModel.IsActive)
@@ -2079,6 +2364,97 @@ m_blocks.push_back(*old_r);
         }
         region.AddFlags(hasPeople ? (int)Flag.REGION_SEEN : 0);
         return hasPeople;
+    }
+
+    private bool CollectBattleData(in BattleDataBlock battleBlock, ref string label, ref string factionName, ref int x, ref int y, ref int plane, ref string content)
+    {
+        x = battleBlock.GetX();
+        y = battleBlock.GetY();
+        plane = battleBlock.GetPlane();
+
+        RegionDataBlock? region = null;
+        // TODO: to check if a battle can be on an unknown region
+        if (GetSeenRegion(ref region, battleBlock))
+        {
+            // TODO: retrieve factionName
+            label = region!.GetUILabel();
+            if (!string.IsNullOrEmpty(factionName))
+            {
+                label = $"{label} [{factionName}]";
+            }
+
+            DataBlock? messageBlock = null;
+            if (CRDocument.GetSeenChild(ref messageBlock, battleBlock, BlockType.MESSAGE))
+            {
+                StringBuilder contentBuilder = new();
+                LinkedListNode<DataBlock>? node = messageBlock!.Node;
+                while (node != null)
+                {
+                    contentBuilder.Append(messageBlock.Value(Strings.EN_MESSAGE_RENDERED));
+                    contentBuilder.Append(Environment.NewLine);
+                    LinkedListNode<DataBlock>? nextNode = node;
+                    if (CRDocument.GetNext(ref nextNode, BlockType.MESSAGE))
+                    {
+                        node = nextNode;
+                        messageBlock = nextNode!.Value;
+                        continue;
+                    }
+                    // No more messages, exit loop
+                    break;
+                }
+                content = contentBuilder.ToString();
+            }
+            return !string.IsNullOrEmpty(content);
+        }
+        else
+        {
+            // Battle on an unknown region ?
+            Debug.WriteLine("[BATTLE] WARNING | Battle on an unknown region !");
+            label = !string.IsNullOrEmpty(factionName) ? $"[?] [{factionName}]" : "[?]";
+            content = string.Empty;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Collects and processes battle data from the report blocks.
+    /// </summary>
+    /// <remarks>This method iterates through the data blocks in the report to identify and process
+    /// battle-related information. It updates the list of battles and sets the selected battle index if any battles are
+    /// found.</remarks>
+    protected bool CollectBattles()
+    {
+        // PARTEI 1
+        // BATTLE 1
+        // BATTLE 2
+        // ...
+        // REGION
+
+        // TODO: extract what was collected by each unit, by faction (last message blocks of a battle)
+        // TODO: extract how many hits and kills where done by each unit, by faction
+        // TODO: extract which units are involved in the battle, by faction (skills, equipment. from other factions: only visible equipment (not silver))
+
+        // MESSAGE type 1803906635; with skills and silver => for the active faction
+        // MESSAGE type 1436762363; with hit (and killed) : "Dakipa Mercenary (7xx6) hit 22 times and killed 4 enemies."; rendered => for the active faction
+        // MESSAGE 1421907893; type "Dakipa Mercenary (7xx6) collects 3 horse."; rendered => collected by the active faction
+        // A BATTLE with no 1436762363:type message is the one seen by other factions on the region
+
+        // LATER: maybe should use CRDocument.Battles property instead of collecting data here by iterating through all the blocks.
+        Battles.Clear();
+        // Iterate through the BattlesBlocks
+        foreach (var battleBlock in BattlesBlocks.Values)
+        {
+            string label = string.Empty;
+            string factionName = string.Empty;
+            string content = string.Empty;
+            int x = 0, y = 0, plane = 0;
+            if (CollectBattleData(in battleBlock, ref label, ref factionName, ref x, ref y, ref plane, ref content))
+            {
+                Battles.Add(new(label, factionName, x, y, plane, in content));
+            }
+        }
+        Debug.WriteLine($"Number of battles = {Battles.Count}");
+        return Battles.Count > 0;
     }
 
     public override string ToString()

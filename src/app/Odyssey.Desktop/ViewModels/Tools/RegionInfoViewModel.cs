@@ -1,16 +1,10 @@
-﻿using Avalonia.Controls;
-using Odyssey.Events;
-using Odyssey.Models;
+﻿using Odyssey.Models;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Localization;
 using Odyssey.Models.Tools;
-using Odyssey.Services;
-using Prism.Events;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Xml.Linq;
 using static Odyssey.Models.Tools.DataProperty;
 
 namespace Odyssey.ViewModels.Tools;
@@ -76,7 +70,7 @@ public partial class RegionInfoViewModel : MessagesViewModel
     private Node? GuardsMessages { get { return _guardsMessages; } }
     private Node? UnitMessages { get { return _unitMessages; } }
 
-    public RegionInfoViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
+    public RegionInfoViewModel() : base()
     {
         // TODO: check if an unseen region can have some messages
         // anyway, handle unseen regions with specific info here, isn't it ?
@@ -88,30 +82,24 @@ public partial class RegionInfoViewModel : MessagesViewModel
         _unitMessages = null;
     }
 
-    protected override void OnSelectionChanged(ISelectionChange selectionChange)
+    protected override void OnSelectionChanged(IEntitySelection selection, SelectionChangeTypes selType, object? sender)
     {
-        // Exclude this selector from selection change events to avoid reentrancy issues
-        List<string> selectorIdsExcludeFilter = [Id];
-        List<string> selectorIdsIncludeFilter = [Ids.Explorer];
-        if (ShouldIgnoreSelectionChangedEvent(selectionChange, selectorIdsIncludeFilter, selectorIdsExcludeFilter))
-        {
+        if (ReferenceEquals(sender, this))
             return;
-        }
-
-        ISelection? sel = selectionChange.Selection;
-
-        bool anotherRegionSelected = sel.IsRegionSelected() && sel.Region != Selection?.Region;
-        bool anotherUnitSelected = sel.IsUnitSelected() && sel.Item != Selection?.Item;
-
-        SetSelection(sel);
-        if (anotherRegionSelected || anotherUnitSelected)
-        {
-            CollectDataFromRegion(anotherRegionSelected, anotherUnitSelected);
-        }
+        CollectDataFromRegion(selection, selType);
     }
 
-    private void CollectDataFromRegion(bool anotherRegionSelected, bool anotherUnitSelected)
+    private void CollectDataFromRegion(IEntitySelection selection, SelectionChangeTypes selType)
     {
+        bool unitChanged = selType.HasFlag(SelectionChangeTypes.Unit);
+        bool regionChanged = selType.HasFlag(SelectionChangeTypes.Region);
+        bool regionSelected = selection.IsRegionSelected();
+        bool unitSelected = selection.HasUnit();
+
+        Debug.WriteLine($"[VM-REGION-INF] OnSelectionChanged: region changed={regionChanged}, region selected={regionSelected} unit changed={unitChanged}, unit selected={unitSelected}");
+
+        bool anotherRegionSelected = regionChanged;
+        bool anotherUnitSelected = unitChanged;
         if (anotherRegionSelected)
         {
             RegionMessages.Children.Clear();
@@ -132,18 +120,20 @@ public partial class RegionInfoViewModel : MessagesViewModel
             return;
         }
 
-        ISelection selection = Selection;
-        DataBlock? region = anotherRegionSelected && selection.IsRegionSelected() ? selection.Item : null;
-        DataBlock? unit = anotherUnitSelected ? Selection.Item : null;
+        // Note: a container selection (the buildings/ships list of a region) is a region selection
+        // without any item: the region to consider is the selected region itself, not the item.
+        // (selection.Item is only the region for a region-only selection.)
+        DataBlock? region = anotherRegionSelected ? selection.Region?.DataBlock : null;
+        DataBlock? unit = anotherUnitSelected ? selection.Item?.DataBlock : null;
 
         if (region != null)
         {
             int terrain = region.GetTerrain();
-            bool needRoadsNode  = Terrains.CanHaveRoad(terrain);
+            bool needRoadsNode = Terrains.CanHaveRoad(terrain);
             bool needGuardsNode = Terrains.CanBeGuarded(terrain);
 
             if (!needRoadsNode)
-            {                 
+            {
                 RemoveItemIfExists(ref _roadsMessages);
             }
             else if (_roadsMessages == null)
@@ -197,7 +187,7 @@ public partial class RegionInfoViewModel : MessagesViewModel
                     // LATER: check if block.Value("typ") can be something else than "Straße"
                     string labelKey = percent == 100 ? Labels.ROAD_INFO : Labels.ROAD_IN_PROGRESS_INFO;
                     string direction = Labels.GetDirectionAbbreviation(directionValue);
-                    string label = Labels.Localize(Categories.None, labelKey, [direction, $"{percent}" ]);
+                    string label = Labels.Localize(Categories.None, labelKey, [direction, $"{percent}"]);
                     AppendItem(RoadsMessages!, label, null);
                 }
                 else if (btype == BlockType.DURCHREISE || btype == BlockType.DURCHSCHIFFUNG)
@@ -212,9 +202,9 @@ public partial class RegionInfoViewModel : MessagesViewModel
                     // retrieve the targets
                     foreach (DataKey msg in block.GetData())
                     {
-                        List<DataBlock> targets = [];
-                        DataBlock? movingShip = null;
-                        DataBlock? movingUnit = null;
+                        List<EntityModel> targets = [];
+                        ShipModel? movingShip = null;
+                        UnitModel? movingUnit = null;
                         // get string inside (...) and convert to int
                         string label = msg.GetValue();
                         int id = DataBlock.ExtractId(label);
@@ -222,12 +212,12 @@ public partial class RegionInfoViewModel : MessagesViewModel
                         {
                             if (block.GetBlockType() == BlockType.DURCHSCHIFFUNG)
                             {
-                                if (!Report.GetShip(ref movingShip, id))
+                                if (!Report.FindShip(id, out movingShip))
                                 {
                                     Debug.WriteLine($"[REGION-INF] WARNING | Ship with {id} id not found");
                                 }
                             }
-                            else if (!Report.GetUnit(ref movingUnit, id))
+                            else if (!Report.FindUnit(id, out movingUnit))
                             {
                                 Debug.WriteLine($"[REGION-INF] WARNING | Ship with {id} id not found");
                             }
@@ -236,7 +226,8 @@ public partial class RegionInfoViewModel : MessagesViewModel
                         {
                             Debug.WriteLine($"[REGION-INF] WARNING | Failed to extract id from : {label}");
                         }
-                        foreach (var item in new[] { movingUnit, movingShip })
+                        List<EntityModel?> entityModels = [movingUnit, movingShip];
+                        foreach (var item in entityModels)
                         {
                             if (item is not null)
                                 targets.Add(item);
@@ -306,7 +297,7 @@ public partial class RegionInfoViewModel : MessagesViewModel
     }
 
     private Node UpdateItem(ref Node? oldItem, string label, MessageEntry? entry)
-    { 
+    {
         Node? parent = (oldItem == null ? Root : oldItem.Parent) ?? Root;
         int index = parent == null || oldItem == null ? -1 : parent.Children.IndexOf(oldItem);
         Node newNode = new Node(parent, label, entry, index);

@@ -1,4 +1,5 @@
-﻿using Avalonia.Svg.Commands;
+﻿using Avalonia.Controls.Shapes;
+using Avalonia.Svg.Commands;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Utils;
@@ -24,7 +25,7 @@ namespace Odyssey.Models.Dal
         {
             bool loaded; 
             outError = "";
-            string reportName = Path.GetFileNameWithoutExtension(pathname);
+            string reportName = System.IO.Path.GetFileNameWithoutExtension(pathname);
             using (var fileStream = new FileStream(pathname, FileMode.Open, FileAccess.Read))
             {
                 loaded = LoadStream(reportName, fileStream, out report, out outError);
@@ -53,8 +54,8 @@ namespace Odyssey.Models.Dal
             LinkedList<DataBlock> blocks = [];
             using (var reader = new StreamReader(stream))
             {
-                DataBlock? block = null;
-                DataBlock? newblock = new();
+                DataBlock? currentBlock = null;
+                //DataBlock? newblock = new();
                 var utf8 = true;
 
                 string? line;
@@ -70,9 +71,9 @@ namespace Odyssey.Models.Dal
 
                     // first try: does the line contain a DataKey?
                     var key = new DataKey();
-                    if (key.Parse(str, block != null ? block.GetBlockType() : BlockType.UNKNOWN, utf8))
+                    if (key.Parse(str, currentBlock is not null ? currentBlock.GetBlockType() : BlockType.UNKNOWN, utf8))
                     {
-                        if (block != null)
+                        if (currentBlock is not null)
                         {
                             switch (key.GetKeyType())
                             {
@@ -86,25 +87,24 @@ namespace Odyssey.Models.Dal
                                     int terrain = DataBlock.ParseTerrain(key.GetValue());
                                     if (terrain == Terrains.UNKNOWN)
                                     {
-                                        block.AddKey(key);
+                                        currentBlock.AddKey(key);
                                         // need textual representation of terrain type
                                         terrain = DataBlock.ParseSpecialTerrain(key.GetValue());
                                     }
-                                    block.SetTerrain(terrain);
+                                    currentBlock.SetTerrain(terrain);
                                     break;
                                 default:
-                                    block.AddKey(key); // appends "Value";Key - tags
+                                    currentBlock.AddKey(key); // appends "Value";Key - tags
                                     break;
                             }
                         }
                     }
                     // second attempt: does the line contain a data block header?
-                    else if (newblock.Parse(str))
+                    else if (ParseBlocHeader(str, out DataBlock? parsedBlock))
                     {
                         // appends BLOCK Info - tags
-                        newblock.SetNode(blocks.AddLast(newblock));
-                        block = newblock;
-                        newblock = new DataBlock();
+                        parsedBlock!.SetNode(blocks.AddLast(parsedBlock));
+                        currentBlock = parsedBlock;
                     }
                     else
                     {
@@ -112,7 +112,7 @@ namespace Odyssey.Models.Dal
                         var semi = str.IndexOf(';');
                         if (semi >= 0)
                         {
-                            block!.AddKey(new DataKey(str[(semi + 1)..], str[..semi]));
+                            currentBlock!.AddKey(new DataKey(str[(semi + 1)..], str[..semi]));
                         }
                     }
                 }
@@ -232,9 +232,15 @@ namespace Odyssey.Models.Dal
                     // Output block names + ID numbers
                     writer.Write(block.GetTypeLabel());
 
-                    if (blockType == BlockType.REGION || blockType == BlockType.BATTLE || block.GetX() != 0 || block.GetY() != 0)
+                    if (blockType == BlockType.REGION || blockType == BlockType.BATTLE)
                     {
-                        writer.Write($" {block.GetX()} {block.GetY()}");
+                        ILocation? location = block as ILocation;
+                        if (location is not null)
+                        {
+                            // TODO: what about if X and Y are 0 ? what &bout Plane ?
+                            // if location.X != 0 && location.Y != 0)
+                            writer.Write($" {location.X} {location.Y}");
+                        }
                     }
 
                     if (blockType == BlockType.TRANSLATION)
@@ -439,6 +445,122 @@ namespace Odyssey.Models.Dal
                 Debug.WriteLine($"[VM-MAIN-WIN] !!! An error occurred: {ex.Message}");
                 return false; 
             }
+            return true;
+        }
+
+        // Try to parse str as a datablock header
+        private static bool ParseBlocHeader(string brutLine, out DataBlock? parsedBlock)
+        {
+            parsedBlock = null;
+            if (string.IsNullOrEmpty(brutLine))
+            {
+                return false;
+            }
+
+            // Skip potential indentation
+            string line = brutLine.TrimStart();
+
+            // must start with an uppercase letter
+            if (string.IsNullOrEmpty(line) || !char.IsLetter(line[0]) || !char.IsUpper(line[0]))
+            {
+                return false;
+            }
+
+            // block headers cannot contain '\"' or ';'
+            if (line.Contains('\"') || line.Contains(';'))
+            {
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(line))
+            {
+                return false;
+            }
+
+            int spaceIndex = line.IndexOf(' ');
+
+            if (spaceIndex != -1)
+            {
+                ReadOnlySpan<char> span = line.AsSpan();
+                string word = span[..spaceIndex].ToString();
+                string id = span[(spaceIndex + 1)..].TrimStart().ToString();
+
+                // region first checked first for performance (moved to top)
+                if (word == "REGION")
+                {
+                    parsedBlock = new RegionDataBlock(id);
+                }
+                else
+                {
+                    BlockType bt = BlockType.UNKNOWN;
+                    // if BLOCKNAMES is defined as static, null exception here
+                    foreach (var b in DataBlock.BLOCKNAMES)
+                    {
+                        if (b.Value == word)
+                        {
+                            bt = b.Key;
+                            break;
+                        }
+                    }
+
+                    if (bt == BlockType.UNIT)
+                    {
+                        parsedBlock = new UnitDataBlock(id);
+                    }
+                    else if (bt == BlockType.BUILDING)
+                    {
+                        parsedBlock = new BuildingDataBlock(id);
+                    }
+
+                    else if (bt == BlockType.SHIP)
+                    {
+                        parsedBlock = new ShipDataBlock(id);
+                    }
+
+                    else if (bt == BlockType.BATTLE)
+                    {
+                        parsedBlock = new BattleDataBlock(id);
+                    }
+                    else if (bt == BlockType.ISLAND)
+                    {
+                        parsedBlock = new IslandDataBlock(id);
+                    }
+                    else
+                    {
+                        // unknown block type, but still create a DataBlock with the given word as type label
+                        parsedBlock = new DataBlock(bt, id, bt == BlockType.UNKNOWN ? word : string.Empty);
+                    }
+                    //SetAttachment(null);
+                }
+            }
+            else
+            {
+                BlockType bt = BlockType.UNKNOWN;
+                // if BLOCKNAMES is defined as static, null exception here
+                foreach (var b in DataBlock.BLOCKNAMES)
+                {
+                    if (b.Value == line)
+                    {
+                        bt = b.Key;
+                        break;
+                    }
+                }
+                parsedBlock = new DataBlock(bt, string.Empty, line);
+                // unset flags
+                //SetFlags((int)Flag.None);
+                //SetTypeLabel(str);
+                //SetId(string.Empty);
+
+                // unset all other states
+                //SetTerrain(Terrains.UNKNOWN);
+                //SetAttachment(null);
+                return true;
+            }
+
+            // unset all other states
+            //SetTerrain(Terrains.UNKNOWN);
+            ////SetAttachment(null);
+
             return true;
         }
 

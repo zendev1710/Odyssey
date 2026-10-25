@@ -1,15 +1,4 @@
-﻿using Avalonia;
-using Odyssey.Models.Data;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Odyssey.Models.Tools.DataProperty;
-using System.Xml.Linq;
-
-namespace Odyssey.Models.Tools
+﻿namespace Odyssey.Models.Tools
 {
     public class DataProperty
     {
@@ -36,7 +25,7 @@ namespace Odyssey.Models.Tools
         /// <summary>
         /// The reference to the data block, if any.
         /// </summary>
-        public DataBlock? Reference { get; private set; }
+        public EntityModel? Reference { get; private set; }
 
         public enum Categories
         {
@@ -63,7 +52,7 @@ namespace Odyssey.Models.Tools
             Description = string.Empty;
         }
 
-        public DataProperty(Categories category, string name, string value, string label = "", string? description = null, DataBlock? reference = null)
+        public DataProperty(Categories category, string name, string value, string label = "", string? description = null, EntityModel? reference = null)
         {
             Category = category;
             Name = name;

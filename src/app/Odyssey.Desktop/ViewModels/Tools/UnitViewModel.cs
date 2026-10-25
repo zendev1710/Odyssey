@@ -2,7 +2,7 @@ using System;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
-using static Odyssey.Models.Documents.CRDocument;
+using Odyssey.Models.Tools;
 
 namespace Odyssey.ViewModels.Tools;
 
@@ -95,12 +95,12 @@ public partial class UnitViewModel : ObservableObject
     {
         // create with id as fallback; fields will be populated if DataBlock found
         var vm = new UnitViewModel(unitId.ToString(), string.Empty/*, x, y*/);
-        if (doc.Units.TryGetValue(unitId, out var block) && block != null)
+        if (doc.FindUnit(unitId, out UnitModel? unit))
         {
-            vm.Id = block.IdToString();
-            vm.Name = block.GetUILabel() ?? string.Empty;
-            vm.FactionId = block.ValueInt(KeyType.FACTION, 0);
-            vm.IsConfirmed = block.ValueInt(KeyType.ORDERS_CONFIRMED, 0) != 0;
+            vm.Id = unit!.EncodedId;
+            vm.Name = unit.Name;
+            vm.FactionId = unit.FactionId;
+            vm.IsConfirmed = unit.IsConfirmed;
             //vm.X = x;
             //vm.Y = y;
             vm.Summary = $"{vm.Name} ({vm.Id})";

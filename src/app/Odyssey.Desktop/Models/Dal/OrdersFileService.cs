@@ -198,14 +198,14 @@ namespace Odyssey.Models.Dal
                     writer.WriteLine(writer.NewLine);
                 }
 
-                DataBlock? region = null;
+                RegionDataBlock? region = null;
                 for (var node = firstBlockNode; node != null; node = node.Next)
                 {
                     DataBlock block = node.Value;
                     var b = block.GetBlockType();
                     if (b == BlockType.REGION)
                     {
-                        region = block;
+                        region = block as RegionDataBlock;
                     }
                     else if (b == BlockType.UNIT)
                     {

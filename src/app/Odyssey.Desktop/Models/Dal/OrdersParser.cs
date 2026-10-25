@@ -284,7 +284,7 @@ namespace Odyssey.Models.Dal
         /// </summary>
         /// <param name="region"></param>
         /// <returns></returns>
-        private static string GetRegionStatement(in DataBlock region)
+        private static string GetRegionStatement(in RegionDataBlock region)
         {
             int id = region.GetId();
             int x = region.GetX();

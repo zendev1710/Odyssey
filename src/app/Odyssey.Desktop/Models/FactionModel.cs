@@ -2,6 +2,7 @@
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Localization;
+using Odyssey.Models.Tools;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -12,6 +13,8 @@ public class FactionModel
 {
     public DataBlock Data { get; private set; }
     public string Name { get; private set; } = string.Empty;
+    public FactionRace Race { get; private set; }
+    public UnitModel? RepresentativeUnit { get; private set; }
 
     public int Id { get; private set; }
     public bool IsActive { get; private set; } = false;
@@ -88,11 +91,33 @@ public class FactionModel
 
         string name = data.Value(KeyType.FACTIONNAME);
         Name = string.IsNullOrEmpty(name) ? Labels.Localize(Labels.DISGUISED) : $"{name} ({data.IdToString()})";
+        Race = FactionRaceParser.Parse(data.Value(KeyType.TYPE));
 
         IsActive = CRDocument.FactionIsActive(data);
         Id = data.GetId();
+    }
 
+    public bool TrySetRaceFromUnit(UnitModel? unitModel)
+    {
+        if (unitModel is null || string.IsNullOrWhiteSpace(unitModel.Race))
+        {
+            return false;
+        }
 
+        if (Race != FactionRace.Unknown)
+        {
+            return false;
+        }
+
+        FactionRace inferredRace = FactionRaceParser.Parse(unitModel.Race);
+        if (inferredRace == FactionRace.Unknown)
+        {
+            return false;
+        }
+
+        Race = inferredRace;
+        RepresentativeUnit ??= unitModel;
+        return true;
     }
 
     public void AddAlliance(DataBlock ally, int blockId)

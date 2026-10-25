@@ -1,8 +1,7 @@
-﻿using Odyssey.Models.Data;
+﻿using Odyssey.Models;
+using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Tools;
-using Odyssey.Services;
-using Prism.Events;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -16,13 +15,8 @@ namespace Odyssey.ViewModels.Tools;
 /// provides functionality to manage and rebuild a tree structure based on document changes.</remarks>
 public partial class ReportInfoViewModel : MessagesListViewModel
 {
-    public ReportInfoViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
+    public ReportInfoViewModel() : base()
     {
-    }
-
-    protected override void OnSelectionChanged(ISelectionChange selectionChange)
-    {
-        // This view does not handle any selection change.
     }
 
     protected override void OnActiveDocumentChanged(CRDocument report)
@@ -60,11 +54,19 @@ public partial class ReportInfoViewModel : MessagesListViewModel
                 // Battle messages are handled in a specific dedicated view model.
                 if (block.GetDepth() == 3)
                 {
-                    List<DataBlock> targets = Report.GetMessageTargets(block);
+                    List<EntityModel> targets = Report.GetMessageTargets(block);
                     Items.Add(new MessageEntry(block.Value(Strings.EN_MESSAGE_RENDERED), targets));
                 }
+                else
+                {
+                    Debug.WriteLine($"[VM-REPORT--] Message depth is not 3 for {block}");
+                }
+            }
+            else 
+            {
+                Debug.WriteLine($"[VM-REPORT--] CollectDataFromReport other message {block}");
             }
         }
-        Debug.WriteLine($"[VM-REPORT--] RebuildTree nbmsg[{Items.Count}] nbfactionsmsg[{factionsMessagesNumber}]");
+        Debug.WriteLine($"[VM-REPORT--] CollectDataFromReport nbmsg[{Items.Count}] nbfactionsmsg[{factionsMessagesNumber}]");
     }
 }

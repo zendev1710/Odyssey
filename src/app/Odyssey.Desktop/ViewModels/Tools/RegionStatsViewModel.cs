@@ -1,19 +1,12 @@
-﻿using Avalonia.Controls;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Odyssey.Models;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Localization;
-using Odyssey.Services;
-using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Reflection.Emit;
-using static Odyssey.Models.Documents.CRDocument;
-using static Odyssey.Models.Documents.SimpleItemSelection;
-using static Odyssey.ViewModels.Tools.RegionStatsViewModel;
 
 namespace Odyssey.ViewModels.Tools;
 
@@ -77,7 +70,7 @@ public partial class RegionStatsViewModel : DocumentToolViewModelBase
 
     public ObservableCollection<string> Domains => _domains ??= [];
 
-    public RegionStatsViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
+    public RegionStatsViewModel() : base()
     {
         SelectedFactionId = -1;
         _statItems = [];
@@ -91,27 +84,25 @@ public partial class RegionStatsViewModel : DocumentToolViewModelBase
         CollectFactionData();
     }
 
-    protected override void OnSelectionChanged(ISelectionChange selectionChange)
+    protected override void OnSelectionChanged(IEntitySelection selection, SelectionChangeTypes selType, object? sender)
     {
-        // Exclude this selector from selection change events to avoid reentrancy issues
-        List<string> selectorIdsExcludeFilter = [Id];
-        List<string> selectorIdsIncludeFilter = [Ids.Explorer];
-        if (ShouldIgnoreSelectionChangedEvent(selectionChange, selectorIdsIncludeFilter, selectorIdsExcludeFilter))
-        {
-            return;
-        }
+        // TODO
+        if (ReferenceEquals(sender, this)) return;
 
-        ISelection sel = selectionChange.Selection;
-        Debug.WriteLine($"[VM-REG-STAT] SELSTATE CHANGED {sel} -> BEGIN");
-        if (sel.IsRegionSelected() && !IsSelectedRegion(sel))
+        bool regionChanged = selType.HasFlag(SelectionChangeTypes.Region);
+        bool regionSelected = selection.IsRegionSelected();
+
+        Debug.WriteLine($"[VM-REG-STAT] OnSelectionChanged: region changed={regionChanged}, region selected={regionSelected}");
+
+        if (regionChanged)
         {
-            SetSelection(sel);
-            if (FillFactionsList(Selection.Region!))
+            if (FillFactionsList(selection.Region!.DataBlock))
             {
                 Debug.WriteLine("[VM-REGIONSTATS-] OnSelectionChanged - CollectFactions returned true");
             }
         }
-        Debug.WriteLine($"[VM-REG-STAT] SELSTATE CHANGED {sel} -> ENDED");
+        Debug.WriteLine($"[VM-REG-STAT] SELSTATE CHANGED {selection} -> ENDED");
+
     }
 
     private bool FillFactionsList(DataBlock region)
@@ -120,13 +111,9 @@ public partial class RegionStatsViewModel : DocumentToolViewModelBase
 
         SortedSet<int> factions = [];
         Factions.Clear();
-        /*
 
-        if (cr == null)
-        {
-            return false;
-        }*/
         Debug.WriteLine($"[VM-REG-STAT] Fill faction lists -> handling...");
+
         bool bFoundCurrentlySelectedFaction = false;
         DataBlock? startBlock = region.GetNextBlock();
         int regionDepth = region.GetDepth();
@@ -212,10 +199,12 @@ public partial class RegionStatsViewModel : DocumentToolViewModelBase
         SortedDictionary<string, Entry> buildings = [];
         SortedDictionary<Tuple<string, int>, Entry> talents = [];
 
+        IEntitySelection selection = CurrentSelection;
+
         // collect data
-        if (Selection.IsRegionSelected())
+        if (selection.IsRegionSelected())
         {
-            CollectData(persons, items, talents, ships, buildings, Selection.Region);
+            CollectData(persons, items, talents, ships, buildings, selection.Region!.DataBlock);
         }
 
         // Add statistics
@@ -402,7 +391,7 @@ public partial class RegionStatsViewModel : DocumentToolViewModelBase
         int depth = region!.GetDepth();
 
         // FIXME: debug this part
-        // TMP : 
+        // TMP :
         return;
 
         for (DataBlock? block = firstBlockNode; block != null && block.GetDepth() > depth; block = block.GetNextBlock())

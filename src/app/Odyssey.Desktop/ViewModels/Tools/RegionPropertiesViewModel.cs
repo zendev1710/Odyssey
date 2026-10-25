@@ -1,18 +1,12 @@
-﻿using Avalonia.Controls;
-using CommunityToolkit.Mvvm.ComponentModel;
-using HarfBuzzSharp;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Localization;
-using Odyssey.Services;
 using Odyssey.Settings;
-using Prism.Events;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using static Odyssey.Models.Data.RegionItem;
 using static Odyssey.Models.Documents.CRDocument;
-using static Odyssey.Models.Documents.SimpleItemSelection;
 using static Odyssey.Models.Tools.DataProperty;
 
 namespace Odyssey.ViewModels.Tools;
@@ -258,32 +252,24 @@ public partial class RegionPropertiesViewModel : DocumentToolViewModelBase
     [ObservableProperty]
     private int _incense;
 
-    public RegionPropertiesViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
+    public RegionPropertiesViewModel() : base()
     {
         _opacity = GlobalSettings.EnableTerrainBackgroundColor ? 0.9 : 1;
     }
 
-    protected override void OnSelectionChanged(ISelectionChange selectionChange)
+    protected override void OnSelectionChanged(IEntitySelection selection, SelectionChangeTypes selType, object? sender)
     {
-        // Exclude this selector from selection change events to avoid reentrancy issues
-        List<string> selectorIdsExcludeFilter = [Id];
-        List<string> selectorIdsIncludeFilter = [Ids.Explorer];
-        if (ShouldIgnoreSelectionChangedEvent(selectionChange, selectorIdsIncludeFilter, selectorIdsExcludeFilter))
-        {
-            return;
-        }
+        if (ReferenceEquals(sender, this)) return;
 
-        ISelection sel = selectionChange.Selection;
-        if (sel.IsRegionSelected() && !IsSelectedRegion(sel))
-        {
-            SetSelection(sel);
+        bool regionChanged = selType.HasFlag(SelectionChangeTypes.Region);
+        bool regionSelected = selection.IsRegionSelected();
 
-            // TODO: update data : 
-            // - description in a textbox if exist
-            // - description as a tooltip (on full region name - 1st expander header) if exist 
-            CollectData(Selection.Region!);
+        Debug.WriteLine($"[VM-REG-PROP] OnSelectionChanged: region changed={regionChanged}, region selected={regionSelected}");
+
+        if (regionChanged)
+        {
+            CollectData(selection.Region!.DataBlock as RegionDataBlock);
         }
-        Debug.WriteLine($"[VM-REG-PROP] SELSTATE CHANGED {sel} -> ENDED");
     }
 
     protected static void AddResourceItem(RegionItemCategory category, RegionItemType pid, Dictionary<RegionItemType, RegionItem> items, string name, ulong value, int skill = 0)
@@ -338,20 +324,22 @@ public partial class RegionPropertiesViewModel : DocumentToolViewModelBase
         items[id] = new RegionItem(name, value, RegionItemCategory.TRADE);
     }
 
-    protected void CollectData(DataBlock region)
+    protected void CollectData(RegionDataBlock region)
     {
         CollectResourcesItem(region);
         CollectIncomeItem(region);
         CollectTradeItems(region);
 
         Description = region.Value(KeyType.DESCRIPTION);
-        Herb = Labels.Localize(Categories.Item,region.Value(KeyType.HERB));
+        Herb = Labels.Localize(Categories.Item, region.Value(KeyType.HERB));
+
+        CollectAdditionalData();
     }
 
     /// <summary>
     /// Region data collection -> region panel data
     /// </summary>
-    protected void CollectResourcesItem(DataBlock region)
+    protected void CollectResourcesItem(RegionDataBlock region)
     {
         Dictionary<RegionItemType, RegionItem> resourceItems = [];
         //Dictionary<int, RegionItem> items = [];
@@ -372,8 +360,8 @@ public partial class RegionPropertiesViewModel : DocumentToolViewModelBase
         /// - not seen: not highlighted and not a neighbor)
         /// - neighbor: not highlighted
         /// - travel: highlighted
-        /// - seen directly: seen by active/ally faction 
-        /// 
+        /// - seen directly: seen by active/ally faction
+        ///
         /// Only ocean with ship is in the region explorer
         /// ocean information are only ships (and who they belong it) - and coordinates
         ///////////////////////////////////////////////
@@ -536,8 +524,8 @@ public partial class RegionPropertiesViewModel : DocumentToolViewModelBase
         Peasants = resourceItems.TryGetValue(RegionItemType.PEASANTS, out item) ? (int)item.Value : peasants;
         Recruits = resourceItems.TryGetValue(RegionItemType.RECRUITS, out item) ? (int)item.Value : -1;
         Surplus = resourceItems.TryGetValue(RegionItemType.PEASANTS_WAGES, out item) ? (int)item.Value : -1;
-        // TO add translation in DE tooltip : Maximale Anzahl Silber, dass per Unterhaltung eingenommen werden kann 
-        Entertainment = resourceItems.TryGetValue(RegionItemType.ENTERTAINMENT_MAX, out item) ? (int)item.Value : -1; 
+        // TO add translation in DE tooltip : Maximale Anzahl Silber, dass per Unterhaltung eingenommen werden kann
+        Entertainment = resourceItems.TryGetValue(RegionItemType.ENTERTAINMENT_MAX, out item) ? (int)item.Value : -1;
         int trees = resourceItems.TryGetValue(RegionItemType.TREES, out item) ? (int)item.Value : -1;
         int saplings = resourceItems.TryGetValue(RegionItemType.SAPLINGS, out item) ? (int)item.Value : -1;
 
@@ -614,7 +602,7 @@ public partial class RegionPropertiesViewModel : DocumentToolViewModelBase
         long entertainRevenue = 0;
         long tradeDuties = 0;
         long learningCosts = 0;
-        
+
         (trees, saplings, peasants) = FindInfoForIncome(region);
         int surplus = Income.ComputeSurplus(region.GetTerrain(), trees, saplings, peasants, salary);
 
@@ -702,14 +690,17 @@ public partial class RegionPropertiesViewModel : DocumentToolViewModelBase
         TradeCategoryLabel = $"Trade {Trade} - Sell {soldItemName} at price={soldPrice}";
     }
 
-    protected void UpdateData() 
+    protected void CollectAdditionalData()
     {
-        if (!Selection.IsRegionSelected())
-        {
-            return;
-        }
+        // TODO: handle additional data :
+        // - description in a textbox if exist
+        // - description as a tooltip (on full region name - 1st expander header) if exist
+
+        /*
 
         DataBlock? region = Selection.Item;
+        */
+
         // RETRIEVE REGION NAME
         /*
         string name = region.value(KeyType.NAME);

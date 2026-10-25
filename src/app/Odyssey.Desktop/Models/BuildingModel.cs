@@ -6,31 +6,31 @@ using Odyssey.Models.Tools;
 
 namespace Odyssey.Models;
 
-public class BuildingModel : ContainerModel
+public class BuildingModel : StructureModel
 {
-    public BuildingModel(DataBlock buildingDataBlock, DataBlock? region = null) : base(buildingDataBlock, Categories.Building, region)
+    public BuildingModel(DataBlock buildingDataBlock, int locationId/*, DataBlock? region = null*/) : base(buildingDataBlock, Categories.Building, locationId/*, region*/)
     {
     }
 
-    public override bool CollectData(CRDocument report/*, DataBlock? region*/, ref DataProperty? containerProperty)
+    protected override bool CollectDataFromBlock(CRDocument report/*, DataBlock? region*/, ref DataProperty? structureProperty)
     {
-        if (Container == null)
+        if (Structure == null)
         {
             return false;
         }
-        containerProperty = null;
+        structureProperty = null;
         DataProperties.Clear();
-        foreach (DataKey dk in Container.GetData())
+        foreach (DataKey dk in Structure.GetData())
         {
             if (!HandleData(dk))
             {
-                AddDataProperty(report, dk);
+                AddDataProperty(dk);
             }
         }
-        string containerLabel = GetLabel();
-        containerProperty = new DataProperty(Categories.Node, containerLabel, string.Empty, containerLabel, string.Empty, Container);
+        string structureLabel = GetLabel();
+        structureProperty = new DataProperty(Categories.Node, structureLabel, string.Empty, structureLabel, string.Empty, this/*Structure*/);
         CollectOwnerInfo(report);
-        CollectUnits(/*region,*/ KeyType.BUILDING, Container.GetId());
+        CollectUnits(report, /*region,*/ KeyType.BUILDING, Structure.GetId());
         CollectEffects();
 
         return true;

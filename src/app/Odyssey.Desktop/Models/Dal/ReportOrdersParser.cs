@@ -2,6 +2,7 @@
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Localization;
+using Odyssey.Models.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Odyssey.Models.Dal
 {
     public class ReportOrdersParser
     {
-        private DataBlock? Region { get; set; }
+        private RegionDataBlock? Region { get; set; }
         private DataBlock? Unit { get; set; }
         private int UnitId { get; set; }
         private OrdersAttachment RegionOrders { get; set; }
@@ -90,7 +91,7 @@ namespace Odyssey.Models.Dal
             errorMessage = "";
             if (Utils.Converters.ExtractCoordinates(param, out int x, out int y, out int z))
             {
-                DataBlock? region = null;
+                RegionDataBlock? region = null;
                 // TODO: check if region can be an unknown one in orders
                 if (!Report.GetRegion(ref region, x, y, (PlaneType)z))
                 {
@@ -103,23 +104,22 @@ namespace Odyssey.Models.Dal
         }
         private bool ProcessUnitKeyword(string param, out string errorMessage)
         {
-            DataBlock? unit = null;
+            UnitModel? unit = null;
             errorMessage = "";
             UnitId = Utils.Converters.StringIdToInt(param);
-            if (!Report.GetUnit(ref unit, UnitId))
+            if (!Report.FindUnit(UnitId, out unit))
             {
                 errorMessage = $"Unit not found: {param}";
                 return false;
             }
-            Unit = unit!;
+            Unit = unit!.DataBlock;
             if (Region != null)
             {
-                DataBlock? region = Region;
+                RegionDataBlock? region = Region;
                 Coordinates coords = new(region.GetX(), region.GetY(), region.GetId());
                 if (!CRDocument.HasSeenChild(region, Unit))
                 {
-                    if (!CRDocument.GetSeenParent(ref region, Unit))
-                    //if (!CRDocument.GetParent(ref region, Unit))
+                    if (!CRDocument.FindRegionFrom(ref region, Unit))
                     {
                         errorMessage = $"Unit in wrong region: {param}";
                         return false;
@@ -132,9 +132,9 @@ namespace Odyssey.Models.Dal
                 Region = null;
             }
             // TODO: cumbersome, but reading orders without a `; bestaetigt` comment must do this.
-            Report.SetConfirmed(ref unit, false);
+            Report.SetConfirmed(Unit, false);
             DataBlock? commandsBlock = null;
-            if (!CRDocument.GetCommands(ref commandsBlock, unit.Node))
+            if (!CRDocument.GetCommands(ref commandsBlock, Unit!.Node))
             {
                 errorMessage = $"Unit has no command block: {param}";
                 return false;
@@ -181,7 +181,7 @@ namespace Odyssey.Models.Dal
         /// </summary>
         /// <param name="region"></param>
         /// <returns></returns>
-        private static string GetRegionStatement(in DataBlock region)
+        private static string GetRegionStatement(in RegionDataBlock region)
         {
             int id = region.GetId();
             int x = region.GetX();

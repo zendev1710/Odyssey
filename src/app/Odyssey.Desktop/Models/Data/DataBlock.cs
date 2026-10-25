@@ -1,13 +1,14 @@
-﻿using Odyssey.Utils;
-using DryIoc.FastExpressionCompiler.LightExpression;
+﻿using DryIoc.FastExpressionCompiler.LightExpression;
 using MicroCom.Runtime;
+using Odyssey.Extensions;
+using Odyssey.Utils;
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
-using Odyssey.Extensions;
 
 namespace Odyssey.Models.Data
 {
@@ -219,8 +220,6 @@ namespace Odyssey.Models.Data
 
         public List<DataKey> GetData() => Data;
         public BlockType GetBlockType() => Type;
-        public int GetX() => X;
-        public int GetY() => Y;
         /// <summary>
         /// Get the Id.
         /// Original method name was info(). 
@@ -235,11 +234,9 @@ namespace Odyssey.Models.Data
         public void SetDepth(int depth) => Depth = depth;
 
         protected BlockType Type { get; set; }
-        protected int Id { get; private set; }
+        protected int Id { get; set; }
         protected int Depth { get; set; }
         protected int Flags { get; private set; }
-        protected int X { get; private set; }
-        protected int Y { get; private set; }
 
         // string representation of the block type when its type is BlockType.UNKNOWN
         private string? TypeLabel { get; set; }
@@ -293,13 +290,13 @@ namespace Odyssey.Models.Data
             "Gang",
             "Wand",
             "Halle",
-            "Nebel",
-            "Dichter Nebel",
+            "Nebel", // Fog
+            "Dichter Nebel", // Dense/thick fog
             "Feuerwand",
             "Mahlstrom"
         ];
 
-        protected static readonly Dictionary<BlockType, string> BLOCKNAMES = new Dictionary<BlockType, string>
+        public static readonly FrozenDictionary<BlockType, string> BLOCKNAMES = new Dictionary<BlockType, string>
         {
             { BlockType.VERSION, "VERSION" },
             { BlockType.OPTIONS, "OPTIONEN" },
@@ -336,7 +333,7 @@ namespace Odyssey.Models.Data
             { BlockType.MESSAGETYPE, "MESSAGETYPE" },
             { BlockType.TRANSLATION, "TRANSLATION" },
             { BlockType.UNKNOWN, string.Empty },
-        };
+        }.ToFrozenDictionary();
 
         // At this moment this method is unused.
         public string GetTranslatedValue(KeyType key)
@@ -349,10 +346,20 @@ namespace Odyssey.Models.Data
             return string.Empty;
         }
 
-        public DataBlock()
+
+        public DataBlock(string id)
         {
             Data = [];
+            SetFlags((int)Flag.None);
+            SetId(id);
         }
+
+        public DataBlock(BlockType bt, string id, string typeLabel): this(id)
+        {
+            Type = bt;
+            TypeLabel = typeLabel;
+        }
+
         public void AddKey(DataKey key) => Data.Add(key);
         public void SetKey(KeyType keyType, string value)
         {
@@ -416,7 +423,7 @@ namespace Odyssey.Models.Data
 
         public DataKey? ValueKey(KeyType keyType) => Data.Find(k => k.GetKeyType() == keyType);
 
-        public string IdToString()
+        public virtual string IdToString()
         {
             int nn = Id;
             return nn > 0 ? Utils.Converters.IdToString(nn) : "0";
@@ -504,7 +511,8 @@ namespace Odyssey.Models.Data
             BlockType btype = target.GetBlockType();
             if (btype == BlockType.REGION)
             {
-                string match = $"{target.GetX()} {target.GetY()} {target.GetId()}";
+                var regionTarget = target as RegionDataBlock;
+                string match = $"{regionTarget.GetX()} {regionTarget.GetY()} {regionTarget.GetId()}";
                 foreach (DataKey key in Data)
                 {
                     if (key.GetValue() == match)
@@ -545,28 +553,6 @@ namespace Odyssey.Models.Data
             }
             return false;
         }
-
-        // return true if region is unseen
-        public bool IsSeenRegion(out Flag visibilityFlag)
-        {
-            visibilityFlag = Flag.None;
-            if ((Flags & (int)Flag.REGION_SEEN) != 0)
-            {
-                visibilityFlag |= Flag.REGION_SEEN;
-            }
-            else if ((Flags & (int)Flag.TRAVEL) != 0)
-            {
-                visibilityFlag |= Flag.TRAVEL;
-            }
-            else if ((Flags & (int)Flag.LIGHTHOUSE) != 0)
-            {
-                visibilityFlag |= Flag.LIGHTHOUSE;
-            }
-            return visibilityFlag != Flag.None;
-        }
-
-        // return true if region has people
-        public bool IsWithPeople() => (Flags & (int)Flag.REGION_SEEN) != 0;
 
         public void SetFlags(int flags) => Flags = flags;
 
@@ -630,65 +616,6 @@ namespace Odyssey.Models.Data
                 return terrainType;
             }
             return 0; // Unknown terrain type
-        }
-
-        // Try to parse str as a datablock header
-        public bool Parse(string value)
-        {
-            if (string.IsNullOrEmpty(value))
-            {
-                return false;
-            }
-
-            // Skip potential indentation
-            string str = value.TrimStart();
-
-            // must start with an uppercase letter
-            if (string.IsNullOrEmpty(str) || !char.IsLetter(str[0]) || !char.IsUpper(str[0]))
-            {
-                return false;
-            }
-
-            // block headers cannot contain '\"' or ';'
-            if (str.Contains('\"') || str.Contains(';'))
-                return false;
-
-            // unset flags
-            SetFlags((int)Flag.None);
-
-            int space = str.IndexOf(' ');
-            SetTypeLabel(space == -1 ? str : str[..space]);
-            SetId(space == -1 ? string.Empty : str.Remove(0, space + 1));
-
-            // unset all other states
-            SetTerrain(Terrains.UNKNOWN);
-            //SetAttachment(null);
-            return true;
-        }
-
-        public /*static*/ BlockType ParseType(string typeStr)
-        {
-            // region moved to top (performance)
-            if (typeStr == "REGION")
-                return BlockType.REGION;
-
-            // if BLOCKNAMES is defined as static, null exception here
-            foreach (var b in BLOCKNAMES)
-            {
-                if (b.Value == typeStr)
-                {
-                    return b.Key;
-                }
-            }
-
-            return BlockType.UNKNOWN;
-        }
-
-        // string() function in cpp code
-        public void SetTypeLabel(string s)
-        {
-            Type = ParseType(s);
-            TypeLabel = Type == BlockType.UNKNOWN ? s : "";
         }
 
         public string GetTypeLabel()
@@ -768,60 +695,40 @@ namespace Odyssey.Models.Data
             return name;
         }
 
+        protected virtual string GetLabelSuffix()
+        {
+            return $"({IdToString()})";
+        }
+
         public string GetUILabel()
         {
-            string name = GetUIName();
-            if (Type == BlockType.REGION || Type == BlockType.BATTLE)
-            {
-                int id = Id;
-                if (id.IsSpecialPlane())
-                {
-                    // Plane name is part of name for regions and battles
-                    return $"{name} ({X}, {Y}, {WorldPlane.GetName((PlaneType)id)})";
-                }
-                return $"{name} ({X}, {Y})";
-            }
-            return $"{name} ({IdToString()})";
+            return $"{GetUIName()} {GetLabelSuffix()}";
         }
 
         public string GetStringId()
         {
-            // TODO: handle ISLAND Id
-            return Type == BlockType.REGION ? $"{X}, {Y}" : IdToString();
+            // TODO: handle ISLAND Id. And what about battle ?
+            //return Type == BlockType.REGION ? $"{X}, {Y}" : IdToString();
+            return IdToString();
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="s"></param>
-        public void SetId(string s)
+        private void SetId(string s)
         {
             SetFlags(Flags & ~((int)Flag.BLOCKID_BIT0 | (int)Flag.BLOCKID_BIT1));
             if (!string.IsNullOrEmpty(s))
             {
-                int id;
                 if (!s.Contains(' '))
                 {
                     SetFlags((int)Flag.BLOCKID_BIT0);
-                    id = Utils.Converters.StringToInt(s);
+                    Id = Utils.Converters.StringToInt(s);
                 }
-                else
-                {
-                    // Note: only REGION and BATTLE blocks have X Y Id values
-                    SetFlags((int)Flag.BLOCKID_BIT1);
-                    Utils.Converters.ExtractCoordinates(s, out int x, out int y, out id);
-                    if (id > 0)
-                        SetFlags((int)Flag.BLOCKID_BIT0);
-                    X = x;
-                    Y = y;
-                }
-
-                Id = id;
             }
             else
             {
-                X = 0;
-                Y = 0;
                 Id = 0;
             }
         }

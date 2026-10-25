@@ -1,14 +1,10 @@
-﻿using Avalonia.Controls;
-using AvaloniaEdit.Document;
+﻿using AvaloniaEdit.Document;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Tools;
-using Odyssey.Services;
 using Odyssey.TextMate;
-using Odyssey.Views;
-using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,7 +21,6 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
 {
     // Collections mises à jour par HandleSelection
     public ObservableCollection<UnitViewModel> UnitsInRegion { get; } = new();
-    //public ObservableCollection<ItemViewModel> UnitItems { get; } = new();
 
     // Ajoutez cette propriété dans UnitOrdersViewModel
     public ObservableCollection<UnitItemViewModel> InventoryItems { get; } = new();
@@ -33,6 +28,12 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
     private static int FreeTempUnitNumber { get; set; } = 1;
 
     private bool IsWrapModeEnabled { get; set; }
+
+    /// <summary>
+    /// Key of the region the context data (UnitsInRegion) is currently built from, or -1 when no region
+    /// is loaded. Used to not recompute the context data when navigating inside the same region.
+    /// </summary>
+    private int _contextRegionKey = -1;
 
     [ObservableProperty]
     private bool _isModified;
@@ -56,7 +57,7 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
 
     public TextDocument Document { get; set; }
 
-    public UnitOrdersViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
+    public UnitOrdersViewModel() : base()
     {
         // when enabled, next/previous unit commands traverse the explorer view in circular mode, i.e.
         // the previous of the first editable unit is the last matching one, the next of the last editable unit is the first matching one
@@ -80,6 +81,15 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
             RecalculateInventoryProjections();
             // IsModified = true;
         };
+    }
+
+    protected override void OnActiveDocumentChanged(CRDocument report)
+    {
+        base.OnActiveDocumentChanged(report);
+
+        // The context data has to be collected again from the new document.
+        _contextRegionKey = -1;
+        UnitsInRegion.Clear();
     }
 
     // <summary>
@@ -142,51 +152,23 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
     /// <param name="newValue">new value</param>
     partial void OnIsConfirmedChanged(bool oldValue, bool newValue)
     {
-        ISelection sel = Selection;
-        if (!HasDocument || sel == null || !sel.IsUnitSelected())
+        IEntitySelection selection = CurrentSelection;
+        if (!HasDocument || !selection.HasUnit())
         {
             return;
         }
 
         // TODO: manage ItemTypes.CONFIRMATION
         // Selection.Selected |= ItemTypes.CONFIRMATION;
-        DataBlock unit = Selection!.Item!;
+        DataBlock unit = selection.Item!.DataBlock;
         Report.SetConfirmed(ref unit!, newValue);
         NotifyUnitConfirmedStatusHasChanged();
     }
 
-    protected override void OnSelectionChanged(ISelectionChange selectionChange)
+    protected override void OnSelectionChanged(IEntitySelection selection, SelectionChangeTypes selType, object? sender)
     {
-        // Handle event only if it comes from Explorer view
-        List<string> selectorIdsExcludeFilter = [Id];
-        List<string> selectorIdsIncludeFilter = [Ids.Explorer];
-        if (ShouldIgnoreSelectionChangedEvent(selectionChange, selectorIdsIncludeFilter, selectorIdsExcludeFilter))
-        {
-            return;
-        }
-
-        HandleSelection(selectionChange.Selection);
-    }
-
-    protected override int OnReportChange(ISelection? selection)
-    {
-        HandleSelection(selection);
-        return 1;
-    }
-
-    /// <summary>
-    /// Links the report document to the view model.
-    /// </summary>
-    /// <param name="cr">the report document to link</param>
-    /// <returns>true if a new report document has been linked to the view model; otherwise false</returns>
-    protected override void OnActiveDocumentChanged(CRDocument report)
-    {
-        base.OnActiveDocumentChanged(report);
-
-        if (!IsSameDocument(report) && IsModified)
-        {
-            // LATER: what about if orders were modified (save file) ?
-        }
+        if (ReferenceEquals(sender, this)) return;
+        HandleSelection(selection, selType);
     }
 
     /// <summary>
@@ -200,19 +182,12 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         // Send a command (notify event ?) to append the "snippet" in text editor area
     }
 
-    private void HandleSelection(ISelection? sel)
+    private void HandleSelection(IEntitySelection selection, SelectionChangeTypes selType)
     {
-        if (sel is not null && sel.IsUnitSelected() && IsSelected(sel))
-        {
-            // if currently selected unit is the specified selection unit, nothing is done
-            return;
-        }
-
         // Handle all kind of selection :
         // - unit selection => update orders view with unit orders and update confirmed status
         // - other selection => empty orders view content and disable commands related to orders edition
-        SetSelection(sel);
-        OnEditableUnitSelected();
+        OnEditableUnitSelected(selection, selType);
         // TODO: update confirmed status (check/unchecked) when navigating from one unit to another
     }
 
@@ -226,13 +201,14 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         }
         Debug.WriteLine("[VM-ORDERS--] Selecting previous unit...");
         DataBlock? start = null;
-        if (Selection.IsUnitSelected())
+        IEntitySelection selection = CurrentSelection;
+        if (selection.HasUnit())
         {
-            start = Selection.Item;
+            start = selection.Item!.DataBlock;
         }
-        else if (Selection.IsRegionSelected())
+        else if (selection.IsRegionSelected())
         {
-            start = Selection.Region;
+            start = selection.Region!.DataBlock;
         }
         if (start == null)
         {
@@ -249,7 +225,7 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         {
             if (block == firstBlock)
             {
-                // first block reacht
+                // first block reached
                 if (!wrap)
                 {
                     break;
@@ -278,9 +254,12 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
 
         if (unit != null)
         {
-            OnEditableUnitSelected();
-            ISelection? sel = new SimpleItemSelection(unit, null, null);
-            SendSelectionChangedEvent(sel);
+            if (Report.FindUnit(unit.GetId(), out UnitModel? unitModel))
+            {
+                IEntitySelection newSelection = new EntitySelection(unitModel, null, null);
+                OnEditableUnitSelected(newSelection, SelectionChangeTypes.Unit);
+                SendSelectionChangedEvent(newSelection);
+            }
         }
     }
 
@@ -300,13 +279,14 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         }
         Debug.WriteLine("[VM-ORDERS--] Selecting next unit...");
         DataBlock? start = null;
-        if (Selection.IsUnitSelected())
+        IEntitySelection selection = CurrentSelection;
+        if (selection.HasUnit())
         {
-            start = Selection.Item;
+            start = selection.Item!.DataBlock;
         }
-        else if (Selection.IsRegionSelected())
+        else if (selection.IsRegionSelected())
         {
-            start = Selection.Item;
+            start = selection.Region!.DataBlock;
         }
         if (start == null)
         {
@@ -320,7 +300,7 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         {
             if (block == null)
             {
-                // last block reacht
+                // last block reached
                 if (!wrap)
                 {
                     break;
@@ -349,9 +329,12 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
 
         if (unit != null)
         {
-            OnEditableUnitSelected();
-            ISelection? sel = new SimpleItemSelection(unit, null, null);
-            SendSelectionChangedEvent(sel);
+            if (Report.FindUnit(unit.GetId(), out UnitModel? unitModel))
+            {
+                IEntitySelection newSelection = new EntitySelection(unitModel, null, null);
+                OnEditableUnitSelected(newSelection, SelectionChangeTypes.Unit);
+                SendSelectionChangedEvent(newSelection);
+            }
         }
     }
 
@@ -370,7 +353,8 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
     }
     private void NotifyUnitConfirmedStatusHasChanged()
     {
-        SetSelection(Selection);
+        // TODO
+        //SetSelection(Selection);
     }
 
     /// <summary>
@@ -436,23 +420,26 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
     /// <returns>The confirmed status value if a unit is selected; otherwise -1</returns>
     public int GetConfirmed()
     {
-        if (!HasDocument || Selection is null)
+        if (!HasDocument)
         {
             return -1;
         }
 
-        if (Selection.IsUnitSelected())
+        IEntitySelection selection = CurrentSelection;
+        if (selection.HasUnit())
         {
-            DataBlock block = Selection.Item!;
+            DataBlock block = selection.Item!.DataBlock;
             if (Report.IsActiveFaction(block.ValueInt(KeyType.FACTION)))
             {
                 return block.ValueInt(KeyType.ORDERS_CONFIRMED);
             }
             return -1;
         }
-        else if (Selection.IsRegionSelected())
+        else if (selection.IsRegionSelected())
         {
-            DataBlock block = Selection.Item!;
+            // Note: selection.Item is null for a container selection (buildings/ships list):
+            // the region is then read from selection.Region.
+            DataBlock block = selection.Region!.DataBlock;
             return block.GetAttachment() is RegionAttachment stats ? stats.Unconfirmed : -1;
         }
         return -1; // no unit with order block
@@ -475,47 +462,58 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         Document.Text = content;
     }
 
-    private void OnEditableUnitSelected()
+    private void OnEditableUnitSelected(IEntitySelection selection, SelectionChangeTypes selType)
     {
+        bool unitSelected = (selType & SelectionChangeTypes.Unit) == SelectionChangeTypes.Unit;
+
         string orders = "";
         string unitName = "";
         bool editable = false;
         bool isConfirmed = false;
         InventoryItems.Clear();
-        if (HasDocument && Selection.IsUnitSelected())
-        {
-            // Only a selected unit is handled for orders
-            DataBlock unit = Selection.Item!;
-            unitName = unit.GetUILabel();
-            CurrentUnitId = unit.GetStringId();
-            DataBlock cmd = new();
-            if (GetSeenCommands(ref cmd!, unit!))
-            {
-                orders = LoadCommands(cmd!);
-                editable = true;
-                isConfirmed  = Report.IsConfirmed(unit);
-            }
 
-            UnitModel unitModel = new(unit);
-            // Collecter les items
-            List<DataProperty> itemsProperties = [];
-            if (unitModel.PrepareAndCollectItems(ref itemsProperties))
+        if (!HasDocument)
+            return;
+
+        if (!unitSelected)
+            return;
+
+        UnitModel? unitModel = selection.Item as UnitModel;
+        if (unitModel is null)
+            return;
+
+
+        // Only a selected unit is handled for orders
+        DataBlock unit = unitModel.DataBlock;
+
+        // TODO: check unit it's not null
+        unitName = unit.GetUILabel();
+        CurrentUnitId = unit.GetStringId();
+        DataBlock? cmdBlock = null;
+        if (GetSeenCommands(ref cmdBlock, unit!))
+        {
+            orders = LoadCommands(cmdBlock!);
+            editable = true;
+            isConfirmed = Report.IsConfirmed(unit);
+        }
+
+        // Collecter les items
+        List<DataProperty> itemsProperties = [];
+        if (unitModel.PrepareAndCollectItems(ref itemsProperties))
+        {
+            foreach (var prop in itemsProperties)
             {
-                foreach (var prop in itemsProperties)
-                {
-                    // 'prop.Label' contient le nom localisé, 'prop.Value' la quantité
-                    int quantity = int.TryParse(prop.Value, out int q) ? q : 0;
-                    InventoryItems.Add(new UnitItemViewModel(prop.Label, quantity, "Item"));
-                }
+                // 'prop.Label' contient le nom localisé, 'prop.Value' la quantité
+                int quantity = int.TryParse(prop.Value, out int q) ? q : 0;
+                InventoryItems.Add(new UnitItemViewModel(prop.Label, quantity, "Item"));
             }
         }
 
-        // TODO: when set from false to true, isenabled and isreadonly are not set
-        CanEditOrders = editable;
 
+        // TODO: when set from false to true, IsEnabled and IsReadonly should be set
+        CanEditOrders = editable;
         IsConfirmed = isConfirmed;
         Title = string.IsNullOrEmpty(unitName) ? "Unit orders" : $"Unit orders for {unitName}";
-
         SetOrders(orders);
 
         // To enable the commands if necessary
@@ -524,39 +522,44 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         ToggleConfirmedStatusCommand.NotifyCanExecuteChanged();
 
         // mettre à jour les données de contexte utilisées par les OrderDefinition.DynamicProvider (completion)
-        UpdateContextData();
+        UpdateContextData(selection);
         // Notify that the orders content has changed, to update completion proposals if necessary
     }
 
-    private void UpdateContextData()
+    private void UpdateContextData(IEntitySelection sel)
     {
-        // TODO: optimize : do not clear and compute UnitsInRegion if we are on the same region
-        UnitsInRegion.Clear();
-
-        if (Selection?.Item == null)
-            return;
-
-        DataBlock? region = null;
-        // prefer explicit region selection, otherwise resolve region of selected unit
-        if (Selection.IsRegionSelected())
+        // Context data are the units of the region of the selected unit (or of the selected region).
+        // They are only recomputed when the region changes: navigating from a unit to another unit of
+        // the same region does not change the context.
+        RegionDataBlock? region = null;
+        if (sel.Item is not null && sel.IsRegionSelected())
         {
-            region = Selection.Region;
+            // prefer explicit region selection
+            region = sel.Region!.DataBlock as RegionDataBlock;
         }
-        else if (Selection.IsUnitSelected())
+        else if (sel.Item is not null && sel.HasUnit())
         {
+            // otherwise resolve the region of the selected unit
             // uses CRDocument helper to find the seen parent region of a unit
-            Report.GetSeenRegion(ref region, Selection.Item);
+            //Report.GetSeenRegion(ref region, sel.Item);
+            CRDocument.FindRegionFrom(ref region, sel.Item.DataBlock);
         }
-
-        if (region == null)
-            return;
 
         // compute the same region key used for indexing in CRDocument
-        int x = region.GetX();
-        int y = region.GetY();
-        //int regionKey1 = region.GetId();
+        int regionKey = region is null ? -1 : Coordinates.GetId(region.GetX(), region.GetY(), PlaneType.WORLD);
 
-        int regionKey = Coordinates.GetId(x, y, PlaneType.WORLD);
+        if (regionKey == _contextRegionKey)
+        {
+            return;
+        }
+
+        _contextRegionKey = regionKey;
+        UnitsInRegion.Clear();
+
+        if (region is null)
+        {
+            return;
+        }
 
         // FIXME: does not return anything
         var ids = Report.GetUnitIdsInRegion(regionKey);
