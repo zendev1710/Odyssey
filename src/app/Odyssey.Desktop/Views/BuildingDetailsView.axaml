@@ -8,9 +8,7 @@
 			 xmlns:conv="using:Odyssey.Converters"
              mc:Ignorable="d"
              d:DesignWidth="300" d:DesignHeight="400"
-             x:DataType="vm:BuildingDetailsViewModel" x:CompileBindings="True"
-			 DataContext="vm:BuildingDetailsViewModel"
-			 >
+			 x:DataType="vm:BuildingDetailsViewModel" x:CompileBindings="True">
 	<Design.DataContext>
 		<vm:BuildingDetailsViewModel />
 	</Design.DataContext>
@@ -25,7 +23,7 @@
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
 			<TextBox Grid.Row="0" Text="{Binding Description}" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True" IsVisible="{Binding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
-			<TreeView Grid.Row="1" ItemsSource="{Binding Items}" DoubleTapped="TreeView_DoubleTapped" >
+			<TreeView Grid.Row="1" Name="DetailsTreeView" ItemsSource="{Binding Items}">
 				<TreeView.Styles>
 					<Style Selector="TreeViewItem" x:DataType="vm:TreeNodeViewModel">
 						<Setter Property="IsExpanded" Value="True"/>

@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Odyssey.ViewModels;
 
@@ -11,6 +12,10 @@ public partial class ShipDetailsView : UserControl
     public ShipDetailsView()
     {
         InitializeComponent();
+
+        var treeView = this.FindControl<TreeView>("DetailsTreeView");
+        treeView?.AddHandler(PointerPressedEvent, TreeView_PointerPressed, RoutingStrategies.Tunnel);
+        treeView?.AddHandler(KeyDownEvent, TreeView_KeyDown, RoutingStrategies.Tunnel);
     }
 
     private void InitializeComponent()
@@ -18,18 +23,31 @@ public partial class ShipDetailsView : UserControl
         AvaloniaXamlLoader.Load(this);
     }
 
-    private void TreeView_DoubleTapped(object? sender, TappedEventArgs e)
+    private void TreeView_PointerPressed(object? sender, PointerPressedEventArgs e)
     {
-        OnDoubleTapped(e);
+        if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed &&
+            e.KeyModifiers.HasFlag(KeyModifiers.Control) &&
+            sender is TreeView treeView &&
+            treeView.SelectedItem is NodeViewModel node &&
+            DataContext is ShipDetailsViewModel vm &&
+            node.Data?.Reference is not null)
+        {
+            vm.DispatchSelectedNode(node);
+            e.Handled = true;
+        }
     }
 
-    private void OnDoubleTapped(/*object? sender,*/ TappedEventArgs e)
+    private void TreeView_KeyDown(object? sender, KeyEventArgs e)
     {
-        // Handle the double-click event
-        if (DataContext is ShipDetailsViewModel vm && e.Source is IDataContextProvider s && s.DataContext is NodeViewModel node)
+        if (e.Key == Key.Enter &&
+            e.KeyModifiers.HasFlag(KeyModifiers.Control) &&
+            sender is TreeView treeView &&
+            treeView.SelectedItem is NodeViewModel node &&
+            DataContext is ShipDetailsViewModel vm &&
+            node.Data?.Reference is not null)
         {
-            // Double-click was on a TreeView item (NodeViewModel)
             vm.DispatchSelectedNode(node);
+            e.Handled = true;
         }
     }
 }

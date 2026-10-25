@@ -8,11 +8,9 @@
 			 xmlns:conv="using:Odyssey.Converters"
              mc:Ignorable="d"
              d:DesignWidth="300" d:DesignHeight="400"
-             x:DataType="vm:ShipDetailsViewModel" x:CompileBindings="True"
-			 DataContext="vm:UnitDetailsViewModel"
-			 >
+			 x:DataType="vm:ShipDetailsViewModel" x:CompileBindings="True">
 	<Design.DataContext>
-		<vm:UnitDetailsViewModel />
+		<vm:ShipDetailsViewModel />
 	</Design.DataContext>
 	<UserControl.Resources>
 		<conv:UnitItemConverter x:Key="UnitItemConverter" />
@@ -25,7 +23,7 @@
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
 			<TextBox Grid.Row="0" Text="{Binding Description}" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True" IsVisible="{Binding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
-			<TreeView Grid.Row="1" ItemsSource="{Binding Items}" DoubleTapped="TreeView_DoubleTapped" >
+			<TreeView Grid.Row="1" Name="DetailsTreeView" ItemsSource="{Binding Items}">
 				<TreeView.Styles>
 					<Style Selector="TreeViewItem" x:DataType="vm:TreeNodeViewModel">
 						<Setter Property="IsExpanded" Value="True"/>
