@@ -1,10 +1,5 @@
-﻿using Prism.DryIoc.Properties;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Odyssey.Models.Data
 {
@@ -177,7 +172,7 @@ namespace Odyssey.Models.Data
             return RegionItemType.UNKNOWN;
         }
 
-        public static RegionItemType ConvertToItemType(KeyType key) { 
+        public static RegionItemType ConvertToItemType(KeyType key) {
             switch (key)
             {
                 case KeyType.TREES: return RegionItemType.TREES;
