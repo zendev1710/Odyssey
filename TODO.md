@@ -11,6 +11,25 @@ Content moved in [zendev monday Odyssey workspace](https://zendev-team.monday.co
 - [ ] Combobox control content to up (not bottom), using flyout ?
 - [ ] Bad design preview for starcontrol
 
+### Map view
+
+- [x] buildings rendering
+- [x] ships rendering
+- [x] all ships turn movements rendering
+- [ ] all order movements rendering
+- [x] ships turn movements rendering on region selection
+- [ ] ships order movements rendering on region selection
+- [x] turn movement highlighting on ship selection
+- [ ] order movement highlighting on ship selection
+- [ ] by foot unit movements rendering
+- [ ] by horse unit movements rendering
+- [ ] movement highlighting on unit selection
+- [ ] astral region selection handling
+
+### Units inspector view
+
+TO BE FINISHED.
+
 ### Statistics view
 
 TO BE FINISHED.
@@ -28,7 +47,8 @@ TO BE DONE.
 ### Translation system
 
 - [ ] Achieve missing translations displayed -- xxx -- in the UI and stored in to-translate bookmarks
-- [ ] Achieve missing german translations marked [de]
+- [ ] Achieve missing german translations marked [DE]
+- [ ] Achieve missing german translations marked [FR]
 
 ### Tooltips system
 
@@ -75,19 +95,7 @@ TO BE FINISHED.
 
 ### Information view
 
-Information view (Ctrl + I in CsMapFx) - display information about the world data (11 tabs in a navigation view ... on central area ?) :
-
-- alchemy
-- buildings
-- resources
-- calendar (winter...)
-- batlles modifiers
-- Races
-- Regions
-- Production
-- Navigation
-- Weapons
-- Waren ?
+TO BE DONE.
 
 ### Orders view additional features
 
@@ -99,16 +107,21 @@ Information view (Ctrl + I in CsMapFx) - display information about the world dat
 
 ## Improvements
 
+- [ ] if the selected region is a firewall, the selection lines on hex should be of another color (nott red, because hard to see)
 - [x] Load then 'save as' a CR file without any change create a CR file with exactly the same content as the original one
-- 'Expand all' action in explorer view
-- 'Collapse all' action in explorer view
-- Icon for Ships node and each ship node
-- Icon for Buildings node and each building node
-- Icon for Factions node and each faction node (race)
-- Display all messages in report view as a list view (not as a 1-depth tree view)
-- Avoid data view update (tree rebuild and so on) when it's not necessary
-- Unit orders view: prev/next buttons as images to the right side of the status bar
-- Unit orders view: confirmed checkbox as a fluent toggle icon
-- Optimize the file loading service
-- Translate GUI in the current language for each view
-- Translate tab contextual menu items
+- [ ] 'Expand all' action in explorer view
+- [ ] 'Collapse all' action in explorer view
+- [ ] Icon for Ships node and each ship node
+- [ ] Icon for Buildings node and each building node
+- [ ] Icon for Factions node and each faction node (race)
+- [ ] Display all messages in report view as a list view (not as a 1-depth tree view)
+- [ ] Avoid data view update (tree rebuild and so on) when it's not necessary
+- [ ] Unit orders view: prev/next buttons as images to the right side of the status bar
+- [ ] Unit orders view: confirmed checkbox as a fluent toggle icon
+- [ ] Optimize the file loading service
+- [ ] Translate GUI in the current language for each view
+- [ ] Translate tab contextual menu items
+- [ ] Centralize selection handling with a service
+- [ ] Quick search (autocompletebox versus textbox...)
+- [ ] Map rendering optimizations
+  - [ ] precompute map bounds

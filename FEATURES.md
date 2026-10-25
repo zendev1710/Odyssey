@@ -16,9 +16,22 @@
 ### Map view
 
 - [x] Center map on the selected region (F8)
-- [x] Center map globally [Ctrl+F8
+- [x] Center map globally [Ctrl+F8)
 - [x] Region selection on mouse left button click release (if in same region as mouse down)
 - [x] Map scrolling using mouse left button down and move
+
+### Alternate pages system
+
+Pages are opened in the main window central area, using a tab control.
+Each page is a view, with its own view model.
+These pages are the following:
+
+- Settings
+- Advanced Search
+
+An alternate page has a clickable cross icon in the top right for closing the page.
+Esc key returns to the main workspace.
+A back/return button has the same effect as the Esc key.
 
 ### Settings system
 
@@ -123,7 +136,7 @@ Here are main missing features compared to Magellan:
 - errors view
 - profiles management
 - islands management
-- map other planes display (astral...)
+- other planes (astral...) not fully handled (only displayed)
 - reports merging management
 
 Here are main missing features compared to CsMapFx:
@@ -135,7 +148,7 @@ Here are main missing features compared to CsMapFx:
 - search results view
 - errors view
 - islands management
-- map other planes display (astral...)
+- other planes (astral...) not fully handled (only displayed)
 - map regions/islands multiselection
 - map region borders/buildings/boats... display
 - reports merging management

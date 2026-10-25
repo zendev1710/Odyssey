@@ -1,5 +1,9 @@
 # SPECIFICATIONS
 
+## Keyboards shortcuts
+
+- F11: toggle fullscreen
+
 ## Bookmarks system
 
 ### Toggle bookmark action
@@ -43,3 +47,83 @@ File example:
 Bookmarks files are saved in the same folder as main save file, with the same name but with `bookmarks-<pattern>.xml` extension.
 Global settings have a default bookmarks location.
 Global settings have a bookmarks auto-save option (if enabled, bookmarks are saved automatically each time bookmarks list is modified).
+
+## Minimap
+
+### CsMapFx
+
+the full map zoomed-in to 20%, with a rectangle representing the visible main map area and that can be moved by maintaining the mouse button.
+A rgion is displayed using its terrain image. 
+
+### Magellan
+
+the full map zoomed-in to 20%.
+A region is displayed in a color depending on a predefined property/criteria.
+
+## Statistics system
+
+### CsMapFx
+
+Statistics are displayed for the selected region(s). Information displayed are, by faction (or for all factions) :
+
+- for each race : `<Race>: <people>`
+- for each item type : `<Item Type>: <count>`
+- for each skill type and level (decreasing order): `<Skill Type> <level>: <number>`
+- for each building : `<Building Type>: <count> (size)` - size is displayed only if building is not fully built
+- for each ship : `<Ship Type>: <count> (size)` - size is displayed only if shipcraft is not completed
+
+Five checkboxes allow to filter the displayed information (races, items, skills...).
+Right clicking on information show a context menu with details (a menu item per unit, or building, or ship...) .
+A combobow allows to select a faction (or all factions) to display information for.
+
+A multi-selection mode to select sevral regions on the map is available (Ctrl+click or Shift+click).
+In this case, information displayed are the sum of all selected regions.
+
+## Astral
+
+TODO: obtain a map with astral having people.
+
+A region in the astral has the following properties:
+
+- "Nebel";Terrain
+- "<island id>";Insel 
+- "neighbour";visibility : for unseen astral regions
+- a list of SCHEMEN Properties :
+  - SCHEMEN X Y
+  - "region name>";Name
+
+## Additional views
+
+### Information view
+
+Information view (Ctrl + I in CsMapFx) - display information about the world data (11 tabs as an alternate view) :
+
+- alchemy
+- buildings
+- resources
+- calendar (winter...)
+- batlles modifiers
+- Races
+- Regions
+- Production
+- Navigation
+- Weapons
+- Waren ?
+
+
+## Data & models
+
+Caractéristiques d'une faction.
+
+infos statiques :
+
+- Nom (id)
+- Coût de recrutement
+- Type de magie
+- langue
+- Email
+
+infos évolutives :
+
+- number of people
+- age en nombre de tours

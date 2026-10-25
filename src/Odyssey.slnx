@@ -12,7 +12,13 @@
     <File Path="../BUILD.md" />
     <File Path="../DEVELOPER.md" />
     <File Path="../FEATURES.md" />
+    <File Path="../NOTES-AI.md" />
+    <File Path="../NOTES.md" />
+    <File Path="../OPTIIZATION-SUMMARY.md" />
+    <File Path="../OPTIIZATION.md" />
+    <File Path="../PROFILE-DATA.md" />
     <File Path="../README.md" />
+    <File Path="../RULES.md" />
     <File Path="../SPECS.md" />
     <File Path="../TODO.md" />
   </Folder>
