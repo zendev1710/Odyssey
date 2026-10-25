@@ -1,5 +1,7 @@
 using Avalonia.Media;
 using Odyssey.Controls.Buildings;
+using Odyssey.Icons;
+using Odyssey.Services;
 using System.Collections.Generic;
 
 namespace Odyssey.Controls.Ships;
@@ -72,39 +74,6 @@ public sealed record ShipVisual
 public static class ShipCatalog
 {
     private const string IconsFolder = "/Assets/ships/visual";
-    private const string ExplorerIconsFolder = "/Assets/ships/icons/de";
-
-    // Explorer icon file (Magellan2 "etc/images/icons") for each normalized ship type.
-    // The Magellan2 icons are named after the German type id; aliases are folded here.
-    private static readonly Dictionary<string, string> ExplorerIconFiles = new()
-    {
-        ["boot"] = "boot",
-        ["boat"] = "boot",
-        ["langboot"] = "langboot",
-        ["longboat"] = "langboot",
-        ["drachenschiff"] = "drachenschiff",
-        ["dragonship"] = "drachenschiff",
-        ["karavelle"] = "karavelle",
-        ["caravel"] = "karavelle",
-        ["trireme"] = "trireme",
-        ["tireme"] = "trireme",
-        ["galeone"] = "galeone",
-        ["galleon"] = "galeone",
-        ["einbaum"] = "einbaum",
-        ["floss"] = "floss",
-        ["kutter"] = "kutter",
-        ["barke"] = "barke",
-        ["kogge"] = "kogge",
-        ["fregatte"] = "fregatte",
-        ["koenigsbarke"] = "koenigsbarke",
-        ["katamaran"] = "katamaran",
-        ["karawane"] = "karawane",
-        ["ballon"] = "ballon",
-        ["luftschiff"] = "ballon",
-        ["kreuzer"] = "kreuzer",
-        ["ship"] = "ships",
-        ["ships"] = "ships",
-    };
 
     // Every spelling (German, English, French) -> canonical English asset key.
     private static readonly Dictionary<string, string> Aliases = new()
@@ -256,13 +225,7 @@ public static class ShipCatalog
     /// Returns the small Explorer icon for a ship type, using the Magellan2 ship-type icons.
     /// Unknown types fall back to the generic "ships" icon.
     /// </summary>
-    public static string GetExplorerIconPath(string? type)
-    {
-        string key = BuildingCatalog.Normalize(type);
-        if (!ExplorerIconFiles.TryGetValue(key, out string? file))
-        {
-            file = "ships";
-        }
-        return $"{ExplorerIconsFolder}/{file}.gif";
-    }
+    public static string GetExplorerIconPath(string? type) =>
+        IconCatalogService.ResolvePath(IconCategories.Ship, type, "ships")
+        ?? "/Assets/ships/ships.gif";
 }

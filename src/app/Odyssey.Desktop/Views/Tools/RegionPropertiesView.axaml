@@ -87,7 +87,7 @@
 							<!-- Trees or mallorn trees -->
 							<StackPanel Grid.Column="0" Orientation="Horizontal">
 								<!--mallornbaeume -->
-								<asyncImageLoader:AdvancedImage Source="/Assets/resources/de/baeume.gif" Margin="0,0,5,0"/>
+								<asyncImageLoader:AdvancedImage Source="/Assets/resources/trees.gif" Margin="0,0,5,0"/>
 								<SelectableTextBlock Name="TreesLabel" Foreground="{Binding HasMallorn, Converter={StaticResource BoolToForegroundColorConverter}}" FontWeight="{Binding HasMallorn, Converter={StaticResource BoolToBoldFontWeigthConverter}}" Padding="2" HorizontalAlignment="Left" Text="{Binding TreesType}"/>
 							</StackPanel>
 							<SelectableTextBlock Foreground="{Binding #TreesLabel.Foreground}" FontWeight="{Binding #TreesLabel.FontWeight}" Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Trees, Converter={StaticResource ItemAmountConverter}}"/>
@@ -100,7 +100,7 @@
 							<!-- Saplings or mallorn saplings -->
 							<StackPanel Grid.Column="0" Orientation="Horizontal">
 								<!--mallornschoesslinge	-->
-								<asyncImageLoader:AdvancedImage Source="/Assets/resources/de/schoesslinge.gif" Margin="0,0,5,0"/>
+								<asyncImageLoader:AdvancedImage Source="/Assets/resources/saplings.gif" Margin="0,0,5,0"/>
 								<SelectableTextBlock Foreground="{Binding #TreesLabel.Foreground}" FontWeight="{Binding #TreesLabel.FontWeight}" Padding="2" HorizontalAlignment="Left" Text="{Binding SaplingsType}"/>
 							</StackPanel>
 							<SelectableTextBlock Foreground="{Binding #TreesLabel.Foreground}" FontWeight="{Binding #TreesLabel.FontWeight}" Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Saplings, Converter={StaticResource ItemAmountConverter}}"/>
@@ -111,7 +111,7 @@
 						</Grid>
 						<Grid Grid.Column="2" Grid.Row="2">
 							<StackPanel Grid.Column="0" Orientation="Horizontal">
-								<asyncImageLoader:AdvancedImage Source="/Assets/resources/de/pferd.gif" Margin="0,0,5,0"/>
+								<asyncImageLoader:AdvancedImage Source="/Assets/resources/horses.gif" Margin="0,0,5,0"/>
 								<SelectableTextBlock Padding="2" HorizontalAlignment="Left"  ToolTip.Tip="{x:Static a:Lang.Horses_tip}" Text="{x:Static a:Lang.emapdetailspanel_node_horses}"/>
 							</StackPanel>
 							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Horses, Converter={StaticResource ItemAmountConverter}}"/>
@@ -122,7 +122,7 @@
 						</Grid>
 						<Grid Grid.Column="2" Grid.Row="3">
 							<StackPanel Grid.Column="0" Orientation="Horizontal">
-								<asyncImageLoader:AdvancedImage Source="/Assets/resources/de/eisen.gif" Margin="0,0,5,0"/>
+								<asyncImageLoader:AdvancedImage Source="/Assets/resources/iron.gif" Margin="0,0,5,0"/>
 								<SelectableTextBlock Padding="2" HorizontalAlignment="Left" Text="{x:Static a:Lang.rules_item_Eisen}"/>
 							</StackPanel>
 							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Iron, Converter={StaticResource ItemAmountConverter}}"/>
@@ -133,7 +133,7 @@
 						</Grid>
 						<Grid Grid.Column="2" Grid.Row="4" >
 							<StackPanel Grid.Column="0" Orientation="Horizontal">
-								<asyncImageLoader:AdvancedImage Source="/Assets/resources/de/stein.gif" Margin="0,0,5,0"/>
+								<asyncImageLoader:AdvancedImage Source="/Assets/resources/stone.gif" Margin="0,0,5,0"/>
 								<SelectableTextBlock Padding="2" HorizontalAlignment="Left" Text="{x:Static a:Lang.rules_item_Stein}"/>
 							</StackPanel>
 							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Stone, Converter={StaticResource ItemAmountConverter}}"/>
@@ -144,7 +144,7 @@
 						</Grid>
 						<Grid Grid.Column="2" Grid.Row="5" >
 							<StackPanel Grid.Column="0" Orientation="Horizontal">
-								<asyncImageLoader:AdvancedImage Source="/Assets/resources/de/kraeuter.gif" Margin="0,0,5,0"/>
+								<asyncImageLoader:AdvancedImage Source="/Assets/resources/herbs.gif" Margin="0,0,5,0"/>
 								<SelectableTextBlock Grid.Column="0" Padding="2" HorizontalAlignment="Left" Text="{x:Static a:Lang.emapdetailspanel_node_herb}"/>
 							</StackPanel>
 							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Herb, Converter={StaticResource ItemAmountConverter}}"/>
@@ -155,7 +155,7 @@
 						</Grid>
 						<Grid Grid.Column="2" Grid.Row="6" IsVisible="{Binding HasLaen}">
 							<StackPanel Grid.Column="0" Orientation="Horizontal">
-								<asyncImageLoader:AdvancedImage Source="/Assets/resources/de/laen.gif" Margin="0,0,5,0"/>
+								<asyncImageLoader:AdvancedImage Source="/Assets/resources/laen.gif" Margin="0,0,5,0"/>
 								<SelectableTextBlock Padding="2" HorizontalAlignment="Left" FontWeight="Bold" Foreground="#FF9800" Text="{x:Static a:Lang.Laen}"/>
 							</StackPanel>
 							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" FontWeight="Bold" Foreground="#FF9800" Text="{Binding Laen, Converter={StaticResource ItemAmountConverter}}"/>
@@ -320,7 +320,7 @@
 								<ColumnDefinition Width="100" />
 							</Grid.ColumnDefinitions>
 							<StackPanel Grid.Column="0" Orientation="Horizontal">
-								<asyncImageLoader:AdvancedImage Source="/Assets/trade/de/balsam.gif" Margin="0,0,5,0"/>
+								<asyncImageLoader:AdvancedImage Source="/Assets/trade/balm.gif" Margin="0,0,5,0"/>
 								<SelectableTextBlock Padding="2" HorizontalAlignment="Left" Text="{x:Static a:Lang.rules_item_Balsam}" />
 							</StackPanel>
 							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Balm}"/>
@@ -333,42 +333,42 @@
 								<ColumnDefinition Width="100" />
 							</Grid.ColumnDefinitions>
 							<StackPanel Grid.Column="0" Orientation="Horizontal">
-								<asyncImageLoader:AdvancedImage Source="/Assets/trade/de/myrrhe.gif" Margin="0,0,5,0"/>
+								<asyncImageLoader:AdvancedImage Source="/Assets/trade/myrrh.gif" Margin="0,0,5,0"/>
 								<SelectableTextBlock Padding="2" HorizontalAlignment="Left" Text="{x:Static a:Lang.rules_item_Myrrhe}"/>
 							</StackPanel>
 							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Myrrh}"/>
 						</Grid>
 						<Grid Grid.Column="0" Grid.Row="1" >
 							<StackPanel Grid.Column="0" Orientation="Horizontal">
-								<asyncImageLoader:AdvancedImage Source="/Assets/trade/de/gewuerz.gif" Margin="0,0,5,0"/>
+								<asyncImageLoader:AdvancedImage Source="/Assets/trade/spice.gif" Margin="0,0,5,0"/>
 								<SelectableTextBlock Padding="2" HorizontalAlignment="Left" Text="{x:Static a:Lang.rules_item_Gewürz}"/>
 							</StackPanel>
 							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Spice}"/>
 						</Grid>
 						<Grid Grid.Column="2" Grid.Row="1">
 							<StackPanel Grid.Column="0" Orientation="Horizontal">
-								<asyncImageLoader:AdvancedImage Source="/Assets/trade/de/oel_en.gif" Margin="0,0,5,0"/>
+								<asyncImageLoader:AdvancedImage Source="/Assets/trade/oil.gif" Margin="0,0,5,0"/>
 								<SelectableTextBlock Padding="2" HorizontalAlignment="Left" Text="{x:Static a:Lang.rules_item_Öl}"/>
 							</StackPanel>
 							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Oil}"/>
 						</Grid>
 						<Grid Grid.Column="0" Grid.Row="2" >
 							<StackPanel Grid.Column="0" Orientation="Horizontal">
-								<asyncImageLoader:AdvancedImage Source="/Assets/trade/de/juwel.gif" Margin="0,0,5,0"/>
+								<asyncImageLoader:AdvancedImage Source="/Assets/trade/gem.gif" Margin="0,0,5,0"/>
 								<SelectableTextBlock Padding="2" HorizontalAlignment="Left" Text="{x:Static a:Lang.rules_item_Juwel}"/>
 							</StackPanel>
 							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Gem}"/>
 						</Grid>
 						<Grid Grid.Column="2" Grid.Row="2">
 							<StackPanel Grid.Column="0" Orientation="Horizontal">
-								<asyncImageLoader:AdvancedImage Source="/Assets/trade/de/seide.gif" Margin="0,0,5,0"/>
+								<asyncImageLoader:AdvancedImage Source="/Assets/trade/silk.gif" Margin="0,0,5,0"/>
 								<SelectableTextBlock Padding="2" HorizontalAlignment="Left" Text="{x:Static a:Lang.rules_item_Seide}"/>
 							</StackPanel>
 							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Silk}"/>
 						</Grid>
 						<Grid Grid.Column="0" Grid.Row="3" >
 							<StackPanel Grid.Column="0" Orientation="Horizontal">
-								<asyncImageLoader:AdvancedImage Source="/Assets/trade/de/weihrauch.gif" Margin="0,0,5,0"/>
+								<asyncImageLoader:AdvancedImage Source="/Assets/trade/incense.gif" Margin="0,0,5,0"/>
 								<SelectableTextBlock Padding="2" HorizontalAlignment="Left" Text="{x:Static a:Lang.rules_item_Weihrauch}"/>
 							</StackPanel>
 							<SelectableTextBlock Grid.Column="2" Padding="2" HorizontalAlignment="Right" Text="{Binding Incense}"/>

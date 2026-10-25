@@ -1,5 +1,7 @@
 using Avalonia.Media;
+using Odyssey.Icons;
 using Odyssey.Models.Data;
+using Odyssey.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -34,7 +36,7 @@ public sealed record BuildingVisual
     /// <summary>Normalized (canonical) type key, e.g. "saegewerk".</summary>
     public string TypeKey { get; init; } = string.Empty;
 
-    /// <summary>avares-relative path of the icon bitmap, e.g. "/Assets/buildings/de/saegewerk.gif".</summary>
+    /// <summary>avares-relative path of the icon bitmap, e.g. "/Assets/buildings/sawmill.gif".</summary>
     public string IconPath { get; init; } = string.Empty;
 
     /// <summary>Shape drawn when the icon bitmap is missing.</summary>
@@ -61,57 +63,12 @@ public sealed record BuildingVisual
 
 /// <summary>
 /// Resolves a building type name (as stored in the report, usually a German name such as
-/// "Leuchtturm") to a <see cref="BuildingVisual"/>. Icon bitmaps are looked up under
-/// /Assets/buildings/de/&lt;name&gt;.gif; unknown types fall back to a colored vector shape.
+/// "Leuchtturm") to a <see cref="BuildingVisual"/>. Icon bitmaps are resolved through the
+/// English icon catalog in Assets/i18n/icons.json; unknown types fall back to a colored vector shape.
 /// </summary>
 public static class BuildingCatalog
 {
-    private const string IconsFolder = "/Assets/buildings/de";
-    private const string ExplorerFallbackIconPath = $"{IconsFolder}/buildings.gif";
-
-    // Explicit icon file names for types whose normalized name does not match the asset file.
-    private static readonly Dictionary<string, string> IconFileOverrides = new()
-    {
-        ["akademiederkuenste"] = "akademie_der_kuenste",
-        ["gesegnetersteinkreis"] = "gesegneter_steinkreis",
-    };
-
-    // Icon files actually shipped under /Assets/buildings/de. Unknown types use the generic
-    // "buildings.gif" icon instead of a path that would fail to load.
-    private static readonly HashSet<string> ExplorerIconFiles = new(StringComparer.OrdinalIgnoreCase)
-    {
-        "akademie",
-        "akademie_der_kuenste",
-        "befestigung",
-        "bergwerk",
-        "buildings",
-        "burg",
-        "damm",
-        "festung",
-        "geruest",
-        "gesegneter_steinkreis",
-        "grundmauern",
-        "hafen",
-        "handelsposten",
-        "karawanserei",
-        "leuchtturm",
-        "magierturm",
-        "marktplatz",
-        "monument",
-        "pferdezucht",
-        "portal",
-        "saegewerk",
-        "schmiede",
-        "steinbruch",
-        "steinkreis",
-        "taverne",
-        "tunnel",
-        "turm",
-        "wachstube",
-        "wachturm",
-        "wurmloch",
-        "zitadelle",
-    };
+    private const string ExplorerFallbackIconPath = "/Assets/buildings/buildings.gif";
 
     // English (or alternate) type names -> canonical German type key.
     private static readonly Dictionary<string, string> Aliases = new()
@@ -252,8 +209,9 @@ public static class BuildingCatalog
             key = canonical;
         }
 
-        string file = IconFileOverrides.TryGetValue(key, out string? overrideName) ? overrideName : key;
-        string iconPath = $"{IconsFolder}/{file}.gif";
+        string iconPath = IconCatalogService.ResolvePath(IconCategories.Building, type, "buildings")
+            ?? IconCatalogService.ResolvePath(IconCategories.Building, key, "buildings")
+            ?? ExplorerFallbackIconPath;
 
         BuildingVisual visual = Known.TryGetValue(key, out BuildingVisual? known) && known is not null
             ? known
@@ -263,34 +221,16 @@ public static class BuildingCatalog
     }
 
     /// <summary>
-    /// Returns the small Explorer icon for a building type, reusing the Magellan2 building
-    /// icons under /Assets/buildings/de. Unknown types fall back to a generic building icon.
+    /// Returns the small Explorer icon for a building type from the English icon catalog.
+    /// Unknown types fall back to the generic building icon.
     /// </summary>
-    public static string GetExplorerIconPath(string? type)
-    {
-        string key = Normalize(type);
-        if (key.Length == 0)
-        {
-            return ExplorerFallbackIconPath;
-        }
-
-        string file = ResolveIconFile(key);
-        return ExplorerIconFiles.Contains(file) ? $"{IconsFolder}/{file}.gif" : ExplorerFallbackIconPath;
-    }
-
-    private static string ResolveIconFile(string key)
-    {
-        if (Aliases.TryGetValue(key, out string? canonical))
-        {
-            key = canonical;
-        }
-
-        return IconFileOverrides.TryGetValue(key, out string? overrideName) ? overrideName : key;
-    }
+    public static string GetExplorerIconPath(string? type) =>
+        IconCatalogService.ResolvePath(IconCategories.Building, type, "buildings")
+        ?? ExplorerFallbackIconPath;
 
     /// <summary>
     /// Normalizes a type name: lowercase, folds German umlauts and drops separators so that
-    /// "Sägewerk" or "Akademie der Künste" can be matched against asset file names.
+    /// "Sägewerk" or "Akademie der Künste" can be matched against icon catalog aliases.
     /// </summary>
     public static string Normalize(string? type)
     {

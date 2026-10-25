@@ -1,11 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Odyssey.Controls.Buildings;
 using Odyssey.Controls.Ships;
+using Odyssey.Icons;
 using Odyssey.Models;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Localization;
 using Odyssey.Models.Tools;
+using Odyssey.Services;
 using Odyssey.Settings;
 using System;
 using System.Collections.Generic;
@@ -658,34 +660,9 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         return factionInfo;
     }
 
-    private static string? GetFactionRaceIconUri(FactionRace race)
-    {
-        return race switch
-        {
-            FactionRace.Humans => "/Assets/races/de/menschen.gif",
-            FactionRace.Dwarves => "/Assets/races/de/zwerge.gif",
-            FactionRace.Elves => "/Assets/races/de/elfen.gif",
-            FactionRace.Orcs => "/Assets/races/de/orks.gif",
-            FactionRace.Goblins => "/Assets/races/de/goblins.gif",
-            FactionRace.Trolls => "/Assets/races/de/trolle.gif",
-            FactionRace.Demons => "/Assets/races/de/daemonen.gif",
-            FactionRace.Insects => "/Assets/races/de/insekten.gif",
-            FactionRace.Cats => "/Assets/races/de/katzen.gif",
-            FactionRace.Aquarians => "/Assets/races/de/meermenschen.gif",
-            FactionRace.Halflings => "/Assets/races/de/halblinge.gif",
-            FactionRace.Ghouls => "/Assets/races/de/ghoule.gif",
-            FactionRace.Ghosts => "/Assets/races/de/ghaste.gif",
-            FactionRace.Zombies => "/Assets/races/de/zombies.gif",
-            FactionRace.Skeletons => "/Assets/races/de/skelette.gif",
-            FactionRace.Vampires => "/Assets/races/de/vampire.gif",
-            FactionRace.Wolves => "/Assets/races/de/woelfe.gif",
-            FactionRace.Rats => "/Assets/races/de/ratten.gif",
-            FactionRace.Ents => "/Assets/races/de/ents.gif",
-            FactionRace.Centaurs => "/Assets/races/de/zentauren.gif",
-            FactionRace.Dragons => "/Assets/races/de/drachen.gif",
-            _ => "/Assets/races/de/rasse.gif",
-        };
-    }
+    private static string? GetFactionRaceIconUri(FactionRace race) =>
+        IconCatalogService.ResolvePath(IconCategories.Race, race.ToString(), "race")
+        ?? "/Assets/races/race.gif";
 
     private static void AddShip(ExplorerNodeViewModel parentNode, string label, DataBlock block, BelongsToStatus status, string? iconUri = null)
     {

@@ -1,5 +1,7 @@
 ﻿using Avalonia.Data.Converters;
+using Odyssey.Icons;
 using Odyssey.Models.Data;
+using Odyssey.Services;
 using System;
 
 namespace Odyssey.Converters
@@ -48,10 +50,10 @@ namespace Odyssey.Converters
                     iconName = "ocean";
                     break;
                 case Terrains.SWAMP:
-                    iconName = "sumpf"; // Marais
+                    iconName = "swamp";
                     break;
                 case Terrains.PLAINS:
-                    iconName = "plain";
+                    iconName = "plains";
                     break;
                 case Terrains.DESERT:
                     iconName = "desert";
@@ -60,10 +62,10 @@ namespace Odyssey.Converters
                     iconName = "forest";
                     break;
                 case Terrains.HIGHLAND:
-                    iconName = "highland";
+                    iconName = "highlands";
                     break;
                 case Terrains.MOUNTAIN:
-                    iconName = "mountain";
+                    iconName = "mountains";
                     break;
                 case Terrains.GLACIER:
                     iconName = "glacier";
@@ -72,16 +74,16 @@ namespace Odyssey.Converters
                     iconName = "volcano";
                     break;
                 case Terrains.VOLCANO_ACTIVE:
-                    iconName = "volcano";
+                    iconName = "active_volcano";
                     break;
                 case Terrains.ICEBERG:
                     iconName = "iceberg";
                     break;
                 case Terrains.CORRIDOR:
-                    iconName = "corridor";
+                    iconName = "passage";
                     break;
                 case Terrains.WALL:
-                    iconName = "wall";
+                    iconName = "wall_cliff";
                     break;
                 case Terrains.HALL:
                     iconName = "hall";
@@ -90,22 +92,27 @@ namespace Odyssey.Converters
                     iconName = "fog";
                     break;
                 case Terrains.THICKFOG:
-                    iconName = "thickfog";
+                    iconName = "dense_fog";
                     break;
                 case Terrains.FIREWALL:
                     iconName = "firewall";
                     break;
                 case Terrains.MAHLSTROM:
-                    iconName = "mahlstrom";
+                    iconName = "maelstrom";
                     break;
-                // CHECK: wanted icon for the folowing values
-                case Terrains.UNKNOWN:
                 case Terrains.PACKICE:
+                    iconName = "pack_ice";
+                    break;
                 case Terrains.ICEFLOE:
+                    iconName = "ice_floe";
+                    break;
+                case Terrains.UNKNOWN:
                 case Terrains.LAST:
-                default: return null;
+                default:
+                    iconName = "undefined";
+                    break;
             }
-            return $"/Assets/terrains/de/{iconName}.gif";
+            return IconCatalogService.ResolvePath(IconCategories.Terrain, iconName, "undefined");
         }
     }
 }

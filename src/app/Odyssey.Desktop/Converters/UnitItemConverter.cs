@@ -1,5 +1,7 @@
 ﻿using Avalonia.Data.Converters;
+using Odyssey.Icons;
 using Odyssey.Models.Tools;
+using Odyssey.Services;
 using System;
 
 namespace Odyssey.Converters
@@ -8,42 +10,27 @@ namespace Odyssey.Converters
     {
         public object? Convert(object? value, Type targetType, object? parameter, System.Globalization.CultureInfo culture)
         {
-            string pathName = string.Empty;
-            if (value is DataProperty data)
+            if (value is not DataProperty data)
             {
-                string name = data.Name.ToLower().
-                    Replace(' ', '_').
-                    Replace("ä", "ae").
-                    Replace("ö", "oe").
-                    Replace("ü", "ue").
-                    Replace("ß", "ss");
-                switch (data.Category)
-                {
-                    case DataProperty.Categories.Skill:
-                        pathName = $"skills/de/{name}";
-                        break;
-                    case DataProperty.Categories.Item:
-                        pathName = $"items/de/{name}";
-                        break;
-                    case DataProperty.Categories.Effect:
-                        pathName = $"effects/de/{name}";
-                        break;
-                    case DataProperty.Categories.Status:
-                    case DataProperty.Categories.CombatStatus:
-                    case DataProperty.Categories.CombatSpell:
-                    case DataProperty.Categories.Spell:
-                    case DataProperty.Categories.Building:
-                    case DataProperty.Categories.Ship:
-                        break;
-                }
+                return null;
+            }
 
-            }
-            if (!string.IsNullOrEmpty(pathName))
+            return data.Category switch
             {
-                return $"/Assets/{pathName}.gif";
-            }
-            return null;
+                DataProperty.Categories.Skill => IconCatalogService.ResolvePath(IconCategories.Skill, data.Name, "skills"),
+                DataProperty.Categories.Item => IconCatalogService.ResolvePath(IconCategories.Item, data.Name, "weapons"),
+                DataProperty.Categories.Effect => IconCatalogService.ResolvePath(IconCategories.Effect, data.Name),
+                DataProperty.Categories.Status => IconCatalogService.ResolvePath(IconCategories.Status, data.Name),
+                DataProperty.Categories.CombatStatus => IconCatalogService.ResolvePath(IconCategories.Status, data.Name),
+                DataProperty.Categories.CombatSpell => IconCatalogService.ResolvePath(IconCategories.Spell, data.Name, "spell"),
+                DataProperty.Categories.Spell => IconCatalogService.ResolvePath(IconCategories.Spell, data.Name, "spell"),
+                DataProperty.Categories.Building => IconCatalogService.ResolvePath(IconCategories.Building, data.Name, "buildings"),
+                DataProperty.Categories.Ship => IconCatalogService.ResolvePath(IconCategories.Ship, data.Name, "ships"),
+                DataProperty.Categories.Race => IconCatalogService.ResolvePath(IconCategories.Race, data.Name, "race"),
+                _ => null,
+            };
         }
+
         public object ConvertBack(object? value, Type targetType, object? parameter, System.Globalization.CultureInfo culture)
         {
             throw new NotImplementedException();

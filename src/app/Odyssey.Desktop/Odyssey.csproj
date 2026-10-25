@@ -272,6 +272,10 @@
    </None>
  </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\lib\Odyssey.Icons\Odyssey.Icons.csproj" />
+  </ItemGroup>
+
   <PropertyGroup>
     <Version>0.10.3</Version>
     <AssemblyVersion>0.10.3.0</AssemblyVersion>
