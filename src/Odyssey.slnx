@@ -26,4 +26,5 @@
     <Build Solution="Release|Any CPU" Project="false" />
   </Project>
   <Project Path="tools/cropper/cropper.csproj" />
+  <Project Path="tools/icons-generator/Odyssey.Icons.Generator.csproj" />
 </Solution>
