@@ -1,0 +1,11 @@
+msgctxt "spell"
+msgid "treegrow"
+msgstr "Hain des Lebens"
+
+msgctxt "spell"
+msgid "irongolem"
+msgstr "Eisengolems erschaffen"
+
+msgctxt "spell"
+msgid "sparkle"
+msgstr "Funkeln"

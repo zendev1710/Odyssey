@@ -27,4 +27,5 @@
   </Project>
   <Project Path="tools/cropper/cropper.csproj" />
   <Project Path="tools/icons-generator/Odyssey.Icons.Generator.csproj" />
+  <Project Path="tests/Odyssey.Icons.Generator.Tests/Odyssey.Icons.Generator.Tests.csproj" />
 </Solution>
