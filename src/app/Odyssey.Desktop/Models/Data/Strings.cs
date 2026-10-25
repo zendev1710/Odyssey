@@ -28,7 +28,6 @@ namespace Odyssey.Models.Data
         public const string DE_FACTION_SCORE_AVERAGE = "Punktedurchschnitt";
 
         public const string DE_GAME = "Spiel";
-        public const string DE_GOBLINS = "Goblins";
         public const string DE_GUARDING = "bewacht";
         public const string DE_HORSES = "Pferde";
 
@@ -51,9 +50,31 @@ namespace Odyssey.Models.Data
         public const string DE_REGION_ROAD_DIRECTION = "richtung";
         public const string DE_RIDING = "Reiten";
         public const string DE_ROAD_PERCENT = "prozent";
-        public const string DE_TROLLS = "Trolle";
-        public const string DE_TRUE_RACE_TYPE = "wahrerTyp";
 
+        // German race names (as returned by the CR in the faction TYPE field)
+        public const string DE_HUMANS = "Menschen";
+        public const string DE_DWARVES = "Zwerge";
+        public const string DE_ELVES = "Elfen";
+        public const string DE_ORCS = "Orks";
+        public const string DE_GOBLINS = "Goblins";
+        public const string DE_TROLLS = "Trolle";
+        public const string DE_DEMONS = "Dämonen";
+        public const string DE_INSECTS = "Insekten";
+        public const string DE_CATS = "Katzen";
+        public const string DE_AQUARIANS = "Meermenschen";
+        public const string DE_HALFLINGS = "Halblinge";
+        public const string DE_GHOULS = "Ghoule";
+        public const string DE_GHOSTS = "Ghaste";
+        public const string DE_ZOMBIES = "Zombies";
+        public const string DE_SKELETONS = "Skelette";
+        public const string DE_VAMPIRES = "Vampire";
+        public const string DE_WOLVES = "Wölfe";
+        public const string DE_RATS = "Ratten";
+        public const string DE_ENTS = "Ents";
+        public const string DE_CENTAURS = "Zentauren";
+        public const string DE_DRAGONS = "Drachen";
+
+        public const string DE_TRUE_RACE_TYPE = "wahrerTyp";
         public const string DE_UNIT_FACTION_ID = "Partei";
         public const string DE_UNIT_IS_GUARDING = DE_GUARDING;
         public const string DE_UNIT_TYPE_NAME_VALUE_SEA_SNAKE = "Seeschlange";

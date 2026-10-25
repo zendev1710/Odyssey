@@ -47,6 +47,7 @@ namespace Odyssey.Models.Localization
         public const string MALLORN_SAPLINGS = "mallornsaplings";
         public const string MALLORN_TREES = "mallorntrees";
         public const string MESSAGES = "messages";
+        public const string OCEAN = "ocean";
         public const string OWNER = "owner";
         public const string PERSONS = "persons";
         public const string PLANE_WORLD = "plane_world";

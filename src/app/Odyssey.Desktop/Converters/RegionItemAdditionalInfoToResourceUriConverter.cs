@@ -20,11 +20,11 @@ namespace Odyssey.Converters
                     // BLUE bullet for active faction
                     // GREEN bullet for allied faction
                     // GRAY bullet for anonymous faction
-                    FactionStatus.ACTIVE => "/Assets/FactionStatus/blue.gif",
-                    FactionStatus.ALLIED => "/Assets/FactionStatus/green.gif",
-                    FactionStatus.ANONYMOUS => "/Assets/FactionStatus/gray.gif",
-                    FactionStatus.TRAITOR => "/Assets/FactionStatus/red.gif",
-                    FactionStatus.UNKNOWN => "/Assets/FactionStatus/red.gif",
+                    FactionStatus.ACTIVE => "/Assets/factionstatus/blue.gif",
+                    FactionStatus.ALLIED => "/Assets/factionstatus/green.gif",
+                    FactionStatus.ANONYMOUS => "/Assets/factionstatus/gray.gif",
+                    FactionStatus.TRAITOR => "/Assets/factionstatus/red.gif",
+                    FactionStatus.UNKNOWN => "/Assets/factionstatus/red.gif",
                     _ => null,
                 };
             }
@@ -105,7 +105,7 @@ namespace Odyssey.Converters
                 case Terrains.LAST:
                 default: return null;
             }
-            return $"/Assets/Terrains/{iconName}.gif";
+            return $"/Assets/terrains/de/{iconName}.gif";
         }
     }
 }

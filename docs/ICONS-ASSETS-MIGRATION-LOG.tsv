@@ -1,0 +1,604 @@
+COPIE	animal	adler.gif	animals\de\adler.gif	
+COPIE	animal	baer.gif	animals\de\baer.gif	
+COPIE	animal	berghunde.gif	animals\de\berghunde.gif	
+COPIE	animal	blauer, bloerkianischer bergpuma.gif	animals\de\blauer_bloerkianischer_bergpuma.gif	
+COPIE	animal	bloerkianisches breitmaulnashorn.gif	animals\de\bloerkianisches_breitmaulnashorn.gif	
+COPIE	animal	delphine.gif	animals\de\delphine.gif	
+COPIE	animal	einhoerner.gif	animals\de\einhoerner.gif	
+COPIE	animal	elefant.gif	animals\de\elefant.gif	
+DEPLACE	animal	eulen.gif	animals\de\eulen.gif	via FactionRace\eulen.gif
+DEPLACE	animal	insekten.gif	animals\de\insekten.gif	via FactionRace\insects.gif
+COPIE	animal	kamel.gif	animals\de\kamel.gif	
+DEPLACE	animal	katzen.gif	animals\de\katzen.gif	via FactionRace\cats.gif
+COPIE	animal	kroeten.gif	animals\de\kroeten.gif	
+COPIE	animal	kamel.gif	animals\de\ladpferd.gif	
+COPIE	animal	luchse.gif	animals\de\luchse.gif	
+DEPLACE	animal	pferd.gif	animals\de\pferd.gif	via items\de\pferd_region.gif
+DEPLACE	animal	ratten.gif	animals\de\ratten.gif	via FactionRace\rats.gif
+COPIE	animal	riesenschildkroeten.gif	animals\de\riesenschildkroeten.gif	
+COPIE	animal	schneeleoparden.gif	animals\de\schneeleoparden.gif	
+DEPLACE	animal	woelfe.gif	animals\de\woelfe.gif	via FactionRace\wolves.gif
+DEPLACE	animal	woelfe.gif	animals\de\wolf.gif	via FactionRace\wolves.gif
+DEPLACE	animal	woelfe.gif	animals\en\wolf.gif	via FactionRace\wolves.gif
+DEJA-IDENTIQUE	building	akademie der kuenste.gif	buildings\de\akademie_der_kuenste.gif	
+DEJA-IDENTIQUE	building	akademie.gif	buildings\de\akademie.gif	
+DEPLACE	building	akropolis.gif	buildings\de\akropolis.gif	via buildings\de\zitadelle.gif
+COPIE	building	alchemistenkueche.gif	buildings\de\alchemistenkueche.gif	
+COPIE	building	baumschule.gif	buildings\de\baumschule.gif	
+DEPLACE	building	baustelle.gif	buildings\de\baustelle.gif	via buildings\de\grundmauern.gif
+DEJA-IDENTIQUE	building	befestigung.gif	buildings\de\befestigung.gif	
+DEJA-IDENTIQUE	building	bergwerk.gif	buildings\de\bergwerk.gif	
+DEJA-IDENTIQUE	building	buildings.gif	buildings\de\buildings.gif	
+DEJA-IDENTIQUE	building	burg.gif	buildings\de\burg.gif	
+DEJA-IDENTIQUE	building	damm.gif	buildings\de\damm.gif	
+COPIE	building	eisenbergwerk.gif	buildings\de\eisenbergwerk.gif	
+DEJA-IDENTIQUE	building	festung.gif	buildings\de\festung.gif	
+COPIE	building	baumschule.gif	buildings\de\forsthaus.gif	
+DEPLACE	building	buildings.gif	buildings\de\gebaeude.gif	via buildings\de\buildings.gif
+DEJA-IDENTIQUE	building	geruest.gif	buildings\de\geruest.gif	
+DEJA-IDENTIQUE	spell	gesegneter steinkreis.gif	buildings\de\gesegneter_steinkreis.gif	
+COPIE	building	gewaechshaus.gif	buildings\de\gewaechshaus.gif	
+DEJA-IDENTIQUE	building	baustelle.gif	buildings\de\grundmauern.gif	
+DEJA-IDENTIQUE	building	hafen.gif	buildings\de\hafen.gif	
+COPIE	terrain	gang-detail.gif	buildings\de\halle_detail.gif	
+COPIE	terrain	gang.gif	buildings\de\halle.gif	
+DEJA-IDENTIQUE	building	handelsposten.gif	buildings\de\handelsposten.gif	
+COPIE	building	holzfaellerhuette.gif	buildings\de\holzfaellerhuette.gif	
+DEPLACE	building	huette.gif	buildings\de\huette.gif	via buildings\de\wachstube.gif
+COPIE	building	jagdhaus.gif	buildings\de\jagdhaus.gif	
+DEJA-IDENTIQUE	building	karawanserei.gif	buildings\de\karawanserei.gif	
+COPIE	building	eisenbergwerk.gif	buildings\de\kohlebergwerk.gif	
+COPIE	building	kraeuterhuette.gif	buildings\de\kraeuterhuette.gif	
+DEJA-IDENTIQUE	building	leuchtturm.gif	buildings\de\leuchtturm.gif	
+DEJA-IDENTIQUE	building	magierturm.gif	buildings\de\magierturm.gif	
+COPIE	building	markt.gif	buildings\de\markt.gif	
+DEJA-IDENTIQUE	building	marktplatz.gif	buildings\de\marktplatz.gif	
+DEPLACE	building	akropolis.gif	buildings\de\megapolis.gif	via buildings\de\zitadelle.gif
+DEJA-IDENTIQUE	building	monument.gif	buildings\de\monument.gif	
+DEJA-IDENTIQUE	skill	pferdezucht.gif	buildings\de\pferdezucht.gif	
+COPIE	building	plantage.gif	buildings\de\plantage.gif	
+DEJA-IDENTIQUE	spell	portal.gif	buildings\de\portal.gif	
+DEJA-IDENTIQUE	building	saegewerk.gif	buildings\de\saegewerk.gif	
+COPIE	building	sattlerei.gif	buildings\de\sattlerei.gif	
+COPIE	building	schiffswerft.gif	buildings\de\schiffswerft.gif	
+COPIE	item	schilde.gif	buildings\de\schilder.gif	
+COPIE	building	schloss.gif	buildings\de\schloss.gif	
+DEJA-IDENTIQUE	building	schmiede.gif	buildings\de\schmiede.gif	
+COPIE	building	schreinerei.gif	buildings\de\schreinerei.gif	
+COPIE	building	spaehturm.gif	buildings\de\spaehturm.gif	
+DEJA-IDENTIQUE	building	steinbruch.gif	buildings\de\steinbruch.gif	
+COPIE	building	steingrube.gif	buildings\de\steingrube.gif	
+DEJA-IDENTIQUE	building	steinkreis.gif	buildings\de\steinkreis.gif	
+DEJA-IDENTIQUE	building	taverne.gif	buildings\de\taverne.gif	
+COPIE	building	tempel.gif	buildings\de\tempel.gif	
+DEJA-IDENTIQUE	building	mine.gif	buildings\de\tunnel.gif	
+DEJA-IDENTIQUE	building	turm.gif	buildings\de\turm.gif	
+COPIE	building	universitaet.gif	buildings\de\universitaet.gif	
+DEJA-IDENTIQUE	building	huette.gif	buildings\de\wachstube.gif	
+DEJA-IDENTIQUE	building	wachturm.gif	buildings\de\wachturm.gif	
+COPIE	building	schiffswerft.gif	buildings\de\werft.gif	
+COPIE	building	werkstatt.gif	buildings\de\werkstatt.gif	
+DEJA-IDENTIQUE	spell	wurmloch.gif	buildings\de\wurmloch.gif	
+DEJA-IDENTIQUE	building	akropolis.gif	buildings\de\zitadelle.gif	
+DEPLACE	building	buildings.gif	buildings\en\buildings.gif	via buildings\de\buildings.gif
+DEPLACE	building	akropolis.gif	buildings\en\megapolis.gif	via buildings\de\zitadelle.gif
+DEPLACE	building	mine.gif	buildings\en\mine.gif	via buildings\de\tunnel.gif
+DEPLACE	building	monument.gif	buildings\en\monument.gif	via buildings\de\monument.gif
+COPIE	faction	alliance.gif	factions\de\allianz.gif	
+COPIE	faction	banner.gif	factions\de\banner.gif	
+COPIE	faction	bauer.gif	factions\de\bauer.gif	
+COPIE	faction	bauer.gif	factions\de\bauern.gif	
+COPIE	faction	pay.gif	factions\de\bezahlen.gif	
+COPIE	faction	income.gif	factions\de\einkommen.gif	
+COPIE	faction	factionpool.gif	factions\de\factionpool.gif	
+COPIE	faction	enemy_faction.gif	factions\de\feindliche_fraktion.gif	
+COPIE	faction	faction.gif	factions\de\fraktion.gif	
+COPIE	faction	geschaeft.gif	factions\de\geschaeft.gif	
+COPIE	skill	arbeiten.gif	factions\de\lohn.gif	
+COPIE	faction	privileged_faction.gif	factions\de\privilegierte_fraktion.gif	
+COPIE	faction	production.gif	factions\de\produktion.gif	
+DEPLACE	faction	reichsschatz.gif	factions\de\reichsschatz.gif	via items\de\reichsschatz.gif
+COPIE	faction	rekruten.gif	factions\de\rekruten.gif	
+DEPLACE	faction	steuereintreiben.gif	factions\de\steuereintreiben.gif	via skills\de\steuereintreiben.gif
+COPIE	faction	upkeep.gif	factions\de\unterhalt.gif	
+COPIE	faction	allied_combat_faction.gif	factions\de\verbuendete_kampffraktion.gif	
+COPIE	faction	trust.gif	factions\de\vertrauen.gif	
+COPIE	faction	alliance.gif	factions\en\alliance.gif	
+COPIE	faction	allied_combat_faction.gif	factions\en\allied_combat_faction.gif	
+COPIE	faction	banner.gif	factions\en\banner.gif	
+COPIE	faction	enemy_faction.gif	factions\en\enemy_faction.gif	
+COPIE	faction	faction.gif	factions\en\faction.gif	
+COPIE	faction	income.gif	factions\en\income.gif	
+COPIE	faction	pay.gif	factions\en\pay.gif	
+COPIE	faction	privileged_faction.gif	factions\en\privileged_faction.gif	
+COPIE	faction	production.gif	factions\en\production.gif	
+DEPLACE	faction	steuereintreiben.gif	factions\en\taxation.gif	via skills\de\steuereintreiben.gif
+COPIE	faction	trust.gif	factions\en\trust.gif	
+COPIE	faction	upkeep.gif	factions\en\upkeep.gif	
+DEJA-IDENTIQUE	item	artefakte.gif	items\de\artefakte.gif	
+DEJA-IDENTIQUE	resource	basiliskenzunge.gif	items\de\basiliskenzunge.gif	
+COPIE	item	distance weapons.gif	items\de\distanz_waffen.gif	
+COPIE	item	distance weapons.gif	items\de\distanzwaffen.gif	
+DEJA-IDENTIQUE	item	feenstaub.gif	items\de\fairydust.gif	
+DEPLACE	item	feenstaub.gif	items\de\feenstaub.gif	via items\de\fairydust.gif
+COPIE	item	front-waffen.gif	items\de\front_waffen.gif	
+COPIE	item	griphonwing.gif	items\de\griphonwing.gif	
+DEPLACE	item	hiebwaffen.gif	items\de\hiebwaffen.gif	via skills\de\hiebwaffen.gif
+DEJA-IDENTIQUE	item	artefakte.gif	items\de\juwel.gif	
+DEJA-IDENTIQUE	item	ammunition.gif	items\de\katapultmunition.gif	
+DEJA-IDENTIQUE	ship	kreuzer.gif	items\de\kreuzer.gif	
+DEJA-IDENTIQUE	skill	juwelierskunst.gif	items\de\lmsreward.gif	
+DEPLACE	item	ammunition.gif	items\de\munition.gif	via items\de\katapultmunition.gif
+DEJA-IDENTIQUE	animal	pferd.gif	items\de\pferd_region.gif	
+DEJA-IDENTIQUE	animal	pferd.gif	items\de\pferd.gif	
+DEJA-IDENTIQUE	animal	pferd.gif	items\de\pferde.gif	
+DEJA-IDENTIQUE	faction	reichsschatz.gif	items\de\reichsschatz.gif	
+DEJA-IDENTIQUE	monster	skelett.gif	items\de\rippe.gif	
+DEJA-IDENTIQUE	item	rostige hellebarde.gif	items\de\rostige_hellebarde.gif	
+DEJA-IDENTIQUE	item	rostige kriegsaxt.gif	items\de\rostige_kriegsaxt.gif	
+DEJA-IDENTIQUE	item	rostiger bihaender.gif	items\de\rostiger_bihaender.gif	
+DEJA-IDENTIQUE	item	rostiger bihaender.gif	items\de\rostiger_zweihaender.gif	
+DEJA-IDENTIQUE	faction	reichsschatz.gif	items\de\schatztruhe.gif	
+COPIE	item	schilde.gif	items\de\schilde.gif	
+DEJA-IDENTIQUE	resource	silber.gif	items\de\silberbeutel.gif	
+DEJA-IDENTIQUE	faction	reichsschatz.gif	items\de\silberkassette.gif	
+DEPLACE	item	polearm.gif	items\de\stangenwaffen.gif	via skills\de\stangenwaffen.gif
+COPIE	item	trophaeen.gif	items\de\trophaeen.gif	
+COPIE	item	trophaeen.gif	items\de\trophy.gif	
+COPIE	item	front-waffen.gif	items\de\waffen.gif	
+DEPLACE	item	ammunition.gif	items\en\ammunition.gif	via items\de\katapultmunition.gif
+DEPLACE	item	armour.gif	items\en\armour.gif	via skills\de\rüstungen.gif
+DEPLACE	skill	bogenschiessen.gif	items\en\bow.gif	via skills\de\bogenschiessen.gif
+DEPLACE	skill	armbrustschiessen.gif	items\en\crossbow.gif	via skills\de\armbrustschiessen.gif
+COPIE	item	distance weapons.gif	items\en\distance_weapons.gif	
+COPIE	item	distance weapons.gif	items\en\distanceweapons.gif	
+COPIE	item	front-waffen.gif	items\en\frontweapons.gif	
+DEPLACE	item	polearm.gif	items\en\polearm.gif	via skills\de\stangenwaffen.gif
+COPIE	item	potions.gif	items\en\potions.gif	
+COPIE	item	schilde.gif	items\en\shield.gif	
+COPIE	item	trophaeen.gif	items\en\trophies.gif	
+COPIE	item	front-waffen.gif	items\en\weapons.gif	
+COPIE	technical	alliancestate_0.gif	misc\alliancestate_0.gif	
+COPIE	technical	alliancestate_1.gif	misc\alliancestate_1.gif	
+COPIE	technical	alliancestate_10.gif	misc\alliancestate_10.gif	
+COPIE	technical	alliancestate_11.gif	misc\alliancestate_11.gif	
+COPIE	technical	alliancestate_123.gif	misc\alliancestate_123.gif	
+COPIE	technical	alliancestate_127.gif	misc\alliancestate_127.gif	
+COPIE	technical	alliancestate_16.gif	misc\alliancestate_16.gif	
+COPIE	technical	alliancestate_17.gif	misc\alliancestate_17.gif	
+COPIE	technical	alliancestate_18.gif	misc\alliancestate_18.gif	
+COPIE	technical	alliancestate_19.gif	misc\alliancestate_19.gif	
+COPIE	technical	alliancestate_2.gif	misc\alliancestate_2.gif	
+COPIE	technical	alliancestate_24.gif	misc\alliancestate_24.gif	
+COPIE	technical	alliancestate_25.gif	misc\alliancestate_25.gif	
+COPIE	technical	alliancestate_26.gif	misc\alliancestate_26.gif	
+COPIE	technical	alliancestate_27.gif	misc\alliancestate_27.gif	
+COPIE	technical	alliancestate_3.gif	misc\alliancestate_3.gif	
+COPIE	technical	alliancestate_32.gif	misc\alliancestate_32.gif	
+COPIE	technical	alliancestate_33.gif	misc\alliancestate_33.gif	
+COPIE	technical	alliancestate_34.gif	misc\alliancestate_34.gif	
+COPIE	technical	alliancestate_35.gif	misc\alliancestate_35.gif	
+COPIE	technical	alliancestate_40.gif	misc\alliancestate_40.gif	
+COPIE	technical	alliancestate_41.gif	misc\alliancestate_41.gif	
+COPIE	technical	alliancestate_42.gif	misc\alliancestate_42.gif	
+COPIE	technical	alliancestate_43.gif	misc\alliancestate_43.gif	
+COPIE	technical	alliancestate_48.gif	misc\alliancestate_48.gif	
+COPIE	technical	alliancestate_49.gif	misc\alliancestate_49.gif	
+COPIE	technical	alliancestate_50.gif	misc\alliancestate_50.gif	
+COPIE	technical	alliancestate_51.gif	misc\alliancestate_51.gif	
+COPIE	technical	alliancestate_56.gif	misc\alliancestate_56.gif	
+COPIE	technical	alliancestate_57.gif	misc\alliancestate_57.gif	
+COPIE	technical	alliancestate_58.gif	misc\alliancestate_58.gif	
+COPIE	technical	alliancestate_123.gif	misc\alliancestate_59.gif	
+COPIE	technical	alliancestate_127.gif	misc\alliancestate_63.gif	
+COPIE	technical	alliancestate_8.gif	misc\alliancestate_8.gif	
+COPIE	technical	alliancestate_9.gif	misc\alliancestate_9.gif	
+COPIE	technical	alliancestate_basisfaction.gif	misc\alliancestate_basisfaction.gif	
+COPIE	technical	border_-1.gif	misc\border_-1.gif	
+COPIE	technical	border_0.gif	misc\border_0.gif	
+COPIE	technical	border_1.gif	misc\border_1.gif	
+COPIE	technical	border_2.gif	misc\border_2.gif	
+COPIE	technical	border_3.gif	misc\border_3.gif	
+COPIE	technical	border_4.gif	misc\border_4.gif	
+COPIE	technical	border_5.gif	misc\border_5.gif	
+COPIE	technical	comment_marker.gif	misc\comment_marker.gif	
+COPIE	technical	coordinatetranslation.gif	misc\coordinatetranslation.gif	
+COPIE	technical	koordinaten.gif	misc\koordinaten.gif	
+COPIE	technical	ladfuss.gif	misc\ladfuss.gif	
+COPIE	technical	layer.gif	misc\layer.gif	
+COPIE	technical	leere-detail.gif	misc\leere_detail.gif	
+COPIE	technical	locale.gif	misc\locale.gif	
+COPIE	technical	leere-detail.gif	misc\magellan_leere_detail.gif	
+COPIE	technical	misc.gif	misc\misc.gif	
+COPIE	technical	missing.gif	misc\missing.gif	
+COPIE	technical	outdated.gif	misc\outdated.gif	
+COPIE	technical	prefix.gif	misc\prefix.gif	
+COPIE	technical	regions.gif	misc\regions.gif	
+COPIE	technical	reportowner.gif	misc\reportowner.gif	
+COPIE	technical	shore_-1.gif	misc\shore_-1.gif	
+COPIE	technical	shore_0.gif	misc\shore_0.gif	
+COPIE	technical	shore_1.gif	misc\shore_1.gif	
+COPIE	technical	shore_2.gif	misc\shore_2.gif	
+COPIE	technical	shore_3.gif	misc\shore_3.gif	
+COPIE	technical	shore_4.gif	misc\shore_4.gif	
+COPIE	technical	shore_5.gif	misc\shore_5.gif	
+COPIE	technical	simpledefault.gif	misc\simpledefault.gif	
+COPIE	technical	misc.gif	misc\sonstiges.gif	
+COPIE	technical	sort.gif	misc\sort.gif	
+COPIE	technical	things.gif	misc\things.gif	
+COPIE	technical	tobig.gif	misc\tobig.gif	
+COPIE	technical	toobig.gif	misc\toobig.gif	
+COPIE	technical	toobig2.gif	misc\toobig2.gif	
+COPIE	technical	unbekannt-detail.gif	misc\unbekannt_detail.gif	
+COPIE	monster	alp.gif	monsters\de\alp.gif	
+DEPLACE	monster	baumhirte.gif	monsters\de\baumhirte.gif	via FactionRace\ents.gif
+COPIE	monster	bergwaechter.gif	monsters\de\bergwaechter.gif	
+DEPLACE	monster	daemonen.gif	monsters\de\daemonen.gif	via FactionRace\demons.gif
+DEPLACE	monster	drachen.gif	monsters\de\drachen.gif	via FactionRace\dragons.gif
+COPIE	monster	eisengolems.gif	monsters\de\eisengolems.gif	
+DEPLACE	monster	baumhirte.gif	monsters\de\ents.gif	via FactionRace\ents.gif
+COPIE	monster	feen.gif	monsters\de\feen.gif	
+COPIE	monster	geister.gif	monsters\de\geister.gif	
+DEPLACE	monster	ghaste.gif	monsters\de\ghaste.gif	via FactionRace\ghosts.gif
+DEPLACE	monster	ghoul.gif	monsters\de\ghoule.gif	via FactionRace\ghouls.gif
+COPIE	monster	hirntoeter.gif	monsters\de\hirntoeter.gif	
+COPIE	monster	hydren.gif	monsters\de\hydren.gif	
+COPIE	monster	eisengolems.gif	monsters\de\irongolem.gif	
+COPIE	monster	irrlichter.gif	monsters\de\irrlichter.gif	
+COPIE	monster	juju-zombies.gif	monsters\de\juju_zombies.gif	
+COPIE	monster	jungdrachen.gif	monsters\de\jungdrachen.gif	
+DEPLACE	race	goblins.gif	monsters\de\kobold.gif	via FactionRace\goblins.gif
+COPIE	monster	krake.gif	monsters\de\krake.gif	
+COPIE	monster	krake.gif	monsters\de\kraken.gif	
+COPIE	monster	riesen.gif	monsters\de\riesen.gif	
+COPIE	monster	schatten.gif	monsters\de\schatten.gif	
+COPIE	monster	schattendaemonen.gif	monsters\de\schattendaemonen.gif	
+COPIE	monster	schattenmeister.gif	monsters\de\schattenmeister.gif	
+COPIE	monster	schneemaenner.gif	monsters\de\schneemaenner.gif	
+COPIE	monster	seeschlangen.gif	monsters\de\seeschlangen.gif	
+COPIE	monster	singdrachen.gif	monsters\de\singdrachen.gif	
+DEPLACE	monster	skelett.gif	monsters\de\skelett.gif	via FactionRace\skeletons.gif
+DEPLACE	monster	skelett.gif	monsters\de\skelette.gif	via FactionRace\skeletons.gif
+COPIE	monster	skelettherren.gif	monsters\de\skelettherren.gif	
+COPIE	monster	skelettmeister.gif	monsters\de\skelettmeister.gif	
+COPIE	monster	snotlinge.gif	monsters\de\snotlinge.gif	
+COPIE	monster	steingolems.gif	monsters\de\steingolems.gif	
+COPIE	monster	steingolems.gif	monsters\de\stonegolem.gif	
+COPIE	monster	teufelchen.gif	monsters\de\teufelchen.gif	
+DEPLACE	monster	trolle.gif	monsters\de\trolle.gif	via FactionRace\trolls.gif
+COPIE	monster	tunnelwuermer.gif	monsters\de\tunnelwuermer.gif	
+COPIE	monster	untote.gif	monsters\de\untote.gif	
+DEPLACE	monster	vampire.gif	monsters\de\vampire.gif	via FactionRace\vampires.gif
+COPIE	monster	wyrme.gif	monsters\de\wyrme.gif	
+DEPLACE	monster	zombie.gif	monsters\de\zombie.gif	via FactionRace\zombies.gif
+COPIE	monster	zombiemeister.gif	monsters\de\zombiemeister.gif	
+DEPLACE	monster	zombie.gif	monsters\de\zombies.gif	via FactionRace\zombies.gif
+COPIE	monster	alp.gif	monsters\en\alp.gif	
+DEPLACE	monster	daemonen.gif	monsters\en\demons.gif	via FactionRace\demons.gif
+DEPLACE	monster	baumhirte.gif	monsters\en\ents.gif	via FactionRace\ents.gif
+DEPLACE	monster	ghoul.gif	monsters\en\ghoul.gif	via FactionRace\ghouls.gif
+COPIE	monster	juju-zombies.gif	monsters\en\juju_zombies.gif	
+DEPLACE	race	goblins.gif	monsters\en\kobold.gif	via FactionRace\goblins.gif
+COPIE	monster	krake.gif	monsters\en\kraken.gif	
+DEPLACE	monster	vampire.gif	monsters\en\vampire.gif	via FactionRace\vampires.gif
+DEPLACE	monster	zombie.gif	monsters\en\zombie.gif	via FactionRace\zombies.gif
+DEPLACE	monster	zombie.gif	monsters\en\zombies.gif	via FactionRace\zombies.gif
+DEPLACE	monster	daemonen.gif	races\de\daemonen.gif	via FactionRace\demons.gif
+DEPLACE	monster	drachen.gif	races\de\drachen.gif	via FactionRace\dragons.gif
+COPIE	race	dracoide.gif	races\de\dracoide.gif	
+COPIE	race	dracoide.gif	races\de\dracoiden.gif	
+DEPLACE	race	elfen.gif	races\de\elfen.gif	via FactionRace\elves.gif
+DEPLACE	monster	baumhirte.gif	races\de\ents.gif	via FactionRace\ents.gif
+DEPLACE	monster	ghaste.gif	races\de\ghaste.gif	via FactionRace\ghosts.gif
+DEPLACE	monster	ghoul.gif	races\de\ghoule.gif	via FactionRace\ghouls.gif
+DEPLACE	race	goblins.gif	races\de\goblins.gif	via FactionRace\goblins.gif
+DEPLACE	race	halblinge.gif	races\de\halblinge.gif	via FactionRace\halflings.gif
+DEPLACE	animal	insekten.gif	races\de\insekten.gif	via FactionRace\insects.gif
+DEPLACE	animal	katzen.gif	races\de\katzen.gif	via FactionRace\cats.gif
+DEPLACE	race	meermenschen.gif	races\de\meermenschen.gif	via FactionRace\aquarians.gif
+DEPLACE	race	menschen.gif	races\de\menschen.gif	via FactionRace\humans.gif
+COPIE	race	orkas.gif	races\de\orkas.gif	
+DEPLACE	race	orks.gif	races\de\orks.gif	via FactionRace\orcs.gif
+COPIE	race	rasse.gif	races\de\rasse.gif	
+DEPLACE	animal	ratten.gif	races\de\ratten.gif	via FactionRace\rats.gif
+DEPLACE	monster	skelett.gif	races\de\skelette.gif	via FactionRace\skeletons.gif
+DEPLACE	monster	trolle.gif	races\de\trolle.gif	via FactionRace\trolls.gif
+DEPLACE	monster	vampire.gif	races\de\vampire.gif	via FactionRace\vampires.gif
+DEPLACE	animal	woelfe.gif	races\de\woelfe.gif	via FactionRace\wolves.gif
+DEPLACE	race	zentauren.gif	races\de\zentauren.gif	via FactionRace\centaurs.gif
+DEPLACE	monster	zombie.gif	races\de\zombies.gif	via FactionRace\zombies.gif
+DEPLACE	race	zwerge.gif	races\de\zwerge.gif	via FactionRace\dwarves.gif
+DEPLACE	race	meermenschen.gif	races\en\aquarians.gif	via FactionRace\aquarians.gif
+DEPLACE	animal	katzen.gif	races\en\cats.gif	via FactionRace\cats.gif
+DEPLACE	race	zentauren.gif	races\en\centaurs.gif	via FactionRace\centaurs.gif
+DEPLACE	monster	daemonen.gif	races\en\demons.gif	via FactionRace\demons.gif
+DEPLACE	monster	drachen.gif	races\en\dragons.gif	via FactionRace\dragons.gif
+DEPLACE	race	zwerge.gif	races\en\dwarves.gif	via FactionRace\dwarves.gif
+DEPLACE	race	elfen.gif	races\en\elves.gif	via FactionRace\elves.gif
+DEPLACE	monster	baumhirte.gif	races\en\ents.gif	via FactionRace\ents.gif
+DEPLACE	animal	eulen.gif	races\en\eulen.gif	via FactionRace\eulen.gif
+DEPLACE	monster	ghaste.gif	races\en\ghosts.gif	via FactionRace\ghosts.gif
+DEPLACE	monster	ghoul.gif	races\en\ghouls.gif	via FactionRace\ghouls.gif
+DEPLACE	race	goblins.gif	races\en\goblins.gif	via FactionRace\goblins.gif
+DEPLACE	race	halblinge.gif	races\en\halflings.gif	via FactionRace\halflings.gif
+DEPLACE	race	menschen.gif	races\en\humans.gif	via FactionRace\humans.gif
+DEPLACE	animal	insekten.gif	races\en\insects.gif	via FactionRace\insects.gif
+DEPLACE	race	orks.gif	races\en\orcs.gif	via FactionRace\orcs.gif
+DEPLACE	race	race.gif	races\en\race.gif	via FactionRace\race.gif
+DEPLACE	animal	ratten.gif	races\en\rats.gif	via FactionRace\rats.gif
+DEPLACE	monster	skelett.gif	races\en\skeletons.gif	via FactionRace\skeletons.gif
+DEPLACE	monster	trolle.gif	races\en\trolls.gif	via FactionRace\trolls.gif
+DEPLACE	monster	vampire.gif	races\en\vampires.gif	via FactionRace\vampires.gif
+DEPLACE	animal	woelfe.gif	races\en\wolves.gif	via FactionRace\wolves.gif
+DEPLACE	monster	zombie.gif	races\en\zombies.gif	via FactionRace\zombies.gif
+DEPLACE	resource	basiliskenzunge.gif	resources\de\basiliskenzunge.gif	via items\de\basiliskenzunge.gif
+COPIE	resource	gulden.gif	resources\de\gulden.gif	
+DEPLACE	skill	handeln.gif	resources\de\handelsgueter.gif	via skills\de\handeln.gif
+COPIE	resource	luxuries.gif	resources\de\luxusgueter.gif	
+DEJA-IDENTIQUE	animal	pferd.gif	resources\de\pferd.gif	
+COPIE	resource	resources.gif	resources\de\ressourcen.gif	
+COPIE	resource	resources.gif	resources\de\rohstoffe.gif	
+DEPLACE	resource	silber.gif	resources\de\silber.gif	via items\de\silberbeutel.gif
+COPIE	resource	herbs.gif	resources\en\herbs.gif	
+COPIE	resource	luxuries.gif	resources\en\luxuries.gif	
+COPIE	resource	resources.gif	resources\en\resources.gif	
+DEPLACE	resource	silber.gif	resources\en\silver.gif	via items\de\silberbeutel.gif
+COPIE	ship	balliste.gif	ships\icons\de\balliste.gif	
+DEPLACE	ship	ballon.gif	ships\icons\de\ballon.gif	via ships\icons\ballon.gif
+DEPLACE	ship	barke.gif	ships\icons\de\barke.gif	via ships\icons\barke.gif
+DEPLACE	ship	boot.gif	ships\icons\de\boot.gif	via ships\icons\boot.gif
+DEPLACE	ship	drachenschiff.gif	ships\icons\de\drachenschiff.gif	via ships\icons\drachenschiff.gif
+DEPLACE	ship	einbaum.gif	ships\icons\de\einbaum.gif	via ships\icons\einbaum.gif
+DEPLACE	ship	floss.gif	ships\icons\de\floss.gif	via ships\icons\floss.gif
+DEPLACE	ship	fregatte.gif	ships\icons\de\fregatte.gif	via ships\icons\fregatte.gif
+DEPLACE	ship	galeone.gif	ships\icons\de\galeone.gif	via ships\icons\galeone.gif
+DEPLACE	ship	karavelle.gif	ships\icons\de\karavelle.gif	via ships\icons\karavelle.gif
+DEPLACE	ship	karawane.gif	ships\icons\de\karawane.gif	via ships\icons\karawane.gif
+DEPLACE	ship	katamaran.gif	ships\icons\de\katamaran.gif	via ships\icons\katamaran.gif
+DEPLACE	ship	catapult.gif	ships\icons\de\katapult.gif	via skills\de\katapultbedienung.gif
+DEPLACE	ship	koenigsbarke.gif	ships\icons\de\koenigsbarke.gif	via ships\icons\koenigsbarke.gif
+DEPLACE	ship	kogge.gif	ships\icons\de\kogge.gif	via ships\icons\kogge.gif
+DEPLACE	ship	kreuzer.gif	ships\icons\de\kreuzer.gif	via items\de\kreuzer.gif
+DEPLACE	ship	kutter.gif	ships\icons\de\kutter.gif	via ships\icons\kutter.gif
+DEPLACE	ship	kutter.gif	ships\icons\de\langboot.gif	via ships\icons\kutter.gif
+DEPLACE	ship	ships.gif	ships\icons\de\schiffe.gif	via ships\icons\ships.gif
+DEPLACE	ship	ships.gif	ships\icons\de\ships.gif	via ships\icons\ships.gif
+DEPLACE	ship	trireme.gif	ships\icons\de\trireme.gif	via ships\icons\trireme.gif
+DEPLACE	ship	catapult.gif	ships\icons\en\catapult.gif	via skills\de\katapultbedienung.gif
+DEPLACE	ship	ships.gif	ships\icons\en\ships.gif	via ships\icons\ships.gif
+DEPLACE	ship	trireme.gif	ships\icons\en\trireme.gif	via ships\icons\trireme.gif
+DEJA-IDENTIQUE	skill	alchemie.gif	skills\de\alchemie.gif	
+COPIE	skill	alchimie.gif	skills\de\alchimie.gif	
+COPIE	skill	anwerben.gif	skills\de\anwerben.gif	
+COPIE	skill	arbeiten.gif	skills\de\arbeiten.gif	
+DEJA-IDENTIQUE	skill	armbrustschiessen.gif	skills\de\armbrustschiessen.gif	
+DEJA-IDENTIQUE	status	ausdauer.gif	skills\de\ausdauer.gif	
+COPIE	skill	baukunst.gif	skills\de\baukunst.gif	
+COPIE	skill	beladung.gif	skills\de\beladung.gif	
+COPIE	skill	siege.gif	skills\de\belagerung.gif	
+DEJA-IDENTIQUE	skill	bergbau.gif	skills\de\bergbau.gif	
+DEJA-IDENTIQUE	skill	bogenbau.gif	skills\de\bogenbau.gif	
+DEJA-IDENTIQUE	skill	bogenschiessen.gif	skills\de\bogenschiessen.gif	
+DEJA-IDENTIQUE	skill	burgenbau.gif	skills\de\burgenbau.gif	
+COPIE	skill	skills.gif	skills\de\faehigkeiten.gif	
+COPIE	skill	fernkampf.gif	skills\de\fernkampf.gif	
+COPIE	skill	flugkunst.gif	skills\de\flugkunst.gif	
+DEPLACE	skill	forestry.gif	skills\de\forstwirtschaft.gif	via skills\de\holzfällen.gif
+COPIE	animal	adler.gif	skills\de\greifenzucht.gif	
+DEJA-IDENTIQUE	skill	handeln.gif	skills\de\handeln.gif	
+DEJA-IDENTIQUE	item	hiebwaffen.gif	skills\de\hiebwaffen.gif	
+DEPLACE	skill	forestry.gif	skills\de\holzfaellen.gif	via skills\de\holzfällen.gif
+DEPLACE	skill	juwelierskunst.gif	skills\de\juwelierskunst.gif	via items\de\lmsreward.gif
+DEJA-IDENTIQUE	ship	catapult.gif	skills\de\katapultbedienung.gif	
+DEPLACE	ship	catapult.gif	skills\de\katapultschiessen.gif	via skills\de\katapultbedienung.gif
+COPIE	skill	kochkunst.gif	skills\de\kochkunst.gif	
+DEJA-IDENTIQUE	skill	herbalism.gif	skills\de\kraeuterkunde.gif	
+DEJA-IDENTIQUE	spell	magic.gif	skills\de\magie.gif	
+COPIE	skill	meucheln.gif	skills\de\meucheln.gif	
+DEPLACE	item	hiebwaffen.gif	skills\de\nahkampf.gif	via skills\de\hiebwaffen.gif
+DEJA-IDENTIQUE	skill	pferdedressur.gif	skills\de\pferdedressur.gif	
+DEPLACE	skill	pferdezucht.gif	skills\de\pferdezucht.gif	via buildings\de\pferdezucht.gif
+DEJA-IDENTIQUE	skill	reiten.gif	skills\de\reiten.gif	
+DEPLACE	item	armour.gif	skills\de\ruestungen.gif	via skills\de\rüstungen.gif
+DEPLACE	skill	armoursmithing.gif	skills\de\ruestungsbau.gif	via skills\en\armoursmithing.gif
+DEJA-IDENTIQUE	skill	schiffbau.gif	skills\de\schiffbau.gif	
+DEJA-IDENTIQUE	skill	sailing.gif	skills\de\segeln.gif	
+DEJA-IDENTIQUE	skill	espionage.gif	skills\de\spionage.gif	
+COPIE	skill	spy.gif	skills\de\spy.gif	
+DEJA-IDENTIQUE	item	polearm.gif	skills\de\stangenwaffen.gif	
+DEJA-IDENTIQUE	skill	quarrying.gif	skills\de\steinbau.gif	
+DEPLACE	skill	quarrying.gif	skills\de\steinbruch.gif	via skills\de\steinbau.gif
+DEJA-IDENTIQUE	faction	steuereintreiben.gif	skills\de\steuereintreiben.gif	
+DEJA-IDENTIQUE	skill	strassenbau.gif	skills\de\strassenbau.gif	
+DEJA-IDENTIQUE	skill	tactics.gif	skills\de\taktik.gif	
+DEJA-IDENTIQUE	skill	stealth.gif	skills\de\tarnung.gif	
+COPIE	skill	tierdressur.gif	skills\de\tierdressur.gif	
+DEJA-IDENTIQUE	skill	entertainment.gif	skills\de\unterhaltung.gif	
+DEJA-IDENTIQUE	skill	waffenbau.gif	skills\de\waffenbau.gif	
+DEJA-IDENTIQUE	skill	unarmed combat.gif	skills\de\waffenloser_kampf.gif	
+DEJA-IDENTIQUE	skill	cartmaking.gif	skills\de\wagenbau.gif	
+DEJA-IDENTIQUE	skill	perception.gif	skills\de\wahrnehmung.gif	
+DEPLACE	skill	pferdedressur.gif	skills\de\zaehmen.gif	via skills\de\pferdedressur.gif
+DEJA-IDENTIQUE	skill	alchemie.gif	skills\en\alchemy.gif	
+DEJA-IDENTIQUE	skill	armoursmithing.gif	skills\en\armoursmithing.gif	
+DEJA-IDENTIQUE	skill	bogenschiessen.gif	skills\en\bow.gif	
+DEJA-IDENTIQUE	skill	cartmaking.gif	skills\en\cartmaking.gif	
+DEJA-IDENTIQUE	ship	catapult.gif	skills\en\catapult.gif	
+DEJA-IDENTIQUE	status	ausdauer.gif	skills\en\endurance.gif	
+DEJA-IDENTIQUE	skill	entertainment.gif	skills\en\entertainment.gif	
+DEJA-IDENTIQUE	skill	espionage.gif	skills\en\espionage.gif	
+DEJA-IDENTIQUE	skill	forestry.gif	skills\en\forestry.gif	
+DEJA-IDENTIQUE	skill	herbalism.gif	skills\en\herbalism.gif	
+DEJA-IDENTIQUE	spell	magic.gif	skills\en\magic.gif	
+DEJA-IDENTIQUE	skill	burgenbau.gif	skills\en\masonry.gif	
+DEJA-IDENTIQUE	item	hiebwaffen.gif	skills\en\melee.gif	
+DEJA-IDENTIQUE	skill	bergbau.gif	skills\en\mining.gif	
+DEJA-IDENTIQUE	skill	perception.gif	skills\en\perception.gif	
+DEJA-IDENTIQUE	item	polearm.gif	skills\en\polearm.gif	
+DEJA-IDENTIQUE	skill	quarrying.gif	skills\en\quarrying.gif	
+DEJA-IDENTIQUE	skill	reiten.gif	skills\en\riding.gif	
+DEJA-IDENTIQUE	skill	roadwork.gif	skills\en\roadwork.gif	
+DEJA-IDENTIQUE	skill	sailing.gif	skills\en\sailing.gif	
+DEJA-IDENTIQUE	skill	schiffbau.gif	skills\en\shipcraft.gif	
+COPIE	skill	siege.gif	skills\en\siege.gif	
+COPIE	skill	skills.gif	skills\en\skills.gif	
+DEJA-IDENTIQUE	skill	stealth.gif	skills\en\stealth.gif	
+DEJA-IDENTIQUE	skill	tactics.gif	skills\en\tactics.gif	
+DEJA-IDENTIQUE	skill	pferdedressur.gif	skills\en\taming.gif	
+DEJA-IDENTIQUE	faction	steuereintreiben.gif	skills\en\taxation.gif	
+DEJA-IDENTIQUE	skill	handeln.gif	skills\en\trade.gif	
+DEJA-IDENTIQUE	skill	unarmed combat.gif	skills\en\unarmed_combat.gif	
+DEJA-IDENTIQUE	skill	waffenbau.gif	skills\en\weaponsmithing.gif	
+COPIE	spell	aura.gif	spells\de\aura.gif	
+COPIE	spell	combatspell.gif	spells\de\combatspell.gif	
+COPIE	spell	feuerwand-detail.gif	spells\de\feuerwand_detail.gif	
+COPIE	spell	feuerwand.gif	spells\de\feuerwand.gif	
+DEPLACE	spell	gesegneter steinkreis.gif	spells\de\gesegneter_steinkreis.gif	via buildings\de\gesegneter_steinkreis.gif
+COPIE	spell	magicschool.gif	spells\de\magicschool.gif	
+DEPLACE	spell	magic.gif	spells\de\magie.gif	via skills\de\magie.gif
+COPIE	spell	permanentaura.gif	spells\de\permanentaura.gif	
+DEPLACE	spell	portal.gif	spells\de\portal.gif	via buildings\de\portal.gif
+COPIE	spell	spell_far.gif	spells\de\spell_far.gif	
+COPIE	spell	spell_ocean.gif	spells\de\spell_ocean.gif	
+COPIE	spell	spell_ship.gif	spells\de\spell_ship.gif	
+DEPLACE	spell	wurmloch.gif	spells\de\wurmloch.gif	via buildings\de\wurmloch.gif
+COPIE	technical	misc.gif	spells\de\zauber_ohne_info.gif	
+COPIE	spell	spell.gif	spells\de\zauber.gif	
+COPIE	spell	spell_rank.gif	spells\de\zaubergrad.gif	
+COPIE	spell	spell_level.gif	spells\de\zauberstufe.gif	
+COPIE	spell	spell_syntax.gif	spells\de\zaubersyntax.gif	
+COPIE	spell	spell_type.gif	spells\de\zaubertyp.gif	
+COPIE	spell	aura.gif	spells\en\aura.gif	
+DEPLACE	spell	magic.gif	spells\en\magic.gif	via skills\de\magie.gif
+DEPLACE	spell	portal.gif	spells\en\portal.gif	via buildings\de\portal.gif
+COPIE	spell	spell_level.gif	spells\en\spell_level.gif	
+COPIE	technical	misc.gif	spells\en\spell_noinfo.gif	
+COPIE	spell	spell_rank.gif	spells\en\spell_rank.gif	
+COPIE	spell	spell_syntax.gif	spells\en\spell_syntax.gif	
+COPIE	spell	spell_type.gif	spells\en\spell_type.gif	
+COPIE	spell	spell.gif	spells\en\spell.gif	
+COPIE	status	age.gif	status\de\alter.gif	
+COPIE	status	attacker.gif	status\de\angreifer.gif	
+DEPLACE	status	ausdauer.gif	status\de\ausdauer.gif	via skills\de\ausdauer.gif
+COPIE	status	crew.gif	status\de\besatzung.gif	
+COPIE	status	bewacht.gif	status\de\bewacht.gif	
+COPIE	status	occupants.gif	status\de\bewohner.gif	
+COPIE	status	build_size.gif	status\de\build_size.gif	
+COPIE	status	buildingcost.gif	status\de\buildingcost.gif	
+COPIE	status	units.gif	status\de\einheiten.gif	
+COPIE	status	email2.gif	status\de\email2.gif	
+COPIE	status	erschoepft.gif	status\de\erschoepft.gif	
+COPIE	status	give.gif	status\de\geben.gif	
+COPIE	status	geburtstag.gif	status\de\geburtstag.gif	
+COPIE	status	gesund.gif	status\de\gesund.gif	
+COPIE	status	get.gif	status\de\get.gif	
+COPIE	status	getgive.gif	status\de\getgive.gif	
+COPIE	status	gettrans.gif	status\de\gettrans.gif	
+COPIE	status	gewicht.gif	status\de\gewicht.gif	
+COPIE	status	givetrans.gif	status\de\givetrans.gif	
+COPIE	status	groups.gif	status\de\gruppen.gif	
+COPIE	status	hero.gif	status\de\helden.gif	
+COPIE	status	hunger.gif	status\de\hunger.gif	
+COPIE	status	kampfstatus.gif	status\de\kampfstatus.gif	
+COPIE	status	captain.gif	status\de\kapitaen.gif	
+COPIE	status	teacher.gif	status\de\lehrer.gif	
+COPIE	status	migrants.gif	status\de\migranten.gif	
+COPIE	status	morale.gif	status\de\moral.gif	
+COPIE	status	homeless.gif	status\de\obdachlos.gif	
+COPIE	status	victim.gif	status\de\opfer.gif	
+COPIE	status	passengers.gif	status\de\passagiere.gif	
+COPIE	status	persons_of_other_race.gif	status\de\personen_anderer_rasse.gif	
+COPIE	faction	faction.gif	status\de\personen.gif	
+COPIE	status	score.gif	status\de\punkte.gif	
+COPIE	status	radius.gif	status\de\radius.gif	
+COPIE	status	reserve.gif	status\de\reserve.gif	
+COPIE	status	damage.gif	status\de\schaden.gif	
+COPIE	status	pupils.gif	status\de\schueler.gif	
+COPIE	status	schwer verwundet.gif	status\de\schwer_verwundet.gif	
+COPIE	status	schwerverwundet.gif	status\de\schwerverwundet.gif	
+COPIE	status	sehr stark.gif	status\de\sehr_stark.gif	
+COPIE	status	speech.gif	status\de\sprache.gif	
+COPIE	status	stark.gif	status\de\stark.gif	
+COPIE	status	carriers.gif	status\de\traeger.gif	
+COPIE	status	verwundet.gif	status\de\verwundet.gif	
+COPIE	status	warnung.gif	status\de\warnung.gif	
+COPIE	status	zurueck.gif	status\de\zurueck.gif	
+COPIE	status	age.gif	status\en\age.gif	
+COPIE	status	attacker.gif	status\en\attacker.gif	
+COPIE	status	captain.gif	status\en\captain.gif	
+COPIE	status	carriers.gif	status\en\carriers.gif	
+COPIE	status	crew.gif	status\en\crew.gif	
+COPIE	status	damage.gif	status\en\damage.gif	
+DEPLACE	status	ausdauer.gif	status\en\endurance.gif	via skills\de\ausdauer.gif
+COPIE	status	give.gif	status\en\give.gif	
+COPIE	status	groups.gif	status\en\groups.gif	
+COPIE	status	hero.gif	status\en\hero.gif	
+COPIE	status	heroes.gif	status\en\heroes.gif	
+COPIE	status	homeless.gif	status\en\homeless.gif	
+COPIE	status	hunger.gif	status\en\hunger.gif	
+COPIE	status	migrants.gif	status\en\migrants.gif	
+COPIE	status	morale.gif	status\en\morale.gif	
+COPIE	status	occupants.gif	status\en\occupants.gif	
+COPIE	status	passengers.gif	status\en\passengers.gif	
+COPIE	faction	faction.gif	status\en\person.gif	
+COPIE	status	persons_of_other_race.gif	status\en\persons_of_other_race.gif	
+COPIE	status	persons.gif	status\en\persons.gif	
+COPIE	status	pupils.gif	status\en\pupils.gif	
+COPIE	status	radius.gif	status\en\radius.gif	
+COPIE	status	reserve.gif	status\en\reserve.gif	
+COPIE	status	score.gif	status\en\score.gif	
+COPIE	status	speech.gif	status\en\speech.gif	
+COPIE	status	teacher.gif	status\en\teacher.gif	
+COPIE	status	units.gif	status\en\units.gif	
+COPIE	status	victim.gif	status\en\victim.gif	
+COPIE	terrain	aktiver vulkan-detail.gif	terrains\de\aktiver_vulkan_detail.gif	
+COPIE	terrain	aktiver vulkan.gif	terrains\de\aktiver_vulkan.gif	
+COPIE	terrain	baeume.gif	terrains\de\baeume.gif	
+COPIE	terrain	berge-detail.gif	terrains\de\berge_detail.gif	
+COPIE	terrain	berge.gif	terrains\de\berge.gif	
+COPIE	terrain	dichter nebel-detail.gif	terrains\de\dichter_nebel_detail.gif	
+COPIE	terrain	dichter nebel.gif	terrains\de\dichter_nebel.gif	
+COPIE	terrain	ebene-detail.gif	terrains\de\ebene_detail.gif	
+COPIE	terrain	ebene.gif	terrains\de\ebene.gif	
+COPIE	terrain	eisberg-detail.gif	terrains\de\eisberg_detail.gif	
+COPIE	terrain	eisberg.gif	terrains\de\eisberg.gif	
+COPIE	terrain	eisscholle-detail.gif	terrains\de\eisscholle_detail.gif	
+COPIE	terrain	eisscholle.gif	terrains\de\eisscholle.gif	
+COPIE	terrain	gang-detail.gif	terrains\de\gang_detail.gif	
+COPIE	terrain	gang.gif	terrains\de\gang.gif	
+COPIE	terrain	berge-detail.gif	terrains\de\gebirge_detail.gif	
+COPIE	terrain	gebirge.gif	terrains\de\gebirge.gif	
+COPIE	terrain	gletscher-detail.gif	terrains\de\gletscher_detail.gif	
+COPIE	terrain	gletscher.gif	terrains\de\gletscher.gif	
+COPIE	terrain	hochland-detail.gif	terrains\de\hochland_detail.gif	
+COPIE	terrain	hochland.gif	terrains\de\hochland.gif	
+COPIE	terrain	hoehle.gif	terrains\de\hoehle.gif	
+COPIE	terrain	insel.gif	terrains\de\insel.gif	
+COPIE	terrain	mahlstrom-detail.gif	terrains\de\mahlstrom_detail.gif	
+COPIE	terrain	nebel-detail.gif	terrains\de\nebel_detail.gif	
+COPIE	terrain	nebel.gif	terrains\de\nebel.gif	
+DEPLACE	building	karawanserei.gif	terrains\de\oase.gif	via buildings\de\karawanserei.gif
+COPIE	terrain	ozean-detail.gif	terrains\de\ozean_detail.gif	
+COPIE	terrain	ozean.gif	terrains\de\ozean.gif	
+COPIE	terrain	packeis-detail.gif	terrains\de\packeis_detail.gif	
+COPIE	terrain	packeis.gif	terrains\de\packeis.gif	
+COPIE	terrain	gang.gif	terrains\de\pilzhoehle.gif	
+COPIE	terrain	ozean-detail.gif	terrains\de\see_detail.gif	
+COPIE	terrain	ozean.gif	terrains\de\see.gif	
+COPIE	terrain	strasse.gif	terrains\de\strasse.gif	
+COPIE	terrain	current.gif	terrains\de\stroemung.gif	
+COPIE	terrain	sumpf-detail.gif	terrains\de\sumpf_detail.gif	
+DEPLACE	building	mine.gif	terrains\de\tunnel.gif	via buildings\de\tunnel.gif
+COPIE	terrain	uebergang-detail.gif	terrains\de\uebergang_detail.gif	
+COPIE	terrain	aktiver vulkan-detail.gif	terrains\de\vulkan_aktiv_detail.gif	
+COPIE	terrain	vulkan-detail.gif	terrains\de\vulkan_detail.gif	
+COPIE	terrain	vulkan.gif	terrains\de\vulkan.gif	
+COPIE	terrain	wald-detail.gif	terrains\de\wald_detail.gif	
+COPIE	terrain	wald.gif	terrains\de\wald.gif	
+COPIE	terrain	wand-detail.gif	terrains\de\wand_detail.gif	
+COPIE	terrain	wand.gif	terrains\de\wand.gif	
+COPIE	terrain	wueste-detail.gif	terrains\de\wueste_detail.gif	
+COPIE	terrain	wueste.gif	terrains\de\wueste.gif	
+COPIE	terrain	current.gif	terrains\en\current.gif	
+DEPLACE	building	mine.gif	terrains\en\tunnel.gif	via buildings\de\tunnel.gif
+DEJA-IDENTIQUE	item	artefakte.gif	trade\de\juwel.gif	

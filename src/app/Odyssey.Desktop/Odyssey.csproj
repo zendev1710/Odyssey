@@ -45,7 +45,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <AvaloniaResource Remove="Assets\Help\help-topics.json" />
+    <AvaloniaResource Remove="Assets\help\help-topics.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -259,7 +259,7 @@
 	</ItemGroup>
 
  <ItemGroup>
-   <Folder Include="Assets\Help\Content\en\reference\" />
+   <Folder Include="Assets\help\Content\en\reference\" />
    <Folder Include="Models\Configuration\" />
  </ItemGroup>
 

@@ -148,7 +148,7 @@ public partial class HelpViewModel : ObservableObject
         if (!filename.Contains('/'))
             filename += "/index";
         var lang = _languageService.CurrentUILanguageCode;
-        var uri = $"avares://Odyssey/Assets/Help/Content/{lang}/{filename}.md";
+        var uri = $"avares://Odyssey/Assets/help/Content/{lang}/{filename}.md";
         return uri;
     }
 
