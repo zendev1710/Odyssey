@@ -1,18 +1,17 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Markdig.Syntax;
+using Odyssey.Models;
 using Odyssey.Models.Data;
-using Prism.Events;
+using Odyssey.Models.Documents;
+using Odyssey.Models.Localization;
+using Odyssey.Models.Tools;
+using Odyssey.ViewModels.Tools;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Odyssey.Models.Tools;
-using Odyssey.Models.Localization;
-using Odyssey.Models.Documents;
-
-using static Odyssey.Utils.Converters;
+using System.Diagnostics;
 using static Odyssey.Models.Tools.DataProperty;
 using static Odyssey.Models.Tools.UnitModel;
-using Odyssey.Models;
-using Odyssey.ViewModels.Tools;
-using Odyssey.Services;
+using static Odyssey.Utils.Converters;
 
 namespace Odyssey.ViewModels;
 
@@ -93,7 +92,7 @@ public partial class UnitDetailsViewModel : ViewModelBase
     [ObservableProperty]
     private int _weight;
 
-    public UnitDetailsViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null/*, ISelectionService selectionService*/) : base(Ids.UnitDetails, eventAggregator, documentService)
+    public UnitDetailsViewModel() : base(Ids.UnitDetails)
     {
         Items = Root.Children;
 
@@ -116,29 +115,30 @@ public partial class UnitDetailsViewModel : ViewModelBase
         _guards = string.Empty;
     }
 
-    protected override void OnSelectionChanged(ISelectionChange selectionChange)
+    protected override void OnSelectionChanged(IEntitySelection selection, SelectionChangeTypes selType, object? sender)
     {
-        // Exclude this selector from selection change events to avoid reentrancy issues
-        List<string> selectorIdsExcludeFilter = [Id];
-        List<string> selectorIdsIncludeFilter = [Ids.Explorer];
-        if (ShouldIgnoreSelectionChangedEvent(selectionChange, selectorIdsIncludeFilter, selectorIdsExcludeFilter))
-        {
+        if (ReferenceEquals(sender, this))
             return;
-        }
 
-        ISelection sel = selectionChange.Selection;
-        if (sel.IsUnitSelected() && !IsSelected(sel))
+        bool unitChanged = selType.HasFlag(SelectionChangeTypes.Unit);
+        bool unitSelected = selection.HasUnit();
+
+        Debug.WriteLine($"[VM-REGION-INF] OnSelectionChanged: unit changed={unitChanged}, unit selected={unitSelected}");
+
+        if (unitChanged)
         {
-            MakeItems(sel);
+            MakeItems(selection);
         }
     }
 
-    public void MakeItems(ISelection sel)
+    public void MakeItems(IEntitySelection selection)
     {
         Items.Clear();
-        ISelection? selection = SetSelection(sel);
-        DataBlock? unitDataBlock = selection?.Item;
-        DataBlock? regionDataBlock = selection is not null ? (selection.IsRegionSelected() ? selection.Region : null) : null;
+
+        UnitModel? unitModel = selection.Item as UnitModel;
+        if (unitModel is null)
+            return;
+
         string factionName = string.Empty;
         string otherFactionName = string.Empty;
         string mageNameIfFamiliar = string.Empty;
@@ -149,15 +149,11 @@ public partial class UnitDetailsViewModel : ViewModelBase
         bool isGuarding;
         bool isFactionDisguised = false;
 
-        UnitModel unitModel = new(unitDataBlock!);
+        // The unit data is collected once, then reused (see UnitModel.CollectData)
+        unitModel.CollectData(Report);
 
-        // Get groups of properties; a group will be a root child node and will have each property as a child
-        unitModel.CollectCategoriesData();
-
-        unitModel.CollectData(unitDataBlock!.GetData(), Report);
-
-        string unitName = $"{unitModel.Name} ({unitDataBlock.IdToString()})";
-        DataProperty unitProperty = new(Categories.None, unitName, string.Empty, unitName, string.Empty, unitDataBlock);
+        string unitName = $"{unitModel.Name} ({unitModel.EncodedId})";
+        DataProperty unitProperty = new(Categories.None, unitName, string.Empty, unitName, string.Empty, unitModel);
         NodeViewModel unitNode = AddItem(Root, unitProperty);
 
         //////////
@@ -250,7 +246,7 @@ public partial class UnitDetailsViewModel : ViewModelBase
             {
                 groupNameValue = ToStringVal(group);
             }
-           //groupName = groupNameValue;
+            //groupName = groupNameValue;
             string groupLabel = Labels.Localize(Categories.Node, Labels.GROUP, [groupNameValue]);
             groupProperty = new DataProperty(Categories.Node, groupNameValue, groupLabel);
             _ = AddItem(unitNode, groupProperty);
@@ -264,13 +260,14 @@ public partial class UnitDetailsViewModel : ViewModelBase
         {
             isFamiliar = true;
             DataBlock? mage = null;
-            if (Report.GetUnit(ref mage, unitModel.FamiliarMageId))
+            if (Report.FindUnit(unitModel.FamiliarMageId, out UnitModel? mageModel))
             {
+                mage = mageModel!.DataBlock;
                 string mageName = mage!.Value(KeyType.NAME);
                 string id = IdToString(unitModel.FamiliarMageId);
                 string familiarMageName = $"{mageName} ({id})";
                 string familiarLabel = Labels.Localize(Categories.None, Labels.FAMILIAR_INFO, [familiarMageName]);
-                familiarProperty = new DataProperty(Categories.None, Labels.FAMILIAR_INFO, familiarMageName, familiarLabel, string.Empty, mage);
+                familiarProperty = new DataProperty(Categories.None, Labels.FAMILIAR_INFO, familiarMageName, familiarLabel, string.Empty, mageModel);
                 _ = AddItem(unitNode, familiarProperty);
                 mageNameIfFamiliar = familiarLabel;
             }
@@ -370,7 +367,7 @@ public partial class UnitDetailsViewModel : ViewModelBase
         ////////////////
         // COMBAT SPELLS
 
-        if (unitModel.CombatSpells.Count > 0) 
+        if (unitModel.CombatSpells.Count > 0)
         {
             string combatSpellsLabel = Labels.Localize(Categories.Node, Labels.COMBAT_SPELLS);
             DataProperty combatSpellsProperty = new(Categories.Node, Labels.COMBAT_SPELLS, string.Empty, combatSpellsLabel);
@@ -505,66 +502,64 @@ public partial class UnitDetailsViewModel : ViewModelBase
             InsertItem(unitNode, unitFirstChildNote, capacityOnHorseProperty);
         }
 
-        NodeViewModel? containerNode = null;
-        // OPTIMIZE - no building when region is an ocean => could just checl ship
+        NodeViewModel? structureNode = null;
 
-        ///////////
-        // BUILDING
+        //////////////////////////////////////////
+        // CONTAINER - BUILDING OR SHIP
         DataProperty? containerProperty = null;
-        if (unitModel.CollectBuildingData(Report/*, regionDataBlock*/, ref containerProperty))
+        if (unitModel.CollectContainerData(Report/*, regionDataBlock*/, ref containerProperty) && containerProperty is not null)
         {
-            containerNode = AddItem(Root, containerProperty!, string.Empty, 0);
-            _ = AddContainerOwner(containerNode, unitModel, true);
-            foreach (DataProperty p in unitModel.ContainerDataProperties)
+            bool isBuilding = unitModel.StructureType == KeyType.BUILDING;
+            structureNode = AddItem(Root, containerProperty, string.Empty, 0);
+            _ = AddContainerOwner(structureNode, unitModel, isBuilding);
+
+            if (isBuilding)
             {
-                _ = AddItem(containerNode, p, $"{p.Label}: {p.Value}");
+                foreach (DataProperty p in unitModel.StructureDataProperties)
+                {
+                    _ = AddItem(structureNode, p, $"{p.Label}: {p.Value}");
+                }
+            }
+            else
+            {
+                if (unitModel.ShipPercentDamage > 0)
+                {
+                    string damageLabel = Labels.Localize(Categories.None, Labels.SHIP_DAMAGE, [$"{unitModel.ShipPercentDamage}"]);
+                    DataProperty damageProperty = new(damageLabel);
+                    AddItem(structureNode, damageProperty);
+                }
+                if (unitModel.ShipCoast >= 0)
+                {
+                    string coastLabel = Labels.GetCoastName(unitModel.ShipCoast);
+                    DataProperty coastProperty = new(coastLabel);
+                    AddItem(structureNode, coastProperty);
+                }
+                if (unitModel.ShipCargo > 0 || unitModel.ShipCapacity > 0)
+                {
+                    string shipCapacityLabel = Labels.Localize(Categories.None, Labels.CAPACITY_SHIP_INFO, [ToStringWithDecimals(unitModel.ShipCargo), ToStringWithDecimals(unitModel.ShipCapacity)]);
+                    DataProperty shipCapacityProperty = new(Categories.None, Labels.CAPACITY_SHIP_INFO, string.Empty, shipCapacityLabel);
+                    AddItem(structureNode, shipCapacityProperty);
+                }
             }
         }
 
-        //////////////////////////////////////////////////////
-        // SHIP - ONLY IF UNIT IS NOT ALREADY INSIDE A BULDING
-        if (containerNode == null && unitModel.CollectShipData(Report/*, regionDataBlock*/, ref containerProperty))
-        {
-            containerNode = AddItem(Root, containerProperty, string.Empty, 0);
-            _ = AddContainerOwner(containerNode, unitModel, false);
-
-            if (unitModel.ShipPercentDamage > 0)
-            {
-                string damageLabel = Labels.Localize(Categories.None, Labels.SHIP_DAMAGE, [$"{unitModel.ShipPercentDamage}"]);
-                DataProperty damageProperty = new(damageLabel);
-                AddItem(containerNode, damageProperty);
-            }
-            if (unitModel.ShipCoast >= 0)
-            {
-                string coastLabel = Labels.GetCoastName(unitModel.ShipCoast);
-                DataProperty coastProperty = new(coastLabel);
-                AddItem(containerNode, coastProperty);
-            }
-            if (unitModel.ShipCargo > 0 || unitModel.ShipCapacity > 0)
-            {
-                string shipCapacityLabel = Labels.Localize(Categories.None, Labels.CAPACITY_SHIP_INFO, [ToStringWithDecimals(unitModel.ShipCargo), ToStringWithDecimals(unitModel.ShipCapacity)]);
-                DataProperty shipCapacityProperty = new(Categories.None, Labels.CAPACITY_SHIP_INFO, string.Empty, shipCapacityLabel);
-                AddItem(containerNode, shipCapacityProperty);
-            }
-        }
-
-        if (containerNode != null && unitModel.DataProperties.Count > 0)
+        if (structureNode != null && unitModel.DataProperties.Count > 0)
         {
             foreach (DataProperty p in unitModel.DataProperties)
             {
-                _ = AddItem(containerNode, p, $"{p.Label}: {p.Value}");
+                _ = AddItem(structureNode, p, $"{p.Label}: {p.Value}");
             }
         }
 
         /////////////////////////////////////////
         // CONTAINER - BUILDING OR SHIP - EFFECTS
 
-        if (unitModel.ContainerEffects.Count > 0 && containerNode != null)
+        if (unitModel.StructureEffects.Count > 0 && structureNode != null)
         {
             string effectsLabel = Labels.Localize(Categories.Node, Labels.EFFECTS);
             DataProperty effectsProperty = new(Categories.Node, Labels.EFFECTS, string.Empty, effectsLabel);
-            NodeViewModel effectsNode = AddItem(containerNode, effectsProperty);
-            foreach (string effectName in unitModel.ContainerEffects)
+            NodeViewModel effectsNode = AddItem(structureNode, effectsProperty);
+            foreach (string effectName in unitModel.StructureEffects)
             {
                 // effectName is already localized in english (or german) in report
                 // LATER: localize in any current other language than english
@@ -594,7 +589,7 @@ public partial class UnitDetailsViewModel : ViewModelBase
         OtherFactionName = otherFactionName;
         MageNameIfFamiliar = mageNameIfFamiliar;
 
-        Description = unitDataBlock.Value(KeyType.DESCRIPTION);
+        Description = unitModel.DataBlock.Value(KeyType.DESCRIPTION);
 
         /*
         // TODO: what about the folowing ?
@@ -606,11 +601,11 @@ public partial class UnitDetailsViewModel : ViewModelBase
     }
     private static bool AddContainerOwner(NodeViewModel parent, UnitModel unitModel, bool buildingContainer)
     {
-        if (!string.IsNullOrEmpty(unitModel.ContainerOwnerName))
+        if (!string.IsNullOrEmpty(unitModel.StructureOwnerName))
         {
             string ownerLabel = Labels.Localize(Categories.Node, buildingContainer ? Labels.OWNER : Labels.CAPTAIN);
-            string ownerFullNameLabel = $"{ownerLabel}: {unitModel.ContainerOwnerName}";
-            DataProperty ownerProperty = new(Categories.None, ownerFullNameLabel, string.Empty, ownerFullNameLabel, "", unitModel.ContainerOwnerUnit);
+            string ownerFullNameLabel = $"{ownerLabel}: {unitModel.StructureOwnerName}";
+            DataProperty ownerProperty = new(Categories.None, ownerFullNameLabel, string.Empty, ownerFullNameLabel, "", unitModel.StructureOwnerUnit);
             AddItem(parent, ownerProperty);
             return true;
         }
@@ -618,41 +613,41 @@ public partial class UnitDetailsViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Dispatch the select node Event using the event aggregator.
+    /// Dispatch the select node Event.
     /// Normally called by a double-click or a space key pressed on the currently selected item of this tree messages list in the corresponding view.
     /// Event is published only if the selected item is linked to a DataBlock (selection state has changed).
     /// </summary>
     public void DispatchSelectedNode(NodeViewModel? node)
     {
-        if (node == null)
-        {
+        if (node is null)
             return;
-        }
-        DataBlock? block = node?.Data?.Reference;
-        if (block == null)
-        {
+
+        EntityModel? entityModel = node?.Data?.Reference;
+        if (entityModel is null)
             return;
-        }
-        ISelection sel = Selection!;
-        if (sel.Item == block)
+
+        /*
+        IEntitySelection sel = CurrentSelection;
+        if (sel.Item!.DataBlock == block)
         {
             // If the block is already selected, we do not change the selection state.
             // This avoids reentrancy issues when the selection is changed by the view.
             return;
         }
-
-        ISelection? newSelection;
+        */
+        // TODO : how to get region
+        IEntitySelection? newSelection = new EntitySelection(entityModel, null/*sel.Region*/, null);
+        /*
         if (sel is ExplorerChildNodeSelection childNodeSel)
         {
-            newSelection = new ExplorerChildNodeSelection(childNodeSel.RegionNodeViewModel!, block);
+            newSelection = new ExplorerChildNodeSelection(childNodeSel.RegionNodeViewModel!, block, Report);
         }
         else
         {
-            newSelection = new SimpleItemSelection(block, sel.Region, null);
+            newSelection = new EntitySelection(block, sel.Region, null);
         }
+        */
 
-        // LATER: should I keep this newSel ?
-        // SetSelection(newSelection);
         SendSelectionChangedEvent(newSelection);
     }
 

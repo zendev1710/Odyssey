@@ -1,13 +1,8 @@
-﻿using Avalonia.Controls;
-using Avalonia.Styling;
-using CommunityToolkit.Mvvm.ComponentModel;
-using Odyssey.Events;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Odyssey.Models;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Tools;
-using Odyssey.Services;
-using Prism.Events;
-using System;
 using System.Collections.ObjectModel;
 
 
@@ -20,7 +15,7 @@ public abstract partial class MessagesListViewModel : DocumentToolViewModelBase
 
     public ObservableCollection<MessageEntry> Items { get; } = [];
 
-    protected MessagesListViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
+    protected MessagesListViewModel() : base()
     {
         SelectedItem = null;
     }
@@ -38,11 +33,13 @@ public abstract partial class MessagesListViewModel : DocumentToolViewModelBase
 
     private void RevealInExplorer(MessageEntry? messageEntry)
     {
-        DataBlock? item = messageEntry?.Selection?.GetDefaultTarget();
-        DataBlock? region = messageEntry?.Selection?.Region;
+        EntityModel? item = messageEntry?.Selection?.GetDefaultTarget();
+        //DataBlock? item = messageEntry?.Selection?.GetDefaultTarget()?.DataBlock;
+        RegionModel? region = messageEntry?.Selection?.Region;
+        //RegionDataBlock? region = messageEntry?.Selection?.Region?.DataBlock as RegionDataBlock;
         if (item != null || region != null)
         {
-            ISelection sel = new SimpleItemSelection(item, region, null);
+            IEntitySelection sel = new EntitySelection(item, region, null);
             SendSelectionChangedEvent(sel);
         }
     }

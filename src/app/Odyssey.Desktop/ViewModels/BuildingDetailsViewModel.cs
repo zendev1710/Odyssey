@@ -1,19 +1,13 @@
-﻿using Avalonia.Controls;
-using Odyssey.Models;
+﻿using Odyssey.Models;
+using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Tools;
-using Odyssey.Services;
-using Prism.Events;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using static Odyssey.Models.Documents.CRDocument;
-using static Odyssey.Models.Documents.SimpleItemSelection;
 
 namespace Odyssey.ViewModels;
 
-public partial class BuildingDetailsViewModel : ContainerViewModel
+public partial class BuildingDetailsViewModel : StructureViewModel
 {
     private readonly NodeViewModel _root = new();
 
@@ -21,63 +15,65 @@ public partial class BuildingDetailsViewModel : ContainerViewModel
 
     public ObservableCollection<NodeViewModel> Items { get; }
 
-    public BuildingDetailsViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(Ids.BuildingDetails, eventAggregator, documentService)
+    public BuildingDetailsViewModel() : base(Ids.BuildingDetails)
     {
         Items = Root.Children;
     }
 
-    protected override void OnSelectionChanged(ISelectionChange selectionChange)
+    protected override void OnSelectionChanged(IEntitySelection selection, SelectionChangeTypes selType, object? sender)
     {
-        // Exclude this selector from selection change events to avoid reentrancy issues
-        List<string> selectorIdsExcludeFilter = [Id];
-        List<string> selectorIdsIncludeFilter = [Ids.Explorer];
-        if (ShouldIgnoreSelectionChangedEvent(selectionChange, selectorIdsIncludeFilter, selectorIdsExcludeFilter))
-        {
+        if (ReferenceEquals(sender, this))
             return;
-        }
 
-        ISelection sel = selectionChange.Selection;
-        if (sel.IsBuildingSelected() && !IsSelected(sel))
+        bool buildingChanged = selType.HasFlag(SelectionChangeTypes.Building);
+        bool buildingSelected = selection.HasBuilding();
+
+        Debug.WriteLine($"[VM-BUILDING] OnSelectionChanged: building changed={buildingChanged}, building selected={buildingSelected}");
+
+        if (buildingChanged)
         {
-           
-            MakeItems(sel);
+            MakeItems(selection);
         }
     }
 
-    private void MakeItems(ISelection sel)
+    private void MakeItems(IEntitySelection selection)
     {
         Items.Clear();
-        ISelection? selection = SetSelection(sel);
-        Block = selection?.Item;
-        Region = selection?.Region;
+        EntityModel? item = selection.Item;
+        if (item is null)
+            return;
+
+        //Block = selection.Item!.DataBlock;
+        Region = selection.Region;
+        //StructureModel = selection.Item as StructureModel;
 
         BuildingModel? buildingModel = null;
-        if (!Report.FindBuilding(Block!.GetId(), out buildingModel))
+        if (!Report.FindBuilding(item.Id/*Block!.GetId()*/, out buildingModel))
         {
             return;
         }
-        //BuildingModel buildingModel = new(Block!);
-        ContainerModel = buildingModel;
+
+        StructureModel = buildingModel;
 
         DataProperty? property = null;
 
-        if (ContainerModel.CollectData(Report/*, selection?.Region*/, ref property))
+        if (StructureModel!.CollectData(Report/*, selection?.Region*/, ref property))
         {
-            OwnerName = ContainerModel.OwnerName;
-            OwnerUnit = ContainerModel.OwnerUnit;
-            Name = ContainerModel.Name;
-            Type = ContainerModel.Type;
-            Size = ContainerModel.Size;
-            Description = ContainerModel.Description;
+            OwnerName = StructureModel.OwnerName;
+            OwnerUnit = StructureModel.OwnerUnit;
+            Name = StructureModel.Name;
+            Type = StructureModel.Type;
+            Size = StructureModel.Size;
+            Description = StructureModel.Description;
 
-            NodeViewModel containerNode = AddItem(Root, property, string.Empty, 0);
-            AddOwner(containerNode, true);
-            foreach (DataProperty p in ContainerModel.DataProperties)
+            NodeViewModel structureNode = AddItem(Root, property, string.Empty, 0);
+            AddOwner(structureNode, true);
+            foreach (DataProperty p in StructureModel.DataProperties)
             {
-                _ = AddItem(containerNode, p, $"{p.Label}: {p.Value}");
+                _ = AddItem(structureNode, p, $"{p.Label}: {p.Value}");
             }
-            AddEffects(containerNode);
-            AddUnits(containerNode);
+            AddEffects(structureNode);
+            AddUnits(structureNode);
         }
     }
 }

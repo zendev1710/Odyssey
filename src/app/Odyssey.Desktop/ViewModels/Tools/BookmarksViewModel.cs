@@ -1,19 +1,20 @@
-﻿using Avalonia.Controls;
-using Avalonia.Platform.Storage;
+﻿using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Odyssey.Models;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Localization;
-using Odyssey.Services;
-using Prism.Events;
+using Odyssey.Models.Tools;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using static BookmarkModel;
 
 namespace Odyssey.ViewModels.Tools;
 
@@ -37,7 +38,7 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
 
     [ObservableProperty]
     private BookmarksFileItem? _selectedBookmarksFile;
-    
+
     [ObservableProperty]
     private string _selectionName = string.Empty;
 
@@ -45,7 +46,7 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
 
     // Add a property for the selected object (bind this in your view)
     [ObservableProperty]
-    private DataBlock? _selectedObject;
+    private EntityModel? _selectedObject;
 
     [ObservableProperty]
     private bool _selectionIsBookmarkable;
@@ -67,10 +68,17 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
 
     private bool LoadingBookmarksInProgress { get; set; }
 
+    /// <summary>
+    /// True while <see cref="SelectedBookmark"/> is updated from the selection (or while a bookmark is
+    /// added or removed for the selection): the bookmark is then not selected by the user, so it must
+    /// not be revealed in the explorer.
+    /// </summary>
+    private bool _syncingSelectedBookmark;
 
-    public BookmarksViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
+
+    public BookmarksViewModel() : base()
     {
-        Bookmarks.CollectionChanged += (_, _) => HasBookmark = Bookmarks.Count > 0;
+        Bookmarks.CollectionChanged += (_, _) => OnBookmarksChanged();
     }
 
     /// <summary>
@@ -80,7 +88,14 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
         if (newValue is not null)
         {
             _lastSelectedBookmark = newValue;
-            RevealBookmark(newValue);
+
+            // Reveal the bookmark only when it has been selected by the user (from the bookmarks list
+            // or the next/previous bookmark commands), not when SelectedBookmark is synchronized with
+            // the current selection.
+            if (!_syncingSelectedBookmark)
+            {
+                RevealBookmark(newValue);
+            }
         }
 
         // To enable the commands if necessary
@@ -88,21 +103,49 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
         JumpToNextBookmarkCommand.NotifyCanExecuteChanged();
     }
 
-    partial void OnSelectionIsBookmarkedChanged(bool value)
+    // The selection changed: the bookmark state of the new selection has still to be computed, but the
+    // ability to toggle a bookmark on it is already known (see UpdateFromGlobalSelection)
+    partial void OnSelectedObjectChanged(EntityModel? value)
     {
-        if (SelectedObject is null)
+        ToggleBookmarkCommand.NotifyCanExecuteChanged();
+    }
+
+    /// <summary>
+    /// Sets <see cref="SelectedBookmark"/> without revealing it: the bookmark is not selected by the
+    /// user but synchronized with the current selection (or added/removed for it).
+    /// </summary>
+    private void SetSelectedBookmark(BookmarkModel? bookmarkModel)
+    {
+        _syncingSelectedBookmark = true;
+        try
         {
-            return;
+            SelectedBookmark = bookmarkModel;
+        }
+        finally
+        {
+            _syncingSelectedBookmark = false;
+        }
+    }
+
+    private void OnBookmarksChanged()
+    {
+        HasBookmark = Bookmarks.Count > 0;
+
+        // A bookmark matching the current selection may have been added or removed (this also happens
+        // when the bookmarks are reloaded from a file or when all the bookmarks are removed)
+        UpdateSelectedBookmark();
+
+        if (SelectedBookmark is not null && !Bookmarks.Contains(SelectedBookmark))
+        {
+            SetSelectedBookmark(null);
         }
 
-        if (value)
-        {
-            AddBookmark(SelectedObject);
-        }
-        else
-        {
-            RemoveBookmark(SelectedObject);
-        }
+        // To enable the commands if necessary
+        ToggleBookmarkCommand.NotifyCanExecuteChanged();
+        JumpToPreviousBookmarkCommand.NotifyCanExecuteChanged();
+        JumpToNextBookmarkCommand.NotifyCanExecuteChanged();
+        RemoveAllBookmarksCommand.NotifyCanExecuteChanged();
+        SaveBookmarksAsCommand.NotifyCanExecuteChanged();
     }
 
     // Called when the active document changes (CRDocument loaded)
@@ -114,38 +157,45 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
         AutoLoadBookmarksForDocument(report);
     }
 
-    private void AddBookmark(DataBlock dt)
+    private void AddBookmark(EntityModel dt)
     {
-        if (IsBookmarkable(dt) && !IsInBookmarks(dt, out BookmarkModel? bookmarkModel))
+        if (IsBookmarkable(dt, out BookmarkType type) && !IsInBookmarks(dt, out BookmarkModel? _))
         {
             var model = BookmarkModel.FromObject(dt);
-            if (model != null)
-            {
-                Bookmarks.Insert(0, model);
-                AutoSave();
-                SelectedBookmark = model;
-                SelectionIsBookmarked = true;
-            }
+            Debug.WriteLine($"[BOOKMARKS] Add bookmark {type} {model.Id} for selection {dt}");
+            Bookmarks.Insert(0, model);
+            AutoSave();
+            SetSelectedBookmark(model);
+            SelectionIsBookmarked = true;
+        }
+        else
+        {
+            Debug.WriteLine($"[BOOKMARKS] WARNING | bookmark not added for {dt}");
         }
     }
 
-    private void RemoveBookmark(DataBlock dt)
+    private void RemoveBookmark(EntityModel dt)
     {
-        if (IsBookmarkable(dt) && IsInBookmarks(dt, out BookmarkModel? bookmarkModel))
+        if (IsBookmarkable(dt, out _) && IsInBookmarks(dt, out BookmarkModel? bookmarkModel))
         {
+            Debug.WriteLine($"[BOOKMARKS] Remove bookmark {bookmarkModel!.Type} {bookmarkModel.Id} for selection {dt}");
             Bookmarks.Remove(bookmarkModel!);
             AutoSave();
-            SelectedBookmark = null;
+            SetSelectedBookmark(null);
             SelectionIsBookmarked = false;
             _lastSelectedBookmark = null;
         }
+        else
+        {
+            Debug.WriteLine($"[BOOKMARKS] WARNING | bookmark not removed for {dt}");
+        }
     }
 
-    private bool IsInBookmarks(DataBlock? dt, out BookmarkModel? bookmarkModel)
+    private bool IsInBookmarks(EntityModel? dt, out BookmarkModel? bookmarkModel)
     {
         bookmarkModel = null;
         if (dt is null)
-        { 
+        {
             return false;
         }
         bookmarkModel = Bookmarks.FirstOrDefault(b => b.IsSameObject(dt));
@@ -161,53 +211,83 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
             return;
         }
 
-        SelectionIsBookmarked = !SelectionIsBookmarked;
+        Debug.WriteLine($"[BOOKMARKS] ToggleBookmark for {SelectedObject} (bookmarked={SelectionIsBookmarked})");
+
+        // The bookmarks list is the source of truth (and not the SelectionIsBookmarked flag, which
+        // could be out of sync). Adding or removing the bookmark updates SelectionIsBookmarked (see
+        // AddBookmark and RemoveBookmark), which in turn updates the star displayed in the status bar.
+        if (IsInBookmarks(SelectedObject, out BookmarkModel? _))
+        {
+            RemoveBookmark(SelectedObject);
+        }
+        else
+        {
+            AddBookmark(SelectedObject);
+        }
     }
 
     // Reveal bookmark in explorer (selects the object in the explorer view)
     private void RevealBookmark(BookmarkModel? bookmarkModel)
-     {
-        if (!LoadingBookmarksInProgress && bookmarkModel?.Target is not null)
-        {
-            // Publish event only if the bookmark target is not the current global selection (from Explorer/Map view)
-            if (SelectedObject != bookmarkModel.Target)
-            {
-                ISelection sel = new SimpleItemSelection(bookmarkModel.Target, null, null);
-                SendSelectionChangedEvent(sel);
-            }
-        }
-    }
-
-    protected override void OnSelectionChanged(ISelectionChange selectionChange)
     {
-        List<string> selectorIdsExcludeFilter = [];
-        List<string> selectorIdsIncludeFilter = [Ids.Explorer];
-        if (ShouldIgnoreSelectionChangedEvent(selectionChange, selectorIdsIncludeFilter, selectorIdsExcludeFilter))
+        if (LoadingBookmarksInProgress || bookmarkModel?.Target is not EntityModel target)
         {
             return;
         }
-        // if selection in event is an existing bookmark, select it in orde the user to see that it's a bookmark
-        ISelection sel = selectionChange.Selection;
-        if (!IsSelected(sel))
-        {
-            SetSelection(sel);
-        }
+
+        Debug.WriteLine($"[BOOKMARKS] Reveal bookmark {bookmarkModel.Type} {bookmarkModel.Id} for target {target} (current selection {SelectedObject})");
+
+        // A region is selected with itself as its region. The other entities are selected without any
+        // region: the explorer resolves the region of a unit, a ship or a building from its item.
+        // Note: the selection is always sent, even when the target is already the current selection
+        // (as MessagesListViewModel does when revealing an item in the explorer): the explorer is then
+        // asked to show the item (expand its parents) in the tree.
+        SendSelectionChangedEvent(new EntitySelection(target, target as RegionModel, null));
     }
 
-    protected override void SetSelection(ISelection? sel)
+    /// <summary>
+    /// Reveals the bookmark currently selected in the bookmarks list.
+    /// Normally called when the user clicks (selects) a bookmark in the bookmarks list, including
+    /// when it is already the selected one: the explorer must then still show the item.
+    /// </summary>
+    public void RevealSelectedBookmark()
     {
-        base.SetSelection(sel);
-        BookmarkModel? bookmarkModel = null;
-        SelectedObject = sel?.Item;
-        SelectionIsBookmarkable = IsBookmarkable(SelectedObject);
-        SelectionIsBookmarked = SelectionIsBookmarkable && IsInBookmarks(SelectedObject, out bookmarkModel);
-        SelectionName = SelectedObject?.GetUILabel() ?? string.Empty;
-        SelectedBookmark = SelectionIsBookmarked ? bookmarkModel : null;
+        RevealBookmark(SelectedBookmark);
     }
 
+    protected override void OnSelectionChanged(IEntitySelection selection, SelectionChangeTypes selType, object? sender)
+    {
+        // The bookmark state shown in the status bar star (and the bookmark highlighted in the
+        // bookmarks list) must always be the state of the current selection, whoever raised the
+        // selection change event.
+        // Note: this view model also raises such events (see RevealBookmark): the sender must not be
+        // used to ignore them, otherwise SelectedObject would keep the previous selection. The star
+        // would then show the bookmark state of another item than the current one, and RevealBookmark
+        // would consider the clicked bookmark as already selected and would not reveal it.
+        UpdateFromGlobalSelection(selection.Item);
+    }
+
+    private void UpdateFromGlobalSelection(EntityModel? item)
+    {
+        BookmarkModel? bookmarkModel = null;
+        SelectedObject = item;
+        SelectionIsBookmarkable = IsBookmarkable(SelectedObject, out _);
+        SelectionIsBookmarked = SelectionIsBookmarkable && IsInBookmarks(SelectedObject, out bookmarkModel);
+        SelectionName = SelectedObject?.DataBlock.GetUILabel() ?? string.Empty;
+        SetSelectedBookmark(SelectionIsBookmarked ? bookmarkModel : null);
+    }
+
+    /// <summary>
+    /// Update the bookmark state of the current selection. Called when the bookmarks list changes:
+    /// the current selection may then be a bookmark or not anymore.
+    /// </summary>
     private void UpdateSelectedBookmark()
     {
-        // TODO: update bookmark status according to the if current selection (Selection) bookmarks list belonging
+        if (SelectedObject is null)
+        {
+            return;
+        }
+
+        SelectionIsBookmarked = IsInBookmarks(SelectedObject, out _);
     }
 
     // Load bookmarks from XML file
@@ -249,7 +329,11 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
     {
         // LATER: improve empty bookmark file handling (should be removed from the bookmarks files list)
         Bookmarks.Clear();
-        Bookmarks.AddRange(LoadBookmarksFromFile(filePath));
+
+        foreach (var item in LoadBookmarksFromFile(filePath))
+        {
+            Bookmarks.Add(item);
+        }
         _currentBookmarksFile = filePath;
     }
 
@@ -298,7 +382,7 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
             BookmarksFiles.Clear();
             Bookmarks.Clear();
             SelectedBookmarksFile = null;
-            SelectedBookmark = null;
+            SetSelectedBookmark(null);
             _lastSelectedBookmark = null;
             _bookmarkFilesPrefix = string.Empty;
             LoadingBookmarksInProgress = false;
@@ -330,7 +414,7 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
             AutoSave();
             BookmarksFiles.Add(new BookmarksFileItem("default", defaultFilePath));
             SelectedBookmarksFile = BookmarksFiles.First();
-            SelectedBookmark = null;
+            SetSelectedBookmark(null);
             _lastSelectedBookmark = null;
             LoadingBookmarksInProgress = false;
             return;
@@ -341,7 +425,7 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
                        ?? BookmarksFiles.First();
         SelectedBookmarksFile = defaultFile;
         LoadingBookmarksInProgress = false;
-        SelectedBookmark = null;
+        SetSelectedBookmark(null);
     }
 
     partial void OnSelectedBookmarksFileChanged(BookmarksFileItem? oldValue, BookmarksFileItem? newValue)
@@ -368,7 +452,7 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
     {
         Bookmarks.Clear();
         BookmarksFiles.Clear();
-        SetSelection(null);
+        UpdateFromGlobalSelection(null);
 
         _lastSelectedBookmark = null;
         _currentBookmarksFile = null;
@@ -376,17 +460,11 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
         LoadingBookmarksInProgress = false;
     }
 
-    private bool IsBookmarkable(DataBlock? dt)
+    private bool IsBookmarkable(EntityModel? dt, out BookmarkType bmt)
     {
-        if (dt is null)
-        {
-            return false;
-        }
-        var bt = dt.GetBlockType();
-        return bt == BlockType.REGION
-            || bt == BlockType.UNIT
-            || bt == BlockType.SHIP
-            || bt == BlockType.BUILDING;
+        // The type of bookmark an entity can have is defined by the bookmark model itself.
+        bmt = BookmarkModel.GetBookmarkType(dt);
+        return bmt != BookmarkType.Unknown;
     }
 
     [RelayCommand(CanExecute = nameof(CanJumpToPreviousBookmark))]
@@ -552,7 +630,7 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
 
     private bool CanToggleBookmark()
     {
-        return IsBookmarkable(SelectedObject);
+        return IsBookmarkable(SelectedObject, out _);
     }
 
     private bool CanRemoveAllBookmarks()

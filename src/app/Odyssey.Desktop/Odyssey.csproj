@@ -220,6 +220,12 @@
 	<Compile Update="Views\ShipDetailsView.axaml.cs">
 	  <DependentUpon>ShipDetailsView.axaml</DependentUpon>
 	</Compile>
+	<Compile Update="Views\BuildingsDetailsView.axaml.cs">
+	  <DependentUpon>BuildingsDetailsView.axaml</DependentUpon>
+	</Compile>
+	<Compile Update="Views\ShipsDetailsView.axaml.cs">
+	  <DependentUpon>ShipsDetailsView.axaml</DependentUpon>
+	</Compile>
 	<Compile Update="Views\NoDetailsView.axaml.cs">
       <DependentUpon>NoDetailsView.axaml</DependentUpon>
 	</Compile>

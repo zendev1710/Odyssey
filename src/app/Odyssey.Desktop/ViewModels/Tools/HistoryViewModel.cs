@@ -1,14 +1,9 @@
-﻿using Avalonia.Controls;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Tools;
-using Odyssey.Services;
-using Prism.Events;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
-
 
 namespace Odyssey.ViewModels.Tools;
 
@@ -27,8 +22,17 @@ public partial class HistoryViewModel : DocumentToolViewModelBase
 
     public ObservableCollection<SelectionEntry> Items { get; } = [];
 
-    public HistoryViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
+    public HistoryViewModel() : base()
     {
+    }
+
+    protected override void OnSelectionChanged(IEntitySelection selection, SelectionChangeTypes selType, object? sender)
+    {
+        if (ReferenceEquals(sender, this))
+            return;
+
+        // Note: an unseen region can also been selected and then added to the history
+        AddSelectionToHistory(selection);
     }
 
     /// <summary>
@@ -49,7 +53,8 @@ public partial class HistoryViewModel : DocumentToolViewModelBase
         }
 
         // if newValue matches the current selection in Explorer, do nothing
-        if (Selection != null && Selection.Item == newValue.Selection?.Item)
+        IEntitySelection selection = CurrentSelection;
+        if (selection.Item == newValue.Selection?.Item)
         {
             // If the selected item is already the current selection in Explorer, do nothing
             return;
@@ -66,44 +71,24 @@ public partial class HistoryViewModel : DocumentToolViewModelBase
         ClearItems();
     }
 
-    protected override void OnSelectionChanged(ISelectionChange selectionChange)
+    private void AddSelectionToHistory(IEntitySelection sel)
     {
-        List<string> selectorIdsExcludeFilter = [];
-        List<string> selectorIdsIncludeFilter = [Ids.Explorer];
-        if (ShouldIgnoreSelectionChangedEvent(selectionChange, selectorIdsIncludeFilter, selectorIdsExcludeFilter))
-        {
-            return;
-        }
-
-        // Note: an unseen region can also been selected and then added to the history
-        ISelection sel = selectionChange.Selection;
-        if (!IsSelected(sel))
-        {
-            SetSelection(sel);
-            if (!InnerSelectorIs(selectionChange, Id))
-            {
-                AddSelectionToHistory(Selection!);
-            }
-        }
-    }
-
-    private void AddSelectionToHistory(ISelection sel)
-    {
-        string label = sel.Item?.GetUILabel() ?? string.Empty;
+        // TODO: optimize it(s called too frequently
+        string label = sel.Item?.DataBlock.GetUILabel() ?? string.Empty;
         // Exclude Buildings and Ships nodes from history.
         // label is empty for these nodes
         if (!string.IsNullOrEmpty(label))
         {
-            var newEntry = new SelectionEntry(sel);
             // Check if an entry with the same label already exists
             var result = Items
                 .Select((entry, idx) => (entry, idx))
-                .FirstOrDefault(x => x.entry.Label == newEntry.Label);
+                .FirstOrDefault(x => x.entry.Label == label);
 
-            int existingIndex = result.entry != null ? result.idx : -1;
+            int existingIndex = result.entry is not null ? result.idx : -1;
             if (existingIndex == 0)
             {
-                // Already at first position, do nothing
+                // Already at first position, just select it in list
+                SelectedItem = result.entry;
                 return;
             }
 
@@ -114,6 +99,7 @@ public partial class HistoryViewModel : DocumentToolViewModelBase
             }
 
             // Insert at first position
+            var newEntry = new SelectionEntry(sel);
             Items.Insert(0, newEntry);
 
             // Enforce max size
@@ -121,17 +107,22 @@ public partial class HistoryViewModel : DocumentToolViewModelBase
             {
                 Items.RemoveAt(Items.Count - 1);
             }
+
+            SelectedItem = newEntry;
         }
     }
 
     private void RevealSelection(SelectionEntry selectionEntry)
     {
-        SendSelectionChangedEvent(selectionEntry.Selection!);
-        SelectedItem = null;
+        IEntitySelection? sel = selectionEntry.Selection;
+        Debug.WriteLine($"[HISTORY-VM] SendSelectionChangedEvent from {Id} for item={sel.Item} region={sel.Region}");
+        _selectionService.SelectItem(sel.Item, sel.Region, /*sel.Faction,*/ this, sel.Data, EntitySelection.GetContainerTypes(sel));
+        //SelectedItem = null;
     }
 
     private void ClearItems()
     {
         Items.Clear();
+        SelectedItem = null;
     }
 }

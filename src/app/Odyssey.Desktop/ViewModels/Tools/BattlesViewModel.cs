@@ -1,19 +1,11 @@
-﻿using Avalonia.Controls;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Odyssey.Models;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Tools;
-using Odyssey.Services;
-using Prism.Events;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using static Odyssey.Models.Documents.CRDocument;
-using static Odyssey.Models.Documents.SimpleItemSelection;
 
 namespace Odyssey.ViewModels.Tools;
 
@@ -23,7 +15,7 @@ public partial class BattlesViewModel : DocumentToolViewModelBase
 
     public ObservableCollection<BattleModel> Battles { get; } = [];
 
-    public BattlesViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
+    public BattlesViewModel() : base()
     {
         Clear();
     }
@@ -54,25 +46,18 @@ public partial class BattlesViewModel : DocumentToolViewModelBase
         CollectData();
     }
 
-    /// <summary>
-    /// Select battle item if a region with a battle has been selected.
-    /// </summary>
-    /// <param name="selectionChange">the viewmodel which has publish the SelectionStateChanged event</param>
-    protected override void OnSelectionChanged(ISelectionChange selectionChange)
+    protected override void OnSelectionChanged(IEntitySelection selection, SelectionChangeTypes selType, object? sender)
     {
-        // Exclude this selector from selection change events to avoid reentrancy issues
-        List<string> selectorIdsExcludeFilter = [Id];
-        List<string> selectorIdsIncludeFilter = [Ids.MainWindowVmId];
-        if (ShouldIgnoreSelectionChangedEvent(selectionChange, selectorIdsIncludeFilter, selectorIdsExcludeFilter))
-        {
-            return;
-        }
+        if (ReferenceEquals(sender, this)) return;
 
-        ISelection? sel = selectionChange.Selection;
-        if (sel != null && sel.HasRegion() && !IsSelected(sel))
+        bool regionSelected = selection.IsRegionSelected();
+        bool regionChanged = selType.HasFlag(SelectionChangeTypes.Region);
+
+        Debug.WriteLine($"[VM-BATTLES] OnSelectionChanged: region changed={regionChanged}, region selected={regionSelected}");
+
+        if (regionChanged)
         {
-            SetSelection(sel);
-            string label = sel.Region!.GetUILabel();
+            string label = selection.Region!.DataBlock.GetUILabel();
             if (Battles.FirstOrDefault(b => b.Label!.StartsWith(label)) is BattleModel battle)
             {
                 SelectedBattleIndex = Battles.IndexOf(battle);
@@ -89,38 +74,12 @@ public partial class BattlesViewModel : DocumentToolViewModelBase
     protected void CollectData()
     {
         Clear();
-        // LATER: maybe should use CRDocument.Battles property instead of collecting data here by iterating through all the blocks.
-        List<BattleModel> battles = [];
-        DataBlock? startBlock = Report.FirstBlock?.Value;
-        string currentFactionName = string.Empty;
-
-        // Iterate through the blocks to find battles
-        for (var block = startBlock; block != null; block = block.GetNextBlock())
+        if (Report.Battles.Count > 0)
         {
-            BlockType type = block.GetBlockType();
-            if (type == BlockType.REGION)
+            foreach (var item in Report.Battles.OrderBy(b => b.Label))
             {
-                break;
+                Battles.Add(item);
             }
-            else if (type == BlockType.FACTION)
-            {
-                // TODO: is there a better way to get the faction name?
-                FactionModel? factionModel = Report.GetFaction(block.GetId());
-                currentFactionName = factionModel is not null ? factionModel.Name : string.Empty;
-                //currentFactionName = GetFactionName(block);
-            }
-            else if (type == BlockType.BATTLE)
-            {
-                BattleModel battleModel = new(Report, currentFactionName);
-                if (battleModel.CollectData(block))
-                {
-                    battles.Add(battleModel);
-                }
-            }
-        }
-        if (battles.Count > 0)
-        {
-            Battles.AddRange(battles.OrderBy(b => b.Label));
             SelectedBattleIndex = 0;
         }
 
@@ -145,10 +104,13 @@ public partial class BattlesViewModel : DocumentToolViewModelBase
     {
         if (SelectedBattleIndex >= 0)
         {
-            DataBlock? region = Battles[SelectedBattleIndex].Region;
-            ISelection sel = new SimpleItemSelection(region, region, null);
-            SetSelection(sel);
-            SendSelectionChangedEvent(sel);
+            BattleModel battle = Battles[SelectedBattleIndex];
+            
+            if (Report.ResolveLocation(battle.X, battle.Y, (PlaneType)0, out ILocation? location))
+            {
+                // new SimpleSelection(Report, battle.X, battle.Y, 0/*battle.GetPlane()*/)
+                SendSelectionChangedEvent(new EntitySelection(location!));
+            }
         }
     }
 
@@ -157,7 +119,7 @@ public partial class BattlesViewModel : DocumentToolViewModelBase
     /// Returns true if a battle is selected and it has an associated region.
     private bool CanRevealBattleInExplorer()
     {
-        return (SelectedBattleIndex >= 0 && Battles[SelectedBattleIndex].Region != null);
+        return SelectedBattleIndex >= 0;
     }
 
     /// <summary>

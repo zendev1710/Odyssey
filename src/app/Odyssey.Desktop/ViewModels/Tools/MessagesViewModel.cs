@@ -1,12 +1,8 @@
-﻿using Avalonia.Controls;
-using CommunityToolkit.Mvvm.ComponentModel;
-using Odyssey.Events;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Odyssey.Models;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Tools;
-using Odyssey.Services;
-using Prism.Events;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -24,7 +20,7 @@ public abstract partial class MessagesViewModel : DocumentToolViewModelBase
 
     public ObservableCollection<Node> Items { get; } = [];
 
-    protected MessagesViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
+    protected MessagesViewModel() : base()
     {
         SelectedItem = Root;
         Items = Root.Children;
@@ -49,13 +45,15 @@ public abstract partial class MessagesViewModel : DocumentToolViewModelBase
 
     private void RevealInExplorer(Node? node)
     {
-        // TODO: check if an unseen region can have a messageand then should be selected in map instead of explorer 
+        // TODO: check if an unseen region can have a message and then it should be selected in map instead of explorer
         MessageEntry? messageEntry = node?.Entry;
-        DataBlock? item = messageEntry?.Selection?.GetDefaultTarget();
-        DataBlock? region = messageEntry?.Selection?.Region;
+        EntityModel? item = messageEntry?.Selection?.GetDefaultTarget();
+        //DataBlock? item = messageEntry?.Selection?.GetDefaultTarget()?.DataBlock;
+        RegionModel? region = messageEntry?.Selection?.Region;
+        //RegionDataBlock? region = messageEntry?.Selection?.Region?.DataBlock as RegionDataBlock;
         if (item != null || region != null)
         {
-            ISelection sel = new SimpleItemSelection(item, region, null);
+            IEntitySelection sel = new EntitySelection(item, region, null);
             SendSelectionChangedEvent(sel);
         }
     }
@@ -93,9 +91,9 @@ public abstract partial class MessagesViewModel : DocumentToolViewModelBase
             }
         }
 
-        List<DataBlock> targets = Report.GetMessageTargets(msgBlock);
+        List<EntityModel> targets = Report.GetMessageTargets(msgBlock);
         MessageEntry messageEntry = new MessageEntry(msgBlock.Value(Strings.EN_MESSAGE_RENDERED), targets);
-        DataBlock? target = messageEntry.Selection?.GetDefaultTarget();
+        DataBlock? target = messageEntry.Selection?.GetDefaultTarget()?.DataBlock;
         if (target == null)
         {
             Debug.WriteLine("!!! AddMessage: message has no target");

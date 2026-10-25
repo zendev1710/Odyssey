@@ -8,6 +8,8 @@
 			 x:DataType="vm:BookmarksViewModel" x:CompileBindings="True"
              x:Class="Odyssey.Views.Tools.BookmarksView">
 	<Grid Focusable="True" IsVisible="{Binding HasDocument}" >
-		<ListBox ItemsSource="{Binding Bookmarks}" SelectedItem="{Binding SelectedBookmark}" AutoScrollToSelectedItem="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+		<!-- The Tapped event is wired in the code-behind to reveal a bookmark which is already the
+		     selected one (SelectedBookmark does not change in that case). -->
+		<ListBox x:Name="BookmarksList" ItemsSource="{Binding Bookmarks}" SelectedItem="{Binding SelectedBookmark}" AutoScrollToSelectedItem="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
 	</Grid>
 </UserControl>

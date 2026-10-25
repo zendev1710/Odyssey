@@ -1,49 +1,8 @@
-﻿using Avalonia.Controls;
-using Dock.Model.Mvvm.Controls;
-using Odyssey.Events;
-using Odyssey.Models.Documents;
-using Odyssey.Services;
-using Prism.Events;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using static Odyssey.Models.Documents.CRDocument;
-
-namespace Odyssey.ViewModels.Tools;
+﻿namespace Odyssey.ViewModels.Tools;
 
 public class SearchResultsViewModel : DocumentToolViewModelBase
 {
-
-    protected override void OnSelectionChanged(ISelectionChange selectionChange)
+    public SearchResultsViewModel() : base()
     {
-        // This view does not handle any selection changes.
     }
-
-    public SearchResultsViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
-    {
-        // TODO: use filter on filePath to update the list only if different
-        //EventAggregator?.GetEvent<ActiveDocumentChangedEvent>().Subscribe(OnActiveDocumentChanged, ThreadOption.UIThread);
-        // TODO: use filter on SelectionState to update data only when needed
-        //EventAggregator?.GetEvent<SelectionStateChangedEvent>().Subscribe(OnSelectionChanged, ThreadOption.UIThread);
-    }
-
-    /*
-    private void OnActiveDocumentChanged(CRDocument report)
-    {
-        if (SetMapFile(report))
-        {
-            //RebuildItems();
-        }
-    }
-    */
-    /*
-    private void OnSelectionChanged(SelectionState sel)
-    {
-        DataBlock? regionBlock = sel.region;
-        if (regionBlock != null)
-        {
-            SetSelection(regionBlock);
-        }
-    }
-    */
 }

@@ -1,21 +1,17 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Prism.Events;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using static Odyssey.Utils.Converters;
-using static Odyssey.Models.Tools.DataProperty;
-using Odyssey.Models.Tools;
-using Odyssey.Models.Localization;
-using Avalonia.Controls;
-using System;
-using System.Diagnostics;
-using Odyssey.Models.Documents;
 using Odyssey.Models;
-using Odyssey.Services;
+using Odyssey.Models.Data;
+using Odyssey.Models.Documents;
+using Odyssey.Models.Localization;
+using Odyssey.Models.Tools;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using static Odyssey.Models.Tools.DataProperty;
+using static Odyssey.Utils.Converters;
 
 namespace Odyssey.ViewModels;
 
-public partial class ShipDetailsViewModel : ContainerViewModel
+public partial class ShipDetailsViewModel : StructureViewModel
 {
     private readonly NodeViewModel _root = new();
     protected NodeViewModel Root { get { return _root; } }
@@ -33,92 +29,94 @@ public partial class ShipDetailsViewModel : ContainerViewModel
     [ObservableProperty]
     private int _capacity;
 
-    public ShipDetailsViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(Ids.ShipDetails, eventAggregator, documentService)
+    public ShipDetailsViewModel() : base(Ids.ShipDetails)
     {
         Items = Root.Children;
     }
-    protected override void OnSelectionChanged(ISelectionChange selectionChange)
+    protected override void OnSelectionChanged(IEntitySelection selection, SelectionChangeTypes selType, object? sender)
     {
-        // Exclude this selector from selection change events to avoid reentrancy issues
-        List<string> selectorIdsExcludeFilter = [Id];
-        List<string> selectorIdsIncludeFilter = [Ids.Explorer];
-        if (ShouldIgnoreSelectionChangedEvent(selectionChange, selectorIdsIncludeFilter, selectorIdsExcludeFilter))
-        {
-            return;
-        }
+        if (ReferenceEquals(sender, this)) return;
 
-        ISelection sel = selectionChange.Selection;
-        if (sel.IsShipSelected() && !IsSelected(sel))
+        bool shipChanged = selType.HasFlag(SelectionChangeTypes.Ship);
+        bool shipSelected = selection.HasShip();
+
+        Debug.WriteLine($"[VM-SHIP] OnSelectionChanged: ship changed={shipChanged}, ship selected={shipSelected}");
+
+        if (shipChanged)
         {
-            MakeItems(sel);
+            MakeItems(selection);
         }
     }
 
-    public void MakeItems(ISelection sel)
+    public void MakeItems(IEntitySelection selection)
     {
         Items.Clear();
-        ISelection? selection = SetSelection(sel);
-        Block = selection?.Item;
-        Region = selection?.Region;
+        EntityModel? item = selection.Item;
+        if (item is null)
+            return;
+
+
+        //Block = selection?.Item!.DataBlock;
+        //Region = selection?.Region!.DataBlock as RegionDataBlock;
         ShipModel? shipModel = null;
-        if (!Report.FindShip(Block!.GetId(), out shipModel))
+        if (!Report.FindShip(item.Id/*Block!.GetId()*/, out shipModel))
         {
             return;
         }
 
-        ContainerModel = shipModel; 
+        StructureModel = shipModel;
         DataProperty? property = null;
-        if (ContainerModel.CollectData(Report/*, selection?.Region*/, ref property))
+        if (StructureModel!.CollectData(Report/*, selection?.Region*/, ref property))
         {
-            OwnerName = ContainerModel.OwnerName;
-            OwnerUnit = ContainerModel.OwnerUnit;
-            Name = ContainerModel.Name;
-            Type = ContainerModel.Type;
-            Size = ContainerModel.Size;
-            Description = ContainerModel.Description;
+            OwnerName = StructureModel.OwnerName;
+            OwnerUnit = StructureModel.OwnerUnit;
+            Name = StructureModel.Name;
+            Type = StructureModel.Type;
+            Size = StructureModel.Size;
+            Description = StructureModel.Description;
 
             DamagePercent = shipModel.DamagePercent;
             Coast = shipModel.Coast;
             Cargo = shipModel.Cargo;
             Capacity = shipModel.Capacity;
 
-            NodeViewModel containerNode = AddItem(Root, property, string.Empty, 0);
-            AddOwner(containerNode, false);
+            NodeViewModel structureNode = AddItem(Root, property, string.Empty, 0);
+            AddOwner(structureNode, false);
 
             if (Coast >= 0)
             {
                 string coastLabel = Labels.GetCoastName(Coast);
                 DataProperty coastProperty = new(coastLabel);
-                AddItem(containerNode, coastProperty);
+                AddItem(structureNode, coastProperty);
             }
             if (Cargo > 0 || Capacity > 0)
             {
                 string shipCapacityLabel = Labels.Localize(Categories.None, Labels.CAPACITY_SHIP_INFO, [ToStringWithDecimals(shipModel.Cargo), ToStringWithDecimals(shipModel.Capacity)]);
                 DataProperty shipCapacityProperty = new(Categories.None, Labels.CAPACITY_SHIP_INFO, string.Empty, shipCapacityLabel);
-                AddItem(containerNode, shipCapacityProperty);
+                AddItem(structureNode, shipCapacityProperty);
             }
             if (DamagePercent > 0)
             {
                 string damageLabel = Labels.Localize(Categories.None, Labels.SHIP_DAMAGE, [$"{DamagePercent}"]);
                 DataProperty damageProperty = new(damageLabel);
-                AddItem(containerNode, damageProperty);
+                AddItem(structureNode, damageProperty);
             }
             foreach (DataProperty p in shipModel.DataProperties)
             {
-                _ = AddItem(containerNode, p, $"{p.Label}: {p.Value}");
+                _ = AddItem(structureNode, p, $"{p.Label}: {p.Value}");
             }
 
-            AddEffects(containerNode);
+            AddEffects(structureNode);
 
             if (shipModel.TotalSkill > 0)
             {
                 string sailingSkillLabel = Labels.Localize(Categories.Node, Labels.TOTAL_SAILING_SKILL);
                 string totalSkillLabel = $"{sailingSkillLabel}: {shipModel.TotalSkill}";
                 DataProperty totalSkillProperty = new(Categories.None, totalSkillLabel, string.Empty, totalSkillLabel);
-                AddItem(containerNode, totalSkillProperty);
+                AddItem(structureNode, totalSkillProperty);
             }
 
-            AddUnits(containerNode);
+            AddUnits(structureNode);
         }
     }
 }
