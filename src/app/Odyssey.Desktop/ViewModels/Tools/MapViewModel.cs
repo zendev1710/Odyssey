@@ -3,6 +3,7 @@ using Odyssey.Extensions;
 using Odyssey.Models;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
+using Odyssey.Models.Tools;
 using Odyssey.Utils;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -181,13 +182,36 @@ public partial class MapViewModel : DocumentToolViewModelBase/*, IRecipient<Cent
         }
     }
 
+    private ShipModel? ResolveSelectedShip(IEntitySelection selection)
+    {
+        if (selection.HasShip())
+        {
+            return selection.Item as ShipModel;
+        }
+
+        if (selection.HasUnit() && selection.Item is UnitModel unit)
+        {
+            if (unit.CommandedShip is not null)
+            {
+                return unit.CommandedShip;
+            }
+
+            if (Report.TryFindShipForUnit(unit, out ShipModel? ship))
+            {
+                return ship;
+            }
+        }
+
+        return null;
+    }
+
     protected override void OnSelectionChanged(IEntitySelection selection, SelectionChangeTypes selType, object? sender)
     {
         if (ReferenceEquals(sender, this))
             return;
 
         // Keep track of the selected ship so its route can be highlighted on the map.
-        SelectedShip = selection.HasShip() ? selection.Item as ShipModel : null;
+        SelectedShip = ResolveSelectedShip(selection);
 
         // TODO
         if (selection.IsRegionSelected() /*&& !IsSelectedRegion(sel)*/)

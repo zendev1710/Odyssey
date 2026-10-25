@@ -25,8 +25,13 @@ public abstract class StructureModel : EntityModel
     public string Type { get; private set; } = string.Empty;
     public int Size { get; private set; }
     public int OwnerId { get; private set; }
-    public UnitModel? OwnerUnit { get; private set; }
-    //public DataBlock? OwnerUnit { get; private set; }
+    public UnitModel? OwnerUnit { get; protected set; }
+
+    public void SetOwnerUnit(UnitModel? ownerUnit)
+    {
+        OwnerUnit = ownerUnit;
+    }
+
     public string OwnerName { get; private set; } = string.Empty;
     public string Description { get; private set; } = string.Empty;
     public DataBlock Structure { get { return DataBlock; } }

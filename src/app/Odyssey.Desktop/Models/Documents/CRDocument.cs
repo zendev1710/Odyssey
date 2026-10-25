@@ -388,7 +388,62 @@ public class CRDocument : EresseaDocument, ILocationResolver
     {
         return Ships.TryGetValue(id, out shipModel);
     }
-    
+
+    /// <summary>
+    /// Resolves the ship commanded by the specified unit, based on the ship captain/owner ids.
+    /// </summary>
+    public bool TryFindShipForUnit(UnitModel unit, out ShipModel? shipModel)
+    {
+        if (unit is null)
+        {
+            shipModel = null;
+            return false;
+        }
+
+        if (unit.CommandedShip is not null)
+        {
+            if (unit.CommandedShip.GetOwnerUnitId() == unit.Id)
+            {
+                shipModel = unit.CommandedShip;
+                return true;
+            }
+
+            unit.SetCommandedShip(null);
+        }
+
+        foreach (ShipModel ship in Ships.Values)
+        {
+            if (ship.GetOwnerUnitId() == unit.Id)
+            {
+                shipModel = ship;
+                ship.SetOwnerUnit(unit);
+                unit.SetCommandedShip(ship);
+                return true;
+            }
+        }
+
+        shipModel = null;
+        return false;
+    }
+
+    public void ResolveUnitShipLinks()
+    {
+        foreach (UnitModel unit in Units.Values)
+        {
+            unit.SetCommandedShip(null);
+        }
+
+        foreach (ShipModel ship in Ships.Values)
+        {
+            if (ship.TryResolveOwnerUnit(this, out UnitModel? ownerUnit) && ownerUnit is not null)
+            {
+                continue;
+            }
+
+            ship.SetOwnerUnit(null);
+        }
+    }
+
     public BuildingModel? GetBuilding(int id)
     {
         if (Buildings.TryGetValue(id, out BuildingModel? buildingModel)) { return buildingModel; }
@@ -2014,6 +2069,8 @@ m_blocks.push_back(*old_r);
             ship.ResolveOwnerFaction(this);
             ship.ResolveInferredRoute();
         }
+
+        ResolveUnitShipLinks();
 
         // Just to check data consuming optimization is ok
         if (OptimizeDataConsuming) {

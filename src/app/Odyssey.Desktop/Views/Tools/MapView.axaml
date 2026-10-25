@@ -10,7 +10,7 @@
              d:DesignWidth="300" d:DesignHeight="400">
   <Grid RowDefinitions="Auto,*" ColumnDefinitions="*,Auto">
       <!-- ToolTip.Tip="Zoom" -->
-      <Slider x:Name="ZoomSlider"  Minimum="20"  Maximum="200"
+      <Slider x:Name="ZoomSlider"  Minimum="20"  Maximum="400"
             Value="{Binding ElementName=HexMap, Path=Zoom, Mode=TwoWay}"
             IsVisible="{Binding HasDocument}"
             TickFrequency="10"

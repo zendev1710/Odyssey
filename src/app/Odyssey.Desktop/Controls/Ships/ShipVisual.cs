@@ -65,6 +65,12 @@ public sealed record ShipVisual
 
     /// <summary>Relative size of the marker, so that a galleon looks bigger than a boat.</summary>
     public double SizeFactor { get; init; } = 1.0;
+
+    /// <summary>
+    /// Maximum size of one ship of this type, as defined by the Eressea rules. Zero when the
+    /// type is unknown, which disables construction detection for that ship.
+    /// </summary>
+    public int MaxSize { get; init; }
 }
 
 /// <summary>
@@ -117,6 +123,7 @@ public static class ShipCatalog
             TrimColor = Color.FromRgb(0x5E, 0x3B, 0x1F),
             Masts = 1,
             SizeFactor = 0.82,
+            MaxSize = 5,
         },
         ["longboat"] = new ShipVisual
         {
@@ -128,6 +135,7 @@ public static class ShipCatalog
             Masts = 1,
             HasShields = true,
             SizeFactor = 0.94,
+            MaxSize = 50,
         },
         ["dragonship"] = new ShipVisual
         {
@@ -140,6 +148,7 @@ public static class ShipCatalog
             HasDragonHead = true,
             HasShields = true,
             SizeFactor = 1.0,
+            MaxSize = 100,
         },
         ["caravel"] = new ShipVisual
         {
@@ -151,6 +160,7 @@ public static class ShipCatalog
             Masts = 2,
             SailStyle = SailStyle.Lateen,
             SizeFactor = 1.02,
+            MaxSize = 250,
         },
         ["trireme"] = new ShipVisual
         {
@@ -162,6 +172,7 @@ public static class ShipCatalog
             Masts = 1,
             HasOars = true,
             SizeFactor = 1.05,
+            MaxSize = 200,
         },
         ["galleon"] = new ShipVisual
         {
@@ -173,6 +184,7 @@ public static class ShipCatalog
             Masts = 3,
             HasSternCastle = true,
             SizeFactor = 1.18,
+            MaxSize = 2000,
         },
         ["ship"] = new ShipVisual
         {

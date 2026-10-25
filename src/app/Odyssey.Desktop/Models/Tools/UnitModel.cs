@@ -69,8 +69,14 @@ public class UnitModel : EntityModel
     /// </summary>
     private DataBlock? Structure { get; set; }
     public KeyType StructureType { get; private set; }
+    public ShipModel? CommandedShip { get; private set; }
     public UnitModel? StructureOwnerUnit { get; private set; }
     //public DataBlock? StructureOwnerUnit { get; private set; }
+    internal void SetCommandedShip(ShipModel? ship)
+    {
+        CommandedShip = ship;
+    }
+
     public string StructureOwnerName { get; private set; } = string.Empty;
     public string StructureName { get; private set; } = string.Empty;
     public string StructureTypeName { get; private set; } = string.Empty;

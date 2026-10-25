@@ -11,17 +11,36 @@ namespace Odyssey.Controls.Ships;
 /// </summary>
 public static class ShipSilhouettes
 {
-    public static void DrawSymbol(DrawingContext context, ShipVisual visual, Point center, double size, double angleDegrees)
+    public static void DrawSymbol(
+        DrawingContext context,
+        ShipVisual visual,
+        Point center,
+        double size,
+        double angleDegrees,
+        bool underConstruction = false)
     {
-        Draw(context, visual, center, size * 0.92, angleDegrees, detailed: false);
+        Draw(context, visual, center, size * 0.92, angleDegrees, detailed: false, underConstruction);
     }
 
-    public static void DrawVector(DrawingContext context, ShipVisual visual, Point center, double size, double angleDegrees)
+    public static void DrawVector(
+        DrawingContext context,
+        ShipVisual visual,
+        Point center,
+        double size,
+        double angleDegrees,
+        bool underConstruction = false)
     {
-        Draw(context, visual, center, size, angleDegrees, detailed: true);
+        Draw(context, visual, center, size, angleDegrees, detailed: true, underConstruction);
     }
 
-    private static void Draw(DrawingContext context, ShipVisual visual, Point center, double size, double angleDegrees, bool detailed)
+    private static void Draw(
+        DrawingContext context,
+        ShipVisual visual,
+        Point center,
+        double size,
+        double angleDegrees,
+        bool detailed,
+        bool underConstruction)
     {
         if (size <= 1.0)
         {
@@ -35,8 +54,36 @@ public static class ShipSilhouettes
 
         using (context.PushTransform(transform))
         {
-            DrawShip(context, visual, scale, detailed);
+            if (underConstruction)
+            {
+                using (context.PushOpacity(0.65))
+                {
+                    DrawShip(context, visual, scale, detailed);
+                }
+
+                DrawScaffold(context, scale);
+            }
+            else
+            {
+                DrawShip(context, visual, scale, detailed);
+            }
         }
+    }
+
+    /// <summary>
+    /// Draws a light scaffold around the hull so a ship under construction stays identifiable
+    /// without relying on a separate image asset.
+    /// </summary>
+    private static void DrawScaffold(DrawingContext context, double scale)
+    {
+        var brush = new SolidColorBrush(Color.FromRgb(0xE0, 0xA0, 0x30));
+        var pen = new Pen(brush, Math.Max(0.035, 2.4 / scale));
+
+        // Two uprights and two crossbeams around the hull.
+        context.DrawLine(pen, new Point(-0.84, 0.30), new Point(-0.84, -0.62));
+        context.DrawLine(pen, new Point(0.62, 0.30), new Point(0.62, -0.62));
+        context.DrawLine(pen, new Point(-0.88, -0.52), new Point(0.66, -0.52));
+        context.DrawLine(pen, new Point(-0.88, 0.14), new Point(0.66, 0.14));
     }
 
     private static void DrawShip(DrawingContext context, ShipVisual visual, double scale, bool detailed)

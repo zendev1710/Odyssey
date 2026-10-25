@@ -20,6 +20,9 @@ public class ShipModel: StructureModel
 
     public int Capacity { get; private set; }
 
+    /// <summary>Number of ships in the fleet ("Anzahl"), at least one for older reports.</summary>
+    public int Number { get; private set; } = 1;
+
     public int TotalSkill { get; private set; }
 
     public RegionDataBlock? FromRegion { get; private set; }
@@ -80,18 +83,37 @@ public class ShipModel: StructureModel
         OwnerFactionId = factionId;
     }
 
-    /// <summary>
-    /// Resolves the faction owning the ship from its captain/owner unit, with the ship faction key as fallback.
-    /// </summary>
-    public void ResolveOwnerFaction(CRDocument report)
+    public int GetOwnerUnitId()
     {
         int ownerUnitId = Structure.ValueInt(KeyType.OWNER, -1);
         if (ownerUnitId <= 0)
         {
             ownerUnitId = Structure.ValueInt(KeyType.CAPTAIN, -1);
         }
+        return ownerUnitId;
+    }
 
-        if (ownerUnitId > 0 && report.FindUnit(ownerUnitId, out UnitModel? ownerUnit) && ownerUnit is not null)
+    public bool TryResolveOwnerUnit(CRDocument report, out UnitModel? ownerUnit)
+    {
+        int ownerUnitId = GetOwnerUnitId();
+        if (ownerUnitId > 0 && report.FindUnit(ownerUnitId, out ownerUnit) && ownerUnit is not null)
+        {
+            SetOwnerUnit(ownerUnit);
+            ownerUnit.SetCommandedShip(this);
+            return true;
+        }
+
+        ownerUnit = null;
+        SetOwnerUnit(null);
+        return false;
+    }
+
+    /// <summary>
+    /// Resolves the faction owning the ship from its captain/owner unit, with the ship faction key as fallback.
+    /// </summary>
+    public void ResolveOwnerFaction(CRDocument report)
+    {
+        if (TryResolveOwnerUnit(report, out UnitModel? ownerUnit) && ownerUnit is not null)
         {
             OwnerFactionId = CRDocument.GetFactionIdForUnit(ownerUnit.DataBlock);
             return;
@@ -487,6 +509,14 @@ public class ShipModel: StructureModel
 
         foreach (DataKey kb in Structure.GetData())
         {
+            // StructureModel ignores this key, but a ship needs its fleet size to compare its
+            // current size with the maximum size of the whole fleet.
+            if (kb.GetKeyType() == KeyType.NUMBER)
+            {
+                Number = Math.Max(1, kb.GetInt());
+                continue;
+            }
+
             if (!HandleData(kb))
             {
                 // Specific detailed ship data

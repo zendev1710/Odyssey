@@ -1322,6 +1322,32 @@ public class HexMapControl : Control
             : baseColor;
     }
 
+    /// <summary>
+    /// True when the route actually leaves its starting region. A route that only repeats the
+    /// same region must not create a destination ring around a ship that stayed in place.
+    /// </summary>
+    private static bool HasRouteMovement(IReadOnlyList<RegionDataBlock> regions)
+    {
+        if (regions.Count < 2)
+        {
+            return false;
+        }
+
+        RegionDataBlock start = regions[0];
+        for (int i = 1; i < regions.Count; i++)
+        {
+            RegionDataBlock region = regions[i];
+            if (region.GetX() != start.GetX() ||
+                region.GetY() != start.GetY() ||
+                region.GetPlane() != start.GetPlane())
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private static (int RegionId, int Coast) GetRouteDestinationKey(ShipRouteDrawing drawing)
     {
         RegionDataBlock destination = drawing.Regions[^1];
@@ -1366,7 +1392,7 @@ public class HexMapControl : Control
             }
 
             List<RegionDataBlock> regions = GetRouteRegions(ship);
-            if (regions.Count < 2)
+            if (regions.Count < 2 || !HasRouteMovement(regions))
             {
                 continue;
             }
@@ -2607,11 +2633,31 @@ public class HexMapControl : Control
                 List<ShipModel> group = pair.Value;
                 ShipModel representative = SelectRepresentativeShip(group);
                 ShipVisual visual = ShipCatalog.Resolve(GetShipType(representative));
+                bool underConstruction = group.Any(IsUnderConstruction);
 
-                if (!DrawShipImage(context, visual, coast, center, hexSize))
+                bool drawn;
+                if (underConstruction)
+                {
+                    using (context.PushOpacity(0.65))
+                    {
+                        drawn = DrawShipImage(context, visual, coast, center, hexSize);
+                    }
+                }
+                else
+                {
+                    drawn = DrawShipImage(context, visual, coast, center, hexSize);
+                }
+
+                if (!drawn)
                 {
                     // Missing image asset: fall back to the detailed vector silhouette.
-                    DrawShipMarker(context, representative, group.Count, coast, center, hexSize, detailed: true);
+                    DrawShipMarker(context, representative, group.Count, coast, center, hexSize, detailed: true, underConstruction);
+                }
+
+                if (underConstruction)
+                {
+                    Point anchor = GetShipMarkerAnchor(center, visual, coast, hexSize);
+                    DrawShipConstructionBadge(context, anchor, hexSize);
                 }
 
                 if (group.Count > 1)
@@ -2647,14 +2693,20 @@ public class HexMapControl : Control
                 ShipModel ship = group[i];
                 ShipVisual visual = ShipCatalog.Resolve(GetShipType(ship));
                 double drawSize = iconSize * visual.SizeFactor;
+                bool underConstruction = IsUnderConstruction(ship);
 
                 if (detailed)
                 {
-                    ShipSilhouettes.DrawVector(context, visual, position, drawSize, angle);
+                    ShipSilhouettes.DrawVector(context, visual, position, drawSize, angle, underConstruction);
                 }
                 else
                 {
-                    ShipSilhouettes.DrawSymbol(context, visual, position, drawSize, angle);
+                    ShipSilhouettes.DrawSymbol(context, visual, position, drawSize, angle, underConstruction);
+                }
+
+                if (underConstruction)
+                {
+                    DrawShipConstructionBadge(context, position, iconSize);
                 }
             }
 
@@ -2716,7 +2768,8 @@ public class HexMapControl : Control
         int coast,
         Point center,
         double hexSize,
-        bool detailed)
+        bool detailed,
+        bool underConstruction = false)
     {
         int slot = coast is >= 0 and <= 5 ? ((coast + 4) % 6) + 1 : HexSlots.CenterIndex;
         Point position = slot == HexSlots.CenterIndex
@@ -2728,11 +2781,11 @@ public class HexMapControl : Control
 
         if (detailed)
         {
-            ShipSilhouettes.DrawVector(context, visual, position, size, angle);
+            ShipSilhouettes.DrawVector(context, visual, position, size, angle, underConstruction);
         }
         else
         {
-            ShipSilhouettes.DrawSymbol(context, visual, position, size, angle);
+            ShipSilhouettes.DrawSymbol(context, visual, position, size, angle, underConstruction);
         }
     }
 
@@ -2826,6 +2879,67 @@ public class HexMapControl : Control
             TextAlignment.Center,
             TextWrapping.NoWrap);
         layout.Draw(context, new Point(center.X - layout.Width / 2.0, center.Y - layout.Height / 2.0));
+    }
+
+    /// <summary>
+    /// A ship is under construction while its size is below the maximum size of its whole fleet.
+    /// This mirrors the server rule used to decide whether a ship is finished.
+    /// </summary>
+    private static bool IsUnderConstruction(ShipModel ship)
+    {
+        ShipVisual visual = ShipCatalog.Resolve(GetShipType(ship));
+        if (visual.MaxSize <= 0 || ship.Number <= 0 || ship.Size < 0)
+        {
+            return false;
+        }
+
+        return (long)ship.Size < (long)ship.Number * visual.MaxSize;
+    }
+
+    private Point GetShipMarkerAnchor(Point center, ShipVisual visual, int coast, double hexSize)
+    {
+        if (_shipStyle == ShipStyles.Image)
+        {
+            Bitmap? image = GetShipImage(ShipCatalog.GetIconPath(visual, coast))
+                ?? GetShipImage(ShipCatalog.GetGenericIconPath(coast));
+            if (image != null)
+            {
+                return ShipMarkerMetrics.GetImageAnchor(image, center, hexSize);
+            }
+        }
+
+        int slot = coast is >= 0 and <= 5 ? ((coast + 4) % 6) + 1 : HexSlots.CenterIndex;
+        return slot == HexSlots.CenterIndex
+            ? center
+            : HexSlots.GetSlotCenter(slot, center, hexSize, HexSlots.EdgeRadiusFactor);
+    }
+
+    /// <summary>
+    /// Small asset-free badge used to mark a ship under construction in every ship style.
+    /// </summary>
+    private static void DrawShipConstructionBadge(DrawingContext context, Point center, double iconSize)
+    {
+        double radius = Math.Max(4.5, iconSize * 0.20);
+        Point badgeCenter = new(center.X - iconSize * 0.30, center.Y - iconSize * 0.30);
+        var background = new SolidColorBrush(Color.FromArgb(235, 32, 26, 16));
+        var border = new Pen(
+            new SolidColorBrush(Color.FromRgb(0xE0, 0xA0, 0x30)),
+            Math.Max(1.0, radius * 0.14));
+        var circle = new EllipseGeometry(
+            new Rect(badgeCenter.X - radius, badgeCenter.Y - radius, radius * 2.0, radius * 2.0));
+        context.DrawGeometry(background, border, circle);
+
+        var hammer = new Pen(
+            new SolidColorBrush(Color.FromRgb(0xF6, 0xD7, 0x8A)),
+            Math.Max(1.2, radius * 0.22));
+        context.DrawLine(
+            hammer,
+            new Point(badgeCenter.X - radius * 0.45, badgeCenter.Y + radius * 0.45),
+            new Point(badgeCenter.X + radius * 0.22, badgeCenter.Y - radius * 0.22));
+        context.DrawLine(
+            hammer,
+            new Point(badgeCenter.X + radius * 0.02, badgeCenter.Y - radius * 0.48),
+            new Point(badgeCenter.X + radius * 0.48, badgeCenter.Y - radius * 0.02));
     }
 
     private static string GetShipType(ShipModel ship)
