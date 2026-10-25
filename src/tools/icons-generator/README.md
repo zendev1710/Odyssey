@@ -1,8 +1,7 @@
 # Odyssey.Icons.Generator
 
 Development tool that generates the localization data used by the icon resolver.
-It reads the Eressea server sources and writes deterministic JSON under
-`src/app/Odyssey.Desktop/Assets/i18n/`.
+It writes deterministic JSON under `src/app/Odyssey.Desktop/Assets/i18n/`.
 
 The server stays German: German names live only in the generated data, never in
 the application code.
@@ -10,19 +9,31 @@ the application code.
 ## Usage
 
 ```powershell
+# Spells, read from an Eressea server checkout
 dotnet run --project src/tools/icons-generator -- --server C:\path\to\eressea\server
+
+# Icons, read from the checked-in icon table
+dotnet run --project src/tools/icons-generator -- --icons
+
+# Verify that the generated catalogs are current
+dotnet run --project src/tools/icons-generator -- --icons-check
 ```
 
-The output defaults to
-`src/app/Odyssey.Desktop/Assets/i18n/spells.json` (located relative to the
-repository root). Override it with `--out`.
+Spell output defaults to `src/app/Odyssey.Desktop/Assets/i18n/spells.json`.
+Icon output defaults to `src/app/Odyssey.Desktop/Assets/i18n/icons.json`.
+Paths are resolved relative to the repository root.
 
 | Option | Description |
 |---|---|
 | `--server <path>` | Eressea server directory. Can also be set with the `ERESSEA_SERVER` environment variable. |
-| `--out <file>` | Output file. |
+| `--out <file>` | Spell output file. |
 | `--code-only` | Only include spells registered in `spells.c`. |
-| `--check` | Compare the existing file with the generated one; exit code 1 when stale. |
+| `--check` | Compare the existing spell catalog with the generated one; exit code 1 when stale. |
+| `--icons` | Generate the icon catalog from `data/icons.tsv`. |
+| `--icons-out <file>` | Icon output file. |
+| `--icons-check` | Compare the existing icon catalog with the generated one; exit code 1 when stale. |
+| `--manifest <file>` | Icon table to read (default: `data/icons.tsv`). |
+| `--assets <dir>` | Asset root used to validate icon files. |
 | `-h`, `--help` | Show help. |
 
 ## Spell catalog
@@ -58,11 +69,40 @@ the server configuration, which never appear in `spell_functions[]`. Entries
 without a translation fall back to the server identifier. Spell identifiers must
 not collide: the generator fails if two names hash to the same value.
 
-## Tests
+## Icon catalog
 
-```powershell
-dotnet test src/tests/Odyssey.Icons.Generator.Tests
+`icons.json` maps the German report vocabulary and English names to the English
+asset tree under `Assets/`:
+
+```json
+{
+  "category": "building",
+  "id": "building/mine",
+  "role": "entry",
+  "de": "Bergwerk",
+  "en": "Mine",
+  "aliases": ["bergwerk", "mines"],
+  "file": "buildings/mine.gif"
+}
 ```
 
-The tests pin the hash against the server unit test (`Hodor`) and against values
-observed in real reports (`treegrow`, `irongolem`).
+`data/icons.tsv` is the source of truth and is never written by the generator.
+It has one row per asset:
+
+| Column | Meaning |
+|---|---|
+| `category` | Resolver category (`animal`, `building`, `item`, `terrain`, ...). |
+| `id` | Stable `category/slug` identifier. |
+| `role` | `entry` (normal icon), `category` (category icon), or `variant` (preserved alternate art). |
+| `de` | German report name, or empty for variants. |
+| `en` | English name, or empty for variants. |
+| `aliases` | Additional lookup names separated by `|`. |
+| `file` | Path below `Assets/`, for example `items/sword.gif`. |
+
+The generator validates that ids and files are unique, paths are lowercase ASCII,
+and no two primary icons in the same category claim the same normalized alias. It
+also adds English singular/plural aliases when they do not conflict with an
+explicit entry.
+
+Variants keep alternate artwork in the repository but never participate in name
+lookup. The runtime resolver (`Odyssey.Icons.IconCatalog`) ignores them.
