@@ -1,6 +1,11 @@
 # Migration des icônes Magellan 2 → `Odyssey.Desktop/Assets`
 
 > Branche : `refactor/codebase-restructuring` — Date : 2026-10-25
+>
+> **Document historique.** L'arborescence intermédiaire `de/` / `en/` décrite ici a été
+> remplacée par l'arborescence anglaise unique et le catalogue `Assets/i18n/icons.json`.
+> Pour les conventions courantes, voir `src/tools/icons-generator/README.md` et
+> `src/tools/icons-generator/data/icons.tsv`.
 > Source : `C:\Program Files\Magellan\etc\images\icons` (catalogue Magellan 2)
 > Cible : `src/app/Odyssey.Desktop/Assets`
 > Sauvegarde avant intervention : `%TEMP%\opencode\assets-backup-20261025-0854` (1139 fichiers, 11 311 Ko)
