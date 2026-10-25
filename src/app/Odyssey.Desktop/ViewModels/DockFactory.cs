@@ -6,10 +6,8 @@ using Dock.Model.Mvvm.Controls;
 using Odyssey.Core.Services;
 using Odyssey.Models.Localization;
 using Odyssey.Models.Tools;
-using Odyssey.Services;
 using Odyssey.ViewModels.Docks;
 using Odyssey.ViewModels.Tools;
-using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,9 +16,6 @@ namespace Odyssey.ViewModels;
 
 public class DockFactory : Factory
 {
-    private readonly object _context;
-    private readonly IActiveDocumentService? _documentService;
-    private readonly IEventAggregator? _eventAggregator;
     private IRootDock? _rootDock;
     private IDocumentDock? _documentDock;
 
@@ -39,19 +34,11 @@ public class DockFactory : Factory
     private ITool? _reportInfoViewModel;
     private ITool? _errorListViewModel;
 
-    protected IEventAggregator? EventAggregator { get { return _eventAggregator; } }
-
-    protected IActiveDocumentService? DocumentService { get { return _documentService; } }
-
     public const string RootDockId = "Root";
     public const string DocumentDockId = "Files";
 
-    public DockFactory(IEventAggregator? eventAggregator, IActiveDocumentService? documentService, object context)
+    public DockFactory()
     {
-        // Commenting the following line will cause all views to stay empty, due to no publishing nor receiving event from event aggregation 
-        _eventAggregator = eventAggregator;
-        _documentService = documentService;
-        _context = context;
         // Close action just hide dock
         HideToolsOnClose = true;
     }
@@ -69,23 +56,23 @@ public class DockFactory : Factory
         var helpViewModel = new HelpViewModel(ServiceLocator.LanguageService);
 
         // all these models are ITool
-        var mapViewModel = new MapViewModel(EventAggregator) { Id = Ids.Map, Title = LocalizedTitle(Ids.Map), CanClose = canCloseTool /*false*/ };
-        var miniMapViewModel = new MiniMapViewModel(EventAggregator) { Id = Ids.MiniMap, Title = LocalizedTitle(Ids.MiniMap), CanClose = canCloseTool };
-        var explorerViewModel = new ExplorerViewModel(EventAggregator) {Id = Ids.Explorer, Title = LocalizedTitle(Ids.Explorer), CanClose = canCloseTool };
-        var historyViewModel = new HistoryViewModel(EventAggregator) { Id = Ids.History, Title = LocalizedTitle(Ids.History), CanClose = canCloseTool };
-        var bookmarksViewModel = new BookmarksViewModel(EventAggregator) {Id = Ids.Bookmarks, Title = LocalizedTitle(Ids.Bookmarks), CanClose = canCloseTool };
-        var regionPropertiesViewModel = new RegionPropertiesViewModel(EventAggregator) {Id = Ids.RegionProperties, Title = LocalizedTitle(Ids.RegionProperties), CanClose = canCloseTool };
-        var regionStatisticsViewModel = new RegionStatsViewModel(EventAggregator) {Id = Ids.RegionStatistics, Title = LocalizedTitle(Ids.RegionStatistics), CanClose = canCloseTool };
-        var detailsViewModel = new DetailsViewModel(EventAggregator) {Id = Ids.Details, Title = LocalizedTitle(Ids.Details), CanClose = canCloseTool };
-        var unitsInspectorViewModel = new UnitsInspectorViewModel(EventAggregator) { Id = Ids.UnitsInspector, Title = LocalizedTitle(Ids.UnitsInspector), CanClose = canCloseTool };
-        //var unittripViewModel = new UnitStripViewModel(EventAggregator) { Id = Ids.UnitStrip, Title = LocalizedTitle(Ids.UnitStrip), CanClose = canCloseTool };
-        //var unitInspectorViewModel = new UnitInspectorViewModel(EventAggregator) { Id = Ids.UnitInspector, Title = LocalizedTitle(Ids.UnitInspector), CanClose = canCloseTool };
-        var unitOrdersViewModel = new UnitOrdersViewModel(EventAggregator) { Id = Ids.UnitOrders, Title = LocalizedTitle(Ids.UnitOrders), CanClose = canCloseTool };
-        var regionInfoViewModel = new RegionInfoViewModel(EventAggregator) {Id = Ids.RegionInfo, Title = LocalizedTitle(Ids.RegionInfo), CanClose = canCloseTool };
-        var battlesViewModel = new BattlesViewModel(EventAggregator) {Id = Ids.Battles, Title = LocalizedTitle(Ids.Battles), CanClose = canCloseTool };
-        var searchResultsViewModel = new SearchResultsViewModel(EventAggregator) {Id = Ids.SearchResults, Title = LocalizedTitle(Ids.SearchResults), CanClose = canCloseTool };
-        var reportInfoViewModel = new ReportInfoViewModel(EventAggregator) {Id = Ids.ReportInfo, Title = LocalizedTitle(Ids.ReportInfo), CanClose = canCloseTool };
-        var errorListViewModel = new ErrorListViewModel(EventAggregator) {Id = Ids.ErrorList, Title = LocalizedTitle(Ids.ErrorList), CanClose = canCloseTool };
+        var mapViewModel = new MapViewModel() { Id = Ids.Map, Title = LocalizedTitle(Ids.Map), CanClose = canCloseTool /*false*/ };
+        var miniMapViewModel = new MiniMapViewModel() { Id = Ids.MiniMap, Title = LocalizedTitle(Ids.MiniMap), CanClose = canCloseTool };
+        var explorerViewModel = new ExplorerViewModel() {Id = Ids.Explorer, Title = LocalizedTitle(Ids.Explorer), CanClose = canCloseTool };
+        var historyViewModel = new HistoryViewModel() { Id = Ids.History, Title = LocalizedTitle(Ids.History), CanClose = canCloseTool };
+        var bookmarksViewModel = new BookmarksViewModel() {Id = Ids.Bookmarks, Title = LocalizedTitle(Ids.Bookmarks), CanClose = canCloseTool };
+        var regionPropertiesViewModel = new RegionPropertiesViewModel() {Id = Ids.RegionProperties, Title = LocalizedTitle(Ids.RegionProperties), CanClose = canCloseTool };
+        var regionStatisticsViewModel = new RegionStatsViewModel() {Id = Ids.RegionStatistics, Title = LocalizedTitle(Ids.RegionStatistics), CanClose = canCloseTool };
+        var detailsViewModel = new DetailsViewModel() {Id = Ids.Details, Title = LocalizedTitle(Ids.Details), CanClose = canCloseTool };
+        var unitsInspectorViewModel = new UnitsInspectorViewModel() { Id = Ids.UnitsInspector, Title = LocalizedTitle(Ids.UnitsInspector), CanClose = canCloseTool };
+        //var unittripViewModel = new UnitStripViewModel() { Id = Ids.UnitStrip, Title = LocalizedTitle(Ids.UnitStrip), CanClose = canCloseTool };
+        //var unitInspectorViewModel = new UnitInspectorViewModel() { Id = Ids.UnitInspector, Title = LocalizedTitle(Ids.UnitInspector), CanClose = canCloseTool };
+        var unitOrdersViewModel = new UnitOrdersViewModel() { Id = Ids.UnitOrders, Title = LocalizedTitle(Ids.UnitOrders), CanClose = canCloseTool };
+        var regionInfoViewModel = new RegionInfoViewModel() {Id = Ids.RegionInfo, Title = LocalizedTitle(Ids.RegionInfo), CanClose = canCloseTool };
+        var battlesViewModel = new BattlesViewModel() {Id = Ids.Battles, Title = LocalizedTitle(Ids.Battles), CanClose = canCloseTool };
+        var searchResultsViewModel = new SearchResultsViewModel() {Id = Ids.SearchResults, Title = LocalizedTitle(Ids.SearchResults), CanClose = canCloseTool };
+        var reportInfoViewModel = new ReportInfoViewModel() {Id = Ids.ReportInfo, Title = LocalizedTitle(Ids.ReportInfo), CanClose = canCloseTool };
+        var errorListViewModel = new ErrorListViewModel() {Id = Ids.ErrorList, Title = LocalizedTitle(Ids.ErrorList), CanClose = canCloseTool };
 
         // leftDock contains the regions explorer only (left, on the whole height)
         var leftDock = new ProportionalDock
@@ -242,8 +229,8 @@ public class DockFactory : Factory
             )
         };
 
-        var searchView = new SearchViewModel(DocumentService) { Id = Ids.Search, Title = "Find" };
-        var configurationView = new ConfigurationViewModel(DocumentService) { Id = Ids.Configuration, Title = "Configuration" };
+        var searchView = new SearchViewModel() { Id = Ids.Search, Title = "Find" };
+        var configurationView = new ConfigurationViewModel() { Id = Ids.Configuration, Title = "Configuration" };
 
         // The workspace view is the default root view (main window), embedding all docking windows
         var workspaceView = new WorkspaceViewModel
@@ -319,7 +306,7 @@ public class DockFactory : Factory
             // Navigation can be achieved on below views
             [Ids.Search] = () => layout,
             [Ids.Configuration] = () => layout,
-            [Ids.Workspace] = () => _context
+            [Ids.Workspace] = () => ServiceLocator.DocumentService.ActiveDocument
         };
 
         DockableLocator = new Dictionary<string, Func<IDockable?>>()

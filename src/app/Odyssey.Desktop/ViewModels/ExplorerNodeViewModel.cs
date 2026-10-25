@@ -1,24 +1,41 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Odyssey.Models.Data;
-using Odyssey.Models.Documents;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-
 namespace Odyssey.ViewModels;
+
+
+// selected flags
 
 public partial class ExplorerNodeViewModel : ObservableObject
 {
+    public enum NodeTypes
+    {
+        NONE = 0,
+        REGION = (1 << 0),
+        FACTION = (1 << 2),
+        BUILDING = (1 << 3),
+        SHIP = (1 << 4),
+        UNIT = (1 << 5),
+        BUILDINGS = (1 << 6),
+        SHIPS = (1 << 7),
+    };
+
     private ObservableCollection<ExplorerNodeViewModel>? _children;
 
     [ObservableProperty]
     private bool isExpanded;
 
+    private readonly int _id;
+
+    public int Id { get { return _id; } }
+    public NodeTypes NodeType { get; }
     public ExplorerNodeViewModel? Parent { get; }
     public string Header { get; }
     public object? AdditionalInfo { get; }
-    public DataBlock? Block { get; private set; }
-    public bool Unconfirmed { get; set; }
+    public string? IconUri { get; }
+    public string? RaceIconUri { get; }
+    public object? IconSource => IconUri ?? AdditionalInfo;
+    public bool Hightlighted { get; private set; }
     public ObservableCollection<ExplorerNodeViewModel> Children => _children ??= [];
     public bool HasChildren() => Children.Count > 0;
 
@@ -29,22 +46,33 @@ public partial class ExplorerNodeViewModel : ObservableObject
         _children = null;
         Parent = null;
         Header = "";
-        Block = null;
+        _id = -1;
+        NodeType = NodeTypes.NONE;
         AdditionalInfo = null;
-        Unconfirmed = false;
+        IconUri = null;
+        Hightlighted = false;
     }
-    public ExplorerNodeViewModel(ExplorerNodeViewModel parent, string header, DataBlock? block, bool unconfirmed = false, object? additionalInfo = null, int index = -1)
+    public ExplorerNodeViewModel(ExplorerNodeViewModel parent, string header, int id, NodeTypes nodeType, bool hightlighted, object? additionalInfo = null, int index = -1, string? iconUri = null, string? raceIconUri = null)
     {
         Parent = parent;
         Header = header;
-        Block = block;
+        _id = id;
+        NodeType = nodeType;
         AdditionalInfo = additionalInfo;
+        IconUri = iconUri;
+        RaceIconUri = raceIconUri;
+        Hightlighted = hightlighted;
+
+        /*
         if (unconfirmed && block?.GetBlockType() == BlockType.UNIT)
         {
             Unconfirmed = true;
-        }
+        }*/
+
         parent.Children.Insert(index != -1 ? index : parent.Children.Count, this);
 
+        HighlightParentNodes(hightlighted);
+        /*
         if (unconfirmed) 
         { 
             ExplorerNodeViewModel? item = parent;
@@ -57,19 +85,23 @@ public partial class ExplorerNodeViewModel : ObservableObject
                 item = item?.Parent;
             }
         }
+        */
     }
 
-    static public ExplorerNodeViewModel? GetAncestor(ExplorerNodeViewModel node)
+    private void HighlightParentNodes(bool hightlight)
     {
-        ExplorerNodeViewModel? parent = node?.Parent;
-        ExplorerNodeViewModel? ancestor = null;
-        while (parent != null)
+        if (hightlight)
         {
-            ancestor = parent;
-            parent = parent.Parent;
+            ExplorerNodeViewModel? item = Parent;
+            while (item != null)
+            {
+                //if (item.Block?.GetBlockType() == BlockType.REGION)
+                {
+                    item.Hightlighted = hightlight;
+                }
+                item = item?.Parent;
+            }
         }
-
-        return ancestor;
     }
 
     /// <summary>

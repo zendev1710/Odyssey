@@ -39,6 +39,7 @@
 		<KeyBinding Gesture="Ctrl+F" Command="{Binding FindSetFocus}" />
         <KeyBinding Gesture="F8" Command="{Binding CenterMapOnSelectedRegionCommand}" />
         <KeyBinding Gesture="Ctrl+F8" Command="{Binding CenterMapGloballyCommand}" />
+        <KeyBinding Gesture="Ctrl+Shift+R" Command="{Binding ToggleAllShipRoutesCommand}" />
 	</UserControl.KeyBindings>
 	<Grid RowDefinitions="Auto,*,25" ColumnDefinitions="Auto,*" Background="Transparent" DragDrop.AllowDrop="True">
 		<!--MENUS -->
@@ -93,6 +94,20 @@
 				<Separator />
 				<MenuItem Header="{x:Static a:Lang.mainmenu_view_map_center_on_selection}" Command="{Binding CenterMapOnSelectedRegionCommand}" HotKey="F8" InputGesture="F8" />
 				<MenuItem Header="{x:Static a:Lang.mainmenu_view_map_center_globally}" Command="{Binding CenterMapGloballyCommand}" HotKey="Ctrl+F8" InputGesture="Ctrl+F8" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_view_map_show_all_ship_routes}"
+						  Command="{Binding ToggleAllShipRoutesCommand}"
+						  IsChecked="{Binding AreAllShipRoutesVisible, Mode=OneWay}"
+						  ToggleType="CheckBox"
+						  HotKey="Ctrl+Shift+R"
+						  InputGesture="Ctrl+Shift+R" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_view_map_show_region_names}"
+						  Command="{Binding ToggleRegionNamesCommand}"
+						  IsChecked="{Binding AreRegionNamesVisible, Mode=OneWay}"
+						  ToggleType="CheckBox" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_view_map_region_name_banner}"
+						  Command="{Binding ToggleRegionNameBannerCommand}"
+						  IsChecked="{Binding IsRegionNameBannerEnabled, Mode=OneWay}"
+						  ToggleType="CheckBox" />
 				<Separator />
 				<!-- TODO: restore windows label when isfullscreen is true -->
 				<MenuItem Header="{x:Static a:Lang.mainmenu_view_fullscreen}" Command="{Binding ToggleFullscreenCommand}" HotKey="F11" InputGesture="F11" />
@@ -406,9 +421,12 @@
 				<StackPanel Orientation="Horizontal" Grid.Column="0" VerticalAlignment="Center" DataContext="{Binding BookmarksViewModel}" IsVisible="{Binding HasDocument}">
 					<!-- Star Fluent icon Button that can be yellow in light mode or red in dark mode (current selection is a bookmark), or empty (is not a bookmark) -->
 					<Grid Width="24" Height="24" Margin="5,0,0,0" VerticalAlignment="Center">
+						<!-- IsStarred only reflects the bookmark state of the current selection:
+						     clicking the star executes the command which adds or removes the bookmark. -->
 						<controls:StarControl
 							ToolTip.Tip="Toggle Bookmark"
-							IsChecked="{Binding SelectionIsBookmarked}"
+							IsStarred="{Binding SelectionIsBookmarked}"
+							Command="{Binding ToggleBookmarkCommand}"
 							IsVisible="{Binding SelectionIsBookmarkable}"
 							/>
 					</Grid>

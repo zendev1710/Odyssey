@@ -11,23 +11,18 @@ using Dock.Model;
 using Dock.Model.Controls;
 using Dock.Model.Core;
 using Dock.Model.Core.Events;
-using Dock.Model.Mvvm.Controls;
 using Dock.Serializer;
-using Dock.Settings;
+using Odyssey.Controls.Ships;
 using Odyssey.Core.Services;
-using Odyssey.Events;
 using Odyssey.Extensions;
-using Odyssey.Help;
 using Odyssey.Messages;
 using Odyssey.Models.Dal;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
-using Odyssey.Services;
 using Odyssey.Settings;
 using Odyssey.Utils;
 using Odyssey.ViewModels.Documents;
 using Odyssey.ViewModels.Tools;
-using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -39,11 +34,10 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using PrismEventAggregator = Prism.Events.EventAggregator;
 
 namespace Odyssey.ViewModels;
 
-public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelector
+public partial class MainWindowViewModel : ObservableObject, IDropTarget
 {
     public string AppVersion =>
     Assembly.GetEntryAssembly()?
@@ -148,7 +142,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         { Ids.ErrorList,          (vm, v) => vm.IsErrorsListViewVisible = v },
     };
 
-    private static readonly List<string> _inProgressFeaturesIds = 
+    private static readonly List<string> _inProgressFeaturesIds =
     [
         Ids.MiniMap,
         Ids.RegionStatistics,
@@ -157,8 +151,9 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     ];
 
     private readonly IFactory _factory;
-    private readonly IActiveDocumentService _activeDocumentService;
-    private readonly IEventAggregator? _eventAggregator;
+    private readonly IDocumentService _activeDocumentService;
+
+    private readonly IEntitySelectionService _selectionService;
     private IRootDock? _layout;
     private string _globalStatus = "Global: (none)";
 
@@ -166,17 +161,25 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
     private readonly bool _readonlyMode = true;
 
+    // Last route mode that was not "all", so the "show all routes" toggle can restore it.
+    // Default to the selected region: unchecking "all routes" must still show the routes
+    // related to the current selection instead of hiding every route.
+    private int _lastNonAllShipRouteMode = ShipRouteModes.SelectedRegion;
+
+    /// <summary>True when the map currently draws every ship route.</summary>
+    public bool AreAllShipRoutesVisible =>
+        GlobalSettings.Get<int>(GlobalSettings.MAP_SHIP_ROUTE_MODE) == ShipRouteModes.All;
+
+    /// <summary>True when region names are drawn on the map.</summary>
+    public bool AreRegionNamesVisible =>
+        GlobalSettings.Get<bool>(GlobalSettings.MAP_SHOW_REGION_NAMES);
+
+    /// <summary>True when region names are drawn inside a gold banner.</summary>
+    public bool IsRegionNameBannerEnabled =>
+        GlobalSettings.Get<bool>(GlobalSettings.MAP_REGION_NAME_BANNER);
+
     private BookmarksViewModel? _bookmarksViewModel;
     public BookmarksViewModel? BookmarksViewModel => _bookmarksViewModel;
-
-    public ISelection? Selection { get; set; }
-
-    public bool IsSelected(ISelection? selection)
-    {
-        return selection is not null && Selection is not null && selection.Item == Selection.Item;
-    }
-
-    protected IEventAggregator? EventAggregator { get { return _eventAggregator; } }
 
     // NOTE: planes management has a combobox (in the document status bar) and a menu. Should have a SelectedPlane property.
     // SelectedPlaneName should be the name of the selected plane in the combobox.
@@ -210,10 +213,20 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     {
         // TODO: check with "if (!Design.IsDesignMode)" if we do not want to do some actions in design mode
 
-        _eventAggregator = PrismEventAggregator.Current;
-        _activeDocumentService = ServiceLocator.ActiveDocumentService;
-        _activeDocumentService.ActiveDocumentChanged += OnActiveDocumenChanged;
-        _factory = new DockFactory(_eventAggregator, _activeDocumentService, _activeDocumentService.ActiveDocument);
+
+        _activeDocumentService = ServiceLocator.DocumentService;
+        _selectionService = ServiceLocator.EntitySelectionService;
+
+        _activeDocumentService.ActiveDocumentChanged += OnActiveDocumentChanged;
+        _selectionService.SelectionChanged += OnSelectionChanged;
+
+        int initialRouteMode = GlobalSettings.Get<int>(GlobalSettings.MAP_SHIP_ROUTE_MODE);
+        _lastNonAllShipRouteMode = initialRouteMode == ShipRouteModes.All
+            ? ShipRouteModes.SelectedRegion
+            : initialRouteMode;
+        GlobalSettings.Shared.SettingChanged += OnGlobalSettingChanged;
+
+        _factory = new DockFactory();
         _isFullscreen = false;
         bool hideInProgressFeatures = GlobalSettings.Get<bool>(GlobalSettings.HIDE_IN_PROGRESS_FEATURES);
         _enableSearchFeature = !hideInProgressFeatures;
@@ -339,6 +352,86 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         WeakReferenceMessenger.Default.Send(new CenterMapMessage(IsGlobal: true));
     }
 
+    /// <summary>
+    /// Shows or hides every ship route with one menu entry / keyboard shortcut. When hiding, the
+    /// previous non-"all" mode (selected ship, selected region, or none) is restored.
+    /// </summary>
+    [RelayCommand]
+    private void ToggleAllShipRoutes()
+    {
+        GlobalSettings settings = GlobalSettings.Shared;
+        int current = GlobalSettings.Get<int>(GlobalSettings.MAP_SHIP_ROUTE_MODE);
+
+        if (current == ShipRouteModes.All)
+        {
+            // The "all routes" shortcut never falls back to "none": unchecking it must leave
+            // selection-based routes visible. "None" remains available in the settings dialog.
+            settings.ShipRouteMode = _lastNonAllShipRouteMode is ShipRouteModes.All or ShipRouteModes.None
+                ? ShipRouteModes.SelectedRegion
+                : _lastNonAllShipRouteMode;
+        }
+        else
+        {
+            _lastNonAllShipRouteMode = current;
+            settings.ShipRouteMode = ShipRouteModes.All;
+        }
+
+        OnPropertyChanged(nameof(AreAllShipRoutesVisible));
+    }
+
+    /// <summary>Shows or hides region names without opening the configuration dialog.</summary>
+    [RelayCommand]
+    private void ToggleRegionNames()
+    {
+        GlobalSettings settings = GlobalSettings.Shared;
+        settings.ShowRegionNames = !settings.ShowRegionNames;
+        OnPropertyChanged(nameof(AreRegionNamesVisible));
+    }
+
+    /// <summary>Toggles the gold banner around region names.</summary>
+    [RelayCommand]
+    private void ToggleRegionNameBanner()
+    {
+        GlobalSettings settings = GlobalSettings.Shared;
+        settings.RegionNameBanner = !settings.RegionNameBanner;
+        OnPropertyChanged(nameof(IsRegionNameBannerEnabled));
+    }
+
+    private void OnGlobalSettingChanged(object? sender, SettingChangedEventArgs e)
+    {
+        if (e.SettingName != GlobalSettings.MAP_SHIP_ROUTE_MODE &&
+            e.SettingName != GlobalSettings.MAP_SHOW_REGION_NAMES &&
+            e.SettingName != GlobalSettings.MAP_REGION_NAME_BANNER)
+        {
+            return;
+        }
+
+        if (!Dispatcher.UIThread.CheckAccess())
+        {
+            Dispatcher.UIThread.Post(() => OnGlobalSettingChanged(sender, e));
+            return;
+        }
+
+        if (e.SettingName == GlobalSettings.MAP_SHIP_ROUTE_MODE)
+        {
+            int mode = GlobalSettings.Get<int>(GlobalSettings.MAP_SHIP_ROUTE_MODE);
+            if (mode != ShipRouteModes.All)
+            {
+                _lastNonAllShipRouteMode = mode;
+            }
+
+            OnPropertyChanged(nameof(AreAllShipRoutesVisible));
+        }
+        else if (e.SettingName == GlobalSettings.MAP_SHOW_REGION_NAMES)
+        {
+            OnPropertyChanged(nameof(AreRegionNamesVisible));
+        }
+        else if (e.SettingName == GlobalSettings.MAP_REGION_NAME_BANNER)
+        {
+            OnPropertyChanged(nameof(IsRegionNameBannerEnabled));
+        }
+    }
+
     private bool CanExecuteIfReportExists()
     {
         return HasDocument;
@@ -377,18 +470,6 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
     {
         base.OnPropertyChanged(e);
-    }
-
-    public bool ShouldIgnoreSelectionChangedEvent(ISelectionChange selectionChange, List<string> selectorIdsIncludeFilter, List<string> selectorIdsExcludeFilter)
-    {
-        return ISelector.ShouldIgnoreSelector(selectionChange, selectorIdsIncludeFilter, selectorIdsExcludeFilter);
-    }
-
-    public bool InnerSelectorIs(ISelectionChange selectionChange, string id)
-    {
-        // Check if the inner selector matches the specified Id
-        string innerSelectorId = selectionChange.InnerSelector?.Id ?? string.Empty;
-        return innerSelectorId == Id;
     }
 
     public async void FileOpenLayout()
@@ -510,9 +591,18 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         Planes.Add(new WorldPlane(PlaneType.WORLD));
     }
 
-    private void OnActiveDocumenChanged(CRDocument report)
+    private void OnActiveDocumentChanged(CRDocument report)
     {
         OnActiveReportDocumentChanged(report);
+    }
+
+    private void OnSelectionChanged(IEntitySelection selection, SelectionChangeTypes selType, object? sender)
+    {
+        // If event come from this viewModel, ignore it
+        if (ReferenceEquals(sender, this))
+            return;
+
+        // TODO
     }
 
     private void OnActiveReportDocumentChanged(CRDocument report)
@@ -522,8 +612,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
         if (report.IsEmpty())
         {
-            // TODO
-            //sel.Clear();
+            _selectionService.Clear(this);
             return;
         }
 
@@ -533,22 +622,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
             // TODO: get active region from CRDocument and set as selection
         }
 
-        ///////////////////////////// 
-
-        ISelection sel = Selection ?? new SimpleItemSelection(report, 0, 0);
-        // checkCommands();
-
-        /*
-        if (!sel.IsSelected(ItemTypes.REGION | ItemTypes.UNKNOWN_REGION))
-        {
-             sel.SetUnknownRegion();
-        }
-        */
-
-        Selection = sel;
-
-        OnReportChange(sel, report);
-        SendSelectionChangedEvent(Selection!);
+        OnReportChange(report);
     }
 
     private void OnReportDocumentLoaded(CRDocument report)
@@ -559,13 +633,8 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
             _activeDocumentService.ClearDocument();
         }
 
-        ISelection sel = Selection ?? new SimpleItemSelection(report, 0, 0);
-        Selection = sel;
-
-        OnReportChange(sel, report);
+        OnReportChange(report);
         _activeDocumentService.SetActiveDocument(report);
-
-        SendSelectionChangedEvent(Selection!);
     }
 
     private bool FileViewModelExists(string pathname)
@@ -647,15 +716,12 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     {
         FileViewModel? fileViewModel;
         if (GetActiveFileViewModel(out fileViewModel, out _))
-        { 
+        {
             return fileViewModel?.Document;
         }
         return null;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private bool ActiveDocumentIsModified()
     {
         EresseaDocument? d = GetActiveDocument();
@@ -1031,7 +1097,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         // This prevents DockSerializer from persisting domain object references
         // (DataBlock, Bookmarks, Explorer selections, ...) that are lost on restore.
         var filesDock = _factory.GetDockable<IDocumentDock>(DockFactory.DocumentDockId);
-        
+
         List<FileViewModel> filesToClose = [];
         if (filesDock?.VisibleDockables != null)
         {
@@ -1096,7 +1162,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
     }
     */
 
-    private int OnReportChange(ISelection? selection, CRDocument reportDocument)
+    private int OnReportChange(CRDocument reportDocument)
     {
         /*
         if (pstate.FileChange != Selection.FileChange) {
@@ -1113,74 +1179,9 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
 
         //updateFileNames();
 
-        // make sure that a region is always selected (when something in it is selected)
-        // start with selected item and search containing region
-        /*
-        datablock::itor block = report.blocks().begin();
-        if (pstate.IsSelected(Mask.UNIT))
-        {
-            block = pstate.unit;
-            descriptionText.setText(descText(*block));
-        }
-        else if (pstate.selected & Mask.SHIP)
-        {
-            block = pstate.ship;
-            descriptionText.setText(descText(*block));
-        }
-        else if (pstate.selected & Mask.BUILDING)
-        {
-            block = pstate.building;
-            descriptionText.setText(descText(*block));
-        }
-        else {
-            descriptionText.setText("");
-        }
-        */
-
         //showProperties(unitProperties, pstate.selected & Mask.UNIT);
         //showProperties(shipProperties, pstate.selected & Mask.SHIP);
         //showProperties(buildingProperties, pstate.selected & Mask.BUILDING);
-
-
-        //////////////////////////
-        // Update selection state
-
-        //SimpleItemSelection s = pstate;
-        // TODO
-        /*
-        //s.SetSelectionChanged();
-        foreach (var r in report.Blocks)
-        {
-            if (r.GetBlockType() == BlockType.REGION)
-            { 
-                s.Enable(ItemTypes.REGION, r);
-                break;
-            }
-        }
-        */
-        // TODO
-        // Retrieve x, y, plane of region
-        /*
-        DataBlock? region = null;
-        if (s.IsSelected(ItemTypes.REGION))
-        {
-            region = s.Region;
-            s.Disable(ItemTypes.UNKNOWN_REGION);
-            s.SelX = region!.GetX();
-            s.SelY = region!.GetY();
-            s.SelPlane = region!.GetId();
-        }
-        else if (Selection.IsSelected(ItemTypes.UNKNOWN_REGION))
-        {
-            if (report.FindRegionFromPosition(ref region, s.SelX, s.SelY, s.SelPlane))
-            {
-                s.Region = region;
-                s.Selected &= ~ItemTypes.UNKNOWN_REGION;
-                s.Selected |= ItemTypes.REGION;
-            }
-        }
-        */
-        //Selection = s;
 
         /*
         int factionId = 0;
@@ -1225,16 +1226,6 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         }
         */
 
-        // TODO
-        // only need to update the regionlist when confirmation status was changed.
-        /*
-        if (Selection.IsSelected(ItemTypes.CONFIRMATION)) {
-            // TODO only when order confirmation will be handled
-            //regions.update();
-            Selection.Disable(ItemTypes.CONFIRMATION);
-        }
-        */
-        //getApp().endWaitCursor();
         return 1;
     }
 
@@ -1584,31 +1575,6 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget, ISelec
         return HasActiveDocument(); //&& HasBoookmarks()
     }
     */
-
-    protected void SendSelectionChangedEvent(ISelection sel)
-    {
-        var ViewModelId = this.Id;
-        ISelector selector = this;
-        ISelector? innerSelector = null;
-        SelectionChange selectionEvent = new SelectionChange(sel, selector, innerSelector);
-        Debug.WriteLine($"[MAINVIEWMODEL] SendSelectionChangedEvent from {ViewModelId} for item {sel.Item}");
-        PublishSelectionChangedEvent(selectionEvent);
-    }
-
-
-    /// <summary>
-    /// Publish a SelectionStateHasChanged event.
-    /// This event will be received by the ViewModels having subscribed to it.
-    /// </summary>
-    public void PublishSelectionChangedEvent(ISelectionChange selectionChange)
-    {
-        EventAggregator?.GetEvent<SelectionChangeEvent>().Publish(selectionChange);
-    }
-
-    public void SubscribeToSelectionChangedEvent()
-    {
-        // Main Window ViewModel does not subscribes to SelectionStateChangedEvent because it does not handle selection state changes.
-    }
 
     private static void UpdateFileViewModel(FileViewModel fileViewModel, string path)
     {

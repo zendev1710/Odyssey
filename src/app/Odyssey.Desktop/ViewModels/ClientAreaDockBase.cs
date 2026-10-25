@@ -1,15 +1,10 @@
-﻿using Avalonia.Controls;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Dock.Model.Controls;
 using Dock.Model.Mvvm.Core;
 using Odyssey.Core.Services;
-using Odyssey.Events;
-using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Services;
-using Prism.Events;
-using System;
 
 namespace Odyssey.ViewModels
 {
@@ -21,15 +16,15 @@ namespace Odyssey.ViewModels
         [ObservableProperty]
         private bool hasDocument;
 
-        private readonly IActiveDocumentService _documentService;
+        private readonly IDocumentService _documentService;
 
         protected CRDocument Report => _documentService.ActiveDocument;
 
         /// <summary>
         /// Constructor for Avalonia XAML Designer.
         /// </summary>
-        protected ClientAreaDockBase(IActiveDocumentService? documentService = null) {
-            _documentService = documentService ?? ServiceLocator.ActiveDocumentService;
+        protected ClientAreaDockBase(IDocumentService? documentService = null) {
+            _documentService = documentService ?? ServiceLocator.DocumentService;
             _documentService.ActiveDocumentChanged += OnActiveDocumentChanged;
         }
 

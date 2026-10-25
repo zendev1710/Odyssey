@@ -1,10 +1,4 @@
-﻿using Avalonia;
-using AvaloniaEdit.Editing;
-using CommunityToolkit.Mvvm.ComponentModel;
-using Odyssey.Models.Tools;
-using System;
-using static Odyssey.Models.Tools.DataProperty;
-using static Odyssey.Models.ShipModel;
+﻿using Odyssey.Models.Tools;
 
 namespace Odyssey.ViewModels;
 
@@ -27,5 +21,3 @@ public partial class TreeNodeViewModel : NodeViewModel
         }
     }
 }
-
-

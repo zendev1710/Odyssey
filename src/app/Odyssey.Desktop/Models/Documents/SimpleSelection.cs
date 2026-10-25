@@ -1,20 +1,21 @@
-﻿using Odyssey.Models.Data;
+﻿//using Odyssey.Core.Services;
+using Odyssey.Models.Data;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using static Odyssey.Models.Documents.MapItemSelection;
 
 namespace Odyssey.Models.Documents;
 
-public class SimpleItemSelection : ISelection
+public class SimpleSelection : ISelection
 {
-    public DataBlock? Region { get; set; }
+    public RegionDataBlock? Region { get; set; }
 
     public DataBlock? Faction { get; set; }
 
     public DataBlock? Item { get; set; }
 
     public ItemTypes ItemType { get; protected set; }
+
+    //protected readonly IDocumentService _documentService;
 
     // selected flags
     [Flags]
@@ -33,41 +34,56 @@ public class SimpleItemSelection : ISelection
         CONFIRMATION = (1 << 6)
     };
 
-    public SimpleItemSelection(DataBlock? item, DataBlock? region, DataBlock? faction)
+    public SimpleSelection(ILocation location)
     {
-        SetItem(item, region, faction);
+        Clear();
+        // TODO: check if an ILocation can be a BattleDataBlock
+        RegionDataBlock r = (RegionDataBlock)location;
+        SetItem(r, r, null, null);
     }
 
-    public SimpleItemSelection()
+    public SimpleSelection(DataBlock? item, RegionDataBlock? region, DataBlock? faction, ILocationResolver? regionResolver = null)
+    {
+        Clear();
+        SetItem(item, region, faction, regionResolver);
+    }
+
+    public SimpleSelection()
     {
         Clear();
     }
 
-    public SimpleItemSelection(CRDocument report, int positionX, int positionY, int plane = 0)
+    /*
+    public SimpleSelection(IDocumentService documentService)
+    {
+        _documentService = documentService;
+        Clear();
+    }
+    */
+
+    public SimpleSelection(ILocationResolver locationResolver, int positionX, int positionY, int plane)
     {
         Clear();
-        DataBlock? region = null;
-        if (report.FindRegionFromPosition(ref region, positionX, positionY, (PlaneType)plane))
+        if (locationResolver.ResolveLocation(positionX, positionY, (PlaneType)plane, out ILocation? location))
         {
-            SetItem(region, null, null);
+            SetItem(location as RegionDataBlock, null, null);
         }
     }
 
-    public bool SetItem(DataBlock? item, DataBlock? region, DataBlock? faction)
+    public bool SetItem(DataBlock? item, RegionDataBlock? region, DataBlock? faction, ILocationResolver? regionResolver = null)
     {
-        Clear();
-        DataBlock? r = region;
+        DataBlock? previousItem = Item;
+        // TODO: it should return false when it does not change the selection compared with the previously one
+        RegionDataBlock? r = region;
         DataBlock? f = faction;
-        bool updated = true;
-        BlockType newBlockType = item != null ? item.GetBlockType() : BlockType.UNKNOWN;
+        BlockType newBlockType = item is not null ? item.GetBlockType() : BlockType.UNKNOWN;
         switch (newBlockType)
         {
             case BlockType.REGION:
                 ItemType |= ItemTypes.REGION;
                 Item = item;
-                r = item;
+                r = item as RegionDataBlock;
                 break;
-
             case BlockType.FACTION:
                 ItemType |= ItemTypes.FACTION;
                 Item = item;
@@ -86,35 +102,44 @@ public class SimpleItemSelection : ISelection
                 Item = item;
                 break;
             case BlockType.UNKNOWN:
-                updated = false;
                 break;
             default:
-                updated = false;
-                Debug.WriteLine($"[VM-DOCTOOL-] !!! new selecteditem block has an unexpected type {newBlockType} !!!");
+                Debug.WriteLine($"[SIMPLE-SEL] !!! new selected item block has an unexpected type {newBlockType} !!!");
                 break;
         }
-        updated = SetRegion(r) || updated;
-        updated = SetFaction(f) || updated;
-        return updated;
+
+        bool regionChanged = SetRegion(r, regionResolver);
+        bool factionChanged = SetFaction(f);
+        bool selectionChanged = previousItem != Item /*|| regionChanged || factionChanged*/;
+
+        Debug.WriteLine($"[SIMPLE-SEL] selectionChanged = {selectionChanged} regionChanged = {regionChanged} factionChanged = {factionChanged}");
+        
+        return selectionChanged;
     }
 
-    public bool SetRegion(DataBlock? region)
+    private bool SetRegion(RegionDataBlock? region, ILocationResolver? regionResolver = null)
     {
-        bool updated = false;
-        BlockType newBlockType = region != null ? region.GetBlockType() : BlockType.UNKNOWN;
+        DataBlock? previousRegion = Region;
+        BlockType newBlockType = region is not null ? region.GetBlockType() : BlockType.UNKNOWN;
         if (newBlockType == BlockType.REGION)
         {
             ItemType |= ItemTypes.REGION;
             Region = region;
-            updated = true;
         }
-        return updated;
+        else
+        {
+            if (regionResolver is not null /*&& regionResolver.FindFromPosition (ref region, x , y)*/)
+            {
+                // TODO: use regionResolver
+            }
+        }
+        return previousRegion != Region;
     }
 
-    public bool SetFaction(DataBlock? faction)
+    private bool SetFaction(DataBlock? faction)
     {
         bool updated = false;
-        BlockType newBlockType = faction != null ? faction.GetBlockType() : BlockType.UNKNOWN;
+        BlockType newBlockType = faction is not null ? faction.GetBlockType() : BlockType.UNKNOWN;
         if (newBlockType == BlockType.FACTION)
         {
             ItemType |= ItemTypes.REGION;
@@ -130,7 +155,27 @@ public class SimpleItemSelection : ISelection
             */
             updated = true;
         }
+        else
+        {
+            if (UpdateFactionFromItem())
+            {
+                updated = true;
+            }
+        }
+
         return updated;
+    }
+
+    protected virtual bool UpdateRegionFromItem()
+    {
+        // TODO
+        return false;
+    }
+
+    protected virtual bool UpdateFactionFromItem()
+    {
+        // TODO
+        return false;
     }
 
     /// <summary>
@@ -139,7 +184,7 @@ public class SimpleItemSelection : ISelection
     /// <param name="mask">The mask to check against the current selection.</param>
     /// <returns><see langword="true"/> if the specified mask is included in the current selection; otherwise, <see
     /// langword="false"/>.</returns>
-    public bool Is(ItemTypes mask)
+    public bool Has(ItemTypes mask)
     {
         return (ItemType & mask) != ItemTypes.None;
     }
@@ -149,24 +194,25 @@ public class SimpleItemSelection : ISelection
         return (ItemType & ItemTypes.REGION) != ItemTypes.None;
     }
 
-    public bool IsOnlyRegionSelected()
-    {
-        return (ItemType & ItemTypes.REGION) == ItemTypes.REGION;
-    }
-
-    public bool IsUnitSelected()
+    public bool HasUnit()
     {
         return (ItemType & ItemTypes.UNIT) != ItemTypes.None;
     }
 
-    public bool IsBuildingSelected()
+    public bool HasBuilding()
     {
         return (ItemType & ItemTypes.BUILDING) != ItemTypes.None;
     }
 
-    public bool IsShipSelected()
+    public bool HasShip()
     {
         return (ItemType & ItemTypes.SHIP) != ItemTypes.None;
+    }
+
+    public bool HasOnlyRegion()
+    {
+        // In that case Item should be equal to Region
+        return (ItemType & ItemTypes.REGION) == ItemTypes.REGION;
     }
 
     public bool IsFactionSelected()
@@ -179,7 +225,7 @@ public class SimpleItemSelection : ISelection
     }
 
     public bool HasFaction()
-    {         
+    {
         return (ItemType & ItemTypes.FACTION) != ItemTypes.None && Faction != null;
     }
 
@@ -188,22 +234,19 @@ public class SimpleItemSelection : ISelection
     /// </summary>
     /// <returns><see langword="true"/> if no items are selected and all related properties are null; otherwise, <see
     /// langword="false"/>.</returns>
-    public bool NothingSelected()
+    public bool IsEmpty()
     {
         return ItemType == ItemTypes.None;
     }
 
-    public void Clear()
+    public bool Clear()
     {
-        ClearSelected();
-    }
-
-    private void ClearSelected()
-    {
+        bool changed = Item is not null;
         ItemType = ItemTypes.None;
         Region = null;
         Faction = null;
         Item = null;
+        return changed;
     }
 
     public override string ToString()

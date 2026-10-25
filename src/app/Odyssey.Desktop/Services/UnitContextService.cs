@@ -45,10 +45,13 @@ public class UnitContextService : IUnitContextService
 
     private void UpdateInventory()
     {
+        // TODO: if UnitContextService is used
+        /*
         InventoryItems.Clear();
         if (_selectedUnit == null) return;
 
-        UnitModel unitModel = new(_selectedUnit);
+        // TODO: Find UnitModel
+        UnitModel unitModel = new(_selectedUnit, 0); // TODO: Replace 0 with actual location ID
         unitModel.CollectCategoriesData();
 
         List<DataProperty> itemsProperties = [];
@@ -61,5 +64,6 @@ public class UnitContextService : IUnitContextService
                 InventoryItems.Add(new UnitItemViewModel(prop.Label, quantity, "item"));
             }
         }
+        */
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Odyssey.ViewModels
+﻿namespace Odyssey.ViewModels
 {
     internal static class Ids
     {
@@ -41,6 +35,8 @@ namespace Odyssey.ViewModels
         // other views view model ids
         public const string ShipDetails = "ship_details";
         public const string BuildingDetails = "building_details";
+        public const string ShipsDetails = "ships_details";
+        public const string BuildingsDetails = "buildings_details";
         public const string UnitDetails = "unit_details";
         public const string NoDetails = "no_details";
 

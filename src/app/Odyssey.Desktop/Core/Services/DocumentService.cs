@@ -1,9 +1,9 @@
 using Odyssey.Models.Documents;
 using System;
 
-namespace Odyssey.Services;
+namespace Odyssey.Core.Services;
 
-public interface IActiveDocumentService
+public interface IDocumentService
 {
     CRDocument ActiveDocument { get; }
     event Action<CRDocument> ActiveDocumentChanged;
@@ -12,7 +12,7 @@ public interface IActiveDocumentService
     void ClearDocument();
 }
 
-public class ActiveDocumentService : IActiveDocumentService
+public class DocumentService : IDocumentService
 {
     private CRDocument _activeDocument = new();
 

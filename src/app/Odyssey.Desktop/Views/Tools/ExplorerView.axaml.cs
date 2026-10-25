@@ -3,8 +3,10 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.Threading;
 using Avalonia.VisualTree;
 using Odyssey.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,6 +23,62 @@ public partial class ExplorerView : UserControl
         TreeView?.AddHandler(KeyDownEvent, TreeView_KeyDown, RoutingStrategies.Tunnel);
         TreeView?.AddHandler(PointerPressedEvent, TreeView_PointerPressed, RoutingStrategies.Tunnel);
         TreeView?.AddHandler(ContextRequestedEvent, TreeView_ContextRequested, RoutingStrategies.Tunnel);
+        TreeView?.SelectionChanged += TreeView_SelectionChanged;
+    }
+
+    private void TreeView_SelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (sender is not TreeView treeView || treeView.SelectedItem is null)
+        {
+            return;
+        }
+
+        Dispatcher.UIThread.Post(() =>
+        {
+            if (!treeView.IsVisible || treeView.SelectedItem is null)
+            {
+                return;
+            }
+
+            var selectedContainer = treeView.TreeContainerFromItem(treeView.SelectedItem) as TreeViewItem;
+            if (selectedContainer is null)
+            {
+                return;
+            }
+
+            var scrollViewer = treeView.GetVisualDescendants().OfType<ScrollViewer>().FirstOrDefault();
+            if (scrollViewer is null)
+            {
+                return;
+            }
+
+            var translated = selectedContainer.TranslatePoint(new Point(0, 0), scrollViewer);
+            if (translated is null)
+            {
+                return;
+            }
+
+            double itemTop = translated.Value.Y;
+            double itemHeight = selectedContainer.Bounds.Height;
+            double viewportHeight = scrollViewer.Viewport.Height;
+            double currentOffset = scrollViewer.Offset.Y;
+            double maxOffset = Math.Max(0, scrollViewer.Extent.Height - viewportHeight);
+            double targetOffset = currentOffset + (itemTop + itemHeight / 2.0 - viewportHeight / 2.0);
+
+            if (targetOffset < 0)
+            {
+                targetOffset = 0;
+            }
+            else if (targetOffset > maxOffset)
+            {
+                targetOffset = maxOffset;
+            }
+
+            if (Math.Abs(scrollViewer.Offset.Y - targetOffset) > 0.5)
+            {
+                scrollViewer.Offset = new Vector(scrollViewer.Offset.X, targetOffset);
+            }
+        });
     }
 
     private void InitializeComponent()

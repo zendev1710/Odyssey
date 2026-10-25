@@ -1,20 +1,19 @@
-﻿using Avalonia.Controls;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Odyssey.Controls.Buildings;
+using Odyssey.Controls.Ships;
 using Odyssey.Models;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Localization;
 using Odyssey.Models.Tools;
-using Odyssey.Services;
 using Odyssey.Settings;
-using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
 using static Odyssey.Models.Documents.CRDocument;
 using static Odyssey.Models.Tools.DataProperty;
+using static Odyssey.ViewModels.ExplorerNodeViewModel;
 
 namespace Odyssey.ViewModels.Tools;
 
@@ -64,7 +63,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
     ///       Unit AL2
     ///     Allied Faction 2
     ///       Unit AL2.1
-    ///       Unit AL2.2      
+    ///       Unit AL2.2
     ///    NOT Allied Faction 1
     ///       Unit NA1
     ///       Unit NA2
@@ -86,15 +85,17 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         public DataBlock? Block { get; set; }
         public FactionStatus Status { get; set; } = FactionStatus.UNKNOWN;
         public string Name { get; set; } = "";
+        public FactionRace Race { get; set; } = FactionRace.Unknown;
+        public int Id { get; set; } = -1;
     }
 
-    public ExplorerViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
+    public ExplorerViewModel() : base()
     {
         _root = new ExplorerNodeViewModel();
 
         _activeFactionGroup = !GlobalSettings.Get<bool>(GlobalSettings.EXPLORER_ACTIVE_FACTION_UNITS_AT_FIRST);
         _expandTreeOnDocumentLoading = GlobalSettings.Get<bool>(GlobalSettings.EXPLORER_EXPAND_TREE_ON_REPORT_OPENING);
-        
+
         Items = _root.Children;
 
         NodeMenuItems =
@@ -135,33 +136,37 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         // LATER: check what to do if newValue is null (maybe it never happens !?)
         if (oldValue != newValue && newValue != null)
         {
-            ISelection sel = new ExplorerNodeSelection(newValue);
-            SetSelection(sel);
-            SendSelectionChangedEvent(sel, InnerSelector);
+            SendSelectionChangedEvent(new ExplorerNodeSelection(newValue, Report));
+        }
+    }
+
+
+    protected override void OnSelectionChanged(IEntitySelection selection, SelectionChangeTypes selType, object? sender)
+    {
+        if (ReferenceEquals(sender, this))
+            return;
+
+        // Handle selection changed event from all selectors except itself and BookMarksViewModel (which can select a unseen region).
+        // unseen region selection change event will be received only from map view.
+
+        if (!HandleSelection(selection))
+        {
+            Debug.WriteLine("[EXPLORER] selected item did not change");
         }
     }
 
     /// <summary>
-    /// Handle selection change event sent by another view (selector).
-    /// Will select the corresponding item in the tree if any.
+    /// Find the tree node of the specified entity, or null when it is not in the tree.
     /// </summary>
-    /// <param name="selectionChange"></param>
-    protected override void OnSelectionChanged(ISelectionChange selectionChange)
+    private ExplorerNodeViewModel? FindNode(EntityModel item)
     {
-        // Handle selection changed event from all selectors except itself and BookMarksViewModel (which can select a unseen region).
-        // unseen region selection change event will be received only from map view.
-        // Exclude this selector from selection change events to avoid reentrancy issues
-        List<string> selectorIdsExcludeFilter = [Id];
-        List<string> selectorIdsIncludeFilter = [];
-        if (ShouldIgnoreSelectionChangedEvent(selectionChange, selectorIdsIncludeFilter, selectorIdsExcludeFilter))
+        // A region node is identified by the region key (RegionModel.Id); the id of the region data
+        // block is the plane, which is not unique to a region.
+        if (item is RegionModel regionModel)
         {
-            return;
+            return FindImmediateTreeItem(Root, regionModel.Id);
         }
-
-        if (!HandleSelection(selectionChange))
-        {
-            Debug.WriteLine("[EXPLORER] selected item did not change");
-        }
+        return FindTreeItem(Root, item.DataBlock.GetId());
     }
 
     /// <summary>
@@ -180,29 +185,40 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         }
     }
 
-    private bool HandleSelection(ISelectionChange selectionChange)
+    private bool HandleSelection(IEntitySelection selection)
     {
-        ISelection sel = selectionChange.Selection;
-        if (IsSelected(sel))
-        {
-            // Selection is already set, so no need to update it
-            return false;
-        }
-
-        if (sel is ExplorerNodeSelection explorerNodeSel)
+        if (selection is ExplorerNodeSelection explorerNodeSel)
         {
             // Store the inner selector (the one who raised the sel change event)
             // to avoid it to react when auto-publishing (in) this event foir the other views
-            InnerSelector = selectionChange.Selector;
             SelectedItem = explorerNodeSel.NodeViewModel;
             return true;
         }
 
-        ExplorerNodeViewModel? regionNodeViewModel = null;
-        DataBlock? selectedRegion = sel.Region;
-        if (!sel.IsRegionSelected())
+        // Some senders do not carry the region of the item they select (bookmarks, history, details
+        // views, ...): in that case, the matching node can still be found from the selected item itself.
+        if (selection.Region is null && selection.Item is not null)
         {
-            if (sel.Item == null || !GetSeenParent(ref selectedRegion, sel.Item))
+            ExplorerNodeViewModel? itemNode = FindNode(selection.Item);
+            if (itemNode is not null)
+            {
+                SelectItem(itemNode);
+                return true;
+            }
+        }
+
+        ExplorerNodeViewModel? regionNodeViewModel = null;
+        RegionModel? regionModel = selection.Region;
+        if (regionModel is null)
+        {
+            Debug.WriteLine("[EXPLORER] WARNING | Region model not found for selection.");
+            return false;
+        }
+
+        if (!selection.IsRegionSelected())
+        {
+            RegionDataBlock selectedRegionBlock = (regionModel.DataBlock as RegionDataBlock)!;
+            if (selection.Item is null || !FindRegionFrom(ref selectedRegionBlock, selection.Item.DataBlock))
             {
                 Debug.WriteLine("[EXPLORER] WARNING | Region parent not found for {sel.Item}.");
                 return false;
@@ -212,25 +228,23 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         // TODO: check selectedRegion is always not null here
 
         // Select a not-region item, region being known
-        if (selectedRegion == Selection?.Region)
+        if (!selection.HasOnlyRegion())
         {
-            // Region is not changed, so no need to search for region node
-            if (Selection is ExplorerChildNodeSelection explorerChildNodeSel)
+            // If the selection comes from the explorer, it already carries the region node.
+            if (selection is ExplorerChildNodeSelection explorerChildNodeSel)
             {
                 regionNodeViewModel = explorerChildNodeSel.RegionNodeViewModel;
             }
-            else
-            {
-                List<ExplorerNodeViewModel> nodeViewModelSubtree = ExplorerNodeViewModel.GetNodeSubTree(SelectedItem!, false, false, false).ToList();
-                regionNodeViewModel = nodeViewModelSubtree.FirstOrDefault();
-            }
+
+            // Otherwise, find the region node from the selected region.
+            regionNodeViewModel ??= FindImmediateTreeItem(Root, regionModel.Id);
         }
         else
         {
             // Only regions with people are in the tree
-            if (selectedRegion!.IsWithPeople())
+            if (regionModel.IsWithPeople)
             {
-                regionNodeViewModel = FindImmediateTreeItem(Root, selectedRegion);
+                regionNodeViewModel = FindImmediateTreeItem(Root, regionModel.Id);
             }
         }
 
@@ -249,7 +263,21 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
 
         if (regionNodeViewModel != null)
         {
-            ExplorerNodeViewModel? item = FindTreeItem(regionNodeViewModel, sel.Item);
+            // selection.Item can be null for a region-only selection: FindTreeItem then returns
+            // null and the region node is selected instead (see fallback below).
+            int itemId = selection.Item?.DataBlock.GetId() ?? -1;
+            ExplorerNodeViewModel? item = FindTreeItem(regionNodeViewModel, itemId);
+
+            // Container nodes (buildings/ships lists) have no id: find the matching child node.
+            if (item == null && selection.HasBuildings())
+            {
+                item = FindImmediateChildNode(regionNodeViewModel, NodeTypes.BUILDINGS);
+            }
+            if (item == null && selection.HasShips())
+            {
+                item = FindImmediateChildNode(regionNodeViewModel, NodeTypes.SHIPS);
+            }
+
             if (item == null)
             {
                 Debug.WriteLine($"[EXPLORER] WARNING | item {regionNodeViewModel} not found.");
@@ -274,9 +302,10 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         {
             // Happens when unseen region is selected from map view
             SelectedItem = null;
-            SetSelection(sel);
-            // TODO: why two SendSelectionChangedEvent calls  in this code ???
-            SendSelectionChangedEvent(sel, InnerSelector);
+            //SetSelection(sel);
+            // TODO: choose another way to force an "unseen region has been selected" event
+            // event won't be received because SelectionService won't send it (same values)
+            SendSelectionChangedEvent(selection);
         }
         return false;
     }
@@ -284,33 +313,20 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
     /// <summary>
     /// Select the specified item (node) in the tree.
     /// Ensure the parent items are expanded before selecting the item.
-    /// Selectng an item means to set the SelectedItem property.
-    /// Note: if the specified is null or id the currently selected item (SeletedItem), nothing is done.
+    /// Selecting an item means to set the SelectedItem property.
+    /// Note: if the specified is null or id the currently selected item (SelectedItem), nothing is done.
     /// </summary>
     /// <param name="itemToSelect"></param>
     private void SelectItem(ExplorerNodeViewModel itemToSelect)
     {
+        // Expand the parents even when the item is already the selected one: the item may be hidden
+        // because one of its parents has been collapsed since it was selected.
+        ExpandParents(itemToSelect);
+
         if (itemToSelect == SelectedItem)
         {
             Debug.WriteLine($"[EXPLORER] WARNING Select Item: {itemToSelect} and selected item are the same ");
             return;
-        }
-
-        // Get hierachy items from the root parent to itemToSelect
-        List<ExplorerNodeViewModel> parents = [];
-
-        // LATER: check if parent.IsChecked = true is sufficient
-        ExplorerNodeViewModel? parent = itemToSelect.Parent;
-        while (parent != null && parent != _root)
-        {
-            parents.Insert(0, parent);
-            parent = parent?.Parent;
-        }
-
-        // Expand all parents of the item if they are not already expanded
-        foreach (ExplorerNodeViewModel p in parents)
-        {
-            p.IsExpanded = true;
         }
 
         SelectedItem = itemToSelect;
@@ -320,7 +336,28 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         // It would be better to vertically center the position of the selected item
     }
 
-    private static ExplorerNodeViewModel? FindImmediateTreeItem(ExplorerNodeViewModel? node, DataBlock? block)
+    /// <summary>
+    /// Expand all the parents of the specified item (except the root) which are not already expanded.
+    /// </summary>
+    private void ExpandParents(ExplorerNodeViewModel item)
+    {
+        // Get hierachy items from the root parent to item
+        List<ExplorerNodeViewModel> parents = [];
+
+        ExplorerNodeViewModel? parent = item.Parent;
+        while (parent != null && parent != _root)
+        {
+            parents.Insert(0, parent);
+            parent = parent?.Parent;
+        }
+
+        foreach (ExplorerNodeViewModel p in parents)
+        {
+            p.IsExpanded = true;
+        }
+    }
+
+    private static ExplorerNodeViewModel? FindImmediateTreeItem(ExplorerNodeViewModel? node, int id/*DataBlock? block*/)
     {
         if (node == null)
         {
@@ -329,7 +366,29 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
 
         foreach (ExplorerNodeViewModel child in node.Children)
         {
-            if (child.Block == block)
+            if (child.Id == id)
+            //if (child.Block == block)
+            {
+                return child;
+            }
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// Finds the immediate child of the specified node having the given node type
+    /// (used for container nodes like the buildings/ships list which have no id).
+    /// </summary>
+    private static ExplorerNodeViewModel? FindImmediateChildNode(ExplorerNodeViewModel? node, NodeTypes nodeType)
+    {
+        if (node == null)
+        {
+            return null;
+        }
+
+        foreach (ExplorerNodeViewModel child in node.Children)
+        {
+            if (child.NodeType == nodeType)
             {
                 return child;
             }
@@ -338,26 +397,29 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
     }
 
 
-    private static ExplorerNodeViewModel? FindTreeItem(ExplorerNodeViewModel? node, DataBlock? block)
+    private static ExplorerNodeViewModel? FindTreeItem(ExplorerNodeViewModel? node, int id/*DataBlock? block*/)
     {
-        if (node == null) {
+        if (node == null)
+        {
             return null;
         }
 
-        if (block == null)
+        if (id == -1)
+        //if (block == null)
         {
             // If block is null, return the node itself
             return null;
         }
 
-        if (node.Block == block)
+        if (node.Id == id)
+        //if (node.Block == block)
         {
             return node;
         }
 
         foreach (ExplorerNodeViewModel child in node.Children)
         {
-            ExplorerNodeViewModel? found = FindTreeItem(child, block);
+            ExplorerNodeViewModel? found = FindTreeItem(child, id);
             if (found != null)
             {
                 return found;
@@ -376,55 +438,40 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         // Clear tree and build a new one from newly opened document data
         Items.Clear();
 
-        ExplorerNodeViewModel? regionNode = null;
-        int activeUnitInsertionIndex = 0;
-        ExplorerNodeViewModel? firstFactionNode = null;
-        ExplorerNodeViewModel? shipsNode = null;
-        ExplorerNodeViewModel? buildingsNode = null;
-        DataBlock? region = null;
-        Dictionary<int, ExplorerNodeViewModel> regionFactionsNodes = [];
-        bool regionHasBuilding = false;
-        bool regionHasShip = false;
-
-        LinkedListNode<DataBlock>? firstBlockNode = Report.FirstBlock;
-
-        // OPTIMIZE: pre-filter regions in order to not browse regions excluded from explorer (regions with no people or neighbours, including a lot of oceans)
-        int excludedRegionsNumber = 0;
-        int regionsNumber = 0;
-        DataBlock? previousBlock = null;
-
-        // TODO: start at first region data block
-        for (var block = firstBlockNode?.Value; block != null; block = block.GetNextBlock())
+        if (Report.Planes.Count == 0)
         {
-            BlockType type = block.GetBlockType();
-            if (type == BlockType.REGION)
+            return;
+        }
+
+        int regionsNumber = 0;
+        var regionModels = Report.Planes[0].OccupiedRegions;
+
+        foreach (var r in regionModels)
+        {
+            int activeUnitInsertionIndex = 0;
+            ExplorerNodeViewModel? regionNode = null;
+            ExplorerNodeViewModel? firstFactionNode = null;
+            ExplorerNodeViewModel? shipsNode = null;
+            ExplorerNodeViewModel? buildingsNode = null;
+            Dictionary<int, ExplorerNodeViewModel> regionFactionsNodes = [];
+            bool regionHasBuilding = false;
+            bool regionHasShip = false;
+            // Process each region model
+            RegionModel regionModel = r.Value;
+            DataBlock region = regionModel.DataBlock;
+            LinkedListNode<DataBlock>? firstBlockNode = region.Node;
+            // First block after region data block
+            DataBlock? block = firstBlockNode!.Value.GetNextBlock();
+            bool regionChanged = false;
+            while (block is not null && !regionChanged)
             {
-                if (regionNode == null && region != null)
+                BlockType type = block.GetBlockType();
+                if (type == BlockType.REGION)
                 {
-                    //excludedRegionNumber++;
+                    regionFactionsNodes.Clear();
+                    break;
                 }
 
-                regionHasBuilding = false;
-                regionHasShip = false;
-                regionFactionsNodes.Clear();
-                regionNode = null;
-                activeUnitInsertionIndex = 0;
-                firstFactionNode = null;
-                shipsNode = null;
-                buildingsNode = null;
-                region = null;
-                RegionAttachment? regionInfo = block.GetAttachment() as RegionAttachment;
-                if (regionInfo == null || regionInfo.People.Count == 0)
-                {
-                    // A region with no people is not added to the regions tree explorer
-                    excludedRegionsNumber++;
-                    continue;
-                }
-                // Set as current region
-                region = block;
-            }
-            else if (region != null)
-            {
                 switch (type)
                 {
                     case BlockType.UNIT:
@@ -440,21 +487,20 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
                         FactionInfo factionInfo = RetrieveAndStoreFactionInfo(factionId);
                         if (!regionFactionsNodes.TryGetValue(factionId, out factionNode))
                         {
-                            regionNode ??= AddRegionNode(Root, region, ref regionsNumber);
+                            regionNode ??= AddRegionNode(Root, regionModel, ref regionsNumber);
                             if (ActiveFactionGroup || factionInfo.Status != FactionStatus.ACTIVE)
                             {
-                                // Order in region is :
+                                // Target order in region is:
                                 // - ships
                                 // - buildings
                                 // - factions
-                                // handling order depends on the elements description order for the region in the CR file
-                                // units/factions on a region are sometimes handled before buildings (to be confirmed)
-                                // ships seem to be always handled after buildings and before units/factions (to be confirmed)
+                                // The CR block order is not guaranteed; PromoteContainerNodes() enforces
+                                // the ships/buildings part at the end of the region build.
                                 int factionIndex = regionHasBuilding ? 1 : 0;
                                 int indexWhenActiveGroup = firstFactionNode == null ? factionIndex : activeUnitInsertionIndex;
                                 int index = factionInfo.Status == FactionStatus.ACTIVE ? indexWhenActiveGroup : -1;
                                 // Add faction node, as child of region node
-                                factionNode = new ExplorerNodeViewModel(regionNode, factionInfo.Name, factionInfo.Block, false, factionInfo.Status, index);
+                                factionNode = new ExplorerNodeViewModel(regionNode, factionInfo.Name, factionInfo.Id, NodeTypes.FACTION, false, factionInfo.Status, index, raceIconUri: GetFactionRaceIconUri(factionInfo.Race));
                                 regionFactionsNodes[factionId] = factionNode;
                                 int factionNodeIndex = index == -1 ? regionNode.Children.Count - 1 : index;
                                 if (firstFactionNode == null)
@@ -467,7 +513,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
 
                         // With ActiveFactionGroup to false, units of own faction are inserted directly as child of region node, after buildings.
                         // Add unit node, as child of faction node (ActiveFactionGroup set to true) or of a region
-                        AddUnit(factionNode ?? (regionNode ??= AddRegionNode(Root, region, ref regionsNumber)), block, factionNode != null ? -1 : activeUnitInsertionIndex);
+                        AddUnit(factionNode ?? (regionNode ??= AddRegionNode(Root, regionModel, ref regionsNumber)), block, factionNode != null ? -1 : activeUnitInsertionIndex);
                         if (factionNode == null)
                         {
                             // Keep track of the first faction node to set the activeUnitIndexPosition
@@ -476,23 +522,25 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
                         break;
                     case BlockType.SHIP:
                         // Append the region node if not already done
-                        regionNode ??= AddRegionNode(Root, region, ref regionsNumber);
+                        regionNode ??= AddRegionNode(Root, regionModel, ref regionsNumber);
                         shipsNode ??= AddShipsNode(regionNode, 0);
-                        string shipType = Labels.Localize(Categories.Ship, $"{block.Value(KeyType.TYPE)}");
+                        string rawShipType = $"{block.Value(KeyType.TYPE)}";
+                        string shipType = Labels.Localize(Categories.Ship, rawShipType);
                         string shipSizeLabel = Labels.Localize(Categories.Node, Labels.SIZE, [$"{block.Value(KeyType.SIZE)}"]);
                         string shipLabel = $"{block.GetUILabel()}, {shipType}, {shipSizeLabel}";
                         BelongsToStatus shipStatus = Report.IsActiveFaction(block.ValueInt(KeyType.FACTION)) ? BelongsToStatus.None : BelongsToStatus.ShipInNotActiveFaction;
-                        AddShip(shipsNode, shipLabel, block, shipStatus);
+                        AddShip(shipsNode, shipLabel, block, shipStatus, ShipCatalog.GetExplorerIconPath(rawShipType));
                         break;
                     case BlockType.BUILDING:
                         regionHasBuilding = true;
-                        regionNode ??= AddRegionNode(Root, region, ref regionsNumber);
+                        regionNode ??= AddRegionNode(Root, regionModel, ref regionsNumber);
                         buildingsNode ??= AddBuildingsNode(regionNode);
-                        string buildingType = Labels.Localize(Categories.Building, $"{block.Value(KeyType.TYPE)}");
+                        string rawBuildingType = $"{block.Value(KeyType.TYPE)}";
+                        string buildingType = Labels.Localize(Categories.Building, rawBuildingType);
                         string buildingSizeLabel = Labels.Localize(Categories.Node, Labels.SIZE, [$"{block.Value(KeyType.SIZE)}"]);
                         string buildingLabel = $"{block.GetUILabel()}, {buildingType}, {buildingSizeLabel}";
                         BelongsToStatus buildingStatus = Report.IsActiveFaction(block.ValueInt(KeyType.FACTION)) ? BelongsToStatus.None : BelongsToStatus.BuildingInNotActiveFaction;
-                        AddBuilding(buildingsNode, buildingLabel, block, buildingStatus);
+                        AddBuilding(buildingsNode, buildingLabel, block, buildingStatus, BuildingCatalog.GetExplorerIconPath(rawBuildingType));
                         break;
 #if DEBUG
                     case BlockType.RESOURCE:
@@ -508,11 +556,22 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
                     case BlockType.DURCHSCHIFFUNG:
                     case BlockType.COMBATSPELL:
                         break;
+                    // out of the current loop, will process the next region
+                    case BlockType.REGION: regionChanged = true; break;
                     default: break;
 #endif
                 }
+
+                block = block.GetNextBlock();
             }
-            previousBlock = block;
+
+            // The CR file does not guarantee that ships/buildings are described before
+            // units/factions. Promote the container nodes so the region always reads:
+            // ships, buildings, then factions (and their units).
+            if (regionNode is not null)
+            {
+                PromoteContainerNodes(regionNode);
+            }
         }
 
         if (ExpandTreeOnDocumentLoading)
@@ -520,22 +579,20 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
             ExpandAllItems();
         }
 
-        if (excludedRegionsNumber != 0)
+        // Force selection of origin region (0,0) to avoid no selection at all when opening a document
+        HandleSelection(new EntitySelection(Report, 0, 0, 0));
+
+        if (regionsNumber != Report.Planes[0].OccupiedRegions.Count)
         {
-            Debug.WriteLine($"[EXPLORER] WARNING | {excludedRegionsNumber} unknown regions found but iteration should be only on known regions ");
+            Debug.WriteLine($"[EXPLORER] WARNING | {regionsNumber} regions found instead of {Report.Planes[0].OccupiedRegions.Count} known regions ");
         }
 
-        if (regionsNumber != Report.SeenRegionsNumber)
-        {
-            Debug.WriteLine($"[EXPLORER] WARNING | {regionsNumber} regions found instead of {Report.SeenRegionsNumber} known regions ");
-        }
-
-        Debug.WriteLine($"[EXPLORER] regions: {regionsNumber} excluded: {excludedRegionsNumber}) known: {Report.SeenRegionsNumber}");
+        Debug.WriteLine($"[EXPLORER] regions: {regionsNumber} known: {Report.Planes[0].OccupiedRegions.Count}");
         Debug.WriteLine("[EXPLORER] Data collection done");
     }
 
     private void Clear()
-    {   
+    {
         Items.Clear();
         _factionsInfo.Clear();
         SelectedItem = null;
@@ -561,6 +618,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
                 FactionModel? factionModel = null;
                 if (Report.GetFaction(ref factionModel, factionId))
                 {
+                    factionInfo.Id = factionModel.Id;
                     factionInfo.Block = factionModel!.Data;
                     factionInfo.Status = factionModel.IsActive ? FactionStatus.ACTIVE : FactionStatus.UNKNOWN;
                 }
@@ -594,42 +652,101 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
                 }
             }
             factionInfo.Name = Report.GetFactionName(factionId);
+            factionInfo.Race = Report.GetFaction(factionId)?.Race ?? FactionRace.Unknown;
             _factionsInfo[factionId] = factionInfo;
         }
         return factionInfo;
     }
 
-    private static void AddShip(ExplorerNodeViewModel parentNode, string label, DataBlock block, BelongsToStatus status)
+    private static string? GetFactionRaceIconUri(FactionRace race)
     {
-        _ = new ExplorerNodeViewModel(parentNode, label, block, false, status);
+        return race switch
+        {
+            FactionRace.Humans => "/Assets/races/de/menschen.gif",
+            FactionRace.Dwarves => "/Assets/races/de/zwerge.gif",
+            FactionRace.Elves => "/Assets/races/de/elfen.gif",
+            FactionRace.Orcs => "/Assets/races/de/orks.gif",
+            FactionRace.Goblins => "/Assets/races/de/goblins.gif",
+            FactionRace.Trolls => "/Assets/races/de/trolle.gif",
+            FactionRace.Demons => "/Assets/races/de/daemonen.gif",
+            FactionRace.Insects => "/Assets/races/de/insekten.gif",
+            FactionRace.Cats => "/Assets/races/de/katzen.gif",
+            FactionRace.Aquarians => "/Assets/races/de/meermenschen.gif",
+            FactionRace.Halflings => "/Assets/races/de/halblinge.gif",
+            FactionRace.Ghouls => "/Assets/races/de/ghoule.gif",
+            FactionRace.Ghosts => "/Assets/races/de/ghaste.gif",
+            FactionRace.Zombies => "/Assets/races/de/zombies.gif",
+            FactionRace.Skeletons => "/Assets/races/de/skelette.gif",
+            FactionRace.Vampires => "/Assets/races/de/vampire.gif",
+            FactionRace.Wolves => "/Assets/races/de/woelfe.gif",
+            FactionRace.Rats => "/Assets/races/de/ratten.gif",
+            FactionRace.Ents => "/Assets/races/de/ents.gif",
+            FactionRace.Centaurs => "/Assets/races/de/zentauren.gif",
+            FactionRace.Dragons => "/Assets/races/de/drachen.gif",
+            _ => "/Assets/races/de/rasse.gif",
+        };
     }
 
-    private static void AddBuilding(ExplorerNodeViewModel parentNode, string label, DataBlock block, BelongsToStatus status)
+    private static void AddShip(ExplorerNodeViewModel parentNode, string label, DataBlock block, BelongsToStatus status, string? iconUri = null)
     {
-        _ = new ExplorerNodeViewModel(parentNode, label, block, false, status);
+        _ = new ExplorerNodeViewModel(parentNode, label, block.GetId(), NodeTypes.SHIP, false, status, -1, iconUri);
     }
 
-    /// <summary>
-    /// Adds a region node to the tree, as child of the specified parent.
-    /// </summary>
-    /// <param name="regionBlock">Data block linked to the node.</param>
-    /// <returns></returns>
-    private ExplorerNodeViewModel AddRegionNode(ExplorerNodeViewModel parent, DataBlock regionBlock, ref int regionsNumber)
+    private static void AddBuilding(ExplorerNodeViewModel parentNode, string label, DataBlock block, BelongsToStatus status, string? iconUri = null)
     {
-        string label = regionBlock.GetUILabel();
-        int t = regionBlock.GetTerrain();
+        _ = new ExplorerNodeViewModel(parentNode, label, block.GetId(), NodeTypes.BUILDING, false, status, -1, iconUri);
+    }
+
+    private ExplorerNodeViewModel AddRegionNode(ExplorerNodeViewModel parent, RegionModel regionModel, ref int regionsNumber)
+    {
+        //string label = regionBlock.GetUILabel();
+        //int t = regionBlock.GetTerrain();
+        int t = regionModel.Terrain;
+        string label = t == Terrains.OCEAN
+            ? Labels.Localize(Categories.Node, Labels.OCEAN, [$"{regionModel.GetX()}", $"{regionModel.GetY()}"])
+            : regionModel.Name;
         regionsNumber++;
-        return new ExplorerNodeViewModel(parent, label, regionBlock, false, t);
+        return new ExplorerNodeViewModel(parent, label, regionModel.Id, NodeTypes.REGION, false, t);
     }
 
     private ExplorerNodeViewModel AddShipsNode(ExplorerNodeViewModel parent, int index = -1)
     {
-        return new ExplorerNodeViewModel(parent, Labels.Localize(Categories.Node, Labels.SHIPS), null, false, null, index);
+        return new ExplorerNodeViewModel(parent, Labels.Localize(Categories.Node, Labels.SHIPS), -1, NodeTypes.SHIPS, false, null, index);
     }
 
     private ExplorerNodeViewModel AddBuildingsNode(ExplorerNodeViewModel parent, int index = -1)
     {
-        return new ExplorerNodeViewModel(parent, Labels.Localize(Categories.Node, Labels.BUILDINGS), null, false, null, index);
+        return new ExplorerNodeViewModel(parent, Labels.Localize(Categories.Node, Labels.BUILDINGS), -1, NodeTypes.BUILDINGS, false, null, index);
+    }
+
+    /// <summary>
+    /// Moves the ships and buildings container nodes to the front of the region children,
+    /// preserving the relative order of all other nodes. The report block order is not
+    /// guaranteed, so this enforces the explorer contract: ships, buildings, then factions.
+    /// </summary>
+    private static void PromoteContainerNodes(ExplorerNodeViewModel regionNode)
+    {
+        int targetIndex = 0;
+        MoveFirstChildOfType(regionNode, NodeTypes.SHIPS, ref targetIndex);
+        MoveFirstChildOfType(regionNode, NodeTypes.BUILDINGS, ref targetIndex);
+    }
+
+    private static void MoveFirstChildOfType(ExplorerNodeViewModel parent, NodeTypes nodeType, ref int targetIndex)
+    {
+        for (int i = targetIndex; i < parent.Children.Count; i++)
+        {
+            if (parent.Children[i].NodeType != nodeType)
+            {
+                continue;
+            }
+
+            if (i != targetIndex)
+            {
+                parent.Children.Move(i, targetIndex);
+            }
+            targetIndex++;
+            return;
+        }
     }
 
     private void AddUnit(ExplorerNodeViewModel parentNode, DataBlock unitBlock, int index)
@@ -647,7 +764,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
                 status |= BelongsToStatus.UnitInShip;
             }
         }
-        _ = new ExplorerNodeViewModel(parentNode, unitlabel, unitBlock, !Report.IsConfirmed(unitBlock), status, index);
+        _ = new ExplorerNodeViewModel(parentNode, unitlabel, unitBlock.GetId(), NodeTypes.UNIT, !Report.IsConfirmed(unitBlock), status, index);
     }
 
     private void ExpandAllItems()

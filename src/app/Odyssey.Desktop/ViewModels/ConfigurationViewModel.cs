@@ -1,8 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using ConfigFactory.Models;
-using Odyssey.Services;
+using Odyssey.Core.Services;
 using Odyssey.Settings;
-using Prism.Events;
 
 namespace Odyssey.ViewModels
 {
@@ -11,7 +10,7 @@ namespace Odyssey.ViewModels
         [ObservableProperty]
         private ConfigPageModel _configPageModel;
 
-        public ConfigurationViewModel(IActiveDocumentService? documentService = null) : base(documentService)
+        public ConfigurationViewModel(IDocumentService? documentService = null) : base(documentService)
         {
             _configPageModel = ConfigFactory.ConfigFactory.Build<GlobalSettings>();
             _configPageModel.PropertyChanged += _configPageModelPropertyChanged;

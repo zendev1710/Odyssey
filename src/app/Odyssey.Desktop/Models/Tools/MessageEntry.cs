@@ -11,7 +11,7 @@ namespace Odyssey.Models.Tools
 
         public MessageTargetsSelection? Selection { get; }
 
-        public MessageEntry(String label, List<DataBlock> targets)
+        public MessageEntry(String label, List<EntityModel> targets)
         {
 
             Label = label;

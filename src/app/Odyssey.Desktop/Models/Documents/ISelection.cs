@@ -1,42 +1,32 @@
-﻿using AvaloniaEdit.Editing;
-using Odyssey.Models.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Odyssey.Models.Documents.CRDocument;
+﻿using Odyssey.Models.Data;
 
 namespace Odyssey.Models.Documents
 {
     /// <summary>
-    /// Represents an object that can be selected and provides information about its selection state and associated
-    /// selectors.
+    /// Represents an object that can be selected and provides information about its selection state.
     /// </summary>
-    /// <remarks>This interface defines properties to access the current selection state and the selectors
-    /// responsible for managing the entity's selection.</remarks>
     public interface ISelection
     {
-        DataBlock? Region { get; }
+        public RegionDataBlock? Region { get; }
 
-        DataBlock? Faction { get; }
+        public DataBlock? Faction { get; }
 
-        DataBlock? Item { get; }
+        public DataBlock? Item { get; }
 
-        bool IsUnitSelected();
+        public bool HasUnit();
 
-        bool IsShipSelected();
+        public bool HasShip();
 
-        bool IsBuildingSelected();
+        public bool HasBuilding();
 
-        bool IsRegionSelected();
+        public bool IsRegionSelected();
 
-        bool IsFactionSelected();
+        public bool IsFactionSelected();
 
-        bool HasFaction();
+        public bool HasFaction();
 
-        bool HasRegion();
+        public bool HasRegion();
 
-        bool NothingSelected();
+        public bool IsEmpty();
     }
 }

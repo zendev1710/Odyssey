@@ -1,5 +1,4 @@
-﻿using Avalonia;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Odyssey.Models.Tools;
 using System.Collections.ObjectModel;
 

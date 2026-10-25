@@ -6,12 +6,35 @@ namespace Odyssey.Models.Tools
     {
         public string? Label { get; private set; }
 
-        public ISelection? Selection { get; }
+        public IEntitySelection? Selection { get; }
 
-        public SelectionEntry(ISelection sel)
+        public SelectionEntry(IEntitySelection sel)
         {
-            Label = sel.Item?.GetUILabel() ?? string.Empty;
-            Selection = sel;
+            Label = sel.Item?.DataBlock.GetUILabel() ?? string.Empty;
+            Selection = CopyOf(sel);
+        }
+
+        /// <summary>
+        /// Copies the specified selection.
+        /// The selection instance owned by the selection service is reused for each selection (it is
+        /// cleared then filled again): a copy has to be stored, otherwise the entry would always reflect
+        /// the current selection instead of the one it has been created with.
+        /// </summary>
+        private static EntitySelection CopyOf(IEntitySelection sel)
+        {
+            EntitySelection copy = new();
+
+            // A container selection (the buildings/ships list of a region) has no item.
+            if (sel.HasBuildings() || sel.HasShips())
+            {
+                copy.SetContainer(EntitySelection.GetContainerTypes(sel), sel.Region, sel.Data);
+            }
+            else
+            {
+                copy.SetItem(sel.Item, sel.Region, sel.Data);
+            }
+
+            return copy;
         }
 
         public override string ToString()

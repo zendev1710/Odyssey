@@ -1,65 +1,56 @@
-﻿using System.Collections.Generic;
-using Odyssey.Models.Data;
+﻿using Odyssey.Models.Tools;
+using System.Collections.Generic;
+using static Odyssey.Models.EntityModel;
 
 namespace Odyssey.Models.Documents;
 
-public class MessageTargetsSelection : SimpleItemSelection
+public class MessageTargetsSelection : EntitySelection
 {
-    public DataBlock? Unit { get; private set; }
-    public DataBlock? Ship { get; private set; }
+    public UnitModel? Unit { get; private set; }
+    public ShipModel? Ship { get; private set; }
+    public BuildingModel? Building { get; private set; }
 
-    public DataBlock? Building { get; private set; }
-
-    public MessageTargetsSelection(List<DataBlock> targets)
+    // TODO: handle a IRegionResolver and receive it as a parameter
+    public MessageTargetsSelection(List<EntityModel> targets/*, IRegionResolver regionResolver*/)
     {
-        DataBlock? region = null;
-        DataBlock? faction = null;
-        foreach (DataBlock target in targets)
+        RegionModel? region = Region;
+        //FactionModel? faction = null;
+        foreach (EntityModel target in targets)
         {
-            var bt = target.GetBlockType();
-            if (bt == BlockType.REGION)
+            var bt = target.Type;
+            if (bt == EntityType.Region)
             {
-                region = target;
+                region = target as RegionModel;
             }
-            else if (bt == BlockType.UNIT)
+            else if (bt == EntityType.Unit)
             {
-                Unit = target;
+                Unit = target as UnitModel;
             }
-            else if (bt == BlockType.SHIP)
+            else if (bt == EntityType.Ship)
             {
-                Ship = target;
+                Ship = target as ShipModel;
             }
-            else if (bt == BlockType.BUILDING)
+            else if (bt == EntityType.Building)
             {
-                Building = target;
+                Building = target as BuildingModel;
             }
         }
 
-        SetItem(GetDefaultTarget() ?? region, region, faction);
+        // TODO: handle a IRegionResolver and give it as parameter
+        EntityModel? entityModel = GetDefaultTarget();
+        SetItem(entityModel, region/*, faction*/);
     }
 
-    public MessageTargetsSelection()
+    public EntityModel? GetDefaultTarget()
     {
-        Clear();
-    }
-
-    public MessageTargetsSelection(CRDocument report, int positionX, int positionY, int plane = 0)
-    {
-        Clear();
-        DataBlock? region = null;
-        if (report.FindRegionFromPosition(ref region, positionX, positionY, (PlaneType)plane))
-        {
-            SetItem(region, null, null);
-        }
-    }
-
-    public DataBlock? GetDefaultTarget()
-    {
-        return Unit ?? Ship ?? Building ?? Item ?? Region;
+        if (Unit is not null) { return Unit; }
+        if (Ship is not null) { return Ship; }
+        if (Building is not null) { return Building; }
+        return Region;
     }
 
     public override string ToString()
     {
-        return ItemType != ItemTypes.None ? $"sel[{Item!}]" : string.Empty;
+        return SelectionType != SelectionTypes.None ? $"sel[{Item!}]" : string.Empty;
     }
 }
