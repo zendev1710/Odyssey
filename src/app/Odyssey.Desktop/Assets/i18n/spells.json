@@ -1,0 +1,1241 @@
+{
+  "version": 1,
+  "spells": [
+    {
+      "id": 1644952989,
+      "sname": "Feuerwand",
+      "en": "Firewall",
+      "de": "Feuerwand"
+    },
+    {
+      "id": 1618035175,
+      "sname": "acidrain",
+      "en": "Acid Rain",
+      "de": "Säurenebel"
+    },
+    {
+      "id": 825648868,
+      "sname": "airship",
+      "en": "Airship",
+      "de": "Luftschiff"
+    },
+    {
+      "id": 360815283,
+      "sname": "analyse_object",
+      "en": "Analysis",
+      "de": "Lied des Ortes analysieren"
+    },
+    {
+      "id": 1249024642,
+      "sname": "analysedream",
+      "en": "Analyse Dreams",
+      "de": "Traumbilder analysieren"
+    },
+    {
+      "id": 1644444971,
+      "sname": "analysesong_unit",
+      "en": "Analyze Song of Life",
+      "de": "Gesang des Lebens analysieren"
+    },
+    {
+      "id": 1711162808,
+      "sname": "analyze_magic",
+      "en": "Analyze Magic",
+      "de": "Magie analysieren"
+    },
+    {
+      "id": 1240761125,
+      "sname": "antimagiczone",
+      "en": "Antimagic",
+      "de": "Astrale Schwächezone"
+    },
+    {
+      "id": 1375934935,
+      "sname": "appeasement",
+      "en": "Appeasing Song",
+      "de": "Friedenslied"
+    },
+    {
+      "id": 1599427433,
+      "sname": "armor_shield",
+      "en": "Shield Shine",
+      "de": "Rüstschild"
+    },
+    {
+      "id": 505322711,
+      "sname": "astral_disruption",
+      "en": "Astral Disruption",
+      "de": "Störe Astrale Integrität"
+    },
+    {
+      "id": 101635562,
+      "sname": "astralblock",
+      "en": "Astral Disruption",
+      "de": "Störe Astrale Integrität"
+    },
+    {
+      "id": 600671118,
+      "sname": "aura_of_fear",
+      "en": "Panic",
+      "de": "Furchteinflößende Aura"
+    },
+    {
+      "id": 493964328,
+      "sname": "auraboost",
+      "en": "Chaos Gift",
+      "de": "Gabe des Chaos"
+    },
+    {
+      "id": 1174644670,
+      "sname": "auraleak",
+      "en": "Astral Leak",
+      "de": "Astraler Riss"
+    },
+    {
+      "id": 94562838,
+      "sname": "auratransfer",
+      "en": "Transfer Aura",
+      "de": "Auratransfer"
+    },
+    {
+      "id": 2018086778,
+      "sname": "bad_dreams",
+      "en": "Bad Dreams",
+      "de": "Schlechte Träume"
+    },
+    {
+      "id": 891761621,
+      "sname": "badlearn",
+      "en": "Insomnia",
+      "de": "Schlechter Schlaf"
+    },
+    {
+      "id": 502533901,
+      "sname": "badmagicresistancezone",
+      "en": "Song of the Aging Spirit",
+      "de": "Gesang des schwachen Geistes"
+    },
+    {
+      "id": 1861425357,
+      "sname": "barkskin",
+      "en": "Barkskin",
+      "de": "Rindenhaut"
+    },
+    {
+      "id": 966512022,
+      "sname": "berserk",
+      "en": "Blood Frenzy",
+      "de": "Blutrausch"
+    },
+    {
+      "id": 347067183,
+      "sname": "big_recruit",
+      "en": "High art of persuasion",
+      "de": "Hohe Kunst der Überzeugung"
+    },
+    {
+      "id": 1932304727,
+      "sname": "blabbermouth",
+      "en": "Blabbermouth",
+      "de": "Plappermaul"
+    },
+    {
+      "id": 563956343,
+      "sname": "blessedharvest",
+      "en": "Blessed Harvest",
+      "de": "Segen der Erde"
+    },
+    {
+      "id": 207622296,
+      "sname": "blessstonecircle",
+      "en": "Bless Stone Circle",
+      "de": "Segne Steinkreis"
+    },
+    {
+      "id": 590298693,
+      "sname": "bloodsacrifice",
+      "en": "Lesser Sacrifice",
+      "de": "Kleines Blutopfer"
+    },
+    {
+      "id": 1460054890,
+      "sname": "bloodthirst",
+      "en": "Song of War",
+      "de": "Kriegsgesang"
+    },
+    {
+      "id": 268219046,
+      "sname": "break_curse",
+      "en": "Negate Curse",
+      "de": "Fluch brechen"
+    },
+    {
+      "id": 1292125200,
+      "sname": "calm_monster",
+      "en": "Calm Monster",
+      "de": "Monster friedlich stimmen"
+    },
+    {
+      "id": 1236537414,
+      "sname": "calm_riot",
+      "en": "Calm Riot",
+      "de": "Aufruhr beschwichtigen"
+    },
+    {
+      "id": 1964581897,
+      "sname": "calmmonster",
+      "en": "Calm Monster",
+      "de": "Monster friedlich stimmen"
+    },
+    {
+      "id": 1817788241,
+      "sname": "cerddor_destroymagic",
+      "en": "Silence Dissonance",
+      "de": "Lebenslied festigen"
+    },
+    {
+      "id": 654542043,
+      "sname": "cerddorfumbleshield",
+      "en": "Countersong",
+      "de": "Bannlied"
+    },
+    {
+      "id": 1912896846,
+      "sname": "chaosrow",
+      "en": "Madness of War",
+      "de": "Wahnsinn des Krieges"
+    },
+    {
+      "id": 1694678911,
+      "sname": "chaossuction",
+      "en": "Chaos Gate",
+      "de": "Chaossog"
+    },
+    {
+      "id": 191168593,
+      "sname": "clone",
+      "en": "Doppelganger",
+      "de": "Seelenkopie"
+    },
+    {
+      "id": 1633925872,
+      "sname": "cold_protection",
+      "en": "Firun's Coat",
+      "de": "Firuns Fell"
+    },
+    {
+      "id": 379470855,
+      "sname": "coldfront",
+      "en": "Coldfront",
+      "de": "Eisnebel"
+    },
+    {
+      "id": 813851946,
+      "sname": "combat_speed",
+      "en": "Acceleration",
+      "de": "Beschleunigung"
+    },
+    {
+      "id": 418821004,
+      "sname": "combatrust",
+      "en": "Winds of Rust",
+      "de": "Rosthauch"
+    },
+    {
+      "id": 1689556387,
+      "sname": "concealing_aura",
+      "en": "Concealing Aura",
+      "de": "Schleieraura"
+    },
+    {
+      "id": 1938168779,
+      "sname": "courting",
+      "en": "Song of Courting",
+      "de": "Gesang des Werbens"
+    },
+    {
+      "id": 851070720,
+      "sname": "create_antimagic",
+      "en": "Create An Antimagic Crystal",
+      "de": "Erschaffe Antimagiekristall"
+    },
+    {
+      "id": 1409828622,
+      "sname": "create_aots",
+      "en": "Create An Amulet of True Sight",
+      "de": "Erschaffe ein Amulett des wahren Sehens"
+    },
+    {
+      "id": 930122791,
+      "sname": "create_bagofholding",
+      "en": "Create A Bag of Holding",
+      "de": "Erschaffe einen Beutel des negativen Gewichts"
+    },
+    {
+      "id": 425197283,
+      "sname": "create_chastitybelt",
+      "en": "Create An Amulet of Chastity",
+      "de": "Erschaffe ein Amulett der Keuschheit"
+    },
+    {
+      "id": 633694043,
+      "sname": "create_dreameye",
+      "en": "Create a Visioneye",
+      "de": "Erschaffe ein Traumauge"
+    },
+    {
+      "id": 2107560440,
+      "sname": "create_firesword",
+      "en": "Create A Flamesword",
+      "de": "Erschaffe ein Flammenschwert"
+    },
+    {
+      "id": 633399183,
+      "sname": "create_focus",
+      "en": "Create An Aurafocus",
+      "de": "Erschaffe einen Aurafocus"
+    },
+    {
+      "id": 1493319924,
+      "sname": "create_invisibility_sphere",
+      "en": "Create a Sphere of Invisbility",
+      "de": "Erschaffe eine Sphäre der Unsichtbarkeit"
+    },
+    {
+      "id": 989943715,
+      "sname": "create_magicherbbag",
+      "en": "Create A Magical Herb Pouch",
+      "de": "Erschaffe einen magischen Kräuterbeutel"
+    },
+    {
+      "id": 1779329693,
+      "sname": "create_roi",
+      "en": "Create A Ring of Invisibility",
+      "de": "Erschaffe einen Ring der Unsichtbarkeit"
+    },
+    {
+      "id": 1779329700,
+      "sname": "create_rop",
+      "en": "Create A Ring of Power",
+      "de": "Erschaffe einen Ring der Macht"
+    },
+    {
+      "id": 1410689599,
+      "sname": "create_roqf",
+      "en": "Quick Fingers",
+      "de": "Miriams flinke Finger"
+    },
+    {
+      "id": 1779329702,
+      "sname": "create_ror",
+      "en": "Create A Ring of Regeneration",
+      "de": "Erschaffe einen Ring der Regeneration"
+    },
+    {
+      "id": 395185660,
+      "sname": "create_runesword",
+      "en": "Create A Runesword",
+      "de": "Erschaffe ein Runenschwert"
+    },
+    {
+      "id": 496744755,
+      "sname": "create_trollbelt",
+      "en": "Create A Belt of Troll Strength",
+      "de": "Erschaffe einen Gürtel der Trollstärke"
+    },
+    {
+      "id": 714175381,
+      "sname": "deathcloud",
+      "en": "Death Cloud",
+      "de": "Todeswolke"
+    },
+    {
+      "id": 2043972728,
+      "sname": "depression",
+      "en": "Song of Melancholy",
+      "de": "Gesang der Melancholie"
+    },
+    {
+      "id": 1494229550,
+      "sname": "destroy_magic",
+      "en": "Destroy Magic",
+      "de": "Magiefresser"
+    },
+    {
+      "id": 2084787447,
+      "sname": "disturbingdreams",
+      "en": "Insomnia",
+      "de": "Schlechter Schlaf"
+    },
+    {
+      "id": 970801101,
+      "sname": "double_time",
+      "en": "Double Time",
+      "de": "Zeitdehnung"
+    },
+    {
+      "id": 1646897190,
+      "sname": "draigdestroymagic",
+      "en": "Pentagram",
+      "de": "Pentagramm"
+    },
+    {
+      "id": 482540555,
+      "sname": "draigfumbleshield",
+      "en": "Astral Chaos",
+      "de": "Astrales Chaos"
+    },
+    {
+      "id": 1575842747,
+      "sname": "drain_skills",
+      "en": "Shadowbreath",
+      "de": "Schattenodem"
+    },
+    {
+      "id": 785554039,
+      "sname": "dreamreading",
+      "en": "Read Dreams",
+      "de": "Traumlesen"
+    },
+    {
+      "id": 551466537,
+      "sname": "drought",
+      "en": "Gate to the elemental plane of fire",
+      "de": "Tor in die Ebene der Hitze"
+    },
+    {
+      "id": 1746553544,
+      "sname": "earn_silver#cerddor",
+      "en": "Jugglery",
+      "de": "Gaukeleien"
+    },
+    {
+      "id": 455556928,
+      "sname": "earn_silver#draig",
+      "en": "Minor Curses",
+      "de": "Kleine Flüche"
+    },
+    {
+      "id": 2041851976,
+      "sname": "earn_silver#gwyrrd",
+      "en": "Cattle Healing",
+      "de": "Viehheilung"
+    },
+    {
+      "id": 11758830,
+      "sname": "earn_silver#illaun",
+      "en": "Divination",
+      "de": "Wahrsagen"
+    },
+    {
+      "id": 798410270,
+      "sname": "earn_silver#tybied",
+      "en": "Miracle Doctor",
+      "de": "Wunderdoktor"
+    },
+    {
+      "id": 1067136535,
+      "sname": "earthquake",
+      "en": "Summon Earth Elemental",
+      "de": "Erdelementar"
+    },
+    {
+      "id": 2017450345,
+      "sname": "enterastral",
+      "en": "Astral Path",
+      "de": "Astraler Weg"
+    },
+    {
+      "id": 965004449,
+      "sname": "eternal_walls",
+      "en": "Eternal Walls",
+      "de": "Mauern der Ewigkeit"
+    },
+    {
+      "id": 1977499229,
+      "sname": "farvision",
+      "en": "an unknown spell",
+      "de": "ein unbekannter Zauber"
+    },
+    {
+      "id": 2077220384,
+      "sname": "fetch_astral",
+      "en": "Call of Reality",
+      "de": "Ruf der Realität"
+    },
+    {
+      "id": 1153076315,
+      "sname": "fiery_dragonbreath",
+      "en": "Fiery Dragonbreath",
+      "de": "Feuriger Drachenodem"
+    },
+    {
+      "id": 523183337,
+      "sname": "fireball",
+      "en": "Fireball",
+      "de": "Feuerball"
+    },
+    {
+      "id": 63258219,
+      "sname": "firestorm",
+      "en": "Firestorm",
+      "de": "Feuersturm"
+    },
+    {
+      "id": 524247050,
+      "sname": "firewall",
+      "en": "Wall of Fire",
+      "de": "Feuerwand"
+    },
+    {
+      "id": 1367305102,
+      "sname": "fish_shield",
+      "en": "Shield of the Fish",
+      "de": "Schild des Fisches"
+    },
+    {
+      "id": 5318296,
+      "sname": "flee",
+      "en": "Unspeakable Horrors",
+      "de": "Grauen der Schlacht"
+    },
+    {
+      "id": 34456585,
+      "sname": "flyingship",
+      "en": "Airship",
+      "de": "Luftschiff"
+    },
+    {
+      "id": 1164891043,
+      "sname": "fogtrap",
+      "en": "an unknown spell",
+      "de": "ein unbekannter Zauber"
+    },
+    {
+      "id": 1812288245,
+      "sname": "forestfire",
+      "en": "Fire Fiend",
+      "de": "Feuerteufel"
+    },
+    {
+      "id": 1519866919,
+      "sname": "frighten",
+      "en": "Song of Fear",
+      "de": "Gesang der Angst"
+    },
+    {
+      "id": 855568943,
+      "sname": "fumble",
+      "en": "Chaos Curse",
+      "de": "Chaosfluch"
+    },
+    {
+      "id": 1147292917,
+      "sname": "fumblecurse",
+      "en": "Chaos Curse",
+      "de": "Chaosfluch"
+    },
+    {
+      "id": 675920774,
+      "sname": "gbdream",
+      "en": "Good Dreams or Bad Dreams",
+      "de": "Schöne Träume oder Schlechte Träume"
+    },
+    {
+      "id": 1163746688,
+      "sname": "generous",
+      "en": "Song of Generosity",
+      "de": "Hohes Lied der Gaukelei"
+    },
+    {
+      "id": 1494155229,
+      "sname": "gooddreams",
+      "en": "Pleasant Dreams",
+      "de": "Schöne Träume"
+    },
+    {
+      "id": 411463275,
+      "sname": "goodmagicresistancezone",
+      "en": "Song of the Youthful Spirit",
+      "de": "Gesang des wachen Geistes"
+    },
+    {
+      "id": 597909078,
+      "sname": "goodwinds",
+      "en": "Summon Water Elemental",
+      "de": "Wasserelementar"
+    },
+    {
+      "id": 722355219,
+      "sname": "great_drought",
+      "en": "Great Drought",
+      "de": "Tor in die Ebene der Hitze"
+    },
+    {
+      "id": 1525506874,
+      "sname": "gwyrrddestroymagic",
+      "en": "Banish Spirits",
+      "de": "Geister bannen"
+    },
+    {
+      "id": 361150239,
+      "sname": "gwyrrdfumbleshield",
+      "en": "Astral Guardian Spirits",
+      "de": "Astralschutzgeister"
+    },
+    {
+      "id": 5404698,
+      "sname": "hail",
+      "en": "Hail",
+      "de": "Hagel"
+    },
+    {
+      "id": 702119683,
+      "sname": "headache",
+      "en": "Hangover",
+      "de": "Schaler Wein"
+    },
+    {
+      "id": 1296274956,
+      "sname": "healing",
+      "en": "Heal",
+      "de": "Heilung"
+    },
+    {
+      "id": 1198001792,
+      "sname": "healingzone",
+      "en": "Zone of Healing",
+      "de": "Zone der Heilung"
+    },
+    {
+      "id": 968060640,
+      "sname": "heroic_song",
+      "en": "Epic Heroes",
+      "de": "Heldengesang"
+    },
+    {
+      "id": 892479971,
+      "sname": "holyground",
+      "en": "Sacred Ground",
+      "de": "Heiliger Boden"
+    },
+    {
+      "id": 1167519218,
+      "sname": "homestone",
+      "en": "Homestone",
+      "de": "Heimstein"
+    },
+    {
+      "id": 1576199357,
+      "sname": "icastle",
+      "en": "Castle of Illusion",
+      "de": "Traumschlößchen"
+    },
+    {
+      "id": 1040315073,
+      "sname": "icy_dragonbreath",
+      "en": "Icy Dragonbreath",
+      "de": "Eisiger Drachenodem"
+    },
+    {
+      "id": 453062479,
+      "sname": "igjarjuk",
+      "en": "igjarjuk",
+      "de": "igjarjuk"
+    },
+    {
+      "id": 298988736,
+      "sname": "illaundestroymagic",
+      "en": "Remove Dreams",
+      "de": "Traumbilder entwirren"
+    },
+    {
+      "id": 1547202389,
+      "sname": "immolation",
+      "en": "Immolation",
+      "de": "Feuerwalze"
+    },
+    {
+      "id": 2113135061,
+      "sname": "incite_riot",
+      "en": "Riot",
+      "de": "Aufruhr verursachen"
+    },
+    {
+      "id": 253102683,
+      "sname": "insectfur",
+      "en": "Firun's Coat",
+      "de": "Firuns Fell"
+    },
+    {
+      "id": 981864732,
+      "sname": "irongolem",
+      "en": "Create Iron Golems",
+      "de": "Erschaffe Eisengolems"
+    },
+    {
+      "id": 80067592,
+      "sname": "ironkeeper",
+      "en": "Mountain Guardian",
+      "de": "Bergwächter"
+    },
+    {
+      "id": 1902609057,
+      "sname": "itemcloak",
+      "en": "Concealing Aura",
+      "de": "Schleieraura"
+    },
+    {
+      "id": 182865543,
+      "sname": "keeploot",
+      "en": "Save Spoils",
+      "de": "Beute Bewahren"
+    },
+    {
+      "id": 1688632384,
+      "sname": "leaveastral",
+      "en": "Astral Exit",
+      "de": "Astraler Ausgang"
+    },
+    {
+      "id": 1675268831,
+      "sname": "living_rock",
+      "en": "Living Rock",
+      "de": "Belebtes Gestein"
+    },
+    {
+      "id": 976567140,
+      "sname": "maelstrom",
+      "en": "Maelstrom",
+      "de": "Mahlstrom"
+    },
+    {
+      "id": 839525439,
+      "sname": "magic_roots",
+      "en": "Roots of Magic",
+      "de": "Wurzeln der Magie"
+    },
+    {
+      "id": 260320940,
+      "sname": "magicboost",
+      "en": "Chaos Gift",
+      "de": "Gabe des Chaos"
+    },
+    {
+      "id": 1180756746,
+      "sname": "magicresistance",
+      "en": "Magic Resistance",
+      "de": "Magieresistenz"
+    },
+    {
+      "id": 290609546,
+      "sname": "magicrunes",
+      "en": "Protective Runes",
+      "de": "Runen des Schutzes"
+    },
+    {
+      "id": 82806968,
+      "sname": "magicstreet",
+      "en": "Magic Path",
+      "de": "Magischer Pfad"
+    },
+    {
+      "id": 298964812,
+      "sname": "magicwalls",
+      "en": "Homestone",
+      "de": "Heimstein"
+    },
+    {
+      "id": 1596189988,
+      "sname": "mallorntreegrow",
+      "en": "Bless Mallorn Logs",
+      "de": "Segne Mallornstecken"
+    },
+    {
+      "id": 971455288,
+      "sname": "melancholy",
+      "en": "Song of Melancholy",
+      "de": "Gesang der Melancholie"
+    },
+    {
+      "id": 513294849,
+      "sname": "meteor_rain",
+      "en": "Meteor Shower",
+      "de": "Meteorregen"
+    },
+    {
+      "id": 1441174858,
+      "sname": "migration",
+      "en": "Rite of Acceptance",
+      "de": "Ritual der Aufnahme"
+    },
+    {
+      "id": 1252033278,
+      "sname": "mindblast",
+      "en": "Mental Death",
+      "de": "Tod des Geistes"
+    },
+    {
+      "id": 314923624,
+      "sname": "nocostbuilding",
+      "en": "Eternal Walls",
+      "de": "Mauern der Ewigkeit"
+    },
+    {
+      "id": 210129914,
+      "sname": "nodrift",
+      "en": "Water Elemental",
+      "de": "Wasserelementar"
+    },
+    {
+      "id": 420329726,
+      "sname": "oldrace",
+      "en": "Unknown Effect",
+      "de": "Unbekannter Effekt"
+    },
+    {
+      "id": 1473545388,
+      "sname": "orcish",
+      "en": "Unknown Effect",
+      "de": "Unbekannter Effekt"
+    },
+    {
+      "id": 1341820489,
+      "sname": "orkdream",
+      "en": "Sweet Dreams",
+      "de": "Süße Träume"
+    },
+    {
+      "id": 160049506,
+      "sname": "peacezone",
+      "en": "Song of Peace",
+      "de": "Gesang der Friedfertigkeit"
+    },
+    {
+      "id": 1531540406,
+      "sname": "plague",
+      "en": "Curse of Pestilence",
+      "de": "Fluch der Pestilenz"
+    },
+    {
+      "id": 21412888,
+      "sname": "powerful_dragonbreath",
+      "en": "Powerful Dragonbreath",
+      "de": "Großer Drachenodem"
+    },
+    {
+      "id": 2063805245,
+      "sname": "protective_runes",
+      "en": "Protective Runes",
+      "de": "Runen des Schutzes"
+    },
+    {
+      "id": 455975399,
+      "sname": "pull_astral",
+      "en": "Astral Call",
+      "de": "Astraler Ruf"
+    },
+    {
+      "id": 1352992530,
+      "sname": "puttorest",
+      "en": "Eternal Rest",
+      "de": "Seelenfrieden"
+    },
+    {
+      "id": 887657961,
+      "sname": "raindance",
+      "en": "Rain Dance",
+      "de": "Regentanz"
+    },
+    {
+      "id": 1236149673,
+      "sname": "raise_mob",
+      "en": "Mob Rule",
+      "de": "Mob aufwiegeln"
+    },
+    {
+      "id": 833734868,
+      "sname": "readmind",
+      "en": "Mind Probe",
+      "de": "Traumdeuten"
+    },
+    {
+      "id": 1469547478,
+      "sname": "reanimate",
+      "en": "Resurrection",
+      "de": "Wiederbelebung"
+    },
+    {
+      "id": 1097962536,
+      "sname": "reelingarrows",
+      "en": "Whirlwind",
+      "de": "Wirbelwind"
+    },
+    {
+      "id": 790036318,
+      "sname": "resist_magic",
+      "en": "Resist Magic",
+      "de": "Schutzzauber"
+    },
+    {
+      "id": 1360690942,
+      "sname": "riotzone",
+      "en": "Riot",
+      "de": "Aufruhr"
+    },
+    {
+      "id": 1404954680,
+      "sname": "rustweapon",
+      "en": "Rain of Rust",
+      "de": "Rostregen"
+    },
+    {
+      "id": 148065343,
+      "sname": "sacrifice_strength",
+      "en": "Sacrifice Strength",
+      "de": "Opfere Kraft"
+    },
+    {
+      "id": 247525986,
+      "sname": "seduction",
+      "en": "Song of Seduction",
+      "de": "Lied der Verführung"
+    },
+    {
+      "id": 964054142,
+      "sname": "shadowknights",
+      "en": "Shadow Knights",
+      "de": "Schattenritter"
+    },
+    {
+      "id": 1317346251,
+      "sname": "shapeshift",
+      "en": "Shapeshift",
+      "de": "Gestaltwandlung"
+    },
+    {
+      "id": 708356474,
+      "sname": "shipspeedup",
+      "en": "Acceleration",
+      "de": "Beschleunigung"
+    },
+    {
+      "id": 647962243,
+      "sname": "shockwave",
+      "en": "Shockwave",
+      "de": "Schockwelle"
+    },
+    {
+      "id": 343187715,
+      "sname": "show_astral",
+      "en": "Astral Gaze",
+      "de": "Astraler Blick"
+    },
+    {
+      "id": 60520563,
+      "sname": "skillmod",
+      "en": "Unknown Effect",
+      "de": "Unbekannter Effekt"
+    },
+    {
+      "id": 2087886950,
+      "sname": "slavery",
+      "en": "Song of Slavery",
+      "de": "Gesang der Versklavung"
+    },
+    {
+      "id": 221141157,
+      "sname": "sleep",
+      "en": "Sleep",
+      "de": "Schlaf"
+    },
+    {
+      "id": 1691733826,
+      "sname": "song_of_confusion",
+      "en": "Song of Confusion",
+      "de": "Gesang der Verwirrung"
+    },
+    {
+      "id": 347423156,
+      "sname": "song_of_fear",
+      "en": "Song of Terror",
+      "de": "Gesang der Furcht"
+    },
+    {
+      "id": 232955030,
+      "sname": "song_of_healing",
+      "en": "Song of Healing",
+      "de": "Lied der Heilung"
+    },
+    {
+      "id": 2135979688,
+      "sname": "song_of_peace",
+      "en": "Song of Peace",
+      "de": "Gesang der Friedfertigkeit"
+    },
+    {
+      "id": 1024567024,
+      "sname": "song_of_slavery",
+      "en": "Song of Slavery",
+      "de": "Gesang der Versklavung"
+    },
+    {
+      "id": 238940628,
+      "sname": "song_resist_magic",
+      "en": "Song of the Youthful Spirit",
+      "de": "Gesang des wachen Geistes"
+    },
+    {
+      "id": 600998185,
+      "sname": "song_suscept_magic",
+      "en": "Song of the Aging Spirit",
+      "de": "Gesang des schwachen Geistes"
+    },
+    {
+      "id": 561612084,
+      "sname": "sound_out",
+      "en": "Sound out",
+      "de": "Aushorchen"
+    },
+    {
+      "id": 217584490,
+      "sname": "sparkle",
+      "en": "Unknown Effect",
+      "de": "Unbekannter Effekt"
+    },
+    {
+      "id": 1138133348,
+      "sname": "sparklechaos",
+      "en": "Hex",
+      "de": "Verwünschung"
+    },
+    {
+      "id": 1140518991,
+      "sname": "sparkledream",
+      "en": "Dream",
+      "de": "Traumsenden"
+    },
+    {
+      "id": 221343757,
+      "sname": "speed",
+      "en": "Double Time",
+      "de": "Zeitdehnung"
+    },
+    {
+      "id": 501049485,
+      "sname": "steal_aura",
+      "en": "Steal Aura",
+      "de": "Stehle Aura"
+    },
+    {
+      "id": 1304518937,
+      "sname": "stonegolem",
+      "en": "Create Stone Golems",
+      "de": "Erschaffe Steingolems"
+    },
+    {
+      "id": 560589083,
+      "sname": "stormwind",
+      "en": "Storm Elemental",
+      "de": "Sturmelementar"
+    },
+    {
+      "id": 1414443354,
+      "sname": "stormwinds",
+      "en": "Summon Storm Elemental",
+      "de": "Sturmelementar"
+    },
+    {
+      "id": 140807883,
+      "sname": "strength",
+      "en": "Unknown Effect",
+      "de": "Unbekannter Effekt"
+    },
+    {
+      "id": 1527553949,
+      "sname": "strongwall",
+      "en": "Strong Wall And Sturdy Gate",
+      "de": "Starkes Tor und feste Mauer"
+    },
+    {
+      "id": 1768634507,
+      "sname": "summon_familiar",
+      "en": "Summon Familiar",
+      "de": "Vertrauten rufen"
+    },
+    {
+      "id": 759364462,
+      "sname": "summondragon",
+      "en": "Call Dragons",
+      "de": "Drachenruf"
+    },
+    {
+      "id": 1970751030,
+      "sname": "summonent",
+      "en": "Awakening of the Ents",
+      "de": "Erwecke Ents"
+    },
+    {
+      "id": 1563773628,
+      "sname": "summonfireelemental",
+      "en": "Summon Fire Elemental",
+      "de": "Hitzeelementar"
+    },
+    {
+      "id": 1780778109,
+      "sname": "summonshadow",
+      "en": "Summon Shadowdemons",
+      "de": "Beschwöre Schattendämonen"
+    },
+    {
+      "id": 517582601,
+      "sname": "summonshadowlords",
+      "en": "Summon Shadowmasters",
+      "de": "Beschwöre Schattenmeister"
+    },
+    {
+      "id": 1930863780,
+      "sname": "summonundead",
+      "en": "Animate Dead",
+      "de": "Mächte des Todes"
+    },
+    {
+      "id": 1573791525,
+      "sname": "tiredsoldiers",
+      "en": "Tiredness",
+      "de": "Schwere Glieder"
+    },
+    {
+      "id": 1231160711,
+      "sname": "transfer_aura_song",
+      "en": "Hymn of Aura Sharing",
+      "de": "Gesang des Auratransfers"
+    },
+    {
+      "id": 843455824,
+      "sname": "transferaurachaos",
+      "en": "Transfer Power",
+      "de": "Machtübertragung"
+    },
+    {
+      "id": 1232184375,
+      "sname": "transferauradruide",
+      "en": "Meditate",
+      "de": "Meditation"
+    },
+    {
+      "id": 875823307,
+      "sname": "transferauratraum",
+      "en": "Dream of Magic",
+      "de": "Traum der Magie"
+    },
+    {
+      "id": 992591507,
+      "sname": "treegrow",
+      "en": "Grove of Oak Trees",
+      "de": "Hainzauber"
+    },
+    {
+      "id": 1657885077,
+      "sname": "treewalkenter",
+      "en": "Path of Trees",
+      "de": "Weg der Bäume"
+    },
+    {
+      "id": 1147582873,
+      "sname": "treewalkexit",
+      "en": "Ties of Life",
+      "de": "Sog des Lebens"
+    },
+    {
+      "id": 1867368661,
+      "sname": "tybiedfumbleshield",
+      "en": "Protection from Magic",
+      "de": "Schutz vor Magie"
+    },
+    {
+      "id": 7428991,
+      "sname": "undeadhero",
+      "en": "Undead Heroes",
+      "de": "Untote Helden"
+    },
+    {
+      "id": 1115610980,
+      "sname": "unholypower",
+      "en": "Unholy Strength",
+      "de": "Unheilige Kraft"
+    },
+    {
+      "id": 1581748665,
+      "sname": "versteinern",
+      "en": "Gaze of the Basilisk",
+      "de": "Blick des Basilisken"
+    },
+    {
+      "id": 453503544,
+      "sname": "view_reality",
+      "en": "Gaze Upon Reality",
+      "de": "Blick in die Realität"
+    },
+    {
+      "id": 768298466,
+      "sname": "wdwpyramid_cerddor",
+      "en": "Song of the Gods",
+      "de": "Gesang der Götter"
+    },
+    {
+      "id": 1838392810,
+      "sname": "wdwpyramid_draig",
+      "en": "Power of the Gods",
+      "de": "Göttliche Macht"
+    },
+    {
+      "id": 1667172058,
+      "sname": "wdwpyramid_gwyrrd",
+      "en": "force of nature",
+      "de": "Kraft der Natur"
+    },
+    {
+      "id": 1784562560,
+      "sname": "wdwpyramid_illaun",
+      "en": "Dream of the gods",
+      "de": "Traum von den Göttern"
+    },
+    {
+      "id": 423730352,
+      "sname": "wdwpyramid_tybied",
+      "en": "Web of the Gods",
+      "de": "Göttliches Netz"
+    },
+    {
+      "id": 1348697999,
+      "sname": "windshield",
+      "en": "Air Shield",
+      "de": "Windschild"
+    },
+    {
+      "id": 228505418,
+      "sname": "wisps",
+      "en": "wisps",
+      "de": "wisps"
+    },
+    {
+      "id": 1552981778,
+      "sname": "wolfhowl",
+      "en": "Timber Wolves",
+      "de": "Wolfsgeheul"
+    },
+    {
+      "id": 228808064,
+      "sname": "worse",
+      "en": "Nightmare",
+      "de": "Alp"
+    },
+    {
+      "id": 583141705,
+      "sname": "wyrm_transformation",
+      "en": "Wyrmtransformation",
+      "de": "Wyrmtransformation"
+    }
+  ]
+}
