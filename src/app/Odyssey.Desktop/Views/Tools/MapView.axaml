@@ -51,7 +51,11 @@
         x:Name="HexMap"
         IsStandardPlane="{Binding IsStandardPlane}"
 		Season="{Binding Season}"
-        Regions="{Binding Regions}"
+        OccupiedRegions="{Binding OccupiedRegions}"
+        UnoccupiedRegions="{Binding UnoccupiedRegions}"
+        ActiveFactionIds="{Binding ActiveFactionIds}"
+        AlliedFactionIds="{Binding AlliedFactionIds}"
+        SelectedShip="{Binding SelectedShip, Mode=OneWay}"
 		SelectedRegion="{Binding SelectedRegion, Mode=TwoWay}"
         HorizontalAlignment="Stretch"
         VerticalAlignment="Stretch" />

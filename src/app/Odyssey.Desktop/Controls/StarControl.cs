@@ -3,80 +3,51 @@ using Avalonia.Automation;
 using Avalonia.Automation.Peers;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
-using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Shapes;
-using Avalonia.Data;
-using Avalonia.Media;
 
 namespace Odyssey.Controls;
 
 /// <summary>
-/// A toggleable star control (favorite/bookmark) inheriting from ToggleButton.
+/// A star button used to display and to change the bookmark state of the current selection.
+/// The star is filled ("starred") when <see cref="IsStarred"/> is true (see StarStyles.axaml).
+/// This control is a plain button: it has no internal checked state. The bookmark state belongs to the
+/// view model, which sets <see cref="IsStarred"/>; clicking the control only executes its command.
 /// </summary>
+[PseudoClasses(StarredPseudoClass)]
 [TemplatePart("PART_StarPresenter", typeof(Path))]
-public class StarControl : ToggleButton
+public class StarControl : Button
 {
-    private Path? _starPresenter;
+    private const string StarredPseudoClass = ":starred";
 
     /// <summary>
-    /// Defines the <see cref="StarFill"/> property.
+    /// Defines the <see cref="IsStarred"/> property.
     /// </summary>
-    public static readonly DirectProperty<StarControl, IBrush?> StarFillProperty =
-        AvaloniaProperty.RegisterDirect<StarControl, IBrush?>(
-            nameof(StarFill),
-            o => o.StarFill);
+    public static readonly StyledProperty<bool> IsStarredProperty =
+        AvaloniaProperty.Register<StarControl, bool>(nameof(IsStarred));
 
-    public IBrush? StarFill => GetStarFill();
-
-    public StarControl()
+    /// <summary>
+    /// Gets or sets whether the star is displayed as starred (filled), i.e. whether the current
+    /// selection is a bookmark.
+    /// </summary>
+    public bool IsStarred
     {
-        // When a new instance of the control is created, we need to update the star visible
-        //UpdateStars();
-    }
-
-    private IBrush? GetStarFill()
-    {
-        var key = IsChecked == true ? "StarControlSelectedBrush" : "StarControlUnselectedBrush";
-        return this.FindResource(key) as IBrush;
-    }
-
-    protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
-    {
-        base.OnApplyTemplate(e);
-
-        if (_starPresenter is not null)
-        {
-            _starPresenter.PointerReleased -= StarPresenter_PointerReleased;
-        }
-
-        _starPresenter = e.NameScope.Find("PART_StarPresenter") as Path;
-
-        if (_starPresenter != null)
-        {
-            _starPresenter.PointerReleased += StarPresenter_PointerReleased;
-        }
-    }
-
-    private void StarPresenter_PointerReleased(object? sender, Avalonia.Input.PointerReleasedEventArgs e)
-    {
-        // ToggleButton already handles IsChecked, but we can force toggle for custom visuals
-        //IsChecked = !IsChecked;
-        // Command is handled by ToggleButton, but you can add custom logic here if needed
-    }
-
-    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
-    {
-        base.OnPropertyChanged(change);
-
-        if (change.Property == IsCheckedProperty)
-        {
-            RaisePropertyChanged(StarFillProperty, null, StarFill);
-        }
+        get => GetValue(IsStarredProperty);
+        set => SetValue(IsStarredProperty, value);
     }
 
     static StarControl()
     {
-        // .Button or .Custom depending on your intent
         AutomationProperties.ControlTypeOverrideProperty.OverrideDefaultValue<StarControl>(AutomationControlType.Button);
+        IsStarredProperty.Changed.AddClassHandler<StarControl>((control, args) => control.UpdatePseudoClasses(args.GetNewValue<bool>()));
+    }
+
+    public StarControl()
+    {
+        UpdatePseudoClasses(IsStarred);
+    }
+
+    private void UpdatePseudoClasses(bool isStarred)
+    {
+        PseudoClasses.Set(StarredPseudoClass, isStarred);
     }
 }

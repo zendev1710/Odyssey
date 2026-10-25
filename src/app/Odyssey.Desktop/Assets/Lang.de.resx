@@ -1824,6 +1824,105 @@
   <data name="parm_hdr_map_season_images" xml:space="preserve">
     <value> Additional images depending on current season [DE]</value>
   </data>
+  <data name="parm_hdr_map_show_buildings" xml:space="preserve">
+    <value>Gebäude auf der Karte anzeigen</value>
+  </data>
+  <data name="parm_inf_map_show_buildings" xml:space="preserve">
+    <value>Zeichnet die Gebäude jeder Region, im Regionshexagon je nach Verwendung verteilt.</value>
+  </data>
+  <data name="parm_hdr_map_building_style" xml:space="preserve">
+    <value>Darstellung der Gebäude</value>
+  </data>
+  <data name="parm_inf_map_building_style" xml:space="preserve">
+    <value>Grafiken verwenden die Gebäudegrafiken, Symbole farbige Formen und Automatisch Grafiken mit Form als Ersatz.</value>
+  </data>
+  <data name="parm_key_building_style_auto" xml:space="preserve">
+    <value>Automatisch (Grafiken mit Symbol-Ersatz)</value>
+  </data>
+  <data name="parm_key_building_style_icons" xml:space="preserve">
+    <value>Grafiken</value>
+  </data>
+  <data name="parm_key_building_style_symbols" xml:space="preserve">
+    <value>Symbole</value>
+  </data>
+  <data name="parm_hdr_map_building_contrast" xml:space="preserve">
+    <value>Kontrast der Gebäude</value>
+  </data>
+  <data name="parm_inf_map_building_contrast" xml:space="preserve">
+    <value>Hintergrund hinter den Gebäudesymbolen, damit sie auf dem Gelände lesbar bleiben. Platte: helle Platte mit farbigem Rand; Nur Rand: Umriss ohne Hintergrund; Keiner: kein Hintergrund.</value>
+  </data>
+  <data name="parm_key_building_contrast_plate" xml:space="preserve">
+    <value>Platte (empfohlen)</value>
+  </data>
+  <data name="parm_key_building_contrast_rim" xml:space="preserve">
+    <value>Nur Rand</value>
+  </data>
+  <data name="parm_key_building_contrast_none" xml:space="preserve">
+    <value>Keiner</value>
+  </data>
+  <data name="parm_hdr_map_show_ships" xml:space="preserve">
+    <value>Schiffe auf der Karte anzeigen</value>
+  </data>
+  <data name="parm_inf_map_show_ships" xml:space="preserve">
+    <value>Zeichnet die Schiffe jeder Region an der Küste, an der sie angelegt haben.</value>
+  </data>
+  <data name="parm_hdr_map_ship_style" xml:space="preserve">
+    <value>Darstellung der Schiffe</value>
+  </data>
+  <data name="parm_inf_map_ship_style" xml:space="preserve">
+    <value>Bilder verwenden die vorgerenderten Schiffsgrafiken, Symbole kompakte Marker und Vektoren detaillierte Vektorsilhouetten.</value>
+  </data>
+  <data name="parm_key_ship_style_image" xml:space="preserve">
+    <value>Bilder</value>
+  </data>
+  <data name="parm_key_ship_style_symbol" xml:space="preserve">
+    <value>Symbole</value>
+  </data>
+  <data name="parm_key_ship_style_vector" xml:space="preserve">
+    <value>Vektoren</value>
+  </data>
+  <data name="parm_hdr_map_ship_route_mode" xml:space="preserve">
+    <value>Anzeige der Schiffsrouten</value>
+  </data>
+  <data name="parm_inf_map_ship_route_mode" xml:space="preserve">
+    <value>Wählen Sie, ob alle Routen, nur die Route des ausgewählten Schiffes oder nur Routen durch die ausgewählte Region gezeichnet werden. Routen werden nach Fraktionsverhältnis eingefärbt; die Route des ausgewählten Schiffes verwendet einen helleren Farbton und eine eigene Deckkraft.</value>
+  </data>
+  <data name="parm_key_ship_route_all" xml:space="preserve">
+    <value>Alle Routen</value>
+  </data>
+  <data name="parm_key_ship_route_selected_ship" xml:space="preserve">
+    <value>Nur ausgewähltes Schiff</value>
+  </data>
+  <data name="parm_key_ship_route_selected_region" xml:space="preserve">
+    <value>Nur ausgewählte Region</value>
+  </data>
+  <data name="parm_key_ship_route_none" xml:space="preserve">
+    <value>Keine</value>
+  </data>
+  <data name="parm_hdr_map_ship_route_opacity" xml:space="preserve">
+    <value>Deckkraft der Schiffsrouten (%)</value>
+  </data>
+  <data name="parm_inf_map_ship_route_opacity" xml:space="preserve">
+    <value>Deckkraft der bereits zurückgelegten Schiffsrouten (10–80 %). Niedrige Werte halten die Karte lesbar; zukünftige befohlene Routen werden darüber gezeichnet.</value>
+  </data>
+  <data name="parm_hdr_map_selected_ship_route_opacity" xml:space="preserve">
+    <value>Deckkraft der ausgewählten Route (%)</value>
+  </data>
+  <data name="parm_inf_map_selected_ship_route_opacity" xml:space="preserve">
+    <value>Deckkraft der Route des ausgewählten Schiffes (10–100 %). Die ausgewählte Route wird außerdem mit einem helleren Fraktionsfarbton, einer dickeren Linie und einem Halo gezeichnet.</value>
+  </data>
+  <data name="parm_hdr_map_show_region_names" xml:space="preserve">
+    <value>Regionsnamen anzeigen</value>
+  </data>
+  <data name="parm_inf_map_show_region_names" xml:space="preserve">
+    <value>Zeichnet den Namen jeder benannten Region auf der Karte.</value>
+  </data>
+  <data name="parm_hdr_map_region_name_banner" xml:space="preserve">
+    <value>Banner für Regionsnamen</value>
+  </data>
+  <data name="parm_inf_map_region_name_banner" xml:space="preserve">
+    <value>Zeichnet Regionsnamen in einem Goldbanner mit dunkler Kontur über allen anderen Kartenelementen.</value>
+  </data>
   <data name="parm_hdr_features_hide_in_progress" xml:space="preserve">
     <value>[DE]</value>
   </data>
@@ -1877,6 +1976,15 @@
   </data>
   <data name="mainmenu_view_map_center_globally" xml:space="preserve">
     <value>Center map globally [DE]</value>
+  </data>
+  <data name="mainmenu_view_map_show_all_ship_routes" xml:space="preserve">
+    <value>Alle Schiffsrouten anzeigen</value>
+  </data>
+  <data name="mainmenu_view_map_show_region_names" xml:space="preserve">
+    <value>Regionsnamen anzeigen</value>
+  </data>
+  <data name="mainmenu_view_map_region_name_banner" xml:space="preserve">
+    <value>Goldbanner für Regionsnamen</value>
   </data>
   <data name="mainmenu_view_win_minimap" xml:space="preserve">
     <value>Minikarte</value>
@@ -2105,6 +2213,9 @@
   </data>
   <data name="opt_confirmed_orders_tip" xml:space="preserve">
     <value>Bestätigten/unbestätigten status von einheitenbestellungen umschalten</value>
+  </data>
+  <data name="emapdetailspanel_node_ocean" xml:space="preserve">
+    <value>Ozean ({0},{1})</value>
   </data>
   <data name="emapdetailspanel_node_ships" xml:space="preserve">
     <value>Schiffe</value>

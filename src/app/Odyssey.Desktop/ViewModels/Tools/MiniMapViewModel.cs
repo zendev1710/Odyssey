@@ -1,19 +1,8 @@
-﻿using Avalonia.Controls;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DryIoc;
-using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
-using Odyssey.Models.Tools;
-using Odyssey.Services;
-using Prism.Events;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
-using static Odyssey.Models.Documents.CRDocument;
-using static Odyssey.Models.Documents.SimpleItemSelection;
 
 namespace Odyssey.ViewModels.Tools;
 
@@ -23,7 +12,7 @@ public partial class MiniMapViewModel : DocumentToolViewModelBase
 
     //public ObservableCollection<BookmarkModel> MiniMap { get; }
 
-    public MiniMapViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
+    public MiniMapViewModel() : base()
     {
         _selectedBookmarkIndex = -1;
         _selectedBookmarkText = string.Empty;
@@ -43,21 +32,19 @@ public partial class MiniMapViewModel : DocumentToolViewModelBase
         CollectData();
     }
 
-    protected override void OnSelectionChanged(ISelectionChange selectionChange)
+    protected override void OnSelectionChanged(IEntitySelection selection, SelectionChangeTypes selType, object? sender)
     {
-        // Exclude this selector from selection change events to avoid reentrancy issues
-        List<string> selectorIdsExcludeFilter = [Id];
-        List<string> selectorIdsIncludeFilter = [];
-        if (ShouldIgnoreSelectionChangedEvent(selectionChange, selectorIdsIncludeFilter, selectorIdsExcludeFilter))
-        {
-            return;
-        }
+        if (ReferenceEquals(sender, this)) return;
 
-        ISelection sel = selectionChange.Selection;
-        if (sel.HasRegion() && !IsSelectedRegion(sel))
+        bool regionChanged = selType.HasFlag(SelectionChangeTypes.Region);
+        bool regionSelected = selection.IsRegionSelected();
+
+        Debug.WriteLine($"[VM-MINI-MAP] OnSelectionChanged: region changed={regionChanged}, region selected={regionSelected}");
+
+        // TODO: if region has changed, should move the square centered on the selected region
+        if (regionChanged)
         {
-            SetSelection(sel);
-            string label = Selection.Region!.GetUILabel();
+            string label = selection.Region!.DataBlock.GetUILabel();
             /*
             if (MiniMap.FirstOrDefault(b => b.Label!.StartsWith(label)) is BookmarkModel Bookmark)
             {

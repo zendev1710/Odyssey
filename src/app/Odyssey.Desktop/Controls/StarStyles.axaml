@@ -6,20 +6,20 @@
     <StackPanel Width="100" Spacing="24">
       <ThemeVariantScope RequestedThemeVariant="Default">
         <StackPanel Spacing="10" Background="{DynamicResource SystemRegionBrush}">
-          <controls:StarControl IsChecked="False" Width="18" Height="18" IsEnabled="True"/>
-          <controls:StarControl IsChecked="True" />
+          <controls:StarControl IsStarred="False" Width="18" Height="18" IsEnabled="True"/>
+          <controls:StarControl IsStarred="True" />
         </StackPanel>
       </ThemeVariantScope>
       <ThemeVariantScope RequestedThemeVariant="Light">
         <StackPanel Spacing="10" Background="{DynamicResource SystemRegionBrush}">
-          <controls:StarControl IsChecked="False" />
-          <controls:StarControl IsChecked="True" />
+          <controls:StarControl IsStarred="False" />
+          <controls:StarControl IsStarred="True" />
         </StackPanel>
       </ThemeVariantScope>
       <ThemeVariantScope RequestedThemeVariant="Dark">
         <StackPanel Spacing="10" Background="{DynamicResource SystemRegionBrush}">
-          <controls:StarControl IsChecked="False" />
-          <controls:StarControl IsChecked="True" />
+          <controls:StarControl IsStarred="False" />
+          <controls:StarControl IsStarred="True" />
         </StackPanel>
       </ThemeVariantScope>
     </StackPanel>
@@ -31,49 +31,48 @@
       <SolidColorBrush x:Key="StarControlSelectedBrush" Color="Red"/>
       <SolidColorBrush x:Key="StarControlUnselectedBrush" Color="Transparent"/>
 	  <SolidColorBrush x:Key="StarControlStrokeBrush" Color="White"/>
-	  <SolidColorBrush x:Key="StarControlPointerOverBrush" Color="Gray"/>
-	  <SolidColorBrush x:Key="StarControlCheckedPointerOverBrush" Color="#FFD3D3D3"/>
     </ResourceDictionary>
     <ResourceDictionary x:Key="Light">
       <SolidColorBrush x:Key="StarControlSelectedBrush" Color="Red"/>
       <SolidColorBrush x:Key="StarControlUnselectedBrush" Color="Transparent"/>
 	  <SolidColorBrush x:Key="StarControlStrokeBrush" Color="Black"/>
-	  <SolidColorBrush x:Key="StarControlPointerOverBrush" Color="Gray"/>
-	  <SolidColorBrush x:Key="StarControlCheckedPointerOverBrush" Color="#FFD3D3D3"/>	
     </ResourceDictionary>
     <ResourceDictionary x:Key="Dark">
       <SolidColorBrush x:Key="StarControlSelectedBrush" Color="Red"/>
       <SolidColorBrush x:Key="StarControlUnselectedBrush" Color="Transparent"/>
 	  <SolidColorBrush x:Key="StarControlStrokeBrush" Color="White"/>
-	  <SolidColorBrush x:Key="StarControlPointerOverBrush" Color="Gray"/>
-	  <SolidColorBrush x:Key="StarControlCheckedPointerOverBrush" Color="#FFD3D3D3"/>
     </ResourceDictionary>
   </ResourceDictionary.ThemeDictionaries>
 
   <ControlTheme x:Key="{x:Type controls:StarControl}" TargetType="controls:StarControl">
+    <Setter Property="Cursor" Value="Hand" />
     <Setter Property="Template">
-		<ControlTemplate>
-			<DataValidationErrors>
-              <DataValidationErrors.Styles>
-                <Style Selector="Path#PART_StarPresenter">
-                  <Setter Property="Data" Value="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                  <Setter Property="Stroke" Value="{DynamicResource StarControlStrokeBrush}" />
-                  <Setter Property="StrokeThickness" Value="2" />
-                  <Setter Property="Stretch" Value="Uniform" />
-                  <Setter Property="Fill" Value="{DynamicResource StarControlUnselectedBrush}" />
-                </Style>
-                <Style Selector="Path#PART_StarPresenter:checked">
-                  <Setter Property="Fill" Value="{DynamicResource StarControlSelectedBrush}" />
-                </Style>
-                <Style Selector="Path#PART_StarPresenter:pointerover">
-                  <Setter Property="Fill" Value="{DynamicResource StarControlPointerOverBrush}" />
-                </Style>
-              </DataValidationErrors.Styles>
-              <Path x:Name="PART_StarPresenter"
-                    Stretch="Uniform"
-                    Fill="{TemplateBinding StarFill}" />
-        </DataValidationErrors>
+      <ControlTemplate>
+        <!-- Transparent background (and not null) so that the whole control area is clickable,
+             whatever the fill of the star is. -->
+        <Border Background="Transparent">
+          <DataValidationErrors>
+            <Path x:Name="PART_StarPresenter"
+                  Data="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                  Stretch="Uniform" />
+          </DataValidationErrors>
+        </Border>
       </ControlTemplate>
     </Setter>
+    <!--
+      The appearance of the star only depends on the state of the model (IsStarred): an empty star
+      means that the current selection is not a bookmark, a filled star that it is.
+      Note: the fill must not be set on the Path itself, because a value set there would always win
+      over the styles below (and the star would then never look filled).
+      There is intentionally no pointerover/disabled style: the star must not change color on hover.
+    -->
+    <Style Selector="^ /template/ Path#PART_StarPresenter">
+      <Setter Property="Stroke" Value="{DynamicResource StarControlStrokeBrush}" />
+      <Setter Property="StrokeThickness" Value="2" />
+      <Setter Property="Fill" Value="{DynamicResource StarControlUnselectedBrush}" />
+    </Style>
+    <Style Selector="^:starred /template/ Path#PART_StarPresenter">
+      <Setter Property="Fill" Value="{DynamicResource StarControlSelectedBrush}" />
+    </Style>
   </ControlTheme>
 </ResourceDictionary>

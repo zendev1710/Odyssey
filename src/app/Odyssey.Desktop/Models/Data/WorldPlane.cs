@@ -24,7 +24,8 @@ namespace Odyssey.Models.Data
         public string Name { get; }
         public PlaneType Type { get; }
 
-        public Dictionary<int, DataBlock> Regions { get; private set; } = [];
+        public Dictionary<int, RegionModel> OccupiedRegions { get; private set; } = [];
+        public Dictionary<int, RegionModel> UnoccupiedRegions { get; private set; } = [];
 
         public WorldPlane(PlaneType planeType)
         {
@@ -41,15 +42,12 @@ namespace Odyssey.Models.Data
         // Mutable rectangle
         private Rectangle _rectangle = new();
 
-        /// <summary>
-        /// Adds a region to the world plane if it does not already exist.
-        /// At this moment, regions must be added in a plane only for special planes (astral...).
-        /// </summary>
-        /// <param name="region">region data block</param>
-        /// <param name="regionId">region id</param>
-        public void AddRegion(DataBlock region)
+        public void AddRegion(RegionModel regionModel, bool isOccupied)
         {
-            int planeId = region.GetId();
+            Debug.WriteLine($"[DOCUMENT] Add region {regionModel} occupied={isOccupied}");
+            regionModel.CollectData();
+            RegionDataBlock? region = regionModel.Region;
+            int planeId = region!.GetId();
             if (planeId == (int)Type)
             {
                 int x = region.GetX();
@@ -69,14 +67,27 @@ namespace Odyssey.Models.Data
                     _rectangle.Y = Math.Min(_rectangle.Y, y);
                     _rectangle.Height = Math.Max(_rectangle.Height, y - _rectangle.Y + 1);
                 }
-                if (!Regions.ContainsKey(regionId))
+                if (isOccupied)
                 {
-                    Regions.Add(regionId, region);
-
+                    if (!OccupiedRegions.ContainsKey(regionId))
+                    {
+                        OccupiedRegions.Add(regionId, regionModel);
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"[WORLDPLANE] populated region {regionModel} ({regionId}) already exists !!!");
+                    }
                 }
                 else
                 {
-                    Debug.WriteLine($"[WORLDPLANE] region {region} ({regionId}) already exists !!!");
+                    if (!UnoccupiedRegions.ContainsKey(regionId))
+                    {
+                        UnoccupiedRegions.Add(regionId, regionModel);
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"[WORLDPLANE] empty region {regionModel} ({regionId}) already exists !!!");
+                    }
                 }
             }
             else

@@ -1824,6 +1824,105 @@
   <data name="parm_hdr_map_season_images" xml:space="preserve">
     <value>Images spécifiques selon la saison</value>
   </data>
+  <data name="parm_hdr_map_show_buildings" xml:space="preserve">
+    <value>Afficher les bâtiments sur la carte</value>
+  </data>
+  <data name="parm_inf_map_show_buildings" xml:space="preserve">
+    <value>Dessine les bâtiments présents dans chaque région, répartis dans l'hexagone selon leur usage.</value>
+  </data>
+  <data name="parm_hdr_map_building_style" xml:space="preserve">
+    <value>Style d'affichage des bâtiments</value>
+  </data>
+  <data name="parm_inf_map_building_style" xml:space="preserve">
+    <value>Les icônes utilisent les graphiques disponibles, les symboles des formes colorées, et automatique utilise les icônes avec un symbole de secours.</value>
+  </data>
+  <data name="parm_key_building_style_auto" xml:space="preserve">
+    <value>Automatique (icônes avec symbole de secours)</value>
+  </data>
+  <data name="parm_key_building_style_icons" xml:space="preserve">
+    <value>Icônes</value>
+  </data>
+  <data name="parm_key_building_style_symbols" xml:space="preserve">
+    <value>Symboles</value>
+  </data>
+  <data name="parm_hdr_map_building_contrast" xml:space="preserve">
+    <value>Contraste des bâtiments</value>
+  </data>
+  <data name="parm_inf_map_building_contrast" xml:space="preserve">
+    <value>Fond dessiné derrière les icônes de bâtiments pour qu'elles restent lisibles sur le terrain. Pastille : fond clair avec liseré coloré ; Liseré seul : contour sans fond ; Aucun : pas de fond.</value>
+  </data>
+  <data name="parm_key_building_contrast_plate" xml:space="preserve">
+    <value>Pastille (recommandé)</value>
+  </data>
+  <data name="parm_key_building_contrast_rim" xml:space="preserve">
+    <value>Liseré seul</value>
+  </data>
+  <data name="parm_key_building_contrast_none" xml:space="preserve">
+    <value>Aucun</value>
+  </data>
+  <data name="parm_hdr_map_show_ships" xml:space="preserve">
+    <value>Afficher les navires sur la carte</value>
+  </data>
+  <data name="parm_inf_map_show_ships" xml:space="preserve">
+    <value>Dessine les navires présents dans chaque région, sur la côte où ils sont amarrés.</value>
+  </data>
+  <data name="parm_hdr_map_ship_style" xml:space="preserve">
+    <value>Style d'affichage des navires</value>
+  </data>
+  <data name="parm_inf_map_ship_style" xml:space="preserve">
+    <value>Les images utilisent les graphiques pré-rendus, les symboles des marqueurs compacts et les vecteurs des silhouettes vectorielles détaillées.</value>
+  </data>
+  <data name="parm_key_ship_style_image" xml:space="preserve">
+    <value>Images</value>
+  </data>
+  <data name="parm_key_ship_style_symbol" xml:space="preserve">
+    <value>Symboles</value>
+  </data>
+  <data name="parm_key_ship_style_vector" xml:space="preserve">
+    <value>Vecteurs</value>
+  </data>
+  <data name="parm_hdr_map_ship_route_mode" xml:space="preserve">
+    <value>Affichage des trajets des navires</value>
+  </data>
+  <data name="parm_inf_map_ship_route_mode" xml:space="preserve">
+    <value>Choisissez d'afficher tous les trajets, uniquement celui du navire sélectionné, ou uniquement ceux qui passent par la région sélectionnée. Les trajets sont colorés selon la relation de faction ; celui du navire sélectionné utilise une teinte plus claire et une opacité dédiée.</value>
+  </data>
+  <data name="parm_key_ship_route_all" xml:space="preserve">
+    <value>Tous les trajets</value>
+  </data>
+  <data name="parm_key_ship_route_selected_ship" xml:space="preserve">
+    <value>Navire sélectionné uniquement</value>
+  </data>
+  <data name="parm_key_ship_route_selected_region" xml:space="preserve">
+    <value>Région sélectionnée uniquement</value>
+  </data>
+  <data name="parm_key_ship_route_none" xml:space="preserve">
+    <value>Aucun</value>
+  </data>
+  <data name="parm_hdr_map_ship_route_opacity" xml:space="preserve">
+    <value>Opacité des trajets des navires (%)</value>
+  </data>
+  <data name="parm_inf_map_ship_route_opacity" xml:space="preserve">
+    <value>Opacité des trajets déjà effectués (10 à 80 %). Une valeur faible garde la carte lisible ; les futurs trajets ordonnés seront dessinés par-dessus.</value>
+  </data>
+  <data name="parm_hdr_map_selected_ship_route_opacity" xml:space="preserve">
+    <value>Opacité du trajet sélectionné (%)</value>
+  </data>
+  <data name="parm_inf_map_selected_ship_route_opacity" xml:space="preserve">
+    <value>Opacité du trajet du navire sélectionné (10 à 100 %). Le trajet sélectionné est aussi dessiné avec une teinte de faction plus claire, une ligne plus épaisse et un halo.</value>
+  </data>
+  <data name="parm_hdr_map_show_region_names" xml:space="preserve">
+    <value>Afficher les noms des régions</value>
+  </data>
+  <data name="parm_inf_map_show_region_names" xml:space="preserve">
+    <value>Dessine le nom de chaque région nommée sur la carte.</value>
+  </data>
+  <data name="parm_hdr_map_region_name_banner" xml:space="preserve">
+    <value>Bandeau des noms de région</value>
+  </data>
+  <data name="parm_inf_map_region_name_banner" xml:space="preserve">
+    <value>Affiche les noms de région dans un bandeau or avec un liseré sombre, au-dessus de tous les autres éléments de la carte.</value>
+  </data>
   <data name="parm_hdr_features_hide_in_progress" xml:space="preserve">
     <value>Fonctionnalités en cours d'implémentation masquées</value>
   </data>
@@ -1877,6 +1976,15 @@
   </data>
   <data name="mainmenu_view_map_center_globally" xml:space="preserve">
     <value>Centrer la carte globalement</value>
+  </data>
+  <data name="mainmenu_view_map_show_all_ship_routes" xml:space="preserve">
+    <value>Afficher tous les trajets des navires</value>
+  </data>
+  <data name="mainmenu_view_map_show_region_names" xml:space="preserve">
+    <value>Afficher les noms des régions</value>
+  </data>
+  <data name="mainmenu_view_map_region_name_banner" xml:space="preserve">
+    <value>Bandeau or pour les noms des régions</value>
   </data>
   <data name="mainmenu_view_win_minimap" xml:space="preserve">
     <value>Minicarte</value>
@@ -2105,6 +2213,9 @@
   </data>
   <data name="opt_confirmed_orders_tip" xml:space="preserve">
     <value>Bascule le statut confirmés/non confirmés des ordres de l'unité</value>
+  </data>
+  <data name="emapdetailspanel_node_ocean" xml:space="preserve">
+    <value>Océan ({0},{1})</value>
   </data>
   <data name="emapdetailspanel_node_ships" xml:space="preserve">
     <value>Navires</value>

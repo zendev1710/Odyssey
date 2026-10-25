@@ -1,12 +1,9 @@
-﻿using Avalonia.Controls;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Odyssey.Extensions;
 using Odyssey.Models;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
-using Odyssey.Services;
 using Odyssey.Utils;
-using Prism.Events;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -23,7 +20,10 @@ public partial class MapViewModel : DocumentToolViewModelBase/*, IRecipient<Cent
     bool _isDragging;
 
     [ObservableProperty]
-    DataBlock? _selectedRegion;
+    RegionModel? _selectedRegion;
+
+    [ObservableProperty]
+    ShipModel? _selectedShip;
 
     [ObservableProperty]
     Seasons _season = Seasons.UNKNOWN;
@@ -40,33 +40,54 @@ public partial class MapViewModel : DocumentToolViewModelBase/*, IRecipient<Cent
     //[ObservableCollection]
     public ObservableCollection<WorldPlane> Planes { get; } = [];
 
-    partial void OnSelectedRegionChanged(DataBlock? oldValue, DataBlock? newValue)
+    // Set to true while the selected region is updated from an incoming selection,
+    // so that OnSelectedRegionChanged does not send the selection back.
+    private bool _isUpdatingSelection;
+
+    partial void OnSelectedRegionChanged(RegionModel? oldValue, RegionModel? newValue)
     {
+        // Do not send the selection back when the region is only being synchronized with
+        // the current selection: it would override the selected item (unit/ship/building)
+        // with a region-only selection.
+        if (_isUpdatingSelection)
+        {
+            return;
+        }
+
         if (oldValue != newValue && newValue != null)
         {
-            ISelection selection = new SimpleItemSelection(item: newValue, region: newValue, faction: null);
-            if (IsSelectedRegion(selection))
-            {
-                return;
-            }
-            SetSelection(selection);
+            IEntitySelection selection = new EntitySelection(item: newValue, region: newValue);
             // Selection changed event will be sent only when a region has been selected directly in the map (mouse click...)
             SendSelectionChangedEvent(selection);
         }
     }
 
-    public IEnumerable<KeyValuePair<int, DataBlock>> Regions
+    public IEnumerable<KeyValuePair<int, RegionModel>> OccupiedRegions
     {
-        get => _regions;
+        get => _populatedRegions;
         set
         {
-            if (!EqualityComparer<IEnumerable<KeyValuePair<int, DataBlock>>>.Default.Equals(_regions, value))
+            if (!EqualityComparer<IEnumerable<KeyValuePair<int, RegionModel>>>.Default.Equals(_populatedRegions, value))
             {
-                _regions = value;
-                OnPropertyChanged(nameof(Regions));
+                _populatedRegions = value;
+                OnPropertyChanged(nameof(OccupiedRegions));
             }
         }
     }
+
+    public IEnumerable<KeyValuePair<int, RegionModel>> UnoccupiedRegions
+    {
+        get => _emptyRegions;
+        set
+        {
+            if (!EqualityComparer<IEnumerable<KeyValuePair<int, RegionModel>>>.Default.Equals(_emptyRegions, value))
+            {
+                _emptyRegions = value;
+                OnPropertyChanged(nameof(UnoccupiedRegions));
+            }
+        }
+    }
+
 
     public IEnumerable<KeyValuePair<int, ShipModel>> Ships
     {
@@ -94,25 +115,59 @@ public partial class MapViewModel : DocumentToolViewModelBase/*, IRecipient<Cent
         }
     }
 
-    public IEnumerable<KeyValuePair<int, RegionModel>> RegionsWithContainer
+    public IEnumerable<KeyValuePair<int, RegionModel>> RegionsWithStructure
     {
-        get => _regionsWithContainer;
+        get => _regionsWithStructure;
         set
         {
-            if (!EqualityComparer<IEnumerable<KeyValuePair<int, RegionModel>>>.Default.Equals(_regionsWithContainer, value))
+            if (!EqualityComparer<IEnumerable<KeyValuePair<int, RegionModel>>>.Default.Equals(_regionsWithStructure, value))
             {
-                _regionsWithContainer = value;
-                OnPropertyChanged(nameof(RegionsWithContainer));
+                _regionsWithStructure = value;
+                OnPropertyChanged(nameof(RegionsWithStructure));
             }
         }
     }
 
-    private IEnumerable<KeyValuePair<int, DataBlock>> _regions = [];
+    private IEnumerable<KeyValuePair<int, RegionModel>> _populatedRegions = [];
+    private IEnumerable<KeyValuePair<int, RegionModel>> _emptyRegions = [];
     private IEnumerable<KeyValuePair<int, ShipModel>> _ships = [];
     private IEnumerable<KeyValuePair<int, BuildingModel>> _buildings = [];
-    private IEnumerable<KeyValuePair<int, RegionModel>> _regionsWithContainer = [];
+    private IEnumerable<KeyValuePair<int, RegionModel>> _regionsWithStructure = [];
 
-    public MapViewModel(IEventAggregator? eventAggregator = null, IActiveDocumentService? documentService = null) : base(eventAggregator, documentService)
+    // Ids of the factions the player can play (allies may have several).
+    // Used by the map to render castles owned by the player differently.
+    public IReadOnlyCollection<int> ActiveFactionIds
+    {
+        get => _activeFactionIds;
+        set
+        {
+            if (!EqualityComparer<IReadOnlyCollection<int>>.Default.Equals(_activeFactionIds, value))
+            {
+                _activeFactionIds = value;
+                OnPropertyChanged(nameof(ActiveFactionIds));
+            }
+        }
+    }
+
+    private IReadOnlyCollection<int> _activeFactionIds = [];
+
+    /// <summary>Ids of the factions allied to one of the active factions.</summary>
+    public IReadOnlyCollection<int> AlliedFactionIds
+    {
+        get => _alliedFactionIds;
+        set
+        {
+            if (!EqualityComparer<IReadOnlyCollection<int>>.Default.Equals(_alliedFactionIds, value))
+            {
+                _alliedFactionIds = value;
+                OnPropertyChanged(nameof(AlliedFactionIds));
+            }
+        }
+    }
+
+    private IReadOnlyCollection<int> _alliedFactionIds = [];
+
+    public MapViewModel() : base()
     {
     }
 
@@ -126,21 +181,27 @@ public partial class MapViewModel : DocumentToolViewModelBase/*, IRecipient<Cent
         }
     }
 
-    protected override void OnSelectionChanged(ISelectionChange selectionChange)
+    protected override void OnSelectionChanged(IEntitySelection selection, SelectionChangeTypes selType, object? sender)
     {
-        List<string> selectorIdsExcludeFilter = [Id];
-        List<string> selectorIdsIncludeFilter = [Ids.Explorer];
-        if (ShouldIgnoreSelectionChangedEvent(selectionChange, selectorIdsIncludeFilter, selectorIdsExcludeFilter))
-        {
+        if (ReferenceEquals(sender, this))
             return;
-        }
 
-        ISelection sel = selectionChange.Selection;
-        if (sel.IsRegionSelected() && !IsSelectedRegion(sel))
+        // Keep track of the selected ship so its route can be highlighted on the map.
+        SelectedShip = selection.HasShip() ? selection.Item as ShipModel : null;
+
+        // TODO
+        if (selection.IsRegionSelected() /*&& !IsSelectedRegion(sel)*/)
         {
             // Update the selected region before setting SelectedRegion, in order to not send back the selection changed event
-            SetSelection(sel);
-            SelectedRegion = sel?.Region!;
+            _isUpdatingSelection = true;
+            try
+            {
+                SelectedRegion = selection.Region/*!.DataBlock as RegionDataBlock*/;
+            }
+            finally
+            {
+                _isUpdatingSelection = false;
+            }
         }
     }
 
@@ -179,16 +240,26 @@ public partial class MapViewModel : DocumentToolViewModelBase/*, IRecipient<Cent
     /// </summary>
     private void RebuildMap()
     {
-        IsStandardPlane = SelectedPlane is null || ((int)SelectedPlane.Type).IsStandardPlane();
-        Regions = IsStandardPlane ? Report.Regions : SelectedPlane!.Regions;
+        if (SelectedPlane is null)
+        {
+            Clear();
+            return;
+        }
+        IsStandardPlane = ((int)SelectedPlane.Type).IsStandardPlane();
+        OccupiedRegions = SelectedPlane.OccupiedRegions;
+        UnoccupiedRegions = SelectedPlane.UnoccupiedRegions;
+        ActiveFactionIds = Report.ActiveFactionIds;
+        AlliedFactionIds = Report.AlliedFactionIds;
         Season = DateUtils.GetGameSeason(Report.Turn);
-        Debug.WriteLine($"[MAPVIEWMODEL] RebuildMap::regions number: {Regions.Count()} Plane: {SelectedPlane?.Name}");
+        Debug.WriteLine($"[MAPVIEWMODEL] RebuildMap::regions - with-people: {OccupiedRegions.Count()} without-people: {UnoccupiedRegions.Count()} Plane: {SelectedPlane.Name}");
     }
 
     private void Clear()
     {
         // LATER: check about Selection that should be cleared also
-        Regions = [];
+        OccupiedRegions = [];
+        UnoccupiedRegions = [];
+        SelectedShip = null;
         Season = 0;
     }
 }

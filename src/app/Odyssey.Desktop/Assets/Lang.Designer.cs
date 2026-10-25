@@ -2293,6 +2293,15 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Alliance.
+        /// </summary>
+        public static string faction_name_alliance {
+            get {
+                return ResourceManager.GetString("faction_name_alliance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Faction people.
         /// </summary>
         public static string Faction_people {
@@ -2824,6 +2833,33 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show all ship routes.
+        /// </summary>
+        public static string mainmenu_view_map_show_all_ship_routes {
+            get {
+                return ResourceManager.GetString("mainmenu_view_map_show_all_ship_routes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show region names.
+        /// </summary>
+        public static string mainmenu_view_map_show_region_names {
+            get {
+                return ResourceManager.GetString("mainmenu_view_map_show_region_names", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gold banner for region names.
+        /// </summary>
+        public static string mainmenu_view_map_region_name_banner {
+            get {
+                return ResourceManager.GetString("mainmenu_view_map_region_name_banner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Panels.
         /// </summary>
         public static string mainmenu_view_panels {
@@ -3247,11 +3283,65 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Building contrast.
+        /// </summary>
+        public static string parm_hdr_map_building_contrast {
+            get {
+                return ResourceManager.GetString("parm_hdr_map_building_contrast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Building display style.
+        /// </summary>
+        public static string parm_hdr_map_building_style {
+            get {
+                return ResourceManager.GetString("parm_hdr_map_building_style", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to  Additional images depending on current season.
         /// </summary>
         public static string parm_hdr_map_season_images {
             get {
                 return ResourceManager.GetString("parm_hdr_map_season_images", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ship route display.
+        /// </summary>
+        public static string parm_hdr_map_ship_route_mode {
+            get {
+                return ResourceManager.GetString("parm_hdr_map_ship_route_mode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ship display style.
+        /// </summary>
+        public static string parm_hdr_map_ship_style {
+            get {
+                return ResourceManager.GetString("parm_hdr_map_ship_style", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display buildings on the map.
+        /// </summary>
+        public static string parm_hdr_map_show_buildings {
+            get {
+                return ResourceManager.GetString("parm_hdr_map_show_buildings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display ships on the map.
+        /// </summary>
+        public static string parm_hdr_map_show_ships {
+            get {
+                return ResourceManager.GetString("parm_hdr_map_show_ships", resourceCulture);
             }
         }
         
@@ -3301,6 +3391,15 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The active faction&apos;s units are the first elements of the region node..
+        /// </summary>
+        public static string parm_inf_explorer_active_faction_units_at_top {
+            get {
+                return ResourceManager.GetString("parm_inf_explorer_active_faction_units_at_top", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Will be taken into account at the next document opening.
         /// </summary>
         public static string parm_inf_explorer_expand_tree_on_load {
@@ -3337,11 +3436,65 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Backdrop drawn behind building icons so they stay readable over the terrain. Plate: light plate with a colored rim; Rim only: outline without background; None: no backdrop..
+        /// </summary>
+        public static string parm_inf_map_building_contrast {
+            get {
+                return ResourceManager.GetString("parm_inf_map_building_contrast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Icons use the building graphics when available, symbols use colored shapes, and automatic uses icons with a shape fallback..
+        /// </summary>
+        public static string parm_inf_map_building_style {
+            get {
+                return ResourceManager.GetString("parm_inf_map_building_style", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Will be taken into account at the next document opening.
         /// </summary>
         public static string parm_inf_map_season_images {
             get {
                 return ResourceManager.GetString("parm_inf_map_season_images", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose whether all ship routes, only the selected ship&apos;s route, or only routes passing through the selected region are drawn. Routes are colored by faction relation..
+        /// </summary>
+        public static string parm_inf_map_ship_route_mode {
+            get {
+                return ResourceManager.GetString("parm_inf_map_ship_route_mode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Images use the pre-rendered ship graphics, Symbols use compact markers, and Vectors use detailed vector silhouettes..
+        /// </summary>
+        public static string parm_inf_map_ship_style {
+            get {
+                return ResourceManager.GetString("parm_inf_map_ship_style", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Draw the buildings present in each region, distributed inside the region hexagon according to their use..
+        /// </summary>
+        public static string parm_inf_map_show_buildings {
+            get {
+                return ResourceManager.GetString("parm_inf_map_show_buildings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Draw the ships present in each region, on the coast where they are docked..
+        /// </summary>
+        public static string parm_inf_map_show_ships {
+            get {
+                return ResourceManager.GetString("parm_inf_map_show_ships", resourceCulture);
             }
         }
         
@@ -3382,6 +3535,60 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        public static string parm_key_building_contrast_none {
+            get {
+                return ResourceManager.GetString("parm_key_building_contrast_none", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plate (recommended).
+        /// </summary>
+        public static string parm_key_building_contrast_plate {
+            get {
+                return ResourceManager.GetString("parm_key_building_contrast_plate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rim only.
+        /// </summary>
+        public static string parm_key_building_contrast_rim {
+            get {
+                return ResourceManager.GetString("parm_key_building_contrast_rim", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatic (icons with symbol fallback).
+        /// </summary>
+        public static string parm_key_building_style_auto {
+            get {
+                return ResourceManager.GetString("parm_key_building_style_auto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Icons.
+        /// </summary>
+        public static string parm_key_building_style_icons {
+            get {
+                return ResourceManager.GetString("parm_key_building_style_icons", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Symbols.
+        /// </summary>
+        public static string parm_key_building_style_symbols {
+            get {
+                return ResourceManager.GetString("parm_key_building_style_symbols", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to English.
         /// </summary>
         public static string parm_key_lang_english {
@@ -3405,6 +3612,69 @@ namespace Odyssey.Assets {
         public static string parm_key_lang_german {
             get {
                 return ResourceManager.GetString("parm_key_lang_german", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All routes.
+        /// </summary>
+        public static string parm_key_ship_route_all {
+            get {
+                return ResourceManager.GetString("parm_key_ship_route_all", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        public static string parm_key_ship_route_none {
+            get {
+                return ResourceManager.GetString("parm_key_ship_route_none", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected region only.
+        /// </summary>
+        public static string parm_key_ship_route_selected_region {
+            get {
+                return ResourceManager.GetString("parm_key_ship_route_selected_region", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected ship only.
+        /// </summary>
+        public static string parm_key_ship_route_selected_ship {
+            get {
+                return ResourceManager.GetString("parm_key_ship_route_selected_ship", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Images.
+        /// </summary>
+        public static string parm_key_ship_style_image {
+            get {
+                return ResourceManager.GetString("parm_key_ship_style_image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Symbols.
+        /// </summary>
+        public static string parm_key_ship_style_symbol {
+            get {
+                return ResourceManager.GetString("parm_key_ship_style_symbol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vectors.
+        /// </summary>
+        public static string parm_key_ship_style_vector {
+            get {
+                return ResourceManager.GetString("parm_key_ship_style_vector", resourceCulture);
             }
         }
         

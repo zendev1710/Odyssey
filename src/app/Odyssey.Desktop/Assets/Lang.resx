@@ -1824,6 +1824,105 @@
   <data name="parm_hdr_map_season_images" xml:space="preserve">
     <value> Additional images depending on current season</value>
   </data>
+  <data name="parm_hdr_map_show_buildings" xml:space="preserve">
+    <value>Display buildings on the map</value>
+  </data>
+  <data name="parm_inf_map_show_buildings" xml:space="preserve">
+    <value>Draw the buildings present in each region, distributed inside the region hexagon according to their use.</value>
+  </data>
+  <data name="parm_hdr_map_building_style" xml:space="preserve">
+    <value>Building display style</value>
+  </data>
+  <data name="parm_inf_map_building_style" xml:space="preserve">
+    <value>Icons use the building graphics when available, symbols use colored shapes, and automatic uses icons with a shape fallback.</value>
+  </data>
+  <data name="parm_key_building_style_auto" xml:space="preserve">
+    <value>Automatic (icons with symbol fallback)</value>
+  </data>
+  <data name="parm_key_building_style_icons" xml:space="preserve">
+    <value>Icons</value>
+  </data>
+  <data name="parm_key_building_style_symbols" xml:space="preserve">
+    <value>Symbols</value>
+  </data>
+  <data name="parm_hdr_map_building_contrast" xml:space="preserve">
+    <value>Building contrast</value>
+  </data>
+  <data name="parm_inf_map_building_contrast" xml:space="preserve">
+    <value>Backdrop drawn behind building icons so they stay readable over the terrain. Plate: light plate with a colored rim; Rim only: outline without background; None: no backdrop.</value>
+  </data>
+  <data name="parm_key_building_contrast_plate" xml:space="preserve">
+    <value>Plate (recommended)</value>
+  </data>
+  <data name="parm_key_building_contrast_rim" xml:space="preserve">
+    <value>Rim only</value>
+  </data>
+  <data name="parm_key_building_contrast_none" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="parm_hdr_map_show_ships" xml:space="preserve">
+    <value>Display ships on the map</value>
+  </data>
+  <data name="parm_inf_map_show_ships" xml:space="preserve">
+    <value>Draw the ships present in each region, on the coast where they are docked.</value>
+  </data>
+  <data name="parm_hdr_map_ship_style" xml:space="preserve">
+    <value>Ship display style</value>
+  </data>
+  <data name="parm_inf_map_ship_style" xml:space="preserve">
+    <value>Images use the pre-rendered ship graphics, Symbols use compact markers, and Vectors use detailed vector silhouettes.</value>
+  </data>
+  <data name="parm_key_ship_style_image" xml:space="preserve">
+    <value>Images</value>
+  </data>
+  <data name="parm_key_ship_style_symbol" xml:space="preserve">
+    <value>Symbols</value>
+  </data>
+  <data name="parm_key_ship_style_vector" xml:space="preserve">
+    <value>Vectors</value>
+  </data>
+  <data name="parm_hdr_map_ship_route_mode" xml:space="preserve">
+    <value>Ship route display</value>
+  </data>
+  <data name="parm_inf_map_ship_route_mode" xml:space="preserve">
+    <value>Choose whether all ship routes, only the selected ship's route, or only routes passing through the selected region are drawn. Routes are colored by faction relation; the selected ship's route uses a brighter shade and a dedicated opacity.</value>
+  </data>
+  <data name="parm_key_ship_route_all" xml:space="preserve">
+    <value>All routes</value>
+  </data>
+  <data name="parm_key_ship_route_selected_ship" xml:space="preserve">
+    <value>Selected ship only</value>
+  </data>
+  <data name="parm_key_ship_route_selected_region" xml:space="preserve">
+    <value>Selected region only</value>
+  </data>
+  <data name="parm_key_ship_route_none" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="parm_hdr_map_ship_route_opacity" xml:space="preserve">
+    <value>Ship route opacity (%)</value>
+  </data>
+  <data name="parm_inf_map_ship_route_opacity" xml:space="preserve">
+    <value>Opacity of completed ship routes (10–80%). Lower values keep the map readable; future ordered routes will be drawn on top.</value>
+  </data>
+  <data name="parm_hdr_map_selected_ship_route_opacity" xml:space="preserve">
+    <value>Selected route opacity (%)</value>
+  </data>
+  <data name="parm_inf_map_selected_ship_route_opacity" xml:space="preserve">
+    <value>Opacity of the selected ship's route (10–100%). The selected route is also drawn with a brighter faction colour, a thicker line and a halo.</value>
+  </data>
+  <data name="parm_hdr_map_show_region_names" xml:space="preserve">
+    <value>Display region names</value>
+  </data>
+  <data name="parm_inf_map_show_region_names" xml:space="preserve">
+    <value>Draw the name of each named region on the map.</value>
+  </data>
+  <data name="parm_hdr_map_region_name_banner" xml:space="preserve">
+    <value>Region name banner</value>
+  </data>
+  <data name="parm_inf_map_region_name_banner" xml:space="preserve">
+    <value>Draw region names inside a gold banner with a dark outline, above all other map elements.</value>
+  </data>
   <data name="parm_hdr_features_hide_in_progress" xml:space="preserve">
     <value>In-progress features hidden</value>
   </data>
@@ -1877,6 +1976,15 @@
   </data>
   <data name="mainmenu_view_map_center_globally" xml:space="preserve">
     <value>Center map globally</value>
+  </data>
+  <data name="mainmenu_view_map_show_all_ship_routes" xml:space="preserve">
+    <value>Show all ship routes</value>
+  </data>
+  <data name="mainmenu_view_map_show_region_names" xml:space="preserve">
+    <value>Show region names</value>
+  </data>
+  <data name="mainmenu_view_map_region_name_banner" xml:space="preserve">
+    <value>Gold banner for region names</value>
   </data>
   <data name="mainmenu_view_win_minimap" xml:space="preserve">
     <value>Minimap</value>
@@ -2105,6 +2213,9 @@
   </data>
   <data name="opt_confirmed_orders_tip" xml:space="preserve">
     <value>Toggle confirmed/unconfirmed status of unit orders</value>
+  </data>
+  <data name="emapdetailspanel_node_ocean" xml:space="preserve">
+    <value>Ocean ({0},{1})</value>
   </data>
   <data name="emapdetailspanel_node_ships" xml:space="preserve">
     <value>Ships</value>

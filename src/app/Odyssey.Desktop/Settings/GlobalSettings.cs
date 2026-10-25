@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -9,6 +10,8 @@ using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
 using ConfigFactory.Core;
 using ConfigFactory.Core.Attributes;
+using Odyssey.Controls.Buildings;
+using Odyssey.Controls.Ships;
 using Odyssey.Models.Localization;
 
 namespace Odyssey.Settings;
@@ -22,9 +25,37 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
 
     /// <summary>
     /// Raised when a setting value has changed.
-    /// TODO: implement it.
     /// </summary>
     public event EventHandler<SettingChangedEventArgs>? SettingChanged;
+
+    /// <summary>
+    /// Raises <see cref="SettingChanged"/> for every setting property change.
+    /// </summary>
+    public GlobalSettings()
+    {
+        // CommunityToolkit generated setters raise PropertyChanged directly (they do not go
+        // through the virtual OnPropertyChanged(PropertyChangedEventArgs)), so subscribe to the
+        // event to forward changes as SettingChanged notifications.
+        PropertyChanged += OnSettingPropertyChanged;
+    }
+
+    private void OnSettingPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (string.IsNullOrEmpty(e.PropertyName))
+        {
+            return;
+        }
+
+        try
+        {
+            object? value = GetType().GetProperty(e.PropertyName)?.GetValue(this);
+            SettingChanged?.Invoke(this, new SettingChangedEventArgs(e.PropertyName, value));
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[APPCONFIG] Failed to raise SettingChanged for '{e.PropertyName}': {ex.Message}");
+        }
+    }
 
     //private const string WindowsThemeRegistryKeyPath = @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
     //private const string WindowsThemeRegistryValueName = "AppsUseLightTheme";
@@ -39,6 +70,16 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
     public const string EXPLORER_EXPAND_TREE_ON_REPORT_OPENING = "ExpandTreeOnReportOpening";
     public const string EXPLORER_SELECT_LAST_ACTIVE_REGION_ON_REPORT_OPENING = "SelectLastActiveRegionOnReportOpening";
     public const string MAP_USE_SEASON_IMAGES = "UseSeasonImages";
+    public const string MAP_SHOW_BUILDINGS = "ShowBuildings";
+    public const string MAP_BUILDING_STYLE = "BuildingStyle";
+    public const string MAP_BUILDING_CONTRAST = "BuildingContrast";
+    public const string MAP_SHOW_SHIPS = "ShowShips";
+    public const string MAP_SHIP_STYLE = "ShipStyle";
+    public const string MAP_SHIP_ROUTE_MODE = "ShipRouteMode";
+    public const string MAP_SHIP_ROUTE_OPACITY = "ShipRouteOpacity";
+    public const string MAP_SELECTED_SHIP_ROUTE_OPACITY = "SelectedShipRouteOpacity";
+    public const string MAP_SHOW_REGION_NAMES = "ShowRegionNames";
+    public const string MAP_REGION_NAME_BANNER = "RegionNameBanner";
 
     public const string HIDE_IN_PROGRESS_FEATURES = "HideInProgressFeatures";
 
@@ -130,6 +171,114 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
         Group = "parm_grp_map")]
     private bool _useSeasonImages = false;
 
+    // whether buildings are displayed on the map
+    [ObservableProperty]
+    [property: Config(
+        Header = "parm_hdr_map_show_buildings",
+        Description = "parm_inf_map_show_buildings",
+        Category = "parm_cat_views",
+        Group = "parm_grp_map")]
+    private bool _showBuildings = true;
+
+    // how buildings are drawn on the map: 0 = auto (icons with vector fallback), 1 = icons only, 2 = symbols only
+    [ObservableProperty]
+    [property: DropdownConfig(
+        RuntimeItemsSourceMethodName = "GetBuildingStyles",
+        DisplayMemberPath = "Key",
+        SelectedValuePath = "Value")]
+    [property: Config(
+        Header = "parm_hdr_map_building_style",
+        Description = "parm_inf_map_building_style",
+        Category = "parm_cat_views",
+        Group = "parm_grp_map")]
+    private int _buildingStyle = 0;
+
+    // contrast aid drawn behind building icons: 0 = plate, 1 = none, 2 = rim only
+    [ObservableProperty]
+    [property: DropdownConfig(
+        RuntimeItemsSourceMethodName = "GetBuildingContrastModes",
+        DisplayMemberPath = "Key",
+        SelectedValuePath = "Value")]
+    [property: Config(
+        Header = "parm_hdr_map_building_contrast",
+        Description = "parm_inf_map_building_contrast",
+        Category = "parm_cat_views",
+        Group = "parm_grp_map")]
+    private int _buildingContrast = BuildingContrastModes.Plate;
+
+    // whether ships are displayed on the map
+    [ObservableProperty]
+    [property: Config(
+        Header = "parm_hdr_map_show_ships",
+        Description = "parm_inf_map_show_ships",
+        Category = "parm_cat_views",
+        Group = "parm_grp_map")]
+    private bool _showShips = true;
+
+    // how ships are drawn on the map: 0 = images, 1 = compact symbols, 2 = detailed vectors
+    [ObservableProperty]
+    [property: DropdownConfig(
+        RuntimeItemsSourceMethodName = "GetShipStyles",
+        DisplayMemberPath = "Key",
+        SelectedValuePath = "Value")]
+    [property: Config(
+        Header = "parm_hdr_map_ship_style",
+        Description = "parm_inf_map_ship_style",
+        Category = "parm_cat_views",
+        Group = "parm_grp_map")]
+    private int _shipStyle = ShipStyles.Image;
+
+    // which ship routes are drawn on the map: 0 = all, 1 = selected ship, 2 = selected region, 3 = none
+    [ObservableProperty]
+    [property: DropdownConfig(
+        RuntimeItemsSourceMethodName = "GetShipRouteModes",
+        DisplayMemberPath = "Key",
+        SelectedValuePath = "Value")]
+    [property: Config(
+        Header = "parm_hdr_map_ship_route_mode",
+        Description = "parm_inf_map_ship_route_mode",
+        Category = "parm_cat_views",
+        Group = "parm_grp_map")]
+    private int _shipRouteMode = ShipRouteModes.All;
+
+    // opacity of completed ship routes, in percent (10..80)
+    [ObservableProperty]
+    [property: NumericConfig(Minimum = 10, Maximum = 80, Increment = 5)]
+    [property: Config(
+        Header = "parm_hdr_map_ship_route_opacity",
+        Description = "parm_inf_map_ship_route_opacity",
+        Category = "parm_cat_views",
+        Group = "parm_grp_map")]
+    private int _shipRouteOpacity = 35;
+
+    // opacity of the selected ship route, in percent (10..100)
+    [ObservableProperty]
+    [property: NumericConfig(Minimum = 10, Maximum = 100, Increment = 5)]
+    [property: Config(
+        Header = "parm_hdr_map_selected_ship_route_opacity",
+        Description = "parm_inf_map_selected_ship_route_opacity",
+        Category = "parm_cat_views",
+        Group = "parm_grp_map")]
+    private int _selectedShipRouteOpacity = 70;
+
+    // whether region names are drawn on the map
+    [ObservableProperty]
+    [property: Config(
+        Header = "parm_hdr_map_show_region_names",
+        Description = "parm_inf_map_show_region_names",
+        Category = "parm_cat_views",
+        Group = "parm_grp_map")]
+    private bool _showRegionNames = true;
+
+    // whether region names are drawn inside a gold banner with a dark outline
+    [ObservableProperty]
+    [property: Config(
+        Header = "parm_hdr_map_region_name_banner",
+        Description = "parm_inf_map_region_name_banner",
+        Category = "parm_cat_views",
+        Group = "parm_grp_map")]
+    private bool _regionNameBanner = false;
+
     [ObservableProperty]
     [property: Config(
     Header = "parm_hdr_features_hide_in_progress",
@@ -193,6 +342,51 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
         var options = (new KeyValuePair<string, int>[] {
             new("parm_key_theme_fluent", (int)Themes.Theme.Fluent),
             new("parm_key_theme_simple", (int)Themes.Theme.Simple),
+        }).Select(x => new KeyValuePair<string, int>(Translate(x.Key), x.Value));
+
+        return new(options);
+    }
+
+    public ObservableCollection<KeyValuePair<string, int>> GetBuildingStyles()
+    {
+        var options = (new KeyValuePair<string, int>[] {
+            new("parm_key_building_style_auto", BuildingStyles.Auto),
+            new("parm_key_building_style_icons", BuildingStyles.Icons),
+            new("parm_key_building_style_symbols", BuildingStyles.Symbols),
+        }).Select(x => new KeyValuePair<string, int>(Translate(x.Key), x.Value));
+
+        return new(options);
+    }
+
+    public ObservableCollection<KeyValuePair<string, int>> GetBuildingContrastModes()
+    {
+        var options = (new KeyValuePair<string, int>[] {
+            new("parm_key_building_contrast_plate", BuildingContrastModes.Plate),
+            new("parm_key_building_contrast_rim", BuildingContrastModes.Rim),
+            new("parm_key_building_contrast_none", BuildingContrastModes.None),
+        }).Select(x => new KeyValuePair<string, int>(Translate(x.Key), x.Value));
+
+        return new(options);
+    }
+
+    public ObservableCollection<KeyValuePair<string, int>> GetShipStyles()
+    {
+        var options = (new KeyValuePair<string, int>[] {
+            new("parm_key_ship_style_image", ShipStyles.Image),
+            new("parm_key_ship_style_symbol", ShipStyles.Symbol),
+            new("parm_key_ship_style_vector", ShipStyles.Vector),
+        }).Select(x => new KeyValuePair<string, int>(Translate(x.Key), x.Value));
+
+        return new(options);
+    }
+
+    public ObservableCollection<KeyValuePair<string, int>> GetShipRouteModes()
+    {
+        var options = (new KeyValuePair<string, int>[] {
+            new("parm_key_ship_route_all", ShipRouteModes.All),
+            new("parm_key_ship_route_selected_ship", ShipRouteModes.SelectedShip),
+            new("parm_key_ship_route_selected_region", ShipRouteModes.SelectedRegion),
+            new("parm_key_ship_route_none", ShipRouteModes.None),
         }).Select(x => new KeyValuePair<string, int>(Translate(x.Key), x.Value));
 
         return new(options);
