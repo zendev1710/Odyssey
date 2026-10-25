@@ -368,3 +368,6 @@ FodyWeavers.xsd
 # Local pilot/test workspaces (local only)
 .src/.localpilot/
 .analysis/
+
+# VS Code
+.vscode/
