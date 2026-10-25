@@ -30,6 +30,17 @@ public abstract class StructureModel : EntityModel
     public void SetOwnerUnit(UnitModel? ownerUnit)
     {
         OwnerUnit = ownerUnit;
+        if (ownerUnit is null)
+        {
+            OwnerId = -1;
+            OwnerName = string.Empty;
+            return;
+        }
+
+        OwnerId = ownerUnit.Id;
+        OwnerName = !string.IsNullOrEmpty(ownerUnit.Name)
+            ? ownerUnit.Name
+            : ownerUnit.DataBlock.GetUIName();
     }
 
     public string OwnerName { get; private set; } = string.Empty;
@@ -100,7 +111,11 @@ public abstract class StructureModel : EntityModel
                 break;
             case KeyType.CAPTAIN:
             case KeyType.OWNER:
-                OwnerId = StringToInt(kb.GetValue());
+                int candidateOwnerId = StringToInt(kb.GetValue());
+                if (candidateOwnerId > 0 && (kb.GetKeyType() == KeyType.OWNER || OwnerId <= 0))
+                {
+                    OwnerId = candidateOwnerId;
+                }
                 break;
             case KeyType.FACTION:
             case KeyType.NOTES:
@@ -130,23 +145,24 @@ public abstract class StructureModel : EntityModel
     }
 
     protected bool CollectOwnerInfo(in CRDocument report)
-    { 
-        if (OwnerId > 0)
+    {
+        if (OwnerUnit is not null)
         {
-            if (OwnerUnit != null)
+            if (string.IsNullOrEmpty(OwnerName))
             {
-                // Already collected
-                return true;
+                OwnerName = !string.IsNullOrEmpty(OwnerUnit.Name)
+                    ? OwnerUnit.Name
+                    : OwnerUnit.DataBlock.GetUIName();
             }
-            DataBlock? ownerUnit = null;
-            if (report.FindUnit(OwnerId, out UnitModel? ownerUnitModel))
-            {
-                ownerUnit = ownerUnitModel!.DataBlock;
-                OwnerName = report.GetUnitName(in ownerUnit, true);
-                OwnerUnit = ownerUnitModel;
-                return true;
-            }
+            return true;
         }
+
+        if (OwnerId > 0 && report.FindUnit(OwnerId, out UnitModel? ownerUnitModel) && ownerUnitModel is not null)
+        {
+            SetOwnerUnit(ownerUnitModel);
+            return true;
+        }
+
         return false;
     }
 
