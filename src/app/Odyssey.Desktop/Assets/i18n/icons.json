@@ -8084,6 +8084,18 @@
     },
     {
       "category": "status",
+      "id": "status/owner",
+      "role": "entry",
+      "de": "Besitzer",
+      "en": "Owner",
+      "aliases": [
+        "besitzer",
+        "owners"
+      ],
+      "file": "status/owner.gif"
+    },
+    {
+      "category": "status",
       "id": "status/captain_alt",
       "role": "variant",
       "de": "",

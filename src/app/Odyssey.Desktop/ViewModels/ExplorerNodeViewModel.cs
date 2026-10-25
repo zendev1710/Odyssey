@@ -34,6 +34,7 @@ public partial class ExplorerNodeViewModel : ObservableObject
     public object? AdditionalInfo { get; }
     public string? IconUri { get; }
     public string? RaceIconUri { get; }
+    public string? StatusIconUri { get; }
     public object? IconSource => IconUri ?? AdditionalInfo;
     public bool Hightlighted { get; private set; }
     public ObservableCollection<ExplorerNodeViewModel> Children => _children ??= [];
@@ -50,9 +51,10 @@ public partial class ExplorerNodeViewModel : ObservableObject
         NodeType = NodeTypes.NONE;
         AdditionalInfo = null;
         IconUri = null;
+        StatusIconUri = null;
         Hightlighted = false;
     }
-    public ExplorerNodeViewModel(ExplorerNodeViewModel parent, string header, int id, NodeTypes nodeType, bool hightlighted, object? additionalInfo = null, int index = -1, string? iconUri = null, string? raceIconUri = null)
+    public ExplorerNodeViewModel(ExplorerNodeViewModel parent, string header, int id, NodeTypes nodeType, bool hightlighted, object? additionalInfo = null, int index = -1, string? iconUri = null, string? raceIconUri = null, string? statusIconUri = null)
     {
         Parent = parent;
         Header = header;
@@ -61,6 +63,7 @@ public partial class ExplorerNodeViewModel : ObservableObject
         AdditionalInfo = additionalInfo;
         IconUri = iconUri;
         RaceIconUri = raceIconUri;
+        StatusIconUri = statusIconUri;
         Hightlighted = hightlighted;
 
         /*

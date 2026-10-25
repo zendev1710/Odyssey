@@ -741,7 +741,50 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
                 status |= BelongsToStatus.UnitInShip;
             }
         }
-        _ = new ExplorerNodeViewModel(parentNode, unitlabel, unitBlock.GetId(), NodeTypes.UNIT, !Report.IsConfirmed(unitBlock), status, index);
+
+        string? statusIconUri = GetUnitStatusIconUri(unitBlock);
+        _ = new ExplorerNodeViewModel(parentNode, unitlabel, unitBlock.GetId(), NodeTypes.UNIT, !Report.IsConfirmed(unitBlock), status, index, statusIconUri: statusIconUri);
+    }
+
+    private string? GetUnitStatusIconUri(DataBlock unitBlock)
+    {
+        int unitId = unitBlock.GetId();
+
+        if (unitBlock.HasKey(KeyType.GUARDING) && unitBlock.ValueInt(KeyType.GUARDING) != 0)
+        {
+            return GetStatusIconUri("guarded");
+        }
+
+        if (Report.GetUnit(unitId) is UnitModel unitModel && Report.TryFindShipForUnit(unitModel, out _))
+        {
+            return GetStatusIconUri("captain");
+        }
+
+        foreach (BuildingModel building in Report.Buildings.Values)
+        {
+            if (building.OwnerId == unitId || building.OwnerUnit?.Id == unitId)
+            {
+                return GetStatusIconUri("owner", "captain");
+            }
+        }
+
+        return null;
+    }
+
+    private static string? GetStatusIconUri(string name, string? fallbackName = null)
+    {
+        string? resolved = IconCatalogService.ResolvePath(IconCategories.Status, name, fallbackName ?? name);
+        if (!string.IsNullOrEmpty(resolved))
+        {
+            return resolved;
+        }
+
+        if (!string.IsNullOrEmpty(fallbackName))
+        {
+            return $"/Assets/status/{fallbackName}.gif";
+        }
+
+        return $"/Assets/status/{name}.gif";
     }
 
     private void ExpandAllItems()
