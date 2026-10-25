@@ -762,7 +762,9 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
 
         foreach (BuildingModel building in Report.Buildings.Values)
         {
-            if (building.OwnerId == unitId || building.OwnerUnit?.Id == unitId)
+            int rawOwnerId = building.Structure.ValueInt(KeyType.OWNER, -1);
+            int rawCaptainId = building.Structure.ValueInt(KeyType.CAPTAIN, -1);
+            if (rawOwnerId == unitId || rawCaptainId == unitId || building.OwnerId == unitId || building.OwnerUnit?.Id == unitId)
             {
                 return GetStatusIconUri("owner", "captain");
             }
