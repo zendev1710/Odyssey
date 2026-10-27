@@ -26,9 +26,18 @@ public partial class ExplorerView : UserControl
         TreeView?.SelectionChanged += TreeView_SelectionChanged;
     }
 
+    // True while a pointer/keyboard input is being processed: the resulting selection must not be recentered
+    private bool _isUserInput;
+
+    private void MarkUserInput()
+    {
+        _isUserInput = true;
+        Dispatcher.UIThread.Post(() => _isUserInput = false, DispatcherPriority.Background);
+    }
+
     private void TreeView_SelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        if (sender is not TreeView treeView || treeView.SelectedItem is null)
+        if (sender is not TreeView treeView || treeView.SelectedItem is null || _isUserInput)
         {
             return;
         }
@@ -216,6 +225,7 @@ public partial class ExplorerView : UserControl
 
     private void TreeView_KeyDown(object? sender, KeyEventArgs e)
     {
+        MarkUserInput();
         if (e.Key >= Key.A && e.Key <= Key.Z && TreeView != null)
         {
             List<TreeViewItem?> tviSubTree = [];
@@ -346,6 +356,7 @@ public partial class ExplorerView : UserControl
 
     private void TreeView_PointerPressed(object? sender, PointerPressedEventArgs e)
     {
+        MarkUserInput();
         if (e.Pointer.Type != PointerType.Mouse)
             return;
 

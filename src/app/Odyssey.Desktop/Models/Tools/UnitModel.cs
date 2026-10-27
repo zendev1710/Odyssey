@@ -385,7 +385,8 @@ public class UnitModel : EntityModel
                     int value = skillKey.GetValueInt(1);
                     string skillLevel = $"{value}";
                     string skillLabel = Labels.Localize(Categories.Skill, skillName, [skillLevel]);
-                    _skillsProperties.Add(new DataProperty(Categories.Skill, skillName, skillLevel, skillLabel));
+                    int change = skillKey.GetValueInt(2);
+                    _skillsProperties.Add(new DataProperty(Categories.Skill, skillName, skillLevel, skillLabel, change: change));
                     if (RidingSkill == 0 && skillName == Strings.DE_RIDING)
                     {
                         RidingSkill = value;

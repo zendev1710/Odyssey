@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Odyssey.Models;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Tools;
 using System.Collections.ObjectModel;
@@ -54,9 +55,8 @@ public partial class HistoryViewModel : DocumentToolViewModelBase
 
         // if newValue matches the current selection in Explorer, do nothing
         IEntitySelection selection = CurrentSelection;
-        if (selection.Item == newValue.Selection?.Item)
+        if (IsSameSelection(selection, newValue.Selection))
         {
-            // If the selected item is already the current selection in Explorer, do nothing
             return;
         }
 
@@ -74,7 +74,8 @@ public partial class HistoryViewModel : DocumentToolViewModelBase
     private void AddSelectionToHistory(IEntitySelection sel)
     {
         // TODO: optimize it(s called too frequently
-        string label = sel.Item?.DataBlock.GetUILabel() ?? string.Empty;
+        SelectionEntry newEntry = new(sel);
+        string label = newEntry.Label ?? string.Empty;
         // Exclude Buildings and Ships nodes from history.
         // label is empty for these nodes
         if (!string.IsNullOrEmpty(label))
@@ -99,7 +100,6 @@ public partial class HistoryViewModel : DocumentToolViewModelBase
             }
 
             // Insert at first position
-            var newEntry = new SelectionEntry(sel);
             Items.Insert(0, newEntry);
 
             // Enforce max size
@@ -116,8 +116,26 @@ public partial class HistoryViewModel : DocumentToolViewModelBase
     {
         IEntitySelection? sel = selectionEntry.Selection;
         Debug.WriteLine($"[HISTORY-VM] SendSelectionChangedEvent from {Id} for item={sel.Item} region={sel.Region}");
-        _selectionService.SelectItem(sel.Item, sel.Region, /*sel.Faction,*/ this, sel.Data, EntitySelection.GetContainerTypes(sel));
+        _selectionService.SelectItem(sel.Item, sel.Region, this, sel.Data, EntitySelection.GetContainerTypes(sel), sel.LocatedFaction);
         //SelectedItem = null;
+    }
+
+    private static bool IsSameSelection(IEntitySelection current, IEntitySelection? candidate)
+    {
+        if (candidate is null || current.Item != candidate.Item || current.Region != candidate.Region)
+        {
+            return false;
+        }
+
+        LocatedFactionModel? currentFaction = current.LocatedFaction;
+        LocatedFactionModel? candidateFaction = candidate.LocatedFaction;
+        if (currentFaction is null || candidateFaction is null)
+        {
+            return currentFaction is null && candidateFaction is null;
+        }
+
+        return currentFaction.FactionId == candidateFaction.FactionId &&
+               currentFaction.Region.Id == candidateFaction.Region.Id;
     }
 
     private void ClearItems()

@@ -38,6 +38,7 @@
         public const string ShipsDetails = "ships_details";
         public const string BuildingsDetails = "buildings_details";
         public const string UnitDetails = "unit_details";
+        public const string FactionLocationDetails = "faction_location_details";
         public const string NoDetails = "no_details";
 
     }

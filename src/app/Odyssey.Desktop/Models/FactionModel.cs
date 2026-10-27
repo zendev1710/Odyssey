@@ -18,6 +18,7 @@ public class FactionModel
 
     public int Id { get; private set; }
     public bool IsActive { get; private set; } = false;
+    public FactionStatus Status { get; internal set; } = FactionStatus.UNKNOWN;
     public int Recruitment { get; private set; } = 0;
     public string MagicRealm { get; private set; }
     public string PeopleNumber { get; private set; }

@@ -68,6 +68,34 @@ public class CRDocument : EresseaDocument, ILocationResolver
         return ActiveFactions.ContainsKey(id);
     }
 
+    public FactionStatus GetFactionStatus(int id)
+    {
+        if (id == (int)SpecialFaction.ANONYMOUS)
+        {
+            return FactionStatus.ANONYMOUS;
+        }
+
+        if (id == (int)SpecialFaction.TRAITOR)
+        {
+            return FactionStatus.TRAITOR;
+        }
+
+        return GetFaction(id)?.Status ?? FactionStatus.UNKNOWN;
+    }
+
+    private void UpdateFactionStatuses()
+    {
+        IReadOnlyCollection<int> alliedFactionIds = AlliedFactionIds;
+        foreach (FactionModel faction in Factions.Values)
+        {
+            faction.Status = faction.IsActive
+                ? FactionStatus.ACTIVE
+                : alliedFactionIds.Contains(faction.Id)
+                    ? FactionStatus.ALLIED
+                    : FactionStatus.UNKNOWN;
+        }
+    }
+
     /// <summary>Ids of the factions the player can play in this report (allies may have several).</summary>
     public IReadOnlyCollection<int> ActiveFactionIds => ActiveFactions.Keys;
 
@@ -166,6 +194,7 @@ public class CRDocument : EresseaDocument, ILocationResolver
         if (HasData())
         {
             CreateHashTables();
+            UpdateFactionStatuses();
             ParseMessages();
         }
     }

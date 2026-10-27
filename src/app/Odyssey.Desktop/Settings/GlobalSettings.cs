@@ -66,6 +66,7 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
     public const string LANGUAGE = "Language";
     public const string THEME = "Theme";
     public const string THEME_MODE = "ThemeMode";
+    public const string ICON_ASSET_FORMAT = "IconAssetFormatModeSetting";
     public const string EXPLORER_ACTIVE_FACTION_UNITS_AT_FIRST = "ActiveFactionUnitsAtTop";
     public const string EXPLORER_EXPAND_TREE_ON_REPORT_OPENING = "ExpandTreeOnReportOpening";
     public const string EXPLORER_SELECT_LAST_ACTIVE_REGION_ON_REPORT_OPENING = "SelectLastActiveRegionOnReportOpening";
@@ -109,22 +110,34 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
 
     [ObservableProperty]
     [property: DropdownConfig(
-       RuntimeItemsSourceMethodName = "GetThemeModes",
-       DisplayMemberPath = "Key",
-       SelectedValuePath = "Value")]
+        RuntimeItemsSourceMethodName = "GetThemeModes",
+        DisplayMemberPath = "Key",
+        SelectedValuePath = "Value")]
     [property: Config(
-       Header = "parm_hdr_theme_mode",
-       Description = "parm_inf_theme_mode",
-       Category = "parm_cat_general",
-       Group = "parm_grp_appearance")]
+        Header = "parm_hdr_theme_mode",
+        Description = "parm_inf_theme_mode",
+        Category = "parm_cat_general",
+        Group = "parm_grp_appearance")]
     private int _themeMode = (int)Core.Theme.ApplicationThemeMode.Default;
 
     [ObservableProperty]
+    [property: DropdownConfig(
+        RuntimeItemsSourceMethodName = "GetIconAssetFormats",
+        DisplayMemberPath = "Key",
+        SelectedValuePath = "Value")]
     [property: Config(
-        Header = "parm_hdr_readonly_mode",
-        Description = "parm_inf_readonly_mode",
+        Header = "Icon asset format",
+        Description = "Select the icon asset format used for rendering.",
         Category = "parm_cat_general",
-        Group = "parm_grp_behaviours")]
+        Group = "parm_grp_appearance")]
+    private int _iconAssetFormatModeSetting = (int)IconAssetFormatMode.TransparentPng;
+
+    [ObservableProperty]
+    [property: Config(
+         Header = "parm_hdr_readonly_mode",
+         Description = "parm_inf_readonly_mode",
+         Category = "parm_cat_general",
+         Group = "parm_grp_behaviours")]
     private bool _isReadOnlyMode = true;
 
     [ObservableProperty]
@@ -333,6 +346,17 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
             new("parm_key_theme_mode_light", (int)Core.Theme.ApplicationThemeMode.Light),
             new("parm_key_theme_mode_dark", (int)Core.Theme.ApplicationThemeMode.Dark),
         }).Select(x => new KeyValuePair<string, int>(Translate(x.Key), x.Value));
+
+        return new(options);
+    }
+
+    public ObservableCollection<KeyValuePair<string, int>> GetIconAssetFormats()
+    {
+        var options = (new KeyValuePair<string, int>[] {
+            new("Legacy GIF", (int)IconAssetFormatMode.LegacyGif),
+            new("Transparent PNG", (int)IconAssetFormatMode.TransparentPng),
+            new("SVG (theme-ready)", (int)IconAssetFormatMode.SvgTheme),
+        }).Select(x => new KeyValuePair<string, int>(x.Key, x.Value));
 
         return new(options);
     }

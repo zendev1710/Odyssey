@@ -52,7 +52,7 @@ namespace Odyssey.ViewModels
 
         protected void SendSelectionChangedEvent(IEntitySelection sel)
         {
-            _selectionService.SelectItem(sel.Item, sel.Region, /*sel.Faction,*/ this, sel.Data, EntitySelection.GetContainerTypes(sel));
+            _selectionService.SelectItem(sel.Item, sel.Region, this, sel.Data, EntitySelection.GetContainerTypes(sel), sel.LocatedFaction);
         }
     }
 }

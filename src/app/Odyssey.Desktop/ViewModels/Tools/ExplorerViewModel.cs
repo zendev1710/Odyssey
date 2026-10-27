@@ -25,7 +25,6 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
     private ExplorerNodeViewModel? selectedItem;
 
     private readonly ExplorerNodeViewModel _root;
-    private readonly Dictionary<int, FactionInfo> _factionsInfo = [];
 
     /// <summary>
     /// when is true, units of the active faction are grouped together inside a faction node at the top of the factions list;
@@ -78,18 +77,6 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
     public ObservableCollection<ExplorerNodeViewModel> Items { get; }
 
     public IReadOnlyList<MenuItemViewModel> NodeMenuItems { get; set; }
-
-    public struct FactionInfo
-    {
-        public FactionInfo()
-        {
-        }
-        public DataBlock? Block { get; set; }
-        public FactionStatus Status { get; set; } = FactionStatus.UNKNOWN;
-        public string Name { get; set; } = "";
-        public FactionRace Race { get; set; } = FactionRace.Unknown;
-        public int Id { get; set; } = -1;
-    }
 
     public ExplorerViewModel() : base()
     {
@@ -162,13 +149,28 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
     /// </summary>
     private ExplorerNodeViewModel? FindNode(EntityModel item)
     {
-        // A region node is identified by the region key (RegionModel.Id); the id of the region data
-        // block is the plane, which is not unique to a region.
+        // A region node is identified by the region key (RegionModel.Id); the id of the region data block is the plane, which is not unique to a region.
         if (item is RegionModel regionModel)
         {
             return FindImmediateTreeItem(Root, regionModel.Id);
         }
         return FindTreeItem(Root, item.DataBlock.GetId());
+    }
+
+    private static ExplorerNodeViewModel? FindFactionNode(ExplorerNodeViewModel regionNode, LocatedFactionModel locatedFaction)
+    {
+        foreach (ExplorerNodeViewModel child in regionNode.Children)
+        {
+            if (child.NodeType == NodeTypes.FACTION &&
+                child.LocatedFaction is LocatedFactionModel childFaction &&
+                childFaction.FactionId == locatedFaction.FactionId &&
+                childFaction.Region.Id == locatedFaction.Region.Id)
+            {
+                return child;
+            }
+        }
+
+        return null;
     }
 
     /// <summary>
@@ -215,6 +217,19 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         {
             Debug.WriteLine("[EXPLORER] WARNING | Region model not found for selection.");
             return false;
+        }
+
+        if (selection.HasFaction() && !selection.HasUnit())
+        {
+            ExplorerNodeViewModel? factionRegionNode = FindImmediateTreeItem(Root, regionModel.Id);
+            ExplorerNodeViewModel? factionNode = factionRegionNode is null || selection.LocatedFaction is null
+                ? null
+                : FindFactionNode(factionRegionNode, selection.LocatedFaction);
+            if (factionNode is not null)
+            {
+                SelectItem(factionNode);
+                return true;
+            }
         }
 
         if (!selection.IsRegionSelected())
@@ -486,23 +501,17 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
                         // Get faction id, -1 means unknown faction or stealth/anonymous
                         int factionId = GetFactionIdForUnit(block);
                         ExplorerNodeViewModel? factionNode = null;
-                        FactionInfo factionInfo = RetrieveAndStoreFactionInfo(factionId);
+                        LocatedFactionModel locatedFaction = CreateLocatedFaction(factionId, regionModel);
+                        FactionStatus factionStatus = locatedFaction.Faction?.Status ?? Report.GetFactionStatus(factionId);
                         if (!regionFactionsNodes.TryGetValue(factionId, out factionNode))
                         {
                             regionNode ??= AddRegionNode(Root, regionModel, ref regionsNumber);
-                            if (ActiveFactionGroup || factionInfo.Status != FactionStatus.ACTIVE)
+                            if (ActiveFactionGroup || factionStatus != FactionStatus.ACTIVE)
                             {
-                                // Target order in region is:
-                                // - ships
-                                // - buildings
-                                // - factions
-                                // The CR block order is not guaranteed; PromoteContainerNodes() enforces
-                                // the ships/buildings part at the end of the region build.
                                 int factionIndex = regionHasBuilding ? 1 : 0;
                                 int indexWhenActiveGroup = firstFactionNode == null ? factionIndex : activeUnitInsertionIndex;
-                                int index = factionInfo.Status == FactionStatus.ACTIVE ? indexWhenActiveGroup : -1;
-                                // Add faction node, as child of region node
-                                factionNode = new ExplorerNodeViewModel(regionNode, factionInfo.Name, factionInfo.Id, NodeTypes.FACTION, false, factionInfo.Status, index, raceIconUri: GetFactionRaceIconUri(factionInfo.Race));
+                                int index = factionStatus == FactionStatus.ACTIVE ? indexWhenActiveGroup : -1;
+                                factionNode = new ExplorerNodeViewModel(regionNode, locatedFaction.Name, locatedFaction.FactionId, NodeTypes.FACTION, false, factionStatus, index, raceIconUri: GetFactionRaceIconUri(locatedFaction.Race), statusIconUri: GetFactionStatusIconUri(factionStatus), locatedFaction: locatedFaction);
                                 regionFactionsNodes[factionId] = factionNode;
                                 int factionNodeIndex = index == -1 ? regionNode.Children.Count - 1 : index;
                                 if (firstFactionNode == null)
@@ -596,73 +605,26 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
     private void Clear()
     {
         Items.Clear();
-        _factionsInfo.Clear();
         SelectedItem = null;
     }
 
-    private FactionInfo RetrieveAndStoreFactionInfo(int factionId)
+    private LocatedFactionModel CreateLocatedFaction(int factionId, RegionModel region)
     {
-        // TODO: dirctly use Report.Factions FactionModel objects
-        FactionInfo factionInfo;
-        if (!_factionsInfo.TryGetValue(factionId, out factionInfo))
-        {
-            // retrieve faction status
-            if (factionId == (int)SpecialFaction.ANONYMOUS)
-            {
-                factionInfo.Status = FactionStatus.ANONYMOUS;
-            }
-            else if (factionId == (int)SpecialFaction.TRAITOR)
-            {
-                factionInfo.Status = FactionStatus.TRAITOR;
-            }
-            else
-            {
-                FactionModel? factionModel = null;
-                if (Report.GetFaction(ref factionModel, factionId))
-                {
-                    factionInfo.Id = factionModel.Id;
-                    factionInfo.Block = factionModel!.Data;
-                    factionInfo.Status = factionModel.IsActive ? FactionStatus.ACTIVE : FactionStatus.UNKNOWN;
-                }
-                if (Report.HasActiveFaction() && factionInfo.Status != FactionStatus.ACTIVE)
-                {
-                    // get first active faction
-                    // LATER : maybe it should be changed when several active factions are possible
-                    // TODO
-                    DataBlock? activeFaction = Report.ActiveFaction.Data;
-                    DataBlock? block = activeFaction?.GetNextBlock();
-                    while (block != null)
-                    {
-                        BlockType refType = block.GetBlockType();
-                        if (refType != BlockType.ALLIANCE &&
-                            refType != BlockType.ITEMS &&
-                            refType != BlockType.OPTIONS &&
-                            refType != BlockType.GROUP)
-                        {
-                            break;
-                        }
-
-                        if (refType == BlockType.ALLIANCE && block.GetId() == factionId)
-                        {
-                            // change icon to green, if alliance status to faction is set
-                            factionInfo.Status = FactionStatus.ALLIED;
-                            break;
-                        }
-                        block = block.GetNextBlock();
-                    }
-
-                }
-            }
-            factionInfo.Name = Report.GetFactionName(factionId);
-            factionInfo.Race = Report.GetFaction(factionId)?.Race ?? FactionRace.Unknown;
-            _factionsInfo[factionId] = factionInfo;
-        }
-        return factionInfo;
+        FactionModel? faction = Report.GetFaction(factionId);
+        return new LocatedFactionModel(faction, region, factionId, Report.GetFactionName(factionId));
     }
 
     private static string? GetFactionRaceIconUri(FactionRace race) =>
         IconCatalogService.ResolvePath(IconCategories.Race, race.ToString(), "race")
         ?? "/Assets/races/race.gif";
+
+    private static string GetFactionStatusIconUri(FactionStatus status) => status switch
+    {
+        FactionStatus.ACTIVE => "/Assets/factionstatus/blue.gif",
+        FactionStatus.ALLIED => "/Assets/factionstatus/green.gif",
+        FactionStatus.ANONYMOUS => "/Assets/factionstatus/gray.gif",
+        _ => "/Assets/factionstatus/red.gif",
+    };
 
     private static void AddShip(ExplorerNodeViewModel parentNode, string label, DataBlock block, BelongsToStatus status, string? iconUri = null)
     {

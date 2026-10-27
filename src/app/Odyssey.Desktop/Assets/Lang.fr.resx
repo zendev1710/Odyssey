@@ -3124,4 +3124,13 @@
   <data name="helptopic_Tables" xml:space="preserve">
     <value>Tables (samples)</value>
   </data>
+  <data name="unit_skill_tooltip_unchanged" xml:space="preserve">
+    <value>{0} : niveau {1}</value>
+  </data>
+  <data name="unit_skill_tooltip_increased" xml:space="preserve">
+    <value>{0} : niveau {1} (augmentation de {2})</value>
+  </data>
+  <data name="unit_skill_tooltip_decreased" xml:space="preserve">
+    <value>{0} : niveau {1} (diminution de {2})</value>
+  </data>
 </root>

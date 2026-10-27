@@ -14,5 +14,6 @@ public enum SelectionChangeTypes
     Building = 1 << 3,
     Ship = 1 << 4,
     Unit = 1 << 5,
-    Cleared = 1 << 6
+    Faction = 1 << 6,
+    Cleared = 1 << 7
 }

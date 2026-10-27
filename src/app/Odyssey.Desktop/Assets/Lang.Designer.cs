@@ -1402,6 +1402,15 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ocean ({0},{1}).
+        /// </summary>
+        public static string emapdetailspanel_node_ocean {
+            get {
+                return ResourceManager.GetString("emapdetailspanel_node_ocean", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to of.
         /// </summary>
         public static string emapdetailspanel_node_of {
@@ -2833,6 +2842,15 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gold banner for region names.
+        /// </summary>
+        public static string mainmenu_view_map_region_name_banner {
+            get {
+                return ResourceManager.GetString("mainmenu_view_map_region_name_banner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show all ship routes.
         /// </summary>
         public static string mainmenu_view_map_show_all_ship_routes {
@@ -2847,15 +2865,6 @@ namespace Odyssey.Assets {
         public static string mainmenu_view_map_show_region_names {
             get {
                 return ResourceManager.GetString("mainmenu_view_map_show_region_names", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Gold banner for region names.
-        /// </summary>
-        public static string mainmenu_view_map_region_name_banner {
-            get {
-                return ResourceManager.GetString("mainmenu_view_map_region_name_banner", resourceCulture);
             }
         }
         
@@ -3301,6 +3310,15 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Region name banner.
+        /// </summary>
+        public static string parm_hdr_map_region_name_banner {
+            get {
+                return ResourceManager.GetString("parm_hdr_map_region_name_banner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to  Additional images depending on current season.
         /// </summary>
         public static string parm_hdr_map_season_images {
@@ -3310,11 +3328,29 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Selected route opacity (%).
+        /// </summary>
+        public static string parm_hdr_map_selected_ship_route_opacity {
+            get {
+                return ResourceManager.GetString("parm_hdr_map_selected_ship_route_opacity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ship route display.
         /// </summary>
         public static string parm_hdr_map_ship_route_mode {
             get {
                 return ResourceManager.GetString("parm_hdr_map_ship_route_mode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ship route opacity (%).
+        /// </summary>
+        public static string parm_hdr_map_ship_route_opacity {
+            get {
+                return ResourceManager.GetString("parm_hdr_map_ship_route_opacity", resourceCulture);
             }
         }
         
@@ -3333,6 +3369,15 @@ namespace Odyssey.Assets {
         public static string parm_hdr_map_show_buildings {
             get {
                 return ResourceManager.GetString("parm_hdr_map_show_buildings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display region names.
+        /// </summary>
+        public static string parm_hdr_map_show_region_names {
+            get {
+                return ResourceManager.GetString("parm_hdr_map_show_region_names", resourceCulture);
             }
         }
         
@@ -3454,6 +3499,15 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Draw region names inside a gold banner with a dark outline, above all other map elements..
+        /// </summary>
+        public static string parm_inf_map_region_name_banner {
+            get {
+                return ResourceManager.GetString("parm_inf_map_region_name_banner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Will be taken into account at the next document opening.
         /// </summary>
         public static string parm_inf_map_season_images {
@@ -3463,11 +3517,29 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose whether all ship routes, only the selected ship&apos;s route, or only routes passing through the selected region are drawn. Routes are colored by faction relation..
+        ///   Looks up a localized string similar to Opacity of the selected ship&apos;s route (10–100%). The selected route is also drawn with a brighter faction colour, a thicker line and a halo..
+        /// </summary>
+        public static string parm_inf_map_selected_ship_route_opacity {
+            get {
+                return ResourceManager.GetString("parm_inf_map_selected_ship_route_opacity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose whether all ship routes, only the selected ship&apos;s route, or only routes passing through the selected region are drawn. Routes are colored by faction relation; the selected ship&apos;s route uses a brighter shade and a dedicated opacity..
         /// </summary>
         public static string parm_inf_map_ship_route_mode {
             get {
                 return ResourceManager.GetString("parm_inf_map_ship_route_mode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opacity of completed ship routes (10–80%). Lower values keep the map readable; future ordered routes will be drawn on top..
+        /// </summary>
+        public static string parm_inf_map_ship_route_opacity {
+            get {
+                return ResourceManager.GetString("parm_inf_map_ship_route_opacity", resourceCulture);
             }
         }
         
@@ -3486,6 +3558,15 @@ namespace Odyssey.Assets {
         public static string parm_inf_map_show_buildings {
             get {
                 return ResourceManager.GetString("parm_inf_map_show_buildings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Draw the name of each named region on the map..
+        /// </summary>
+        public static string parm_inf_map_show_region_names {
+            get {
+                return ResourceManager.GetString("parm_inf_map_show_region_names", resourceCulture);
             }
         }
         
@@ -6958,15 +7039,6 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The sorcerer opens his mind to the Spheres of Chaos so that he can access a greater ammount of magical power for a while. But the help of the Chaos Lords has its price - and so the period of power will be followed by a period of weakness..
-        /// </summary>
-        public static string rules_spell_Gabe_des_Chaos_tip {
-            get {
-                return ResourceManager.GetString("rules_spell_Gabe des Chaos_tip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Banish Spirits.
         /// </summary>
         public static string rules_spell_Geister_bannen {
@@ -7702,15 +7774,6 @@ namespace Odyssey.Assets {
         public static string rules_spell_Ruf_der_Realität {
             get {
                 return ResourceManager.GetString("rules_spell_Ruf der Realität", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to A magician in the material world can summon units from the adjacent part of the astral plane. If he is experienced enough to cast the spell at at least level 13, he can even summon units against their will..
-        /// </summary>
-        public static string rules_spell_Ruf_der_Realität_tip {
-            get {
-                return ResourceManager.GetString("rules_spell_Ruf der Realität_tip", resourceCulture);
             }
         }
         
@@ -8818,6 +8881,33 @@ namespace Odyssey.Assets {
         public static string traitor {
             get {
                 return ResourceManager.GetString("traitor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}: level {1} (decreased by {2}).
+        /// </summary>
+        public static string unit_skill_tooltip_decreased {
+            get {
+                return ResourceManager.GetString("unit_skill_tooltip_decreased", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}: level {1} (increased by {2}).
+        /// </summary>
+        public static string unit_skill_tooltip_increased {
+            get {
+                return ResourceManager.GetString("unit_skill_tooltip_increased", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}: level {1}.
+        /// </summary>
+        public static string unit_skill_tooltip_unchanged {
+            get {
+                return ResourceManager.GetString("unit_skill_tooltip_unchanged", resourceCulture);
             }
         }
         

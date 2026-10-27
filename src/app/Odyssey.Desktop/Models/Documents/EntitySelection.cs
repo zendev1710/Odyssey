@@ -10,8 +10,7 @@ namespace Odyssey.Models.Documents;
 public class EntitySelection : IEntitySelection
 {
     public RegionModel? Region { get; set; }
-
-    //public FactionModel? Faction { get; set; }
+    public LocatedFactionModel? LocatedFaction { get; private set; }
 
     public EntityModel? Item { get; set; }
 
@@ -34,6 +33,7 @@ public class EntitySelection : IEntitySelection
         Building = (1 << 3),
         Ship = (1 << 4),
         Unit = (1 << 5),
+        Faction = (1 << 6),
     };
 
     // TODO
@@ -92,9 +92,15 @@ public class EntitySelection : IEntitySelection
     }
     */
 
-    public bool SetItem(EntityModel? item, RegionModel? region, object? data = null, ILocationResolver? regionResolver = null)
+    public bool SetItem(EntityModel? item, RegionModel? region, object? data = null, ILocationResolver? regionResolver = null, LocatedFactionModel? locatedFaction = null)
     {
         EntityModel? previousItem = Item;
+        LocatedFaction = locatedFaction;
+        if (locatedFaction is not null)
+        {
+            SelectionType |= SelectionTypes.Faction;
+        }
+
         // TODO: it should return false when it does not change the selection compared with the previously one
 
         // Note: the instance is expected to be reset before applying a new selection
@@ -146,6 +152,7 @@ public class EntitySelection : IEntitySelection
     public void SetContainer(SelectionTypes containerType, RegionModel? region, object? data = null)
     {
         Data = data;
+        LocatedFaction = null;
         SelectionType |= containerType & (SelectionTypes.Buildings | SelectionTypes.Ships);
         SetRegion(region);
     }
@@ -227,6 +234,11 @@ public class EntitySelection : IEntitySelection
         return (SelectionType & SelectionTypes.Region) != SelectionTypes.None;
     }
 
+    public bool HasFaction()
+    {
+        return (SelectionType & SelectionTypes.Faction) != SelectionTypes.None && LocatedFaction is not null;
+    }
+
     public bool HasUnit()
     {
         return (SelectionType & SelectionTypes.Unit) != SelectionTypes.None;
@@ -275,7 +287,7 @@ public class EntitySelection : IEntitySelection
     {
         // In that case Item should be equal to Region:
         // a region is selected and no unit, ship, building or container (buildings/ships list) is selected.
-        return (SelectionType & (SelectionTypes.Region | SelectionTypes.Buildings | SelectionTypes.Ships | SelectionTypes.Building | SelectionTypes.Ship | SelectionTypes.Unit)) == SelectionTypes.Region;
+        return (SelectionType & (SelectionTypes.Region | SelectionTypes.Faction | SelectionTypes.Buildings | SelectionTypes.Ships | SelectionTypes.Building | SelectionTypes.Ship | SelectionTypes.Unit)) == SelectionTypes.Region;
     }
 
     /*
@@ -310,8 +322,9 @@ public class EntitySelection : IEntitySelection
         bool changed = Item is not null;
         SelectionType = SelectionTypes.None;
         Region = null;
-        //Faction = null;
+        LocatedFaction = null;
         Item = null;
+        Data = null;
         return changed;
     }
 

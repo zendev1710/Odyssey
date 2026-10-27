@@ -128,6 +128,7 @@
 	<PackageReference Include="Avalonia.AvaloniaEdit" Version="12.0.0" />
 	<PackageReference Include="Avalonia.Controls.DataGrid" Version="12.1.2" />
 	<PackageReference Include="Avalonia.Desktop" Version="12.1.4" />
+	<PackageReference Include="Avalonia.Svg.Skia" Version="11.3.0" />
 	<PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.4" />
 	<PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.4" />
 	<PackageReference Include="Avalonia.Themes.Simple" Version="12.1.4" />

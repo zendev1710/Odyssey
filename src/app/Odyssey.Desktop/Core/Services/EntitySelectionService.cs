@@ -11,7 +11,7 @@ public interface IEntitySelectionService
     IEntitySelection Selection { get; }
     event Action<IEntitySelection, SelectionChangeTypes, object?>? SelectionChanged;
 
-    void SelectItem(EntityModel? item, RegionModel? region, /*DataBlock? faction,*/ object? sender, object? data = null, SelectionTypes containerTypes = SelectionTypes.None);
+    void SelectItem(EntityModel? item, RegionModel? region, object? sender, object? data = null, SelectionTypes containerTypes = SelectionTypes.None, LocatedFactionModel? locatedFaction = null);
     //void SelectRegion(RegionDataBlock? region, object? sender);
     void Clear(object? sender);
 }
@@ -29,7 +29,7 @@ public class EntitySelectionService : IEntitySelectionService
         _selection = new EntitySelection();
     }
 
-    public void SelectItem(EntityModel? item, RegionModel? region, /*DataBlock? faction,*/ object? sender, object? data = null, SelectionTypes containerTypes = SelectionTypes.None)
+    public void SelectItem(EntityModel? item, RegionModel? region, object? sender, object? data = null, SelectionTypes containerTypes = SelectionTypes.None, LocatedFactionModel? locatedFaction = null)
     {
         Debug.WriteLine($"[ENTITY-SERVICE-SEL] Select from {sender} for item={item} region={region} container={containerTypes}");
 
@@ -39,6 +39,7 @@ public class EntitySelectionService : IEntitySelectionService
         EntityModel? previousItem = _selection.Item;
         RegionModel? previousRegion = _selection.Region;
         SelectionTypes previousTypes = _selection.SelectionType;
+        object? previousData = _selection.Data;
 
         // The service owns the single shared selection instance: reset it before applying the
         // new selection so that no state (flags, item, region) leaks from the previous one.
@@ -50,12 +51,13 @@ public class EntitySelectionService : IEntitySelectionService
         }
         else
         {
-            _selection.SetItem(item, region/*, faction*/);
+            _selection.SetItem(item, region, data: null, locatedFaction: locatedFaction);
         }
 
         if (previousItem != _selection.Item ||
             previousRegion != _selection.Region ||
-            previousTypes != _selection.SelectionType)
+            previousTypes != _selection.SelectionType ||
+            !ReferenceEquals(previousData, data))
         {
             _selection.Data = data;
             SelectionChanged?.Invoke(
@@ -148,6 +150,12 @@ public class EntitySelectionService : IEntitySelectionService
             (!Has(previousTypes, SelectionTypes.Unit) || previousItem != item))
         {
             result |= SelectionChangeTypes.Unit;
+        }
+
+        if (Has(types, SelectionTypes.Faction) &&
+            !Has(previousTypes, SelectionTypes.Faction))
+        {
+            result |= SelectionChangeTypes.Faction;
         }
 
         return result;

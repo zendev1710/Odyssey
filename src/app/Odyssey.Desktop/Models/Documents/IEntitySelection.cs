@@ -7,13 +7,15 @@
     {
         public RegionModel? Region { get; }
 
-        //public FactionModel? Faction { get; }
+        public LocatedFactionModel? LocatedFaction { get; }
 
         public EntityModel? Item { get; }
 
         public object? Data { get; }
 
         public bool HasUnit();
+
+        public bool HasFaction();
 
         public bool HasShip();
 
@@ -30,10 +32,6 @@
         public bool HasShips();
 
         public bool IsRegionSelected();
-
-        //public bool IsFactionSelected();
-
-        //public bool HasFaction();
 
         public bool HasRegion();
 

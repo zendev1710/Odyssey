@@ -63,7 +63,7 @@ namespace Odyssey.ViewModels.Tools
         protected void SendSelectionChangedEvent(IEntitySelection sel)
         {
             Debug.WriteLine($"[DOCTOOLVIEWMODELBASE] SendSelectionChangedEvent from {Id} for item={sel.Item} region={sel.Region}");
-            _selectionService.SelectItem(sel.Item, sel.Region, this, sel.Data, EntitySelection.GetContainerTypes(sel));
+            _selectionService.SelectItem(sel.Item, sel.Region, this, sel.Data, EntitySelection.GetContainerTypes(sel), sel.LocatedFaction);
         }
     }
 }

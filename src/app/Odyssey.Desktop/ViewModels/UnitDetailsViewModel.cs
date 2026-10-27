@@ -17,6 +17,7 @@ namespace Odyssey.ViewModels;
 public partial class UnitDetailsViewModel : ViewModelBase
 {
     public ObservableCollection<UnitItemViewModel> InventoryItems { get; } = new();
+    public ObservableCollection<UnitSkillViewModel> SkillItems { get; } = new();
     private readonly NodeViewModel _root = new();
 
     protected NodeViewModel Root { get { return _root; } }
@@ -197,7 +198,6 @@ public partial class UnitDetailsViewModel : ViewModelBase
             if (unitModel.OtherFactionId > 0)
             {
                 string otherFactionLabel = string.Empty;
-                //DataBlock? anotherFaction = null;
                 FactionModel? anotherFactionModel = null;
                 if (Report.GetFaction(ref anotherFactionModel, unitModel.OtherFactionId))
                 {
@@ -217,7 +217,6 @@ public partial class UnitDetailsViewModel : ViewModelBase
                 else
                 {
                     string otherFactionId = IdToString(unitModel.OtherFactionId);
-                    // emapdetailspanel.node.unknownfaction
                     otherFactionLabel = Labels.Localize(Labels.UNKNOWN_ID, [otherFactionId]);
                 }
                 otherFactionName = otherFactionLabel;
@@ -226,6 +225,8 @@ public partial class UnitDetailsViewModel : ViewModelBase
         }
 
         DataProperty factionProperty = new(Categories.None, factionName, string.Empty, factionLabel, string.Empty);
+
+        // First item is the faction name
         _ = AddItem(unitNode, factionProperty);
 
         ////////
@@ -248,6 +249,8 @@ public partial class UnitDetailsViewModel : ViewModelBase
             //groupName = groupNameValue;
             string groupLabel = Labels.Localize(Categories.Node, Labels.GROUP, [groupNameValue]);
             groupProperty = new DataProperty(Categories.Node, groupNameValue, groupLabel);
+
+            // Second item is group name (if any)
             _ = AddItem(unitNode, groupProperty);
         }
 
@@ -267,6 +270,8 @@ public partial class UnitDetailsViewModel : ViewModelBase
                 string familiarMageName = $"{mageName} ({id})";
                 string familiarLabel = Labels.Localize(Categories.None, Labels.FAMILIAR_INFO, [familiarMageName]);
                 familiarProperty = new DataProperty(Categories.None, Labels.FAMILIAR_INFO, familiarMageName, familiarLabel, string.Empty, mageModel);
+
+                // Third item is familiar name (if any)
                 _ = AddItem(unitNode, familiarProperty);
                 mageNameIfFamiliar = familiarLabel;
             }
@@ -298,6 +303,8 @@ public partial class UnitDetailsViewModel : ViewModelBase
         }
 
         DataProperty fullNameProperty = new DataProperty(fullNameLabel);
+
+        // Fourth item is full name (if any)
         NodeViewModel unitFirstChildNote = AddItem(unitNode, fullNameProperty);
 
         // DE: hungert / "Starving"
@@ -336,9 +343,12 @@ public partial class UnitDetailsViewModel : ViewModelBase
             //string weightValue = weight % 100 == 0 ? $"{weight / 100}" : $"{(weight / 100.0F):F2}";
             string weightLabel = Labels.Localize(Categories.Node, Labels.WEIGHT_INFO, [weightValue]);
             DataProperty weightProperty = new(Categories.Node, Labels.WEIGHT_INFO, string.Empty, weightLabel);
+
+            // Fifth item is weight
             unitFirstChildNote = AddItem(unitNode, weightProperty);
         }
 
+        // Then add each property as an item
         foreach (DataProperty k in unitModel.DataProperties)
         {
             _ = AddItem(unitNode, k);
@@ -418,14 +428,12 @@ public partial class UnitDetailsViewModel : ViewModelBase
         List<DataProperty> skillsProperties = [];
         List<DataProperty> itemsProperties = [];
 
+        SkillItems.Clear();
         if (unitModel.CollectSkills(ref skillsProperties))
         {
-            string skillsLabel = Labels.Localize(Categories.Node, Labels.SKILLS);
-            DataProperty skillsProperty = new(Categories.Node, Labels.SKILLS, string.Empty, skillsLabel);
-            NodeViewModel skillsNode = AddItem(unitNode, skillsProperty);
             foreach (DataProperty sp in skillsProperties)
             {
-                _ = AddItem(skillsNode, sp, $"{sp.Label} {sp.Value}");
+                SkillItems.Add(new UnitSkillViewModel(sp.Name, sp.Label, int.TryParse(sp.Value, out int level) ? level : 0, sp.Change));
             }
         }
 
@@ -440,6 +448,7 @@ public partial class UnitDetailsViewModel : ViewModelBase
                 // Supposons que itemProp.Label soit le nom et itemProp.Value soit la quantité
                 // Adaptez selon votre structure de données DataProperty
                 var itemVm = new UnitItemViewModel(
+                    itemProp.Name,
                     itemProp.Label,
                     int.TryParse(itemProp.Value, out int q) ? q : 0,
                     itemProp.Category.ToString()

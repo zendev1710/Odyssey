@@ -1,0 +1,18 @@
+<UserControl x:Class="Odyssey.Views.FactionLocationDetailsView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Odyssey.ViewModels"
+             x:DataType="vm:FactionLocationDetailsViewModel"
+             x:CompileBindings="True">
+    <Design.DataContext>
+        <vm:FactionLocationDetailsViewModel />
+    </Design.DataContext>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="8" Spacing="6">
+            <TextBlock Text="{Binding FactionName}" FontSize="18" FontWeight="Bold" />
+            <TextBlock Text="{Binding RegionName}" />
+            <TextBlock Text="{Binding Race}" />
+            <TextBlock Text="{Binding Status}" />
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

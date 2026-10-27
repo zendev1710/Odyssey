@@ -476,7 +476,18 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
             return;
 
         if (!unitSelected)
+        {
+            CanEditOrders = false;
+            IsConfirmed = false;
+            CurrentUnitId = string.Empty;
+            Title = "Unit orders";
+            SetOrders(string.Empty);
+            UpdateContextData(selection);
+            SelectPreviousUnitCommand.NotifyCanExecuteChanged();
+            SelectNextUnitCommand.NotifyCanExecuteChanged();
+            ToggleConfirmedStatusCommand.NotifyCanExecuteChanged();
             return;
+        }
 
         UnitModel? unitModel = selection.Item as UnitModel;
         if (unitModel is null)

@@ -2541,9 +2541,6 @@
   <data name="rules_spell_Chaos Gift_tip" xml:space="preserve">
     <value>The sorcerer opens his mind to the Spheres of Chaos so that he can access a greater ammount of magical power for a while. But the help of the Chaos Lords has its price - and so the period of power will be followed by a period of weakness.</value>
   </data>
-  <data name="rules_spell_Gabe des Chaos_tip" xml:space="preserve">
-    <value>The sorcerer opens his mind to the Spheres of Chaos so that he can access a greater ammount of magical power for a while. But the help of the Chaos Lords has its price - and so the period of power will be followed by a period of weakness.</value>
-  </data>
   <data name="rules_spell_Lesser Sacrifice" xml:space="preserve">
     <value>Lesser Sacrifice</value>
   </data>
@@ -2737,9 +2734,6 @@
     <value>Call of Reality</value>
   </data>
   <data name="rules_spell_Call of Reality_tip" xml:space="preserve">
-    <value>A magician in the material world can summon units from the adjacent part of the astral plane. If he is experienced enough to cast the spell at at least level 13, he can even summon units against their will.</value>
-  </data>
-  <data name="rules_spell_Ruf der Realität_tip" xml:space="preserve">
     <value>A magician in the material world can summon units from the adjacent part of the astral plane. If he is experienced enough to cast the spell at at least level 13, he can even summon units against their will.</value>
   </data>
   <data name="rules_spell_Dream of Magic" xml:space="preserve">
@@ -3117,5 +3111,14 @@
   </data>
   <data name="parm_inf_explorer_active_faction_units_at_top" xml:space="preserve">
     <value>The active faction's units are the first elements of the region node.</value>
+  </data>
+  <data name="unit_skill_tooltip_unchanged" xml:space="preserve">
+    <value>{0}: level {1}</value>
+  </data>
+  <data name="unit_skill_tooltip_increased" xml:space="preserve">
+    <value>{0}: level {1} (increased by {2})</value>
+  </data>
+  <data name="unit_skill_tooltip_decreased" xml:space="preserve">
+    <value>{0}: level {1} (decreased by {2})</value>
   </data>
 </root>

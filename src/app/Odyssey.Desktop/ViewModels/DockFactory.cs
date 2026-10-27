@@ -202,15 +202,15 @@ public class DockFactory : Factory
                 new ToolDock
                 {
                     Proportion = 0.25,
-                    ActiveDockable = unitsInspectorViewModel,
-                    VisibleDockables = CreateList<IDockable>(unitsInspectorViewModel),
+                    ActiveDockable = unitOrdersViewModel,
+                    VisibleDockables = CreateList<IDockable>(unitOrdersViewModel),
                 },
                 new ProportionalDockSplitter(),
                 new ToolDock
                 {
                     Proportion = 0.25,
-                    ActiveDockable = unitOrdersViewModel,
-                    VisibleDockables = CreateList<IDockable>(unitOrdersViewModel),
+                    ActiveDockable = unitsInspectorViewModel,
+                    VisibleDockables = CreateList<IDockable>(unitsInspectorViewModel),
                 }
             )
         };
@@ -223,9 +223,9 @@ public class DockFactory : Factory
             (
                 leftDock,
                 new ProportionalDockSplitter(),
-                centralDock,
+                rightDock,
                 new ProportionalDockSplitter(),
-                rightDock
+                centralDock
             )
         };
 

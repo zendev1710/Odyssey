@@ -1,8 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Odyssey.Models;
+using Odyssey.Models.Data;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 namespace Odyssey.ViewModels;
-
 
 // selected flags
 
@@ -32,10 +33,11 @@ public partial class ExplorerNodeViewModel : ObservableObject
     public ExplorerNodeViewModel? Parent { get; }
     public string Header { get; }
     public object? AdditionalInfo { get; }
+    public LocatedFactionModel? LocatedFaction { get; }
     public string? IconUri { get; }
     public string? RaceIconUri { get; }
     public string? StatusIconUri { get; }
-    public object? IconSource => IconUri ?? AdditionalInfo;
+    public object? IconSource => IconUri ?? (AdditionalInfo is FactionStatus ? null : AdditionalInfo);
     public bool Hightlighted { get; private set; }
     public ObservableCollection<ExplorerNodeViewModel> Children => _children ??= [];
     public bool HasChildren() => Children.Count > 0;
@@ -50,17 +52,19 @@ public partial class ExplorerNodeViewModel : ObservableObject
         _id = -1;
         NodeType = NodeTypes.NONE;
         AdditionalInfo = null;
+        LocatedFaction = null;
         IconUri = null;
         StatusIconUri = null;
         Hightlighted = false;
     }
-    public ExplorerNodeViewModel(ExplorerNodeViewModel parent, string header, int id, NodeTypes nodeType, bool hightlighted, object? additionalInfo = null, int index = -1, string? iconUri = null, string? raceIconUri = null, string? statusIconUri = null)
+    public ExplorerNodeViewModel(ExplorerNodeViewModel parent, string header, int id, NodeTypes nodeType, bool hightlighted, object? additionalInfo = null, int index = -1, string? iconUri = null, string? raceIconUri = null, string? statusIconUri = null, LocatedFactionModel? locatedFaction = null)
     {
         Parent = parent;
         Header = header;
         _id = id;
         NodeType = nodeType;
         AdditionalInfo = additionalInfo;
+        LocatedFaction = locatedFaction;
         IconUri = iconUri;
         RaceIconUri = raceIconUri;
         StatusIconUri = statusIconUri;

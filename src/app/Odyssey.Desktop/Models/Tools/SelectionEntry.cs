@@ -10,7 +10,9 @@ namespace Odyssey.Models.Tools
 
         public SelectionEntry(IEntitySelection sel)
         {
-            Label = sel.Item?.DataBlock.GetUILabel() ?? string.Empty;
+            Label = sel.HasFaction() && !sel.HasUnit() && sel.LocatedFaction is not null
+                ? $"{sel.LocatedFaction.Name} @ {sel.LocatedFaction.Region.Name}"
+                : sel.Item?.DataBlock.GetUILabel() ?? string.Empty;
             Selection = CopyOf(sel);
         }
 
@@ -31,7 +33,7 @@ namespace Odyssey.Models.Tools
             }
             else
             {
-                copy.SetItem(sel.Item, sel.Region, sel.Data);
+                copy.SetItem(sel.Item, sel.Region, sel.Data, locatedFaction: sel.LocatedFaction);
             }
 
             return copy;

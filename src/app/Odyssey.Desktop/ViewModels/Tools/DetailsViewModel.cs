@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Odyssey.Models.Documents;
+using Odyssey.ViewModels;
 using System.Collections.Generic;
 
 namespace Odyssey.ViewModels.Tools;
@@ -20,6 +21,7 @@ public partial class DetailsViewModel : DocumentToolViewModelBase
     private readonly BuildingDetailsViewModel _buildingDetailsViewModel;
     private readonly BuildingsDetailsViewModel _buildingsDetailsViewModel;
     private readonly ShipsDetailsViewModel _shipsDetailsViewModel;
+    private readonly FactionLocationDetailsViewModel _factionLocationDetailsViewModel;
 
     [ObservableProperty]
     private ViewModelBase? _currentPage;
@@ -32,6 +34,7 @@ public partial class DetailsViewModel : DocumentToolViewModelBase
         _shipDetailsViewModel = new ShipDetailsViewModel();
         _buildingsDetailsViewModel = new BuildingsDetailsViewModel();
         _shipsDetailsViewModel = new ShipsDetailsViewModel();
+        _factionLocationDetailsViewModel = new FactionLocationDetailsViewModel();
         _currentPage = _noDetailsViewModel;
     }
 
@@ -67,6 +70,9 @@ public partial class DetailsViewModel : DocumentToolViewModelBase
                 break;
             case var _ when selection.HasShip():
                 vm = _shipDetailsViewModel;
+                break;
+            case var _ when selection.HasFaction() && selection.Data is ExplorerNodeViewModel { NodeType: ExplorerNodeViewModel.NodeTypes.FACTION }:
+                vm = _factionLocationDetailsViewModel;
                 break;
             /*
             case var _ when selection.HasFaction():

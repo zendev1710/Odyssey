@@ -84,12 +84,12 @@ namespace Odyssey.ViewModels
                             break;
                     }
 
-                    // Faction nodes have no matching entity: fall back to a region-only selection.
+                    // Faction nodes have no matching entity; keep the region as their item context.
                     item ??= region;
                 }
             }
 
-            SetItem(item, region, NodeViewModel);
+            SetItem(item, region, NodeViewModel, locatedFaction: NodeViewModel.LocatedFaction ?? NodeViewModel.Parent?.LocatedFaction);
         }
     }
 }

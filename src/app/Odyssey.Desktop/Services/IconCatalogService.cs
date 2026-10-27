@@ -16,7 +16,7 @@ public static class IconCatalogService
     public static IconCatalog Catalog => LazyCatalog.Value;
 
     public static string? ResolvePath(string category, string? name, string? fallbackId = null) =>
-        Catalog.ResolvePath(category, name, fallbackId);
+        IconAssetResolver.ResolvePreferredPath(Catalog.ResolvePath(category, name, fallbackId));
 
     private static IconCatalog LoadCatalog()
     {

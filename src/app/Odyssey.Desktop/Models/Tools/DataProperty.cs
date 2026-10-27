@@ -26,6 +26,7 @@
         /// The reference to the data block, if any.
         /// </summary>
         public EntityModel? Reference { get; private set; }
+        public int Change { get; private set; }
 
         public enum Categories
         {
@@ -52,7 +53,7 @@
             Description = string.Empty;
         }
 
-        public DataProperty(Categories category, string name, string value, string label = "", string? description = null, EntityModel? reference = null)
+        public DataProperty(Categories category, string name, string value, string label = "", string? description = null, EntityModel? reference = null, int change = 0)
         {
             Category = category;
             Name = name;
@@ -60,6 +61,7 @@
             Label = label;
             Description = description;
             Reference = reference;
+            Change = change;
         }
     }
 }
