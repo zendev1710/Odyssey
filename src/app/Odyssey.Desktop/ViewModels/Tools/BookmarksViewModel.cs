@@ -49,6 +49,9 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
     private EntityModel? _selectedObject;
 
     [ObservableProperty]
+    private LocatedFactionModel? _selectedLocatedFaction;
+
+    [ObservableProperty]
     private bool _selectionIsBookmarkable;
 
     [ObservableProperty]
@@ -106,6 +109,11 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
     // The selection changed: the bookmark state of the new selection has still to be computed, but the
     // ability to toggle a bookmark on it is already known (see UpdateFromGlobalSelection)
     partial void OnSelectedObjectChanged(EntityModel? value)
+    {
+        ToggleBookmarkCommand.NotifyCanExecuteChanged();
+    }
+
+    partial void OnSelectedLocatedFactionChanged(LocatedFactionModel? value)
     {
         ToggleBookmarkCommand.NotifyCanExecuteChanged();
     }
@@ -174,6 +182,16 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
         }
     }
 
+    private void AddBookmark(LocatedFactionModel locatedFaction)
+    {
+        if (IsInBookmarks(locatedFaction, out BookmarkModel? _)) return;
+        BookmarkModel model = BookmarkModel.FromLocatedFaction(locatedFaction);
+        Bookmarks.Insert(0, model);
+        AutoSave();
+        SetSelectedBookmark(model);
+        SelectionIsBookmarked = true;
+    }
+
     private void RemoveBookmark(EntityModel dt)
     {
         if (IsBookmarkable(dt, out _) && IsInBookmarks(dt, out BookmarkModel? bookmarkModel))
@@ -191,6 +209,16 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
         }
     }
 
+    private void RemoveBookmark(LocatedFactionModel locatedFaction)
+    {
+        if (!IsInBookmarks(locatedFaction, out BookmarkModel? bookmarkModel)) return;
+        Bookmarks.Remove(bookmarkModel);
+        AutoSave();
+        SetSelectedBookmark(null);
+        SelectionIsBookmarked = false;
+        _lastSelectedBookmark = null;
+    }
+
     private bool IsInBookmarks(EntityModel? dt, out BookmarkModel? bookmarkModel)
     {
         bookmarkModel = null;
@@ -202,10 +230,23 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
         return bookmarkModel != null;
     }
 
-    // Toggle bookmark for the selected object (region, unit, ship, building)
+    private bool IsInBookmarks(LocatedFactionModel? locatedFaction, out BookmarkModel? bookmarkModel)
+    {
+        bookmarkModel = locatedFaction is null ? null : Bookmarks.FirstOrDefault(b => b.IsSameLocatedFaction(locatedFaction));
+        return bookmarkModel is not null;
+    }
+
+    // Toggle bookmark for the selected object (region, faction, unit, ship, building)
     [RelayCommand(CanExecute = nameof(CanToggleBookmark))]
     private void ToggleBookmark()
     {
+        if (SelectedLocatedFaction is not null)
+        {
+            if (IsInBookmarks(SelectedLocatedFaction, out BookmarkModel? _)) RemoveBookmark(SelectedLocatedFaction);
+            else AddBookmark(SelectedLocatedFaction);
+            return;
+        }
+
         if (SelectedObject is null)
         {
             return;
@@ -229,10 +270,13 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
     // Reveal bookmark in explorer (selects the object in the explorer view)
     private void RevealBookmark(BookmarkModel? bookmarkModel)
     {
-        if (LoadingBookmarksInProgress || bookmarkModel?.Target is not EntityModel target)
+        if (LoadingBookmarksInProgress || bookmarkModel is null) return;
+        if (bookmarkModel.LocatedFaction is LocatedFactionModel locatedFaction)
         {
+            SendSelectionChangedEvent(new EntitySelection(null, locatedFaction.Region, locatedFaction: locatedFaction));
             return;
         }
+        if (bookmarkModel.Target is not EntityModel target) return;
 
         Debug.WriteLine($"[BOOKMARKS] Reveal bookmark {bookmarkModel.Type} {bookmarkModel.Id} for target {target} (current selection {SelectedObject})");
 
@@ -270,9 +314,10 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
     {
         BookmarkModel? bookmarkModel = null;
         SelectedObject = item;
-        SelectionIsBookmarkable = IsBookmarkable(SelectedObject, out _);
-        SelectionIsBookmarked = SelectionIsBookmarkable && IsInBookmarks(SelectedObject, out bookmarkModel);
-        SelectionName = SelectedObject?.DataBlock.GetUILabel() ?? string.Empty;
+        SelectedLocatedFaction = CurrentSelection.HasFaction() && !CurrentSelection.HasUnit() ? CurrentSelection.LocatedFaction : null;
+        SelectionIsBookmarkable = SelectedLocatedFaction is not null || IsBookmarkable(SelectedObject, out _);
+        SelectionIsBookmarked = SelectedLocatedFaction is not null ? IsInBookmarks(SelectedLocatedFaction, out bookmarkModel) : SelectionIsBookmarkable && IsInBookmarks(SelectedObject, out bookmarkModel);
+        SelectionName = SelectedLocatedFaction is not null ? $"{SelectedLocatedFaction.Name} @ {SelectedLocatedFaction.Region.Name}" : SelectedObject?.DataBlock.GetUILabel() ?? string.Empty;
         SetSelectedBookmark(SelectionIsBookmarked ? bookmarkModel : null);
     }
 
@@ -282,8 +327,19 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
     /// </summary>
     private void UpdateSelectedBookmark()
     {
+        if (SelectedLocatedFaction is not null)
+        {
+            SelectionIsBookmarked = IsInBookmarks(SelectedLocatedFaction, out _);
+            SetSelectedBookmark(SelectionIsBookmarked
+                ? Bookmarks.FirstOrDefault(b => b.IsSameLocatedFaction(SelectedLocatedFaction))
+                : null);
+            return;
+        }
+
         if (SelectedObject is null)
         {
+            SelectionIsBookmarked = false;
+            SetSelectedBookmark(null);
             return;
         }
 
@@ -313,7 +369,8 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
                 var type = el.Attribute("type")?.Value;
                 var id = el.Attribute("id")?.Value;
                 var name = el.Attribute("name")?.Value;
-                var model = BookmarkModel.FromXml(type, id, name, Report);
+                var region = el.Attribute("region")?.Value;
+                var model = BookmarkModel.FromXml(type, id, name, Report, region);
                 if (model != null)
                 {
                     bookmarks.Add(model);
@@ -630,7 +687,7 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
 
     private bool CanToggleBookmark()
     {
-        return IsBookmarkable(SelectedObject, out _);
+        return SelectedLocatedFaction is not null || IsBookmarkable(SelectedObject, out _);
     }
 
     private bool CanRemoveAllBookmarks()

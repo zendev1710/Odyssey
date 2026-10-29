@@ -20,7 +20,8 @@ public class BookmarkModel
         Unit,
         Ship,
         Building,
-        Island
+        Island,
+        Faction
     }
 
     public BookmarkType Type { get; private set; }
@@ -33,6 +34,8 @@ public class BookmarkModel
     /// (an entity that does not exist any more, or a kind of entity having no entity model, as islands).
     /// </summary>
     public EntityModel? Target { get; private set; }
+    public LocatedFactionModel? LocatedFaction { get; private set; }
+    public string? RegionId { get; private set; }
 
     private const string UnknownTypeValue = "UNKNOWN";
     private const string RegionTypeValue = "REGION";
@@ -40,6 +43,7 @@ public class BookmarkModel
     private const string ShipTypeValue = "SHIP";
     private const string BuildingTypeValue = "BUILDING";
     private const string IslandTypeValue = "ISLAND";
+    private const string FactionTypeValue = "FACTION";
 
     // The type of a bookmark is saved (and read) as one of the type values above. The comparison
     // is not case-sensitive: files saved by previous versions use the upper case values, and
@@ -51,17 +55,27 @@ public class BookmarkModel
         { UnitTypeValue, BookmarkType.Unit },
         { ShipTypeValue, BookmarkType.Ship },
         { BuildingTypeValue, BookmarkType.Building },
-        { IslandTypeValue, BookmarkType.Island }
+        { IslandTypeValue, BookmarkType.Island },
+        { FactionTypeValue, BookmarkType.Faction }
     };
 
     public BookmarkModel(BookmarkType type, EntityModel target)
     {
         Type = type;
-        // The data block of the entity gives the id it is saved with, and its name and label.
         Id = target.DataBlock.GetStringId();
         Name = target.DataBlock.GetUIName();
         Label = target.DataBlock.GetUILabel();
         Target = target;
+    }
+
+    private BookmarkModel(LocatedFactionModel locatedFaction)
+    {
+        Type = BookmarkType.Faction;
+        Id = locatedFaction.FactionId.ToString(System.Globalization.CultureInfo.InvariantCulture);
+        Name = locatedFaction.Name;
+        Label = $"{locatedFaction.Name} @ {locatedFaction.Region.Name}";
+        LocatedFaction = locatedFaction;
+        RegionId = $"{locatedFaction.Region.GetX()},{locatedFaction.Region.GetY()}";
     }
 
     /// <summary>
@@ -73,13 +87,17 @@ public class BookmarkModel
         return new BookmarkModel(GetBookmarkType(target), target);
     }
 
+    public static BookmarkModel FromLocatedFaction(LocatedFactionModel locatedFaction)
+    {
+        return new BookmarkModel(locatedFaction);
+    }
+
     /// <summary>
     /// Gets the type of bookmark that can be set on the specified entity: a region, a unit, a ship
     /// or a building, or <see cref="BookmarkType.Unknown"/> when the entity cannot be bookmarked.
     /// </summary>
     public static BookmarkType GetBookmarkType(EntityModel? entity)
     {
-        // TODO: handle island ? handle faction in a given region ?
         return entity?.Type switch
         {
             EntityModel.EntityType.Region => BookmarkType.Region,
@@ -98,17 +116,28 @@ public class BookmarkModel
     /// <param name="name">name of the bookmarked entity, as saved</param>
     /// <param name="cr">the CR document the bookmark belongs to</param>
     /// <returns>null when the type is unknown or when the entity does not exist in the document</returns>
-    public static BookmarkModel? FromXml(string? type, string? encodedId, string? name, CRDocument? cr)
+    public static BookmarkModel? FromXml(string? type, string? encodedId, string? name, CRDocument? cr, string? regionCoordinates = null)
     {
         if (type == null || encodedId == null || cr == null)
         {
             return null;
         }
 
-        // The type saved in the file tells how to find the entity in the document; the type of the
-        // bookmark is then the type of the found entity (see GetBookmarkType), so that it is always
-        // coherent with the bookmarked entity.
         BookmarkType savedType = TypeMapping.GetValueOrDefault(type, BookmarkType.Unknown);
+        if (savedType == BookmarkType.Faction)
+        {
+            if (!int.TryParse(encodedId, out int factionId) ||
+                !Converters.ExtractCoordinatesWithComma(regionCoordinates, out int x, out int y) ||
+                !cr.FindRegion(x, y, PlaneType.WORLD, out RegionModel? region))
+            {
+                return null;
+            }
+
+            FactionModel? faction = cr.GetFaction(factionId);
+            LocatedFactionModel locatedFaction = new(faction, region, factionId, name ?? cr.GetFactionName(factionId));
+            return FromLocatedFaction(locatedFaction);
+        }
+
         EntityModel? target = ResolveTarget(savedType, encodedId, cr);
         if (target is null)
         {
@@ -161,6 +190,7 @@ public class BookmarkModel
             BookmarkType.Ship => ShipTypeValue,
             BookmarkType.Building => BuildingTypeValue,
             BookmarkType.Island => IslandTypeValue,
+            BookmarkType.Faction => FactionTypeValue,
             _ => UnknownTypeValue
         };
     }
@@ -170,7 +200,8 @@ public class BookmarkModel
         return new XElement("bookmark",
             new XAttribute("type", GetTypeValue(Type)),
             new XAttribute("id", Id),
-            new XAttribute("name", Name)
+            new XAttribute("name", Name),
+            RegionId is not null ? new XAttribute("region", RegionId) : null
         );
     }
 
@@ -179,11 +210,17 @@ public class BookmarkModel
     /// </summary>
     public bool IsSameObject(EntityModel? entityModel)
     {
-        // The id alone is not enough to identify the entity: the id spaces of units, ships and
-        // buildings are distinct, so two entities of different types can have the same id.
         return entityModel is not null &&
                Type == GetBookmarkType(entityModel) &&
                entityModel.DataBlock.GetStringId() == Id;
+    }
+
+    public bool IsSameLocatedFaction(LocatedFactionModel? locatedFaction)
+    {
+        return locatedFaction is not null &&
+               Type == BookmarkType.Faction &&
+               locatedFaction.FactionId.ToString(System.Globalization.CultureInfo.InvariantCulture) == Id &&
+               locatedFaction.Region.GetX().ToString(System.Globalization.CultureInfo.InvariantCulture) + "," + locatedFaction.Region.GetY().ToString(System.Globalization.CultureInfo.InvariantCulture) == RegionId;
     }
 
     public override string ToString()

@@ -1,4 +1,4 @@
-﻿using Avalonia.Controls;
+using Avalonia.Controls;
 using Odyssey.Models.Data;
 using Odyssey.Models.Tools;
 using System;
@@ -47,10 +47,10 @@ public class EntitySelection : IEntitySelection
     }
     */
     
-    public EntitySelection(EntityModel? item, RegionModel? region, /*FactionModel? faction,*/ ILocationResolver? regionResolver = null)
+    public EntitySelection(EntityModel? item, RegionModel? region, object? data = null, ILocationResolver? regionResolver = null, LocatedFactionModel? locatedFaction = null)
     {
         Clear();
-        SetItem(item, region, /*faction,*/ regionResolver);
+        SetItem(item, region, data, regionResolver, locatedFaction);
     }
 
     public EntitySelection(CRDocument report, int x, int y, int z)
