@@ -1,13 +1,13 @@
 using CommunityToolkit.Mvvm.Input;
-using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
+using System.Linq;
 
 namespace Odyssey.ViewModels.Tools;
 
 /// <summary>
-/// Shows a horizontal strip of units for the currently selected region.
+/// Shows the units selected by the composite units inspector.
 /// Inherits from <see cref="DocumentToolViewModelBase"/> so the Report is provided later via SetMapFile.
 /// </summary>
 public partial class UnitStripViewModel : DocumentToolViewModelBase
@@ -17,11 +17,7 @@ public partial class UnitStripViewModel : DocumentToolViewModelBase
     // Public command property exposed to the view
     public IRelayCommand<UnitViewModel?> SelectUnitCommand { get; }
 
-    /// <summary>
-    /// Key of the region the strip is currently built from, or -1 when no region is loaded
-    /// (used to not rebuild the strip when the selection changes inside the same region).
-    /// </summary>
-    private int _loadedRegionKey = -1;
+    private readonly List<int> _loadedUnitIds = [];
 
     public UnitStripViewModel() : base()
     {
@@ -32,84 +28,25 @@ public partial class UnitStripViewModel : DocumentToolViewModelBase
     protected override void OnActiveDocumentChanged(CRDocument report)
     {
         base.OnActiveDocumentChanged(report);
-
-        // The units of the new document have to be collected again.
-        _loadedRegionKey = -1;
+        _loadedUnitIds.Clear();
         Units.Clear();
     }
 
-    /// <summary>
-    /// Selection change from the global selection system.
-    /// We load units for the region of the new selection (region or unit's parent region).
-    /// </summary>
-    protected override void OnSelectionChanged(IEntitySelection selection, SelectionChangeTypes selType, object? sender)
+    public void SetUnits(IEnumerable<int> unitIds)
     {
-        if (ReferenceEquals(sender, this)) return;
-
-        bool regionChanged = selType.HasFlag(SelectionChangeTypes.Region);
-        bool regionSelected = selection.IsRegionSelected();
-        bool unitSelected = selection.HasUnit();
-
-        Debug.WriteLine($"[VM-UNIT-STRIP] OnSelectionChanged: region changed={regionChanged}, region selected={regionSelected}");
-
-        // If a region is selected -> load units in that region
-        if (regionSelected)
-        {
-            var region = selection.Region.DataBlock as RegionDataBlock;
-            int regionKey = Coordinates.GetId(region.GetX(), region.GetY(), (PlaneType)region.GetId());
-            LoadUnitsForRegion(regionKey);
+        List<int> requestedIds = [.. unitIds];
+        if (requestedIds.SequenceEqual(_loadedUnitIds))
             return;
-        }
 
-        // If a unit is selected -> resolve its seen parent region, then load units of that region
-        if (unitSelected)
-        {
-            var unit = selection.Item!.DataBlock;
-            if (unit != null)
-            {
-                RegionDataBlock? region = null;
-                if (CRDocument.FindRegionFrom(ref region, unit))
-                {
-                    if (region is not null)
-                    {
-                        RegionDataBlock r = region as RegionDataBlock;
-                        if (r is not null)
-                        {
-                            int regionKey = Coordinates.GetId(r.GetX(), r.GetY(), (PlaneType)region.GetId());
-                            LoadUnitsForRegion(regionKey);
-                            return;
-                        }
-                    }
-                }
-            }
-        }
-
-        // default: clear list
-        _loadedRegionKey = -1;
-        Units.Clear();
-
-    }
-
-    private void LoadUnitsForRegion(int regionKey)
-    {
-        // This method is called for any selection change occurring in a region (the region itself or
-        // one of its units/buildings/... being selected): rebuilding the strip is useless when the
-        // units of that region are already displayed.
-        if (regionKey == _loadedRegionKey)
-        {
-            return;
-        }
-
-        _loadedRegionKey = regionKey;
+        _loadedUnitIds.Clear();
+        _loadedUnitIds.AddRange(requestedIds);
         Units.Clear();
         if (!HasDocument)
             return;
 
-        var ids = Report.GetUnitIdsInRegion(regionKey);
-        foreach (var id in ids)
+        foreach (int unitId in requestedIds)
         {
-            var uvm = UnitViewModel.FromDocument(Report, id);
-            Units.Add(uvm);
+            Units.Add(UnitViewModel.FromDocument(Report, unitId));
         }
     }
 

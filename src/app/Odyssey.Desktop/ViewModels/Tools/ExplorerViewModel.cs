@@ -524,7 +524,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
 
                         // With ActiveFactionGroup to false, units of own faction are inserted directly as child of region node, after buildings.
                         // Add unit node, as child of faction node (ActiveFactionGroup set to true) or of a region
-                        AddUnit(factionNode ?? (regionNode ??= AddRegionNode(Root, regionModel, ref regionsNumber)), block, factionNode != null ? -1 : activeUnitInsertionIndex);
+                        AddUnit(factionNode ?? (regionNode ??= AddRegionNode(Root, regionModel, ref regionsNumber)), block, factionNode != null ? -1 : activeUnitInsertionIndex, locatedFaction);
                         if (factionNode == null)
                         {
                             // Keep track of the first faction node to set the activeUnitIndexPosition
@@ -688,7 +688,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         }
     }
 
-    private void AddUnit(ExplorerNodeViewModel parentNode, DataBlock unitBlock, int index)
+    private void AddUnit(ExplorerNodeViewModel parentNode, DataBlock unitBlock, int index, LocatedFactionModel locatedFaction)
     {
         string unitlabel = $"{unitBlock.GetUILabel()}: {unitBlock.ValueInt(KeyType.NUMBER)}";
         BelongsToStatus status = BelongsToStatus.None;
@@ -705,7 +705,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         }
 
         string? statusIconUri = GetUnitStatusIconUri(unitBlock);
-        _ = new ExplorerNodeViewModel(parentNode, unitlabel, unitBlock.GetId(), NodeTypes.UNIT, !Report.IsConfirmed(unitBlock), status, index, statusIconUri: statusIconUri);
+        _ = new ExplorerNodeViewModel(parentNode, unitlabel, unitBlock.GetId(), NodeTypes.UNIT, !Report.IsConfirmed(unitBlock), status, index, statusIconUri: statusIconUri, locatedFaction: locatedFaction);
     }
 
     private string? GetUnitStatusIconUri(DataBlock unitBlock)
