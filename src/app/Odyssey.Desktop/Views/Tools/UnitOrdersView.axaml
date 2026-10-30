@@ -35,7 +35,7 @@
             <!-- DropDownButton Content="Change theme" VerticalAlignment="Stretch" VerticalContentAlignment="Center"-->
                 <Button.Flyout>
                     <Flyout>
-                        <ListBox ItemsSource="{Binding AllThemes}" SelectedItem="{Binding SelectedTheme}">
+                        <ListBox ItemsSource="{Binding AvailableThemes}" SelectedItem="{Binding SelectedTheme}">
                             <ListBox.DataTemplates>
                                 <DataTemplate x:DataType="vm:ColorThemeViewModel">
                                     <TextBlock Text="{Binding DisplayName}"/>
@@ -88,6 +88,7 @@
 				<!--TextBlock Name="StatusUnitName" Text="{Binding UnitName}" Margin="5 0 0 0" FontSize="12" /-->
 			<!--/StackPanel-->
 		</Grid>
+        <Border Name="ConfirmationIndicator" Grid.RowSpan="3" Grid.ColumnSpan="2" BorderThickness="0" IsHitTestVisible="False" />
 	</Grid>
 </UserControl>
 

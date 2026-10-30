@@ -2,6 +2,7 @@
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.Styling;
 
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
@@ -12,8 +13,6 @@ using AvaloniaEdit.Editing;
 using AvaloniaEdit.Rendering;
 using AvaloniaEdit.Snippets;
 
-
-using AvaloniaEdit.CodeCompletion;
 using AvaloniaEdit.TextMate;
 using Odyssea.TextMate;
 using Odyssey.TextMate;
@@ -23,14 +22,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Reflection.Emit;
-using System.Runtime.CompilerServices;
-//using System.Collections.Generic;
-//using AvaloniaEdit.Snippets;
-//using Snippet = AvaloniaEdit.Snippets.Snippet;
-
-//using System.Diagnostics;
-//using TextMateSharp.Grammars;
 
 namespace Odyssey.Views.Tools;
 
@@ -38,6 +29,8 @@ public partial class UnitOrdersView : UserControl
 {
     private static string eresseaScopeName = "source.eressea";
     private readonly TextEditor? _textEditor;
+    private UnitOrdersViewModel? _viewModel;
+    private Color? _themeEditorBackground;
     private AvaloniaEdit.TextMate.TextMate.Installation _textMateInstallation;
     private EresseaOrdersRegistryOptions _eresseaRegistryOptions;
     private CompletionWindow _completionWindow;
@@ -47,12 +40,17 @@ public partial class UnitOrdersView : UserControl
 
     private CompletionEngine _engine;
 
+    private static readonly IBrush UnconfirmedOrdersBorderBrush = new SolidColorBrush(Color.Parse("#C07800"));
+    private readonly Border? _confirmationIndicator;
+    private Application? _themeApplication;
+
     public UnitOrdersView()
     {
         InitializeComponent();
 
         //var control = this.FindControl<TextBlock>("StatusUnitName");
         _textEditor = this.FindControl<TextEditor>("Editor");
+        _confirmationIndicator = this.FindControl<Border>("ConfirmationIndicator");
 
         if (_textEditor is not null)
         {
@@ -152,6 +150,29 @@ public partial class UnitOrdersView : UserControl
 
         // Subscribe to DataContext changes to attach to the ViewModel
         this.DataContextChanged += OnDataContextChanged;
+
+        this.AttachedToVisualTree += (_, _) =>
+        {
+            if (_themeApplication is not null)
+            {
+                return;
+            }
+
+            _themeApplication = Application.Current;
+            if (_themeApplication is not null)
+            {
+                _themeApplication.ActualThemeVariantChanged += Application_ActualThemeVariantChanged;
+                UpdateAvailableThemesForApplicationMode();
+            }
+        };
+        this.DetachedFromVisualTree += (_, _) =>
+        {
+            if (_themeApplication is not null)
+            {
+                _themeApplication.ActualThemeVariantChanged -= Application_ActualThemeVariantChanged;
+                _themeApplication = null;
+            }
+        };
     }
 
     private void InitializeComponent()
@@ -193,20 +214,37 @@ public partial class UnitOrdersView : UserControl
         //     newVm.PropertyChanged += ViewModel_PropertyChanged;
         // }
 
-        if (DataContext is UnitOrdersViewModel vm)
+        if (_viewModel is not null)
         {
-            vm.PropertyChanged += ViewModel_PropertyChanged;
-            _engine = new CompletionEngine(vm);
+            _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
         }
+
+        _viewModel = DataContext as UnitOrdersViewModel;
+        if (_viewModel is not null)
+        {
+            _viewModel.PropertyChanged += ViewModel_PropertyChanged;
+            _engine = new CompletionEngine(_viewModel);
+        }
+
+        UpdateAvailableThemesForApplicationMode();
+        UpdateOrderConfirmationAppearance();
     }
 
     private void ViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
+        if (sender is not UnitOrdersViewModel vm)
+        {
+            return;
+        }
+
         if (e.PropertyName == nameof(UnitOrdersViewModel.SelectedTheme))
         {
-            var vm = (UnitOrdersViewModel)sender!;
-            // Handle your theme logic here
             ApplyThemeToView(vm.SelectedTheme);
+        }
+
+        if (e.PropertyName is nameof(UnitOrdersViewModel.IsConfirmed) or nameof(UnitOrdersViewModel.CanEditOrders))
+        {
+            UpdateOrderConfirmationAppearance();
         }
     }
 
@@ -219,7 +257,12 @@ public partial class UnitOrdersView : UserControl
 
     void ApplyThemeColorsToEditor(AvaloniaEdit.TextMate.TextMate.Installation e)
     {
-        ApplyBrushAction(e, "editor.background", brush => _textEditor.Background = brush);
+        _themeEditorBackground = null;
+        ApplyBrushAction(e, "editor.background", brush =>
+        {
+            _themeEditorBackground = (brush as SolidColorBrush)?.Color;
+            _textEditor.Background = brush;
+        });
         ApplyBrushAction(e, "editor.foreground", brush => _textEditor.Foreground = brush);
 
         if (!ApplyBrushAction(e, "editor.selectionBackground",
@@ -250,6 +293,8 @@ public partial class UnitOrdersView : UserControl
         {
             _textEditor.LineNumbersForeground = _textEditor.Foreground;
         }
+
+        UpdateOrderConfirmationAppearance();
     }
 
     private void ApplyThemeColorsToWindow(AvaloniaEdit.TextMate.TextMate.Installation e)
@@ -380,7 +425,60 @@ public partial class UnitOrdersView : UserControl
         //Applying the Editor background to the whole window for demo sake.
         ApplyBrushAction(e, "editor.background", brush => Background = brush);
         ApplyBrushAction(e, "editor.foreground", brush => Foreground = brush);
+        UpdateOrderConfirmationAppearance();
     }
+
+    private ThemeVariant CurrentApplicationThemeVariant =>
+        (_themeApplication ?? Application.Current)?.ActualThemeVariant ?? ThemeVariant.Default;
+
+    private void UpdateAvailableThemesForApplicationMode()
+    {
+        bool isDarkMode = CurrentApplicationThemeVariant == ThemeVariant.Dark;
+        _viewModel?.UpdateAvailableThemes(isDarkMode);
+        UpdateOrderConfirmationAppearance();
+    }
+
+    private void UpdateOrderConfirmationAppearance()
+    {
+        bool showUnconfirmedState = _viewModel is { CanEditOrders: true, IsConfirmed: false };
+        if (_confirmationIndicator is not null)
+        {
+            _confirmationIndicator.BorderBrush = showUnconfirmedState ? UnconfirmedOrdersBorderBrush : Brushes.Transparent;
+            _confirmationIndicator.BorderThickness = showUnconfirmedState ? new Thickness(4) : new Thickness(0);
+        }
+
+        if (_themeEditorBackground is not Color themeBackground)
+        {
+            return;
+        }
+
+        Color background = showUnconfirmedState
+            ? ApplyUnconfirmedTint(themeBackground, CurrentApplicationThemeVariant == ThemeVariant.Dark)
+            : themeBackground;
+        var backgroundBrush = new SolidColorBrush(background);
+        Background = backgroundBrush;
+        if (_textEditor is not null)
+        {
+            _textEditor.Background = backgroundBrush;
+            _textEditor.TextArea.Background = backgroundBrush;
+            //_textEditor.TextArea.TextView.Background = backgroundBrush;
+        }
+    }
+
+    private static Color ApplyUnconfirmedTint(Color background, bool isDarkMode)
+    {
+        const double overlayOpacity = 0.10;
+        byte overlay = isDarkMode ? byte.MaxValue : (byte)0;
+
+        return Color.FromArgb(
+            background.A,
+            BlendChannel(background.R, overlay, overlayOpacity),
+            BlendChannel(background.G, overlay, overlayOpacity),
+            BlendChannel(background.B, overlay, overlayOpacity));
+    }
+
+    private static byte BlendChannel(byte original, byte overlay, double opacity) =>
+        (byte)Math.Round(original * (1 - opacity) + overlay * opacity);
 
     bool ApplyBrushAction(AvaloniaEdit.TextMate.TextMate.Installation e, string colorKeyNameFromJson, Action<IBrush> applyColorAction)
     {
@@ -740,4 +838,6 @@ public partial class UnitOrdersView : UserControl
         snippet.Insert(_textEditor.TextArea);
         _textEditor.Focus();
     }
+
+    private void Application_ActualThemeVariantChanged(object? sender, EventArgs e) => UpdateAvailableThemesForApplicationMode();
 }
