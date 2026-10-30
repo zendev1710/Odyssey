@@ -13,10 +13,18 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Border Grid.Row="0" Padding="8" Background="{DynamicResource PanelBackgroundBrush}">
-            <StackPanel Orientation="Horizontal" Spacing="8">
-                <TextBlock Text="{Binding LocatedFaction.Name}" FontWeight="SemiBold" />
-                <TextBlock Text="{Binding LocatedFaction.Region.Name}" Foreground="#FF888888" />
-            </StackPanel>
+            <Grid ColumnDefinitions="*,Auto">
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding LocatedFaction.Name}" FontWeight="SemiBold" />
+                    <TextBlock Text="{Binding LocatedFaction.Region.Name}" Foreground="#FF888888" />
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="2">
+                    <Button Content="⇤" Command="{Binding NavigateToFirstLocatedFactionCommand}" IsVisible="{Binding ShowFirstLastLocatedFactionButtons}" />
+                    <Button Content="←" Command="{Binding NavigateToPreviousLocatedFactionCommand}" />
+                    <Button Content="→" Command="{Binding NavigateToNextLocatedFactionCommand}" />
+                    <Button Content="⇥" Command="{Binding NavigateToLastLocatedFactionCommand}" IsVisible="{Binding ShowFirstLastLocatedFactionButtons}" />
+                </StackPanel>
+            </Grid>
         </Border>
         <views:UnitStripView Grid.Row="1" DataContext="{Binding StripViewModel}" />
     </Grid>
