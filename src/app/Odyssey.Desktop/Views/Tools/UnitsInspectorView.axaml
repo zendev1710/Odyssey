@@ -18,21 +18,6 @@
                 <TextBlock Text="{Binding LocatedFaction.Region.Name}" Foreground="#FF888888" />
             </StackPanel>
         </Border>
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="220" />
-                <ColumnDefinition Width="6" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <views:UnitStripView Grid.Column="0" DataContext="{Binding StripViewModel}" />
-            <GridSplitter Grid.Column="1"
-                          Width="6"
-                          Background="Transparent"
-                          HorizontalAlignment="Stretch"
-                          VerticalAlignment="Stretch"
-                          ShowsPreview="True"
-                          ResizeDirection="Columns" />
-            <views:UnitInspectorView Grid.Column="2" DataContext="{Binding InspectorViewModel}" />
-        </Grid>
+        <views:UnitStripView Grid.Row="1" DataContext="{Binding StripViewModel}" />
     </Grid>
 </UserControl>

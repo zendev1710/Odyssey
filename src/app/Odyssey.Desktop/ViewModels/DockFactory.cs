@@ -170,6 +170,7 @@ public class DockFactory : Factory
         // Contains the documentDock and the messagesDock under it
         var centralDock = new ProportionalDock
         {
+            Proportion = 0.25,
             Orientation = Orientation.Vertical,
             ActiveDockable = null,
             VisibleDockables = CreateList<IDockable>
@@ -184,31 +185,44 @@ public class DockFactory : Factory
             )
         };
 
-        // contains the properties and so on, until orders at the bottom
+        var detailsDock = new ToolDock
+        {
+            Proportion = 0.5,
+            ActiveDockable = detailsViewModel,
+            VisibleDockables = CreateList<IDockable>(detailsViewModel, regionStatisticsViewModel),
+        };
+
+        var ordersDock = new ToolDock
+        {
+            Proportion = 0.5,
+            ActiveDockable = unitOrdersViewModel,
+            VisibleDockables = CreateList<IDockable>(unitOrdersViewModel),
+        };
+
+        var upperToolsDock = new ProportionalDock
+        {
+            Proportion = 0.5,
+            Orientation = Orientation.Horizontal,
+            VisibleDockables = CreateList<IDockable>
+            (
+                ordersDock,
+                new ProportionalDockSplitter(),
+                detailsDock
+            )
+        };
+
         var rightDock = new ProportionalDock
         {
-            Proportion = 0.25,
+            Proportion = 0.5,
             Orientation = Orientation.Vertical,
             ActiveDockable = null,
             VisibleDockables = CreateList<IDockable>
             (
+                upperToolsDock,
+                new ProportionalDockSplitter(),
                 new ToolDock
                 {
                     Proportion = 0.5,
-                    ActiveDockable = detailsViewModel,
-                    VisibleDockables = CreateList<IDockable>(detailsViewModel, /*unitInspectorViewModel,*/ regionStatisticsViewModel),
-                },
-                new ProportionalDockSplitter(),
-                new ToolDock
-                {
-                    Proportion = 0.25,
-                    ActiveDockable = unitOrdersViewModel,
-                    VisibleDockables = CreateList<IDockable>(unitOrdersViewModel),
-                },
-                new ProportionalDockSplitter(),
-                new ToolDock
-                {
-                    Proportion = 0.25,
                     ActiveDockable = unitsInspectorViewModel,
                     VisibleDockables = CreateList<IDockable>(unitsInspectorViewModel),
                 }

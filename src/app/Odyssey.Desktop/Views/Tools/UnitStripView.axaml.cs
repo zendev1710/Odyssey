@@ -1,4 +1,3 @@
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
@@ -13,7 +12,6 @@ public partial class UnitStripView : UserControl
 
     private void InitializeComponent()
     {
-        // Ensure XAML is loaded even if XAML code-gen is not present
         AvaloniaXamlLoader.Load(this);
     }
 }

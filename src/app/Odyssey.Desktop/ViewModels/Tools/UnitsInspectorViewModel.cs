@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using Odyssey.Models;
+using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Tools;
 using Odyssey.ViewModels;
@@ -9,13 +10,11 @@ using System.Linq;
 namespace Odyssey.ViewModels.Tools
 {
     /// <summary>
-    /// Composite ViewModel for the UnitsInspector view.
-    /// Hosts a vertical UnitStripViewModel and a UnitInspectorViewModel and forwards the active document/selection.
+    /// ViewModel for the units overview, which presents each unit with its summary.
     /// </summary>
     public partial class UnitsInspectorViewModel : DocumentToolViewModelBase
     {
         public UnitStripViewModel StripViewModel { get; }
-        public UnitInspectorViewModel InspectorViewModel { get; }
 
         [ObservableProperty]
         private LocatedFactionModel? locatedFaction;
@@ -23,7 +22,6 @@ namespace Odyssey.ViewModels.Tools
         public UnitsInspectorViewModel() : base()
         {
             StripViewModel = new UnitStripViewModel();
-            InspectorViewModel = new UnitInspectorViewModel();
         }
 
         protected override void OnActiveDocumentChanged(CRDocument report)
@@ -31,7 +29,9 @@ namespace Odyssey.ViewModels.Tools
             base.OnActiveDocumentChanged(report);
             LocatedFaction = null;
             StripViewModel.SetUnits([]);
-            InspectorViewModel.SetSelectedUnit(null);
+            StripViewModel.SetSelectionContext(null, null);
+            StripViewModel.SetSelectedUnit(null);
+            StripViewModel.SetOrdersColumnVisible(true);
         }
 
         protected override void OnSelectionChanged(IEntitySelection selection, SelectionChangeTypes selType, object? sender)
@@ -42,7 +42,9 @@ namespace Odyssey.ViewModels.Tools
             {
                 LocatedFaction = null;
                 StripViewModel.SetUnits([]);
-                InspectorViewModel.SetSelectedUnit(null);
+                StripViewModel.SetSelectionContext(null, null);
+                StripViewModel.SetSelectedUnit(null);
+                StripViewModel.SetOrdersColumnVisible(true);
                 return;
             }
 
@@ -58,6 +60,10 @@ namespace Odyssey.ViewModels.Tools
             {
                 selectedFaction = FindFirstLocatedFactionForSelection(selectedNode);
             }
+
+            bool showOrdersColumn = selectedFaction is null || Report.GetFactionStatus(selectedFaction.FactionId) is FactionStatus.ACTIVE or FactionStatus.ALLIED;
+            StripViewModel.SetOrdersColumnVisible(showOrdersColumn);
+            StripViewModel.SetSelectionContext(selectedFaction?.Region ?? selection.Region, selectedFaction);
 
             bool factionChanged = !IsSameLocatedFaction(LocatedFaction, selectedFaction);
             if (factionChanged)
@@ -85,7 +91,7 @@ namespace Odyssey.ViewModels.Tools
                 StripViewModel.SetUnits([]);
             }
 
-            InspectorViewModel.SetSelectedUnit(selection.HasUnit() ? selection.Item?.Id : null);
+            StripViewModel.SetSelectedUnit(selection.Item is UnitModel selectedUnit ? selectedUnit.Id : null);
         }
 
         private static bool IsSameLocatedFaction(LocatedFactionModel? left, LocatedFactionModel? right)

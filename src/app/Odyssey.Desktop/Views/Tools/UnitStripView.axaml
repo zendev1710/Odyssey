@@ -2,39 +2,209 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+             xmlns:controls="using:Odyssey.Controls"
              xmlns:vm="using:Odyssey.ViewModels.Tools"
+             xmlns:vmtools="using:Odyssey.ViewModels.Tools"
              x:Class="Odyssey.Views.Tools.UnitStripView"
              x:Name="Root"
-             x:DataType="vm:UnitStripViewModel">
-  <Border Padding="6" Background="{DynamicResource PanelBackgroundBrush}">
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
-      <ItemsControl ItemsSource="{Binding Units}">
-        <ItemsControl.ItemsPanel>
-          <ItemsPanelTemplate>
-            <StackPanel Orientation="Horizontal" Spacing="6"/>
-          </ItemsPanelTemplate>
-        </ItemsControl.ItemsPanel>
-        <ItemsControl.ItemTemplate>
-          <DataTemplate>
-               <!--Button Command="{Binding DataContext.SelectUnitCommand, ElementName=Root}"
-               CommandParameter="{Binding}"-->
-            <Button 
-                    Width="160" Height="64" Margin="0"
-                    Padding="6">
-              <Border CornerRadius="4" Padding="4">
-                <StackPanel Orientation="Vertical">
-                  <TextBlock Text="{Binding Name}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" />
-                  <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
-                    <TextBlock Text="{Binding Id}" FontSize="11" Foreground="#FF888888" />
-                    <TextBlock Text="{Binding Summary}" FontSize="11" Foreground="#FF666666" TextTrimming="CharacterEllipsis" />
-                  </StackPanel>
-                </StackPanel>
-              </Border>
-            </Button>
-          </DataTemplate>
-        </ItemsControl.ItemTemplate>
-      </ItemsControl>
-    </ScrollViewer>
-  </Border>
+             x:DataType="vm:UnitStripViewModel"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450">
+    <Border Padding="6" Background="{DynamicResource PanelBackground}">
+        <ScrollViewer Name="UnitsScrollViewer"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding Units}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical" Spacing="0" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vmtools:UnitViewModel">
+                        <Border Height="68" ClipToBounds="True">
+                            <Grid ColumnSpacing="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="180" />
+                                    <ColumnDefinition Width="{Binding DataContext.OrdersColumnWidth, ElementName=Root}" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                    <Border Grid.Column="0"
+                                        Padding="4"
+                                        BorderBrush="#FF555555"
+                                        BorderThickness="1">
+                                    <Button Width="160"
+                                            Height="52"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Padding="0"
+                                            BorderThickness="0"
+                                            Background="Transparent"
+                                            Command="{Binding DataContext.SelectUnitCommand, ElementName=Root}"
+                                            CommandParameter="{Binding}">
+                                        <Border Padding="6"
+                                                CornerRadius="12"
+                                                BorderBrush="{Binding FactionStatusBrush}"
+                                                BorderThickness="4"
+                                                Background="{Binding IdentityBackground}">
+                                            <Grid ColumnDefinitions="*,42">
+                                                <StackPanel Grid.Column="0" Spacing="3" VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding Name}"
+                                                               FontWeight="SemiBold"
+                                                               Foreground="{Binding IdentityForeground}"
+                                                               TextWrapping="NoWrap"
+                                                               TextTrimming="CharacterEllipsis" />
+                                                    <TextBlock Text="{Binding Id}"
+                                                               FontSize="10"
+                                                               Foreground="{Binding IdentityForeground}"
+                                                               TextWrapping="NoWrap" />
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="1" Spacing="0" VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding PeopleNumber}"
+                                                               FontSize="20"
+                                                               FontWeight="Black"
+                                                               Foreground="{Binding IdentityForeground}"
+                                                               TextAlignment="Center" />
+                                                    <TextBlock Text="people"
+                                                               FontSize="7"
+                                                               FontWeight="SemiBold"
+                                                               Foreground="{Binding IdentityForeground}"
+                                                               TextAlignment="Center" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </Border>
+                                    </Button>
+                                </Border>
+                                <Border Grid.Column="1"
+                                        Padding="4"
+                                        BorderBrush="#FF555555"
+                                        BorderThickness="1">
+                                    <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                                  VerticalScrollBarVisibility="Auto">
+                                        <TextBlock Text="{Binding OrdersSummary}"
+                                                   TextWrapping="NoWrap" />
+                                    </ScrollViewer>
+                                </Border>
+                                <Border Grid.Column="2"
+                                        Padding="3"
+                                        BorderBrush="#FF555555"
+                                        BorderThickness="1">
+                                    <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                                  VerticalScrollBarVisibility="Disabled">
+                                        <Grid RowDefinitions="*,*" RowSpacing="2">
+                                            <ItemsControl Grid.Row="0" ItemsSource="{Binding InventoryItems}">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Horizontal" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate x:DataType="vmtools:UnitItemViewModel">
+                                                        <Border Width="20"
+                                                                Height="20"
+                                                                Margin="1"
+                                                                CornerRadius="4"
+                                                                BorderBrush="#8f6d42"
+                                                                BorderThickness="1"
+                                                                Background="#d9d9d9"
+                                                                ToolTip.Tip="{Binding TooltipLabel}">
+                                                            <Grid>
+                                                                <asyncImageLoader:AdvancedImage Source="{Binding IconPath}"
+                                                                                               Width="13"
+                                                                                               Height="13"
+                                                                                               HorizontalAlignment="Center"
+                                                                                               VerticalAlignment="Center"
+                                                                                               IsVisible="{Binding IconPath, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                                                                               Stretch="Uniform" />
+                                                                <TextBlock Text="{Binding Name}"
+                                                                           IsVisible="{Binding IconPath, Converter={x:Static StringConverters.IsNullOrEmpty}}"
+                                                                           HorizontalAlignment="Center"
+                                                                           VerticalAlignment="Center"
+                                                                           FontSize="6"
+                                                                           FontWeight="SemiBold"
+                                                                           Foreground="#1a1a1a"
+                                                                           TextWrapping="NoWrap"
+                                                                           TextTrimming="CharacterEllipsis" />
+                                                                <Border Background="#f5d67b"
+                                                                        CornerRadius="3"
+                                                                        HorizontalAlignment="Right"
+                                                                        VerticalAlignment="Bottom"
+                                                                        Padding="1,0"
+                                                                        BorderBrush="#7a6146"
+                                                                        BorderThickness="1">
+                                                                    <TextBlock Text="{Binding QuantityText}"
+                                                                               FontSize="6"
+                                                                               FontWeight="Black"
+                                                                               Foreground="#101010"
+                                                                               TextAlignment="Center" />
+                                                                </Border>
+                                                            </Grid>
+                                                        </Border>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                            <ItemsControl Grid.Row="1" ItemsSource="{Binding SkillItems}">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Horizontal" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate x:DataType="vmtools:UnitSkillViewModel">
+                                                        <Border Width="20"
+                                                                Height="20"
+                                                                Margin="1"
+                                                                CornerRadius="10"
+                                                                BorderBrush="{Binding ChangeBorderBrush}"
+                                                                BorderThickness="1.5"
+                                                                Background="#cfe6f0"
+                                                                ToolTip.Tip="{Binding TooltipLabel}">
+                                                            <Grid>
+                                                                <Border Background="{Binding ChangeCircleOverlay}" CornerRadius="10" />
+                                                                <asyncImageLoader:AdvancedImage Source="{Binding IconPath}"
+                                                                                               Width="12"
+                                                                                               Height="12"
+                                                                                               Margin="0,0,0,4"
+                                                                                               HorizontalAlignment="Center"
+                                                                                               VerticalAlignment="Center"
+                                                                                               IsVisible="{Binding IconPath, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                                                                               Stretch="Uniform" />
+                                                                <TextBlock Text="{Binding Name}"
+                                                                           IsVisible="{Binding IconPath, Converter={x:Static StringConverters.IsNullOrEmpty}}"
+                                                                           Margin="1,1,1,5"
+                                                                           FontSize="5"
+                                                                           FontWeight="SemiBold"
+                                                                           TextAlignment="Center"
+                                                                           TextWrapping="NoWrap"
+                                                                           TextTrimming="CharacterEllipsis"
+                                                                           HorizontalAlignment="Center"
+                                                                           VerticalAlignment="Center"
+                                                                           Foreground="#12313f" />
+                                                                <Border Background="{Binding LevelBackground}"
+                                                                        CornerRadius="4"
+                                                                        HorizontalAlignment="Center"
+                                                                        VerticalAlignment="Bottom"
+                                                                        Margin="0,0,0,1"
+                                                                        Padding="2,0">
+                                                                    <TextBlock Text="{Binding LevelText}"
+                                                                               FontSize="6"
+                                                                               FontWeight="Black"
+                                                                               Foreground="White"
+                                                                               TextAlignment="Center" />
+                                                                </Border>
+                                                            </Grid>
+                                                        </Border>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </Grid>
+                                    </ScrollViewer>
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Border>
 </UserControl>
