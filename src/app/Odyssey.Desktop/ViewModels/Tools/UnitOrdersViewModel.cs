@@ -162,6 +162,10 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         // Selection.Selected |= ItemTypes.CONFIRMATION;
         DataBlock unit = selection.Item!.DataBlock;
         Report.SetConfirmed(ref unit!, newValue);
+        if (selection.Item is UnitModel unitModel)
+        {
+            unitModel.SetConfirmedStatus(newValue);
+        }
         NotifyUnitConfirmedStatusHasChanged();
     }
 
@@ -353,8 +357,7 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
     }
     private void NotifyUnitConfirmedStatusHasChanged()
     {
-        // TODO
-        //SetSelection(Selection);
+        SendSelectionChangedEvent(CurrentSelection);
     }
 
     /// <summary>

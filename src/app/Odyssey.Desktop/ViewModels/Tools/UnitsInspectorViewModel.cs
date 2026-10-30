@@ -92,6 +92,7 @@ namespace Odyssey.ViewModels.Tools
             }
 
             StripViewModel.SetSelectedUnit(selection.Item is UnitModel selectedUnit ? selectedUnit.Id : null);
+            StripViewModel.RefreshConfirmedStatuses();
         }
 
         private static bool IsSameLocatedFaction(LocatedFactionModel? left, LocatedFactionModel? right)

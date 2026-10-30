@@ -1,5 +1,4 @@
-﻿
-using Odyssey.Models.Data;
+﻿using Odyssey.Models.Data;
 using System;
 using System.Collections.Generic;
 using Odyssey.Models.Documents;
@@ -99,14 +98,17 @@ public class UnitModel : EntityModel
 
     public bool IsConfirmed { get; private set; }
 
+    internal void SetConfirmedStatus(bool isConfirmed)
+    {
+        IsConfirmed = isConfirmed;
+    }
+
     public UnitModel(DataBlock unitDataBlock, int locationId): base(unitDataBlock, locationId)
     {
         _structureDataProperties = [];
         _itemsProperties = [];
         _skillsProperties = [];
         PopulateImmediateProperties();
-        // TODO
-        IsConfirmed = false;
     }
 
     private bool IsImmediateProperty(DataKey dataKey)
@@ -126,6 +128,7 @@ public class UnitModel : EntityModel
             case KeyType.GUARDING:
             case KeyType.HUNGER:
             case KeyType.HERO:
+            case KeyType.ORDERS_CONFIRMED:
                 return true;
             case KeyType.UNKNOWN:
                 return dataKey.GetKeyFromType() == Strings.DE_TRUE_RACE_TYPE;
@@ -183,6 +186,9 @@ public class UnitModel : EntityModel
                     break;
                 case KeyType.HERO:
                     Hero = udk.GetValue();
+                    break;
+                case KeyType.ORDERS_CONFIRMED:
+                    IsConfirmed = udk.GetValue() == "1";
                     break;
                 case KeyType.UNKNOWN:
                     if (udk.GetKeyFromType() == Strings.DE_TRUE_RACE_TYPE)

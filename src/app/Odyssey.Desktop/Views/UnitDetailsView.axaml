@@ -46,55 +46,7 @@
 						</ItemsControl.ItemsPanel>
 						<ItemsControl.ItemTemplate>
 							<DataTemplate x:DataType="vmtools:UnitItemViewModel">
-								<Border Width="46"
-										Height="46"
-										CornerRadius="8"
-										BorderBrush="#8f6d42"
-										BorderThickness="1.2"
-										Background="#d9d9d9"
-										ToolTip.Tip="{Binding TooltipLabel}">
-									<Grid>
-										<Grid.RowDefinitions>
-											<RowDefinition Height="*" />
-											<RowDefinition Height="Auto" />
-										</Grid.RowDefinitions>
-
-										<asyncImageLoader:AdvancedImage Source="{Binding IconPath}"
-																	   Grid.Row="0"
-																	   Width="24"
-																	   Height="24"
-																	   HorizontalAlignment="Center"
-																	   VerticalAlignment="Center"
-																	   IsVisible="{Binding IconPath, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-																	   Stretch="Uniform" />
-										<TextBlock Text="{Binding Name}"
-												   Grid.Row="0"
-												   IsVisible="{Binding IconPath, Converter={x:Static StringConverters.IsNullOrEmpty}}"
-												   HorizontalAlignment="Center"
-												   VerticalAlignment="Center"
-												   FontWeight="SemiBold"
-												   Foreground="#1a1a1a" />
-
-										<Border Grid.Row="1"
-												Background="#f5d67b"
-												Opacity="0.96"
-												CornerRadius="4"
-												HorizontalAlignment="Right"
-												VerticalAlignment="Bottom"
-												Margin="0,2,0,0"
-												Padding="3,0,3,0"
-												BorderBrush="#7a6146"
-												BorderThickness="1">
-											<TextBlock Text="{Binding QuantityText}"
-													   FontSize="11"
-													   FontFamily="Segoe UI"
-													   FontWeight="Black"
-													   Foreground="#101010"
-													   TextAlignment="Center"
-													   MinWidth="14" />
-										</Border>
-									</Grid>
-								</Border>
+								<controls:UnitItemBadgeControl DataContext="{Binding}" Zoom="1" />
 							</DataTemplate>
 						</ItemsControl.ItemTemplate>
 					</ItemsControl>
@@ -117,48 +69,7 @@
 						</ItemsControl.ItemsPanel>
 						<ItemsControl.ItemTemplate>
 							<DataTemplate x:DataType="vmtools:UnitSkillViewModel">
-								<Border Width="46"
-										Height="46"
-										CornerRadius="23"
-										BorderBrush="{Binding ChangeBorderBrush}"
-										BorderThickness="{Binding ChangeBorderThickness}"
-										Background="#cfe6f0"
-										ToolTip.Tip="{Binding TooltipLabel}">
-									<Grid>
-										<Border Background="{Binding ChangeCircleOverlay}"
-												CornerRadius="23" />
-										<asyncImageLoader:AdvancedImage Source="{Binding IconPath}"
-																	   Width="24"
-																	   Height="24"
-																	   Margin="0,0,0,8"
-																	   HorizontalAlignment="Center"
-																	   VerticalAlignment="Center"
-																	   IsVisible="{Binding IconPath, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-																	   Stretch="Uniform" />
-										<TextBlock Text="{Binding Name}"
-												   IsVisible="{Binding IconPath, Converter={x:Static StringConverters.IsNullOrEmpty}}"
-												   Margin="4,4,4,12"
-												   FontSize="9"
-												   FontWeight="SemiBold"
-												   TextAlignment="Center"
-												   TextTrimming="CharacterEllipsis"
-												   HorizontalAlignment="Center"
-												   VerticalAlignment="Center"
-												   Foreground="#12313f" />
-										<Border Background="{Binding LevelBackground}"
-												CornerRadius="8"
-												HorizontalAlignment="Center"
-												VerticalAlignment="Bottom"
-												Margin="0,0,0,2"
-												Padding="5,0,5,0">
-											<TextBlock Text="{Binding LevelText}"
-													   FontSize="11"
-													   FontWeight="Black"
-													   Foreground="White"
-													   TextAlignment="Center" />
-										</Border>
-									</Grid>
-								</Border>
+								<controls:UnitSkillBadgeControl DataContext="{Binding}" Zoom="1" />
 							</DataTemplate>
 						</ItemsControl.ItemTemplate>
 					</ItemsControl>

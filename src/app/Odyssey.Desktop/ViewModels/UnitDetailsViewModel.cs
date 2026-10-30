@@ -63,6 +63,9 @@ public partial class UnitDetailsViewModel : ViewModelBase
     private int _peopleNumber;
 
     [ObservableProperty]
+    private bool _areSkillsVisible;
+
+    [ObservableProperty]
     private string _race;
 
     [ObservableProperty]
@@ -137,7 +140,14 @@ public partial class UnitDetailsViewModel : ViewModelBase
 
         UnitModel? unitModel = selection.Item as UnitModel;
         if (unitModel is null)
+        {
+            AreSkillsVisible = false;
+            SkillItems.Clear();
+            InventoryItems.Clear();
             return;
+        }
+
+        AreSkillsVisible = Report.GetFactionStatus(CRDocument.GetFactionIdForUnit(unitModel.DataBlock)) is FactionStatus.ACTIVE or FactionStatus.ALLIED;
 
         string factionName = string.Empty;
         string otherFactionName = string.Empty;
@@ -429,7 +439,7 @@ public partial class UnitDetailsViewModel : ViewModelBase
         List<DataProperty> itemsProperties = [];
 
         SkillItems.Clear();
-        if (unitModel.CollectSkills(ref skillsProperties))
+        if (AreSkillsVisible && unitModel.CollectSkills(ref skillsProperties))
         {
             foreach (DataProperty sp in skillsProperties)
             {

@@ -32,10 +32,14 @@ public partial class UnitViewModel : ObservableObject
     private int _factionId;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IdentityBackground))]
     private bool _isConfirmed;
 
     [ObservableProperty]
     private int _peopleNumber;
+
+    [ObservableProperty]
+    private bool _areSkillsVisible;
 
     [ObservableProperty]
     private int _x;
@@ -55,7 +59,11 @@ public partial class UnitViewModel : ObservableObject
     public IBrush FactionStatusBrush { get; private set; } = CreateFactionStatusBrush(FactionStatus.UNKNOWN);
     public IBrush FactionStatusBackground { get; private set; } = CreateFactionStatusBackground(FactionStatus.UNKNOWN);
     public IBrush FactionStatusSelectedBackground { get; private set; } = CreateFactionStatusSelectedBackground(FactionStatus.UNKNOWN);
-    public IBrush IdentityBackground => IsSelected ? FactionStatusSelectedBackground : FactionStatusBackground;
+    public IBrush FactionStatusConfirmedBackground { get; private set; } = CreateDarkenedBrush(CreateFactionStatusBackground(FactionStatus.UNKNOWN));
+    public IBrush FactionStatusSelectedConfirmedBackground { get; private set; } = CreateDarkenedBrush(CreateFactionStatusSelectedBackground(FactionStatus.UNKNOWN));
+    public IBrush IdentityBackground => IsSelected
+        ? IsConfirmed ? FactionStatusSelectedConfirmedBackground : FactionStatusSelectedBackground
+        : IsConfirmed ? FactionStatusConfirmedBackground : FactionStatusBackground;
     public IBrush IdentityForeground => IsSelected ? Brushes.White : Brushes.Black;
     public ObservableCollection<UnitItemViewModel> InventoryItems { get; } = new();
     public ObservableCollection<UnitSkillViewModel> SkillItems { get; } = new();
@@ -126,9 +134,12 @@ public partial class UnitViewModel : ObservableObject
             vm.PeopleNumber = unit.PeopleNumber;
             vm.Model = unit;
             FactionStatus factionStatus = doc.GetFactionStatus(CRDocument.GetFactionIdForUnit(unit.DataBlock));
+            vm.AreSkillsVisible = factionStatus is FactionStatus.ACTIVE or FactionStatus.ALLIED;
             vm.FactionStatusBrush = CreateFactionStatusBrush(factionStatus);
             vm.FactionStatusBackground = CreateFactionStatusBackground(factionStatus);
             vm.FactionStatusSelectedBackground = CreateFactionStatusSelectedBackground(factionStatus);
+            vm.FactionStatusConfirmedBackground = CreateDarkenedBrush(vm.FactionStatusBackground);
+            vm.FactionStatusSelectedConfirmedBackground = CreateDarkenedBrush(vm.FactionStatusSelectedBackground);
             if (includeSummary)
             {
                 vm.LoadUnitSummary(unit);
@@ -176,10 +187,20 @@ public partial class UnitViewModel : ObservableObject
         return new SolidColorBrush(Color.Parse(color));
     }
 
+    private static IBrush CreateDarkenedBrush(IBrush brush)
+    {
+        var baseColor = ((SolidColorBrush)brush).Color;
+        return new SolidColorBrush(Color.FromArgb(
+            baseColor.A,
+            (byte)(baseColor.R / 2),
+            (byte)(baseColor.G / 2),
+            (byte)(baseColor.B / 2)));
+    }
+
     private void LoadUnitSummary(UnitModel unit)
     {
         List<DataProperty> properties = [];
-        if (unit.CollectSkills(ref properties))
+        if (AreSkillsVisible && unit.CollectSkills(ref properties))
         {
             foreach (DataProperty property in properties)
             {

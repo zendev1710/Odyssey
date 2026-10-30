@@ -2,7 +2,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
              xmlns:controls="using:Odyssey.Controls"
              xmlns:vm="using:Odyssey.ViewModels.Tools"
              xmlns:vmtools="using:Odyssey.ViewModels.Tools"
@@ -22,7 +21,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="vmtools:UnitViewModel">
-                        <Border Height="68" ClipToBounds="True">
+                        <Border Height="100" ClipToBounds="True">
                             <Grid ColumnSpacing="0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="180" />
@@ -42,7 +41,14 @@
                                             Background="Transparent"
                                             Command="{Binding DataContext.SelectUnitCommand, ElementName=Root}"
                                             CommandParameter="{Binding}">
-                                        <Border Padding="6"
+                                        <Button.Styles>
+                                            <Style Selector="Button:pointerover">
+                                                <Setter Property="Opacity" Value="0.85" />
+                                            </Style>
+                                        </Button.Styles>
+                                        <Border Width="160"
+                                                Padding="6"
+                                                HorizontalAlignment="Center"
                                                 CornerRadius="12"
                                                 BorderBrush="{Binding FactionStatusBrush}"
                                                 BorderThickness="4"
@@ -63,11 +69,6 @@
                                                     <TextBlock Text="{Binding PeopleNumber}"
                                                                FontSize="20"
                                                                FontWeight="Black"
-                                                               Foreground="{Binding IdentityForeground}"
-                                                               TextAlignment="Center" />
-                                                    <TextBlock Text="people"
-                                                               FontSize="7"
-                                                               FontWeight="SemiBold"
                                                                Foreground="{Binding IdentityForeground}"
                                                                TextAlignment="Center" />
                                                 </StackPanel>
@@ -91,112 +92,35 @@
                                         BorderThickness="1">
                                     <ScrollViewer HorizontalScrollBarVisibility="Auto"
                                                   VerticalScrollBarVisibility="Disabled">
-                                        <Grid RowDefinitions="*,*" RowSpacing="2">
-                                            <ItemsControl Grid.Row="0" ItemsSource="{Binding InventoryItems}">
-                                                <ItemsControl.ItemsPanel>
-                                                    <ItemsPanelTemplate>
-                                                        <StackPanel Orientation="Horizontal" />
-                                                    </ItemsPanelTemplate>
-                                                </ItemsControl.ItemsPanel>
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate x:DataType="vmtools:UnitItemViewModel">
-                                                        <Border Width="20"
-                                                                Height="20"
-                                                                Margin="1"
-                                                                CornerRadius="4"
-                                                                BorderBrush="#8f6d42"
-                                                                BorderThickness="1"
-                                                                Background="#d9d9d9"
-                                                                ToolTip.Tip="{Binding TooltipLabel}">
-                                                            <Grid>
-                                                                <asyncImageLoader:AdvancedImage Source="{Binding IconPath}"
-                                                                                               Width="13"
-                                                                                               Height="13"
-                                                                                               HorizontalAlignment="Center"
-                                                                                               VerticalAlignment="Center"
-                                                                                               IsVisible="{Binding IconPath, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-                                                                                               Stretch="Uniform" />
-                                                                <TextBlock Text="{Binding Name}"
-                                                                           IsVisible="{Binding IconPath, Converter={x:Static StringConverters.IsNullOrEmpty}}"
-                                                                           HorizontalAlignment="Center"
-                                                                           VerticalAlignment="Center"
-                                                                           FontSize="6"
-                                                                           FontWeight="SemiBold"
-                                                                           Foreground="#1a1a1a"
-                                                                           TextWrapping="NoWrap"
-                                                                           TextTrimming="CharacterEllipsis" />
-                                                                <Border Background="#f5d67b"
-                                                                        CornerRadius="3"
-                                                                        HorizontalAlignment="Right"
-                                                                        VerticalAlignment="Bottom"
-                                                                        Padding="1,0"
-                                                                        BorderBrush="#7a6146"
-                                                                        BorderThickness="1">
-                                                                    <TextBlock Text="{Binding QuantityText}"
-                                                                               FontSize="6"
-                                                                               FontWeight="Black"
-                                                                               Foreground="#101010"
-                                                                               TextAlignment="Center" />
-                                                                </Border>
-                                                            </Grid>
-                                                        </Border>
-                                                    </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
-                                            </ItemsControl>
-                                            <ItemsControl Grid.Row="1" ItemsSource="{Binding SkillItems}">
-                                                <ItemsControl.ItemsPanel>
-                                                    <ItemsPanelTemplate>
-                                                        <StackPanel Orientation="Horizontal" />
-                                                    </ItemsPanelTemplate>
-                                                </ItemsControl.ItemsPanel>
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate x:DataType="vmtools:UnitSkillViewModel">
-                                                        <Border Width="20"
-                                                                Height="20"
-                                                                Margin="1"
-                                                                CornerRadius="10"
-                                                                BorderBrush="{Binding ChangeBorderBrush}"
-                                                                BorderThickness="1.5"
-                                                                Background="#cfe6f0"
-                                                                ToolTip.Tip="{Binding TooltipLabel}">
-                                                            <Grid>
-                                                                <Border Background="{Binding ChangeCircleOverlay}" CornerRadius="10" />
-                                                                <asyncImageLoader:AdvancedImage Source="{Binding IconPath}"
-                                                                                               Width="12"
-                                                                                               Height="12"
-                                                                                               Margin="0,0,0,4"
-                                                                                               HorizontalAlignment="Center"
-                                                                                               VerticalAlignment="Center"
-                                                                                               IsVisible="{Binding IconPath, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-                                                                                               Stretch="Uniform" />
-                                                                <TextBlock Text="{Binding Name}"
-                                                                           IsVisible="{Binding IconPath, Converter={x:Static StringConverters.IsNullOrEmpty}}"
-                                                                           Margin="1,1,1,5"
-                                                                           FontSize="5"
-                                                                           FontWeight="SemiBold"
-                                                                           TextAlignment="Center"
-                                                                           TextWrapping="NoWrap"
-                                                                           TextTrimming="CharacterEllipsis"
-                                                                           HorizontalAlignment="Center"
-                                                                           VerticalAlignment="Center"
-                                                                           Foreground="#12313f" />
-                                                                <Border Background="{Binding LevelBackground}"
-                                                                        CornerRadius="4"
-                                                                        HorizontalAlignment="Center"
-                                                                        VerticalAlignment="Bottom"
-                                                                        Margin="0,0,0,1"
-                                                                        Padding="2,0">
-                                                                    <TextBlock Text="{Binding LevelText}"
-                                                                               FontSize="6"
-                                                                               FontWeight="Black"
-                                                                               Foreground="White"
-                                                                               TextAlignment="Center" />
-                                                                </Border>
-                                                            </Grid>
-                                                        </Border>
-                                                    </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
-                                            </ItemsControl>
+                                        <Grid RowDefinitions="Auto,Auto" RowSpacing="4" VerticalAlignment="Center">
+                                            <Border Grid.Row="0" Background="#4a4742" CornerRadius="5">
+                                                <ItemsControl ItemsSource="{Binding InventoryItems}" VerticalAlignment="Center">
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <StackPanel Orientation="Horizontal" Spacing="2" />
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate x:DataType="vmtools:UnitItemViewModel">
+                                                            <controls:UnitItemBadgeControl DataContext="{Binding}" Zoom="0.8" />
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </Border>
+                                            <Border Grid.Row="1" Background="{DynamicResource PanelBackgroundBrush}" CornerRadius="5" IsVisible="{Binding AreSkillsVisible}">
+                                                <ItemsControl ItemsSource="{Binding SkillItems}" VerticalAlignment="Center">
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <StackPanel Orientation="Horizontal" Spacing="2" />
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate x:DataType="vmtools:UnitSkillViewModel">
+                                                            <controls:UnitSkillBadgeControl DataContext="{Binding}" Zoom="0.8" />
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </Border>
                                         </Grid>
                                     </ScrollViewer>
                                 </Border>

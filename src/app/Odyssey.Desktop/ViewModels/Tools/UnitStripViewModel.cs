@@ -69,6 +69,17 @@ public partial class UnitStripViewModel : DocumentToolViewModelBase
         UpdateSelectedBadge();
     }
 
+    public void RefreshConfirmedStatuses()
+    {
+        foreach (UnitViewModel unit in Units)
+        {
+            if (unit.Model is UnitModel model)
+            {
+                unit.IsConfirmed = model.IsConfirmed;
+            }
+        }
+    }
+
     private void UpdateSelectedBadge()
     {
         foreach (UnitViewModel unit in Units)
