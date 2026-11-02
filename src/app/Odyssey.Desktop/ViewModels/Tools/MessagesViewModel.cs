@@ -93,7 +93,7 @@ public abstract partial class MessagesViewModel : DocumentToolViewModelBase
 
         List<EntityModel> targets = Report.GetMessageTargets(msgBlock);
         MessageEntry messageEntry = new MessageEntry(msgBlock.Value(Strings.EN_MESSAGE_RENDERED), targets);
-        DataBlock? target = messageEntry.Selection?.GetDefaultTarget()?.DataBlock;
+        DataBlock? target = messageEntry.Selection?.GetDefaultTarget()?.SourceDataBlock;
         if (target == null)
         {
             Debug.WriteLine("!!! AddMessage: message has no target");

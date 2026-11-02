@@ -268,7 +268,7 @@ public partial class RegionPropertiesViewModel : DocumentToolViewModelBase
 
         if (regionChanged)
         {
-            CollectData(selection.Region!.DataBlock as RegionDataBlock);
+            CollectData(selection.Region!.Region);
         }
     }
 

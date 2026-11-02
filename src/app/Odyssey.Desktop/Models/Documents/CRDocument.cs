@@ -403,6 +403,11 @@ public class CRDocument : EresseaDocument, ILocationResolver
         return null;
     }
 
+    public RegionModel? FindRegionModelFromPosition(int x, int y, PlaneType plane = PlaneType.WORLD)
+    {
+        return FindRegion(x, y, plane, out RegionModel? regionModel) ? regionModel : null;
+    }
+
     public bool FindUnit(int id, out UnitModel? unitModel)
     {
         return Units.TryGetValue(id, out unitModel);
@@ -618,7 +623,7 @@ public class CRDocument : EresseaDocument, ILocationResolver
     {
         if (FindRegion(x, y, plane, out RegionModel? regionModel))
         { 
-            return regionModel!.DataBlock as RegionDataBlock;
+            return regionModel!.Region;
         }
         return null;
     }
@@ -1348,7 +1353,7 @@ m_blocks.push_back(*old_r);
                             Utils.Converters.ExtractCoordinates(block.Value(Strings.EN_MESSAGE_TO), out int toX, out int toY, out int _);
                             if (FindShip(shipId, out var shipModel))
                             {
-                                shipModel!.SetFromTo(FindRegionFromPosition(fromX, fromY), FindRegionFromPosition(toX, toY)); 
+                                shipModel!.SetFromTo(FindRegionModelFromPosition(fromX, fromY), FindRegionModelFromPosition(toX, toY));
                             }
                         }
 #if DEBUG
@@ -1580,7 +1585,7 @@ m_blocks.push_back(*old_r);
         UnitsByKey.Clear();
 
         Dictionary<int, DataBlock> ships = [];
-        Dictionary<int, List<DataBlock>> shipsCrossedRegions = [];
+        Dictionary<int, List<RegionModel>> shipsCrossedRegions = [];
 
         FactionModel currentActiveFaction = ActiveFaction!;
 
@@ -1997,11 +2002,11 @@ m_blocks.push_back(*old_r);
                         // record the region (where DURCHSCHIFFUNG occurred) in ShipTravels
                         if (!shipsCrossedRegions.TryGetValue(shipId, out var travelList))
                         {
-                            travelList = new List<DataBlock>();
+                            travelList = new List<RegionModel>();
                             shipsCrossedRegions[shipId] = travelList;
                         }
                         // store the region (not the DURCHSCHIFFUNG child) so sorting by coordinates is straightforward
-                        travelList.Add(currentRegion);
+                        travelList.Add(regionModel!);
                     }
                 }
                 else if (btype == BlockType.BUILDING)
@@ -2170,7 +2175,7 @@ m_blocks.push_back(*old_r);
         Debug.WriteLine($"[DOCUMENT] Add ship {shipDataBlock} in region {regionModel}");
         int regionId = Coordinates.GetId(regionModel.GetX(), regionModel.GetY());
         var shipModel = new ShipModel(shipDataBlock, regionId/*region*/);
-        shipModel.SetCurrentRegion(regionModel.Region);
+        shipModel.SetCurrentRegion(regionModel);
         Ships[shipId] = shipModel;
         if (!RegionsWithStructure.TryGetValue(regionId, out _))
         {
@@ -2308,8 +2313,7 @@ m_blocks.push_back(*old_r);
         List<RegionDataBlock> floodIslands = new List<RegionDataBlock> { };
         foreach (var region in Planes[0].OccupiedRegions)
         {
-            //var r = region.Value.DataBlock;
-            RegionDataBlock? b = region.Value.DataBlock as RegionDataBlock;
+            RegionDataBlock? b = region.Value.Region;
             if (b!.GetBlockType() != BlockType.REGION)
             {
                 continue;

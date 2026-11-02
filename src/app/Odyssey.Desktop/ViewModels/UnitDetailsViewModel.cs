@@ -147,7 +147,7 @@ public partial class UnitDetailsViewModel : ViewModelBase
             return;
         }
 
-        AreSkillsVisible = Report.GetFactionStatus(CRDocument.GetFactionIdForUnit(unitModel.DataBlock)) is FactionStatus.ACTIVE or FactionStatus.ALLIED;
+        AreSkillsVisible = Report.GetFactionStatus(CRDocument.GetFactionIdForUnit(unitModel.SourceDataBlock)) is FactionStatus.ACTIVE or FactionStatus.ALLIED;
 
         string factionName = string.Empty;
         string otherFactionName = string.Empty;
@@ -274,7 +274,7 @@ public partial class UnitDetailsViewModel : ViewModelBase
             DataBlock? mage = null;
             if (Report.FindUnit(unitModel.FamiliarMageId, out UnitModel? mageModel))
             {
-                mage = mageModel!.DataBlock;
+                mage = mageModel!.SourceDataBlock;
                 string mageName = mage!.Value(KeyType.NAME);
                 string id = IdToString(unitModel.FamiliarMageId);
                 string familiarMageName = $"{mageName} ({id})";
@@ -607,7 +607,7 @@ public partial class UnitDetailsViewModel : ViewModelBase
         OtherFactionName = otherFactionName;
         MageNameIfFamiliar = mageNameIfFamiliar;
 
-        Description = unitModel.DataBlock.Value(KeyType.DESCRIPTION);
+        Description = unitModel.SourceDataBlock.Value(KeyType.DESCRIPTION);
 
         /*
         // TODO: what about the folowing ?
@@ -646,7 +646,7 @@ public partial class UnitDetailsViewModel : ViewModelBase
 
         /*
         IEntitySelection sel = CurrentSelection;
-        if (sel.Item!.DataBlock == block)
+        if (sel.Item!.SourceDataBlock == block)
         {
             // If the block is already selected, we do not change the selection state.
             // This avoids reentrancy issues when the selection is changed by the view.

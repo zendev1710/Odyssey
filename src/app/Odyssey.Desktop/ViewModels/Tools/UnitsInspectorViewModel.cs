@@ -64,7 +64,7 @@ namespace Odyssey.ViewModels.Tools
             if (selection.HasUnit() && selectedFaction is null &&
                 selection.Item is UnitModel unit && selection.Region is RegionModel unitRegion)
             {
-                int factionId = CRDocument.GetFactionIdForUnit(unit.DataBlock);
+                int factionId = CRDocument.GetFactionIdForUnit(unit.SourceDataBlock);
                 selectedFaction = new LocatedFactionModel(
                     Report.GetFaction(factionId), unitRegion, factionId, Report.GetFactionName(factionId));
             }
@@ -187,7 +187,7 @@ namespace Odyssey.ViewModels.Tools
         {
             return Report.GetUnitIdsInRegion(faction.Region.Id)
                 .Where(unitId => Report.GetUnit(unitId) is UnitModel unit &&
-                                 CRDocument.GetFactionIdForUnit(unit.DataBlock) == faction.FactionId)
+                                  CRDocument.GetFactionIdForUnit(unit.SourceDataBlock) == faction.FactionId)
                 .ToList();
         }
 
@@ -237,7 +237,7 @@ namespace Odyssey.ViewModels.Tools
                 {
                     if (Report.GetUnit(unitId) is UnitModel unit)
                     {
-                        int factionId = CRDocument.GetFactionIdForUnit(unit.DataBlock);
+                        int factionId = CRDocument.GetFactionIdForUnit(unit.SourceDataBlock);
                         AddLocatedFactionIfMissing(new LocatedFactionModel(
                             Report.GetFaction(factionId), region, factionId, Report.GetFactionName(factionId)));
                     }

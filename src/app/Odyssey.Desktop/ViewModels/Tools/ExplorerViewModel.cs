@@ -154,7 +154,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         {
             return FindImmediateTreeItem(Root, regionModel.Id);
         }
-        return FindTreeItem(Root, item.DataBlock.GetId());
+        return FindTreeItem(Root, item.SourceDataBlock.GetId());
     }
 
     private static ExplorerNodeViewModel? FindFactionNode(ExplorerNodeViewModel regionNode, LocatedFactionModel locatedFaction)
@@ -234,8 +234,8 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
 
         if (!selection.IsRegionSelected())
         {
-            RegionDataBlock selectedRegionBlock = (regionModel.DataBlock as RegionDataBlock)!;
-            if (selection.Item is null || !FindRegionFrom(ref selectedRegionBlock, selection.Item.DataBlock))
+            RegionDataBlock selectedRegionBlock = regionModel.Region;
+            if (selection.Item is null || !FindRegionFrom(ref selectedRegionBlock, selection.Item.SourceDataBlock))
             {
                 Debug.WriteLine("[EXPLORER] WARNING | Region parent not found for {sel.Item}.");
                 return false;
@@ -282,7 +282,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         {
             // selection.Item can be null for a region-only selection: FindTreeItem then returns
             // null and the region node is selected instead (see fallback below).
-            int itemId = selection.Item?.DataBlock.GetId() ?? -1;
+            int itemId = selection.Item?.SourceDataBlock.GetId() ?? -1;
             ExplorerNodeViewModel? item = FindTreeItem(regionNodeViewModel, itemId);
 
             // Container nodes (buildings/ships lists) have no id: find the matching child node.
@@ -475,7 +475,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
             bool regionHasShip = false;
             // Process each region model
             RegionModel regionModel = r.Value;
-            DataBlock region = regionModel.DataBlock;
+            DataBlock region = regionModel.SourceDataBlock;
             LinkedListNode<DataBlock>? firstBlockNode = region.Node;
             // First block after region data block
             DataBlock? block = firstBlockNode!.Value.GetNextBlock();

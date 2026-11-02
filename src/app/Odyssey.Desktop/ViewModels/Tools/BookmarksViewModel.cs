@@ -317,7 +317,7 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
         SelectedLocatedFaction = CurrentSelection.HasFaction() && !CurrentSelection.HasUnit() ? CurrentSelection.LocatedFaction : null;
         SelectionIsBookmarkable = SelectedLocatedFaction is not null || IsBookmarkable(SelectedObject, out _);
         SelectionIsBookmarked = SelectedLocatedFaction is not null ? IsInBookmarks(SelectedLocatedFaction, out bookmarkModel) : SelectionIsBookmarkable && IsInBookmarks(SelectedObject, out bookmarkModel);
-        SelectionName = SelectedLocatedFaction is not null ? $"{SelectedLocatedFaction.Name} @ {SelectedLocatedFaction.Region.Name}" : SelectedObject?.DataBlock.GetUILabel() ?? string.Empty;
+        SelectionName = SelectedLocatedFaction is not null ? $"{SelectedLocatedFaction.Name} @ {SelectedLocatedFaction.Region.Name}" : SelectedObject?.SourceDataBlock.GetUILabel() ?? string.Empty;
         SetSelectedBookmark(SelectionIsBookmarked ? bookmarkModel : null);
     }
 

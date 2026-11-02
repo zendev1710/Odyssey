@@ -112,7 +112,7 @@ namespace Odyssey.Models.Dal
                 errorMessage = $"Unit not found: {param}";
                 return false;
             }
-            Unit = unit!.DataBlock;
+            Unit = unit!.SourceDataBlock;
             if (Region != null)
             {
                 RegionDataBlock? region = Region;

@@ -30,9 +30,8 @@ namespace Odyssey.Models
         private readonly EntityType _type;
         protected string _encodedId;
 
-        // TODO: set as protected when code will be refactored
-        public DataBlock DataBlock { get { return _dataBlock; } }
-        //protected DataBlock DataBlock { get { return _dataBlock; } }
+        protected DataBlock DataBlock { get { return _dataBlock; } }
+        internal DataBlock SourceDataBlock { get { return _dataBlock; } }
 
         public string EncodedId { get { return _encodedId; } }
         public int Id { get { return _id; } }

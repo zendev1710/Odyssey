@@ -44,7 +44,7 @@ public partial class MiniMapViewModel : DocumentToolViewModelBase
         // TODO: if region has changed, should move the square centered on the selected region
         if (regionChanged)
         {
-            string label = selection.Region!.DataBlock.GetUILabel();
+            string label = selection.Region!.SourceDataBlock.GetUILabel();
             /*
             if (MiniMap.FirstOrDefault(b => b.Label!.StartsWith(label)) is BookmarkModel Bookmark)
             {

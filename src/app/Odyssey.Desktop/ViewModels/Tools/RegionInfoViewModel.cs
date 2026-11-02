@@ -123,8 +123,8 @@ public partial class RegionInfoViewModel : MessagesViewModel
         // Note: a container selection (the buildings/ships list of a region) is a region selection
         // without any item: the region to consider is the selected region itself, not the item.
         // (selection.Item is only the region for a region-only selection.)
-        DataBlock? region = anotherRegionSelected ? selection.Region?.DataBlock : null;
-        DataBlock? unit = anotherUnitSelected ? selection.Item?.DataBlock : null;
+        DataBlock? region = anotherRegionSelected ? selection.Region?.SourceDataBlock : null;
+        DataBlock? unit = anotherUnitSelected ? selection.Item?.SourceDataBlock : null;
 
         if (region != null)
         {

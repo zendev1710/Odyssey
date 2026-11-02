@@ -97,9 +97,9 @@ public partial class StructureViewModel : ViewModelBase
         var unitsNode = AddItem(parent, unitsProperty);
         foreach (var unit in StructureModel.Units)
         {
-            string id = unit.DataBlock.IdToString();
-            string name = unit.DataBlock.Value(KeyType.NAME);
-            string number = unit.DataBlock.Value(KeyType.NUMBER);
+            string id = unit.SourceDataBlock.IdToString();
+            string name = unit.SourceDataBlock.Value(KeyType.NAME);
+            string number = unit.SourceDataBlock.Value(KeyType.NUMBER);
             string fullName = $"{name} ({id})";
             string unitlabel = $"{fullName}: {number}";
             DataProperty unitProperty = new(Categories.None, unitlabel, string.Empty, unitlabel, string.Empty, unit);

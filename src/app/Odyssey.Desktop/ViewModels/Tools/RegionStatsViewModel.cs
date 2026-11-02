@@ -96,7 +96,7 @@ public partial class RegionStatsViewModel : DocumentToolViewModelBase
 
         if (regionChanged)
         {
-            if (FillFactionsList(selection.Region!.DataBlock))
+            if (FillFactionsList(selection.Region!.SourceDataBlock))
             {
                 Debug.WriteLine("[VM-REGIONSTATS-] OnSelectionChanged - CollectFactions returned true");
             }
@@ -204,7 +204,7 @@ public partial class RegionStatsViewModel : DocumentToolViewModelBase
         // collect data
         if (selection.IsRegionSelected())
         {
-            CollectData(persons, items, talents, ships, buildings, selection.Region!.DataBlock);
+            CollectData(persons, items, talents, ships, buildings, selection.Region!.SourceDataBlock);
         }
 
         // Add statistics

@@ -6,13 +6,12 @@ using System.Numerics;
 
 namespace Odyssey.Models;
 
-public class RegionModel : EntityModel
+public class RegionModel : EntityModel, ILocation
 {
     private int X { get; set; }
     private int Y { get; set; }
     private int Plane { get; }
 
-    /*
     int ILocation.X
     {
         get => X;
@@ -24,8 +23,7 @@ public class RegionModel : EntityModel
         set => Y = value;
     }
     
-    PlaneType ILocation.Plane => (PlaneType)Id;
-    */
+    PlaneType ILocation.Plane => (PlaneType)Plane;
 
     public int GetX() => X;
     public int GetY() => Y;

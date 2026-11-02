@@ -57,7 +57,7 @@ public partial class BattlesViewModel : DocumentToolViewModelBase
 
         if (regionChanged)
         {
-            string label = selection.Region!.DataBlock.GetUILabel();
+            string label = selection.Region!.SourceDataBlock.GetUILabel();
             if (Battles.FirstOrDefault(b => b.Label!.StartsWith(label)) is BattleModel battle)
             {
                 SelectedBattleIndex = Battles.IndexOf(battle);

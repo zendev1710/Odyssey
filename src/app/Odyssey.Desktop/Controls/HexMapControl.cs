@@ -10,6 +10,7 @@ using Odyssey.Controls.Buildings;
 using Odyssey.Controls.Ships;
 using Odyssey.Models;
 using Odyssey.Models.Data;
+using Odyssey.Models.Documents;
 using Odyssey.Models.Localization;
 using Odyssey.Settings;
 using Odyssey.Utils;
@@ -1182,7 +1183,7 @@ public class HexMapControl : Control
         public ShipVisual Visual { get; init; } = null!;
         public ShipFactionRelation Relation { get; init; }
         public int Coast { get; init; }
-        public List<RegionDataBlock> Regions { get; } = [];
+        public List<ILocation> Regions { get; } = [];
         public List<Point> Centers { get; } = [];
         public List<ShipRouteSegmentKey> SegmentKeys { get; } = [];
         public List<bool> ReversedSegments { get; } = [];
@@ -1194,6 +1195,13 @@ public class HexMapControl : Control
     private readonly record struct ShipRouteSegmentKey(int Plane, int AX, int AY, int BX, int BY);
 
     private readonly record struct RouteDestinationRing(Point Center, double Radius, bool IsOcean);
+
+    private sealed class RouteLocation(int x, int y, PlaneType plane) : ILocation
+    {
+        public int X { get; set; } = x;
+        public int Y { get; set; } = y;
+        public PlaneType Plane { get; } = plane;
+    }
 
     private void RenderShipMovements(DrawingContext context)
     {
@@ -1326,20 +1334,20 @@ public class HexMapControl : Control
     /// True when the route actually leaves its starting region. A route that only repeats the
     /// same region must not create a destination ring around a ship that stayed in place.
     /// </summary>
-    private static bool HasRouteMovement(IReadOnlyList<RegionDataBlock> regions)
+    private static bool HasRouteMovement(IReadOnlyList<ILocation> regions)
     {
         if (regions.Count < 2)
         {
             return false;
         }
 
-        RegionDataBlock start = regions[0];
+        ILocation start = regions[0];
         for (int i = 1; i < regions.Count; i++)
         {
-            RegionDataBlock region = regions[i];
-            if (region.GetX() != start.GetX() ||
-                region.GetY() != start.GetY() ||
-                region.GetPlane() != start.GetPlane())
+            ILocation region = regions[i];
+            if (region.X != start.X ||
+                region.Y != start.Y ||
+                region.Plane != start.Plane)
             {
                 return true;
             }
@@ -1350,11 +1358,11 @@ public class HexMapControl : Control
 
     private static (int RegionId, int Coast) GetRouteDestinationKey(ShipRouteDrawing drawing)
     {
-        RegionDataBlock destination = drawing.Regions[^1];
+        ILocation destination = drawing.Regions[^1];
         int regionId = Coordinates.GetId(
-            destination.GetX(),
-            destination.GetY(),
-            (PlaneType)destination.GetPlane());
+            destination.X,
+            destination.Y,
+            destination.Plane);
         int coast = drawing.Coast is >= 0 and <= 5 ? drawing.Coast : -1;
         return (regionId, coast);
     }
@@ -1391,7 +1399,7 @@ public class HexMapControl : Control
                 continue;
             }
 
-            List<RegionDataBlock> regions = GetRouteRegions(ship);
+            List<ILocation> regions = GetRouteRegions(ship);
             if (regions.Count < 2 || !HasRouteMovement(regions))
             {
                 continue;
@@ -1410,16 +1418,16 @@ public class HexMapControl : Control
                 IsSelected = IsSelectedShip(ship),
             };
 
-            foreach (RegionDataBlock region in regions)
+            foreach (ILocation region in regions)
             {
                 drawing.Regions.Add(region);
-                drawing.Centers.Add(HexToPixel(region.GetX(), region.GetY(), hexSize));
+                drawing.Centers.Add(HexToPixel(region.X, region.Y, hexSize));
             }
 
             for (int i = 0; i < regions.Count - 1; i++)
             {
-                RegionDataBlock a = regions[i];
-                RegionDataBlock b = regions[i + 1];
+                ILocation a = regions[i];
+                ILocation b = regions[i + 1];
                 drawing.SegmentKeys.Add(GetRouteSegmentKey(a, b));
                 drawing.ReversedSegments.Add(IsReversedRouteSegment(a, b));
             }
@@ -1475,11 +1483,11 @@ public class HexMapControl : Control
         int selectedY = SelectedRegion.GetY();
         int selectedPlane = SelectedRegion.GetPlane();
 
-        foreach (RegionDataBlock region in GetRouteRegions(ship))
+        foreach (ILocation region in GetRouteRegions(ship))
         {
-            if (region.GetX() == selectedX &&
-                region.GetY() == selectedY &&
-                region.GetPlane() == selectedPlane)
+            if (region.X == selectedX &&
+                region.Y == selectedY &&
+                (int)region.Plane == selectedPlane)
             {
                 return true;
             }
@@ -1509,21 +1517,36 @@ public class HexMapControl : Control
         return ShipFactionRelation.Enemy;
     }
 
-    private static List<RegionDataBlock> GetRawRouteRegions(ShipModel ship)
+    private List<ILocation> GetRawRouteRegions(ShipModel ship)
     {
-        var regions = new List<RegionDataBlock>();
+        var regions = new List<ILocation>();
 
-        foreach (DataBlock block in ship.TravelledByRegions)
+        foreach (ILocation region in ship.TravelledByRegions)
         {
-            if (block is not RegionDataBlock region)
-            {
-                continue;
-            }
-
-            AddUniqueRegion(regions, region);
+            AddUniqueRegion(regions, GetRouteRegionModel(region));
         }
 
         return regions;
+    }
+
+    private ILocation GetRouteRegionModel(ILocation region)
+    {
+        int key = Coordinates.GetId(
+            region.X,
+            region.Y,
+            region.Plane);
+
+        if (OccupiedRegions.TryGetValue(key, out RegionModel? occupied))
+        {
+            return occupied;
+        }
+
+        if (UnoccupiedRegions.TryGetValue(key, out RegionModel? unoccupied))
+        {
+            return unoccupied;
+        }
+
+        return region;
     }
 
     /// <summary>
@@ -1531,21 +1554,21 @@ public class HexMapControl : Control
     /// any resulting gap with a shortest path through non-land regions. Departure and arrival may
     /// be land (harbours), but the rest of a ship route must stay on water.
     /// </summary>
-    private List<RegionDataBlock> GetRouteRegions(ShipModel ship)
+    private List<ILocation> GetRouteRegions(ShipModel ship)
     {
-        List<RegionDataBlock> raw = GetRawRouteRegions(ship);
+        List<ILocation> raw = GetRawRouteRegions(ship);
         if (raw.Count < 2)
         {
             return raw;
         }
 
-        int plane = raw[0].GetPlane();
-        if (raw.Any(region => region.GetPlane() != plane))
+        PlaneType plane = raw[0].Plane;
+        if (raw.Any(region => region.Plane != plane))
         {
             return raw;
         }
 
-        var kept = new List<RegionDataBlock>(raw.Count);
+        var kept = new List<ILocation>(raw.Count);
         AddUniqueRegion(kept, raw[0]);
 
         for (int i = 1; i < raw.Count - 1; i++)
@@ -1562,13 +1585,13 @@ public class HexMapControl : Control
             return raw;
         }
 
-        var navigable = new List<RegionDataBlock>(kept.Count);
+        var navigable = new List<ILocation>(kept.Count);
         AddUniqueRegion(navigable, kept[0]);
 
         for (int i = 1; i < kept.Count; i++)
         {
-            RegionDataBlock from = navigable[^1];
-            RegionDataBlock to = kept[i];
+            ILocation from = navigable[^1];
+            ILocation to = kept[i];
 
             if (AreRouteRegionsAdjacent(from, to))
             {
@@ -1576,7 +1599,7 @@ public class HexMapControl : Control
                 continue;
             }
 
-            List<RegionDataBlock>? path = FindNavigableRoutePath(from, to);
+            List<ILocation>? path = FindNavigableRoutePath(from, to);
             if (path is not null)
             {
                 for (int j = 1; j < path.Count; j++)
@@ -1595,7 +1618,7 @@ public class HexMapControl : Control
         return navigable.Count >= 2 ? navigable : raw;
     }
 
-    private static void AddUniqueRegion(List<RegionDataBlock> regions, RegionDataBlock region)
+    private static void AddUniqueRegion(List<ILocation> regions, ILocation region)
     {
         if (regions.Count == 0)
         {
@@ -1603,24 +1626,24 @@ public class HexMapControl : Control
             return;
         }
 
-        RegionDataBlock last = regions[^1];
-        if (last.GetX() != region.GetX() ||
-            last.GetY() != region.GetY() ||
-            last.GetPlane() != region.GetPlane())
+        ILocation last = regions[^1];
+        if (last.X != region.X ||
+            last.Y != region.Y ||
+            last.Plane != region.Plane)
         {
             regions.Add(region);
         }
     }
 
-    private static bool AreRouteRegionsAdjacent(RegionDataBlock a, RegionDataBlock b)
+    private static bool AreRouteRegionsAdjacent(ILocation a, ILocation b)
     {
-        if (a.GetPlane() != b.GetPlane())
+        if (a.Plane != b.Plane)
         {
             return false;
         }
 
-        int dx = b.GetX() - a.GetX();
-        int dy = b.GetY() - a.GetY();
+        int dx = b.X - a.X;
+        int dy = b.Y - a.Y;
         foreach ((int dq, int dr) in HexSlots.NeighborDeltas)
         {
             if (dx == dq && dy == dr)
@@ -1637,10 +1660,10 @@ public class HexMapControl : Control
     /// which may be harbours. Unknown regions stay traversable so an incomplete map does not
     /// erase a route.
     /// </summary>
-    private List<RegionDataBlock>? FindNavigableRoutePath(RegionDataBlock from, RegionDataBlock to)
+    private List<ILocation>? FindNavigableRoutePath(ILocation from, ILocation to)
     {
-        int plane = from.GetPlane();
-        if (to.GetPlane() != plane)
+        int plane = (int)from.Plane;
+        if (to.Plane != from.Plane)
         {
             return null;
         }
@@ -1652,21 +1675,21 @@ public class HexMapControl : Control
             return [from];
         }
 
-        int distance = HexDistance(from.GetX(), from.GetY(), to.GetX(), to.GetY());
+        int distance = HexDistance(from.X, from.Y, to.X, to.Y);
         int margin = Math.Max(6, distance + 4);
-        int minX = Math.Min(from.GetX(), to.GetX()) - margin;
-        int maxX = Math.Max(from.GetX(), to.GetX()) + margin;
-        int minY = Math.Min(from.GetY(), to.GetY()) - margin;
-        int maxY = Math.Max(from.GetY(), to.GetY()) + margin;
+        int minX = Math.Min(from.X, to.X) - margin;
+        int maxX = Math.Max(from.X, to.X) + margin;
+        int minY = Math.Min(from.Y, to.Y) - margin;
+        int maxY = Math.Max(from.Y, to.Y) + margin;
 
-        var nodes = new Dictionary<int, RegionDataBlock>
+        var nodes = new Dictionary<int, ILocation>
         {
             [fromKey] = from,
         };
         var previous = new Dictionary<int, int>();
         var visited = new HashSet<int> { fromKey };
         var queue = new Queue<(int X, int Y)>();
-        queue.Enqueue((from.GetX(), from.GetY()));
+        queue.Enqueue((from.X, from.Y));
 
         while (queue.Count > 0)
         {
@@ -1715,18 +1738,18 @@ public class HexMapControl : Control
         return null;
     }
 
-    private static List<RegionDataBlock> ReconstructRoutePath(
-        IReadOnlyDictionary<int, RegionDataBlock> nodes,
+    private static List<ILocation> ReconstructRoutePath(
+        IReadOnlyDictionary<int, ILocation> nodes,
         IReadOnlyDictionary<int, int> previous,
         int startKey,
         int targetKey)
     {
-        var path = new List<RegionDataBlock>();
+        var path = new List<ILocation>();
         int currentKey = targetKey;
 
         while (true)
         {
-            if (!nodes.TryGetValue(currentKey, out RegionDataBlock? node))
+            if (!nodes.TryGetValue(currentKey, out ILocation? node))
             {
                 return [];
             }
@@ -1749,25 +1772,25 @@ public class HexMapControl : Control
         return path;
     }
 
-    private RegionDataBlock GetRouteRegionAt(int x, int y, int plane)
+    private ILocation GetRouteRegionAt(int x, int y, int plane)
     {
         int key = Coordinates.GetId(x, y, (PlaneType)plane);
         if (OccupiedRegions.TryGetValue(key, out RegionModel? occupied))
         {
-            return occupied.Region;
+            return occupied;
         }
 
         if (UnoccupiedRegions.TryGetValue(key, out RegionModel? unoccupied))
         {
-            return unoccupied.Region;
+            return unoccupied;
         }
 
-        return new RegionDataBlock($"{x} {y} {plane}");
+        return new RouteLocation(x, y, (PlaneType)plane);
     }
 
-    private bool IsKnownLandRegion(RegionDataBlock region)
+    private bool IsKnownLandRegion(ILocation region)
     {
-        return IsKnownLandAt(region.GetX(), region.GetY(), region.GetPlane());
+        return IsKnownLandAt(region.X, region.Y, (int)region.Plane);
     }
 
     private bool IsKnownLandAt(int x, int y, int plane)
@@ -1777,9 +1800,9 @@ public class HexMapControl : Control
                terrain != Terrains.UNKNOWN;
     }
 
-    private static int GetRouteRegionKey(RegionDataBlock region)
+    private static int GetRouteRegionKey(ILocation region)
     {
-        return Coordinates.GetId(region.GetX(), region.GetY(), (PlaneType)region.GetPlane());
+        return Coordinates.GetId(region.X, region.Y, region.Plane);
     }
 
     private static int HexDistance(int ax, int ay, int bx, int by)
@@ -1789,13 +1812,13 @@ public class HexMapControl : Control
         return Math.Max(Math.Abs(ax - bx), Math.Max(Math.Abs(ay - by), Math.Abs(az - bz)));
     }
 
-    private static ShipRouteSegmentKey GetRouteSegmentKey(RegionDataBlock a, RegionDataBlock b)
+    private static ShipRouteSegmentKey GetRouteSegmentKey(ILocation a, ILocation b)
     {
-        int plane = a.GetPlane();
-        int ax = a.GetX();
-        int ay = a.GetY();
-        int bx = b.GetX();
-        int by = b.GetY();
+        int plane = (int)a.Plane;
+        int ax = a.X;
+        int ay = a.Y;
+        int bx = b.X;
+        int by = b.Y;
 
         if (ax > bx || (ax == bx && ay > by))
         {
@@ -1806,12 +1829,12 @@ public class HexMapControl : Control
         return new ShipRouteSegmentKey(plane, ax, ay, bx, by);
     }
 
-    private static bool IsReversedRouteSegment(RegionDataBlock a, RegionDataBlock b)
+    private static bool IsReversedRouteSegment(ILocation a, ILocation b)
     {
-        int ax = a.GetX();
-        int ay = a.GetY();
-        int bx = b.GetX();
-        int by = b.GetY();
+        int ax = a.X;
+        int ay = a.Y;
+        int bx = b.X;
+        int by = b.Y;
         return ax > bx || (ax == bx && ay > by);
     }
 
@@ -1958,7 +1981,7 @@ public class HexMapControl : Control
     {
         var cells = new List<(int X, int Y)>(drawing.Regions.Count * 4);
         var seen = new HashSet<int>();
-        int plane = drawing.Regions[0].GetPlane();
+        int plane = (int)drawing.Regions[0].Plane;
 
         void AddCell(int x, int y)
         {
@@ -1968,17 +1991,17 @@ public class HexMapControl : Control
             }
         }
 
-        foreach (RegionDataBlock region in drawing.Regions)
+        foreach (ILocation region in drawing.Regions)
         {
-            AddCell(region.GetX(), region.GetY());
+            AddCell(region.X, region.Y);
         }
 
-        foreach (RegionDataBlock region in drawing.Regions)
+        foreach (ILocation region in drawing.Regions)
         {
             foreach ((int dq, int dr) in HexSlots.NeighborDeltas)
             {
-                int x = region.GetX() + dq;
-                int y = region.GetY() + dr;
+                int x = region.X + dq;
+                int y = region.Y + dr;
                 if (!IsKnownLandAt(x, y, plane))
                 {
                     AddCell(x, y);
@@ -2008,7 +2031,7 @@ public class HexMapControl : Control
         ShipRouteDrawing drawing,
         double hexSize)
     {
-        RegionDataBlock destination = drawing.Regions[^1];
+        ILocation destination = drawing.Regions[^1];
         bool isOcean = IsOceanRegion(destination);
 
         Bitmap? image = null;
@@ -2035,32 +2058,9 @@ public class HexMapControl : Control
         return new RouteDestinationRing(marker, radius, isOcean);
     }
 
-    private bool IsOceanRegion(RegionDataBlock region)
+    private bool IsOceanRegion(ILocation region)
     {
-        // Prefer the terrain carried by the region block itself. This also works when the
-        // departure region is outside the currently loaded dictionaries.
-        try
-        {
-            int terrain = region.GetTerrain();
-            if (terrain == Terrains.OCEAN)
-            {
-                return true;
-            }
-
-            if (terrain != Terrains.UNKNOWN)
-            {
-                return false;
-            }
-        }
-        catch
-        {
-            // Fall back to the dictionaries below.
-        }
-
-        int key = Coordinates.GetId(
-            region.GetX(),
-            region.GetY(),
-            (PlaneType)region.GetPlane());
+        int key = Coordinates.GetId(region.X, region.Y, region.Plane);
 
         if (OccupiedRegions.TryGetValue(key, out RegionModel? occupied))
         {
@@ -2131,11 +2131,11 @@ public class HexMapControl : Control
 
     private Point GetShipMarkerPosition(
         ShipRouteDrawing drawing,
-        RegionDataBlock region,
+        ILocation region,
         double hexSize,
         Bitmap? image)
     {
-        Point center = HexToPixel(region.GetX(), region.GetY(), hexSize);
+        Point center = HexToPixel(region.X, region.Y, hexSize);
         int coast = drawing.Coast;
 
         if (_shipStyle == ShipStyles.Image && image != null)
@@ -3366,7 +3366,7 @@ public class HexMapControl : Control
 
     private void OnSelectedRegionChanged(AvaloniaPropertyChangedEventArgs e)
     {
-        // SelectedRegion is a RegionModel (see SelectedRegionProperty), not a DataBlock.
+        // SelectedRegion is a RegionModel (see SelectedRegionProperty).
         var previousRegion = e.OldValue as RegionModel;
         var region = e.NewValue as RegionModel;
         if (ReferenceEquals(previousRegion, region))

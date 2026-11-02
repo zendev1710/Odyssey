@@ -159,7 +159,7 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
 
         // TODO: manage ItemTypes.CONFIRMATION
         // Selection.Selected |= ItemTypes.CONFIRMATION;
-        DataBlock unit = selection.Item!.DataBlock;
+        DataBlock unit = selection.Item!.SourceDataBlock;
         Report.SetConfirmed(ref unit!, newValue);
         if (selection.Item is UnitModel unitModel)
         {
@@ -207,11 +207,11 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         IEntitySelection selection = CurrentSelection;
         if (selection.HasUnit())
         {
-            start = selection.Item!.DataBlock;
+            start = selection.Item!.SourceDataBlock;
         }
         else if (selection.IsRegionSelected())
         {
-            start = selection.Region!.DataBlock;
+            start = selection.Region!.SourceDataBlock;
         }
         if (start == null)
         {
@@ -285,11 +285,11 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         IEntitySelection selection = CurrentSelection;
         if (selection.HasUnit())
         {
-            start = selection.Item!.DataBlock;
+            start = selection.Item!.SourceDataBlock;
         }
         else if (selection.IsRegionSelected())
         {
-            start = selection.Region!.DataBlock;
+            start = selection.Region!.SourceDataBlock;
         }
         if (start == null)
         {
@@ -430,7 +430,7 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         IEntitySelection selection = CurrentSelection;
         if (selection.HasUnit())
         {
-            DataBlock block = selection.Item!.DataBlock;
+            DataBlock block = selection.Item!.SourceDataBlock;
             if (Report.IsActiveFaction(block.ValueInt(KeyType.FACTION)))
             {
                 return block.ValueInt(KeyType.ORDERS_CONFIRMED);
@@ -441,7 +441,7 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         {
             // Note: selection.Item is null for a container selection (buildings/ships list):
             // the region is then read from selection.Region.
-            DataBlock block = selection.Region!.DataBlock;
+            DataBlock block = selection.Region!.SourceDataBlock;
             return block.GetAttachment() is RegionAttachment stats ? stats.Unconfirmed : -1;
         }
         return -1; // no unit with order block
@@ -497,7 +497,7 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
 
 
         // Only a selected unit is handled for orders
-        DataBlock unit = unitModel.DataBlock;
+        DataBlock unit = unitModel.SourceDataBlock;
 
         // TODO: check unit it's not null
         unitName = unit.GetUILabel();
@@ -548,14 +548,14 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         if (sel.Item is not null && sel.IsRegionSelected())
         {
             // prefer explicit region selection
-            region = sel.Region!.DataBlock as RegionDataBlock;
+            region = sel.Region!.Region;
         }
         else if (sel.Item is not null && sel.HasUnit())
         {
             // otherwise resolve the region of the selected unit
             // uses CRDocument helper to find the seen parent region of a unit
             //Report.GetSeenRegion(ref region, sel.Item);
-            CRDocument.FindRegionFrom(ref region, sel.Item.DataBlock);
+            CRDocument.FindRegionFrom(ref region, sel.Item.SourceDataBlock);
         }
 
         // compute the same region key used for indexing in CRDocument

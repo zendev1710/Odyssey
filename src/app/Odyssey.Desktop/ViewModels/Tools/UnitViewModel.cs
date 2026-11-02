@@ -133,7 +133,7 @@ public partial class UnitViewModel : ObservableObject
             vm.IsConfirmed = unit.IsConfirmed;
             vm.PeopleNumber = unit.PeopleNumber;
             vm.Model = unit;
-            FactionStatus factionStatus = doc.GetFactionStatus(CRDocument.GetFactionIdForUnit(unit.DataBlock));
+            FactionStatus factionStatus = doc.GetFactionStatus(CRDocument.GetFactionIdForUnit(unit.SourceDataBlock));
             vm.AreSkillsVisible = factionStatus is FactionStatus.ACTIVE or FactionStatus.ALLIED;
             vm.FactionStatusBrush = CreateFactionStatusBrush(factionStatus);
             vm.FactionStatusBackground = CreateFactionStatusBackground(factionStatus);
@@ -226,7 +226,7 @@ public partial class UnitViewModel : ObservableObject
         }
 
         DataBlock? commandsBlock = null;
-        if (CRDocument.GetSeenCommands(ref commandsBlock, unit.DataBlock) && commandsBlock is not null)
+        if (CRDocument.GetSeenCommands(ref commandsBlock, unit.SourceDataBlock) && commandsBlock is not null)
         {
             OrdersAttachment? attachment = commandsBlock.GetAttachment() as OrdersAttachment;
             IEnumerable<string> commands = attachment is not null

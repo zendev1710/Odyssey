@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.HighPerformance;
-using Odyssey.Models.Data;
+﻿using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Tools;
 using System;
@@ -25,19 +24,19 @@ public class ShipModel: StructureModel
 
     public int TotalSkill { get; private set; }
 
-    public RegionDataBlock? FromRegion { get; private set; }
+    public RegionModel? FromRegion { get; private set; }
 
-    public DataBlock? ToRegion { get; private set; }
+    public RegionModel? ToRegion { get; private set; }
 
     /// <summary>Region where the ship is currently located (its destination for the current turn).</summary>
-    public RegionDataBlock? CurrentRegion { get; private set; }
+    public RegionModel? CurrentRegion { get; private set; }
 
     /// <summary>Faction owning the ship, resolved from its captain/owner unit when the report is parsed.</summary>
     public int OwnerFactionId { get; private set; } = -1;
 
-    public List<DataBlock> TravelledByRegions { get; private set; } = [];
+    public List<ILocation> TravelledByRegions { get; private set; } = [];
 
-    public Dictionary<int, RegionDataBlock> CrossedRegions { get; private set; } = [];
+    public Dictionary<int, RegionModel> CrossedRegions { get; private set; } = [];
 
     // neighbour offsets for pointy-topped axial coords (q,r)
     private static readonly (int Dq, int Dr)[] NeighborOffsets =
@@ -45,35 +44,30 @@ public class ShipModel: StructureModel
         (0, 1), (0, -1), (1, 0), (-1, 0), (1, -1), (-1, 1),
     };
 
-    public ShipModel(DataBlock shipDataBlock, int locationId/*, DataBlock? region = null*/) : base(shipDataBlock, Categories.Ship, locationId/*, region*/)
+    public ShipModel(DataBlock shipDataBlock, int locationId) : base(shipDataBlock, Categories.Ship, locationId)
     {
     }
 
-    public void AddCrossedRegions(List<DataBlock> regions)
+    public void AddCrossedRegions(IEnumerable<RegionModel> regions)
     {
-        if (regions.Count > 0)
+        bool hasRegions = false;
+        foreach (RegionModel region in regions)
         {
-            foreach (DataBlock block in regions)
+            hasRegions = true;
+            int key = GetNodeKey(region);
+            if (!CrossedRegions.ContainsKey(key))
             {
-                if (block is not RegionDataBlock region)
-                {
-                    continue;
-                }
-
-                int key = GetNodeKey(region);
-                if (!CrossedRegions.ContainsKey(key))
-                {
-                    CrossedRegions[key] = region;
-                }
+                CrossedRegions[key] = region;
             }
         }
-        else
+
+        if (!hasRegions)
         {
             Debug.WriteLine($"AddCrossedRegions without any region for {this} !");
         }
     }
 
-    public void SetCurrentRegion(RegionDataBlock? region)
+    public void SetCurrentRegion(RegionModel? region)
     {
         CurrentRegion = region;
     }
@@ -115,7 +109,7 @@ public class ShipModel: StructureModel
     {
         if (TryResolveOwnerUnit(report, out UnitModel? ownerUnit) && ownerUnit is not null)
         {
-            OwnerFactionId = CRDocument.GetFactionIdForUnit(ownerUnit.DataBlock);
+            OwnerFactionId = CRDocument.GetFactionIdForUnit(ownerUnit.SourceDataBlock);
             return;
         }
 
@@ -126,7 +120,7 @@ public class ShipModel: StructureModel
     /// Resolves the route from a SAIL message. The crossed regions recorded in the report are used as
     /// the allowed intermediate regions, and a shortest path is searched between the two endpoints.
     /// </summary>
-    public void SetFromTo(RegionDataBlock? fromRegion, RegionDataBlock? toRegion)
+    public void SetFromTo(RegionModel? fromRegion, RegionModel? toRegion)
     {
         FromRegion = fromRegion;
         ToRegion = toRegion;
@@ -172,12 +166,12 @@ public class ShipModel: StructureModel
 
         // The departure is the crossed region farthest from the current position. This ignores
         // small branches and gives the most plausible start of the travelled chain.
-        RegionDataBlock start = candidates
+        RegionModel start = candidates
             .OrderByDescending(r => HexDistance(r, CurrentRegion))
             .First();
 
-        var allowed = new Dictionary<int, RegionDataBlock>();
-        foreach (RegionDataBlock candidate in candidates)
+        var allowed = new Dictionary<int, ILocation>();
+        foreach (ILocation candidate in candidates)
         {
             allowed[GetNodeKey(candidate)] = candidate;
         }
@@ -200,16 +194,16 @@ public class ShipModel: StructureModel
         CompleteRoute(TravelledByRegions);
     }
 
-    private static List<DataBlock> BuildRoute(
-        RegionDataBlock from,
-        RegionDataBlock to,
-        IEnumerable<RegionDataBlock> crossedRegions)
+    private static List<ILocation> BuildRoute(
+        ILocation from,
+        ILocation to,
+        IEnumerable<ILocation> crossedRegions)
     {
-        var nodes = new Dictionary<int, RegionDataBlock>();
+        var nodes = new Dictionary<int, ILocation>();
         AddNode(nodes, from);
         AddNode(nodes, to);
 
-        foreach (RegionDataBlock region in crossedRegions)
+        foreach (ILocation region in crossedRegions)
         {
             AddNode(nodes, region);
         }
@@ -223,7 +217,7 @@ public class ShipModel: StructureModel
         return BuildFallbackRoute(from, to, nodes.Values);
     }
 
-    private static void AddNode(Dictionary<int, RegionDataBlock> nodes, RegionDataBlock region)
+    private static void AddNode(Dictionary<int, ILocation> nodes, ILocation region)
     {
         nodes.TryAdd(GetNodeKey(region), region);
     }
@@ -231,10 +225,10 @@ public class ShipModel: StructureModel
     /// <summary>
     /// Breadth-first search restricted to the regions that were actually crossed by the ship.
     /// </summary>
-    private static List<DataBlock>? FindPath(
-        RegionDataBlock from,
-        RegionDataBlock to,
-        IReadOnlyDictionary<int, RegionDataBlock> nodes)
+    private static List<ILocation>? FindPath(
+        ILocation from,
+        ILocation to,
+        IReadOnlyDictionary<int, ILocation> nodes)
     {
         int startKey = GetNodeKey(from);
         int targetKey = GetNodeKey(to);
@@ -244,8 +238,8 @@ public class ShipModel: StructureModel
             return [from];
         }
 
-        if (!nodes.TryGetValue(startKey, out RegionDataBlock? startNode) ||
-            !nodes.TryGetValue(targetKey, out RegionDataBlock? targetNode))
+        if (!nodes.TryGetValue(startKey, out ILocation? startNode) ||
+            !nodes.TryGetValue(targetKey, out ILocation? targetNode))
         {
             return null;
         }
@@ -258,15 +252,15 @@ public class ShipModel: StructureModel
         while (queue.Count > 0)
         {
             int key = queue.Dequeue();
-            RegionDataBlock node = nodes[key];
-            int plane = node.GetPlane();
-            int x = node.GetX();
-            int y = node.GetY();
+            ILocation node = nodes[key];
+            int plane = (int)node.Plane;
+            int x = node.X;
+            int y = node.Y;
 
             foreach ((int dq, int dr) in NeighborOffsets)
             {
                 int nextKey = Coordinates.GetId(x + dq, y + dr, (PlaneType)plane);
-                if (!nodes.TryGetValue(nextKey, out RegionDataBlock? next) || !visited.Add(nextKey))
+                if (!nodes.TryGetValue(nextKey, out ILocation? next) || !visited.Add(nextKey))
                 {
                     continue;
                 }
@@ -287,13 +281,13 @@ public class ShipModel: StructureModel
         return null;
     }
 
-    private static List<DataBlock> ReconstructPath(
-        IReadOnlyDictionary<int, RegionDataBlock> nodes,
+    private static List<ILocation> ReconstructPath(
+        IReadOnlyDictionary<int, ILocation> nodes,
         IReadOnlyDictionary<int, int> previous,
         int startKey,
         int targetKey)
     {
-        var path = new List<DataBlock>();
+        var path = new List<ILocation>();
         int currentKey = targetKey;
 
         while (true)
@@ -322,37 +316,37 @@ public class ShipModel: StructureModel
     /// compatible with the direct route are kept, and the chain is forced to make progress towards
     /// the destination. Missing intermediate hexes are filled later by <see cref="CompleteRoute"/>.
     /// </summary>
-    private static List<DataBlock> BuildFallbackRoute(
-        RegionDataBlock from,
-        RegionDataBlock to,
-        IEnumerable<RegionDataBlock> crossedRegions)
+    private static List<ILocation> BuildFallbackRoute(
+        ILocation from,
+        ILocation to,
+        IEnumerable<ILocation> crossedRegions)
     {
         const int MaxDetour = 3;
 
         int directDistance = HexDistance(from, to);
         var remaining = crossedRegions
             .Where(r => GetNodeKey(r) != GetNodeKey(from) && GetNodeKey(r) != GetNodeKey(to))
-            .Where(r => r.GetPlane() == from.GetPlane() && r.GetPlane() == to.GetPlane())
+            .Where(r => r.Plane == from.Plane && r.Plane == to.Plane)
             .Where(r => HexDistance(from, r) + HexDistance(r, to) <= directDistance + MaxDetour)
             .GroupBy(GetNodeKey)
             .Select(g => g.First())
             .ToList();
 
-        var result = new List<DataBlock> { from };
-        RegionDataBlock current = from;
+        var result = new List<ILocation> { from };
+        ILocation current = from;
         int progress = 0;
 
         while (remaining.Count > 0)
         {
             int currentRemaining = HexDistance(current, to);
-            RegionDataBlock? next = remaining
+            ILocation? next = remaining
                 .Where(r => HexDistance(from, r) >= progress)
                 .Where(r => IsNeighbour(current, r) || HexDistance(r, to) <= currentRemaining)
                 .OrderBy(r => IsNeighbour(current, r) ? 0 : 1)
                 .ThenBy(r => HexDistance(current, r) + HexDistance(r, to))
                 .ThenBy(r => HexDistance(current, r))
-                .ThenBy(r => r.GetX())
-                .ThenBy(r => r.GetY())
+                .ThenBy(r => r.X)
+                .ThenBy(r => r.Y)
                 .FirstOrDefault();
 
             if (next is null)
@@ -379,23 +373,23 @@ public class ShipModel: StructureModel
     /// always complete, so this keeps the rendered curve on the hex grid instead of jumping across
     /// several regions in a straight line.
     /// </summary>
-    private static void CompleteRoute(List<DataBlock> route)
+    private static void CompleteRoute(List<ILocation> route)
     {
         if (route.Count < 2)
         {
             return;
         }
 
-        var completed = new List<DataBlock>(route.Count * 2) { route[0] };
+        var completed = new List<ILocation>(route.Count * 2) { route[0] };
         for (int i = 1; i < route.Count; i++)
         {
-            if (route[i - 1] is RegionDataBlock previous &&
-                route[i] is RegionDataBlock next &&
-                previous.GetPlane() == next.GetPlane())
+            ILocation previous = route[i - 1];
+            ILocation next = route[i];
+            if (previous.Plane == next.Plane)
             {
                 foreach ((int x, int y) in EnumerateIntermediateHexes(previous, next))
                 {
-                    completed.Add(CreateRouteRegion(x, y, previous.GetPlane()));
+                    completed.Add(CreateRouteRegion(x, y, (int)previous.Plane));
                 }
             }
 
@@ -406,14 +400,14 @@ public class ShipModel: StructureModel
         route.AddRange(completed);
     }
 
-    private static IEnumerable<(int X, int Y)> EnumerateIntermediateHexes(RegionDataBlock from, RegionDataBlock to)
+    private static IEnumerable<(int X, int Y)> EnumerateIntermediateHexes(ILocation from, ILocation to)
     {
-        int ax = from.GetX();
-        int az = from.GetY();
+        int ax = from.X;
+        int az = from.Y;
         int ay = -ax - az;
 
-        int bx = to.GetX();
-        int bz = to.GetY();
+        int bx = to.X;
+        int bz = to.Y;
         int by = -bx - bz;
 
         int distance = Math.Max(Math.Abs(ax - bx), Math.Max(Math.Abs(ay - by), Math.Abs(az - bz)));
@@ -449,20 +443,20 @@ public class ShipModel: StructureModel
         }
     }
 
-    private static RegionDataBlock CreateRouteRegion(int x, int y, int plane)
+    private static ILocation CreateRouteRegion(int x, int y, int plane)
     {
-        return new RegionDataBlock($"{x} {y} {plane}");
+        return new RouteLocation(x, y, (PlaneType)plane);
     }
 
-    private static bool IsNeighbour(RegionDataBlock a, RegionDataBlock b)
+    private static bool IsNeighbour(ILocation a, ILocation b)
     {
-        if (a.GetPlane() != b.GetPlane())
+        if (a.Plane != b.Plane)
         {
             return false;
         }
 
-        int dx = b.GetX() - a.GetX();
-        int dy = b.GetY() - a.GetY();
+        int dx = b.X - a.X;
+        int dy = b.Y - a.Y;
         foreach ((int dq, int dr) in NeighborOffsets)
         {
             if (dx == dq && dy == dr)
@@ -474,22 +468,29 @@ public class ShipModel: StructureModel
         return false;
     }
 
-    private static int HexDistance(RegionDataBlock a, RegionDataBlock b)
+    private static int HexDistance(ILocation a, ILocation b)
     {
-        int ax = a.GetX();
-        int az = a.GetY();
+        int ax = a.X;
+        int az = a.Y;
         int ay = -ax - az;
 
-        int bx = b.GetX();
-        int bz = b.GetY();
+        int bx = b.X;
+        int bz = b.Y;
         int by = -bx - bz;
 
         return Math.Max(Math.Abs(ax - bx), Math.Max(Math.Abs(ay - by), Math.Abs(az - bz)));
     }
 
-    private static int GetNodeKey(RegionDataBlock region)
+    private static int GetNodeKey(ILocation region)
     {
-        return Coordinates.GetId(region.GetX(), region.GetY(), (PlaneType)region.GetPlane());
+        return Coordinates.GetId(region.X, region.Y, region.Plane);
+    }
+
+    private sealed class RouteLocation(int x, int y, PlaneType plane) : ILocation
+    {
+        public int X { get; set; } = x;
+        public int Y { get; set; } = y;
+        public PlaneType Plane { get; } = plane;
     }
    
 
@@ -501,7 +502,7 @@ public class ShipModel: StructureModel
     /// <param name="region">Region where is located the ship</param>
     /// <param name="con    tainerProperty"></param>
     /// <returns></returns>
-    protected override bool CollectDataFromBlock(CRDocument report/*, DataBlock? region*/, ref DataProperty? structureProperty)
+    protected override bool CollectDataFromBlock(CRDocument report, ref DataProperty? structureProperty)
     {
         if (Structure == null) { return false; }
         structureProperty = null;
@@ -568,9 +569,9 @@ public class ShipModel: StructureModel
         {
             foreach (UnitModel unitModel in Units)
             {
-                int number = unitModel.DataBlock.ValueInt(KeyType.NUMBER);
+                int number = unitModel.SourceDataBlock.ValueInt(KeyType.NUMBER);
                 DataBlock? child = null;
-                if (number > 0 && CRDocument.GetSeenChild(ref child, unitModel.DataBlock, BlockType.TALENTS))
+                if (number > 0 && CRDocument.GetSeenChild(ref child, unitModel.SourceDataBlock, BlockType.TALENTS))
                 {
                     int skill = child!.ValueSkill(DataKey.SKILL_SAILING_NAME);
                     total += skill * number;
