@@ -75,7 +75,7 @@ public partial class UnitStripViewModel : DocumentToolViewModelBase
         {
             if (unit.Model is UnitModel model)
             {
-                unit.IsConfirmed = model.IsConfirmed;
+                unit.IsConfirmed = model.OrdersConfirmed;
             }
         }
     }

@@ -1833,6 +1833,27 @@
   <data name="parm_key_explorer_unit_order_name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="parm_hdr_explorer_region_order" xml:space="preserve">
+    <value>Regionenreihenfolge</value>
+  </data>
+  <data name="parm_inf_explorer_region_order" xml:space="preserve">
+    <value>Belegte Explorer-Regionen nach Berichtsreihenfolge, Koordinaten oder Inselname sortieren. Regionen bleiben ohne eigene Inselknoten gelistet.</value>
+  </data>
+  <data name="parm_key_explorer_region_order_report" xml:space="preserve">
+    <value>Keine (Berichtsreihenfolge)</value>
+  </data>
+  <data name="parm_key_explorer_region_order_coordinates" xml:space="preserve">
+    <value>Koordinaten</value>
+  </data>
+  <data name="parm_key_explorer_region_order_island" xml:space="preserve">
+    <value>Inselname (alphabetisch)</value>
+  </data>
+  <data name="parm_hdr_unit_orders_navigate_editable_only" xml:space="preserve">
+    <value>Direkt zu bearbeitbaren Einheiten navigieren</value>
+  </data>
+  <data name="parm_inf_unit_orders_navigate_editable_only" xml:space="preserve">
+    <value>Vorherige/Nächste überspringt Einheiten ohne bearbeitbaren Befehlsblock. Standardmäßig aktiviert.</value>
+  </data>
   <data name="parm_hdr_explorer_expand_tree_on_load" xml:space="preserve">
     <value>Expand Explorer tree when report document is opened [DE]</value>
   </data>

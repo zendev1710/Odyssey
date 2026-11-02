@@ -26,7 +26,9 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
     private ExplorerNodeViewModel? selectedItem;
 
     private readonly ExplorerNodeViewModel _root;
+    private readonly Dictionary<int, int> _reportRegionOrder = [];
     private readonly Dictionary<int, int> _reportUnitOrder = [];
+    private int _nextReportRegionOrder;
     private int _nextReportUnitOrder;
 
     /// <summary>
@@ -123,12 +125,24 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
 
     private void OnGlobalSettingChanged(object? sender, SettingChangedEventArgs e)
     {
-        if (e.SettingName != GlobalSettings.EXPLORER_UNIT_ORDER || !HasDocument)
+        if (!HasDocument)
         {
             return;
         }
 
-        ApplyUnitOrder(Root);
+        if (e.SettingName == GlobalSettings.EXPLORER_REGION_ORDER)
+        {
+            ApplyRegionOrder();
+        }
+        else if (e.SettingName == GlobalSettings.EXPLORER_UNIT_ORDER)
+        {
+            ApplyUnitOrder(Root);
+        }
+        else
+        {
+            return;
+        }
+
         PublishUnitNavigationOrder();
     }
 
@@ -469,7 +483,9 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
 
         // Clear tree and build a new one from newly opened document data
         Items.Clear();
+        _reportRegionOrder.Clear();
         _reportUnitOrder.Clear();
+        _nextReportRegionOrder = 0;
         _nextReportUnitOrder = 0;
         ServiceLocator.UnitNavigationOrderService.SetOrder(Report, []);
 
@@ -480,6 +496,10 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
 
         int regionsNumber = 0;
         var regionModels = Report.Planes[0].OccupiedRegions;
+        foreach (KeyValuePair<int, RegionModel> regionEntry in regionModels)
+        {
+            _reportRegionOrder[regionEntry.Value.Id] = _nextReportRegionOrder++;
+        }
 
         foreach (var r in regionModels)
         {
@@ -603,6 +623,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
             }
         }
 
+        ApplyRegionOrder();
         ApplyUnitOrder(Root);
 
         if (ExpandTreeOnDocumentLoading)
@@ -641,6 +662,66 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         }
 
         ServiceLocator.UnitNavigationOrderService.SetOrder(Report, orderedRegions);
+    }
+
+    private void ApplyRegionOrder()
+    {
+        if (Report.Planes.Count == 0 || Root.Children.Count < 2)
+        {
+            return;
+        }
+
+        RegionOrderMode orderMode = (RegionOrderMode)GlobalSettings.Get<int>(GlobalSettings.EXPLORER_REGION_ORDER);
+        List<ExplorerNodeViewModel> orderedRegions = [.. Root.Children];
+        orderedRegions.Sort((leftNode, rightNode) =>
+        {
+            Report.Planes[0].OccupiedRegions.TryGetValue(leftNode.Id, out RegionModel? leftRegion);
+            Report.Planes[0].OccupiedRegions.TryGetValue(rightNode.Id, out RegionModel? rightRegion);
+
+            int comparison = orderMode switch
+            {
+                RegionOrderMode.Coordinates when leftRegion is not null && rightRegion is not null =>
+                    CompareCoordinates(leftRegion, rightRegion),
+                RegionOrderMode.IslandName => CompareIslandNames(leftRegion?.IslandName, rightRegion?.IslandName),
+                _ => 0
+            };
+
+            if (comparison != 0)
+            {
+                return comparison;
+            }
+
+            comparison = _reportRegionOrder.GetValueOrDefault(leftNode.Id, int.MaxValue)
+                .CompareTo(_reportRegionOrder.GetValueOrDefault(rightNode.Id, int.MaxValue));
+            return comparison != 0 ? comparison : leftNode.Id.CompareTo(rightNode.Id);
+        });
+
+        for (int targetIndex = 0; targetIndex < orderedRegions.Count; targetIndex++)
+        {
+            int currentIndex = Root.Children.IndexOf(orderedRegions[targetIndex]);
+            if (currentIndex != targetIndex)
+            {
+                Root.Children.Move(currentIndex, targetIndex);
+            }
+        }
+    }
+
+    private static int CompareCoordinates(RegionModel left, RegionModel right)
+    {
+        int comparison = right.GetY().CompareTo(left.GetY());
+        return comparison != 0 ? comparison : left.GetX().CompareTo(right.GetX());
+    }
+
+    private static int CompareIslandNames(string? leftName, string? rightName)
+    {
+        bool leftHasName = !string.IsNullOrWhiteSpace(leftName);
+        bool rightHasName = !string.IsNullOrWhiteSpace(rightName);
+        if (leftHasName != rightHasName)
+        {
+            return leftHasName ? -1 : 1;
+        }
+
+        return StringComparer.CurrentCultureIgnoreCase.Compare(leftName, rightName);
     }
 
     private void ApplyUnitOrder(ExplorerNodeViewModel parent)

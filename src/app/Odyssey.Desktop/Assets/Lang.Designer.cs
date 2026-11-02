@@ -3265,6 +3265,15 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Region order.
+        /// </summary>
+        public static string parm_hdr_explorer_region_order {
+            get {
+                return ResourceManager.GetString("parm_hdr_explorer_region_order", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Select the active region when opening report.
         /// </summary>
         public static string parm_hdr_explorer_select_last_active_region {
@@ -3436,6 +3445,15 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Navigate directly to editable units.
+        /// </summary>
+        public static string parm_hdr_unit_orders_navigate_editable_only {
+            get {
+                return ResourceManager.GetString("parm_hdr_unit_orders_navigate_editable_only", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Select the ECheck program executable file.
         /// </summary>
         public static string parm_inf_echeck_program {
@@ -3462,6 +3480,15 @@ namespace Odyssey.Assets {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Sort occupied Explorer regions by report order, coordinates, or island name. Island regions remain listed separately..
+        /// </summary>
+        public static string parm_inf_explorer_region_order {
+            get {
+                return ResourceManager.GetString("parm_inf_explorer_region_order", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to The active region is the one selected at the last report closing. If disabled, the (0,0 region will be selected.
         /// </summary>
@@ -3634,6 +3661,15 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Previous/Next skips units without an editable orders block. Enabled by default..
+        /// </summary>
+        public static string parm_inf_unit_orders_navigate_editable_only {
+            get {
+                return ResourceManager.GetString("parm_inf_unit_orders_navigate_editable_only", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to None.
         /// </summary>
         public static string parm_key_building_contrast_none {
@@ -3687,6 +3723,33 @@ namespace Odyssey.Assets {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Coordinates.
+        /// </summary>
+        public static string parm_key_explorer_region_order_coordinates {
+            get {
+                return ResourceManager.GetString("parm_key_explorer_region_order_coordinates", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Island name (alphabetical).
+        /// </summary>
+        public static string parm_key_explorer_region_order_island {
+            get {
+                return ResourceManager.GetString("parm_key_explorer_region_order_island", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to None (report order).
+        /// </summary>
+        public static string parm_key_explorer_region_order_report {
+            get {
+                return ResourceManager.GetString("parm_key_explorer_region_order_report", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>

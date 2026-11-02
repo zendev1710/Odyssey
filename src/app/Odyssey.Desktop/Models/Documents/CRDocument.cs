@@ -61,6 +61,7 @@ public class CRDocument : EresseaDocument, ILocationResolver
     // An active faction is a faction for which the player has units (and can set commands for them) in the current report.
     private readonly Dictionary<int, FactionModel> ActiveFactions = [];
     private readonly Dictionary<int, IReadOnlyList<string>> _editedCommands = [];
+    private readonly Dictionary<int, bool> _editedUnitConfirmationStatuses = [];
 
     private readonly List<BattleModel> _battles = [];
 
@@ -181,6 +182,7 @@ public class CRDocument : EresseaDocument, ILocationResolver
     public int Turn { get; private set; } = -1;
 
     public bool HasEditedCommands => _editedCommands.Count > 0;
+    public bool HasEditedOrderData => HasEditedCommands || _editedUnitConfirmationStatuses.Count > 0;
 
     public bool TryGetEditedCommands(int unitId, out IReadOnlyList<string> commands)
     {
@@ -194,6 +196,49 @@ public class CRDocument : EresseaDocument, ILocationResolver
 
         _editedCommands[unitId] = commands.ToArray();
         SetModified(true);
+    }
+
+    public bool TryGetEditedUnitConfirmationStatus(int unitId, out bool isConfirmed)
+    {
+        return _editedUnitConfirmationStatuses.TryGetValue(unitId, out isConfirmed);
+    }
+
+    public void SetEditedUnitConfirmationStatus(int unitId, bool isConfirmed)
+    {
+        if (!Units.TryGetValue(unitId, out UnitModel? unit))
+        {
+            throw new ArgumentOutOfRangeException(nameof(unitId), unitId, "The unit is not part of this report.");
+        }
+        if (!unit.HasEditableOrders)
+        {
+            throw new InvalidOperationException($"Unit {unitId} does not have editable orders.");
+        }
+
+        unit.SetOrdersConfirmedStatus(isConfirmed);
+        if (unit.SavedOrdersConfirmedStatus == isConfirmed)
+        {
+            _editedUnitConfirmationStatuses.Remove(unitId);
+        }
+        else
+        {
+            _editedUnitConfirmationStatuses[unitId] = isConfirmed;
+        }
+        SetModified(HasEditedOrderData);
+    }
+
+    public void CommitEditedOrderChanges()
+    {
+        foreach ((int unitId, bool isConfirmed) in _editedUnitConfirmationStatuses)
+        {
+            if (Units.TryGetValue(unitId, out UnitModel? unit))
+            {
+                SetConfirmed(unit.SourceDataBlock, isConfirmed);
+                unit.CommitOrdersConfirmedStatus();
+            }
+        }
+
+        _editedUnitConfirmationStatuses.Clear();
+        _editedCommands.Clear();
     }
 
     public void ClearEditedCommands()
@@ -638,6 +683,19 @@ public class CRDocument : EresseaDocument, ILocationResolver
             return false;
         }
         return true;
+    }
+
+    public RegionModel? FindRegionById(int regionId)
+    {
+        foreach (WorldPlane plane in Planes.Values)
+        {
+            if (plane.OccupiedRegions.TryGetValue(regionId, out RegionModel? region) ||
+                plane.UnoccupiedRegions.TryGetValue(regionId, out region))
+            {
+                return region;
+            }
+        }
+        return null;
     }
 
 
@@ -1490,10 +1548,27 @@ m_blocks.push_back(*old_r);
         CreateHierarchy();
         UpdateHashTables();
         FloodIslandNames();
+        UpdateRegionIslandNames();
 
         // Below collection could be optimized (done while traversing the datablocks) but it is not a big deal for now.
         // Collect battles by traversing the datablocks from the first to the first encountered region datablock
         CollectBattles();
+    }
+
+    private void UpdateRegionIslandNames()
+    {
+        foreach (WorldPlane plane in Planes.Values)
+        {
+            foreach (RegionModel region in plane.OccupiedRegions.Values)
+            {
+                region.UpdateIslandName();
+            }
+
+            foreach (RegionModel region in plane.UnoccupiedRegions.Values)
+            {
+                region.UpdateIslandName();
+            }
+        }
     }
 
     /// <summary>

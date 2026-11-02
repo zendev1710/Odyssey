@@ -40,7 +40,10 @@ public class UnitModel : EntityModel
     private bool _isContainerDataCollected;
     private bool _hasFactionId;
     private bool _commandsCollected;
+    private bool _commandBlockAvailabilityChecked;
     private bool _hasCommandBlock;
+    private bool _ordersConfirmed;
+    private bool _savedOrdersConfirmedStatus;
     private DataProperty? _containerProperty;
     private IReadOnlyList<string> _commands = Array.Empty<string>();
 
@@ -109,7 +112,22 @@ public class UnitModel : EntityModel
     public int CatapultsNumber { get; private set; }
     public int CatapultsNumberMax { get; private set; }
 
-    public bool IsConfirmed { get; private set; }
+    public bool HasEditableOrders
+    {
+        get
+        {
+            if (!_commandBlockAvailabilityChecked)
+            {
+                DataBlock? commandBlock = null;
+                _hasCommandBlock = CRDocument.GetSeenCommands(ref commandBlock, SourceDataBlock) && commandBlock is not null;
+                _commandBlockAvailabilityChecked = true;
+            }
+            return _hasCommandBlock;
+        }
+    }
+
+    public bool? OrdersConfirmed => HasEditableOrders ? _ordersConfirmed : null;
+    internal bool? SavedOrdersConfirmedStatus => HasEditableOrders ? _savedOrdersConfirmedStatus : null;
 
     public bool TryGetCommands(out IReadOnlyList<string> commands)
     {
@@ -119,20 +137,35 @@ public class UnitModel : EntityModel
         }
 
         commands = _commands;
-        return _hasCommandBlock;
+        return HasEditableOrders;
     }
 
-    internal void SetConfirmedStatus(bool isConfirmed)
+    internal void SetOrdersConfirmedStatus(bool isConfirmed)
     {
-        IsConfirmed = isConfirmed;
+        if (!HasEditableOrders)
+        {
+            throw new InvalidOperationException($"Unit {Id} does not have editable orders.");
+        }
+        _ordersConfirmed = isConfirmed;
+    }
+
+    internal void CommitOrdersConfirmedStatus()
+    {
+        _savedOrdersConfirmedStatus = _ordersConfirmed;
     }
 
     private void CollectCommands()
     {
         _commandsCollected = true;
+        if (!HasEditableOrders)
+        {
+            return;
+        }
+
         DataBlock? commandBlock = null;
         if (!CRDocument.GetSeenCommands(ref commandBlock, SourceDataBlock) || commandBlock is null)
         {
+            _hasCommandBlock = false;
             return;
         }
 
@@ -153,6 +186,7 @@ public class UnitModel : EntityModel
         _itemsProperties = [];
         _skillsProperties = [];
         PopulateImmediateProperties();
+        _savedOrdersConfirmedStatus = _ordersConfirmed;
     }
 
     private bool IsImmediateProperty(DataKey dataKey)
@@ -234,7 +268,7 @@ public class UnitModel : EntityModel
                     Hero = udk.GetValue();
                     break;
                 case KeyType.ORDERS_CONFIRMED:
-                    IsConfirmed = udk.GetValue() == "1";
+                    _ordersConfirmed = udk.GetValue() == "1";
                     break;
                 case KeyType.UNKNOWN:
                     if (udk.GetKeyFromType() == Strings.DE_TRUE_RACE_TYPE)

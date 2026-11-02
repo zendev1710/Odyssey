@@ -577,10 +577,10 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
         {
             case DocumentType.ERESSEA_REPORT:
             case DocumentType.ERESSEA_REPORT_FROM_ZIP:
-                saved = ReportFileService.SaveWithCommandEdits(path, doc, MapType.FULL, []);
+                saved = ReportFileService.SaveWithOrderEdits(path, doc, MapType.FULL, []);
                 if (saved)
                 {
-                    doc.ClearEditedCommands();
+                    doc.CommitEditedOrderChanges();
                     doc.SetModified(false);
                 }
                 break;

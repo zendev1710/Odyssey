@@ -33,7 +33,7 @@ public partial class UnitViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IdentityBackground))]
-    private bool _isConfirmed;
+    private bool? _isConfirmed;
 
     [ObservableProperty]
     private int _peopleNumber;
@@ -62,13 +62,13 @@ public partial class UnitViewModel : ObservableObject
     public IBrush FactionStatusConfirmedBackground { get; private set; } = CreateDarkenedBrush(CreateFactionStatusBackground(FactionStatus.UNKNOWN));
     public IBrush FactionStatusSelectedConfirmedBackground { get; private set; } = CreateDarkenedBrush(CreateFactionStatusSelectedBackground(FactionStatus.UNKNOWN));
     public IBrush IdentityBackground => IsSelected
-        ? IsConfirmed ? FactionStatusSelectedConfirmedBackground : FactionStatusSelectedBackground
-        : IsConfirmed ? FactionStatusConfirmedBackground : FactionStatusBackground;
+        ? IsConfirmed == true ? FactionStatusSelectedConfirmedBackground : FactionStatusSelectedBackground
+        : IsConfirmed == true ? FactionStatusConfirmedBackground : FactionStatusBackground;
     public IBrush IdentityForeground => IsSelected ? Brushes.White : Brushes.Black;
     public ObservableCollection<UnitItemViewModel> InventoryItems { get; } = new();
     public ObservableCollection<UnitSkillViewModel> SkillItems { get; } = new();
 
-    public UnitViewModel(string id, string name, /*int x, int y,*/ int factionId = 0, bool isConfirmed = false)
+    public UnitViewModel(string id, string name, /*int x, int y,*/ int factionId = 0, bool? isConfirmed = null)
     {
         DataBlock = null;
         _id = id ?? string.Empty;
@@ -92,7 +92,11 @@ public partial class UnitViewModel : ObservableObject
 
             // Try to read common keys; fallback to sensible defaults
             try { _factionId = block.ValueInt(KeyType.FACTION); } catch { _factionId = 0; }
-            try { _isConfirmed = block.ValueInt(KeyType.ORDERS_CONFIRMED) != 0; } catch { _isConfirmed = false; }
+            DataBlock? commandsBlock = null;
+            if (CRDocument.GetSeenCommands(ref commandsBlock, block) && commandsBlock is not null)
+            {
+                _isConfirmed = block.ValueInt(KeyType.ORDERS_CONFIRMED) != 0;
+            }
 
             // Id: prefer string key if available, otherwise use int id
             try
@@ -130,7 +134,7 @@ public partial class UnitViewModel : ObservableObject
             vm.Id = unit!.EncodedId;
             vm.Name = unit.Name;
             vm.FactionId = unit.FactionId;
-            vm.IsConfirmed = unit.IsConfirmed;
+            vm.IsConfirmed = unit.OrdersConfirmed;
             vm.PeopleNumber = unit.PeopleNumber;
             vm.Model = unit;
             FactionStatus factionStatus = doc.GetFactionStatus(unit.EffectiveFactionId);

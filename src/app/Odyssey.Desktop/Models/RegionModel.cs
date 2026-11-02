@@ -38,6 +38,7 @@ public class RegionModel : EntityModel, ILocation
 
     public string Name { get; private set; } = string.Empty;
     public string Label { get; private set; } = string.Empty;
+    public string IslandName { get; private set; } = string.Empty;
 
     public List<BuildingModel> Buildings { get; private set; } = [];
     public List<ShipModel> Ships { get; private set; } = [];
@@ -112,5 +113,10 @@ public class RegionModel : EntityModel, ILocation
             ship.CollectData();
         }
         */
+    }
+
+    internal void UpdateIslandName()
+    {
+        IslandName = (Region.GetAttachment() as RegionAttachment)?.Island ?? string.Empty;
     }
 }

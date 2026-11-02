@@ -151,15 +151,21 @@ namespace Odyssey.Models.Dal
         /// <returns>true if saving was successfull; otherwise false</returns>
         public static bool Save(string pathname, CRDocument cr, MapType mapFilter, HashSet<DataBlock> selection)
         {
-            return SaveCore(pathname, cr, mapFilter, selection, useEditedCommands: false);
+            return SaveCore(pathname, cr, mapFilter, selection, useEditedCommands: false, useEditedConfirmationStatuses: false);
         }
 
         public static bool SaveWithCommandEdits(string pathname, CRDocument cr, MapType mapFilter, HashSet<DataBlock> selection)
         {
-            return SaveCore(pathname, cr, mapFilter, selection, useEditedCommands: true);
+            return SaveCore(pathname, cr, mapFilter, selection, useEditedCommands: true, useEditedConfirmationStatuses: false);
         }
 
-        private static bool SaveCore(string pathname, CRDocument cr, MapType mapFilter, HashSet<DataBlock> selection, bool useEditedCommands)
+        /// <summary>Saves the report with edited orders and unit confirmation statuses.</summary>
+        public static bool SaveWithOrderEdits(string pathname, CRDocument cr, MapType mapFilter, HashSet<DataBlock> selection)
+        {
+            return SaveCore(pathname, cr, mapFilter, selection, useEditedCommands: true, useEditedConfirmationStatuses: true);
+        }
+
+        private static bool SaveCore(string pathname, CRDocument cr, MapType mapFilter, HashSet<DataBlock> selection, bool useEditedCommands, bool useEditedConfirmationStatuses)
         {
             if (string.IsNullOrEmpty(pathname))
             {
@@ -296,13 +302,18 @@ namespace Odyssey.Models.Dal
                     }
                     else if (blockType == BlockType.UNIT)
                     {
-                        if (!IsIdenticalToMagellanContent)
+                        bool editedConfirmationStatus = false;
+                        bool hasEditedConfirmationStatus = useEditedConfirmationStatuses &&
+                                                          cr.TryGetEditedUnitConfirmationStatus(currentUnitId, out editedConfirmationStatus);
+                        bool isConfirmed = hasEditedConfirmationStatus ? editedConfirmationStatus : cr.IsConfirmed(block);
+                        bool hasConfirmationMarker = block.ValueInt(KeyType.ORDERS_CONFIRMED) != 0;
+                        bool shouldWriteConfirmation = !IsIdenticalToMagellanContent ||
+                                                      (useEditedConfirmationStatuses &&
+                                                       (hasEditedConfirmationStatus ? editedConfirmationStatus : hasConfirmationMarker));
+                        if (shouldWriteConfirmation && isConfirmed)
                         {
                             // CsMap specific property
-                            if (cr.IsConfirmed(block))
-                            {
-                                writer.WriteLine("1;ejcOrdersConfirmed");
-                            }
+                            writer.WriteLine("1;ejcOrdersConfirmed");
                         }
 
                     }

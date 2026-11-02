@@ -71,6 +71,8 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
     public const string EXPLORER_ACTIVE_FACTION_UNITS_AT_FIRST = "ActiveFactionUnitsAtTop";
     public const string EXPLORER_EXPAND_TREE_ON_REPORT_OPENING = "ExpandTreeOnReportOpening";
     public const string EXPLORER_UNIT_ORDER = "ExplorerUnitOrder";
+    public const string EXPLORER_REGION_ORDER = "ExplorerRegionOrder";
+    public const string UNIT_ORDERS_NAVIGATE_EDITABLE_ONLY = "NavigateOnlyToEditableUnits";
     public const string EXPLORER_SELECT_LAST_ACTIVE_REGION_ON_REPORT_OPENING = "SelectLastActiveRegionOnReportOpening";
     public const string MAP_USE_SEASON_IMAGES = "UseSeasonImages";
     public const string MAP_SHOW_BUILDINGS = "ShowBuildings";
@@ -188,6 +190,26 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
         Category = "parm_cat_views",
         Group = "parm_grp_explorer")]
     private int _explorerUnitOrder = (int)UnitOrderMode.ReportOrder;
+
+    [ObservableProperty]
+    [property: DropdownConfig(
+        RuntimeItemsSourceMethodName = "GetExplorerRegionOrderModes",
+        DisplayMemberPath = "Key",
+        SelectedValuePath = "Value")]
+    [property: Config(
+        Header = "parm_hdr_explorer_region_order",
+        Description = "parm_inf_explorer_region_order",
+        Category = "parm_cat_views",
+        Group = "parm_grp_explorer")]
+    private int _explorerRegionOrder = (int)RegionOrderMode.ReportOrder;
+
+    [ObservableProperty]
+    [property: Config(
+        Header = "parm_hdr_unit_orders_navigate_editable_only",
+        Description = "parm_inf_unit_orders_navigate_editable_only",
+        Category = "parm_cat_views",
+        Group = "parm_grp_explorer")]
+    private bool _navigateOnlyToEditableUnits = true;
 
     // whether additional images depending on current season are used in Map
     [ObservableProperty]
@@ -370,6 +392,17 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
             new("parm_key_explorer_unit_order_report", (int)UnitOrderMode.ReportOrder),
             new("parm_key_explorer_unit_order_skill", (int)UnitOrderMode.BestSkillLevel),
             new("parm_key_explorer_unit_order_name", (int)UnitOrderMode.Name),
+        }.Select(x => new KeyValuePair<string, int>(Translate(x.Key), x.Value));
+
+        return new(options);
+    }
+
+    public ObservableCollection<KeyValuePair<string, int>> GetExplorerRegionOrderModes()
+    {
+        var options = new KeyValuePair<string, int>[] {
+            new("parm_key_explorer_region_order_report", (int)RegionOrderMode.ReportOrder),
+            new("parm_key_explorer_region_order_coordinates", (int)RegionOrderMode.Coordinates),
+            new("parm_key_explorer_region_order_island", (int)RegionOrderMode.IslandName),
         }.Select(x => new KeyValuePair<string, int>(Translate(x.Key), x.Value));
 
         return new(options);

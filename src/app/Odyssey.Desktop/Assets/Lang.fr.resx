@@ -1833,6 +1833,27 @@
   <data name="parm_key_explorer_unit_order_name" xml:space="preserve">
     <value>Nom</value>
   </data>
+  <data name="parm_hdr_explorer_region_order" xml:space="preserve">
+    <value>Ordre des régions</value>
+  </data>
+  <data name="parm_inf_explorer_region_order" xml:space="preserve">
+    <value>Trie les régions occupées par ordre du rapport, coordonnées ou nom d'île. Les régions restent affichées séparément, sans nœuds d'île.</value>
+  </data>
+  <data name="parm_key_explorer_region_order_report" xml:space="preserve">
+    <value>Aucun (ordre du rapport)</value>
+  </data>
+  <data name="parm_key_explorer_region_order_coordinates" xml:space="preserve">
+    <value>Coordonnées</value>
+  </data>
+  <data name="parm_key_explorer_region_order_island" xml:space="preserve">
+    <value>Nom d'île (alphabétique)</value>
+  </data>
+  <data name="parm_hdr_unit_orders_navigate_editable_only" xml:space="preserve">
+    <value>Aller directement aux unités éditables</value>
+  </data>
+  <data name="parm_inf_unit_orders_navigate_editable_only" xml:space="preserve">
+    <value>Précédent/Suivant ignore les unités sans bloc d'ordres éditable. Activé par défaut.</value>
+  </data>
   <data name="parm_hdr_explorer_expand_tree_on_load" xml:space="preserve">
     <value>Déplier tous les éléments de l'Explorateur à l'ouverture du document</value>
   </data>

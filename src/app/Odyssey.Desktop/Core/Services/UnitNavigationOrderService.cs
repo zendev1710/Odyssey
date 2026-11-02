@@ -14,6 +14,13 @@ public enum UnitOrderMode
     Name
 }
 
+public enum RegionOrderMode
+{
+    ReportOrder,
+    Coordinates,
+    IslandName
+}
+
 public sealed record RegionUnitOrder(RegionModel Region, IReadOnlyList<UnitModel> Units);
 
 public interface IUnitNavigationOrderService
