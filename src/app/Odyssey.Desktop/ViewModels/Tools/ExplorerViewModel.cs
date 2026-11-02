@@ -234,8 +234,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
 
         if (!selection.IsRegionSelected())
         {
-            RegionDataBlock selectedRegionBlock = regionModel.Region;
-            if (selection.Item is null || !FindRegionFrom(ref selectedRegionBlock, selection.Item.SourceDataBlock))
+            if (selection.Item is null || selection.Item.LocationId != regionModel.Id)
             {
                 Debug.WriteLine("[EXPLORER] WARNING | Region parent not found for {sel.Item}.");
                 return false;

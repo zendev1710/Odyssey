@@ -11,6 +11,8 @@ public class RegionModel : EntityModel, ILocation
     private int X { get; set; }
     private int Y { get; set; }
     private int Plane { get; }
+    private int _terrain;
+    private int _flags;
 
     int ILocation.X
     {
@@ -29,12 +31,13 @@ public class RegionModel : EntityModel, ILocation
     public int GetY() => Y;
     public int GetPlane() => Plane;
 
-    public int Terrain { get => Region.GetTerrain(); }
-    public int Flags { get => Region.GetFlags(); }
+    public int Terrain => _terrain;
+    public int Flags => _flags;
 
-    public bool IsWithPeople => Region.IsWithPeople();
+    public bool IsWithPeople => (Flags & (int)Flag.REGION_SEEN) != 0;
 
     public string Name { get; private set; } = string.Empty;
+    public string Label { get; private set; } = string.Empty;
 
     public List<BuildingModel> Buildings { get; private set; } = [];
     public List<ShipModel> Ships { get; private set; } = [];
@@ -55,7 +58,20 @@ public class RegionModel : EntityModel, ILocation
 
     public bool IsVisible(out Flag visibilityFlag)
     {
-        return Region.IsVisible(out visibilityFlag);
+        visibilityFlag = Flag.None;
+        if ((Flags & (int)Flag.REGION_SEEN) != 0)
+        {
+            visibilityFlag |= Flag.REGION_SEEN;
+        }
+        else if ((Flags & (int)Flag.TRAVEL) != 0)
+        {
+            visibilityFlag |= Flag.TRAVEL;
+        }
+        else if ((Flags & (int)Flag.LIGHTHOUSE) != 0)
+        {
+            visibilityFlag |= Flag.LIGHTHOUSE;
+        }
+        return visibilityFlag != Flag.None;
     }
 
     public void AddBuilding(in BuildingModel buildingModel)
@@ -70,7 +86,10 @@ public class RegionModel : EntityModel, ILocation
 
     public void CollectData()
     {
-        // Get readable name from the datablock
+        _terrain = Region.GetTerrain();
+        _flags = Region.GetFlags();
+        Label = Region.GetUILabel();
+
         string name = Region.Value(KeyType.NAME);
         if (string.IsNullOrEmpty(name))
         {

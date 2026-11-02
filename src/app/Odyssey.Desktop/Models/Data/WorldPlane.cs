@@ -46,12 +46,11 @@ namespace Odyssey.Models.Data
         {
             Debug.WriteLine($"[DOCUMENT] Add region {regionModel} occupied={isOccupied}");
             regionModel.CollectData();
-            RegionDataBlock? region = regionModel.Region;
-            int planeId = region!.GetId();
+            int planeId = regionModel.GetPlane();
             if (planeId == (int)Type)
             {
-                int x = region.GetX();
-                int y = region.GetY();
+                int x = regionModel.GetX();
+                int y = regionModel.GetY();
                 int regionId = Coordinates.GetId(x, y, (PlaneType)planeId);
                 if (_rectangle.IsEmpty)
                 {
@@ -92,7 +91,7 @@ namespace Odyssey.Models.Data
             }
             else
             {
-                Debug.WriteLine($"[WORLDPLANE] region {region} ({planeId}) must not be added to {Name} !!!");
+                Debug.WriteLine($"[WORLDPLANE] region {regionModel} ({planeId}) must not be added to {Name} !!!");
             }
         }
 

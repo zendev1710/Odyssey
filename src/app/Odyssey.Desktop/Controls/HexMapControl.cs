@@ -614,15 +614,6 @@ public class HexMapControl : Control
             return name;
         }
 
-        if (regionModel.Region is { } region)
-        {
-            name = region.Value(KeyType.NAME);
-            if (string.IsNullOrEmpty(name))
-            {
-                name = region.Value(KeyType.LOWERCASE_NAME);
-            }
-        }
-
         return name ?? string.Empty;
     }
 
@@ -992,11 +983,9 @@ public class HexMapControl : Control
         foreach (var kvp in UnoccupiedRegions)
         {
             var regionModel = kvp.Value;
-            var region = regionModel.Region;
-            var flags = region!.GetFlags();
-
-            var x = region.GetX();
-            var y = region.GetY();
+            var flags = regionModel.Flags;
+            var x = regionModel.GetX();
+            var y = regionModel.GetY();
 
             var center = HexToPixel(x, y, hexSize);
             var hexPoints = GetHexPoints(center, hexSize);
@@ -1012,7 +1001,7 @@ public class HexMapControl : Control
             }
 
             // --- Fill with terrain image ---
-            var terrain = region.GetTerrain();
+            var terrain = regionModel.Terrain;
             var image = GetTerrainImage(terrain);
 
             if (image != null)
@@ -1022,7 +1011,7 @@ public class HexMapControl : Control
                 context.DrawImage(image, new Rect(0, 0, image.Size.Width, image.Size.Height), bounds);
 
                 // If region is unseen, overlay a semi-transparent black to darken
-                if (region.IsVisible(out Flag visibilityFlag))
+                if (regionModel.IsVisible(out Flag visibilityFlag))
                 {
                     /*else if (visibilityFlag == Flag.TRAVEL)
                     {
@@ -1056,7 +1045,7 @@ public class HexMapControl : Control
             {
                 // LATER: add a warning in console. Should not happen
                 //context.DrawGeometry(Brushes.LightGray, null, geometry);
-                Debug.WriteLine($"[HEXMAP-CTRL] unknown astral terrain {terrain} for {region}...");
+                Debug.WriteLine($"[HEXMAP-CTRL] unknown astral terrain {terrain} for {regionModel}...");
             }
 
             RenderBuildingsOnRegion(context, regionModel, center, hexSize);
@@ -1074,11 +1063,9 @@ public class HexMapControl : Control
         foreach (var kvp in OccupiedRegions)
         {
             var regionModel = kvp.Value;
-            var region = regionModel.Region;
-            var flags = region!.GetFlags();
-
-            var x = region.GetX();
-            var y = region.GetY();
+            var flags = regionModel.Flags;
+            var x = regionModel.GetX();
+            var y = regionModel.GetY();
 
             var center = HexToPixel(x, y, hexSize);
             var hexPoints = GetHexPoints(center, hexSize);
@@ -1094,7 +1081,7 @@ public class HexMapControl : Control
             }
 
             // --- Fill with terrain image ---
-            var terrain = region.GetTerrain();
+            var terrain = regionModel.Terrain;
             var image = GetTerrainImage(terrain);
 
             if (image != null)
@@ -1104,7 +1091,7 @@ public class HexMapControl : Control
                 context.DrawImage(image, new Rect(0, 0, image.Size.Width, image.Size.Height), bounds);
 
                 // If region is unseen, overlay a semi-transparent black to darken
-                if (region.IsVisible(out Flag visibilityFlag))
+                if (regionModel.IsVisible(out Flag visibilityFlag))
                 {
                     /*else if (visibilityFlag == Flag.TRAVEL)
                     {
@@ -1138,7 +1125,7 @@ public class HexMapControl : Control
             {
                 // LATER: add a warning in console. Should not happen
                 //context.DrawGeometry(Brushes.LightGray, null, geometry);
-                Debug.WriteLine($"[HEXMAP-CTRL] unknown astral terrain {terrain} for {region}...");
+                Debug.WriteLine($"[HEXMAP-CTRL] unknown astral terrain {terrain} for {regionModel}...");
             }
 
             RenderBuildingsOnRegion(context, regionModel, center, hexSize);
@@ -3250,21 +3237,17 @@ public class HexMapControl : Control
         int key = Coordinates.GetId(q2, r2);
         if (OccupiedRegions.TryGetValue(key, out var populatedRegionModel))
         {
-            var region = populatedRegionModel.Region;
-            var terrain = region!.GetTerrain();
+            var terrain = populatedRegionModel.Terrain;
             if (Terrains.CanBeNamed(terrain))
             {
                 // don't display tooltip if over a region that can not be named (ocean, firewall...)
-                if (!ReferenceEquals(region, _hoveredRegion))
+                if (!ReferenceEquals(populatedRegionModel, _hoveredRegion))
                 {
                     _hoveredRegion = populatedRegionModel;
-                    // Build tooltip text
-                    string tip = region.GetUILabel();
+                    string tip = populatedRegionModel.Label;
                     if (string.IsNullOrEmpty(tip))
                     {
-                        tip = region.Value(KeyType.NAME);
-                        if (string.IsNullOrEmpty(tip))
-                            tip = $"{q2},{r2}";
+                        tip = $"{q2},{r2}";
                     }
                     tip = AppendBuildingsToTooltip(tip, q2, r2);
                     ToolTip.SetTip(this, tip);
@@ -3280,21 +3263,17 @@ public class HexMapControl : Control
 
         if (UnoccupiedRegions.TryGetValue(key, out var emptyRegionModel))
         {
-            var region = emptyRegionModel.Region;
-            var terrain = region!.GetTerrain();
+            var terrain = emptyRegionModel.Terrain;
             if (Terrains.CanBeNamed(terrain))
             {
                 // don't display tooltip if over a region that can not be named (ocean, firewall...)
-                if (!ReferenceEquals(region, _hoveredRegion))
+                if (!ReferenceEquals(emptyRegionModel, _hoveredRegion))
                 {
-                    _hoveredRegion = populatedRegionModel;
-                    // Build tooltip text
-                    string tip = region.GetUILabel();
+                    _hoveredRegion = emptyRegionModel;
+                    string tip = emptyRegionModel.Label;
                     if (string.IsNullOrEmpty(tip))
                     {
-                        tip = region.Value(KeyType.NAME);
-                        if (string.IsNullOrEmpty(tip))
-                            tip = $"{q2},{r2}";
+                        tip = $"{q2},{r2}";
                     }
                     tip = AppendBuildingsToTooltip(tip, q2, r2);
                     ToolTip.SetTip(this, tip);
