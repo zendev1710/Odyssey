@@ -1,10 +1,12 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Odyssey.Core.Services;
 using Odyssey.Models;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Tools;
 using Odyssey.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -32,6 +34,26 @@ namespace Odyssey.ViewModels.Tools
         public UnitsInspectorViewModel() : base()
         {
             StripViewModel = new UnitStripViewModel();
+            ServiceLocator.UnitNavigationOrderService.OrderChanged += OnUnitNavigationOrderChanged;
+        }
+
+        private void OnUnitNavigationOrderChanged(object? sender, EventArgs e)
+        {
+            if (!HasDocument || !ReferenceEquals(ServiceLocator.UnitNavigationOrderService.Report, Report))
+            {
+                return;
+            }
+
+            if (LocatedFaction is not null)
+            {
+                StripViewModel.SetUnits(GetUnitIdsForFaction(LocatedFaction));
+            }
+            else if (CurrentSelection.Region is RegionModel region)
+            {
+                StripViewModel.SetUnits(GetUnitIdsForRegion(region));
+            }
+
+            StripViewModel.RefreshConfirmedStatuses();
         }
 
         protected override void OnActiveDocumentChanged(CRDocument report)
@@ -80,7 +102,7 @@ namespace Odyssey.ViewModels.Tools
             }
 
             RegionModel? region = selectedFaction?.Region ?? selection.Region;
-            RefreshLocatedFactions(region, selectedNode, selectedFaction);
+            RefreshLocatedFactions(region, selectedFaction);
             if (selectedFaction is null && _locatedFactionsInRegion.Count > 0)
             {
                 selectedFaction = _locatedFactionsInRegion[0];
@@ -100,16 +122,12 @@ namespace Odyssey.ViewModels.Tools
             {
                 if (factionChanged)
                 {
-                    if (!TryGetUnitIdsFromExplorer(selectedNode, selectedFaction, out List<int> unitIds))
-                    {
-                        unitIds = GetUnitIdsForFaction(selectedFaction);
-                    }
-                    StripViewModel.SetUnits(unitIds);
+                    StripViewModel.SetUnits(GetUnitIdsForFaction(selectedFaction));
                 }
             }
             else if (region is not null)
             {
-                StripViewModel.SetUnits(Report.GetUnitIdsInRegion(region.Id));
+                StripViewModel.SetUnits(GetUnitIdsForRegion(region));
             }
             else
             {
@@ -158,37 +176,42 @@ namespace Odyssey.ViewModels.Tools
             return null;
         }
 
-        private static bool TryGetUnitIdsFromExplorer(
-            ExplorerNodeViewModel? selectedNode, LocatedFactionModel faction, out List<int> unitIds)
-        {
-            unitIds = [];
-            ExplorerNodeViewModel? regionNode = FindRegionNode(selectedNode);
-            if (regionNode is null || regionNode.Id != faction.Region.Id)
-            {
-                return false;
-            }
-
-            ExplorerNodeViewModel? factionNode = regionNode.Children.FirstOrDefault(node =>
-                node.NodeType == ExplorerNodeViewModel.NodeTypes.FACTION &&
-                node.LocatedFaction is LocatedFactionModel locatedFaction &&
-                IsSameLocatedFaction(locatedFaction, faction));
-            ExplorerNodeViewModel unitsParent = factionNode ?? regionNode;
-
-            unitIds = unitsParent.Children
-                .Where(node => node.NodeType == ExplorerNodeViewModel.NodeTypes.UNIT &&
-                               node.LocatedFaction is LocatedFactionModel locatedFaction &&
-                               IsSameLocatedFaction(locatedFaction, faction))
-                .Select(node => node.Id)
-                .ToList();
-            return factionNode is not null || unitIds.Count > 0;
-        }
-
         private List<int> GetUnitIdsForFaction(LocatedFactionModel faction)
         {
+            IUnitNavigationOrderService order = ServiceLocator.UnitNavigationOrderService;
+            if (ReferenceEquals(order.Report, Report))
+            {
+                RegionUnitOrder? regionOrder = order.OrderedRegions
+                    .FirstOrDefault(region => region.Region.Id == faction.Region.Id);
+                if (regionOrder is not null)
+                {
+                    return regionOrder.Units
+                        .Where(unit => unit.EffectiveFactionId == faction.FactionId)
+                        .Select(unit => unit.Id)
+                        .ToList();
+                }
+            }
+
             return Report.GetUnitIdsInRegion(faction.Region.Id)
                 .Where(unitId => Report.GetUnit(unitId) is UnitModel unit &&
                                    unit.EffectiveFactionId == faction.FactionId)
                 .ToList();
+        }
+
+        private List<int> GetUnitIdsForRegion(RegionModel region)
+        {
+            IUnitNavigationOrderService order = ServiceLocator.UnitNavigationOrderService;
+            if (ReferenceEquals(order.Report, Report))
+            {
+                RegionUnitOrder? regionOrder = order.OrderedRegions
+                    .FirstOrDefault(item => item.Region.Id == region.Id);
+                if (regionOrder is not null)
+                {
+                    return regionOrder.Units.Select(unit => unit.Id).ToList();
+                }
+            }
+
+            return Report.GetUnitIdsInRegion(region.Id).ToList();
         }
 
         [RelayCommand(CanExecute = nameof(CanNavigateToFirstLocatedFaction))]
@@ -222,25 +245,25 @@ namespace Odyssey.ViewModels.Tools
             NavigateToLastLocatedFactionCommand.NotifyCanExecuteChanged();
         }
 
-        private void RefreshLocatedFactions(RegionModel? region, ExplorerNodeViewModel? selectedNode, LocatedFactionModel? selectedFaction)
+        private void RefreshLocatedFactions(RegionModel? region, LocatedFactionModel? selectedFaction)
         {
             _locatedFactionsInRegion.Clear();
             if (region is not null)
             {
-                ExplorerNodeViewModel? regionNode = FindRegionNode(selectedNode);
-                if (regionNode is not null)
+                IUnitNavigationOrderService order = ServiceLocator.UnitNavigationOrderService;
+                RegionUnitOrder? regionOrder = ReferenceEquals(order.Report, Report)
+                    ? order.OrderedRegions.FirstOrDefault(item => item.Region.Id == region.Id)
+                    : null;
+                IEnumerable<UnitModel> units = regionOrder is not null
+                    ? regionOrder.Units
+                    : Report.GetUnitIdsInRegion(region.Id)
+                        .Select(unitId => Report.GetUnit(unitId))
+                        .OfType<UnitModel>();
+                foreach (UnitModel unit in units)
                 {
-                    CollectLocatedFactions(regionNode, region);
-                }
-
-                foreach (int unitId in Report.GetUnitIdsInRegion(region.Id))
-                {
-                    if (Report.GetUnit(unitId) is UnitModel unit)
-                    {
-                        int factionId = unit.EffectiveFactionId;
-                        AddLocatedFactionIfMissing(new LocatedFactionModel(
-                            Report.GetFaction(factionId), region, factionId, Report.GetFactionName(factionId)));
-                    }
+                    int factionId = unit.EffectiveFactionId;
+                    AddLocatedFactionIfMissing(new LocatedFactionModel(
+                        Report.GetFaction(factionId), region, factionId, Report.GetFactionName(factionId)));
                 }
 
                 if (selectedFaction is not null && selectedFaction.Region.Id == region.Id)
@@ -276,11 +299,7 @@ namespace Odyssey.ViewModels.Tools
             LocatedFactionIndex = index;
             StripViewModel.SetOrdersColumnVisible(Report.GetFactionStatus(faction.FactionId) is FactionStatus.ACTIVE or FactionStatus.ALLIED);
             StripViewModel.SetSelectionContext(faction.Region, faction);
-            if (!TryGetUnitIdsFromExplorer(CurrentSelection.Data as ExplorerNodeViewModel, faction, out List<int> unitIds))
-            {
-                unitIds = GetUnitIdsForFaction(faction);
-            }
-            StripViewModel.SetUnits(unitIds);
+            StripViewModel.SetUnits(GetUnitIdsForFaction(faction));
             StripViewModel.SetSelectedUnit(null);
             StripViewModel.RefreshConfirmedStatuses();
             SendSelectionChangedEvent(new EntitySelection(null, faction.Region, locatedFaction: faction));
@@ -294,27 +313,5 @@ namespace Odyssey.ViewModels.Tools
             NotifyFactionNavigationCommands();
         }
 
-        private static ExplorerNodeViewModel? FindRegionNode(ExplorerNodeViewModel? node)
-        {
-            while (node is not null && node.NodeType != ExplorerNodeViewModel.NodeTypes.REGION)
-            {
-                node = node.Parent;
-            }
-
-            return node;
-        }
-
-        private void CollectLocatedFactions(ExplorerNodeViewModel node, RegionModel region)
-        {
-            if (node.LocatedFaction is LocatedFactionModel faction && faction.Region.Id == region.Id)
-            {
-                AddLocatedFactionIfMissing(faction);
-            }
-
-            foreach (ExplorerNodeViewModel child in node.Children)
-            {
-                CollectLocatedFactions(child, region);
-            }
-        }
     }
 }

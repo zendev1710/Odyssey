@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Odyssey.Controls.Buildings;
 using Odyssey.Controls.Ships;
+using Odyssey.Core.Services;
 using Odyssey.Icons;
 using Odyssey.Models;
 using Odyssey.Models.Data;
@@ -25,6 +26,8 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
     private ExplorerNodeViewModel? selectedItem;
 
     private readonly ExplorerNodeViewModel _root;
+    private readonly Dictionary<int, int> _reportUnitOrder = [];
+    private int _nextReportUnitOrder;
 
     /// <summary>
     /// when is true, units of the active faction are grouped together inside a faction node at the top of the factions list;
@@ -84,6 +87,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
 
         _activeFactionGroup = !GlobalSettings.Get<bool>(GlobalSettings.EXPLORER_ACTIVE_FACTION_UNITS_AT_FIRST);
         _expandTreeOnDocumentLoading = GlobalSettings.Get<bool>(GlobalSettings.EXPLORER_EXPAND_TREE_ON_REPORT_OPENING);
+        GlobalSettings.Shared.SettingChanged += OnGlobalSettingChanged;
 
         Items = _root.Children;
 
@@ -111,9 +115,21 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
                             CommandParameter = @"c:\foo\File2.txt"
                         },
                     }
+
                 },
                 */
             ];
+    }
+
+    private void OnGlobalSettingChanged(object? sender, SettingChangedEventArgs e)
+    {
+        if (e.SettingName != GlobalSettings.EXPLORER_UNIT_ORDER || !HasDocument)
+        {
+            return;
+        }
+
+        ApplyUnitOrder(Root);
+        PublishUnitNavigationOrder();
     }
 
     /// <summary>
@@ -453,6 +469,9 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
 
         // Clear tree and build a new one from newly opened document data
         Items.Clear();
+        _reportUnitOrder.Clear();
+        _nextReportUnitOrder = 0;
+        ServiceLocator.UnitNavigationOrderService.SetOrder(Report, []);
 
         if (Report.Planes.Count == 0)
         {
@@ -584,10 +603,14 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
             }
         }
 
+        ApplyUnitOrder(Root);
+
         if (ExpandTreeOnDocumentLoading)
         {
             ExpandAllItems();
         }
+
+        PublishUnitNavigationOrder();
 
         // Force selection of origin region (0,0) to avoid no selection at all when opening a document
         HandleSelection(new EntitySelection(Report, 0, 0, 0));
@@ -599,6 +622,125 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
 
         Debug.WriteLine($"[EXPLORER] regions: {regionsNumber} known: {Report.Planes[0].OccupiedRegions.Count}");
         Debug.WriteLine("[EXPLORER] Data collection done");
+    }
+
+    private void PublishUnitNavigationOrder()
+    {
+        List<RegionUnitOrder> orderedRegions = [];
+        foreach (ExplorerNodeViewModel regionNode in Root.Children)
+        {
+            if (regionNode.NodeType != NodeTypes.REGION ||
+                !Report.Planes[0].OccupiedRegions.TryGetValue(regionNode.Id, out RegionModel? regionModel))
+            {
+                continue;
+            }
+
+            List<UnitModel> orderedUnits = [];
+            CollectOrderedUnits(regionNode, orderedUnits);
+            orderedRegions.Add(new RegionUnitOrder(regionModel, orderedUnits));
+        }
+
+        ServiceLocator.UnitNavigationOrderService.SetOrder(Report, orderedRegions);
+    }
+
+    private void ApplyUnitOrder(ExplorerNodeViewModel parent)
+    {
+        UnitOrderMode orderMode = (UnitOrderMode)GlobalSettings.Get<int>(GlobalSettings.EXPLORER_UNIT_ORDER);
+        ApplyUnitOrder(parent, orderMode);
+    }
+
+    private void ApplyUnitOrder(ExplorerNodeViewModel parent, UnitOrderMode orderMode)
+    {
+        SortUnitRuns(parent, orderMode);
+
+        foreach (ExplorerNodeViewModel child in parent.Children)
+        {
+            ApplyUnitOrder(child, orderMode);
+        }
+    }
+
+    private void SortUnitRuns(ExplorerNodeViewModel parent, UnitOrderMode orderMode)
+    {
+        int index = 0;
+        while (index < parent.Children.Count)
+        {
+            if (parent.Children[index].NodeType != NodeTypes.UNIT)
+            {
+                index++;
+                continue;
+            }
+
+            int runStart = index;
+            while (index < parent.Children.Count && parent.Children[index].NodeType == NodeTypes.UNIT)
+            {
+                index++;
+            }
+
+            if (index - runStart < 2)
+            {
+                continue;
+            }
+
+            List<UnitOrderEntry> entries = [];
+            for (int childIndex = runStart; childIndex < index; childIndex++)
+            {
+                ExplorerNodeViewModel node = parent.Children[childIndex];
+                UnitModel? unit = Report.FindUnit(node.Id, out UnitModel? foundUnit) ? foundUnit : null;
+                entries.Add(new UnitOrderEntry(
+                    node,
+                    unit,
+                    _reportUnitOrder.GetValueOrDefault(node.Id, int.MaxValue),
+                    orderMode == UnitOrderMode.BestSkillLevel ? unit?.GetBestSkillLevel() ?? 0 : 0));
+            }
+
+            entries.Sort((left, right) => CompareUnitOrder(left, right, orderMode));
+            for (int entryIndex = 0; entryIndex < entries.Count; entryIndex++)
+            {
+                int targetIndex = runStart + entryIndex;
+                int currentIndex = parent.Children.IndexOf(entries[entryIndex].Node);
+                if (currentIndex != targetIndex)
+                {
+                    parent.Children.Move(currentIndex, targetIndex);
+                }
+            }
+        }
+    }
+
+    private static int CompareUnitOrder(UnitOrderEntry left, UnitOrderEntry right, UnitOrderMode orderMode)
+    {
+        int comparison = orderMode switch
+        {
+            UnitOrderMode.BestSkillLevel => right.BestSkillLevel.CompareTo(left.BestSkillLevel),
+            UnitOrderMode.Name => StringComparer.CurrentCultureIgnoreCase.Compare(left.Unit?.Name, right.Unit?.Name),
+            _ => 0
+        };
+
+        if (comparison != 0)
+        {
+            return comparison;
+        }
+
+        comparison = left.ReportOrder.CompareTo(right.ReportOrder);
+        return comparison != 0 ? comparison : left.Node.Id.CompareTo(right.Node.Id);
+    }
+
+    private sealed record UnitOrderEntry(
+        ExplorerNodeViewModel Node,
+        UnitModel? Unit,
+        int ReportOrder,
+        int BestSkillLevel);
+
+    private void CollectOrderedUnits(ExplorerNodeViewModel node, List<UnitModel> orderedUnits)
+    {
+        if (node.NodeType == NodeTypes.UNIT && Report.FindUnit(node.Id, out UnitModel? unit) && unit is not null)
+        {
+            orderedUnits.Add(unit);
+        }
+
+        foreach (ExplorerNodeViewModel child in node.Children)
+        {
+            CollectOrderedUnits(child, orderedUnits);
+        }
     }
 
     private void Clear()
@@ -689,6 +831,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
 
     private void AddUnit(ExplorerNodeViewModel parentNode, DataBlock unitBlock, int index, LocatedFactionModel locatedFaction)
     {
+        _reportUnitOrder[unitBlock.GetId()] = _nextReportUnitOrder++;
         string unitlabel = $"{unitBlock.GetUILabel()}: {unitBlock.ValueInt(KeyType.NUMBER)}";
         BelongsToStatus status = BelongsToStatus.None;
         if (unitBlock.HasKey(KeyType.BUILDING))

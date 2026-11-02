@@ -8,6 +8,7 @@ public static class ServiceLocator
     public static IDocumentService DocumentService { get; private set; } = new DocumentService();
     //public static ISelectionService SelectionService { get; private set; } = default!;
     public static IEntitySelectionService EntitySelectionService { get; private set; } = new EntitySelectionService();
+    public static IUnitNavigationOrderService UnitNavigationOrderService { get; private set; } = new UnitNavigationOrderService();
 
     public static void Initialize()
     {
@@ -15,5 +16,6 @@ public static class ServiceLocator
         DocumentService = new DocumentService();
         //SelectionService = new SelectionService();
         EntitySelectionService = new EntitySelectionService();
+        UnitNavigationOrderService = new UnitNavigationOrderService();
     }
 }

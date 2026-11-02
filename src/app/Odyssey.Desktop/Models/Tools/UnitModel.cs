@@ -1,6 +1,7 @@
 ﻿using Odyssey.Models.Data;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Odyssey.Models.Documents;
 using static Odyssey.Utils.Converters;
 using Odyssey.Models.Localization;
@@ -38,7 +39,10 @@ public class UnitModel : EntityModel
     private bool _areSkillsCollected;
     private bool _isContainerDataCollected;
     private bool _hasFactionId;
+    private bool _commandsCollected;
+    private bool _hasCommandBlock;
     private DataProperty? _containerProperty;
+    private IReadOnlyList<string> _commands = Array.Empty<string>();
 
     private DataBlock? Items { get; set; }
     private DataBlock? Skills { get; set; }
@@ -48,6 +52,7 @@ public class UnitModel : EntityModel
     // UNIT PROPERTIES
     public string Name { get; private set; } = string.Empty;
     public string Description { get; private set; } = string.Empty;
+    public int BestSkillLevel { get; private set; }
     public int FactionId { get; private set; } = -1;
     public int EffectiveFactionId => IsTraitor
         ? (int)SpecialFaction.TRAITOR
@@ -106,9 +111,40 @@ public class UnitModel : EntityModel
 
     public bool IsConfirmed { get; private set; }
 
+    public bool TryGetCommands(out IReadOnlyList<string> commands)
+    {
+        if (!_commandsCollected)
+        {
+            CollectCommands();
+        }
+
+        commands = _commands;
+        return _hasCommandBlock;
+    }
+
     internal void SetConfirmedStatus(bool isConfirmed)
     {
         IsConfirmed = isConfirmed;
+    }
+
+    private void CollectCommands()
+    {
+        _commandsCollected = true;
+        DataBlock? commandBlock = null;
+        if (!CRDocument.GetSeenCommands(ref commandBlock, SourceDataBlock) || commandBlock is null)
+        {
+            return;
+        }
+
+        _hasCommandBlock = true;
+        if (commandBlock.GetAttachment() is OrdersAttachment attachment)
+        {
+            _commands = attachment.Commands.ToArray();
+        }
+        else
+        {
+            _commands = commandBlock.GetData().Select(data => data.GetValue()).ToArray();
+        }
     }
 
     public UnitModel(DataBlock unitDataBlock, int locationId): base(unitDataBlock, locationId)
@@ -409,6 +445,7 @@ public class UnitModel : EntityModel
                     string skillLabel = Labels.Localize(Categories.Skill, skillName, [skillLevel]);
                     int change = skillKey.GetValueInt(2);
                     _skillsProperties.Add(new DataProperty(Categories.Skill, skillName, skillLevel, skillLabel, change: change));
+                    BestSkillLevel = Math.Max(BestSkillLevel, value);
                     if (RidingSkill == 0 && skillName == Strings.DE_RIDING)
                     {
                         RidingSkill = value;
@@ -419,6 +456,13 @@ public class UnitModel : EntityModel
         }
         skillsProperties = _skillsProperties;
         return _skillsProperties.Count > 0;
+    }
+
+    public int GetBestSkillLevel()
+    {
+        List<DataProperty> skillsProperties = _skillsProperties;
+        CollectSkills(ref skillsProperties);
+        return BestSkillLevel;
     }
     
     /// <summary>

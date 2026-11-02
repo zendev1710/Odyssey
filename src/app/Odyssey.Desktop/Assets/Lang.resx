@@ -1818,6 +1818,21 @@
   <data name="parm_hdr_explorer_active_faction_units_at_top" xml:space="preserve">
     <value>Active faction units at top</value>
   </data>
+  <data name="parm_hdr_explorer_unit_order" xml:space="preserve">
+    <value>Unit order</value>
+  </data>
+  <data name="parm_inf_explorer_unit_order" xml:space="preserve">
+    <value>Order units in the Explorer and use the same order for unit navigation.</value>
+  </data>
+  <data name="parm_key_explorer_unit_order_report" xml:space="preserve">
+    <value>Report order</value>
+  </data>
+  <data name="parm_key_explorer_unit_order_skill" xml:space="preserve">
+    <value>Best skill level</value>
+  </data>
+  <data name="parm_key_explorer_unit_order_name" xml:space="preserve">
+    <value>Name</value>
+  </data>
   <data name="parm_hdr_explorer_expand_tree_on_load" xml:space="preserve">
     <value>Expand Explorer tree when report document is opened</value>
   </data>

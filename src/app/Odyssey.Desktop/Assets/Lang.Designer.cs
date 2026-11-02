@@ -3274,6 +3274,15 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unit order.
+        /// </summary>
+        public static string parm_hdr_explorer_unit_order {
+            get {
+                return ResourceManager.GetString("parm_hdr_explorer_unit_order", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to In-progress features hidden.
         /// </summary>
         public static string parm_hdr_features_hide_in_progress {
@@ -3462,6 +3471,15 @@ namespace Odyssey.Assets {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Order units in the Explorer and use the same order for unit navigation..
+        /// </summary>
+        public static string parm_inf_explorer_unit_order {
+            get {
+                return ResourceManager.GetString("parm_inf_explorer_unit_order", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Hide in-progress features (taken into accoun after app restart).
         /// </summary>
@@ -3669,6 +3687,33 @@ namespace Odyssey.Assets {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string parm_key_explorer_unit_order_name {
+            get {
+                return ResourceManager.GetString("parm_key_explorer_unit_order_name", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Report order.
+        /// </summary>
+        public static string parm_key_explorer_unit_order_report {
+            get {
+                return ResourceManager.GetString("parm_key_explorer_unit_order_report", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Best skill level.
+        /// </summary>
+        public static string parm_key_explorer_unit_order_skill {
+            get {
+                return ResourceManager.GetString("parm_key_explorer_unit_order_skill", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to English.
         /// </summary>

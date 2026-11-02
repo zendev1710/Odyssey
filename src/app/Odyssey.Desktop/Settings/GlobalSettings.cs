@@ -12,6 +12,7 @@ using ConfigFactory.Core;
 using ConfigFactory.Core.Attributes;
 using Odyssey.Controls.Buildings;
 using Odyssey.Controls.Ships;
+using Odyssey.Core.Services;
 using Odyssey.Models.Localization;
 
 namespace Odyssey.Settings;
@@ -69,6 +70,7 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
     public const string ICON_ASSET_FORMAT = "IconAssetFormatModeSetting";
     public const string EXPLORER_ACTIVE_FACTION_UNITS_AT_FIRST = "ActiveFactionUnitsAtTop";
     public const string EXPLORER_EXPAND_TREE_ON_REPORT_OPENING = "ExpandTreeOnReportOpening";
+    public const string EXPLORER_UNIT_ORDER = "ExplorerUnitOrder";
     public const string EXPLORER_SELECT_LAST_ACTIVE_REGION_ON_REPORT_OPENING = "SelectLastActiveRegionOnReportOpening";
     public const string MAP_USE_SEASON_IMAGES = "UseSeasonImages";
     public const string MAP_SHOW_BUILDINGS = "ShowBuildings";
@@ -174,6 +176,18 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
     Category = "parm_cat_views",
     Group = "parm_grp_explorer")]
     private bool _activeFactionUnitsAtTop = false;
+
+    [ObservableProperty]
+    [property: DropdownConfig(
+        RuntimeItemsSourceMethodName = "GetExplorerUnitOrderModes",
+        DisplayMemberPath = "Key",
+        SelectedValuePath = "Value")]
+    [property: Config(
+        Header = "parm_hdr_explorer_unit_order",
+        Description = "parm_inf_explorer_unit_order",
+        Category = "parm_cat_views",
+        Group = "parm_grp_explorer")]
+    private int _explorerUnitOrder = (int)UnitOrderMode.ReportOrder;
 
     // whether additional images depending on current season are used in Map
     [ObservableProperty]
@@ -346,6 +360,17 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
             new("parm_key_theme_mode_light", (int)Core.Theme.ApplicationThemeMode.Light),
             new("parm_key_theme_mode_dark", (int)Core.Theme.ApplicationThemeMode.Dark),
         }).Select(x => new KeyValuePair<string, int>(Translate(x.Key), x.Value));
+
+        return new(options);
+    }
+
+    public ObservableCollection<KeyValuePair<string, int>> GetExplorerUnitOrderModes()
+    {
+        var options = new KeyValuePair<string, int>[] {
+            new("parm_key_explorer_unit_order_report", (int)UnitOrderMode.ReportOrder),
+            new("parm_key_explorer_unit_order_skill", (int)UnitOrderMode.BestSkillLevel),
+            new("parm_key_explorer_unit_order_name", (int)UnitOrderMode.Name),
+        }.Select(x => new KeyValuePair<string, int>(Translate(x.Key), x.Value));
 
         return new(options);
     }

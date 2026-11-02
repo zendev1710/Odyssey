@@ -1,6 +1,8 @@
 ﻿using AvaloniaEdit.Document;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Odyssey.Core.Services;
+using Odyssey.Models;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Tools;
@@ -231,67 +233,7 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
             return;
         }
         Debug.WriteLine("[VM-ORDERS--] Selecting previous unit...");
-        DataBlock? start = null;
-        IEntitySelection selection = CurrentSelection;
-        if (selection.HasUnit())
-        {
-            start = selection.Item!.SourceDataBlock;
-        }
-        else if (selection.IsRegionSelected())
-        {
-            start = selection.Region!.SourceDataBlock;
-        }
-        if (start == null)
-        {
-            return;
-        }
-
-        bool wrap = IsWrapModeEnabled;
-        DataBlock? unit = null;
-        DataBlock? firstBlock = Report.FirstBlock!.Value;
-        DataBlock? lastBlock = Report.LastBlock!.Value;
-        DataBlock? startBlock = start.GetPreviousBlock();
-        DataBlock? block = startBlock;
-        while (wrap || block != firstBlock)
-        {
-            if (block == firstBlock)
-            {
-                // first block reached
-                if (!wrap)
-                {
-                    break;
-                }
-                wrap = false;
-                block = lastBlock;
-            }
-            if (block == start)
-            {
-                // There is only one unit to edit
-                break;
-            }
-            if (block.GetBlockType() != BlockType.UNIT)
-            {
-                block = block.GetPreviousBlock();
-                continue;
-            }
-            // search command block
-            if (!Report.IsConfirmed(block))
-            {
-                unit = block;
-                break;
-            }
-            block = block.GetPreviousBlock();
-        }
-
-        if (unit != null)
-        {
-            if (Report.FindUnit(unit.GetId(), out UnitModel? unitModel))
-            {
-                IEntitySelection newSelection = new EntitySelection(unitModel, null, null);
-                OnEditableUnitSelected(newSelection, SelectionChangeTypes.Unit);
-                SendSelectionChangedEvent(newSelection);
-            }
-        }
+        SelectUnit(FindAdjacentUnit(next: false));
     }
 
     [RelayCommand(CanExecute = nameof(CanToggleConfirmedStatus))]
@@ -309,64 +251,119 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
             return;
         }
         Debug.WriteLine("[VM-ORDERS--] Selecting next unit...");
-        DataBlock? start = null;
+        SelectUnit(FindAdjacentUnit(next: true));
+    }
+
+    private UnitModel? FindAdjacentUnit(bool next)
+    {
+        IUnitNavigationOrderService order = ServiceLocator.UnitNavigationOrderService;
+        if (!ReferenceEquals(order.Report, Report))
+        {
+            return null;
+        }
+
         IEntitySelection selection = CurrentSelection;
-        if (selection.HasUnit())
+        IReadOnlyList<UnitModel> orderedUnits = order.OrderedUnits;
+        if (selection.Item is UnitModel selectedUnit)
         {
-            start = selection.Item!.SourceDataBlock;
+            int currentIndex = -1;
+            for (int i = 0; i < orderedUnits.Count; i++)
+            {
+                if (orderedUnits[i].Id == selectedUnit.Id)
+                {
+                    currentIndex = i;
+                    break;
+                }
+            }
+
+            if (currentIndex >= 0)
+            {
+                for (int distance = 1; distance < orderedUnits.Count; distance++)
+                {
+                    int candidateIndex = currentIndex + (next ? distance : -distance);
+                    if (IsWrapModeEnabled)
+                    {
+                        candidateIndex = (candidateIndex % orderedUnits.Count + orderedUnits.Count) % orderedUnits.Count;
+                    }
+                    else if (candidateIndex < 0 || candidateIndex >= orderedUnits.Count)
+                    {
+                        break;
+                    }
+
+                    UnitModel candidate = orderedUnits[candidateIndex];
+                    if (!IsUnitConfirmed(candidate))
+                    {
+                        return candidate;
+                    }
+                }
+                return null;
+            }
         }
-        else if (selection.IsRegionSelected())
+
+        if (selection.Region is not RegionModel selectedRegion)
         {
-            start = selection.Region!.SourceDataBlock;
+            return null;
         }
-        if (start == null)
+
+        IReadOnlyList<RegionUnitOrder> orderedRegions = order.OrderedRegions;
+        int selectedRegionIndex = -1;
+        for (int i = 0; i < orderedRegions.Count; i++)
+        {
+            if (orderedRegions[i].Region.Id == selectedRegion.Id)
+            {
+                selectedRegionIndex = i;
+                break;
+            }
+        }
+        if (selectedRegionIndex < 0 || orderedRegions.Count == 0)
+        {
+            return null;
+        }
+
+        for (int distance = 0; distance < orderedRegions.Count; distance++)
+        {
+            int regionIndex = next
+                ? selectedRegionIndex + distance
+                : selectedRegionIndex - distance - 1;
+            if (IsWrapModeEnabled)
+            {
+                regionIndex = (regionIndex % orderedRegions.Count + orderedRegions.Count) % orderedRegions.Count;
+            }
+            else if (regionIndex < 0 || regionIndex >= orderedRegions.Count)
+            {
+                break;
+            }
+
+            IReadOnlyList<UnitModel> regionUnits = orderedRegions[regionIndex].Units;
+            for (int i = 0; i < regionUnits.Count; i++)
+            {
+                int unitIndex = next ? i : regionUnits.Count - i - 1;
+                UnitModel candidate = regionUnits[unitIndex];
+                if (!IsUnitConfirmed(candidate))
+                {
+                    return candidate;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private bool IsUnitConfirmed(UnitModel unit)
+    {
+        return !Report.IsActiveFaction(unit.FactionId) || unit.IsConfirmed;
+    }
+
+    private void SelectUnit(UnitModel? unitModel)
+    {
+        if (unitModel is null)
         {
             return;
         }
-        bool wrap = IsWrapModeEnabled;
-        DataBlock? unit = null;
-        DataBlock firstBlock = Report.FirstBlock?.Value!;
-        DataBlock? startBlock = start.GetNextBlock();
-        for (DataBlock? block = startBlock; wrap || block != null; block = block.GetNextBlock())
-        {
-            if (block == null)
-            {
-                // last block reached
-                if (!wrap)
-                {
-                    break;
-                }
-                wrap = false;
-                block = firstBlock;
-            }
 
-            if (block == start)
-            {
-                // There is only one unit to edit
-                break;
-            }
-
-            if (block.GetBlockType() != BlockType.UNIT)
-            {
-                continue;
-            }
-            // search command block
-            if (!Report.IsConfirmed(block))
-            {
-                unit = block;
-                break;
-            }
-        }
-
-        if (unit != null)
-        {
-            if (Report.FindUnit(unit.GetId(), out UnitModel? unitModel))
-            {
-                IEntitySelection newSelection = new EntitySelection(unitModel, null, null);
-                OnEditableUnitSelected(newSelection, SelectionChangeTypes.Unit);
-                SendSelectionChangedEvent(newSelection);
-            }
-        }
+        IEntitySelection newSelection = new EntitySelection(unitModel, null, null);
+        OnEditableUnitSelected(newSelection, SelectionChangeTypes.Unit);
+        SendSelectionChangedEvent(newSelection);
     }
 
     private bool CanToggleConfirmedStatus()
@@ -390,30 +387,16 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
     /// <summary>
     /// Load unit orders lines, and returns them as a concatenated string.
     /// </summary>
-    /// <param name="commandBlock">DataBlock embedding the orders</param>
+    /// <param name="commands">The unit's command lines</param>
     /// <returns>All the orders lines as a concatenated string.</returns>
-    private static string LoadCommands(in DataBlock commandBlock)
+    private static string LoadCommands(IReadOnlyList<string> commands)
     {
         Debug.WriteLine("[VM-ORDERS--] Load Commands -> BEGIN");
         StringBuilder textBuilder = new();
-        OrdersAttachment? cmds = commandBlock.GetAttachment() as OrdersAttachment;
-        if (cmds != null)
+        foreach (string command in commands)
         {
-            // TODO: hide original commands
-            //hideKeys = true;
-            foreach (var cmd in cmds.Commands)
-            {
-                textBuilder.Append(cmd);
-                textBuilder.Append(Environment.NewLine);
-            }
-        }
-        else
-        {
-            foreach (var data in commandBlock.GetData())
-            {
-                textBuilder.Append(data.GetValue());
-                textBuilder.Append(Environment.NewLine);
-            }
+            textBuilder.Append(command);
+            textBuilder.Append(Environment.NewLine);
         }
         Debug.WriteLine("[VM-ORDERS--] Load Commands -> ENDED");
         return textBuilder.ToString();
@@ -468,10 +451,9 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         IEntitySelection selection = CurrentSelection;
         if (selection.HasUnit())
         {
-            DataBlock block = selection.Item!.SourceDataBlock;
-            if (Report.IsActiveFaction(block.ValueInt(KeyType.FACTION)))
+            if (selection.Item is UnitModel unitModel && Report.IsActiveFaction(unitModel.FactionId))
             {
-                return block.ValueInt(KeyType.ORDERS_CONFIRMED);
+                return unitModel.IsConfirmed ? 1 : 0;
             }
             return -1;
         }
@@ -544,15 +526,11 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
 
 
         // Only a selected unit is handled for orders
-        DataBlock unit = unitModel.SourceDataBlock;
-
-        // TODO: check unit it's not null
-        unitName = unit.GetUILabel();
-        CurrentUnitId = unit.GetStringId();
-        DataBlock? cmdBlock = null;
-        if (GetSeenCommands(ref cmdBlock, unit!))
+        unitName = unitModel.DisplayLabel;
+        CurrentUnitId = unitModel.StringId;
+        if (unitModel.TryGetCommands(out IReadOnlyList<string> unitCommands))
         {
-            if (Report.TryGetEditedCommands(unit.GetId(), out IReadOnlyList<string> editedCommands))
+            if (Report.TryGetEditedCommands(unitModel.Id, out IReadOnlyList<string> editedCommands))
             {
                 orders = string.Join(Environment.NewLine, editedCommands);
                 if (editedCommands.Count > 0)
@@ -562,11 +540,11 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
             }
             else
             {
-                orders = LoadCommands(cmdBlock!);
+                orders = LoadCommands(unitCommands);
             }
             editable = true;
-            isConfirmed = Report.IsConfirmed(unit);
-            _activeEditableUnitId = unit.GetId();
+            isConfirmed = unitModel.IsConfirmed;
+            _activeEditableUnitId = unitModel.Id;
         }
         else
         {
