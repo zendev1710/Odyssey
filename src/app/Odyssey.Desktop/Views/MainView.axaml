@@ -31,6 +31,7 @@
 		<StreamGeometry x:Key="FactionIconPath">m8.5 6c.82843 0 1.5.67157 1.5 1.5 0 1.11608-.45897 2.01027-1.21215 2.6148-.74127.595-1.73477.8852-2.78785.8852s-2.04658-.2902-2.78785-.8852c-.75318-.60453-1.21215-1.49872-1.21215-2.6148 0-.77966118.59487668-1.42044457 1.3555213-1.49313306l.1444587-.00686694zm-2.5-5c1.10457 0 2 .89543 2 2s-.89543 2-2 2-2-.89543-2-2 .89543-2 2-2z</StreamGeometry>
 		<StreamGeometry x:Key="CalendarDayIconPath">M17.75 3A3.25 3.25 0 0 1 21 6.25v11.5A3.25 3.25 0 0 1 17.75 21H6.25A3.25 3.25 0 0 1 3 17.75V6.25A3.25 3.25 0 0 1 6.25 3h11.5Zm-1.5 8h-8.5a.75.75 0 0 0-.743.648L7 11.75v4.5c0 .38.282.694.648.743L7.75 17h8.5a.75.75 0 0 0 .743-.648L17 16.25v-4.5a.75.75 0 0 0-.648-.743L16.25 11Zm-.75 1.5v3h-7v-3h7Zm.75-5.25h-8.5a.75.75 0 0 0 0 1.5h8.5a.75.75 0 0 0 0-1.5Z</StreamGeometry>
 		<StreamGeometry x:Key="FileIconPath">M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z</StreamGeometry>
+		<StreamGeometry x:Key="UnconfirmedOrdersIconPath">M5,2 L19,2 L19,4 L13,12 L19,20 L19,22 L5,22 L5,20 L11,12 L5,4 Z</StreamGeometry>
 		<StreamGeometry x:Key="StarIconPath">M10,1 L12,7 H18 L13,11 L15,17 L10,13 L5,17 L7,11 L2,7 H8 Z</StreamGeometry>
 		<StreamGeometry x:Key="ChevronLeftIcon">M14,4 L8,10 L14,16</StreamGeometry>
 		<StreamGeometry x:Key="PrevBookmarkStarArrowIcon">M10,2 L11,6 H15 L12,8 L13,12 L10,10 L7,12 L8,8 L5,6 H9 Z M5,15 L10,15 M10,15 L7,12 M10,15 L7,18</StreamGeometry>
@@ -415,10 +416,9 @@
 		<DockControl x:Name="DockControl" Layout="{Binding Layout}" Margin="4" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
 		<!-- Bottom status bar -->
 		<Panel x:Name="StatusBar" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" >
-			<Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto,Auto" IsVisible="{Binding HasDocument}" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-				<!--TODO - add orders completed status to the left (number of units to confirm / total number of units which need orders for faction)-->
+			<Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto,Auto,Auto,Auto" IsVisible="{Binding HasDocument}" HorizontalAlignment="Stretch" VerticalAlignment="Center">
 				<!-- BOOKMARKS PANEL -->
-				<StackPanel Orientation="Horizontal" Grid.Column="0" VerticalAlignment="Center" DataContext="{Binding BookmarksViewModel}" IsVisible="{Binding HasDocument}">
+				<StackPanel Orientation="Horizontal" Grid.Column="1" VerticalAlignment="Center" DataContext="{Binding BookmarksViewModel}" IsVisible="{Binding HasDocument}">
 					<!-- Star Fluent icon Button that can be yellow in light mode or red in dark mode (current selection is a bookmark), or empty (is not a bookmark) -->
 					<Grid Width="24" Height="24" Margin="5,0,0,0" VerticalAlignment="Center">
 						<!-- IsStarred only reflects the bookmark state of the current selection:
@@ -477,18 +477,22 @@
 						</Canvas>
 					</Button>
 				</StackPanel>
-				<!-- faction icon / faction name / game date / game turn / report name -->
-				<PathIcon HorizontalAlignment="Right" Grid.Column="1" Width="18" Height="18" Opacity="0.6" Data="{StaticResource FactionIconPath}" Margin="5,0,0,0"/>
-				<TextBlock HorizontalAlignment="Right" Grid.Column="2" Text="{Binding FactionName}" ToolTip.Tip="{x:Static a:Lang.active_faction_tip}" Margin="5,0,0,0"/>
-				<StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="3" ToolTip.Tip="{x:Static a:Lang.game_date_info_tip}" Margin="5,0,0,0" >
-					<PathIcon Width="18" Height="18" Opacity="0.6" Data="{StaticResource CalendarDayIconPath}" Margin="5,0,0,0"/>
-					<TextBlock Text="{Binding GameDate}" Margin="5,0,0,0"/>
-					<TextBlock Text="{Binding GameTurn}" Margin="5,0,0,0"/>
+				<StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="8,0,0,0" ToolTip.Tip="{Binding UnconfirmedOrdersTooltip}">
+					<PathIcon Width="18" Height="18" Data="{StaticResource UnconfirmedOrdersIconPath}" />
+					<TextBlock Text="{Binding UnconfirmedOrdersCount}" Margin="4,0,0,0" VerticalAlignment="Center" />
 				</StackPanel>
-				<PathIcon Grid.Column="4" Width="18" Height="18" Opacity="0.6" Data="{StaticResource FileIconPath}" HorizontalAlignment="Right" Margin="5,0,0,0"/>
+				<!-- faction icon / faction name / game date / game turn / report name -->
+				<PathIcon HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="3" Width="18" Height="18" Opacity="0.6" Data="{StaticResource FactionIconPath}" Margin="5,0,0,0"/>
+				<TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="4" Text="{Binding FactionName}" ToolTip.Tip="{x:Static a:Lang.active_faction_tip}" Margin="5,0,0,0"/>
+				<StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Grid.Column="5" ToolTip.Tip="{x:Static a:Lang.game_date_info_tip}" Margin="5,0,0,0" >
+					<PathIcon Width="18" Height="18" VerticalAlignment="Center" Opacity="0.6" Data="{StaticResource CalendarDayIconPath}" Margin="5,0,0,0"/>
+					<TextBlock Text="{Binding GameDate}" VerticalAlignment="Center" Margin="5,0,0,0"/>
+					<TextBlock Text="{Binding GameTurn}" VerticalAlignment="Center" Margin="5,0,0,0"/>
+				</StackPanel>
+				<PathIcon Grid.Column="6" Width="18" Height="18" VerticalAlignment="Center" Opacity="0.6" Data="{StaticResource FileIconPath}" HorizontalAlignment="Right" Margin="5,0,0,0"/>
 				<!-- TODO : Tip with the full pathname -->
 				<!-- combobox with recently/last loaded reports (having reportname as label and pathname as data -->
-				<TextBlock Grid.Column="5" Text="{Binding ReportName}" HorizontalAlignment="Right" Margin="5,0,0,0"/>
+				<TextBlock Grid.Column="7" Text="{Binding ReportName}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,0,0,0"/>
 			</Grid>
 		</Panel>
 	</Grid>

@@ -1854,6 +1854,12 @@
   <data name="parm_inf_unit_orders_navigate_editable_only" xml:space="preserve">
     <value>Précédent/Suivant ignore les unités sans bloc d'ordres éditable. Activé par défaut.</value>
   </data>
+  <data name="parm_hdr_unit_orders_navigate_unconfirmed_only" xml:space="preserve">
+    <value>Naviguer uniquement vers les unités avec des ordres non confirmés</value>
+  </data>
+  <data name="parm_inf_unit_orders_navigate_unconfirmed_only" xml:space="preserve">
+    <value>Activé, Précédent/Suivant ignore les unités dont les ordres sont confirmés. Désactivé par défaut.</value>
+  </data>
   <data name="parm_hdr_explorer_expand_tree_on_load" xml:space="preserve">
     <value>Déplier tous les éléments de l'Explorateur à l'ouverture du document</value>
   </data>
@@ -2239,16 +2245,25 @@
     <value>Suivant</value>
   </data>
   <data name="btn_previous_unit_tip" xml:space="preserve">
-    <value>Accéder à l'unité précédente avec ordres non confirmés</value>
+    <value>Accéder à l'unité précédente</value>
   </data>
   <data name="btn_next_unit_tip" xml:space="preserve">
-    <value>Accéder à l'unité suivante avec ordres  non confirmés</value>
+    <value>Accéder à l'unité suivante</value>
   </data>
   <data name="opt_confirmed_orders" xml:space="preserve">
     <value>Confirmés</value>
   </data>
   <data name="opt_confirmed_orders_tip" xml:space="preserve">
     <value>Bascule le statut confirmés/non confirmés des ordres de l'unité</value>
+  </data>
+  <data name="opt_navigate_unconfirmed_only" xml:space="preserve">
+    <value>Ordres non confirmés uniquement</value>
+  </data>
+  <data name="opt_navigate_unconfirmed_only_tip" xml:space="preserve">
+    <value>Ordres non confirmés uniquement : Précédent/Suivant navigue uniquement vers les unités dont les ordres ne sont pas confirmés.</value>
+  </data>
+  <data name="statusbar_orders_left_tip" xml:space="preserve">
+    <value>Il reste {0} ordres non confirmés.</value>
   </data>
   <data name="emapdetailspanel_node_ocean" xml:space="preserve">
     <value>Océan ({0},{1})</value>

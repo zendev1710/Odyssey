@@ -65,10 +65,15 @@ public class CRDocument : EresseaDocument, ILocationResolver
 
     private readonly List<BattleModel> _battles = [];
 
+    public event EventHandler? OrderConfirmationChanged;
+
     public bool IsActiveFaction(int id)
     {
         return ActiveFactions.ContainsKey(id);
     }
+
+    public int UnconfirmedOrdersCount => Units.Values.Count(unit =>
+        IsActiveFaction(unit.FactionId) && unit.HasEditableOrders && unit.OrdersConfirmed == false);
 
     public FactionStatus GetFactionStatus(int id)
     {
@@ -214,6 +219,7 @@ public class CRDocument : EresseaDocument, ILocationResolver
             throw new InvalidOperationException($"Unit {unitId} does not have editable orders.");
         }
 
+        bool confirmationChanged = unit.OrdersConfirmed != isConfirmed;
         unit.SetOrdersConfirmedStatus(isConfirmed);
         if (unit.SavedOrdersConfirmedStatus == isConfirmed)
         {
@@ -224,6 +230,10 @@ public class CRDocument : EresseaDocument, ILocationResolver
             _editedUnitConfirmationStatuses[unitId] = isConfirmed;
         }
         SetModified(HasEditedOrderData);
+        if (confirmationChanged)
+        {
+            OrderConfirmationChanged?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     public void CommitEditedOrderChanges()
@@ -2202,6 +2212,11 @@ m_blocks.push_back(*old_r);
         }
 
         ResolveUnitShipLinks();
+
+        foreach (UnitModel unit in Units.Values)
+        {
+            unit.SetIsActiveFaction(IsActiveFaction(unit.FactionId));
+        }
 
         // Just to check data consuming optimization is ok
         if (OptimizeDataConsuming) {

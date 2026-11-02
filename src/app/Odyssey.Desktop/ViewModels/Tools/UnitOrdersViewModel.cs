@@ -10,6 +10,7 @@ using Odyssey.TextMate;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,7 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
 
     // Ajoutez cette propriété dans UnitOrdersViewModel
     public ObservableCollection<UnitItemViewModel> InventoryItems { get; } = new();
+    public GlobalSettings Settings => GlobalSettings.Shared;
 
     private static int FreeTempUnitNumber { get; set; } = 1;
 
@@ -68,6 +70,8 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         // when enabled, next/previous unit commands traverse the explorer view in circular mode, i.e.
         // the previous of the first editable unit is the last matching one, the next of the last editable unit is the first matching one
         IsWrapModeEnabled = true;
+        Settings.PropertyChanged += OnGlobalSettingsPropertyChanged;
+        ServiceLocator.UnitNavigationOrderService.OrderChanged += OnUnitNavigationOrderChanged;
         Document = new TextDocument { Text = "" };
         CanEditOrders = false;
         Reset();
@@ -102,10 +106,32 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         if (_editedReport is not null)
         {
             _editedReport.ModifiedChanged -= OnReportModifiedChanged;
+            _editedReport.OrderConfirmationChanged -= OnOrderConfirmationChanged;
         }
         _editedReport = report;
         _editedReport.ModifiedChanged += OnReportModifiedChanged;
+        _editedReport.OrderConfirmationChanged += OnOrderConfirmationChanged;
         IsModified = report.HasEditedOrderData;
+        NotifyNavigationCommandsCanExecuteChanged();
+    }
+
+    private void OnGlobalSettingsPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(GlobalSettings.NavigateOnlyToEditableUnits) ||
+            e.PropertyName == nameof(GlobalSettings.NavigateOnlyToUnconfirmedOrders))
+        {
+            NotifyNavigationCommandsCanExecuteChanged();
+        }
+    }
+
+    private void OnUnitNavigationOrderChanged(object? sender, EventArgs e)
+    {
+        NotifyNavigationCommandsCanExecuteChanged();
+    }
+
+    private void OnOrderConfirmationChanged(object? sender, EventArgs e)
+    {
+        NotifyNavigationCommandsCanExecuteChanged();
     }
 
     private void OnReportModifiedChanged(object? sender, EventArgs args)
@@ -276,6 +302,7 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         }
 
         bool editableOnly = GlobalSettings.Get<bool>(GlobalSettings.UNIT_ORDERS_NAVIGATE_EDITABLE_ONLY);
+        bool unconfirmedOnly = GlobalSettings.Get<bool>(GlobalSettings.UNIT_ORDERS_NAVIGATE_UNCONFIRMED_ONLY);
         IEntitySelection selection = CurrentSelection;
         IReadOnlyList<UnitModel> orderedUnits = order.OrderedUnits;
         if (selection.Item is UnitModel selectedUnit)
@@ -305,7 +332,7 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
                     }
 
                     UnitModel candidate = orderedUnits[candidateIndex];
-                    if (IsNavigableUnit(candidate, editableOnly))
+                    if (IsNavigableUnit(candidate, editableOnly, unconfirmedOnly))
                     {
                         return candidate;
                     }
@@ -353,7 +380,7 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
             {
                 int unitIndex = next ? i : regionUnits.Count - i - 1;
                 UnitModel candidate = regionUnits[unitIndex];
-                if (IsNavigableUnit(candidate, editableOnly))
+                if (IsNavigableUnit(candidate, editableOnly, unconfirmedOnly))
                 {
                     return candidate;
                 }
@@ -363,16 +390,13 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         return null;
     }
 
-    private bool IsUnitConfirmed(UnitModel unit)
+    private bool IsNavigableUnit(UnitModel unit, bool editableOnly, bool unconfirmedOnly)
     {
-        return !Report.IsActiveFaction(unit.FactionId) ||
-               (unit.HasEditableOrders && unit.OrdersConfirmed == true);
-    }
-
-    private bool IsNavigableUnit(UnitModel unit, bool editableOnly)
-    {
-        return !IsUnitConfirmed(unit) &&
-               (!editableOnly || unit.TryGetCommands(out _));
+        bool isActiveFaction = Report.IsActiveFaction(unit.FactionId);
+        bool hasEditableOrders = unit.HasEditableOrders;
+        return isActiveFaction &&
+               (!editableOnly || hasEditableOrders) &&
+               (!unconfirmedOnly || (hasEditableOrders && unit.OrdersConfirmed == false));
     }
 
     private void SelectUnit(UnitModel? unitModel)
@@ -394,11 +418,17 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
     }
     private bool CanSelectPreviousUnit()
     {
-        return Report.HasData();
+        return Report.HasData() && FindAdjacentUnit(next: false) is not null;
     }
     private bool CanSelectNextUnit()
     {
-        return Report.HasData();
+        return Report.HasData() && FindAdjacentUnit(next: true) is not null;
+    }
+
+    private void NotifyNavigationCommandsCanExecuteChanged()
+    {
+        SelectPreviousUnitCommand.NotifyCanExecuteChanged();
+        SelectNextUnitCommand.NotifyCanExecuteChanged();
     }
     private void NotifyUnitConfirmedStatusHasChanged()
     {

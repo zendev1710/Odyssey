@@ -169,7 +169,7 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Navigate to the next unit with unconfirmed orders.
+        ///   Looks up a localized string similar to Navigate to the next unit.
         /// </summary>
         public static string btn_next_unit_tip {
             get {
@@ -187,7 +187,7 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Navigate to the previous unit with unconfirmed orders.
+        ///   Looks up a localized string similar to Navigate to the previous unit.
         /// </summary>
         public static string btn_previous_unit_tip {
             get {
@@ -3130,6 +3130,24 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unconfirmed only.
+        /// </summary>
+        public static string opt_navigate_unconfirmed_only {
+            get {
+                return ResourceManager.GetString("opt_navigate_unconfirmed_only", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Unconfirmed only: when enabled, Previous/Next navigates only to units with unconfirmed orders..
+        /// </summary>
+        public static string opt_navigate_unconfirmed_only_tip {
+            get {
+                return ResourceManager.GetString("opt_navigate_unconfirmed_only_tip", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string parm_btn_cancel {
@@ -3454,6 +3472,15 @@ namespace Odyssey.Assets {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Navigate only to units with unconfirmed orders.
+        /// </summary>
+        public static string parm_hdr_unit_orders_navigate_unconfirmed_only {
+            get {
+                return ResourceManager.GetString("parm_hdr_unit_orders_navigate_unconfirmed_only", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Select the ECheck program executable file.
         /// </summary>
         public static string parm_inf_echeck_program {
@@ -3666,6 +3693,15 @@ namespace Odyssey.Assets {
         public static string parm_inf_unit_orders_navigate_editable_only {
             get {
                 return ResourceManager.GetString("parm_inf_unit_orders_navigate_editable_only", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to When enabled, Previous/Next skips units whose orders are confirmed. Disabled by default..
+        /// </summary>
+        public static string parm_inf_unit_orders_navigate_unconfirmed_only {
+            get {
+                return ResourceManager.GetString("parm_inf_unit_orders_navigate_unconfirmed_only", resourceCulture);
             }
         }
 
@@ -8920,6 +8956,15 @@ namespace Odyssey.Assets {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Left: {0} unconfirmed orders..
+        /// </summary>
+        public static string statusbar_orders_left_tip {
+            get {
+                return ResourceManager.GetString("statusbar_orders_left_tip", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Taxes income.
         /// </summary>

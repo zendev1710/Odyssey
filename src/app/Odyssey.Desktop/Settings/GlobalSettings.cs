@@ -73,6 +73,7 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
     public const string EXPLORER_UNIT_ORDER = "ExplorerUnitOrder";
     public const string EXPLORER_REGION_ORDER = "ExplorerRegionOrder";
     public const string UNIT_ORDERS_NAVIGATE_EDITABLE_ONLY = "NavigateOnlyToEditableUnits";
+    public const string UNIT_ORDERS_NAVIGATE_UNCONFIRMED_ONLY = "NavigateOnlyToUnconfirmedOrders";
     public const string EXPLORER_SELECT_LAST_ACTIVE_REGION_ON_REPORT_OPENING = "SelectLastActiveRegionOnReportOpening";
     public const string MAP_USE_SEASON_IMAGES = "UseSeasonImages";
     public const string MAP_SHOW_BUILDINGS = "ShowBuildings";
@@ -210,6 +211,14 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
         Category = "parm_cat_views",
         Group = "parm_grp_explorer")]
     private bool _navigateOnlyToEditableUnits = true;
+
+    [ObservableProperty]
+    [property: Config(
+        Header = "parm_hdr_unit_orders_navigate_unconfirmed_only",
+        Description = "parm_inf_unit_orders_navigate_unconfirmed_only",
+        Category = "parm_cat_views",
+        Group = "parm_grp_explorer")]
+    private bool _navigateOnlyToUnconfirmedOrders = false;
 
     // whether additional images depending on current season are used in Map
     [ObservableProperty]

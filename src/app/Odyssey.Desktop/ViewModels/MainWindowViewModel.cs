@@ -14,6 +14,7 @@ using Dock.Model.Core.Events;
 using Dock.Serializer;
 using Odyssey.Controls.Ships;
 using Odyssey.Core.Services;
+using Odyssey.Assets;
 using Odyssey.Extensions;
 using Odyssey.Messages;
 using Odyssey.Models.Dal;
@@ -60,6 +61,13 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
 
     [ObservableProperty]
     private bool _hasDocument;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(UnconfirmedOrdersTooltip))]
+    private int _unconfirmedOrdersCount;
+
+    public string UnconfirmedOrdersTooltip =>
+        string.Format(Lang.statusbar_orders_left_tip, UnconfirmedOrdersCount);
 
     [ObservableProperty]
     private string? _gameTurn;
@@ -611,9 +619,11 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
         if (_modifiedDocument is not null)
         {
             _modifiedDocument.ModifiedChanged -= OnDocumentModifiedChanged;
+            _modifiedDocument.OrderConfirmationChanged -= OnOrderConfirmationChanged;
         }
         _modifiedDocument = report;
         _modifiedDocument.ModifiedChanged += OnDocumentModifiedChanged;
+        _modifiedDocument.OrderConfirmationChanged += OnOrderConfirmationChanged;
         SaveFileCommand.NotifyCanExecuteChanged();
         OnActiveReportDocumentChanged(report);
     }
@@ -621,6 +631,14 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
     private void OnDocumentModifiedChanged(object? sender, EventArgs args)
     {
         SaveFileCommand.NotifyCanExecuteChanged();
+    }
+
+    private void OnOrderConfirmationChanged(object? sender, EventArgs args)
+    {
+        if (sender is CRDocument report)
+        {
+            UnconfirmedOrdersCount = report.UnconfirmedOrdersCount;
+        }
     }
 
     private void OnSelectionChanged(IEntitySelection selection, SelectionChangeTypes selType, object? sender)
@@ -1620,6 +1638,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
     private void CollectGlobalReportInformation(CRDocument report)
     {
         HasDocument = report.HasData();
+        UnconfirmedOrdersCount = report.UnconfirmedOrdersCount;
         FactionName = report.GetActiveFactionName();
         ReportName = HasDocument ? report.Name : string.Empty;
 

@@ -1854,6 +1854,12 @@
   <data name="parm_inf_unit_orders_navigate_editable_only" xml:space="preserve">
     <value>Previous/Next skips units without an editable orders block. Enabled by default.</value>
   </data>
+  <data name="parm_hdr_unit_orders_navigate_unconfirmed_only" xml:space="preserve">
+    <value>Navigate only to units with unconfirmed orders</value>
+  </data>
+  <data name="parm_inf_unit_orders_navigate_unconfirmed_only" xml:space="preserve">
+    <value>When enabled, Previous/Next skips units whose orders are confirmed. Disabled by default.</value>
+  </data>
   <data name="parm_hdr_explorer_expand_tree_on_load" xml:space="preserve">
     <value>Expand Explorer tree when report document is opened</value>
   </data>
@@ -2239,16 +2245,25 @@
     <value>Next</value>
   </data>
   <data name="btn_previous_unit_tip" xml:space="preserve">
-    <value>Navigate to the previous unit with unconfirmed orders</value>
+    <value>Navigate to the previous unit</value>
   </data>
   <data name="btn_next_unit_tip" xml:space="preserve">
-    <value>Navigate to the next unit with unconfirmed orders</value>
+    <value>Navigate to the next unit</value>
   </data>
   <data name="opt_confirmed_orders" xml:space="preserve">
     <value>Confirmed</value>
   </data>
   <data name="opt_confirmed_orders_tip" xml:space="preserve">
     <value>Toggle confirmed/unconfirmed status of unit orders</value>
+  </data>
+  <data name="opt_navigate_unconfirmed_only" xml:space="preserve">
+    <value>Unconfirmed only</value>
+  </data>
+  <data name="opt_navigate_unconfirmed_only_tip" xml:space="preserve">
+    <value>Unconfirmed only: when enabled, Previous/Next navigates only to units with unconfirmed orders.</value>
+  </data>
+  <data name="statusbar_orders_left_tip" xml:space="preserve">
+    <value>Left: {0} unconfirmed orders.</value>
   </data>
   <data name="emapdetailspanel_node_ocean" xml:space="preserve">
     <value>Ocean ({0},{1})</value>

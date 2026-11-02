@@ -1854,6 +1854,12 @@
   <data name="parm_inf_unit_orders_navigate_editable_only" xml:space="preserve">
     <value>Vorherige/Nächste überspringt Einheiten ohne bearbeitbaren Befehlsblock. Standardmäßig aktiviert.</value>
   </data>
+  <data name="parm_hdr_unit_orders_navigate_unconfirmed_only" xml:space="preserve">
+    <value>Nur zu Einheiten mit unbestätigten Befehlen navigieren</value>
+  </data>
+  <data name="parm_inf_unit_orders_navigate_unconfirmed_only" xml:space="preserve">
+    <value>Wenn aktiviert, überspringt Vorherige/Nächste Einheiten mit bestätigten Befehlen. Standardmäßig deaktiviert.</value>
+  </data>
   <data name="parm_hdr_explorer_expand_tree_on_load" xml:space="preserve">
     <value>Expand Explorer tree when report document is opened [DE]</value>
   </data>
@@ -2239,16 +2245,25 @@
     <value>Nächste</value>
   </data>
   <data name="btn_previous_unit_tip" xml:space="preserve">
-    <value>Navigieren Sie zur vorherigen Einheit mit unbestätigten Bestellungen</value>
+    <value>Zur vorherigen Einheit navigieren</value>
   </data>
   <data name="btn_next_unit_tip" xml:space="preserve">
-    <value>Navigieren Sie zur nächsten Einheit mit unbestätigten Bestellungen</value>
+    <value>Zur nächsten Einheit navigieren</value>
   </data>
   <data name="opt_confirmed_orders" xml:space="preserve">
     <value>Bestätigt</value>
   </data>
   <data name="opt_confirmed_orders_tip" xml:space="preserve">
     <value>Bestätigten/unbestätigten status von einheitenbestellungen umschalten</value>
+  </data>
+  <data name="opt_navigate_unconfirmed_only" xml:space="preserve">
+    <value>Nur unbestätigte</value>
+  </data>
+  <data name="opt_navigate_unconfirmed_only_tip" xml:space="preserve">
+    <value>Nur unbestätigte: Vorherige/Nächste navigiert nur zu Einheiten mit unbestätigten Befehlen.</value>
+  </data>
+  <data name="statusbar_orders_left_tip" xml:space="preserve">
+    <value>Noch {0} unbestätigte Befehle offen.</value>
   </data>
   <data name="emapdetailspanel_node_ocean" xml:space="preserve">
     <value>Ozean ({0},{1})</value>

@@ -13,6 +13,11 @@
              x:DataType="vmt:UnitOrdersViewModel"
 			 x:CompileBindings="True"
 		>
+        <UserControl.Resources>
+            <StreamGeometry x:Key="PreviousUnitIcon">M20,10 L20,14 L7.83,14 L13.42,19.59 L12,21 L3,12 L12,3 L13.41,4.41 L7.83,10 Z</StreamGeometry>
+            <StreamGeometry x:Key="NextUnitIcon">M4,10 L16.17,10 L10.58,4.41 L12,3 L21,12 L12,21 L10.59,19.59 L16.17,14 L4,14 Z</StreamGeometry>
+            <StreamGeometry x:Key="UnconfirmedOnlyIcon">M3,4 L21,4 L14,12 L14,19 L10,21 L10,12 Z</StreamGeometry>
+        </UserControl.Resources>
 		<Grid Name="UnitOrders" Focusable="True" IsVisible="true" RowDefinitions="Auto,*,Auto" ColumnDefinitions="*,Auto">
 			<StackPanel Grid.Row="0" Orientation="Horizontal"
                     Spacing="5"
@@ -80,13 +85,16 @@
 			</Grid.ColumnDefinitions>
 			<StackPanel Grid.Column="0" Margin="5,0,2,2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
 				<CheckBox IsChecked="{Binding IsConfirmed, Mode=TwoWay}" IsEnabled="{Binding CanEditOrders}" Command="{Binding ToggleConfirmedStatusCommand}" Content="{x:Static a:Lang.opt_confirmed_orders}" ToolTip.Tip="{x:Static a:Lang.opt_confirmed_orders_tip}" Margin="5 0 10 0" FontSize="12" />
-				<Button Content="{x:Static a:Lang.btn_previous_unit}" ToolTip.Tip="{x:Static a:Lang.btn_previous_unit_tip}" Margin="5 0 0 0" FontSize="12" Command="{Binding SelectPreviousUnitCommand}" />
-				<Button Content="{x:Static a:Lang.btn_next_unit}" ToolTip.Tip="{x:Static a:Lang.btn_next_unit_tip}" Margin="5 0 0 0" FontSize="12" Command="{Binding SelectNextUnitCommand}" />
+                <Button ToolTip.Tip="{x:Static a:Lang.btn_previous_unit_tip}" AutomationProperties.Name="{x:Static a:Lang.btn_previous_unit}" Margin="5,0,0,0" Padding="6" Command="{Binding SelectPreviousUnitCommand}">
+                    <PathIcon Data="{StaticResource PreviousUnitIcon}" Width="16" Height="16" />
+                </Button>
+                <Button ToolTip.Tip="{x:Static a:Lang.btn_next_unit_tip}" AutomationProperties.Name="{x:Static a:Lang.btn_next_unit}" Margin="5,0,0,0" Padding="6" Command="{Binding SelectNextUnitCommand}">
+                    <PathIcon Data="{StaticResource NextUnitIcon}" Width="16" Height="16" />
+                </Button>
+                <ToggleButton IsChecked="{Binding Settings.NavigateOnlyToUnconfirmedOrders, Mode=TwoWay}" ToolTip.Tip="{x:Static a:Lang.opt_navigate_unconfirmed_only_tip}" AutomationProperties.Name="{x:Static a:Lang.opt_navigate_unconfirmed_only}" Margin="5,0,0,0" Padding="6">
+                    <PathIcon Data="{StaticResource UnconfirmedOnlyIcon}" Width="16" Height="16" />
+                </ToggleButton>
 			</StackPanel>
-			<!--StackPanel Grid.Column="2" Margin="5,0,2,2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" -->
-				<!--TextBlock Name="StatusText" Text="Ready" Margin="5 0 0 0" FontSize="12" /-->
-				<!--TextBlock Name="StatusUnitName" Text="{Binding UnitName}" Margin="5 0 0 0" FontSize="12" /-->
-			<!--/StackPanel-->
 		</Grid>
         <Border Name="ConfirmationIndicator" Grid.RowSpan="3" Grid.ColumnSpan="2" BorderThickness="0" IsHitTestVisible="False" />
 	</Grid>

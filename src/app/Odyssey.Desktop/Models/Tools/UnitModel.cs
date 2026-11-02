@@ -42,6 +42,7 @@ public class UnitModel : EntityModel
     private bool _commandsCollected;
     private bool _commandBlockAvailabilityChecked;
     private bool _hasCommandBlock;
+    private bool _isActiveFaction;
     private bool _ordersConfirmed;
     private bool _savedOrdersConfirmedStatus;
     private DataProperty? _containerProperty;
@@ -122,8 +123,13 @@ public class UnitModel : EntityModel
                 _hasCommandBlock = CRDocument.GetSeenCommands(ref commandBlock, SourceDataBlock) && commandBlock is not null;
                 _commandBlockAvailabilityChecked = true;
             }
-            return _hasCommandBlock;
+            return _isActiveFaction && _hasCommandBlock;
         }
+    }
+
+    internal void SetIsActiveFaction(bool isActiveFaction)
+    {
+        _isActiveFaction = isActiveFaction;
     }
 
     public bool? OrdersConfirmed => HasEditableOrders ? _ordersConfirmed : null;
