@@ -151,6 +151,16 @@ namespace Odyssey.Models.Dal
         /// <returns>true if saving was successfull; otherwise false</returns>
         public static bool Save(string pathname, CRDocument cr, MapType mapFilter, HashSet<DataBlock> selection)
         {
+            return SaveCore(pathname, cr, mapFilter, selection, useEditedCommands: false);
+        }
+
+        public static bool SaveWithCommandEdits(string pathname, CRDocument cr, MapType mapFilter, HashSet<DataBlock> selection)
+        {
+            return SaveCore(pathname, cr, mapFilter, selection, useEditedCommands: true);
+        }
+
+        private static bool SaveCore(string pathname, CRDocument cr, MapType mapFilter, HashSet<DataBlock> selection, bool useEditedCommands)
+        {
             if (string.IsNullOrEmpty(pathname))
             {
                 return false;
@@ -159,6 +169,8 @@ namespace Odyssey.Models.Dal
             int maxDepth = 0;
             bool inTranslationBlock = false;
             string terrainName = string.Empty;
+            int currentUnitId = 0;
+            int currentUnitDepth = -1;
             try
             {
                 // open text file for writing
@@ -172,6 +184,16 @@ namespace Odyssey.Models.Dal
                     {
                         // GAME -1 prevent
                         continue;
+                    }
+                    if (currentUnitDepth >= 0 && block.GetDepth() <= currentUnitDepth)
+                    {
+                        currentUnitId = 0;
+                        currentUnitDepth = -1;
+                    }
+                    if (blockType == BlockType.UNIT)
+                    {
+                        currentUnitId = block.GetId();
+                        currentUnitDepth = block.GetDepth();
                     }
                     if (maxDepth > 0)
                     {
@@ -286,13 +308,21 @@ namespace Odyssey.Models.Dal
                     }
                     else if (blockType == BlockType.COMMANDS)
                     {
-                        // commands are stored in attachment for the active faction(s)
-                        OrdersAttachment? cmds = block.GetAttachment() as OrdersAttachment;
-                        if (cmds?.Commands.Count > 0)
+                        IReadOnlyList<string>? commandsToWrite = null;
+                        if (useEditedCommands && currentUnitId > 0 && cr.TryGetEditedCommands(currentUnitId, out IReadOnlyList<string> editedCommands))
+                        {
+                            commandsToWrite = editedCommands;
+                        }
+                        else if (block.GetAttachment() is OrdersAttachment cmds && cmds.Commands.Count > 0)
+                        {
+                            commandsToWrite = cmds.Commands;
+                        }
+
+                        if (commandsToWrite is not null)
                         {
                             // hide original commands as they are present here in the attachment data
                             hideKeys = true;
-                            foreach (var cmd in cmds.Commands)
+                            foreach (var cmd in commandsToWrite)
                             {
                                 writer.Write('"');
                                 string value = cmd;

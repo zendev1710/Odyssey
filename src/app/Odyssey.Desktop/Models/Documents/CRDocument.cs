@@ -60,6 +60,7 @@ public class CRDocument : EresseaDocument, ILocationResolver
     // active factions (could be more than one in case of alliances).
     // An active faction is a faction for which the player has units (and can set commands for them) in the current report.
     private readonly Dictionary<int, FactionModel> ActiveFactions = [];
+    private readonly Dictionary<int, IReadOnlyList<string>> _editedCommands = [];
 
     private readonly List<BattleModel> _battles = [];
 
@@ -178,6 +179,27 @@ public class CRDocument : EresseaDocument, ILocationResolver
     public Dictionary<int, WorldPlane> Planes { get; private set; } = [];
     private Dictionary<int, FactionModel> Factions { get; set; } = [];
     public int Turn { get; private set; } = -1;
+
+    public bool HasEditedCommands => _editedCommands.Count > 0;
+
+    public bool TryGetEditedCommands(int unitId, out IReadOnlyList<string> commands)
+    {
+        return _editedCommands.TryGetValue(unitId, out commands!);
+    }
+
+    public void SetEditedCommands(int unitId, IEnumerable<string> commands)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(unitId);
+        ArgumentNullException.ThrowIfNull(commands);
+
+        _editedCommands[unitId] = commands.ToArray();
+        SetModified(true);
+    }
+
+    public void ClearEditedCommands()
+    {
+        _editedCommands.Clear();
+    }
 
     public OrdersDocument OrdersDocument { get; private set; }
 

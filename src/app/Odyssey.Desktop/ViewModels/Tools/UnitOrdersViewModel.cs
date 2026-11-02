@@ -34,6 +34,9 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
     /// is loaded. Used to not recompute the context data when navigating inside the same region.
     /// </summary>
     private int _contextRegionKey = -1;
+    private int? _activeEditableUnitId;
+    private bool _isLoadingOrders;
+    private CRDocument? _editedReport;
 
     [ObservableProperty]
     private bool _isModified;
@@ -78,7 +81,11 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         Document.TextChanged += (sender, args) =>
         {
             RecalculateInventoryProjections();
-            // IsModified = true;
+            if (!_isLoadingOrders && CanEditOrders && _activeEditableUnitId is int unitId)
+            {
+                Report.SetEditedCommands(unitId, GetCommandLines(Document.Text));
+                IsModified = true;
+            }
         };
     }
 
@@ -89,6 +96,19 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         // The context data has to be collected again from the new document.
         _contextRegionKey = -1;
         UnitsInRegion.Clear();
+        _activeEditableUnitId = null;
+        if (_editedReport is not null)
+        {
+            _editedReport.ModifiedChanged -= OnReportModifiedChanged;
+        }
+        _editedReport = report;
+        _editedReport.ModifiedChanged += OnReportModifiedChanged;
+        IsModified = report.HasEditedCommands;
+    }
+
+    private void OnReportModifiedChanged(object? sender, EventArgs args)
+    {
+        IsModified = _editedReport?.HasEditedCommands ?? false;
     }
 
     // <summary>
@@ -179,10 +199,18 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
     /// </summary>
     public void OnMakeTempUnitRequested()
     {
-        MakeTempUnitSnippet = CreateMakeTempUnitOrder();
-        // TODO
-        // PublishMessageEvent(MessageType type, MessageId id, ref readonly object? data)
-        // Send a command (notify event ?) to append the "snippet" in text editor area
+        if (!CanEditOrders || _activeEditableUnitId is null)
+        {
+            return;
+        }
+
+        string snippet = CreateMakeTempUnitOrder();
+        MakeTempUnitSnippet = snippet;
+        if (Document.TextLength > 0 && !Document.Text.EndsWith('\n'))
+        {
+            Document.Insert(Document.TextLength, Environment.NewLine);
+        }
+        Document.Insert(Document.TextLength, snippet);
     }
 
     private void HandleSelection(IEntitySelection selection, SelectionChangeTypes selType)
@@ -391,6 +419,16 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         return textBuilder.ToString();
     }
 
+    private static string[] GetCommandLines(string text)
+    {
+        string[] lines = text.Replace("\r\n", "\n", StringComparison.Ordinal).Split('\n');
+        if (lines.Length > 0 && lines[^1].Length == 0)
+        {
+            Array.Resize(ref lines, lines.Length - 1);
+        }
+        return lines;
+    }
+
     private static string GetFreeTemp()
     {
         return ToStringVal(FreeTempUnitNumber++);
@@ -461,7 +499,15 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
     private void SetOrders(string content)
     {
         Debug.WriteLine($"set orders to {content}...");
-        Document.Text = content;
+        _isLoadingOrders = true;
+        try
+        {
+            Document.Text = content;
+        }
+        finally
+        {
+            _isLoadingOrders = false;
+        }
     }
 
     private void OnEditableUnitSelected(IEntitySelection selection, SelectionChangeTypes selType)
@@ -479,6 +525,7 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
 
         if (!unitSelected)
         {
+            _activeEditableUnitId = null;
             CanEditOrders = false;
             IsConfirmed = false;
             CurrentUnitId = string.Empty;
@@ -505,9 +552,25 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         DataBlock? cmdBlock = null;
         if (GetSeenCommands(ref cmdBlock, unit!))
         {
-            orders = LoadCommands(cmdBlock!);
+            if (Report.TryGetEditedCommands(unit.GetId(), out IReadOnlyList<string> editedCommands))
+            {
+                orders = string.Join(Environment.NewLine, editedCommands);
+                if (editedCommands.Count > 0)
+                {
+                    orders += Environment.NewLine;
+                }
+            }
+            else
+            {
+                orders = LoadCommands(cmdBlock!);
+            }
             editable = true;
             isConfirmed = Report.IsConfirmed(unit);
+            _activeEditableUnitId = unit.GetId();
+        }
+        else
+        {
+            _activeEditableUnitId = null;
         }
 
         // Collecter les items

@@ -2,6 +2,7 @@
 using Odyssey.Models.Data;
 using Odyssey.Models.Localization;
 using Odyssey.Settings;
+using System;
 using System.Diagnostics;
 
 namespace Odyssey.Models.Documents
@@ -22,6 +23,8 @@ namespace Odyssey.Models.Documents
         /// Returns true if the document has been modified; otherwise, false.
         /// </summary>
         public bool IsModified { get; protected set; }
+
+        public event EventHandler? ModifiedChanged;
 
         /// <summary>
         /// Returns true if document is read only; otherwise false.
@@ -52,7 +55,13 @@ namespace Odyssey.Models.Documents
                 return ;
             }
 
+            if (IsModified == isModified)
+            {
+                return;
+            }
+
             IsModified = isModified;
+            ModifiedChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

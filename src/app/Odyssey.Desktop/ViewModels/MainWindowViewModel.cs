@@ -152,6 +152,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
 
     private readonly IFactory _factory;
     private readonly IDocumentService _activeDocumentService;
+    private CRDocument? _modifiedDocument;
 
     private readonly IEntitySelectionService _selectionService;
     private IRootDock? _layout;
@@ -561,28 +562,42 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
         return reader.CurrentEncoding;
     }
 
-    private static void SaveFileViewModel(FileViewModel fileViewModel)
+    private static bool SaveFileViewModel(FileViewModel fileViewModel)
     {
         DocumentType docType = fileViewModel.DocumentType;
         string path = fileViewModel.Path;
-        CRDocument doc = (fileViewModel.Document as CRDocument)!;
+        CRDocument? doc = fileViewModel.Document as CRDocument;
+        if (doc is null)
+        {
+            return false;
+        }
 
+        bool saved;
         switch (docType)
         {
             case DocumentType.ERESSEA_REPORT:
             case DocumentType.ERESSEA_REPORT_FROM_ZIP:
-                ReportFileService.Save(path, doc, MapType.FULL, []);
+                saved = ReportFileService.SaveWithCommandEdits(path, doc, MapType.FULL, []);
+                if (saved)
+                {
+                    doc.ClearEditedCommands();
+                    doc.SetModified(false);
+                }
                 break;
             case DocumentType.ERESSEA_ORDERS:
                 //OrdersFileService.Save(path, doc, MapType.FULL, []);
+                saved = false;
                 break;
             case DocumentType.TXT:
                 //TxtFileService.Save(path, doc, MapType.FULL, []);
+                saved = false;
                 break;
             default:
                 Debug.WriteLine($"[MAINWINDOW] WARNING | SaveFileViewModel - Unable to save file of type {fileViewModel.DocumentType}!");
+                saved = false;
                 break;
         }
+        return saved;
     }
 
     private void CollectPlanes()
@@ -593,7 +608,19 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
 
     private void OnActiveDocumentChanged(CRDocument report)
     {
+        if (_modifiedDocument is not null)
+        {
+            _modifiedDocument.ModifiedChanged -= OnDocumentModifiedChanged;
+        }
+        _modifiedDocument = report;
+        _modifiedDocument.ModifiedChanged += OnDocumentModifiedChanged;
+        SaveFileCommand.NotifyCanExecuteChanged();
         OnActiveReportDocumentChanged(report);
+    }
+
+    private void OnDocumentModifiedChanged(object? sender, EventArgs args)
+    {
+        SaveFileCommand.NotifyCanExecuteChanged();
     }
 
     private void OnSelectionChanged(IEntitySelection selection, SelectionChangeTypes selType, object? sender)
@@ -676,7 +703,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
         var files = _factory.GetDockable<IDocumentDock>(DockFactory.DocumentDockId);
         fileViewModel = files?.ActiveDockable as FileViewModel;
         bool hasActive = fileViewModel is not null;
-        isModified = hasActive ? fileViewModel!.IsModified : false;
+        isModified = hasActive ? fileViewModel!.IsDocumentModified() : false;
         return hasActive;
     }
 
