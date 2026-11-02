@@ -133,7 +133,7 @@ public partial class UnitViewModel : ObservableObject
             vm.IsConfirmed = unit.IsConfirmed;
             vm.PeopleNumber = unit.PeopleNumber;
             vm.Model = unit;
-            FactionStatus factionStatus = doc.GetFactionStatus(CRDocument.GetFactionIdForUnit(unit.SourceDataBlock));
+            FactionStatus factionStatus = doc.GetFactionStatus(unit.EffectiveFactionId);
             vm.AreSkillsVisible = factionStatus is FactionStatus.ACTIVE or FactionStatus.ALLIED;
             vm.FactionStatusBrush = CreateFactionStatusBrush(factionStatus);
             vm.FactionStatusBackground = CreateFactionStatusBackground(factionStatus);

@@ -154,7 +154,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         {
             return FindImmediateTreeItem(Root, regionModel.Id);
         }
-        return FindTreeItem(Root, item.SourceDataBlock.GetId());
+        return FindTreeItem(Root, item.Id);
     }
 
     private static ExplorerNodeViewModel? FindFactionNode(ExplorerNodeViewModel regionNode, LocatedFactionModel locatedFaction)
@@ -281,7 +281,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         {
             // selection.Item can be null for a region-only selection: FindTreeItem then returns
             // null and the region node is selected instead (see fallback below).
-            int itemId = selection.Item?.SourceDataBlock.GetId() ?? -1;
+            int itemId = selection.Item?.Id ?? -1;
             ExplorerNodeViewModel? item = FindTreeItem(regionNodeViewModel, itemId);
 
             // Container nodes (buildings/ships lists) have no id: find the matching child node.

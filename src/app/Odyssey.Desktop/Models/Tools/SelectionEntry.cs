@@ -12,7 +12,7 @@ namespace Odyssey.Models.Tools
         {
             Label = sel.HasFaction() && !sel.HasUnit() && sel.LocatedFaction is not null
                 ? $"{sel.LocatedFaction.Name} @ {sel.LocatedFaction.Region.Name}"
-                : sel.Item?.SourceDataBlock.GetUILabel() ?? string.Empty;
+                : sel.Item?.DisplayLabel ?? string.Empty;
             Selection = CopyOf(sel);
         }
 

@@ -40,7 +40,7 @@ public abstract class StructureModel : EntityModel
         OwnerId = ownerUnit.Id;
         OwnerName = !string.IsNullOrEmpty(ownerUnit.Name)
             ? ownerUnit.Name
-            : ownerUnit.SourceDataBlock.GetUIName();
+            : ownerUnit.DisplayName;
     }
 
     public string OwnerName { get; private set; } = string.Empty;
@@ -152,7 +152,7 @@ public abstract class StructureModel : EntityModel
             {
                 OwnerName = !string.IsNullOrEmpty(OwnerUnit.Name)
                     ? OwnerUnit.Name
-                    : OwnerUnit.SourceDataBlock.GetUIName();
+                    : OwnerUnit.DisplayName;
             }
             return true;
         }

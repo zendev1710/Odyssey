@@ -109,7 +109,7 @@ public class ShipModel: StructureModel
     {
         if (TryResolveOwnerUnit(report, out UnitModel? ownerUnit) && ownerUnit is not null)
         {
-            OwnerFactionId = CRDocument.GetFactionIdForUnit(ownerUnit.SourceDataBlock);
+            OwnerFactionId = ownerUnit.EffectiveFactionId;
             return;
         }
 

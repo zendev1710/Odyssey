@@ -147,7 +147,7 @@ public partial class UnitDetailsViewModel : ViewModelBase
             return;
         }
 
-        AreSkillsVisible = Report.GetFactionStatus(CRDocument.GetFactionIdForUnit(unitModel.SourceDataBlock)) is FactionStatus.ACTIVE or FactionStatus.ALLIED;
+        AreSkillsVisible = Report.GetFactionStatus(unitModel.EffectiveFactionId) is FactionStatus.ACTIVE or FactionStatus.ALLIED;
 
         string factionName = string.Empty;
         string otherFactionName = string.Empty;
@@ -271,12 +271,10 @@ public partial class UnitDetailsViewModel : ViewModelBase
         if (unitModel.FamiliarMageId > 0)
         {
             isFamiliar = true;
-            DataBlock? mage = null;
-            if (Report.FindUnit(unitModel.FamiliarMageId, out UnitModel? mageModel))
+            if (Report.FindUnit(unitModel.FamiliarMageId, out UnitModel? mageModel) && mageModel is not null)
             {
-                mage = mageModel!.SourceDataBlock;
-                string mageName = mage!.Value(KeyType.NAME);
-                string id = IdToString(unitModel.FamiliarMageId);
+                string mageName = mageModel.Name;
+                string id = mageModel.EncodedId;
                 string familiarMageName = $"{mageName} ({id})";
                 string familiarLabel = Labels.Localize(Categories.None, Labels.FAMILIAR_INFO, [familiarMageName]);
                 familiarProperty = new DataProperty(Categories.None, Labels.FAMILIAR_INFO, familiarMageName, familiarLabel, string.Empty, mageModel);
@@ -607,7 +605,7 @@ public partial class UnitDetailsViewModel : ViewModelBase
         OtherFactionName = otherFactionName;
         MageNameIfFamiliar = mageNameIfFamiliar;
 
-        Description = unitModel.SourceDataBlock.Value(KeyType.DESCRIPTION);
+        Description = unitModel.Description;
 
         /*
         // TODO: what about the folowing ?

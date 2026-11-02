@@ -37,6 +37,7 @@ public class UnitModel : EntityModel
     private bool _areItemsCollected;
     private bool _areSkillsCollected;
     private bool _isContainerDataCollected;
+    private bool _hasFactionId;
     private DataProperty? _containerProperty;
 
     private DataBlock? Items { get; set; }
@@ -46,7 +47,13 @@ public class UnitModel : EntityModel
     public SortedDictionary<int, DataBlock> CombatSpells { get; private set; } = [];
     // UNIT PROPERTIES
     public string Name { get; private set; } = string.Empty;
+    public string Description { get; private set; } = string.Empty;
     public int FactionId { get; private set; } = -1;
+    public int EffectiveFactionId => IsTraitor
+        ? (int)SpecialFaction.TRAITOR
+        : _hasFactionId
+            ? FactionId
+            : (int)SpecialFaction.ANONYMOUS;
     public int OtherFactionId { get; private set; } = -1;
     public int PeopleNumber { get; private set; }
     public string Race { get; private set; } = string.Empty;
@@ -62,6 +69,7 @@ public class UnitModel : EntityModel
     public string Hungry { get; private set; } = string.Empty;
     public string Hero { get; private set; } = string.Empty;
     public string TrueRaceType { get; private set; } = string.Empty;
+    public bool IsTraitor { get; private set; }
     // STRUCTURE - BUILDING OR SHIP - PROPERTIES
     /// <summary>
     /// Structure is a building or a ship.
@@ -131,7 +139,8 @@ public class UnitModel : EntityModel
             case KeyType.ORDERS_CONFIRMED:
                 return true;
             case KeyType.UNKNOWN:
-                return dataKey.GetKeyFromType() == Strings.DE_TRUE_RACE_TYPE;
+                return dataKey.GetKeyFromType() == Strings.DE_TRUE_RACE_TYPE ||
+                       dataKey.GetKeyFromType() == Strings.EN_UNIT_TRAITOR;
             default:
                 return false;
         }
@@ -152,6 +161,7 @@ public class UnitModel : EntityModel
                     Name = udk.GetValue();
                     break;
                 case KeyType.FACTION:
+                    _hasFactionId = true;
                     FactionId = StringToInt(udk.GetValue());
                     break;
                 case KeyType.OTHER_FACTION:
@@ -194,6 +204,10 @@ public class UnitModel : EntityModel
                     if (udk.GetKeyFromType() == Strings.DE_TRUE_RACE_TYPE)
                     {
                         TrueRaceType = udk.GetValue();
+                    }
+                    else if (udk.GetKeyFromType() == Strings.EN_UNIT_TRAITOR)
+                    {
+                        IsTraitor = StringToInt(udk.GetValue()) != 0;
                     }
                     break;
             }
@@ -304,9 +318,11 @@ public class UnitModel : EntityModel
                     break;
                 case KeyType.ORDERS_CONFIRMED:
                 case KeyType.FACTIONSTEALTH:
-                case KeyType.DESCRIPTION:
                 case KeyType.NOTES:
                     // do not show
+                    break;
+                case KeyType.DESCRIPTION:
+                    Description = udk.GetValue();
                     break;
                 case KeyType.UNKNOWN:
                     switch (udk.GetKeyFromType())

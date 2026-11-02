@@ -62,9 +62,9 @@ public class BookmarkModel
     public BookmarkModel(BookmarkType type, EntityModel target)
     {
         Type = type;
-        Id = target.SourceDataBlock.GetStringId();
-        Name = target.SourceDataBlock.GetUIName();
-        Label = target.SourceDataBlock.GetUILabel();
+        Id = target.StringId;
+        Name = target.DisplayName;
+        Label = target.DisplayLabel;
         Target = target;
     }
 
@@ -212,7 +212,7 @@ public class BookmarkModel
     {
         return entityModel is not null &&
                Type == GetBookmarkType(entityModel) &&
-               entityModel.SourceDataBlock.GetStringId() == Id;
+               entityModel.StringId == Id;
     }
 
     public bool IsSameLocatedFaction(LocatedFactionModel? locatedFaction)

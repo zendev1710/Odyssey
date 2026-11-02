@@ -34,6 +34,9 @@ namespace Odyssey.Models
         internal DataBlock SourceDataBlock { get { return _dataBlock; } }
 
         public string EncodedId { get { return _encodedId; } }
+        public string StringId { get; }
+        public string DisplayName { get; }
+        public string DisplayLabel { get; }
         public int Id { get { return _id; } }
         public EntityType Type { get { return _type; } }
 
@@ -61,6 +64,9 @@ namespace Odyssey.Models
             _type = SetType(dataBlock);
             _dataProperties = [];
             _encodedId = Utils.Converters.IdToString(_id);
+            StringId = dataBlock.GetStringId();
+            DisplayName = dataBlock.GetUIName();
+            DisplayLabel = dataBlock.GetUILabel();
         }
 
         private static EntityType SetType(in DataBlock dataBlock)
