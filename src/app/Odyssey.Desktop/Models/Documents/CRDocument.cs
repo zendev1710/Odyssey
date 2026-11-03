@@ -1024,6 +1024,18 @@ public class CRDocument : EresseaDocument, ILocationResolver
         return group != null;
     }
 
+    public bool TryGetGroupName(int id, out string groupName)
+    {
+        if (Groups.TryGetValue(id, out DataBlock? group))
+        {
+            groupName = group.Value(KeyType.LOWERCASE_NAME);
+            return true;
+        }
+
+        groupName = string.Empty;
+        return false;
+    }
+
     public bool GetSeenRegion(ref RegionDataBlock? region, in ILocation location)
     {
         return FindRegionFromPosition(ref region, location.X, location.Y);

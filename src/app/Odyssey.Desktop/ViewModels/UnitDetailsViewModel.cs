@@ -177,25 +177,12 @@ public partial class UnitDetailsViewModel : ViewModelBase
         }
         else
         {
-            //DataBlock? faction = null;
             FactionModel? factionModel = null;
             if (unitModel.FactionId > 0)
             {
                 if (Report.GetFaction(ref factionModel, unitModel.FactionId))
                 {
                     factionLabel = factionModel!.Name;
-                    /*
-                    factionDataBlock = faction;
-                    factionLabel = factionDataBlock!.Value(KeyType.FACTIONNAME);
-                    if (string.IsNullOrEmpty(factionLabel))
-                    {
-                        factionLabel = Labels.Localize(Labels.DISGUISED);
-                    }
-                    else
-                    {
-                        factionLabel = $"{factionLabel} ({factionDataBlock.IdToString()})";
-                    }
-                    */
                 }
                 else
                 {
@@ -211,17 +198,15 @@ public partial class UnitDetailsViewModel : ViewModelBase
                 FactionModel? anotherFactionModel = null;
                 if (Report.GetFaction(ref anotherFactionModel, unitModel.OtherFactionId))
                 {
-                    // TODO: use anotherFactionModel.Name ?
-                    DataBlock factionDataBlock = anotherFactionModel!.Data;
-                    otherFactionLabel = factionDataBlock.Value(KeyType.FACTIONNAME);
-                    if (string.IsNullOrEmpty(otherFactionLabel))
+                    string otherFactionDataName = anotherFactionModel!.FactionName;
+                    if (string.IsNullOrEmpty(otherFactionDataName))
                     {
                         otherFactionLabel = Labels.Localize(Labels.FACTION_DISGUISED_AS_FACTION);
                     }
                     else
                     {
                         string otherFactionId = IdToString(unitModel.OtherFactionId);
-                        otherFactionLabel = Labels.Localize(Labels.FACTION_DISGUISED_AS, [$"{otherFactionLabel} ({otherFactionId})"]);
+                        otherFactionLabel = Labels.Localize(Labels.FACTION_DISGUISED_AS, [$"{otherFactionDataName} ({otherFactionId})"]);
                     }
                 }
                 else
@@ -247,10 +232,9 @@ public partial class UnitDetailsViewModel : ViewModelBase
         {
             int group = unitModel.Group;
             string groupNameValue;
-            DataBlock? match = null;
-            if (Report.GetGroup(ref match, group))
+            if (Report.TryGetGroupName(group, out string groupName))
             {
-                groupNameValue = match!.Value(KeyType.LOWERCASE_NAME);
+                groupNameValue = groupName;
             }
             else
             {
@@ -365,15 +349,14 @@ public partial class UnitDetailsViewModel : ViewModelBase
         /////////
         // SPELLS
 
-        if (unitModel.Spells != null)
+        if (unitModel.Spells is not null)
         {
             string spellsLabel = Labels.Localize(Categories.Node, Labels.SPELLS);
             DataProperty spellsProperty = new(Categories.Node, Labels.SPELLS, string.Empty, spellsLabel);
             NodeViewModel spellsNode = AddItem(unitNode, spellsProperty);
-            foreach (DataKey d in unitModel.Spells.GetData())
+            foreach (string spellName in unitModel.Spells)
             {
                 // Values in CR are already translated in English for EN CR
-                string spellName = d.GetValue();
                 string spellLabel = Labels.Localize(Categories.Spell, spellName);
                 string spellTip = Labels.Localize(Categories.Spell, $"{spellName}_tip");
                 DataProperty spellProperty = new(Categories.Spell, spellName, string.Empty, spellLabel, spellTip);
@@ -389,15 +372,15 @@ public partial class UnitDetailsViewModel : ViewModelBase
             string combatSpellsLabel = Labels.Localize(Categories.Node, Labels.COMBAT_SPELLS);
             DataProperty combatSpellsProperty = new(Categories.Node, Labels.COMBAT_SPELLS, string.Empty, combatSpellsLabel);
             NodeViewModel combatSpellsNode = AddItem(unitNode, combatSpellsProperty);
-            for (SortedDictionary<int, DataBlock>.Enumerator itor = unitModel.CombatSpells.GetEnumerator(); itor.MoveNext();)
+            foreach (KeyValuePair<int, CombatSpellData> combatSpellEntry in unitModel.CombatSpells)
             {
-                DataBlock block = itor.Current.Value;
-                int period = itor.Current.Key;
+                CombatSpellData combatSpell = combatSpellEntry.Value;
+                int period = combatSpellEntry.Key;
                 if (period > (int)CombatSpellPeriod.PostCombat) { period = 1; }
                 string combatSpellPeriodLabel = Labels.Localize($"{Labels.COMBAT_SPELL_PERIOD}_{period}");
                 // TODO: replace localization key from rules_spell to rules_combatspell_ in resx files
-                string spell = Labels.Localize(Categories.Spell, block.Value(DataKey.KEYNAME_NAME));
-                string level = block.Value(DataKey.KEYNAME_LEVEL);
+                string spell = Labels.Localize(Categories.Spell, combatSpell.SpellName);
+                string level = combatSpell.Level;
                 // type spell level
                 string combatSpellLabel = $"{combatSpellPeriodLabel}: {spell} ({level})";
                 DataProperty spellProperty = new(Categories.CombatSpell, combatSpellLabel, string.Empty, combatSpellLabel);
@@ -405,14 +388,14 @@ public partial class UnitDetailsViewModel : ViewModelBase
             }
         }
 
-        if (unitModel.Effects != null)
+        if (unitModel.Effects is not null)
         {
             string effectsLabel = Labels.Localize(Categories.Node, Labels.EFFECTS);
             DataProperty effectsProperty = new(Categories.Node, Labels.EFFECTS, string.Empty, effectsLabel);
             NodeViewModel effectsNode = AddItem(unitNode, effectsProperty);
-            foreach (DataKey effectKey in unitModel.Effects.GetData())
+            foreach (string effectKey in unitModel.Effects)
             {
-                string effectName = effectKey.GetValue();
+                string effectName = effectKey;
                 string effectValue = string.Empty;
                 string effectLabel;
                 // if effectValue starts with a numeric value; extracts effectname to localize it
@@ -523,7 +506,7 @@ public partial class UnitDetailsViewModel : ViewModelBase
         //////////////////////////////////////////
         // CONTAINER - BUILDING OR SHIP
         DataProperty? containerProperty = null;
-        if (unitModel.CollectContainerData(Report/*, regionDataBlock*/, ref containerProperty) && containerProperty is not null)
+        if (unitModel.CollectContainerData(Report, ref containerProperty) && containerProperty is not null)
         {
             bool isBuilding = unitModel.StructureType == KeyType.BUILDING;
             structureNode = AddItem(Root, containerProperty, string.Empty, 0);
@@ -631,7 +614,7 @@ public partial class UnitDetailsViewModel : ViewModelBase
     /// <summary>
     /// Dispatch the select node Event.
     /// Normally called by a double-click or a space key pressed on the currently selected item of this tree messages list in the corresponding view.
-    /// Event is published only if the selected item is linked to a DataBlock (selection state has changed).
+    /// Event is published only if the selected item is linked to an entity model.
     /// </summary>
     public void DispatchSelectedNode(NodeViewModel? node)
     {
@@ -642,27 +625,8 @@ public partial class UnitDetailsViewModel : ViewModelBase
         if (entityModel is null)
             return;
 
-        /*
-        IEntitySelection sel = CurrentSelection;
-        if (sel.Item!.SourceDataBlock == block)
-        {
-            // If the block is already selected, we do not change the selection state.
-            // This avoids reentrancy issues when the selection is changed by the view.
-            return;
-        }
-        */
         // TODO : how to get region
-        IEntitySelection? newSelection = new EntitySelection(entityModel, null/*sel.Region*/, null);
-        /*
-        if (sel is ExplorerChildNodeSelection childNodeSel)
-        {
-            newSelection = new ExplorerChildNodeSelection(childNodeSel.RegionNodeViewModel!, block, Report);
-        }
-        else
-        {
-            newSelection = new EntitySelection(block, sel.Region, null);
-        }
-        */
+        IEntitySelection newSelection = new EntitySelection(entityModel, null, null);
 
         SendSelectionChangedEvent(newSelection);
     }

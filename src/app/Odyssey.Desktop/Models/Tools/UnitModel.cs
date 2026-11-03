@@ -11,6 +11,8 @@ namespace Odyssey.Models.Tools;
 
 public class UnitModel : EntityModel
 {
+    public readonly record struct CombatSpellData(string SpellName, string Level);
+
     public enum CombatStatusType
     {
         Undefined = -1,
@@ -50,9 +52,9 @@ public class UnitModel : EntityModel
 
     private DataBlock? Items { get; set; }
     private DataBlock? Skills { get; set; }
-    public DataBlock? Spells { get; private set; }
-    public DataBlock? Effects { get; private set; }
-    public SortedDictionary<int, DataBlock> CombatSpells { get; private set; } = [];
+    public IReadOnlyList<string>? Spells { get; private set; }
+    public IReadOnlyList<string>? Effects { get; private set; }
+    public SortedDictionary<int, CombatSpellData> CombatSpells { get; private set; } = [];
     // UNIT PROPERTIES
     public string Name { get; private set; } = string.Empty;
     public string Description { get; private set; } = string.Empty;
@@ -75,6 +77,9 @@ public class UnitModel : EntityModel
     public string Hp { get; private set; } = string.Empty;
     public int FamiliarMageId { get; private set; }
     public bool IsGuarding { get; private set; } = false;
+    public bool IsInBuilding { get; }
+    public bool IsInShip { get; }
+    public bool IsOrdersConfirmed => _ordersConfirmed;
     public string Hungry { get; private set; } = string.Empty;
     public string Hero { get; private set; } = string.Empty;
     public string TrueRaceType { get; private set; } = string.Empty;
@@ -137,13 +142,19 @@ public class UnitModel : EntityModel
 
     public bool TryGetCommands(out IReadOnlyList<string> commands)
     {
+        bool hasEditableOrders = HasEditableOrders;
+        commands = hasEditableOrders ? GetCommandLines() : Array.Empty<string>();
+        return hasEditableOrders;
+    }
+
+    public IReadOnlyList<string> GetCommandLines()
+    {
         if (!_commandsCollected)
         {
             CollectCommands();
         }
 
-        commands = _commands;
-        return HasEditableOrders;
+        return _commands;
     }
 
     internal void SetOrdersConfirmedStatus(bool isConfirmed)
@@ -163,19 +174,16 @@ public class UnitModel : EntityModel
     private void CollectCommands()
     {
         _commandsCollected = true;
-        if (!HasEditableOrders)
-        {
-            return;
-        }
-
         DataBlock? commandBlock = null;
         if (!CRDocument.GetSeenCommands(ref commandBlock, SourceDataBlock) || commandBlock is null)
         {
             _hasCommandBlock = false;
+            _commandBlockAvailabilityChecked = true;
             return;
         }
 
         _hasCommandBlock = true;
+        _commandBlockAvailabilityChecked = true;
         if (commandBlock.GetAttachment() is OrdersAttachment attachment)
         {
             _commands = attachment.Commands.ToArray();
@@ -191,6 +199,8 @@ public class UnitModel : EntityModel
         _structureDataProperties = [];
         _itemsProperties = [];
         _skillsProperties = [];
+        IsInBuilding = unitDataBlock.HasKey(KeyType.BUILDING);
+        IsInShip = unitDataBlock.HasKey(KeyType.SHIP);
         PopulateImmediateProperties();
         _savedOrdersConfirmedStatus = _ordersConfirmed;
     }
@@ -265,7 +275,7 @@ public class UnitModel : EntityModel
                     Hp = udk.GetValue();
                     break;
                 case KeyType.GUARDING:
-                    IsGuarding = udk.GetValue() == "1";
+                    IsGuarding = udk.GetInt() != 0;
                     break;
                 case KeyType.HUNGER:
                     Hungry = udk.GetValue();
@@ -303,7 +313,7 @@ public class UnitModel : EntityModel
     }
 
     /// <summary>
-    /// Collects the data blocks of the unit categories (items, talents, spells, effects...).
+    /// Collects the unit categories (items, talents, spells, effects...).
     /// The collection is done only once: the collected data is then reused.
     /// </summary>
     public void CollectCategoriesData()
@@ -329,15 +339,17 @@ public class UnitModel : EntityModel
             }
             else if (btype == BlockType.SPELLS)
             {
-                Spells = block;
+                Spells = block.GetData().Select(data => data.GetValue()).ToArray();
             }
             else if (btype == BlockType.EFFECTS)
             {
-                Effects = block;
+                Effects = block.GetData().Select(data => data.GetValue()).ToArray();
             }
             else if (btype == BlockType.COMBATSPELL)
             {
-                CombatSpells[block.GetId()] = block;
+                CombatSpells[block.GetId()] = new(
+                    block.Value(DataKey.KEYNAME_NAME),
+                    block.Value(DataKey.KEYNAME_LEVEL));
             }
         }
     }

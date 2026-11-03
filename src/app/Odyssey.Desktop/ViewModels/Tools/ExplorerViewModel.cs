@@ -14,7 +14,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using static Odyssey.Models.Documents.CRDocument;
 using static Odyssey.Models.Tools.DataProperty;
 using static Odyssey.ViewModels.ExplorerNodeViewModel;
 
@@ -403,7 +402,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         }
     }
 
-    private static ExplorerNodeViewModel? FindImmediateTreeItem(ExplorerNodeViewModel? node, int id/*DataBlock? block*/)
+    private static ExplorerNodeViewModel? FindImmediateTreeItem(ExplorerNodeViewModel? node, int id)
     {
         if (node == null)
         {
@@ -443,7 +442,7 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
     }
 
 
-    private static ExplorerNodeViewModel? FindTreeItem(ExplorerNodeViewModel? node, int id/*DataBlock? block*/)
+    private static ExplorerNodeViewModel? FindTreeItem(ExplorerNodeViewModel? node, int id)
     {
         if (node == null)
         {
@@ -506,112 +505,75 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
             int activeUnitInsertionIndex = 0;
             ExplorerNodeViewModel? regionNode = null;
             ExplorerNodeViewModel? firstFactionNode = null;
-            ExplorerNodeViewModel? shipsNode = null;
-            ExplorerNodeViewModel? buildingsNode = null;
             Dictionary<int, ExplorerNodeViewModel> regionFactionsNodes = [];
-            bool regionHasBuilding = false;
-            bool regionHasShip = false;
             // Process each region model
             RegionModel regionModel = r.Value;
-            DataBlock region = regionModel.SourceDataBlock;
-            LinkedListNode<DataBlock>? firstBlockNode = region.Node;
-            // First block after region data block
-            DataBlock? block = firstBlockNode!.Value.GetNextBlock();
-            bool regionChanged = false;
-            while (block is not null && !regionChanged)
+            bool regionHasBuilding = regionModel.Buildings.Count > 0;
+            foreach (int unitId in Report.GetUnitIdsInRegion(regionModel.Id))
             {
-                BlockType type = block.GetBlockType();
-                if (type == BlockType.REGION)
+                if (!Report.FindUnit(unitId, out UnitModel? unitModel) || unitModel is null)
                 {
-                    regionFactionsNodes.Clear();
-                    break;
+                    continue;
                 }
 
-                switch (type)
+                int factionId = unitModel.EffectiveFactionId;
+                ExplorerNodeViewModel? factionNode = null;
+                LocatedFactionModel locatedFaction = CreateLocatedFaction(factionId, regionModel);
+                FactionStatus factionStatus = locatedFaction.Faction?.Status ?? Report.GetFactionStatus(factionId);
+                if (!regionFactionsNodes.TryGetValue(factionId, out factionNode))
                 {
-                    case BlockType.UNIT:
-                        // Bullet image :
-                        // RED for unknown or traitor
-                        // BLUE for own faction
-                        // GREEN for alliance
-                        // GRAY for anonymous
-
-                        // Get faction id, -1 means unknown faction or stealth/anonymous
-                        int factionId = GetFactionIdForUnit(block);
-                        ExplorerNodeViewModel? factionNode = null;
-                        LocatedFactionModel locatedFaction = CreateLocatedFaction(factionId, regionModel);
-                        FactionStatus factionStatus = locatedFaction.Faction?.Status ?? Report.GetFactionStatus(factionId);
-                        if (!regionFactionsNodes.TryGetValue(factionId, out factionNode))
+                    regionNode ??= AddRegionNode(Root, regionModel, ref regionsNumber);
+                    if (ActiveFactionGroup || factionStatus != FactionStatus.ACTIVE)
+                    {
+                        int factionIndex = regionHasBuilding ? 1 : 0;
+                        int indexWhenActiveGroup = firstFactionNode == null ? factionIndex : activeUnitInsertionIndex;
+                        int index = factionStatus == FactionStatus.ACTIVE ? indexWhenActiveGroup : -1;
+                        factionNode = new ExplorerNodeViewModel(regionNode, locatedFaction.Name, locatedFaction.FactionId, NodeTypes.FACTION, false, factionStatus, index, raceIconUri: GetFactionRaceIconUri(locatedFaction.Race), statusIconUri: GetFactionStatusIconUri(factionStatus), locatedFaction: locatedFaction);
+                        regionFactionsNodes[factionId] = factionNode;
+                        int factionNodeIndex = index == -1 ? regionNode.Children.Count - 1 : index;
+                        if (firstFactionNode == null)
                         {
-                            regionNode ??= AddRegionNode(Root, regionModel, ref regionsNumber);
-                            if (ActiveFactionGroup || factionStatus != FactionStatus.ACTIVE)
-                            {
-                                int factionIndex = regionHasBuilding ? 1 : 0;
-                                int indexWhenActiveGroup = firstFactionNode == null ? factionIndex : activeUnitInsertionIndex;
-                                int index = factionStatus == FactionStatus.ACTIVE ? indexWhenActiveGroup : -1;
-                                factionNode = new ExplorerNodeViewModel(regionNode, locatedFaction.Name, locatedFaction.FactionId, NodeTypes.FACTION, false, factionStatus, index, raceIconUri: GetFactionRaceIconUri(locatedFaction.Race), statusIconUri: GetFactionStatusIconUri(factionStatus), locatedFaction: locatedFaction);
-                                regionFactionsNodes[factionId] = factionNode;
-                                int factionNodeIndex = index == -1 ? regionNode.Children.Count - 1 : index;
-                                if (firstFactionNode == null)
-                                {
-                                    activeUnitInsertionIndex = factionNodeIndex;
-                                    firstFactionNode = factionNode;
-                                }
-                            }
+                            activeUnitInsertionIndex = factionNodeIndex;
+                            firstFactionNode = factionNode;
                         }
-
-                        // With ActiveFactionGroup to false, units of own faction are inserted directly as child of region node, after buildings.
-                        // Add unit node, as child of faction node (ActiveFactionGroup set to true) or of a region
-                        AddUnit(factionNode ?? (regionNode ??= AddRegionNode(Root, regionModel, ref regionsNumber)), block, factionNode != null ? -1 : activeUnitInsertionIndex, locatedFaction);
-                        if (factionNode == null)
-                        {
-                            // Keep track of the first faction node to set the activeUnitIndexPosition
-                            activeUnitInsertionIndex++;
-                        }
-                        break;
-                    case BlockType.SHIP:
-                        // Append the region node if not already done
-                        regionNode ??= AddRegionNode(Root, regionModel, ref regionsNumber);
-                        shipsNode ??= AddShipsNode(regionNode, 0);
-                        string rawShipType = $"{block.Value(KeyType.TYPE)}";
-                        string shipType = Labels.Localize(Categories.Ship, rawShipType);
-                        string shipSizeLabel = Labels.Localize(Categories.Node, Labels.SIZE, [$"{block.Value(KeyType.SIZE)}"]);
-                        string shipLabel = $"{block.GetUILabel()}, {shipType}, {shipSizeLabel}";
-                        BelongsToStatus shipStatus = Report.IsActiveFaction(block.ValueInt(KeyType.FACTION)) ? BelongsToStatus.None : BelongsToStatus.ShipInNotActiveFaction;
-                        AddShip(shipsNode, shipLabel, block, shipStatus, ShipCatalog.GetExplorerIconPath(rawShipType));
-                        break;
-                    case BlockType.BUILDING:
-                        regionHasBuilding = true;
-                        regionNode ??= AddRegionNode(Root, regionModel, ref regionsNumber);
-                        buildingsNode ??= AddBuildingsNode(regionNode);
-                        string rawBuildingType = $"{block.Value(KeyType.TYPE)}";
-                        string buildingType = Labels.Localize(Categories.Building, rawBuildingType);
-                        string buildingSizeLabel = Labels.Localize(Categories.Node, Labels.SIZE, [$"{block.Value(KeyType.SIZE)}"]);
-                        string buildingLabel = $"{block.GetUILabel()}, {buildingType}, {buildingSizeLabel}";
-                        BelongsToStatus buildingStatus = Report.IsActiveFaction(block.ValueInt(KeyType.FACTION)) ? BelongsToStatus.None : BelongsToStatus.BuildingInNotActiveFaction;
-                        AddBuilding(buildingsNode, buildingLabel, block, buildingStatus, BuildingCatalog.GetExplorerIconPath(rawBuildingType));
-                        break;
-#if DEBUG
-                    case BlockType.RESOURCE:
-                    case BlockType.PRICES:
-                    case BlockType.COMMANDS:
-                    case BlockType.TALENTS:
-                    case BlockType.ITEMS:
-                    case BlockType.SPELLS:
-                    case BlockType.DURCHREISE:
-                    case BlockType.MESSAGE:
-                    case BlockType.UNKNOWN:
-                    case BlockType.EFFECTS:
-                    case BlockType.DURCHSCHIFFUNG:
-                    case BlockType.COMBATSPELL:
-                        break;
-                    // out of the current loop, will process the next region
-                    case BlockType.REGION: regionChanged = true; break;
-                    default: break;
-#endif
+                    }
                 }
 
-                block = block.GetNextBlock();
+                AddUnit(factionNode ?? (regionNode ??= AddRegionNode(Root, regionModel, ref regionsNumber)), unitModel, factionNode is not null ? -1 : activeUnitInsertionIndex, locatedFaction);
+                if (factionNode is null)
+                {
+                    activeUnitInsertionIndex++;
+                }
+            }
+
+            if (regionModel.Ships.Count > 0)
+            {
+                regionNode ??= AddRegionNode(Root, regionModel, ref regionsNumber);
+                ExplorerNodeViewModel shipsNode = AddShipsNode(regionNode, 0);
+                foreach (ShipModel ship in regionModel.Ships)
+                {
+                    string rawShipType = ship.Type;
+                    string shipType = Labels.Localize(Categories.Ship, rawShipType);
+                    string shipSizeLabel = Labels.Localize(Categories.Node, Labels.SIZE, [ship.SizeText]);
+                    string shipLabel = $"{ship.DisplayLabel}, {shipType}, {shipSizeLabel}";
+                    BelongsToStatus shipStatus = Report.IsActiveFaction(ship.FactionId) ? BelongsToStatus.None : BelongsToStatus.ShipInNotActiveFaction;
+                    AddShip(shipsNode, shipLabel, ship, shipStatus, ShipCatalog.GetExplorerIconPath(rawShipType));
+                }
+            }
+
+            if (regionModel.Buildings.Count > 0)
+            {
+                regionNode ??= AddRegionNode(Root, regionModel, ref regionsNumber);
+                ExplorerNodeViewModel buildingsNode = AddBuildingsNode(regionNode);
+                foreach (BuildingModel building in regionModel.Buildings)
+                {
+                    string rawBuildingType = building.Type;
+                    string buildingType = Labels.Localize(Categories.Building, rawBuildingType);
+                    string buildingSizeLabel = Labels.Localize(Categories.Node, Labels.SIZE, [building.SizeText]);
+                    string buildingLabel = $"{building.DisplayLabel}, {buildingType}, {buildingSizeLabel}";
+                    BelongsToStatus buildingStatus = Report.IsActiveFaction(building.FactionId) ? BelongsToStatus.None : BelongsToStatus.BuildingInNotActiveFaction;
+                    AddBuilding(buildingsNode, buildingLabel, building, buildingStatus, BuildingCatalog.GetExplorerIconPath(rawBuildingType));
+                }
             }
 
             // The CR file does not guarantee that ships/buildings are described before
@@ -848,14 +810,14 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         _ => "/Assets/factionstatus/red.gif",
     };
 
-    private static void AddShip(ExplorerNodeViewModel parentNode, string label, DataBlock block, BelongsToStatus status, string? iconUri = null)
+    private static void AddShip(ExplorerNodeViewModel parentNode, string label, ShipModel ship, BelongsToStatus status, string? iconUri = null)
     {
-        _ = new ExplorerNodeViewModel(parentNode, label, block.GetId(), NodeTypes.SHIP, false, status, -1, iconUri);
+        _ = new ExplorerNodeViewModel(parentNode, label, ship.Id, NodeTypes.SHIP, false, status, -1, iconUri);
     }
 
-    private static void AddBuilding(ExplorerNodeViewModel parentNode, string label, DataBlock block, BelongsToStatus status, string? iconUri = null)
+    private static void AddBuilding(ExplorerNodeViewModel parentNode, string label, BuildingModel building, BelongsToStatus status, string? iconUri = null)
     {
-        _ = new ExplorerNodeViewModel(parentNode, label, block.GetId(), NodeTypes.BUILDING, false, status, -1, iconUri);
+        _ = new ExplorerNodeViewModel(parentNode, label, building.Id, NodeTypes.BUILDING, false, status, -1, iconUri);
     }
 
     private ExplorerNodeViewModel AddRegionNode(ExplorerNodeViewModel parent, RegionModel regionModel, ref int regionsNumber)
@@ -910,46 +872,45 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         }
     }
 
-    private void AddUnit(ExplorerNodeViewModel parentNode, DataBlock unitBlock, int index, LocatedFactionModel locatedFaction)
+    private void AddUnit(ExplorerNodeViewModel parentNode, UnitModel unit, int index, LocatedFactionModel locatedFaction)
     {
-        _reportUnitOrder[unitBlock.GetId()] = _nextReportUnitOrder++;
-        string unitlabel = $"{unitBlock.GetUILabel()}: {unitBlock.ValueInt(KeyType.NUMBER)}";
+        _reportUnitOrder[unit.Id] = _nextReportUnitOrder++;
+        string unitlabel = $"{unit.DisplayLabel}: {unit.PeopleNumber}";
         BelongsToStatus status = BelongsToStatus.None;
-        if (unitBlock.HasKey(KeyType.BUILDING))
+        if (unit.IsInBuilding)
         {
             status |= BelongsToStatus.UnitInBuilding;
         }
         else
         {
-            if (unitBlock.HasKey(KeyType.SHIP))
+            if (unit.IsInShip)
             {
                 status |= BelongsToStatus.UnitInShip;
             }
         }
 
-        string? statusIconUri = GetUnitStatusIconUri(unitBlock);
-        _ = new ExplorerNodeViewModel(parentNode, unitlabel, unitBlock.GetId(), NodeTypes.UNIT, !Report.IsConfirmed(unitBlock), status, index, statusIconUri: statusIconUri, locatedFaction: locatedFaction);
+        string? statusIconUri = GetUnitStatusIconUri(unit);
+        bool isConfirmed = !Report.IsActiveFaction(unit.FactionId) || unit.IsOrdersConfirmed;
+        _ = new ExplorerNodeViewModel(parentNode, unitlabel, unit.Id, NodeTypes.UNIT, !isConfirmed, status, index, statusIconUri: statusIconUri, locatedFaction: locatedFaction);
     }
 
-    private string? GetUnitStatusIconUri(DataBlock unitBlock)
+    private string? GetUnitStatusIconUri(UnitModel unitModel)
     {
-        int unitId = unitBlock.GetId();
+        int unitId = unitModel.Id;
 
-        if (unitBlock.HasKey(KeyType.GUARDING) && unitBlock.ValueInt(KeyType.GUARDING) != 0)
+        if (unitModel.IsGuarding)
         {
             return GetStatusIconUri("guarded");
         }
 
-        if (Report.GetUnit(unitId) is UnitModel unitModel && Report.TryFindShipForUnit(unitModel, out _))
+        if (Report.TryFindShipForUnit(unitModel, out _))
         {
             return GetStatusIconUri("captain");
         }
 
         foreach (BuildingModel building in Report.Buildings.Values)
         {
-            int rawOwnerId = building.Structure.ValueInt(KeyType.OWNER, -1);
-            int rawCaptainId = building.Structure.ValueInt(KeyType.CAPTAIN, -1);
-            if (rawOwnerId == unitId || rawCaptainId == unitId || building.OwnerId == unitId || building.OwnerUnit?.Id == unitId)
+            if (building.OwnerId == unitId || building.CaptainId == unitId || building.OwnerUnit?.Id == unitId)
             {
                 return GetStatusIconUri("owner", "captain");
             }

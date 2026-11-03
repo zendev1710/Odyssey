@@ -24,7 +24,10 @@ public abstract class StructureModel : EntityModel
     public string Name { get; private set; } = string.Empty;
     public string Type { get; private set; } = string.Empty;
     public int Size { get; private set; }
+    public string SizeText { get; private set; } = string.Empty;
+    public int FactionId { get; private set; } = -1;
     public int OwnerId { get; private set; }
+    public int CaptainId { get; private set; } = -1;
     public UnitModel? OwnerUnit { get; protected set; }
 
     public void SetOwnerUnit(UnitModel? ownerUnit)
@@ -59,6 +62,13 @@ public abstract class StructureModel : EntityModel
         Region = null;
         Size = -1;
         OwnerId = -1;
+        Name = structureDataBlock.Value(KeyType.NAME);
+        Type = structureDataBlock.Value(KeyType.TYPE);
+        SizeText = structureDataBlock.Value(KeyType.SIZE);
+        Size = structureDataBlock.ValueInt(KeyType.SIZE, -1);
+        FactionId = structureDataBlock.ValueInt(KeyType.FACTION, -1);
+        CaptainId = structureDataBlock.ValueInt(KeyType.CAPTAIN, -1);
+        OwnerId = structureDataBlock.ValueInt(KeyType.OWNER, CaptainId);
     }
 
     /// <summary>
@@ -103,13 +113,19 @@ public abstract class StructureModel : EntityModel
             case KeyType.TYPE:
                 Type = kb.GetValue();
                 break;
+            case KeyType.FACTION:
+                FactionId = StringToInt(kb.GetValue());
+                break;
             case KeyType.SIZE:
+                SizeText = kb.GetValue();
                 Size = kb.GetInt();
                 break;
             case KeyType.DESCRIPTION:
                 Description = kb.GetValue();
                 break;
             case KeyType.CAPTAIN:
+                CaptainId = StringToInt(kb.GetValue());
+                goto case KeyType.OWNER;
             case KeyType.OWNER:
                 int candidateOwnerId = StringToInt(kb.GetValue());
                 if (candidateOwnerId > 0 && (kb.GetKeyType() == KeyType.OWNER || OwnerId <= 0))
@@ -117,7 +133,6 @@ public abstract class StructureModel : EntityModel
                     OwnerId = candidateOwnerId;
                 }
                 break;
-            case KeyType.FACTION:
             case KeyType.NOTES:
                 // LATER : check this property meaning (number/anzahl: 1 for t51h boat in 1387-woza)
             case KeyType.NUMBER:

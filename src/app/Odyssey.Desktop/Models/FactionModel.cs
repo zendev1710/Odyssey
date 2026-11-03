@@ -12,6 +12,7 @@ namespace Odyssey.Models;
 public class FactionModel
 {
     public DataBlock Data { get; private set; }
+    public string FactionName { get; private set; } = string.Empty;
     public string Name { get; private set; } = string.Empty;
     public FactionRace Race { get; private set; }
     public UnitModel? RepresentativeUnit { get; private set; }
@@ -90,8 +91,8 @@ public class FactionModel
         */
 
 
-        string name = data.Value(KeyType.FACTIONNAME);
-        Name = string.IsNullOrEmpty(name) ? Labels.Localize(Labels.DISGUISED) : $"{name} ({data.IdToString()})";
+        FactionName = data.Value(KeyType.FACTIONNAME);
+        Name = string.IsNullOrEmpty(FactionName) ? Labels.Localize(Labels.DISGUISED) : $"{FactionName} ({data.IdToString()})";
         Race = FactionRaceParser.Parse(data.Value(KeyType.TYPE));
 
         IsActive = CRDocument.FactionIsActive(data);

@@ -12,14 +12,10 @@ namespace Odyssey.ViewModels.Tools;
 
 /// <summary>
 /// ViewModel léger représentant une unité pour les vues d'édition d'ordres.
-/// Conçu pour être créé à partir d'un <see cref="DataBlock"/> ou manuellement.
+/// Conçu pour être créé à partir d'un <see cref="UnitModel"/> ou manuellement.
 /// </summary>
 public partial class UnitViewModel : ObservableObject
 {
-    /// <summary>
-    /// Underlying data block (nullable si construit manuellement).
-    /// </summary>
-    public DataBlock? DataBlock { get; }
     public UnitModel? Model { get; private set; }
 
     [ObservableProperty]
@@ -70,7 +66,6 @@ public partial class UnitViewModel : ObservableObject
 
     public UnitViewModel(string id, string name, /*int x, int y,*/ int factionId = 0, bool? isConfirmed = null)
     {
-        DataBlock = null;
         _id = id ?? string.Empty;
         _name = name ?? string.Empty;
         _factionId = factionId;
@@ -80,54 +75,10 @@ public partial class UnitViewModel : ObservableObject
         _summary = $"{_name} ({_id})";
     }
 
-    public UnitViewModel(DataBlock block, int x, int y)
-    {
-        DataBlock = block ?? throw new ArgumentNullException(nameof(block));
-
-        // Populate common properties from DataBlock (defensive - rely on CRDocument API)
-        try
-        {
-            // Display label / name
-            _name = block.GetUILabel() ?? string.Empty;
-
-            // Try to read common keys; fallback to sensible defaults
-            try { _factionId = block.ValueInt(KeyType.FACTION); } catch { _factionId = 0; }
-            DataBlock? commandsBlock = null;
-            if (CRDocument.GetSeenCommands(ref commandsBlock, block) && commandsBlock is not null)
-            {
-                _isConfirmed = block.ValueInt(KeyType.ORDERS_CONFIRMED) != 0;
-            }
-
-            // Id: prefer string key if available, otherwise use int id
-            try
-            {
-                _id = block.IdToString();
-            }
-            catch
-            {
-                try { _id = block.ValueInt(KeyType.ID).ToString(); } catch { _id = string.Empty; }
-            }
-
-            // Coordinates (if present)
-            // TODO: check if coordinates are needed
-            _x = x;
-            _y = y;
-
-            _summary = $"{_name} ({_id})";
-        }
-        catch
-        {
-            // Ensure object is still usable even if DataBlock layout differs
-            _id ??= string.Empty;
-            _name ??= string.Empty;
-            _summary ??= $"{_name} ({_id})";
-        }
-    }
-
-    // Factory légère : construit un UnitViewModel à partir d'un unit id dans CRDocument
+    // Factory légère : construit un UnitViewModel à partir du modèle d'unité du document
     public static UnitViewModel FromDocument(CRDocument doc, int unitId, bool includeSummary = false/*, int x, int y*/)
     {
-        // create with id as fallback; fields will be populated if DataBlock found
+        // create with id as fallback; fields will be populated if the model is found
         var vm = new UnitViewModel(unitId.ToString(), string.Empty/*, x, y*/);
         if (doc.FindUnit(unitId, out UnitModel? unit))
         {
@@ -229,13 +180,9 @@ public partial class UnitViewModel : ObservableObject
             }
         }
 
-        DataBlock? commandsBlock = null;
-        if (CRDocument.GetSeenCommands(ref commandsBlock, unit.SourceDataBlock) && commandsBlock is not null)
+        IReadOnlyList<string> commands = unit.GetCommandLines();
+        if (commands.Count > 0)
         {
-            OrdersAttachment? attachment = commandsBlock.GetAttachment() as OrdersAttachment;
-            IEnumerable<string> commands = attachment is not null
-                ? attachment.Commands
-                : commandsBlock.GetData().Select(data => data.GetValue());
             string summary = string.Join(Environment.NewLine, commands.Where(command => !string.IsNullOrWhiteSpace(command)));
             if (!string.IsNullOrWhiteSpace(summary))
             {
