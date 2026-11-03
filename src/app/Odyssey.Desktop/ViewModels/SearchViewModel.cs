@@ -1,41 +1,13 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Odyssey.Core.Services;
-using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Localization;
 using Odyssey.Search;
-using System;
 using System.Collections.ObjectModel;
 
 namespace Odyssey.ViewModels
 {
-    // search functions
-    public class BlockContext
-    {
-        public CRDocument Report;
-        public readonly DataBlock Region;
-        public readonly DataBlock Building;
-        public readonly DataBlock Ship;
-        public readonly DataBlock Unit;
-        public readonly Predicate<string> Compare;
-        public readonly Predicate<string> CompareIgnoreCase;
-        public readonly bool SearchDescriptions;
-        public readonly bool SearchFactions;
-
-        public BlockContext(ref CRDocument report, in DataBlock region, in DataBlock building, in DataBlock ship, in DataBlock unit, in Predicate<string> compare, in Predicate<string> compareIgnoreCase, bool searchDescriptions, bool searchFactions)
-        {
-            this.Report = report;
-            this.Region = region;
-            this.Building = building;
-            this.Ship = ship;
-            this.Unit = unit;
-            this.Compare = compare;
-            this.CompareIgnoreCase = compareIgnoreCase;
-            this.SearchDescriptions = searchDescriptions;
-            this.SearchFactions = searchFactions;
-        }
-    }
     public partial class SearchViewModel: ClientAreaDockBase
     {
         // Search domains (everything, regions, units, buildings, ships, commands)

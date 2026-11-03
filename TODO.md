@@ -125,3 +125,28 @@ TO BE DONE.
 - [ ] Quick search (autocompletebox versus textbox...)
 - [ ] Map rendering optimizations
   - [ ] precompute map bounds
+
+## Asset conversion report — GIF to transparent PNG
+
+Date: 2026-10-25
+Scope: `src/app/Odyssey.Desktop/Assets` and subdirectories
+Script: `scripts/convert-gif-assets-to-png.ps1`
+
+### Objective
+Convert all existing GIF icon assets to transparent PNG files as a first step before a dark-mode-friendly SVG migration.
+
+### Strategy used
+- Prefer ImageMagick when it can process a GIF cleanly.
+- Detect light/dirty-white backgrounds using a white-pixel ratio heuristic.
+- When ImageMagick fails on palette-heavy or malformed GIFs, use a .NET fallback that loads the image, strips near-white pixels to transparency, and saves it as PNG with alpha.
+- Keep a generated PNG alongside each GIF source, without deleting the original asset.
+
+### Result
+- GIFs checked: 1135
+- PNGs generated/available after conversion: 1237
+- Missing PNGs after conversion: 0
+
+### Notes
+- This conversion is intended as a safe preparation step for theme-aware icon usage.
+- The final goal remains: SVG assets with `currentColor`/transparent backgrounds, or a simple light/dark pair if the SVG conversion is not clean enough.
+- GIF is still kept as source for now, but the transparent PNG variants are now available for UI integration and dark-mode testing.

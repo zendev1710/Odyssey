@@ -174,6 +174,8 @@ public class CRDocument : EresseaDocument, ILocationResolver
     private bool OptimizeDataConsuming { get; set; }
     private Dictionary<int, BattleDataBlock> BattlesBlocks { get; set; } = [];
     private Dictionary<int, DataBlock> Groups { get; set; } = [];
+    private readonly Dictionary<int, List<int>> _buildingIdsByRegion = [];
+    private readonly Dictionary<int, List<int>> _shipIdsByRegion = [];
 
     public LinkedListNode<DataBlock>? FirstBlock { get { return Blocks?.First; } }
     public LinkedListNode<DataBlock>? LastBlock { get { return Blocks?.Last; } }
@@ -1357,6 +1359,150 @@ m_blocks.push_back(*old_r);
         return targets;
     }
 
+    public IEnumerable<RenderedMessage> GetReportMessages()
+    {
+        for (DataBlock? block = Blocks.First?.Value; block is not null; block = block.GetNextBlock())
+        {
+            BlockType blockType = block.GetBlockType();
+            if (blockType == BlockType.REGION)
+            {
+                yield break;
+            }
+
+            if (blockType == BlockType.MESSAGE && block.GetDepth() == 3)
+            {
+                yield return CreateRenderedMessage(block);
+            }
+        }
+    }
+
+    public IEnumerable<RenderedMessage> GetRegionMessages(RegionModel region)
+    {
+        int regionDepth = region.SourceDataBlock.GetDepth();
+        for (DataBlock? block = region.SourceDataBlock.GetNextBlock(); block is not null && block.GetDepth() > regionDepth; block = block.GetNextBlock())
+        {
+            if (block.GetBlockType() == BlockType.MESSAGE)
+            {
+                yield return CreateRenderedMessage(block);
+            }
+        }
+    }
+
+    public List<string> GetRegionEffects(RegionModel region)
+    {
+        List<string> effects = [];
+        int regionDepth = region.SourceDataBlock.GetDepth();
+        for (DataBlock? block = region.SourceDataBlock.GetNextBlock(); block is not null && block.GetDepth() > regionDepth; block = block.GetNextBlock())
+        {
+            if (block.GetDepth() == regionDepth + 1 && block.GetBlockType() == BlockType.EFFECTS)
+            {
+                effects.AddRange(block.GetData().Select(effect => effect.GetValue()));
+            }
+        }
+        return effects;
+    }
+
+    public List<(int Direction, int Percent)> GetRegionRoads(RegionModel region)
+    {
+        List<(int Direction, int Percent)> roads = [];
+        int regionDepth = region.SourceDataBlock.GetDepth();
+        for (DataBlock? block = region.SourceDataBlock.GetNextBlock(); block is not null && block.GetDepth() > regionDepth; block = block.GetNextBlock())
+        {
+            if (block.GetDepth() == regionDepth + 1 && block.GetBlockType() == BlockType.BORDER)
+            {
+                roads.Add((block.ValueInt(Strings.DE_REGION_ROAD_DIRECTION, 6), block.ValueInt(Strings.DE_ROAD_PERCENT, 0)));
+            }
+        }
+        return roads;
+    }
+
+    public List<(string Label, List<EntityModel> Targets)> GetRegionTransits(RegionModel region)
+    {
+        List<(string Label, List<EntityModel> Targets)> transits = [];
+        int regionDepth = region.SourceDataBlock.GetDepth();
+        for (DataBlock? block = region.SourceDataBlock.GetNextBlock(); block is not null && block.GetDepth() > regionDepth; block = block.GetNextBlock())
+        {
+            BlockType blockType = block.GetBlockType();
+            if (block.GetDepth() != regionDepth + 1 ||
+                blockType is not (BlockType.DURCHREISE or BlockType.DURCHSCHIFFUNG))
+            {
+                continue;
+            }
+
+            foreach (DataKey transit in block.GetData())
+            {
+                string label = transit.GetValue();
+                List<EntityModel> targets = [];
+                int id = DataBlock.ExtractId(label);
+                if (id == -1)
+                {
+                    Debug.WriteLine($"[REGION-INF] WARNING | Failed to extract id from : {label}");
+                }
+                else if (blockType == BlockType.DURCHSCHIFFUNG)
+                {
+                    if (FindShip(id, out ShipModel? ship) && ship is not null)
+                    {
+                        targets.Add(ship);
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"[REGION-INF] WARNING | Ship with {id} id not found");
+                    }
+                }
+                else if (FindUnit(id, out UnitModel? unit) && unit is not null)
+                {
+                    targets.Add(unit);
+                }
+                else
+                {
+                    Debug.WriteLine($"[REGION-INF] WARNING | Unit with {id} id not found");
+                }
+                transits.Add((label, targets));
+            }
+        }
+        return transits;
+    }
+
+    public SortedSet<int> GetRegionGuardingFactionIds(RegionModel region)
+    {
+        SortedSet<int> factionIds = [];
+        foreach (UnitModel unit in GetUnitsInRegion(region))
+        {
+            if (unit.IsGuarding)
+            {
+                factionIds.Add(unit.FactionId);
+            }
+        }
+        return factionIds;
+    }
+
+    public IEnumerable<(RenderedMessage Message, bool MatchesUnit, bool MatchesRegion)> GetActiveFactionMessages(UnitModel? unit, RegionModel? region)
+    {
+        DataBlock? message = ActiveFaction.Data.GetNextBlock();
+        while (message is not null && message.GetBlockType() != BlockType.MESSAGE)
+        {
+            message = message.GetNextBlock();
+        }
+
+        for (; message is not null; message = message.GetNextBlock())
+        {
+            bool matchesUnit = unit is not null && message.HasReference(unit.SourceDataBlock);
+            bool matchesRegion = region is not null && message.HasReference(region.SourceDataBlock);
+            if (matchesUnit || matchesRegion)
+            {
+                yield return (CreateRenderedMessage(message), matchesUnit, matchesRegion);
+            }
+        }
+    }
+
+    private RenderedMessage CreateRenderedMessage(DataBlock message)
+    {
+        return new RenderedMessage(
+            message.Value(Strings.EN_MESSAGE_RENDERED),
+            message.Value(Strings.EN_MESSAGE_SECTION),
+            GetMessageTargets(message));
+    }
+
     /*
     public List<DataBlock> GetMessageTargets(DataBlock msg)
     {
@@ -1702,6 +1848,8 @@ m_blocks.push_back(*old_r);
         // Clear indexing structures before rebuild
         UnitsByRegion.Clear();
         UnitsByKey.Clear();
+        _buildingIdsByRegion.Clear();
+        _shipIdsByRegion.Clear();
 
         Dictionary<int, DataBlock> ships = [];
         Dictionary<int, List<RegionModel>> shipsCrossedRegions = [];
@@ -1910,16 +2058,13 @@ m_blocks.push_back(*old_r);
                     // Index unit by region (if we have a current region)
                     if (currentRegion is not null)
                     {
-                        int regionKey = Coordinates.GetId(currentRegion.GetX(), currentRegion.GetY(), (PlaneType)currentRegion.GetId());
-                        if (regionKey > 0)
+                        int regionKey = regionModel!.Id;
+                        if (!UnitsByRegion.TryGetValue(regionKey, out var list))
                         {
-                            if (!UnitsByRegion.TryGetValue(regionKey, out var list))
-                            {
-                                list = new List<int>();
-                                UnitsByRegion[regionKey] = list;
-                            }
-                            list.Add(blockId);
+                            list = new List<int>();
+                            UnitsByRegion[regionKey] = list;
                         }
+                        list.Add(blockId);
                     }
 
                     // Index unit by common keys (BUILDING, SHIP, OWNER) for fast lookup
@@ -2264,7 +2409,8 @@ m_blocks.push_back(*old_r);
 
         foreach (var elt in UnitsByRegion)
         {
-            Debug.WriteLine($"[DOCUMENT] {elt.Value.Count} units in region {Planes[0].OccupiedRegions[elt.Key]}");
+            string regionLabel = FindRegionById(elt.Key)?.DisplayLabel ?? elt.Key.ToString();
+            Debug.WriteLine($"[DOCUMENT] {elt.Value.Count} units in region {regionLabel}");
         }
     }
 
@@ -2276,7 +2422,7 @@ m_blocks.push_back(*old_r);
         {
             Debug.WriteLine($"[DOCUMENT] Add unit {unitDataBlock} in region {regionModel}");
         }
-        int regionId = Coordinates.GetId(regionModel.GetX(), regionModel.GetY());
+        int regionId = regionModel.Id;
         unitModel = new UnitModel(unitDataBlock, regionId);
         Units[unitId] = unitModel;
     }
@@ -2284,29 +2430,38 @@ m_blocks.push_back(*old_r);
     private void AddBuildingInRegion(in BuildingDataBlock buildingDataBlock, int buildingId, in RegionModel regionModel)
     {
         Debug.WriteLine($"[DOCUMENT] Add building {buildingDataBlock} in region {regionModel}");
-        int regionId = Coordinates.GetId(regionModel.GetX(), regionModel.GetY());
+        int regionId = regionModel.Id;
         var buildingModel = new BuildingModel(buildingDataBlock, regionId/*region*/);
         Buildings[buildingId] = buildingModel;
+        AddRegionEntityId(_buildingIdsByRegion, regionId, buildingId);
         if (!RegionsWithStructure.TryGetValue(regionId, out _))
         {
             RegionsWithStructure[regionId] = regionModel;
         }
-        regionModel.AddBuilding(buildingModel);
     }
 
     private void AddShipInRegion(in ShipDataBlock shipDataBlock, int shipId, in RegionModel regionModel)
     {
         Debug.WriteLine($"[DOCUMENT] Add ship {shipDataBlock} in region {regionModel}");
-        int regionId = Coordinates.GetId(regionModel.GetX(), regionModel.GetY());
+        int regionId = regionModel.Id;
         var shipModel = new ShipModel(shipDataBlock, regionId/*region*/);
         shipModel.SetCurrentRegion(regionModel);
         Ships[shipId] = shipModel;
+        AddRegionEntityId(_shipIdsByRegion, regionId, shipId);
         if (!RegionsWithStructure.TryGetValue(regionId, out _))
         {
             RegionsWithStructure[regionId] = regionModel;
         }
-        regionModel.AddShip(shipModel);
+    }
 
+    private static void AddRegionEntityId(Dictionary<int, List<int>> regionIndex, int regionId, int entityId)
+    {
+        if (!regionIndex.TryGetValue(regionId, out List<int>? entityIds))
+        {
+            entityIds = [];
+            regionIndex[regionId] = entityIds;
+        }
+        entityIds.Add(entityId);
     }
 
     // TODO: add building id in region list of buildings)
@@ -2682,6 +2837,40 @@ m_blocks.push_back(*old_r);
     public IReadOnlyList<int> GetUnitIdsInRegion(int regionKey)
     {
         return UnitsByRegion.TryGetValue(regionKey, out var list) ? list : Array.Empty<int>();
+    }
+
+    public IEnumerable<UnitModel> GetUnitsInRegion(RegionModel region)
+    {
+        return GetEntitiesInRegion(UnitsByRegion, Units, region.Id);
+    }
+
+    public IEnumerable<BuildingModel> GetBuildingsInRegion(RegionModel region)
+    {
+        return GetEntitiesInRegion(_buildingIdsByRegion, Buildings, region.Id);
+    }
+
+    public IEnumerable<ShipModel> GetShipsInRegion(RegionModel region)
+    {
+        return GetEntitiesInRegion(_shipIdsByRegion, Ships, region.Id);
+    }
+
+    private static IEnumerable<TEntity> GetEntitiesInRegion<TEntity>(
+        Dictionary<int, List<int>> regionIndex,
+        Dictionary<int, TEntity> entities,
+        int regionId)
+    {
+        if (!regionIndex.TryGetValue(regionId, out List<int>? entityIds))
+        {
+            yield break;
+        }
+
+        foreach (int entityId in entityIds)
+        {
+            if (entities.TryGetValue(entityId, out TEntity? entity) && entity is not null)
+            {
+                yield return entity;
+            }
+        }
     }
 
     public IReadOnlyList<int> GetUnitIdsByKey(KeyType key, int value)

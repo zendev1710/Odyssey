@@ -14,9 +14,9 @@ public partial class ShipsDetailsViewModel : StructureListViewModel
     {
     }
 
-    protected override IEnumerable<StructureModel> GetStructures(RegionModel region)
+    protected override IEnumerable<StructureModel> GetStructures(CRDocument report, RegionModel region)
     {
-        return region.Ships;
+        return report.GetShipsInRegion(region);
     }
 
     protected override bool IsContainerChanged(SelectionChangeTypes selType)

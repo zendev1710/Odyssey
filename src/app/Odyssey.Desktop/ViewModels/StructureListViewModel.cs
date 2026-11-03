@@ -30,7 +30,7 @@ public abstract partial class StructureListViewModel : StructureViewModel
     /// <summary>
     /// Gets the structures of the specified region (its buildings or its ships).
     /// </summary>
-    protected abstract IEnumerable<StructureModel> GetStructures(RegionModel region);
+    protected abstract IEnumerable<StructureModel> GetStructures(CRDocument report, RegionModel region);
 
     /// <summary>
     /// Returns true when the changed selection concerns the container handled by this view model.
@@ -65,7 +65,7 @@ public abstract partial class StructureListViewModel : StructureViewModel
             return;
         }
 
-        foreach (StructureModel structure in GetStructures(Region))
+        foreach (StructureModel structure in GetStructures(Report, Region))
         {
             DataProperty? structureProperty = null;
             if (!structure.CollectData(Report, ref structureProperty) || structureProperty is null)

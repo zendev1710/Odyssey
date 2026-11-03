@@ -123,12 +123,12 @@ public partial class RegionInfoViewModel : MessagesViewModel
         // Note: a container selection (the buildings/ships list of a region) is a region selection
         // without any item: the region to consider is the selected region itself, not the item.
         // (selection.Item is only the region for a region-only selection.)
-        DataBlock? region = anotherRegionSelected ? selection.Region?.SourceDataBlock : null;
-        DataBlock? unit = anotherUnitSelected ? selection.Item?.SourceDataBlock : null;
+        RegionModel? region = anotherRegionSelected ? selection.Region : null;
+        UnitModel? unit = anotherUnitSelected ? selection.Item as UnitModel : null;
 
         if (region != null)
         {
-            int terrain = region.GetTerrain();
+            int terrain = region.Terrain;
             bool needRoadsNode = Terrains.CanHaveRoad(terrain);
             bool needGuardsNode = Terrains.CanBeGuarded(terrain);
 
@@ -150,93 +150,30 @@ public partial class RegionInfoViewModel : MessagesViewModel
                 _guardsMessages = AppendItem(Root, Labels.Localize(Categories.Node, Labels.GUARDS), null);
             }
 
-            SortedSet<int> guardsIds = [];
-            DataBlock? startNode = region.GetNextBlock();
-            int regionDepth = region.GetDepth();
-            for (DataBlock? block = startNode; block != null && block.GetDepth() > regionDepth; block = block.GetNextBlock())
+            foreach (RenderedMessage message in Report.GetRegionMessages(region))
             {
-                BlockType btype = block.GetBlockType();
-                if (btype == BlockType.MESSAGE)
-                {
-                    AddMessage(RegionMessages, block);
-                }
-                else if (block.GetDepth() > regionDepth + 1)
-                {
-                    continue;
-                }
-                else if (btype == BlockType.UNIT)
-                {
-                    int guard = block.ValueInt(Strings.DE_UNIT_IS_GUARDING);
-                    if (guard != 0)
-                    {
-                        int faction = block.ValueInt(Strings.DE_UNIT_FACTION_ID);
-                        guardsIds.Add(faction);
-                    }
-                }
-                else if (btype == BlockType.EFFECTS)
-                {
-                    foreach (DataKey msg in block.GetData())
-                    {
-                        AppendItem(EffectsMessages, msg.GetValue(), null);
-                    }
-                }
-                else if (btype == BlockType.BORDER)
-                {
-                    int directionValue = block.ValueInt(Strings.DE_REGION_ROAD_DIRECTION, 6);
-                    int percent = block.ValueInt(Strings.DE_ROAD_PERCENT, 0);
-                    // LATER: check if block.Value("typ") can be something else than "Straße"
-                    string labelKey = percent == 100 ? Labels.ROAD_INFO : Labels.ROAD_IN_PROGRESS_INFO;
-                    string direction = Labels.GetDirectionAbbreviation(directionValue);
-                    string label = Labels.Localize(Categories.None, labelKey, [direction, $"{percent}"]);
-                    AppendItem(RoadsMessages!, label, null);
-                }
-                else if (btype == BlockType.DURCHREISE || btype == BlockType.DURCHSCHIFFUNG)
-                {
-                    // TODO: find "from region" and "to region" information
-                    // transit (DURCHREISE)
-                    // "Wagon driver to Xorlosch (g5te)"
-                    // for ships : The...
-                    // TODO: localize it
-                    string prefix = btype == BlockType.DURCHSCHIFFUNG ? "The " : "";
-                    //string prefix = btype == BlockType.DURCHSCHIFFUNG ? "Die " : "";
-                    // retrieve the targets
-                    foreach (DataKey msg in block.GetData())
-                    {
-                        List<EntityModel> targets = [];
-                        ShipModel? movingShip = null;
-                        UnitModel? movingUnit = null;
-                        // get string inside (...) and convert to int
-                        string label = msg.GetValue();
-                        int id = DataBlock.ExtractId(label);
-                        if (id != -1)
-                        {
-                            if (block.GetBlockType() == BlockType.DURCHSCHIFFUNG)
-                            {
-                                if (!Report.FindShip(id, out movingShip))
-                                {
-                                    Debug.WriteLine($"[REGION-INF] WARNING | Ship with {id} id not found");
-                                }
-                            }
-                            else if (!Report.FindUnit(id, out movingUnit))
-                            {
-                                Debug.WriteLine($"[REGION-INF] WARNING | Ship with {id} id not found");
-                            }
-                        }
-                        else
-                        {
-                            Debug.WriteLine($"[REGION-INF] WARNING | Failed to extract id from : {label}");
-                        }
-                        List<EntityModel?> entityModels = [movingUnit, movingShip];
-                        foreach (var item in entityModels)
-                        {
-                            if (item is not null)
-                                targets.Add(item);
-                        }
-                        _ = AppendItem(TravelMessages, label, new MessageEntry(label, targets));
-                    }
-
-                }
+                AddMessage(RegionMessages, message);
             }
+
+            foreach (string effect in Report.GetRegionEffects(region))
+            {
+                AppendItem(EffectsMessages, effect, null);
+            }
+
+            foreach ((int directionValue, int percent) in Report.GetRegionRoads(region))
+            {
+                string labelKey = percent == 100 ? Labels.ROAD_INFO : Labels.ROAD_IN_PROGRESS_INFO;
+                string direction = Labels.GetDirectionAbbreviation(directionValue);
+                string label = Labels.Localize(Categories.None, labelKey, [direction, $"{percent}"]);
+                AppendItem(RoadsMessages!, label, null);
+            }
+
+            foreach ((string label, List<EntityModel> targets) in Report.GetRegionTransits(region))
+            {
+                _ = AppendItem(TravelMessages, label, new MessageEntry(label, targets));
+            }
+
+            SortedSet<int> guardsIds = Report.GetRegionGuardingFactionIds(region);
             if (guardsIds.Count > 0)
             {
                 foreach (int id in guardsIds)
@@ -252,7 +189,7 @@ public partial class RegionInfoViewModel : MessagesViewModel
 
         if (unit != null)
         {
-            string name = unit.GetUILabel();
+            string name = unit.DisplayLabel;
             if (_unitMessages == null)
             {
                 // Insert Unit item at last position
@@ -269,28 +206,15 @@ public partial class RegionInfoViewModel : MessagesViewModel
         {
             // Search for first MESSAGE block beginning from ActiveFaction block
             // TODO: check if it's what that should be done
-            DataBlock? firstBlock = Report.ActiveFaction.Data.GetNextBlock();
-            DataBlock? firstMessageBlock = null;
-            for (var block = firstBlock; block != null; block = block.GetNextBlock())
+            foreach (var message in Report.GetActiveFactionMessages(unit, region))
             {
-                if (block.GetBlockType() == BlockType.MESSAGE)
+                if (unit is not null && message.MatchesUnit)
                 {
-                    firstMessageBlock = block;
-                    break;
+                    AddMessage(UnitMessages!, message.Message);
                 }
-            }
-
-            // Note: the below unit messages are duplicated in region messages node. Is it what we want ?
-            // LATER: maybe we should avoid duplicating them
-            for (var msg = firstMessageBlock; msg != null; msg = msg.GetNextBlock())
-            {
-                if (unit != null && msg.HasReference(unit))
+                if (region is not null && message.MatchesRegion)
                 {
-                    AddMessage(UnitMessages!, msg);
-                }
-                if (region != null && msg.HasReference(region))
-                {
-                    AddMessage(RegionMessages, msg);
+                    AddMessage(RegionMessages, message.Message);
                 }
             }
         }

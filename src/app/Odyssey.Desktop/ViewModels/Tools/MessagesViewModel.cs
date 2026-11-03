@@ -1,9 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Odyssey.Models;
-using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Tools;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
@@ -35,7 +33,7 @@ public abstract partial class MessagesViewModel : DocumentToolViewModelBase
     /// <summary>
     /// Dispatch the select node Event using the event aggregator.
     /// Normally called by a double-click or a space key pressed on the currently selected item of this tree messages list in the corresponding view.
-    /// Event is published only if the selected item is linked to a DataBlock (selection state has changed).
+    /// Event is published only if the selected item is linked to an entity model.
     /// </summary>
     /// <param name="node"></param>
     public void DispatchSelectedNode(Node? node)
@@ -48,9 +46,7 @@ public abstract partial class MessagesViewModel : DocumentToolViewModelBase
         // TODO: check if an unseen region can have a message and then it should be selected in map instead of explorer
         MessageEntry? messageEntry = node?.Entry;
         EntityModel? item = messageEntry?.Selection?.GetDefaultTarget();
-        //DataBlock? item = messageEntry?.Selection?.GetDefaultTarget()?.DataBlock;
         RegionModel? region = messageEntry?.Selection?.Region;
-        //RegionDataBlock? region = messageEntry?.Selection?.Region?.DataBlock as RegionDataBlock;
         if (item != null || region != null)
         {
             IEntitySelection sel = new EntitySelection(item, region, null);
@@ -59,16 +55,10 @@ public abstract partial class MessagesViewModel : DocumentToolViewModelBase
     }
 
     // new because in original code it needs to override base method
-    protected Node? AddMessage(Node group, in DataBlock? msgBlock)
+    protected Node? AddMessage(Node group, RenderedMessage message)
     {
-        if (msgBlock == null)
-        {
-            Debug.WriteLine("!!! AddMessage: message block is null");
-            return null;
-        }
-
         bool foundChild = false;
-        string section = msgBlock.Value(Strings.EN_MESSAGE_SECTION);
+        string section = message.Section;
         if (!string.IsNullOrEmpty(section))
         {
             string text = GetMessageSection(section);
@@ -91,14 +81,14 @@ public abstract partial class MessagesViewModel : DocumentToolViewModelBase
             }
         }
 
-        List<EntityModel> targets = Report.GetMessageTargets(msgBlock);
-        MessageEntry messageEntry = new MessageEntry(msgBlock.Value(Strings.EN_MESSAGE_RENDERED), targets);
+        MessageEntry messageEntry = new(message.Text, message.Targets);
         EntityModel? target = messageEntry.Selection?.GetDefaultTarget();
-        if (target == null)
+        if (target is null)
         {
             Debug.WriteLine("!!! AddMessage: message has no target");
+            return null;
         }
-        return target != null ? AppendItem(group, msgBlock.Value(Strings.EN_MESSAGE_RENDERED), messageEntry) : null;
+        return AppendItem(group, message.Text, messageEntry);
     }
 
     private static string GetMessageSection(in string section)
@@ -154,7 +144,7 @@ public abstract partial class MessagesViewModel : DocumentToolViewModelBase
         }
 
         // TODO: add Targets property as an ITargets interface (target can be a unit, region, ship and so on)
-        public Node(Node parent, string header, MessageEntry? entry /*DataBlock? block*/, int index = -1)
+        public Node(Node parent, string header, MessageEntry? entry, int index = -1)
         {
             Parent = parent;
             Header = header;
@@ -171,7 +161,6 @@ public abstract partial class MessagesViewModel : DocumentToolViewModelBase
 
         public Node? Parent { get; }
         public string Header { get; }
-        //public DataBlock? Block { get; }
         public MessageEntry? Entry { get; }
         public ObservableCollection<Node> Children => _children ??= [];
         public bool HasChildren() => Children.Count > 0;

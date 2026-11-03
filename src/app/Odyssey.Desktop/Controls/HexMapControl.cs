@@ -211,6 +211,8 @@ public class HexMapControl : Control
         PreloadStandardTerrainImages();
         OccupiedRegionsProperty.Changed.AddClassHandler<HexMapControl>((ctrl, e) => ctrl.OnOccupiedRegionsChanged());
         UnoccupiedRegionsProperty.Changed.AddClassHandler<HexMapControl>((ctrl, e) => ctrl.OnUnoccupiedRegionsChanged());
+        ShipsProperty.Changed.AddClassHandler<HexMapControl>((ctrl, e) => ctrl.OnShipsChanged());
+        BuildingsProperty.Changed.AddClassHandler<HexMapControl>((ctrl, e) => ctrl.OnBuildingsChanged());
         HexSizeProperty.Changed.AddClassHandler<HexMapControl>((ctrl, e) => ctrl.OnHexSizeChanged());
         ZoomProperty.Changed.AddClassHandler<HexMapControl>((ctrl, e) => ctrl.OnZoomChanged());
         SeasonProperty.Changed.AddClassHandler<HexMapControl>((ctrl, e) => ctrl.OnSeasonChanged());
@@ -238,6 +240,8 @@ public class HexMapControl : Control
     private int _shipRouteMode = ShipRouteModes.All;
     private int _shipRouteOpacity = 35;
     private int _selectedShipRouteOpacity = 70;
+    private readonly Dictionary<int, List<ShipModel>> _shipsByRegion = [];
+    private readonly Dictionary<int, List<BuildingModel>> _buildingsByRegion = [];
 
     // Map region-name settings (read from GlobalSettings).
     private bool _showRegionNames = true;
@@ -412,6 +416,49 @@ public class HexMapControl : Control
     {
         UpdateMap();
     }
+
+    private void OnShipsChanged()
+    {
+        RebuildStructureIndexes();
+        InvalidateVisual();
+    }
+
+    private void OnBuildingsChanged()
+    {
+        RebuildStructureIndexes();
+        InvalidateVisual();
+    }
+
+    private void RebuildStructureIndexes()
+    {
+        _shipsByRegion.Clear();
+        foreach (ShipModel ship in Ships.Values)
+        {
+            AddToRegionIndex(_shipsByRegion, ship.LocationId, ship);
+        }
+
+        _buildingsByRegion.Clear();
+        foreach (BuildingModel building in Buildings.Values)
+        {
+            AddToRegionIndex(_buildingsByRegion, building.LocationId, building);
+        }
+    }
+
+    private static void AddToRegionIndex<TEntity>(Dictionary<int, List<TEntity>> index, int regionId, TEntity entity)
+    {
+        if (!index.TryGetValue(regionId, out List<TEntity>? entities))
+        {
+            entities = [];
+            index[regionId] = entities;
+        }
+        entities.Add(entity);
+    }
+
+    private IReadOnlyList<ShipModel> GetShipsInRegion(RegionModel region) =>
+        _shipsByRegion.TryGetValue(region.Id, out List<ShipModel>? ships) ? ships : Array.Empty<ShipModel>();
+
+    private IReadOnlyList<BuildingModel> GetBuildingsInRegion(RegionModel region) =>
+        _buildingsByRegion.TryGetValue(region.Id, out List<BuildingModel>? buildings) ? buildings : Array.Empty<BuildingModel>();
 
     //private Rect regionsBound;
 
@@ -1378,7 +1425,7 @@ public class HexMapControl : Control
         List<ShipRouteDrawing> drawings,
         HashSet<int> visitedShips)
     {
-        foreach (ShipModel ship in regionModel.Ships)
+        foreach (ShipModel ship in GetShipsInRegion(regionModel))
         {
             int shipId = ship.Structure.GetId();
             if (!visitedShips.Add(shipId) || !ShouldShowShipRoute(ship))
@@ -2152,7 +2199,7 @@ public class HexMapControl : Control
             return;
         }
 
-        List<BuildingModel>? buildings = regionModel.Buildings;
+        IReadOnlyList<BuildingModel> buildings = GetBuildingsInRegion(regionModel);
         int count = buildings.Count;
         if (count == 0)
         {
@@ -2590,7 +2637,7 @@ public class HexMapControl : Control
             return;
         }
 
-        List<ShipModel>? ships = regionModel.Ships;
+        IReadOnlyList<ShipModel> ships = GetShipsInRegion(regionModel);
         int count = ships.Count;
         if (count == 0)
         {
@@ -2798,13 +2845,13 @@ public class HexMapControl : Control
     /// Returns the visual of the ship that is actually drawn for a coast. Several ships docked on
     /// the same edge share one image: the largest one. Route rings must use the same type.
     /// </summary>
-    private static ShipVisual GetRepresentativeShipVisual(RegionModel regionModel, ShipModel fallback, int coast)
+    private ShipVisual GetRepresentativeShipVisual(RegionModel regionModel, ShipModel fallback, int coast)
     {
         int key = coast is >= 0 and <= 5 ? coast : -1;
         ShipModel? representative = null;
         double bestSize = double.MinValue;
 
-        foreach (ShipModel candidate in regionModel.Ships)
+        foreach (ShipModel candidate in GetShipsInRegion(regionModel))
         {
             int candidateCoast = GetShipCoast(candidate);
             int candidateKey = candidateCoast is >= 0 and <= 5 ? candidateCoast : -1;
@@ -3304,13 +3351,19 @@ public class HexMapControl : Control
             return baseTip;
         }
 
-        if (regionModel is null || regionModel.Buildings.Count == 0)
+        if (regionModel is null)
         {
             return baseTip;
         }
 
-        var names = new List<string>(regionModel.Buildings.Count);
-        foreach (BuildingModel building in regionModel.Buildings)
+        IReadOnlyList<BuildingModel> buildings = GetBuildingsInRegion(regionModel);
+        if (buildings.Count == 0)
+        {
+            return baseTip;
+        }
+
+        var names = new List<string>(buildings.Count);
+        foreach (BuildingModel building in buildings)
         {
             string label = Labels.Localize(
                 Odyssey.Models.Tools.DataProperty.Categories.Building,

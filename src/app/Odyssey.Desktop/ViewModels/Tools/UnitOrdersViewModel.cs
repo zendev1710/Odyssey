@@ -512,11 +512,10 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         }
         else if (selection.IsRegionSelected() && selection.Region is RegionModel region)
         {
-            return Report.GetUnitIdsInRegion(region.Id)
-                .Count(id => Report.Units.TryGetValue(id, out UnitModel? unit) &&
-                             Report.IsActiveFaction(unit.FactionId) &&
-                             unit.HasEditableOrders &&
-                             unit.OrdersConfirmed == false);
+            return Report.GetUnitsInRegion(region)
+                .Count(unit => Report.IsActiveFaction(unit.FactionId) &&
+                               unit.HasEditableOrders &&
+                               unit.OrdersConfirmed == false);
         }
         return -1; // no unit with order block
     }
@@ -663,12 +662,10 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
             return;
         }
 
-        // FIXME: does not return anything
-        var ids = Report.GetUnitIdsInRegion(regionKey);
         // If the region contains many units, consider creating only a page/virtualized subset here.
-        foreach (var id in ids)
+        foreach (UnitModel unit in Report.GetUnitsInRegion(region))
         {
-            UnitsInRegion.Add(UnitViewModel.FromDocument(Report, id/*, x, y*/));
+            UnitsInRegion.Add(UnitViewModel.FromDocument(Report, unit.Id/*, x, y*/));
         }
     }
 

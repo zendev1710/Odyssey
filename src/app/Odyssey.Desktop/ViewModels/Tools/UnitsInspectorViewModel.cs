@@ -192,9 +192,9 @@ namespace Odyssey.ViewModels.Tools
                 }
             }
 
-            return Report.GetUnitIdsInRegion(faction.Region.Id)
-                .Where(unitId => Report.GetUnit(unitId) is UnitModel unit &&
-                                   unit.EffectiveFactionId == faction.FactionId)
+            return Report.GetUnitsInRegion(faction.Region)
+                .Where(unit => unit.EffectiveFactionId == faction.FactionId)
+                .Select(unit => unit.Id)
                 .ToList();
         }
 
@@ -211,7 +211,7 @@ namespace Odyssey.ViewModels.Tools
                 }
             }
 
-            return Report.GetUnitIdsInRegion(region.Id).ToList();
+            return Report.GetUnitsInRegion(region).Select(unit => unit.Id).ToList();
         }
 
         [RelayCommand(CanExecute = nameof(CanNavigateToFirstLocatedFaction))]
@@ -256,9 +256,7 @@ namespace Odyssey.ViewModels.Tools
                     : null;
                 IEnumerable<UnitModel> units = regionOrder is not null
                     ? regionOrder.Units
-                    : Report.GetUnitIdsInRegion(region.Id)
-                        .Select(unitId => Report.GetUnit(unitId))
-                        .OfType<UnitModel>();
+                    : Report.GetUnitsInRegion(region);
                 foreach (UnitModel unit in units)
                 {
                     int factionId = unit.EffectiveFactionId;

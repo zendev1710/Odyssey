@@ -90,12 +90,12 @@ public partial class MapViewModel : DocumentToolViewModelBase/*, IRecipient<Cent
     }
 
 
-    public IEnumerable<KeyValuePair<int, ShipModel>> Ships
+    public Dictionary<int, ShipModel> Ships
     {
         get => _ships;
         set
         {
-            if (!EqualityComparer<IEnumerable<KeyValuePair<int, ShipModel>>>.Default.Equals(_ships, value))
+            if (!ReferenceEquals(_ships, value))
             {
                 _ships = value;
                 OnPropertyChanged(nameof(Ships));
@@ -103,12 +103,12 @@ public partial class MapViewModel : DocumentToolViewModelBase/*, IRecipient<Cent
         }
     }
 
-    public IEnumerable<KeyValuePair<int, BuildingModel>> Buildings
+    public Dictionary<int, BuildingModel> Buildings
     {
         get => _buildings;
         set
         {
-            if (!EqualityComparer<IEnumerable<KeyValuePair<int, BuildingModel>>>.Default.Equals(_buildings, value))
+            if (!ReferenceEquals(_buildings, value))
             {
                 _buildings = value;
                 OnPropertyChanged(nameof(Buildings));
@@ -131,8 +131,8 @@ public partial class MapViewModel : DocumentToolViewModelBase/*, IRecipient<Cent
 
     private IEnumerable<KeyValuePair<int, RegionModel>> _populatedRegions = [];
     private IEnumerable<KeyValuePair<int, RegionModel>> _emptyRegions = [];
-    private IEnumerable<KeyValuePair<int, ShipModel>> _ships = [];
-    private IEnumerable<KeyValuePair<int, BuildingModel>> _buildings = [];
+    private Dictionary<int, ShipModel> _ships = [];
+    private Dictionary<int, BuildingModel> _buildings = [];
     private IEnumerable<KeyValuePair<int, RegionModel>> _regionsWithStructure = [];
 
     // Ids of the factions the player can play (allies may have several).
@@ -272,6 +272,8 @@ public partial class MapViewModel : DocumentToolViewModelBase/*, IRecipient<Cent
         IsStandardPlane = ((int)SelectedPlane.Type).IsStandardPlane();
         OccupiedRegions = SelectedPlane.OccupiedRegions;
         UnoccupiedRegions = SelectedPlane.UnoccupiedRegions;
+        Ships = Report.Ships;
+        Buildings = Report.Buildings;
         ActiveFactionIds = Report.ActiveFactionIds;
         AlliedFactionIds = Report.AlliedFactionIds;
         Season = DateUtils.GetGameSeason(Report.Turn);
@@ -283,6 +285,8 @@ public partial class MapViewModel : DocumentToolViewModelBase/*, IRecipient<Cent
         // LATER: check about Selection that should be cleared also
         OccupiedRegions = [];
         UnoccupiedRegions = [];
+        Ships = [];
+        Buildings = [];
         SelectedShip = null;
         Season = 0;
     }

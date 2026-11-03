@@ -1,8 +1,6 @@
 ﻿
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
-using System.Collections.Generic;
-using System.Numerics;
 
 namespace Odyssey.Models;
 
@@ -40,9 +38,6 @@ public class RegionModel : EntityModel, ILocation
     public string Label { get; private set; } = string.Empty;
     public string IslandName { get; private set; } = string.Empty;
 
-    public List<BuildingModel> Buildings { get; private set; } = [];
-    public List<ShipModel> Ships { get; private set; } = [];
-
     // TODO: set island id instead of 0 when island is defined for the region
     public RegionModel(in RegionDataBlock region) : base(region, 0)
     {
@@ -75,16 +70,6 @@ public class RegionModel : EntityModel, ILocation
         return visibilityFlag != Flag.None;
     }
 
-    public void AddBuilding(in BuildingModel buildingModel)
-    {
-        Buildings.Add(buildingModel);
-    }
-
-    public void AddShip(in ShipModel shipModel)
-    {
-        Ships.Add(shipModel);
-    }
-
     public void CollectData()
     {
         _terrain = Region.GetTerrain();
@@ -102,17 +87,6 @@ public class RegionModel : EntityModel, ILocation
         // TODO: set main properties :
         // - Name
         // - Description...
-        /*
-        Region?.CollectData();
-        foreach (var building in Buildings)
-        {
-            building.CollectData();
-        }
-        foreach (var ship in Ships)
-        {
-            ship.CollectData();
-        }
-        */
     }
 
     internal void UpdateIslandName()

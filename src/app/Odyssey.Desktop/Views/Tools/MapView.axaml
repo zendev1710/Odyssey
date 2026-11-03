@@ -53,6 +53,8 @@
 		Season="{Binding Season}"
         OccupiedRegions="{Binding OccupiedRegions}"
         UnoccupiedRegions="{Binding UnoccupiedRegions}"
+        Ships="{Binding Ships}"
+        Buildings="{Binding Buildings}"
         ActiveFactionIds="{Binding ActiveFactionIds}"
         AlliedFactionIds="{Binding AlliedFactionIds}"
         SelectedShip="{Binding SelectedShip, Mode=OneWay}"
