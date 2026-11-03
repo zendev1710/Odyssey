@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Text.Json;
 using TextMateSharp.Internal.Grammars.Reader;
 using TextMateSharp.Internal.Themes.Reader;
 using TextMateSharp.Internal.Types;
@@ -126,6 +127,60 @@ public class EresseaOrdersRegistryOptions : IRegistryOptions
     }
 
     public IRawTheme LoadTheme(ExtendedThemeName name) => GetTheme(GetThemeFile(name));
+
+    public IReadOnlyDictionary<string, string> LoadThemeColors(ExtendedThemeName name)
+    {
+        var colors = new Dictionary<string, string>(System.StringComparer.Ordinal);
+        LoadThemeColors(GetThemeFile(name), colors, new HashSet<string>(System.StringComparer.OrdinalIgnoreCase));
+        return colors;
+    }
+
+    private void LoadThemeColors(
+        string themeFileName,
+        Dictionary<string, string> colors,
+        HashSet<string> visitedThemes)
+    {
+        string themeName = Path.GetFileNameWithoutExtension(themeFileName);
+        if (string.IsNullOrWhiteSpace(themeName))
+        {
+            throw new InvalidDataException($"Invalid TextMate theme include '{themeFileName}'.");
+        }
+
+        if (!visitedThemes.Add(themeName))
+        {
+            throw new InvalidDataException($"A circular TextMate theme include was found for '{themeName}'.");
+        }
+
+        string resourceName = $"Odyssey.Resources.Themes.{themeName}.json";
+        using var stream = _assembly.GetManifestResourceStream(resourceName)
+            ?? throw new FileNotFoundException($"Embedded TextMate theme resource '{resourceName}' was not found.");
+        using var document = JsonDocument.Parse(stream, new JsonDocumentOptions
+        {
+            AllowTrailingCommas = true,
+            CommentHandling = JsonCommentHandling.Skip
+        });
+
+        JsonElement root = document.RootElement;
+        if (root.TryGetProperty("include", out JsonElement includeElement) &&
+            includeElement.ValueKind == JsonValueKind.String)
+        {
+            LoadThemeColors(includeElement.GetString()!, colors, visitedThemes);
+        }
+
+        if (!root.TryGetProperty("colors", out JsonElement colorsElement) ||
+            colorsElement.ValueKind != JsonValueKind.Object)
+        {
+            return;
+        }
+
+        foreach (JsonProperty property in colorsElement.EnumerateObject())
+        {
+            if (property.Value.ValueKind == JsonValueKind.String)
+            {
+                colors[property.Name] = property.Value.GetString()!;
+            }
+        }
+    }
 
     private static string GetThemeFile(ExtendedThemeName name) => name switch
     {

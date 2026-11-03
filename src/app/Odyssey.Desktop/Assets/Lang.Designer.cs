@@ -3463,7 +3463,7 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unit orders editor theme (dark mode).
+        ///   Looks up a localized string similar to Application color theme (dark mode).
         /// </summary>
         public static string parm_hdr_unit_orders_dark_theme {
             get {
@@ -3472,7 +3472,7 @@ namespace Odyssey.Assets {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Unit orders editor theme (light mode).
+        ///   Looks up a localized string similar to Application color theme (light mode).
         /// </summary>
         public static string parm_hdr_unit_orders_light_theme {
             get {
@@ -3706,7 +3706,7 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TextMate color theme used for unit orders when the application is in dark mode..
+        ///   Looks up a localized string similar to Color theme used across the application in dark mode..
         /// </summary>
         public static string parm_inf_unit_orders_dark_theme {
             get {
@@ -3715,7 +3715,7 @@ namespace Odyssey.Assets {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to TextMate color theme used for unit orders when the application is in light mode..
+        ///   Looks up a localized string similar to Color theme used across the application in light mode..
         /// </summary>
         public static string parm_inf_unit_orders_light_theme {
             get {

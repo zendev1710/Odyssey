@@ -231,8 +231,8 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
     [property: Config(
         Header = "parm_hdr_unit_orders_light_theme",
         Description = "parm_inf_unit_orders_light_theme",
-        Category = "parm_cat_views",
-        Group = "parm_grp_explorer")]
+        Category = "parm_cat_general",
+        Group = "parm_grp_appearance")]
     private int _unitOrdersLightTheme = (int)ExtendedThemeName.LightPlus;
 
     [ObservableProperty]
@@ -243,8 +243,8 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
     [property: Config(
         Header = "parm_hdr_unit_orders_dark_theme",
         Description = "parm_inf_unit_orders_dark_theme",
-        Category = "parm_cat_views",
-        Group = "parm_grp_explorer")]
+        Category = "parm_cat_general",
+        Group = "parm_grp_appearance")]
     private int _unitOrdersDarkTheme = (int)ExtendedThemeName.DarkPlus;
 
     // whether additional images depending on current season are used in Map

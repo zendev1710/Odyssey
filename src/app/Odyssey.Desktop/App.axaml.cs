@@ -2,6 +2,8 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Styling;
+using Avalonia.Media;
+using Avalonia.Threading;
 using Avalonia.Themes.Fluent;
 using Avalonia.Themes.Simple;
 using Odyssey.Assets;
@@ -13,11 +15,16 @@ using Dock.Avalonia.Diagnostics.Controls;
 using Dock.Avalonia.Diagnostics;
 using Dock.Avalonia.Themes.Fluent;
 using Dock.Avalonia.Themes.Simple;
+using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Collections.Generic;
+using System.IO;
 using Odyssey.Core.Services;
 using Avalonia.Input;
 using Odyssey.ViewModels;
+using Odyssey.TextMate;
+using Odyssea.TextMate;
 
 namespace Odyssey;
 
@@ -31,6 +38,7 @@ public class App : Application
     private IStyle? _dataGridFluent, _dataGridSimple;
     private IStyle? _avaloniaEditFluent, _avaloniaEditSimple;
     private IStyle? _configFactoryFluent/*, _configFactorySimple*/;
+    private readonly EresseaOrdersRegistryOptions _themeRegistryOptions = new("Odyssey.Resources.Grammars.eressea.tmLanguage.json");
 
     public static IThemeModeManager? ThemeModeManager;
 
@@ -81,10 +89,11 @@ public class App : Application
         _configFactoryFluent = (IStyle)Resources["ConfigFactoryFluent"]!;
         //_configFactorySimple = (IStyle)Resources["ConfigFactorySimple"]!;
 
+        ActualThemeVariantChanged += OnActualThemeVariantChanged;
+        GlobalSettings.Shared.SettingChanged += OnGlobalSettingChanged;
+
         Theme initialTheme = (Theme)GlobalSettings.Get<int>(GlobalSettings.THEME);
         ApplicationThemeMode initialThemeMode = (ApplicationThemeMode)GlobalSettings.Get<int>(GlobalSettings.THEME_MODE);
-
-        UpdateThemeResources(initialTheme, initialThemeMode);
 
         // Note: Simple theme does not exist for ConfigFactory, so Settings view will not be styled when Simple theme is used
         SetThemes(initialTheme);
@@ -96,20 +105,109 @@ public class App : Application
 #else
         AvaloniaXamlLoader.Load(this);
 #endif
+
+        UpdateThemeResources(initialThemeMode);
     }
 
-    private void UpdateThemeResources(Theme theme, ApplicationThemeMode themeMode)
+    private void UpdateThemeResources(ApplicationThemeMode themeMode)
     {
-        // TODO: update mainWindow resource AcrylicMaterial TintColor property according to theme
-        // - FluentTheme => SystemAltHighColor dynamic resource should be set to TintColor
-        // - SimpleTHeme => ThemeBackgroundColor dynamic resource should be set to TintColor
+        bool isDarkMode = themeMode switch
+        {
+            ApplicationThemeMode.Default => ActualThemeVariant == ThemeVariant.Dark,
+            ApplicationThemeMode.Light => false,
+            ApplicationThemeMode.Dark => true,
+            _ => throw new ArgumentOutOfRangeException(nameof(themeMode), themeMode, "Unknown application theme mode.")
+        };
 
-        // TODO: update mainWindow RenderOptions.BitmapInterpolationMode property according to theme
-        // - FluentTheme => HighQuality value should be set
-        // - SimpleTHeme => what value should be set ? it seams HighQuality value should be ok
+        string settingName = isDarkMode
+            ? GlobalSettings.UNIT_ORDERS_DARK_THEME
+            : GlobalSettings.UNIT_ORDERS_LIGHT_THEME;
+        ExtendedThemeName themeName = (ExtendedThemeName)GlobalSettings.Get<int>(settingName);
+        IReadOnlyDictionary<string, string> themeColors = _themeRegistryOptions.LoadThemeColors(themeName);
 
-        // - FluentTheme => app.Resources["AcrylicTintColor"] = app.Resources["SystemAltHighColor"]!;
-        // app.Resources["AcrylicTintColor"] = app.Resources["ThemeBackgroundColor"]!;
+        Color defaultBackground = isDarkMode ? Color.Parse("#2F2F2F") : Color.Parse("#EFEFEF");
+        Color defaultForeground = isDarkMode ? Colors.White : Color.Parse("#212121");
+        Color background = GetThemeColor(themeColors, "editor.background", defaultBackground);
+        Color foreground = GetThemeColor(themeColors, "editor.foreground", defaultForeground);
+        Color surface = GetThemeColor(themeColors, "sideBar.background", background);
+        Color inputBackground = GetThemeColor(themeColors, "input.background", surface);
+        Color border = GetThemeColor(themeColors, "editorGroup.border", Blend(surface, foreground, 0.2));
+        Color focus = GetThemeColor(themeColors, "focusBorder", border);
+        Color selection = GetThemeColor(
+            themeColors,
+            "list.activeSelectionBackground",
+            GetThemeColor(themeColors, "editor.selectionBackground", focus));
+        Color acrylicTint = GetThemeColor(themeColors, "titleBar.activeBackground", surface);
+
+        Resources["ApplicationThemeBackgroundBrush"] = new SolidColorBrush(background);
+        Resources["ApplicationThemeForegroundBrush"] = new SolidColorBrush(foreground);
+        Resources["ApplicationThemeSurfaceBrush"] = new SolidColorBrush(surface);
+        Resources["ApplicationThemeInputBrush"] = new SolidColorBrush(inputBackground);
+        Resources["ApplicationThemeSelectionBrush"] = new SolidColorBrush(selection);
+        Resources["TextControlBackground"] = new SolidColorBrush(inputBackground);
+        Resources["TextControlBackgroundFocused"] = new SolidColorBrush(inputBackground);
+        Resources["TextControlBackgroundPointerOver"] = new SolidColorBrush(inputBackground);
+        Resources["TextControlForeground"] = new SolidColorBrush(foreground);
+        Resources["TextForegroundColor"] = new SolidColorBrush(foreground);
+        Resources["TextControlBorderBrush"] = new SolidColorBrush(border);
+        Resources["TextControlBorderBrushPointerOver"] = new SolidColorBrush(focus);
+        Resources["DockThemeBackgroundBrush"] = new SolidColorBrush(surface);
+        Resources["DockThemeForegroundBrush"] = new SolidColorBrush(foreground);
+        Resources["DockThemeBorderLowBrush"] = new SolidColorBrush(border);
+        Resources["AcrylicTintColor"] = acrylicTint;
+        Resources["AcrylicFallbackColor"] = background;
+    }
+
+    private static Color GetThemeColor(IReadOnlyDictionary<string, string> themeColors, string name, Color fallback)
+    {
+        if (!themeColors.TryGetValue(name, out string? value))
+        {
+            return fallback;
+        }
+
+        if (value.Length == 9 && value[0] == '#' &&
+            uint.TryParse(value.AsSpan(1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out uint rgba))
+        {
+            return Color.FromArgb(
+                (byte)rgba,
+                (byte)(rgba >> 24),
+                (byte)(rgba >> 16),
+                (byte)(rgba >> 8));
+        }
+
+        if (Color.TryParse(value, out Color color))
+        {
+            return color;
+        }
+
+        throw new InvalidDataException($"TextMate theme color '{name}' has invalid value '{value}'.");
+    }
+
+    private static Color Blend(Color background, Color foreground, double foregroundOpacity)
+    {
+        static byte Mix(byte backgroundChannel, byte foregroundChannel, double opacity) =>
+            (byte)Math.Round(backgroundChannel * (1 - opacity) + foregroundChannel * opacity);
+
+        return Color.FromArgb(
+            byte.MaxValue,
+            Mix(background.R, foreground.R, foregroundOpacity),
+            Mix(background.G, foreground.G, foregroundOpacity),
+            Mix(background.B, foreground.B, foregroundOpacity));
+    }
+
+    private void OnActualThemeVariantChanged(object? sender, EventArgs e) =>
+        UpdateThemeResources((ApplicationThemeMode)GlobalSettings.Get<int>(GlobalSettings.THEME_MODE));
+
+    private void OnGlobalSettingChanged(object? sender, SettingChangedEventArgs e)
+    {
+        if (e.SettingName != GlobalSettings.UNIT_ORDERS_LIGHT_THEME &&
+            e.SettingName != GlobalSettings.UNIT_ORDERS_DARK_THEME)
+        {
+            return;
+        }
+
+        Dispatcher.UIThread.Post(() =>
+            UpdateThemeResources((ApplicationThemeMode)GlobalSettings.Get<int>(GlobalSettings.THEME_MODE)));
     }
 
     public override void OnFrameworkInitializationCompleted()

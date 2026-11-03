@@ -1861,16 +1861,16 @@
     <value>When enabled, Previous/Next skips units whose orders are confirmed. Disabled by default.</value>
   </data>
   <data name="parm_hdr_unit_orders_light_theme" xml:space="preserve">
-    <value>Unit orders editor theme (light mode)</value>
+    <value>Application color theme (light mode)</value>
   </data>
   <data name="parm_inf_unit_orders_light_theme" xml:space="preserve">
-    <value>TextMate color theme used for unit orders when the application is in light mode.</value>
+    <value>Color theme used across the application in light mode.</value>
   </data>
   <data name="parm_hdr_unit_orders_dark_theme" xml:space="preserve">
-    <value>Unit orders editor theme (dark mode)</value>
+    <value>Application color theme (dark mode)</value>
   </data>
   <data name="parm_inf_unit_orders_dark_theme" xml:space="preserve">
-    <value>TextMate color theme used for unit orders when the application is in dark mode.</value>
+    <value>Color theme used across the application in dark mode.</value>
   </data>
   <data name="parm_hdr_explorer_expand_tree_on_load" xml:space="preserve">
     <value>Expand Explorer tree when report document is opened</value>

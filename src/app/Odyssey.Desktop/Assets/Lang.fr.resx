@@ -1861,16 +1861,16 @@
     <value>Activé, Précédent/Suivant ignore les unités dont les ordres sont confirmés. Désactivé par défaut.</value>
   </data>
   <data name="parm_hdr_unit_orders_light_theme" xml:space="preserve">
-    <value>Thème de l’éditeur d’ordres (mode clair)</value>
+    <value>Thème de couleurs de l’application (mode clair)</value>
   </data>
   <data name="parm_inf_unit_orders_light_theme" xml:space="preserve">
-    <value>Thème de couleurs TextMate utilisé pour les ordres lorsque l’application est en mode clair.</value>
+    <value>Thème de couleurs appliqué à toute l’application en mode clair.</value>
   </data>
   <data name="parm_hdr_unit_orders_dark_theme" xml:space="preserve">
-    <value>Thème de l’éditeur d’ordres (mode sombre)</value>
+    <value>Thème de couleurs de l’application (mode sombre)</value>
   </data>
   <data name="parm_inf_unit_orders_dark_theme" xml:space="preserve">
-    <value>Thème de couleurs TextMate utilisé pour les ordres lorsque l’application est en mode sombre.</value>
+    <value>Thème de couleurs appliqué à toute l’application en mode sombre.</value>
   </data>
   <data name="parm_hdr_explorer_expand_tree_on_load" xml:space="preserve">
     <value>Déplier tous les éléments de l'Explorateur à l'ouverture du document</value>

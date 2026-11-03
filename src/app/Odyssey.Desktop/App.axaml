@@ -119,6 +119,11 @@
 					</ResourceDictionary.ThemeDictionaries>
 				</ResourceDictionary>
 			</ResourceDictionary.MergedDictionaries>
+			<SolidColorBrush x:Key="ApplicationThemeBackgroundBrush">#EFEFEF</SolidColorBrush>
+			<SolidColorBrush x:Key="ApplicationThemeForegroundBrush">#212121</SolidColorBrush>
+			<SolidColorBrush x:Key="ApplicationThemeSurfaceBrush">#EFEFEF</SolidColorBrush>
+			<SolidColorBrush x:Key="ApplicationThemeInputBrush">#EFEFEF</SolidColorBrush>
+			<SolidColorBrush x:Key="ApplicationThemeSelectionBrush">#0078D4</SolidColorBrush>
 			<!-- Styles attached dynamically depending on current theme (simple or fluent) -->
 			<StyleInclude x:Key="AvaloniaEditFluent" Source="avares://AvaloniaEdit/Themes/Fluent/AvaloniaEdit.xaml" />
 			<StyleInclude x:Key="AvaloniaEditSimple" Source="avares://AvaloniaEdit/Themes/Simple/AvaloniaEdit.xaml" />
@@ -137,6 +142,41 @@
 		<StyleInclude Source="avares://AsyncImageLoader.Avalonia/AdvancedImage.axaml" />
 		<Style Selector="DockControl">
 			<Setter Property="(ControlRecyclingDataTemplate.ControlRecycling)" Value="{StaticResource ControlRecyclingKey}" />
+		</Style>
+		<Style Selector="UserControl">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeBackgroundBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeForegroundBrush}" />
+		</Style>
+		<Style Selector="TextBlock">
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeForegroundBrush}" />
+		</Style>
+		<Style Selector="TextBox">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeInputBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeForegroundBrush}" />
+		</Style>
+		<Style Selector="ListBox">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSurfaceBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeForegroundBrush}" />
+		</Style>
+		<Style Selector="TreeView">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSurfaceBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeForegroundBrush}" />
+		</Style>
+		<Style Selector="DataGrid">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSurfaceBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeForegroundBrush}" />
+		</Style>
+		<Style Selector="ListBoxItem:selected">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeForegroundBrush}" />
+		</Style>
+		<Style Selector="TreeViewItem:selected">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeForegroundBrush}" />
+		</Style>
+		<Style Selector="DataGridRow:selected">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeForegroundBrush}" />
 		</Style>
 		<Style Selector="DocumentControl">
 			<Setter Property="IconTemplate">
