@@ -1860,6 +1860,18 @@
   <data name="parm_inf_unit_orders_navigate_unconfirmed_only" xml:space="preserve">
     <value>Wenn aktiviert, überspringt Vorherige/Nächste Einheiten mit bestätigten Befehlen. Standardmäßig deaktiviert.</value>
   </data>
+  <data name="parm_hdr_unit_orders_light_theme" xml:space="preserve">
+    <value>Editor-Design für Einheitenbefehle (heller Modus)</value>
+  </data>
+  <data name="parm_inf_unit_orders_light_theme" xml:space="preserve">
+    <value>TextMate-Farbdesign für Einheitenbefehle im hellen Anwendungsmodus.</value>
+  </data>
+  <data name="parm_hdr_unit_orders_dark_theme" xml:space="preserve">
+    <value>Editor-Design für Einheitenbefehle (dunkler Modus)</value>
+  </data>
+  <data name="parm_inf_unit_orders_dark_theme" xml:space="preserve">
+    <value>TextMate-Farbdesign für Einheitenbefehle im dunklen Anwendungsmodus.</value>
+  </data>
   <data name="parm_hdr_explorer_expand_tree_on_load" xml:space="preserve">
     <value>Expand Explorer tree when report document is opened [DE]</value>
   </data>

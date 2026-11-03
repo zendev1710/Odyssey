@@ -16,7 +16,7 @@ using AvaloniaEdit.Snippets;
 using AvaloniaEdit.TextMate;
 using Odyssea.TextMate;
 using Odyssey.TextMate;
-using Odyssey.ViewModels;
+using Odyssey.Settings;
 using Odyssey.ViewModels.Tools;
 using System;
 using System.Collections.Generic;
@@ -43,6 +43,7 @@ public partial class UnitOrdersView : UserControl
     private static readonly IBrush UnconfirmedOrdersBorderBrush = new SolidColorBrush(Color.Parse("#C07800"));
     private readonly Border? _confirmationIndicator;
     private Application? _themeApplication;
+    private GlobalSettings? _settings;
 
     public UnitOrdersView()
     {
@@ -153,17 +154,22 @@ public partial class UnitOrdersView : UserControl
 
         this.AttachedToVisualTree += (_, _) =>
         {
-            if (_themeApplication is not null)
+            if (_themeApplication is null)
             {
-                return;
+                _themeApplication = Application.Current;
+                if (_themeApplication is not null)
+                {
+                    _themeApplication.ActualThemeVariantChanged += Application_ActualThemeVariantChanged;
+                }
             }
 
-            _themeApplication = Application.Current;
-            if (_themeApplication is not null)
+            if (_settings is null)
             {
-                _themeApplication.ActualThemeVariantChanged += Application_ActualThemeVariantChanged;
-                UpdateAvailableThemesForApplicationMode();
+                _settings = GlobalSettings.Shared;
+                _settings.SettingChanged += Settings_SettingChanged;
             }
+
+            UpdateConfiguredThemeForApplicationMode();
         };
         this.DetachedFromVisualTree += (_, _) =>
         {
@@ -171,6 +177,12 @@ public partial class UnitOrdersView : UserControl
             {
                 _themeApplication.ActualThemeVariantChanged -= Application_ActualThemeVariantChanged;
                 _themeApplication = null;
+            }
+
+            if (_settings is not null)
+            {
+                _settings.SettingChanged -= Settings_SettingChanged;
+                _settings = null;
             }
         };
     }
@@ -202,18 +214,6 @@ public partial class UnitOrdersView : UserControl
 
     private void OnDataContextChanged(object? sender, EventArgs e)
     {
-        // When to avoid this: If you just need to change the style of an element (like a color),
-        // you should ideally use DataTriggers or Styles in your XAML bound to the SelectedTheme property instead of doing it in the code-behind.
-        // Only use the code-behind approach if you need to perform complex logic (e.g., re-initializing a third-party control,
-        // or heavy visual reconfiguration) that cannot be done via simple XAML bindings.
-
-        // // Unsubscribe from old VM if necessary (avoid memory leaks)
-        // if (sender is UnitOrdersViewModel oldVm) oldVm.PropertyChanged -= ViewModel_PropertyChanged;
-        // if (DataContext is UnitOrdersViewModel newVm)
-        // {
-        //     newVm.PropertyChanged += ViewModel_PropertyChanged;
-        // }
-
         if (_viewModel is not null)
         {
             _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
@@ -226,7 +226,7 @@ public partial class UnitOrdersView : UserControl
             _engine = new CompletionEngine(_viewModel);
         }
 
-        UpdateAvailableThemesForApplicationMode();
+        UpdateConfiguredThemeForApplicationMode();
         UpdateOrderConfirmationAppearance();
     }
 
@@ -237,22 +237,16 @@ public partial class UnitOrdersView : UserControl
             return;
         }
 
-        if (e.PropertyName == nameof(UnitOrdersViewModel.SelectedTheme))
-        {
-            ApplyThemeToView(vm.SelectedTheme);
-        }
-
         if (e.PropertyName is nameof(UnitOrdersViewModel.IsConfirmed) or nameof(UnitOrdersViewModel.CanEditOrders))
         {
             UpdateOrderConfirmationAppearance();
         }
     }
 
-    private void ApplyThemeToView(ColorThemeViewModel theme)
+    private void ApplyThemeToView(ExtendedThemeName themeName)
     {
-        // Your logic for the view (e.g., changing colors, triggers, etc.)
-        Debug.WriteLine($"Theme changed to: {theme.ThemeName}");
-        _textMateInstallation.SetTheme(_eresseaRegistryOptions.LoadTheme(theme.ThemeName));
+        Debug.WriteLine($"Theme changed to: {themeName}");
+        _textMateInstallation.SetTheme(_eresseaRegistryOptions.LoadTheme(themeName));
     }
 
     void ApplyThemeColorsToEditor(AvaloniaEdit.TextMate.TextMate.Installation e)
@@ -431,11 +425,22 @@ public partial class UnitOrdersView : UserControl
     private ThemeVariant CurrentApplicationThemeVariant =>
         (_themeApplication ?? Application.Current)?.ActualThemeVariant ?? ThemeVariant.Default;
 
-    private void UpdateAvailableThemesForApplicationMode()
+    private void UpdateConfiguredThemeForApplicationMode()
     {
         bool isDarkMode = CurrentApplicationThemeVariant == ThemeVariant.Dark;
-        _viewModel?.UpdateAvailableThemes(isDarkMode);
+        string settingName = isDarkMode
+            ? GlobalSettings.UNIT_ORDERS_DARK_THEME
+            : GlobalSettings.UNIT_ORDERS_LIGHT_THEME;
+        ApplyThemeToView((ExtendedThemeName)GlobalSettings.Get<int>(settingName));
         UpdateOrderConfirmationAppearance();
+    }
+
+    private void Settings_SettingChanged(object? sender, SettingChangedEventArgs e)
+    {
+        if (e.SettingName is GlobalSettings.UNIT_ORDERS_LIGHT_THEME or GlobalSettings.UNIT_ORDERS_DARK_THEME)
+        {
+            UpdateConfiguredThemeForApplicationMode();
+        }
     }
 
     private void UpdateOrderConfirmationAppearance()
@@ -839,5 +844,5 @@ public partial class UnitOrdersView : UserControl
         _textEditor.Focus();
     }
 
-    private void Application_ActualThemeVariantChanged(object? sender, EventArgs e) => UpdateAvailableThemesForApplicationMode();
+    private void Application_ActualThemeVariantChanged(object? sender, EventArgs e) => UpdateConfiguredThemeForApplicationMode();
 }

@@ -6,7 +6,6 @@ using Odyssey.Models;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Tools;
 using Odyssey.Settings;
-using Odyssey.TextMate;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -57,12 +56,6 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
     [ObservableProperty]
     private bool _canEditOrders;
 
-    private readonly List<ColorThemeViewModel> _allThemes = [];
-    public ObservableCollection<ColorThemeViewModel> AvailableThemes { get; } = [];
-
-    [ObservableProperty]
-    private ColorThemeViewModel _selectedTheme = new(ExtendedThemeName.DarkPlus);
-
     public TextDocument Document { get; set; }
 
     public UnitOrdersViewModel() : base()
@@ -75,14 +68,6 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         Document = new TextDocument { Text = "" };
         CanEditOrders = false;
         Reset();
-
-        foreach (ExtendedThemeName themeName in Enum.GetValues<ExtendedThemeName>())
-        {
-            _allThemes.Add(new ColorThemeViewModel(themeName));
-        }
-
-        SelectedTheme = _allThemes.Single(theme => theme.ThemeName == ExtendedThemeName.DarkPlus);
-        UpdateAvailableThemes(isDarkMode: true);
 
         Document.TextChanged += (sender, args) =>
         {
@@ -669,73 +654,6 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         }
     }
 
-    public void UpdateAvailableThemes(bool isDarkMode)
-    {
-        var availableThemes = _allThemes
-            .Where(theme => IsDarkTheme(theme.ThemeName) == isDarkMode)
-            .ToArray();
-        var defaultThemeName = isDarkMode ? ExtendedThemeName.DarkPlus : ExtendedThemeName.LightPlus;
-        var defaultTheme = availableThemes.Single(theme => theme.ThemeName == defaultThemeName);
-
-        foreach (var theme in availableThemes)
-        {
-            if (!AvailableThemes.Contains(theme))
-            {
-                AvailableThemes.Add(theme);
-            }
-        }
-
-        if (!availableThemes.Any(theme => theme.ThemeName == SelectedTheme.ThemeName))
-        {
-            SelectedTheme = defaultTheme;
-        }
-
-        for (int i = AvailableThemes.Count - 1; i >= 0; i--)
-        {
-            if (!availableThemes.Contains(AvailableThemes[i]))
-            {
-                AvailableThemes.RemoveAt(i);
-            }
-        }
-
-        for (int i = 0; i < availableThemes.Length; i++)
-        {
-            int currentIndex = AvailableThemes.IndexOf(availableThemes[i]);
-            if (currentIndex != i)
-            {
-                AvailableThemes.Move(currentIndex, i);
-            }
-        }
-    }
-
-    private static bool IsDarkTheme(ExtendedThemeName themeName) => themeName switch
-    {
-        ExtendedThemeName.Abbys or
-        ExtendedThemeName.Dark or
-        ExtendedThemeName.DarkPlus or
-        ExtendedThemeName.DimmedMonokai or
-        ExtendedThemeName.KimbieDark or
-        ExtendedThemeName.OneDark or
-        ExtendedThemeName.Monokai or
-        ExtendedThemeName.Red or
-        ExtendedThemeName.SolarizedDark or
-        ExtendedThemeName.TomorrowNightBlue or
-        ExtendedThemeName.HighContrastDark or
-        ExtendedThemeName.Dracula or
-        ExtendedThemeName.AtomOneDark or
-        ExtendedThemeName.VisualStudioDark => true,
-
-        ExtendedThemeName.Light or
-        ExtendedThemeName.LightPlus or
-        ExtendedThemeName.QuietLight or
-        ExtendedThemeName.SolarizedLight or
-        ExtendedThemeName.HighContrastLight or
-        ExtendedThemeName.AtomOneLight or
-        ExtendedThemeName.VisualStudioLight or
-        ExtendedThemeName.MagellanLight => false,
-
-        _ => throw new ArgumentOutOfRangeException(nameof(themeName), themeName, "No light/dark category is defined for this theme.")
-    };
 }
 
 

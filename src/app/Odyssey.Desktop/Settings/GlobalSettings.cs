@@ -14,6 +14,7 @@ using Odyssey.Controls.Buildings;
 using Odyssey.Controls.Ships;
 using Odyssey.Core.Services;
 using Odyssey.Models.Localization;
+using Odyssey.TextMate;
 
 namespace Odyssey.Settings;
 
@@ -74,6 +75,8 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
     public const string EXPLORER_REGION_ORDER = "ExplorerRegionOrder";
     public const string UNIT_ORDERS_NAVIGATE_EDITABLE_ONLY = "NavigateOnlyToEditableUnits";
     public const string UNIT_ORDERS_NAVIGATE_UNCONFIRMED_ONLY = "NavigateOnlyToUnconfirmedOrders";
+    public const string UNIT_ORDERS_LIGHT_THEME = "UnitOrdersLightTheme";
+    public const string UNIT_ORDERS_DARK_THEME = "UnitOrdersDarkTheme";
     public const string EXPLORER_SELECT_LAST_ACTIVE_REGION_ON_REPORT_OPENING = "SelectLastActiveRegionOnReportOpening";
     public const string MAP_USE_SEASON_IMAGES = "UseSeasonImages";
     public const string MAP_SHOW_BUILDINGS = "ShowBuildings";
@@ -219,6 +222,30 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
         Category = "parm_cat_views",
         Group = "parm_grp_explorer")]
     private bool _navigateOnlyToUnconfirmedOrders = false;
+
+    [ObservableProperty]
+    [property: DropdownConfig(
+        RuntimeItemsSourceMethodName = "GetLightTextEditorThemes",
+        DisplayMemberPath = "Key",
+        SelectedValuePath = "Value")]
+    [property: Config(
+        Header = "parm_hdr_unit_orders_light_theme",
+        Description = "parm_inf_unit_orders_light_theme",
+        Category = "parm_cat_views",
+        Group = "parm_grp_explorer")]
+    private int _unitOrdersLightTheme = (int)ExtendedThemeName.LightPlus;
+
+    [ObservableProperty]
+    [property: DropdownConfig(
+        RuntimeItemsSourceMethodName = "GetDarkTextEditorThemes",
+        DisplayMemberPath = "Key",
+        SelectedValuePath = "Value")]
+    [property: Config(
+        Header = "parm_hdr_unit_orders_dark_theme",
+        Description = "parm_inf_unit_orders_dark_theme",
+        Category = "parm_cat_views",
+        Group = "parm_grp_explorer")]
+    private int _unitOrdersDarkTheme = (int)ExtendedThemeName.DarkPlus;
 
     // whether additional images depending on current season are used in Map
     [ObservableProperty]
@@ -416,6 +443,48 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
 
         return new(options);
     }
+
+    public ObservableCollection<KeyValuePair<string, int>> GetLightTextEditorThemes() => GetTextEditorThemes(isDarkMode: false);
+
+    public ObservableCollection<KeyValuePair<string, int>> GetDarkTextEditorThemes() => GetTextEditorThemes(isDarkMode: true);
+
+    private static ObservableCollection<KeyValuePair<string, int>> GetTextEditorThemes(bool isDarkMode)
+    {
+        var options = Enum.GetValues<ExtendedThemeName>()
+            .Where(themeName => IsDarkTextEditorTheme(themeName) == isDarkMode)
+            .Select(themeName => new KeyValuePair<string, int>(themeName.ToString(), (int)themeName));
+
+        return new(options);
+    }
+
+    private static bool IsDarkTextEditorTheme(ExtendedThemeName themeName) => themeName switch
+    {
+        ExtendedThemeName.Abbys or
+        ExtendedThemeName.Dark or
+        ExtendedThemeName.DarkPlus or
+        ExtendedThemeName.DimmedMonokai or
+        ExtendedThemeName.KimbieDark or
+        ExtendedThemeName.OneDark or
+        ExtendedThemeName.Monokai or
+        ExtendedThemeName.Red or
+        ExtendedThemeName.SolarizedDark or
+        ExtendedThemeName.TomorrowNightBlue or
+        ExtendedThemeName.HighContrastDark or
+        ExtendedThemeName.Dracula or
+        ExtendedThemeName.AtomOneDark or
+        ExtendedThemeName.VisualStudioDark => true,
+
+        ExtendedThemeName.Light or
+        ExtendedThemeName.LightPlus or
+        ExtendedThemeName.QuietLight or
+        ExtendedThemeName.SolarizedLight or
+        ExtendedThemeName.HighContrastLight or
+        ExtendedThemeName.AtomOneLight or
+        ExtendedThemeName.VisualStudioLight or
+        ExtendedThemeName.MagellanLight => false,
+
+        _ => throw new ArgumentOutOfRangeException(nameof(themeName), themeName, "No light/dark category is defined for this theme.")
+    };
 
     public ObservableCollection<KeyValuePair<string, int>> GetIconAssetFormats()
     {

@@ -3128,7 +3128,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("opt_confirmed_orders_tip", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Unconfirmed only.
         /// </summary>
@@ -3463,6 +3463,24 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unit orders editor theme (dark mode).
+        /// </summary>
+        public static string parm_hdr_unit_orders_dark_theme {
+            get {
+                return ResourceManager.GetString("parm_hdr_unit_orders_dark_theme", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Unit orders editor theme (light mode).
+        /// </summary>
+        public static string parm_hdr_unit_orders_light_theme {
+            get {
+                return ResourceManager.GetString("parm_hdr_unit_orders_light_theme", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Navigate directly to editable units.
         /// </summary>
         public static string parm_hdr_unit_orders_navigate_editable_only {
@@ -3687,6 +3705,24 @@ namespace Odyssey.Assets {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to TextMate color theme used for unit orders when the application is in dark mode..
+        /// </summary>
+        public static string parm_inf_unit_orders_dark_theme {
+            get {
+                return ResourceManager.GetString("parm_inf_unit_orders_dark_theme", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to TextMate color theme used for unit orders when the application is in light mode..
+        /// </summary>
+        public static string parm_inf_unit_orders_light_theme {
+            get {
+                return ResourceManager.GetString("parm_inf_unit_orders_light_theme", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Previous/Next skips units without an editable orders block. Enabled by default..
         /// </summary>

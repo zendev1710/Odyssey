@@ -5,8 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:AvalonEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
              xmlns:vmt="using:Odyssey.ViewModels.Tools"
-			 xmlns:vm="using:Odyssey.ViewModels"
-			 xmlns:views="using:Odyssey.Views"
 			 xmlns:a="clr-namespace:Odyssey.Assets"
              mc:Ignorable="d"
              d:DesignWidth="300" d:DesignHeight="400"
@@ -36,20 +34,6 @@
             <Button Name="clearControlBtn" Content="Clear Buttons" VerticalAlignment="Stretch" VerticalContentAlignment="Center"/>
             <ComboBox Name="syntaxModeCombo" VerticalAlignment="Stretch" VerticalContentAlignment="Center"/>
             -->
-            <DropDownButton Content="Change theme" >
-            <!-- DropDownButton Content="Change theme" VerticalAlignment="Stretch" VerticalContentAlignment="Center"-->
-                <Button.Flyout>
-                    <Flyout>
-                        <ListBox ItemsSource="{Binding AvailableThemes}" SelectedItem="{Binding SelectedTheme}">
-                            <ListBox.DataTemplates>
-                                <DataTemplate x:DataType="vm:ColorThemeViewModel">
-                                    <TextBlock Text="{Binding DisplayName}"/>
-                                </DataTemplate>
-                            </ListBox.DataTemplates>
-                        </ListBox>    
-                    </Flyout>
-                </Button.Flyout>
-            </DropDownButton>
             <!--
             <Button Name="insertSnippetBtn" Content="Insert Snippet" />
             <StackPanel Orientation="Horizontal" Spacing="5">
