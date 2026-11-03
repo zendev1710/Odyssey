@@ -1,6 +1,4 @@
-﻿using Avalonia;
-using Odyssey.Models.Data;
-using Odyssey.Models.Localization;
+﻿using Odyssey.Models.Localization;
 using Odyssey.Settings;
 using System;
 using System.Diagnostics;
