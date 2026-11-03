@@ -13,7 +13,7 @@
         <ScrollViewer Name="UnitsScrollViewer"
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding Units}">
+            <ItemsControl x:Name="UnitsList" ItemsSource="{Binding Units}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Vertical" Spacing="0" />

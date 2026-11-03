@@ -218,14 +218,14 @@ public class DockFactory : Factory
             ActiveDockable = null,
             VisibleDockables = CreateList<IDockable>
             (
-                upperToolsDock,
-                new ProportionalDockSplitter(),
                 new ToolDock
                 {
                     Proportion = 0.5,
                     ActiveDockable = unitsInspectorViewModel,
                     VisibleDockables = CreateList<IDockable>(unitsInspectorViewModel),
-                }
+                },
+                new ProportionalDockSplitter(),
+                upperToolsDock
             )
         };
 

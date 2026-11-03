@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Odyssey.Models;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Localization;
@@ -6,7 +7,6 @@ using Odyssey.Settings;
 using System.Collections.Generic;
 using System.Diagnostics;
 using static Odyssey.Models.Data.RegionItem;
-using static Odyssey.Models.Documents.CRDocument;
 using static Odyssey.Models.Tools.DataProperty;
 
 namespace Odyssey.ViewModels.Tools;
@@ -266,9 +266,9 @@ public partial class RegionPropertiesViewModel : DocumentToolViewModelBase
 
         Debug.WriteLine($"[VM-REG-PROP] OnSelectionChanged: region changed={regionChanged}, region selected={regionSelected}");
 
-        if (regionChanged)
+        if (regionChanged && selection.Region is RegionModel region)
         {
-            CollectData(selection.Region!.Region);
+            CollectData(region);
         }
     }
 
@@ -324,14 +324,14 @@ public partial class RegionPropertiesViewModel : DocumentToolViewModelBase
         items[id] = new RegionItem(name, value, RegionItemCategory.TRADE);
     }
 
-    protected void CollectData(RegionDataBlock region)
+    protected void CollectData(RegionModel region)
     {
         CollectResourcesItem(region);
         CollectIncomeItem(region);
         CollectTradeItems(region);
 
-        Description = region.Value(KeyType.DESCRIPTION);
-        Herb = Labels.Localize(Categories.Item, region.Value(KeyType.HERB));
+        Description = region.Description;
+        Herb = Labels.Localize(Categories.Item, region.Herb);
 
         CollectAdditionalData();
     }
@@ -339,7 +339,7 @@ public partial class RegionPropertiesViewModel : DocumentToolViewModelBase
     /// <summary>
     /// Region data collection -> region panel data
     /// </summary>
-    protected void CollectResourcesItem(RegionDataBlock region)
+    protected void CollectResourcesItem(RegionModel region)
     {
         Dictionary<RegionItemType, RegionItem> resourceItems = [];
         //Dictionary<int, RegionItem> items = [];
@@ -348,12 +348,12 @@ public partial class RegionPropertiesViewModel : DocumentToolViewModelBase
         // Region properties
 
         // For a named region, it's ok; for another, should use GetUIName()
-        string shortRegionName = region.Value(KeyType.NAME);
-        string fullRegionName = region.GetUILabel();
+        string shortRegionName = region.ShortName;
+        string fullRegionName = region.DisplayLabel;
         int xPosition = region.GetX();
         int yPosition = region.GetY();
-        int terrainType = region.GetTerrain();
-        string terrainTypeName = Terrains.GetLabel(TerrainType);
+        int terrainType = region.Terrain;
+        string terrainTypeName = Terrains.GetLabel(terrainType);
 
         ///////////////////////////////////////////////
         /// OCEAN STATUS
@@ -380,11 +380,11 @@ public partial class RegionPropertiesViewModel : DocumentToolViewModelBase
         // Collect region resources from the region block
         // OPTIMIZE : Should be done at report file loading
 
-        int peasants = region.ValueInt(KeyType.PEASANTS, -1);
-        int regionSilver = region.ValueInt(KeyType.SILVER, -1);
-        int entertainment = region.ValueInt(ENTERTAINMENT_NAME, -1);
-        int recruits = region.ValueInt(RECRUITS_NAME, -1);
-        int horses = region.ValueInt(HORSES_NAME, -1);
+        int peasants = region.Peasants;
+        int regionSilver = region.Silver;
+        int entertainment = region.Entertainment;
+        int recruits = region.Recruits;
+        int horses = region.Horses;
 
         if (entertainment >= 0)
         {
@@ -403,83 +403,12 @@ public partial class RegionPropertiesViewModel : DocumentToolViewModelBase
         int factionPeople = 0;
         int factionSilver = 0;
 
-        RegionAttachment? regionAttachment = region.GetAttachment() as RegionAttachment;
-        RegionInfos? regionInfos = regionAttachment?.RegionInfos;
-        if (regionInfos != null)
-        {
-            people = regionInfos.People;
-            factionPeople = regionInfos.FactionPeople;
-            factionSilver = regionInfos.FactionSilver;
-        }
-        else
-        {
-            // Compute and store region information
-            // no regionInfo -> collect information (resources and peole...) from other blocks
-            bool isActiveFaction = false;
-            regionInfos = regionAttachment!.SetRegionInfos(new RegionInfos());
-            var startBlock = region.GetNextBlock();
-            int depth = region.GetDepth();
-            for (var b = startBlock; b != null; b = b.GetNextBlock())
-            {
-                if (b.GetDepth() <= depth)
-                {
-                    // The block is not a child, just a brother or parent
-                    break;
-                }
-                BlockType btype = b.GetBlockType();
-                if (btype == BlockType.RESOURCE)
-                {
-                    string resourceType = b.Value(KeyType.RESOURCE_TYPE);
-                    // don't double-count resources in REGION block
-                    if ($"{DataKey.TREES_NAME}|{DataKey.SILVER_NAME}|{DataKey.HORSES_NAME}".Contains(resourceType))
-                    {
-                        continue;
-                    }
-                    if (!string.IsNullOrEmpty(resourceType))
-                    {
-                        int skill = b.ValueInt(KeyType.RESOURCE_SKILL);
-                        int number = b.ValueInt(KeyType.RESOURCE_COUNT);
-                        AddResourceItem(RegionItemCategory.NATURAL_RESOURCE, RegionItemType.UNKNOWN, regionAttachment.RegionInfos.Items, resourceType, (ulong)number, skill);
-                    }
-                }
-                else if (btype == BlockType.UNIT)
-                {
-                    // collect people from units to :
-                    // - compute total number of people in the region
-                    // - compute number of people from the active faction
-                    DataBlock unitBlock = b;
-                    int factionId = GetFactionIdForUnit(unitBlock);
-                    isActiveFaction = Report.IsActiveFaction(factionId);
-                    int number = unitBlock.ValueInt(KeyType.NUMBER, -1);
-                    if (number > 0)
-                    {
-                        people += number;
-                        if (isActiveFaction)
-                        {
-                            factionPeople += number;
-                        }
-                    }
-                }
-                else if (btype == BlockType.ITEMS)
-                {
-                    if (isActiveFaction)
-                    {
-                        int silver = b.ValueInt(KeyType.SILVER, -1);
-                        if (silver > 0)
-                        {
-                            factionSilver += silver;
-                        }
-                    }
+        RegionInfos regionInfos = region.GetRegionInfos(Report);
+        people = regionInfos.People;
+        factionPeople = regionInfos.FactionPeople;
+        factionSilver = regionInfos.FactionSilver;
 
-                }
-            }
-
-            regionInfos.People = people;
-            regionInfos.FactionPeople = factionPeople;
-            regionInfos.FactionSilver = factionSilver;
-        }
-
-        foreach (var r in regionAttachment.RegionInfos.Items)
+        foreach (var r in regionInfos.Items)
         {
             AddResourceItem(RegionItemCategory.NATURAL_RESOURCE, RegionItemType.UNKNOWN, resourceItems, r.Value.Name, r.Value.Value, r.Value.Skill);
         }
@@ -503,10 +432,6 @@ public partial class RegionPropertiesViewModel : DocumentToolViewModelBase
         YPosition = yPosition;
         TerrainType = terrainType;
         TerrainTypeName = terrainTypeName;
-
-        YPosition = region.GetY();
-        TerrainType = region.GetTerrain();
-        TerrainTypeName = Terrains.GetLabel(TerrainType);
 
         IsUnknown = isUnknown;
         IsNeighbour = isNeighbour;
@@ -543,78 +468,24 @@ public partial class RegionPropertiesViewModel : DocumentToolViewModelBase
         TreesType = Labels.Localize(Categories.Node, HasMallorn ? Labels.MALLORN_TREES : Labels.TREES);
         SaplingsType = Labels.Localize(Categories.Node, HasMallorn ? Labels.MALLORN_SAPLINGS : Labels.SAPLINGS);
     }
-    protected static (int, int, int) FindInfoForIncome(DataBlock region)
-    {
-        // Find peasants, trees and saplings
-        int trees = region.ValueInt(KeyType.TREES);
-        int saplings = region.ValueInt(KeyType.SAPLINGS);
-        int peasants = region.ValueInt(KeyType.PEASANTS);
-
-        var startBlock = region.GetNextBlock();
-        int depth = region.GetDepth();
-        for (DataBlock? resourceBlock = startBlock; resourceBlock != null; resourceBlock = resourceBlock.GetNextBlock())
-        {
-            if (resourceBlock.GetDepth() <= depth)
-            {
-                break;
-            }
-            if (resourceBlock.GetBlockType() != BlockType.RESOURCE)
-            {
-                continue;
-            }
-            string value = resourceBlock.Value(KeyType.RESOURCE_TYPE);
-            KeyType type = (KeyType)((int)(DataKey.ParseType(value, BlockType.RESOURCE)) & ((1 << 7) - 1));
-            if (type == KeyType.PEASANTS)
-            {
-                peasants = resourceBlock.ValueInt(KeyType.RESOURCE_COUNT);
-            }
-            else if (type == KeyType.TREES)
-            {
-                trees = resourceBlock.ValueInt(KeyType.RESOURCE_COUNT);
-            }
-            else if (type == KeyType.SAPLINGS)
-            {
-                saplings = resourceBlock.ValueInt(KeyType.RESOURCE_COUNT);
-            }
-        }
-
-        return (trees, saplings, peasants);
-    }
-
     /// <summary>
     /// Region data collection -> region panel data
     /// </summary>
-    protected void CollectIncomeItem(DataBlock region)
+    protected void CollectIncomeItem(RegionModel region)
     {
-        Dictionary<Income.Kind, RegionItem> incomeItems = [];
+        int salary = region.Salary;
 
-        int peasants;
-        int trees;
-        int saplings;
+        RegionModel.IncomeInputs incomeInputs = region.GetIncomeInputs();
+        int surplus = Income.ComputeSurplus(region.Terrain, incomeInputs.Trees, incomeInputs.Saplings, incomeInputs.Peasants, salary);
 
-        int salary = region.ValueInt(KeyType.SALARY);
-
-        long taxes = 0;
-        long tradeRevenue = 0;
-        long sorcery = 0;
-        long theft = 0;
-        long miscRevenue = 0;
-        long entertainRevenue = 0;
-        long tradeDuties = 0;
-        long learningCosts = 0;
-
-        (trees, saplings, peasants) = FindInfoForIncome(region);
-        int surplus = Income.ComputeSurplus(region.GetTerrain(), trees, saplings, peasants, salary);
-
-        RegionAttachment? att = region.GetAttachment() as RegionAttachment;
-        learningCosts = att!.LearnCost;
-        miscRevenue = att.GetIncome(Income.Kind.MISC);
-        entertainRevenue = att.GetIncome(Income.Kind.ENTERTAIN);
-        taxes = att.GetIncome(Income.Kind.TAXES);
-        tradeRevenue = att.GetIncome(Income.Kind.TRADE);
-        theft = att.GetIncome(Income.Kind.THEFT);
-        sorcery = att.GetIncome(Income.Kind.MAGIC);
-        tradeDuties = att.GetIncome(Income.Kind.TARIFFS);
+        long learningCosts = region.LearningCost;
+        long miscRevenue = region.GetIncome(Income.Kind.MISC);
+        long entertainRevenue = region.GetIncome(Income.Kind.ENTERTAIN);
+        long taxes = region.GetIncome(Income.Kind.TAXES);
+        long tradeRevenue = region.GetIncome(Income.Kind.TRADE);
+        long theft = region.GetIncome(Income.Kind.THEFT);
+        long sorcery = region.GetIncome(Income.Kind.MAGIC);
+        long tradeDuties = region.GetIncome(Income.Kind.TARIFFS);
 
         //////////////////////
         // Income and cost - original code stats panel
@@ -636,45 +507,22 @@ public partial class RegionPropertiesViewModel : DocumentToolViewModelBase
     /// <summary>
     /// Trade data collection on the region -> trade panel data
     /// </summary>
-    protected void CollectTradeItems(DataBlock region)
+    protected void CollectTradeItems(RegionModel region)
     {
-        // Search prices block of this region.
-        // They are retrieved each time from the region block (not stored).
-        // OPTIMIZE : keep the prices information in the region block, as they do not change.
         Dictionary<RegionItemType, RegionItem> tradeItems = [];
 
         string soldItemName = "";
         int soldPrice = 0;
 
-        DataBlock? pricesBlock = null;
-        //LinkedListNode<DataBlock>? regionNode = region.Node;
-        if (GetSeenChild(ref pricesBlock, region, BlockType.PRICES))
+        foreach (RegionModel.TradePrice good in region.GetTradePrices())
         {
-            /*	PREISE
-				96;Balsam		// balm is purchased
-				-5;Seide		// silk is sold
-			*/
-            foreach (var good in pricesBlock!.GetData())
+            int price = good.Price;
+            if (price < 0)
             {
-                string name = good.GetKeyFromType();
-                string value = good.GetValue();
-                if (name.Length != 0 && value.Length != 0)
-                {
-                    int price = Utils.Converters.StringToInt(value);
-                    if (price < 0)
-                    {
-
-                        // sold trade item
-                        price = -price;
-                        soldPrice = price;
-                        soldItemName = name;
-                    }
-                    // CGN - use translated text to fill info
-                    //createLabels("Purchase price " + goods.translatedKey(), Globals.thousandsPoints(new FXint(price)), -1); // -1 == topmatrix
-                    //createLabels("Purchase price " + goods->key(), thousandsPoints(price), -1);	// -1 == topmatrix
-                    AddTradeItem(tradeItems, name, (ulong)price);
-                }
+                soldPrice = -price;
+                soldItemName = good.Name;
             }
+            AddTradeItem(tradeItems, good.Name, (ulong)(price < 0 ? -price : price));
         }
 
         // OPTIMIZE: use a TradeItemViewModel class
@@ -695,11 +543,6 @@ public partial class RegionPropertiesViewModel : DocumentToolViewModelBase
         // TODO: handle additional data :
         // - description in a textbox if exist
         // - description as a tooltip (on full region name - 1st expander header) if exist
-
-        /*
-
-        DataBlock? region = Selection.Item;
-        */
 
         // RETRIEVE REGION NAME
         /*

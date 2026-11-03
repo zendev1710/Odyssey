@@ -70,6 +70,7 @@ namespace Odyssey.ViewModels.Tools
         protected override void OnSelectionChanged(IEntitySelection selection, SelectionChangeTypes selType, object? sender)
         {
             if (ReferenceEquals(sender, this)) return;
+            bool selectionFromStrip = ReferenceEquals(sender, StripViewModel);
             if (!HasDocument)
             {
                 LocatedFaction = null;
@@ -122,19 +123,22 @@ namespace Odyssey.ViewModels.Tools
             {
                 if (factionChanged)
                 {
-                    StripViewModel.SetUnits(GetUnitIdsForFaction(selectedFaction));
+                    StripViewModel.SetUnits(GetUnitIdsForFaction(selectedFaction), revealSelectedUnit: !selectionFromStrip);
                 }
             }
             else if (region is not null)
             {
-                StripViewModel.SetUnits(GetUnitIdsForRegion(region));
+                StripViewModel.SetUnits(GetUnitIdsForRegion(region), revealSelectedUnit: !selectionFromStrip);
             }
             else
             {
-                StripViewModel.SetUnits([]);
+                StripViewModel.SetUnits([], revealSelectedUnit: !selectionFromStrip);
             }
 
-            StripViewModel.SetSelectedUnit(selection.Item is UnitModel selectedUnit ? selectedUnit.Id : null);
+            if (!selectionFromStrip)
+            {
+                StripViewModel.SetSelectedUnit(selection.Item is UnitModel selectedUnit ? selectedUnit.Id : null);
+            }
             StripViewModel.RefreshConfirmedStatuses();
             LocatedFactionIndex = _locatedFactionsInRegion.FindIndex(faction => IsSameLocatedFaction(faction, selectedFaction));
         }
