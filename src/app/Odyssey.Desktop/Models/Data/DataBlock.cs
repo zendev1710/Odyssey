@@ -46,6 +46,7 @@ namespace Odyssey.Models.Data
         BATTLE,
         MESSAGETYPE,
         TRANSLATION,
+        OLDUNIT,
         LAST
     }
 
@@ -332,6 +333,7 @@ namespace Odyssey.Models.Data
             { BlockType.BATTLE, "BATTLE" },
             { BlockType.MESSAGETYPE, "MESSAGETYPE" },
             { BlockType.TRANSLATION, "TRANSLATION" },
+            { BlockType.OLDUNIT, "ALTEINHEIT" },
             { BlockType.UNKNOWN, string.Empty },
         }.ToFrozenDictionary();
 

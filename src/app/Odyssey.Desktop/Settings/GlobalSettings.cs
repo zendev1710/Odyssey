@@ -77,6 +77,7 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
     public const string UNIT_ORDERS_NAVIGATE_UNCONFIRMED_ONLY = "NavigateOnlyToUnconfirmedOrders";
     public const string UNIT_ORDERS_LIGHT_THEME = "UnitOrdersLightTheme";
     public const string UNIT_ORDERS_DARK_THEME = "UnitOrdersDarkTheme";
+    public const int DOCK_DEFAULT_TEXT_EDITOR_THEME = -1;
     public const string EXPLORER_SELECT_LAST_ACTIVE_REGION_ON_REPORT_OPENING = "SelectLastActiveRegionOnReportOpening";
     public const string MAP_USE_SEASON_IMAGES = "UseSeasonImages";
     public const string MAP_SHOW_BUILDINGS = "ShowBuildings";
@@ -233,7 +234,7 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
         Description = "parm_inf_unit_orders_light_theme",
         Category = "parm_cat_general",
         Group = "parm_grp_appearance")]
-    private int _unitOrdersLightTheme = (int)ExtendedThemeName.LightPlus;
+    private int _unitOrdersLightTheme = DOCK_DEFAULT_TEXT_EDITOR_THEME;
 
     [ObservableProperty]
     [property: DropdownConfig(
@@ -245,7 +246,7 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
         Description = "parm_inf_unit_orders_dark_theme",
         Category = "parm_cat_general",
         Group = "parm_grp_appearance")]
-    private int _unitOrdersDarkTheme = (int)ExtendedThemeName.DarkPlus;
+    private int _unitOrdersDarkTheme = DOCK_DEFAULT_TEXT_EDITOR_THEME;
 
     // whether additional images depending on current season are used in Map
     [ObservableProperty]
@@ -454,7 +455,7 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
             .Where(themeName => IsDarkTextEditorTheme(themeName) == isDarkMode)
             .Select(themeName => new KeyValuePair<string, int>(themeName.ToString(), (int)themeName));
 
-        return new(options);
+        return new(options.Prepend(new KeyValuePair<string, int>("Dock (system)", DOCK_DEFAULT_TEXT_EDITOR_THEME)));
     }
 
     private static bool IsDarkTextEditorTheme(ExtendedThemeName themeName) => themeName switch

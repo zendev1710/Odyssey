@@ -124,6 +124,15 @@
 			<SolidColorBrush x:Key="ApplicationThemeSurfaceBrush">#EFEFEF</SolidColorBrush>
 			<SolidColorBrush x:Key="ApplicationThemeInputBrush">#EFEFEF</SolidColorBrush>
 			<SolidColorBrush x:Key="ApplicationThemeSelectionBrush">#0078D4</SolidColorBrush>
+			<SolidColorBrush x:Key="ApplicationThemeSelectionForegroundBrush">#212121</SolidColorBrush>
+			<SolidColorBrush x:Key="ApplicationThemeHoverBrush">#E5E5E5</SolidColorBrush>
+			<SolidColorBrush x:Key="ApplicationThemeMenuBackgroundBrush">#EFEFEF</SolidColorBrush>
+			<SolidColorBrush x:Key="ApplicationThemeMenuForegroundBrush">#212121</SolidColorBrush>
+			<SolidColorBrush x:Key="ApplicationThemeMenuBorderBrush">#33323232</SolidColorBrush>
+			<SolidColorBrush x:Key="ApplicationThemeTooltipBackgroundBrush">#EFEFEF</SolidColorBrush>
+			<SolidColorBrush x:Key="ApplicationThemeTooltipForegroundBrush">#212121</SolidColorBrush>
+			<SolidColorBrush x:Key="ApplicationThemeTooltipBorderBrush">#33323232</SolidColorBrush>
+			<SolidColorBrush x:Key="ApplicationThemeFindInputBrush">#EFEFEF</SolidColorBrush>
 			<!-- Styles attached dynamically depending on current theme (simple or fluent) -->
 			<StyleInclude x:Key="AvaloniaEditFluent" Source="avares://AvaloniaEdit/Themes/Fluent/AvaloniaEdit.xaml" />
 			<StyleInclude x:Key="AvaloniaEditSimple" Source="avares://AvaloniaEdit/Themes/Simple/AvaloniaEdit.xaml" />
@@ -143,6 +152,9 @@
 		<Style Selector="DockControl">
 			<Setter Property="(ControlRecyclingDataTemplate.ControlRecycling)" Value="{StaticResource ControlRecyclingKey}" />
 		</Style>
+		<Style Selector="Window">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeBackgroundBrush}" />
+		</Style>
 		<Style Selector="UserControl">
 			<Setter Property="Background" Value="{DynamicResource ApplicationThemeBackgroundBrush}" />
 			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeForegroundBrush}" />
@@ -150,9 +162,57 @@
 		<Style Selector="TextBlock">
 			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeForegroundBrush}" />
 		</Style>
+		<Style Selector="Expander">
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeForegroundBrush}" />
+		</Style>
+		<Style Selector="Menu">
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeMenuForegroundBrush}" />
+		</Style>
+		<Style Selector="Menu > MenuItem">
+			<Setter Property="Background" Value="Transparent" />
+		</Style>
+		<Style Selector="MenuItem">
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeMenuForegroundBrush}" />
+		</Style>
+		<Style Selector="MenuItem:selected /template/ Border#root">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeHoverBrush}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource ApplicationThemeHoverBrush}" />
+		</Style>
+		<Style Selector="MenuItem:selected /template/ Border#PART_LayoutRoot">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeHoverBrush}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource ApplicationThemeHoverBrush}" />
+		</Style>
+		<Style Selector="MenuItem /template/ Border#root:pointerover, MenuItem /template/ Border#PART_LayoutRoot:pointerover">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeHoverBrush}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource ApplicationThemeHoverBrush}" />
+		</Style>
+		<Style Selector="MenuItem:pressed /template/ Border#root:pointerover, MenuItem:pressed /template/ Border#PART_LayoutRoot:pointerover">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeHoverBrush}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource ApplicationThemeHoverBrush}" />
+		</Style>
+		<Style Selector="MenuItem /template/ Popup Border">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeMenuBackgroundBrush}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource ApplicationThemeMenuBorderBrush}" />
+		</Style>
+		<Style Selector="ToolTip">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeTooltipBackgroundBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeTooltipForegroundBrush}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource ApplicationThemeTooltipBorderBrush}" />
+		</Style>
+		<Style Selector="ToolTip TextBlock">
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeTooltipForegroundBrush}" />
+		</Style>
+		<Style Selector="ContextMenu, MenuFlyoutPresenter">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeMenuBackgroundBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeMenuForegroundBrush}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource ApplicationThemeMenuBorderBrush}" />
+		</Style>
 		<Style Selector="TextBox">
 			<Setter Property="Background" Value="{DynamicResource ApplicationThemeInputBrush}" />
 			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeForegroundBrush}" />
+		</Style>
+		<Style Selector="TextBox#PART_searchTextBox">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeFindInputBrush}" />
 		</Style>
 		<Style Selector="ListBox">
 			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSurfaceBrush}" />
@@ -166,17 +226,73 @@
 			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSurfaceBrush}" />
 			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeForegroundBrush}" />
 		</Style>
+		<Style Selector="ListBoxItem /template/ ContentPresenter:pointerover">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeHoverBrush}" />
+		</Style>
+		<Style Selector="DataGridRow:pointerover">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeHoverBrush}" />
+		</Style>
 		<Style Selector="ListBoxItem:selected">
 			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
-			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeForegroundBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeSelectionForegroundBrush}" />
 		</Style>
 		<Style Selector="TreeViewItem:selected">
 			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
-			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeForegroundBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeSelectionForegroundBrush}" />
+		</Style>
+		<Style Selector="ComboBoxItem:selected">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeSelectionForegroundBrush}" />
 		</Style>
 		<Style Selector="DataGridRow:selected">
 			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
-			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeForegroundBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeSelectionForegroundBrush}" />
+		</Style>
+		<Style Selector="ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter, ComboBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeSelectionForegroundBrush}" />
+		</Style>
+		<Style Selector="ListBoxItem:selected:pointerover /template/ ContentPresenter#PART_ContentPresenter, ComboBoxItem:selected:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeSelectionForegroundBrush}" />
+		</Style>
+		<Style Selector="ListBoxItem:selected:focus /template/ ContentPresenter#PART_ContentPresenter, ComboBoxItem:selected:focus /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeSelectionForegroundBrush}" />
+		</Style>
+		<Style Selector="ListBoxItem:selected:pointerover:focus /template/ ContentPresenter#PART_ContentPresenter, ComboBoxItem:selected:pointerover:focus /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeSelectionForegroundBrush}" />
+		</Style>
+		<Style Selector="ListBoxItem:selected:pressed /template/ ContentPresenter#PART_ContentPresenter, ComboBoxItem:selected:pressed /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeSelectionForegroundBrush}" />
+		</Style>
+		<Style Selector="TreeViewItem:selected /template/ Border#PART_LayoutRoot, TreeViewItem:selected /template/ Border#SelectionBorder">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+		</Style>
+		<Style Selector="TreeViewItem:selected:pointerover /template/ Border#PART_LayoutRoot, TreeViewItem:selected:pointerover /template/ Border#SelectionBorder">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+		</Style>
+		<Style Selector="TreeViewItem:selected:pressed /template/ Border#PART_LayoutRoot">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+		</Style>
+		<Style Selector="TreeViewItem:selected:focus /template/ Border#SelectionBorder">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+		</Style>
+		<Style Selector="TreeViewItem:selected:pointerover:focus /template/ Border#SelectionBorder">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+		</Style>
+		<Style Selector="TreeViewItem:selected /template/ ContentPresenter#PART_HeaderPresenter">
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeSelectionForegroundBrush}" />
+		</Style>
+		<Style Selector="DataGridRow:selected /template/ Rectangle#BackgroundRectangle">
+			<Setter Property="Fill" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+			<Setter Property="Opacity" Value="1" />
+		</Style>
+		<Style Selector="DataGridRow:selected:pointerover /template/ Rectangle#BackgroundRectangle, DataGridRow:selected:focus /template/ Rectangle#BackgroundRectangle, DataGridRow:selected:pointerover:focus /template/ Rectangle#BackgroundRectangle">
+			<Setter Property="Fill" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+			<Setter Property="Opacity" Value="1" />
 		</Style>
 		<Style Selector="DocumentControl">
 			<Setter Property="IconTemplate">
@@ -206,8 +322,11 @@
 				</DataTemplate>
 			</Setter>
 		</Style>
-		<Style Selector="ToolChromeControl">
-			<Setter Property="Background" Value="Transparent" />
+		<Style Selector="ToolChromeControl /template/ Grid#PART_Grip">
+			<Setter Property="Background" Value="{DynamicResource ApplicationDockTitleBarInactiveBrush}" />
+		</Style>
+		<Style Selector="ToolChromeControl:active /template/ Grid#PART_Grip">
+			<Setter Property="Background" Value="{DynamicResource ApplicationDockTitleBarActiveBrush}" />
 		</Style>
 	</Application.Styles>
 </Application>

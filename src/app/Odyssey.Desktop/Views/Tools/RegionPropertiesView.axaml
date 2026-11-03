@@ -16,7 +16,7 @@
 		<conv:TerainToBackgroundConverter x:Key="TerainToBackgroundConverter" />
 		<conv:ItemAmountToString x:Key="ItemAmountConverter" />
 	</UserControl.Resources>
-	<Grid Focusable="True" Opacity="0.9" IsVisible="{Binding HasDocument}" Background="{Binding TerrainType, Converter={StaticResource TerainToBackgroundConverter}}" >
+	<Grid Focusable="True" IsVisible="{Binding HasDocument}" Background="{DynamicResource ApplicationThemeBackgroundBrush}" >
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
@@ -37,6 +37,10 @@
 			</Grid.RowDefinitions> -->
 		<!--Border Background="#101010" -->
 		<!--StackPanel Orientation="Vertical"-->
+			<Border Grid.RowSpan="5"
+					IsHitTestVisible="False"
+					Opacity="0.9"
+					Background="{Binding TerrainType, Converter={StaticResource TerainToBackgroundConverter}}" />
 			<!-- first expander -->
 			<Expander IsExpanded="True"
 					  ExpandDirection="Down"
@@ -384,7 +388,6 @@
 			</Expander>
 		<TextBox Grid.Row="3" Text="{Binding Description}" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True" IsVisible="{Binding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
 		<!-- TODO: use a StaticResource from fluentTheme -->
-		<TextBlock Grid.Row="4" Background="#2F2F2F" HorizontalAlignment="Stretch" ></TextBlock>
 		<!--/StackPanel-->
 		<!--/Border-->
 		<!--/Grid-->

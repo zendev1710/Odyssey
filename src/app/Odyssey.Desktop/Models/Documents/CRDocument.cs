@@ -319,6 +319,7 @@ public class CRDocument : EresseaDocument, ILocationResolver
         enclosed[BlockType.REGION].Add(BlockType.RESOURCE);
         enclosed[BlockType.REGION].Add(BlockType.ITEMS);
         enclosed[BlockType.REGION].Add(BlockType.UNIT);
+        enclosed[BlockType.REGION].Add(BlockType.OLDUNIT);
         enclosed[BlockType.UNIT].Add(BlockType.EFFECTS);
         enclosed[BlockType.UNIT].Add(BlockType.COMMANDS);
         enclosed[BlockType.UNIT].Add(BlockType.ITEMS);
@@ -326,6 +327,7 @@ public class CRDocument : EresseaDocument, ILocationResolver
         enclosed[BlockType.UNIT].Add(BlockType.COMBATSPELL);
         enclosed[BlockType.UNIT].Add(BlockType.UNITMESSAGES);
         enclosed[BlockType.UNIT].Add(BlockType.TALENTS);
+        enclosed[BlockType.OLDUNIT].UnionWith(enclosed[BlockType.UNIT]);
         enclosed[BlockType.REGION].Add(BlockType.BUILDING);
         enclosed[BlockType.BUILDING].Add(BlockType.EFFECTS);
         enclosed[BlockType.REGION].Add(BlockType.DURCHREISE);

@@ -431,7 +431,11 @@ public partial class UnitOrdersView : UserControl
         string settingName = isDarkMode
             ? GlobalSettings.UNIT_ORDERS_DARK_THEME
             : GlobalSettings.UNIT_ORDERS_LIGHT_THEME;
-        ApplyThemeToView((ExtendedThemeName)GlobalSettings.Get<int>(settingName));
+        int configuredTheme = GlobalSettings.Get<int>(settingName);
+        ExtendedThemeName themeName = configuredTheme == GlobalSettings.DOCK_DEFAULT_TEXT_EDITOR_THEME
+            ? (isDarkMode ? ExtendedThemeName.DarkPlus : ExtendedThemeName.LightPlus)
+            : (ExtendedThemeName)configuredTheme;
+        ApplyThemeToView(themeName);
         UpdateOrderConfirmationAppearance();
     }
 

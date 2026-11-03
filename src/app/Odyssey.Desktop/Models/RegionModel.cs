@@ -188,6 +188,10 @@ public class RegionModel : EntityModel, ILocation
                     }
                 }
             }
+            else if (blockType == BlockType.OLDUNIT)
+            {
+                isActiveFaction = false;
+            }
             else if (blockType == BlockType.ITEMS && isActiveFaction)
             {
                 int silver = block.ValueInt(KeyType.SILVER, -1);
