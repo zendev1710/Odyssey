@@ -55,7 +55,7 @@ jobs:
     runs-on: windows-latest
 
     env:
-      Solution_Name: src/app/Odyssey.Desktop/Odyssey.sln       # Odyssey solution path
+      Solution_Name: src/Odyssey.slnx                         # Odyssey solution path
       # Test_Project_Path: app/Odyssey.Desktop/Odyssey.Tests/Odyssey.Tests.csproj # Uncomment and set if you have tests
       Wap_Project_Directory: installer                         # WAP project directory (adjust if needed)
       Wap_Project_Path: src/app/OdysseyInstaller.wxs         # WAP project path (adjust if needed)
@@ -69,7 +69,7 @@ jobs:
     - name: Install .NET Core
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: 10.0.x
 
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v2
