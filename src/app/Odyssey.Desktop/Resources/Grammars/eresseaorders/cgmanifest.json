@@ -1,0 +1,18 @@
+{
+	"registrations": [
+		{
+			"component": {
+				"type": "git",
+				"git": {
+					"name": "eresseaorders/eresseaorders-tmLanguage",
+					"repositoryUrl": "https://github.com/zendev1710/Odyssey",
+					"commitHash": ""
+				}
+			},
+			"license": "MIT",
+			"version": "0.1.0",
+			"description": "The file syntaxes/eresseaorders.tmLanguage.json was derived from https://github.com/zendev1710/Odyssey"
+		}
+	],
+	"version": 1
+}

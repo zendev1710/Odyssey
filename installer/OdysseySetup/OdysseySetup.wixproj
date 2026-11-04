@@ -1,0 +1,12 @@
+﻿<Project Sdk="WixToolset.Sdk/6.0.1">
+  <ItemGroup>
+    <PackageReference Include="WixToolset.UI.wixext" Version="6.0.1" />
+    <PackageReference Include="WixToolset.Util.wixext" Version="6.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\app\Odyssey.Desktop\Odyssey.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="ComponentsForNet80.wxs;ComponentsForNet90.wxs" />
+  </ItemGroup>
+</Project>

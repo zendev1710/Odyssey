@@ -1,13 +1,32 @@
 # TODO
 
-## Keyboard shortcuts
-
-- which one for 'Save Orders'?
-
+Content moved in [zendev monday Odyssey workspace](https://zendev-team.monday.com/).
 
 ## Features in progress
 
-### Menu system
+### Bookmarks system
+
+- [ ] 'New bookmarks set' item in the status bar's combobox
+- [ ] Manage bookmarks (dialog box)
+- [ ] Combobox control content to up (not bottom), using flyout ?
+- [ ] Bad design preview for starcontrol
+
+### Map view
+
+- [x] buildings rendering
+- [x] ships rendering
+- [x] all ships turn movements rendering
+- [ ] all order movements rendering
+- [x] ships turn movements rendering on region selection
+- [ ] ships order movements rendering on region selection
+- [x] turn movement highlighting on ship selection
+- [ ] order movement highlighting on ship selection
+- [ ] by foot unit movements rendering
+- [ ] by horse unit movements rendering
+- [ ] movement highlighting on unit selection
+- [ ] astral region selection handling
+
+### Units inspector view
 
 TO BE FINISHED.
 
@@ -21,22 +40,15 @@ TO BE DONE.
 
 ### Settings system
 
-TO BE FINISHED.
-
 - [x] Use [ConfigFactory.Avalonia](https://www.nuget.org/packages/ConfigFactory.Avalonia) for GUI settings pages
 - [x] Restore/save settings by (de)serializing into an application settings JSON file (config.json)
-- [ ] Restore/override settings by (de)serializing into an user settings JSON file (config.json)
+- [x] Restore/override settings by (de)serializing into an user settings JSON file (config.json)
 
 ### Translation system
 
-TO BE FINISHED.
-
-- [x] Main view
-- [x] Building details view
-- [x] Ship details view
-- [x] Unit details view
-- [x] Explorer view
-- [x] Region properties view
+- [ ] Achieve missing translations displayed -- xxx -- in the UI and stored in to-translate bookmarks
+- [ ] Achieve missing german translations marked [DE]
+- [ ] Achieve missing german translations marked [FR]
 
 ### Tooltips system
 
@@ -83,18 +95,7 @@ TO BE FINISHED.
 
 ### Information view
 
-Information view (Ctrl + I in CsMapFx) - display information about the world data (11 tabs in a navigation view ... on central area ?) :
-  - alchemy 
-  - buildings
-  - resources
-  - calendar (winter...)
-  - batlles modifiers
-  - Races
-  - Regions
-  - Production
-  - Navigation
-  - Weapons
-  - Waren ?
+TO BE DONE.
 
 ### Orders view additional features
 
@@ -106,16 +107,46 @@ Information view (Ctrl + I in CsMapFx) - display information about the world dat
 
 ## Improvements
 
-- [x] Load then 'save as' a CR file without any change create a CR file with exactly the same content as the original one 
-- 'Expand all' action in explorer view
-- 'Collapse all' action in explorer view
-- Icon for Ships node and each ship node
-- Icon for Buildings node and each building node
-- Icon for Factions node and each faction node (race)
-- Display all messages in report view as a list view (not as a 1-depth tree view)
-- Avoid data view update (tree rebuild and so on) when it's not necessary
-- Unit orders view: prev/next buttons as images to the right side of the status bar
-- Unit orders view: confirmed checkbox as a fluent toggle icon 
-- Optimize the file loading service
-- Translate GUI in the current language for each view
-- Translate tab contextual menu items
+- [ ] if the selected region is a firewall, the selection lines on hex should be of another color (nott red, because hard to see)
+- [x] Load then 'save as' a CR file without any change create a CR file with exactly the same content as the original one
+- [ ] 'Expand all' action in explorer view
+- [ ] 'Collapse all' action in explorer view
+- [ ] Icon for Ships node and each ship node
+- [ ] Icon for Buildings node and each building node
+- [ ] Icon for Factions node and each faction node (race)
+- [ ] Display all messages in report view as a list view (not as a 1-depth tree view)
+- [ ] Avoid data view update (tree rebuild and so on) when it's not necessary
+- [ ] Unit orders view: prev/next buttons as images to the right side of the status bar
+- [ ] Unit orders view: confirmed checkbox as a fluent toggle icon
+- [ ] Optimize the file loading service
+- [ ] Translate GUI in the current language for each view
+- [ ] Translate tab contextual menu items
+- [ ] Centralize selection handling with a service
+- [ ] Quick search (autocompletebox versus textbox...)
+- [ ] Map rendering optimizations
+  - [ ] precompute map bounds
+
+## Asset conversion report — GIF to transparent PNG
+
+Date: 2026-10-25
+Scope: `src/app/Odyssey.Desktop/Assets` and subdirectories
+Script: `scripts/convert-gif-assets-to-png.ps1`
+
+### Objective
+Convert all existing GIF icon assets to transparent PNG files as a first step before a dark-mode-friendly SVG migration.
+
+### Strategy used
+- Prefer ImageMagick when it can process a GIF cleanly.
+- Detect light/dirty-white backgrounds using a white-pixel ratio heuristic.
+- When ImageMagick fails on palette-heavy or malformed GIFs, use a .NET fallback that loads the image, strips near-white pixels to transparency, and saves it as PNG with alpha.
+- Keep a generated PNG alongside each GIF source, without deleting the original asset.
+
+### Result
+- GIFs checked: 1135
+- PNGs generated/available after conversion: 1237
+- Missing PNGs after conversion: 0
+
+### Notes
+- This conversion is intended as a safe preparation step for theme-aware icon usage.
+- The final goal remains: SVG assets with `currentColor`/transparent backgrounds, or a simple light/dark pair if the SVG conversion is not clean enough.
+- GIF is still kept as source for now, but the transparent PNG variants are now available for UI integration and dark-mode testing.

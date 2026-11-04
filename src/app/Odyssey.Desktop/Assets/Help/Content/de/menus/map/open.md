@@ -1,0 +1,6 @@
+# Auswahl öffnen
+
+Dieser Menüpunkt öffnet einen Dialog und fragt nach einer Auswahldatei, die mit [Auswahl speichern](save.md) erstellt wurde. So kann man eine Auswahl wieder herstellen.
+
+**Hinweis:**  
+Speichert man einen CR mit ausgewählten Regionen, so wird diese Information im CR hinterlegt. Exportiert man einen Report im Kompatibilitätsmodus, so werden diese Informationen nicht hinterlegt.

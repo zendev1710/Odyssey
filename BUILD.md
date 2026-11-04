@@ -11,10 +11,10 @@ For the application development, you have to install :
 
 ### Using the dotnet CLI
 
-To build the project with the  [`dotnet CLI`]() (.NET 9 version) :
+To build the project with the  [`dotnet CLI`](https://learn.microsoft.com/en-us/dotnet/core/tools/) (.NET 10 version) :
 Using the, being in the project root directory (the one containing `Odyssey.sln`), in a command window (PowerShell, DOS...) :
 
-```
+```vonsole
 dotnet build
 ```
 
@@ -28,11 +28,8 @@ dotnet build
 
 After build the executable file generated is `Odyssey.exe`.
 It should be :
-- In the `src/bin/Release/net8.0` and `src/bin/Release/net9.0` folders (Release configuration), or 
+
+- In the `src/bin/Release/net8.0` and `src/bin/Release/net9.0` folders (Release configuration), or
 - In the `src/bin/Debug/net8.0` and `src/bin/Debug/net9.0` folders (Debug configuration)
 
 ## Dependencies
-
-
-
-

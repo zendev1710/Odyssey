@@ -1,0 +1,844 @@
+category	id	role	de	en	aliases	file
+animal	animal/bear	entry	Bär	Bear	baer	animals/bear.gif
+animal	animal/bloerkian_broad_mouthed_rhinoceros	entry	Blörkianisches Breitmaulnashorn	Bloerkian broad-mouthed rhinoceros	bloerkianisches_breitmaulnashorn|bloerkianisches breitmaulnashorn	animals/bloerkian_broad_mouthed_rhinoceros.gif
+animal	animal/blue_bloerkian_mountain_puma	entry	Blauer blörkianischer Bergpuma	Blue Bloerkian mountain puma	blauer_bloerkianischer_bergpuma|blauer, bloerkianischer bergpuma	animals/blue_bloerkian_mountain_puma.gif
+animal	animal/camel	entry	Kamel	Camel	kamel	animals/camel.gif
+animal	animal/cats	entry	Katzen	Cats	katzen	animals/cats.gif
+animal	animal/dolphins	entry	Delphine	Dolphins	delphine	animals/dolphins.gif
+animal	animal/eagle	entry	Adler	Eagle	adler	animals/eagle.gif
+animal	animal/elephant	entry	Elefant	Elephant	elefant	animals/elephant.gif
+animal	animal/giant_tortoises	entry	Riesenschildkröten	Giant tortoises	riesenschildkroeten	animals/giant_tortoises.gif
+animal	animal/horse	entry	Pferd	Horse	pferd	animals/horse.gif
+animal	animal/insects	entry	Insekten	Insects	insekten	animals/insects.gif
+animal	animal/lynxes	entry	Luchse	Lynxes	luchse	animals/lynxes.gif
+animal	animal/mountain_hounds	entry	Berghunde	Mountain hounds	berghunde	animals/mountain_hounds.gif
+animal	animal/owls	entry	Eulen	Owls	eulen	animals/owls.gif
+animal	animal/packhorse	entry	Lastpferd	Packhorse	ladpferd	animals/packhorse.gif
+animal	animal/rats	entry	Ratten	Rats	ratten	animals/rats.gif
+animal	animal/snow_leopards	entry	Schneeleoparden	Snow leopards	schneeleoparden	animals/snow_leopards.gif
+animal	animal/toads	entry	Kröten	Toads	kroeten	animals/toads.gif
+animal	animal/unicorns	entry	Einhörner	Unicorns	einhoerner	animals/unicorns.gif
+animal	animal/wolf	entry	Wolf	Wolf	wolf|Wolf	animals/wolf.gif
+animal	animal/wolf_alt	variant				animals/wolf_alt.gif
+animal	animal/wolves	entry	Wölfe	Wolves	woelfe|Wölfe|Wolves	animals/wolves.gif
+building	building/academy	entry	Akademie	Academy	akademie|Akademie|Academy	buildings/academy.gif
+building	building/acropolis	entry	Akropolis	Acropolis	akropolis	buildings/acropolis.gif
+building	building/alchemist_s_kitchen	entry	Alchemistenküche	Alchemist's kitchen	alchemistenkueche	buildings/alchemist_s_kitchen.gif
+building	building/art_academy	entry	Akademie der Künste	Art academy	akademie_der_kuenste|Akademie der Künste|Art academy	buildings/art_academy.gif
+building	building/blessed_stone_circle	entry	Gesegneter Steinkreis	Blessed stone circle	gesegneter_steinkreis|gesegneter steinkreis	buildings/blessed_stone_circle.gif
+building	building/buildings	category	Gebäude	Buildings	buildings	buildings/buildings.gif
+building	building/buildings_alt	variant				buildings/buildings_alt.gif
+building	building/buildings_alt2	variant				buildings/buildings_alt2.gif
+building	building/caravanserai	entry	Karawanserei	Caravanserai	karawanserei	buildings/caravanserai.gif
+building	building/carpentry	entry	Schreinerei	Carpentry	schreinerei	buildings/carpentry.gif
+building	building/castle	entry	Burg	Castle	burg|Burg|Castle	buildings/castle.gif
+building	building/citadel	entry	Zitadelle	Citadel	zitadelle|Zitadelle|Citadel	buildings/citadel.gif
+building	building/coal_mine	entry	Kohlebergwerk	Coal mine	kohlebergwerk	buildings/coal_mine.gif
+building	building/construction_site	entry	Baustelle	Construction site	baustelle	buildings/construction_site.gif
+building	building/dam	entry	Damm	Dam	damm	buildings/dam.gif
+building	building/dockyard	entry	Werft	Dockyard	werft|Werft|Dockyard	buildings/dockyard.gif
+building	building/forester_s_house	entry	Forsthaus	Forester's house	forsthaus	buildings/forester_s_house.gif
+building	building/forge_smithy	entry	Schmiede	Forge / Smithy	schmiede	buildings/forge_smithy.gif
+building	building/fortification	entry	Befestigung	Fortification	befestigung	buildings/fortification.gif
+building	building/fortress	entry	Festung	Fortress	festung|Festung|Fortress	buildings/fortress.gif
+building	building/foundations	entry	Grundmauern	Foundations	grundmauern	buildings/foundations.gif
+building	building/greenhouse	entry	Gewächshaus	Greenhouse	gewaechshaus	buildings/greenhouse.gif
+building	building/guardroom	entry	Wachstube	Guardroom	wachstube	buildings/guardroom.gif
+building	building/hall	entry	Halle	Hall	halle|Halle|Hall	buildings/hall.gif
+building	building/hall_detail	variant				buildings/hall_detail.gif
+building	building/harbour	entry	Hafen	Harbour	hafen	buildings/harbour.gif
+building	building/herbalist_s_hut	entry	Kräuterhütte	Herbalist's hut	kraeuterhuette	buildings/herbalist_s_hut.gif
+building	building/horse_breeding	entry	Pferdezucht	Horse breeding	pferdezucht	buildings/horse_breeding.gif
+building	building/hunting_lodge	entry	Jagdhaus	Hunting lodge	jagdhaus	buildings/hunting_lodge.gif
+building	building/hut	entry	Hütte	Hut	huette	buildings/hut.gif
+building	building/iron_mine	entry	Eisenbergwerk	Iron mine	eisenbergwerk	buildings/iron_mine.gif
+building	building/lighthouse	entry	Leuchtturm	Lighthouse	leuchtturm	buildings/lighthouse.gif
+building	building/mage_tower	entry	Magierturm	Mage tower	magierturm	buildings/mage_tower.gif
+building	building/market	entry	Marktplatz	Market	marktplatz|Marktplatz|Market	buildings/market.gif
+building	building/marketplace	entry	Markt	Marketplace	markt|Markt|Marketplace	buildings/marketplace.gif
+building	building/megapolis	entry	Megapolis	Megapolis	megapolis	buildings/megapolis.gif
+building	building/megapolis_alt	variant				buildings/megapolis_alt.gif
+building	building/mine	entry	Bergwerk	Mine	bergwerk|Bergwerk|Mine	buildings/mine.gif
+building	building/mine_alt	variant				buildings/mine_alt.gif
+building	building/monument	entry	Monument	Monument	monument	buildings/monument.gif
+building	building/monument_alt	variant				buildings/monument_alt.gif
+building	building/palace	entry	Schloss	Palace	schloss|Schloss|Palace	buildings/palace.gif
+building	building/plantation	entry	Plantage	Plantation	plantage	buildings/plantation.gif
+building	building/portal	entry	Portal	Portal	portal	buildings/portal.gif
+building	building/quarry	entry	Steinbruch	Quarry	steinbruch|Steinbruch|Quarry	buildings/quarry.gif
+building	building/saddlery	entry	Sattlerei	Saddlery	sattlerei	buildings/saddlery.gif
+building	building/sawmill	entry	Sägewerk	Sawmill	saegewerk	buildings/sawmill.gif
+building	building/scaffold	entry	Gerüst	Scaffold	geruest	buildings/scaffold.gif
+building	building/scout_tower	entry	Spähturm	Scout tower	spaehturm	buildings/scout_tower.gif
+building	building/shipyard	entry	Schiffswerft	Shipyard	schiffswerft|Schiffswerft|Shipyard	buildings/shipyard.gif
+building	building/signs	entry	Schilder	Signs	schilder	buildings/signs.gif
+building	building/stone_circle	entry	Steinkreis	Stone circle	steinkreis	buildings/stone_circle.gif
+building	building/stone_pit	entry	Steingrube	Stone pit	steingrube|Steingrube|Stone pit	buildings/stone_pit.gif
+building	building/tavern	entry	Taverne	Tavern	taverne	buildings/tavern.gif
+building	building/temple	entry	Tempel	Temple	tempel	buildings/temple.gif
+building	building/tower	entry	Turm	Tower	turm|Turm|Tower	buildings/tower.gif
+building	building/trading_post	entry	Handelsposten	Trading post	handelsposten	buildings/trading_post.gif
+building	building/tree_nursery	entry	Baumschule	Tree nursery	baumschule	buildings/tree_nursery.gif
+building	building/tunnel	entry	Tunnel	Tunnel	tunnel	buildings/tunnel.gif
+building	building/university	entry	Universität	University	universitaet	buildings/university.gif
+building	building/watchtower	entry	Wachturm	Watchtower	wachturm|Wachturm|Watchtower	buildings/watchtower.gif
+building	building/woodcutter_s_hut	entry	Holzfällerhütte	Woodcutter's hut	holzfaellerhuette	buildings/woodcutter_s_hut.gif
+building	building/workshop	entry	Werkstatt	Workshop	werkstatt	buildings/workshop.gif
+building	building/wormhole	entry	Wurmloch	Wormhole	wurmloch	buildings/wormhole.gif
+effect	effect/berserkers_blood	entry	Berserkerblut	Berserkers blood	berserkerblut	effects/berserkers_blood.gif
+effect	effect/brain_wax	entry	Gehirnschmalz	Brain wax	gehirnschmalz	effects/brain_wax.gif
+effect	effect/busybeer	entry	Schaffenstrunk	Busybeer	schaffenstrunk	effects/busybeer.gif
+effect	effect/duncebun	entry	Dumpfbackenbrot	Duncebun	dumpfbackenbrot	effects/duncebun.gif
+effect	effect/elixir_of_power	entry	Elixier der Macht	Elixir of power	elixier_der_macht	effects/elixir_of_power.gif
+effect	effect/goliath_water	entry	Goliathwasser	Goliath water	goliathwasser	effects/goliath_water.gif
+effect	effect/healing_potion	entry	Heiltrank	Healing potion	heiltrank	effects/healing_potion.gif
+effect	effect/horsepower_potion	entry	Pferdeglück	Horsepower potion	pferdeglueck	effects/horsepower_potion.gif
+effect	effect/ointment	entry	Wundsalbe	Ointment	wundsalbe	effects/ointment.gif
+effect	effect/peasant_blood	entry	Bauernblut	Peasant blood	bauernblut	effects/peasant_blood.gif
+effect	effect/peasant_love_potion	entry	Bauernlieb	Peasant love potion	bauernlieb	effects/peasant_love_potion.gif
+effect	effect/potion_of_nest_warmth	entry	Nestwärme	Potion of nest warmth	nestwaerme	effects/potion_of_nest_warmth.gif
+effect	effect/potion_of_truth	entry	Trank der Wahrheit	Potion of truth	trank_der_wahrheit	effects/potion_of_truth.gif
+effect	effect/seven_mile_tea	entry	Siebenmeilentee	Seven mile tea	siebenmeilentee	effects/seven_mile_tea.gif
+effect	effect/water_of_life	entry	Wasser des Lebens	Water of life	wasser_des_lebens	effects/water_of_life.gif
+faction	faction/alliance	entry	Allianz	Alliance	allianz	factions/alliance.gif
+faction	faction/alliance_alt	variant				factions/alliance_alt.gif
+faction	faction/allied_combat_faction	entry	Verbündete Kampffraktion	Allied combat faction	verbuendete_kampffraktion	factions/allied_combat_faction.gif
+faction	faction/allied_combat_faction_alt	variant				factions/allied_combat_faction_alt.gif
+faction	faction/banner	entry	Banner	Banner	banner	factions/banner.gif
+faction	faction/banner_alt	variant				factions/banner_alt.gif
+faction	faction/business	entry	Geschäft	Business	geschaeft	factions/business.gif
+faction	faction/enemy_faction	entry	Feindliche Fraktion	Enemy faction	feindliche_fraktion	factions/enemy_faction.gif
+faction	faction/enemy_faction_alt	variant				factions/enemy_faction_alt.gif
+faction	faction/faction	entry	Fraktion	Faction	fraktion	factions/faction.gif
+faction	faction/faction_alt	variant				factions/faction_alt.gif
+faction	faction/faction_pool	entry	Fraktionspool	Faction pool	factionpool	factions/faction_pool.gif
+faction	faction/imperial_treasury	entry	Reichsschatz	Imperial treasury	reichsschatz	factions/imperial_treasury.gif
+faction	faction/income	entry	Einkommen	Income	einkommen	factions/income.gif
+faction	faction/income_alt	variant				factions/income_alt.gif
+faction	faction/pay	entry	Bezahlen	Pay	bezahlen	factions/pay.gif
+faction	faction/pay_alt	variant				factions/pay_alt.gif
+faction	faction/peasant	entry	Bauer	Peasant	bauer|Bauer|Peasant	factions/peasant.gif
+faction	faction/peasants	entry	Bauern	Peasants	bauern|Bauern|Peasants	factions/peasants.gif
+faction	faction/privileged_faction	entry	Privilegierte Fraktion	Privileged faction	privilegierte_fraktion	factions/privileged_faction.gif
+faction	faction/privileged_faction_alt	variant				factions/privileged_faction_alt.gif
+faction	faction/production	entry	Produktion	Production	produktion	factions/production.gif
+faction	faction/production_alt	variant				factions/production_alt.gif
+faction	faction/recruits	entry	Rekruten	Recruits	rekruten	factions/recruits.gif
+faction	faction/tax_collection	entry	Steuereintreiben	Tax collection	steuereintreiben|Steuereintreiben|Tax collection	factions/tax_collection.gif
+faction	faction/tax_collection_alt	variant				factions/tax_collection_alt.gif
+faction	faction/trust	entry	Vertrauen	Trust	vertrauen	factions/trust.gif
+faction	faction/trust_alt	variant				factions/trust_alt.gif
+faction	faction/upkeep	entry	Unterhalt	Upkeep	unterhalt	factions/upkeep.gif
+faction	faction/upkeep_alt	variant				factions/upkeep_alt.gif
+faction	faction/wages	entry	Lohn	Wages	lohn	factions/wages.gif
+item	item/adamantium	entry	Adamantium	adamantium	adamantium	items/adamantium.gif
+item	item/adamantium_axe	entry	Adamantiumaxt	adamantium axe	adamantiumaxt	items/adamantium_axe.gif
+item	item/adamantium_plate	entry	Adamantiumrüstung	adamantium plate	adamantiumruestung	items/adamantium_plate.gif
+item	item/agriflail	entry	Agriflail	agriflail	agriflail	items/agriflail.gif
+item	item/almond	entry	Mandelkern	almond	mandelkern	items/almond.gif
+item	item/ammunition	category	Munition	ammunition	munition	items/ammunition.gif
+item	item/ammunition_alt	variant				items/ammunition_alt.gif
+item	item/amulet	entry	Amulett	amulet	amulett	items/amulet.gif
+item	item/amulet_of_healing	entry	Amulett der Heilung	amulet of healing	amulett_der_heilung	items/amulet_of_healing.gif
+item	item/amulet_of_true_sight	entry	Amulett des wahren Sehens	amulet of true sight	amulett_des_wahren_sehens	items/amulet_of_true_sight.gif
+item	item/animal_heart	entry	Tierherz	animal heart	tierherz	items/animal_heart.gif
+item	item/antimagic_crystal	entry	Antimagiekristal	antimagic crystal	antimagiekristal	items/antimagic_crystal.gif
+item	item/antimagic_crystal_alt	variant				items/antimagic_crystal_alt.gif
+item	item/apple	entry	Apfel	apple	apfel	items/apple.gif
+item	item/aquarian_scale	entry	Meermenschschuppe	aquarian scale	meermenschschuppe	items/aquarian_scale.gif
+item	item/arcanas_blessing	entry	Arcanas Segen	arcanas blessing	arcanas_segen	items/arcanas_blessing.gif
+item	item/armour	category	Ruestungen	armour	ruestungen	items/armour.gif
+item	item/armour_alt	variant				items/armour_alt.gif
+item	item/armour_alt_alt	variant				items/armour_alt_alt.gif
+item	item/arrow	entry	Arrow	arrow	arrow	items/arrow.gif
+item	item/arrowhead	entry	Arrowhead	arrowhead	arrowhead	items/arrowhead.gif
+item	item/artefacts	entry	Artefakte	artefacts	artefakte	items/artefacts.gif
+item	item/astral_ban	entry	Astraler Bann	astral ban	astraler_bann	items/astral_ban.gif
+item	item/astral_crystal	entry	Astralkristall	astral crystal	astralkristall	items/astral_crystal.gif
+item	item/aurafocus	entry	Aurafocus	aurafocus	aurafocus	items/aurafocus.gif
+item	item/axe	entry	Kriegsaxt	axe	kriegsaxt	items/axe.gif
+item	item/axe_alt	variant				items/axe_alt.gif
+item	item/bag_of_negative_weight	entry	Beutel des negativen Gewichts	bag of negative weight	beutel_des_negativen_gewichts	items/bag_of_negative_weight.gif
+item	item/balm	entry	Balsam	balm	balsam	items/balm.gif
+item	item/basilisk_tongue	entry	Basiliskenzunge	basilisk tongue	basiliskenzunge	items/basilisk_tongue.gif
+item	item/battle_axe	entry	Battle Axe	battle axe	battle_axe	items/battle_axe.gif
+item	item/battlestaff	entry	Battlestaff	battlestaff	battlestaff	items/battlestaff.gif
+item	item/belt_of_troll_strength	entry	Gürtel der Trollstärke	belt of troll strength	guertel_der_trollstaerke	items/belt_of_troll_strength.gif
+item	item/berserkers_blood	entry	Berserkerblut	berserkers blood	berserkerblut	items/berserkers_blood.gif
+item	item/berserkers_fury	entry	Berserkerswut	berserkers fury	berserkerswut	items/berserkers_fury.gif
+item	item/birthday_cake	entry	Geburtstagstorte	birthday cake	geburtstagstorte	items/birthday_cake.gif
+item	item/black_lotus	entry	Schwarzer Lotus	black lotus	schwarzer_lotus	items/black_lotus.gif
+item	item/blessing_of_horses	entry	Segen Der Pferde	blessing of horses	segen_der_pferde	items/blessing_of_horses.gif
+item	item/bone_amulet	entry	Knochenamulett	bone amulet	knochenamulett	items/bone_amulet.gif
+item	item/bow	category	Bogen	bow	bogen	items/bow.gif
+item	item/bow_alt	variant				items/bow_alt.gif
+item	item/brain_boost	entry	Lerntrank	brain boost	lerntrank	items/brain_boost.gif
+item	item/brain_wax	entry	Gehirnschmalz	brain wax	gehirnschmalz	items/brain_wax.gif
+item	item/bubblemorel	entry	Bubblemorel	bubblemorel	bubblemorel	items/bubblemorel.gif
+item	item/bugleweed	entry	Bugleweed	bugleweed	bugleweed	items/bugleweed.gif
+item	item/busybeer	entry	Schaffenstrunk	busybeer	schaffenstrunk	items/busybeer.gif
+item	item/cart	entry	Wagen	cart	wagen	items/cart.gif
+item	item/cat_tail	entry	Katzenschwanz	cat tail	katzenschwanz	items/cat_tail.gif
+item	item/catapult	entry	Katapult	catapult	katapult	items/catapult.gif
+item	item/catapult_ammunition	entry	Katapultmunition	catapult ammunition	katapultmunition	items/catapult_ammunition.gif
+item	item/cattle	entry	Cattle	cattle	cattle	items/cattle.gif
+item	item/cave_lichen	entry	Cavelichen	cave lichen	cavelichen	items/cave_lichen.gif
+item	item/chainmail	entry	Kettenhemd	chainmail	kettenhemd	items/chainmail.gif
+item	item/childrens_kingdom	entry	Kinderreich	childrens kingdom	kinderreich	items/childrens_kingdom.gif
+item	item/chitin_armour	entry	Chitinpanzer	chitin armour	chitinpanzer	items/chitin_armour.gif
+item	item/christmas_tree	entry	Weihnachtsbaum	christmas tree	weihnachtsbaum	items/christmas_tree.gif
+item	item/claymore	entry	Bihänder	claymore	bihaender	items/claymore.gif
+item	item/cloak_of_invulnerability	entry	Mantel Der Unverletzlichkeit	cloak of invulnerability	mantel_der_unverletzlichkeit	items/cloak_of_invulnerability.gif
+item	item/cloud	entry	Wolke	cloud	wolke	items/cloud.gif
+item	item/club	entry	Club	club	club	items/club.gif
+item	item/coal	entry	Coal	coal	coal	items/coal.gif
+item	item/cobalt_fungus	entry	Cobalt Fungus	cobalt fungus	cobalt_fungus	items/cobalt_fungus.gif
+item	item/coin_purse	entry	Coinpurse	coin purse	coinpurse	items/coin_purse.gif
+item	item/composite_bow	entry	Compositebow	composite bow	compositebow	items/composite_bow.gif
+item	item/cookie	entry	Keks	cookie	keks	items/cookie.gif
+item	item/cookie_alt	variant				items/cookie_alt.gif
+item	item/crossbow	category	Armbrust	crossbow	armbrust	items/crossbow.gif
+item	item/crossbow_alt	variant				items/crossbow_alt.gif
+item	item/demon_blood	entry	Dämonenblut	demon blood	daemonenblut	items/demon_blood.gif
+item	item/distance_weapons	category	Distanz Waffen	distance weapons	distanz_waffen	items/distance_weapons.gif
+item	item/distance_weapons_alt	variant				items/distance_weapons_alt.gif
+item	item/distance_weapons_en	variant				items/distance_weapons_en.gif
+item	item/distance_weapons_en_alt	variant				items/distance_weapons_en_alt.gif
+item	item/double_sight	entry	Doppelsicht	double sight	doppelsicht	items/double_sight.gif
+item	item/dragon_blood	entry	Drachenblut	dragon blood	drachenblut	items/dragon_blood.gif
+item	item/dragon_head	entry	Drachenkopf	dragon head	drachenkopf	items/dragon_head.gif
+item	item/dragon_hide	entry	Drachenhaut	dragon hide	drachenhaut	items/dragon_hide.gif
+item	item/dragon_scale_armour	entry	Drachenpanzer	dragon scale armour	drachenpanzer	items/dragon_scale_armour.gif
+item	item/dream_eye	entry	Traumauge	dream eye	traumauge	items/dream_eye.gif
+item	item/duncebun	entry	Dumpfbackenbrot	duncebun	dumpfbackenbrot	items/duncebun.gif
+item	item/dwarven_beard	entry	Zwergenbart	dwarven beard	zwergenbart	items/dwarven_beard.gif
+item	item/dwarven_hammer	entry	Zwergenhammer	dwarven hammer	zwergenhammer	items/dwarven_hammer.gif
+item	item/egg	entry	Ei	egg	ei	items/egg.gif
+item	item/elixir_of_power	entry	Elixier der Macht	elixir of power	elixier_der_macht	items/elixir_of_power.gif
+item	item/elven_bow	entry	Elfenbogen	elven bow	elfenbogen	items/elven_bow.gif
+item	item/elven_deer	entry	Elvendear	elven deer	elvendear	items/elven_deer.gif
+item	item/elven_ear	entry	Elfenohr	elven ear	elfenohr	items/elven_ear.gif
+item	item/elven_horse	entry	Elfenpferd	elven horse	elfenpferd	items/elven_horse.gif
+item	item/eternal_life	entry	Ewiges Leben	eternal life	ewiges_leben	items/eternal_life.gif
+item	item/eye_of_the_dragon	entry	Auge des Drachen	eye of the dragon	auge_des_drachen	items/eye_of_the_dragon.gif
+item	item/fairy_boots	entry	Feenstiefel	fairy boots	feenstiefel	items/fairy_boots.gif
+item	item/fairy_dust	entry	Fairydust	fairy dust	fairydust	items/fairy_dust.gif
+item	item/fairy_dust_alt	variant				items/fairy_dust_alt.gif
+item	item/fjord_fungus	entry	Fjord Fungus	fjord fungus	fjord_fungus	items/fjord_fungus.gif
+item	item/flaming_sword	entry	Flammenschwert	flaming sword	flammenschwert	items/flaming_sword.gif
+item	item/flatroot	entry	Flatroot	flatroot	flatroot	items/flatroot.gif
+item	item/front_weapons	category	Front Waffen	front weapons	front_waffen	items/front_weapons.gif
+item	item/front_weapons_alt	variant				items/front_weapons_alt.gif
+item	item/gapgrowth	entry	Gapgrowth	gapgrowth	gapgrowth	items/gapgrowth.gif
+item	item/gem	entry	Juwel	gem	juwel	items/gem.gif
+item	item/germander	entry	Gamander	germander	gamander	items/germander.gif
+item	item/goblin_head	entry	Goblinkopf	goblin head	goblinkopf	items/goblin_head.gif
+item	item/goliath_water	entry	Goliathwasser	goliath water	goliathwasser	items/goliath_water.gif
+item	item/grain	entry	Korn	grain	korn	items/grain.gif
+item	item/grain_alt	variant				items/grain_alt.gif
+item	item/griffin_wing	entry	Griphonwing	griffin wing	griphonwing	items/griffin_wing.gif
+item	item/guilder	entry	Guilder	guilder	guilder	items/guilder.gif
+item	item/halberd	entry	Hellebarde	halberd	hellebarde	items/halberd.gif
+item	item/halfling_foot	entry	Halblingfuß	halfling foot	halblingfuss	items/halfling_foot.gif
+item	item/harpoon	entry	Harpune	harpoon	harpune	items/harpoon.gif
+item	item/healing_potion	entry	Heiltrank	healing potion	heiltrank	items/healing_potion.gif
+item	item/healing_salve	entry	Heilsalbe	healing salve	heilsalbe	items/healing_salve.gif
+item	item/heart	entry	Herz	heart	herz	items/heart.gif
+item	item/helm_of_the_seven_winds	entry	Helm Der Sieben Winde	helm of the seven winds	helm_der_sieben_winde	items/helm_of_the_seven_winds.gif
+item	item/herb_bag	entry	Kräuterbeutel	herb bag	kraeuterbeutel	items/herb_bag.gif
+item	item/herbs	category	KRÄUTER	herbs	kraeuter	items/herbs.gif
+item	item/horn	entry	Horn	horn	horn	items/horn.gif
+item	item/horse	entry	Pferd	horse	pferd	items/horse.gif
+item	item/horse_alt	variant				items/horse_alt.gif
+item	item/horse_region	entry	Pferd Region	horse region	pferd_region	items/horse_region.gif
+item	item/horsepower_potion	entry	Pferdeglück	horsepower potion	pferdeglueck	items/horsepower_potion.gif
+item	item/horses	entry	Pferde	horses	pferde	items/horses.gif
+item	item/human_scalp	entry	Menschenskalp	human scalp	menschenskalp	items/human_scalp.gif
+item	item/ice_begonia	entry	Ice Begonia	ice begonia	ice_begonia	items/ice_begonia.gif
+item	item/incense	entry	Weihrauch	incense	weihrauch	items/incense.gif
+item	item/insect_antenna	entry	Insektenfühler	insect antenna	insektenfuehler	items/insect_antenna.gif
+item	item/iron	entry	Eisen	iron	eisen	items/iron.gif
+item	item/iron_alt	variant				items/iron_alt.gif
+item	item/jadee_dress	entry	Jadee Dress	jadee dress	jadee_dress	items/jadee_dress.gif
+item	item/key	entry	Schlüssel	key	schluessel	items/key.gif
+item	item/key_alt	variant				items/key_alt.gif
+item	item/knotroot	entry	Knotroot	knotroot	knotroot	items/knotroot.gif
+item	item/knowledge_potion	entry	Wissenstrunk	knowledge potion	wissenstrunk	items/knowledge_potion.gif
+item	item/kreuzer	entry	Kreuzer	kreuzer	kreuzer	items/kreuzer.gif
+item	item/laen	entry	Laen	laen	laen	items/laen.gif
+item	item/laen_chainmail	entry	Laenkettenhemd	laen chainmail	laenkettenhemd	items/laen_chainmail.gif
+item	item/laen_region	entry	Laen Region	laen region	laen_region	items/laen_region.gif
+item	item/laen_shield	entry	Laenschild	laen shield	laenschild	items/laen_shield.gif
+item	item/laen_sword	entry	Laenschwert	laen sword	laenschwert	items/laen_sword.gif
+item	item/laminar	entry	Laminar	laminar	laminar	items/laminar.gif
+item	item/lance	entry	Lanze	lance	lanze	items/lance.gif
+item	item/leather	entry	Leather	leather	leather	items/leather.gif
+item	item/leather_shirt	entry	Lederhemd	leather shirt	lederhemd	items/leather_shirt.gif
+item	item/lms_reward	entry	Lmsreward	lms reward	lmsreward	items/lms_reward.gif
+item	item/loosestrife	entry	Felberich	loosestrife	felberich	items/loosestrife.gif
+item	item/luxury_goods	entry	Luxuswaren	luxury goods	luxuswaren	items/luxury_goods.gif
+item	item/mace	entry	Streitkolben	mace	streitkolben	items/mace.gif
+item	item/magic_bag	entry	Zauberbeutel	magic bag	zauberbeutel	items/magic_bag.gif
+item	item/magic_herb_bag	entry	Magischer Kräuterbeutel	magic herb bag	magischer_kraeuterbeutel	items/magic_herb_bag.gif
+item	item/mallorn	entry	Mallorn	mallorn	mallorn	items/mallorn.gif
+item	item/mallorn_bow	entry	Mallornbogen	mallorn bow	mallornbogen	items/mallorn_bow.gif
+item	item/mallorn_crossbow	entry	Mallornarmbrust	mallorn crossbow	mallornarmbrust	items/mallorn_crossbow.gif
+item	item/mallorn_lance	entry	Mallornlanze	mallorn lance	mallornlanze	items/mallorn_lance.gif
+item	item/mallorn_region	entry	Mallorn Region	mallorn region	mallorn_region	items/mallorn_region.gif
+item	item/mallorn_saplings	entry	Mallornschößlinge	mallorn saplings	mallornschoesslinge	items/mallorn_saplings.gif
+item	item/mallorn_seed	entry	Mallornsame	mallorn seed	mallornsame	items/mallorn_seed.gif
+item	item/mallorn_seeds	entry	Mallornsamen	mallorn seeds	mallornsamen	items/mallorn_seeds.gif
+item	item/mallorn_spear	entry	Mallornspeer	mallorn spear	mallornspeer	items/mallorn_spear.gif
+item	item/mallorn_trees	entry	Mallornbäume	mallorn trees	mallornbaeume	items/mallorn_trees.gif
+item	item/mandrake	entry	Mandrake	mandrake	mandrake	items/mandrake.gif
+item	item/maw_flames	entry	Rachenlodern	maw flames	rachenlodern	items/maw_flames.gif
+item	item/meat	entry	Meat	meat	meat	items/meat.gif
+item	item/mistletoe	entry	Mistelzweig	mistletoe	mistelzweig	items/mistletoe.gif
+item	item/mithril	entry	Mithril	mithril	mithril	items/mithril.gif
+item	item/mithril_armour	entry	Mithrilruestung	mithril armour	mithrilruestung	items/mithril_armour.gif
+item	item/mithril_shield	entry	Mithrilschild	mithril shield	mithrilschild	items/mithril_shield.gif
+item	item/money_bag	entry	Moneybag	money bag	moneybag	items/money_bag.gif
+item	item/museum_exit_ticket	entry	Museumexitticket	museum exit ticket	museumexitticket	items/museum_exit_ticket.gif
+item	item/museum_ticket	entry	Museumticket	museum ticket	museumticket	items/museum_ticket.gif
+item	item/myrrh	entry	Myrrhe	myrrh	myrrhe	items/myrrh.gif
+item	item/nut	entry	Nuß	nut	nuss	items/nut.gif
+item	item/oil	entry	Öl	oil	oel	items/oil.gif
+item	item/oil_alt	variant				items/oil_alt.gif
+item	item/ointment	entry	Wundsalbe	ointment	wundsalbe	items/ointment.gif
+item	item/orc_tusks	entry	Orkhauer	orc tusks	orkhauer	items/orc_tusks.gif
+item	item/owls_gaze	entry	Owlsgaze	owls gaze	owlsgaze	items/owls_gaze.gif
+item	item/parrying_dagger	entry	Parierdolch	parrying dagger	parierdolch	items/parrying_dagger.gif
+item	item/pearl	entry	Perle	pearl	perle	items/pearl.gif
+item	item/pearls	entry	Perlen	pearls	perlen	items/pearls.gif
+item	item/peasant	entry	Bauer	peasant	bauer	items/peasant.gif
+item	item/peasant_blood	entry	Bauernblut	peasant blood	bauernblut	items/peasant_blood.gif
+item	item/peasant_love_potion	entry	Bauernlieb	peasant love potion	bauernlieb	items/peasant_love_potion.gif
+item	item/peasants	entry	BAUERN	peasants	bauern	items/peasants.gif
+item	item/peyote	entry	Peyote	peyote	peyote	items/peyote.gif
+item	item/platemail	entry	Plattenpanzer	platemail	plattenpanzer	items/platemail.gif
+item	item/poison_dagger	entry	Giftdolch	poison dagger	giftdolch	items/poison_dagger.gif
+item	item/polearm_alt	variant				items/polearm_alt.gif
+item	item/polearms	category	Stangenwaffen	polearms	stangenwaffen	items/polearms.gif
+item	item/pot_of_toadslime	entry	Tiegel mit Krötenschleim	pot of toadslime	tiegel_mit_kroetenschleim	items/pot_of_toadslime.gif
+item	item/potion_of_nest_warmth	entry	Nestwärme	potion of nest warmth	nestwaerme	items/potion_of_nest_warmth.gif
+item	item/potion_of_truth	entry	Trank der Wahrheit	potion of truth	trank_der_wahrheit	items/potion_of_truth.gif
+item	item/potions	category	TRÄNKE	potions	traenke	items/potions.gif
+item	item/potions_alt	variant				items/potions_alt.gif
+item	item/realm_treasury	entry	Reichsschatz	realm treasury	reichsschatz	items/realm_treasury.gif
+item	item/repeating_crossbow	entry	Repetierarmbrust	repeating crossbow	repetierarmbrust	items/repeating_crossbow.gif
+item	item/rib	entry	Rippe	rib	rippe	items/rib.gif
+item	item/ring	entry	Ring	ring	ring	items/ring.gif
+item	item/ring_of_invisibility	entry	Ring der Unsichtbarkeit	ring of invisibility	ring_der_unsichtbarkeit	items/ring_of_invisibility.gif
+item	item/ring_of_levitation	entry	Ring der Levitation	ring of levitation	ring_der_levitation	items/ring_of_levitation.gif
+item	item/ring_of_power	entry	Ring der Macht	ring of power	ring_der_macht	items/ring_of_power.gif
+item	item/ring_of_quick_fingers	entry	Ring der flinken Finger	ring of quick fingers	ring_der_flinken_finger	items/ring_of_quick_fingers.gif
+item	item/ring_of_regeneration	entry	Ring der Regeneration	ring of regeneration	ring_der_regeneration	items/ring_of_regeneration.gif
+item	item/rockweed	entry	Rockweed	rockweed	rockweed	items/rockweed.gif
+item	item/round_shield	entry	Rundschild	round shield	rundschild	items/round_shield.gif
+item	item/rune_armour	entry	Runenpanzer	rune armour	runenpanzer	items/rune_armour.gif
+item	item/runesword	entry	Runenschwert	runesword	runenschwert	items/runesword.gif
+item	item/rusty_axe	entry	Rostige Kriegsaxt	rusty axe	rostige_kriegsaxt	items/rusty_axe.gif
+item	item/rusty_chainmail	entry	Rostiges Kettenhemd	rusty chainmail	rostiges_kettenhemd	items/rusty_chainmail.gif
+item	item/rusty_claymore	entry	Rostiger Bihaender	rusty claymore	rostiger_bihaender	items/rusty_claymore.gif
+item	item/rusty_claymore_alt2	variant				items/rusty_claymore_alt2.gif
+item	item/rusty_halberd	entry	Rostige Hellebarde	rusty halberd	rostige_hellebarde	items/rusty_halberd.gif
+item	item/rusty_shield	entry	Rostiger Schild	rusty shield	rostiger_schild	items/rusty_shield.gif
+item	item/rusty_shield_alt2	variant				items/rusty_shield_alt2.gif
+item	item/rusty_sword	entry	Rostiges Schwert	rusty sword	rostiges_schwert	items/rusty_sword.gif
+item	item/rusty_sword_alt2	variant				items/rusty_sword_alt2.gif
+item	item/sand_reeker	entry	Sandreeker	sand reeker	sandreeker	items/sand_reeker.gif
+item	item/sapling_region	entry	Schoesslinge Region	sapling region	schoesslinge_region	items/sapling_region.gif
+item	item/saplings	entry	Schößlinge	saplings	schoesslinge	items/saplings.gif
+item	item/scale_armour	entry	Schuppenpanzer	scale armour	schuppenpanzer	items/scale_armour.gif
+item	item/scale_armour_1	entry	Schuppenpanzer1	scale armour 1	schuppenpanzer1	items/scale_armour_1.gif
+item	item/scale_armour_2	entry	Schuppenpanzer2	scale armour 2	schuppenpanzer2	items/scale_armour_2.gif
+item	item/sea_serpent_head	entry	Seeschlangenkopf	sea serpent head	seeschlangenkopf	items/sea_serpent_head.gif
+item	item/seashell	entry	Seashell	seashell	seashell	items/seashell.gif
+item	item/seed	entry	Same	seed	same	items/seed.gif
+item	item/seeds	entry	Samen	seeds	samen	items/seeds.gif
+item	item/seven_mile_tea	entry	Siebenmeilentee	seven mile tea	siebenmeilentee	items/seven_mile_tea.gif
+item	item/shadow_armour	entry	Schattenpanzer	shadow armour	schattenpanzer	items/shadow_armour.gif
+item	item/shadow_blade	entry	Schattenklinge	shadow blade	schattenklinge	items/shadow_blade.gif
+item	item/shell	entry	Muschel	shell	muschel	items/shell.gif
+item	item/shepherd_blood	entry	Hirtenblut	shepherd blood	hirtenblut	items/shepherd_blood.gif
+item	item/shield	entry	Schild	shield	schild	items/shield.gif
+item	item/shield_alt	variant				items/shield_alt.gif
+item	item/shield_stone	entry	Schildstein	shield stone	schildstein	items/shield_stone.gif
+item	item/shields	category	Schilde	shields	schilde	items/shields.gif
+item	item/shields_alt	variant				items/shields_alt.gif
+item	item/short_bow	entry	Shortbow	short bow	shortbow	items/short_bow.gif
+item	item/short_spear	entry	Kurzspeer	short spear	kurzspeer	items/short_spear.gif
+item	item/silk	entry	Seide	silk	seide	items/silk.gif
+item	item/silver	entry	Silber	silver	silber	items/silver.gif
+item	item/silver_bag	entry	Silberbeutel	silver bag	silberbeutel	items/silver_bag.gif
+item	item/silver_chest	entry	Silberkassette	silver chest	silberkassette	items/silver_chest.gif
+item	item/skull	entry	Schaedel	skull	schaedel	items/skull.gif
+item	item/slashing_weapons	entry	Hiebwaffen	slashing weapons	hiebwaffen	items/slashing_weapons.gif
+item	item/snow_globe	entry	Schneekugel	snow globe	schneekugel	items/snow_globe.gif
+item	item/snow_glow	entry	Schneeglueh	snow glow	schneeglueh	items/snow_glow.gif
+item	item/snowball	entry	Schneeball	snowball	schneeball	items/snowball.gif
+item	item/snowcrystal_petal	entry	Snowcrystal Petal	snowcrystal petal	snowcrystal_petal	items/snowcrystal_petal.gif
+item	item/snowman	entry	Schneemann	snowman	schneemann	items/snowman.gif
+item	item/soul_stone	entry	Seelenstein	soul stone	seelenstein	items/soul_stone.gif
+item	item/spear	entry	Speer	spear	speer	items/spear.gif
+item	item/spearhead	entry	Spearhead	spearhead	spearhead	items/spearhead.gif
+item	item/sphere_of_invisibility	entry	Sphäre der Unsichtbarkeit	sphere of invisibility	sphaere_der_unsichtbarkeit	items/sphere_of_invisibility.gif
+item	item/spice	entry	Gewürz	spice	gewuerz	items/spice.gif
+item	item/spider_ivy	entry	Spider Ivy	spider ivy	spider_ivy	items/spider_ivy.gif
+item	item/spider_web	entry	Spinnennetz	spider web	spinnennetz	items/spider_web.gif
+item	item/spiked_shield	entry	Stachelschild	spiked shield	stachelschild	items/spiked_shield.gif
+item	item/stardust	entry	Sternenstaub	stardust	sternenstaub	items/stardust.gif
+item	item/stone	entry	Stein	stone	stein	items/stone.gif
+item	item/stone_alt	variant				items/stone_alt.gif
+item	item/stone_club	entry	Steinkeule	stone club	steinkeule	items/stone_club.gif
+item	item/stone_region	entry	Stein Region	stone region	stein_region	items/stone_region.gif
+item	item/stones	entry	Steine	stones	steine	items/stones.gif
+item	item/stones_region	entry	Steine Region	stones region	steine_region	items/stones_region.gif
+item	item/sun_sail	entry	Sonnensegel	sun sail	sonnensegel	items/sun_sail.gif
+item	item/sword	entry	Schwert	sword	schwert	items/sword.gif
+item	item/sword_alt	variant				items/sword_alt.gif
+item	item/talent_potion	entry	Talenttrunk	talent potion	talenttrunk	items/talent_potion.gif
+item	item/tangy_temerity	entry	Tangy Temerity	tangy temerity	tangy_temerity	items/tangy_temerity.gif
+item	item/thorn_palm	entry	Dornenpalme	thorn palm	dornenpalme	items/thorn_palm.gif
+item	item/tower_shield	entry	Turmschild	tower shield	turmschild	items/tower_shield.gif
+item	item/treasure_chest	entry	Schatztruhe	treasure chest	schatztruhe	items/treasure_chest.gif
+item	item/troll_horn	entry	Trollhorn	troll horn	trollhorn	items/troll_horn.gif
+item	item/trophies	category	Trophaeen	trophies	trophaeen	items/trophies.gif
+item	item/trophies_alt	variant				items/trophies_alt.gif
+item	item/trophy	entry	Trophy	trophy	trophy	items/trophy.gif
+item	item/unicorn	entry	Einhorn	unicorn	einhorn	items/unicorn.gif
+item	item/unicorn_horn	entry	Horn Eines Einhorns	unicorn horn	horn_eines_einhorns	items/unicorn_horn.gif
+item	item/velvet	entry	Samt	velvet	samt	items/velvet.gif
+item	item/vial	entry	Phiole	vial	phiole	items/vial.gif
+item	item/wanderlust	entry	Wanderslust	wanderlust	wanderslust	items/wanderlust.gif
+item	item/warhorse	entry	Streitross	warhorse	streitross	items/warhorse.gif
+item	item/water_of_life	entry	Wasser des Lebens	water of life	wasser_des_lebens	items/water_of_life.gif
+item	item/waterfinder	entry	Waterfinder	waterfinder	waterfinder	items/waterfinder.gif
+item	item/weapons	category	Waffen	weapons	waffen	items/weapons.gif
+item	item/weapons_alt	variant				items/weapons_alt.gif
+item	item/wente_dress	entry	Wente Dress	wente dress	wente_dress	items/wente_dress.gif
+item	item/white_hemlock	entry	White Hemlock	white hemlock	white_hemlock	items/white_hemlock.gif
+item	item/windbag	entry	Windbag	windbag	windbag	items/windbag.gif
+item	item/wine	entry	Wein	wine	wein	items/wine.gif
+item	item/witch_finger	entry	Hexenfinger	witch finger	hexenfinger	items/witch_finger.gif
+item	item/wood	entry	Holz	wood	holz	items/wood.gif
+item	item/wood_alt	variant				items/wood_alt.gif
+item	item/wooden_shield	entry	Holzschild	wooden shield	holzschild	items/wooden_shield.gif
+monster	monster/alp_nightmare	entry	Alp	Alp (nightmare)	alp	monsters/alp_nightmare.gif
+monster	monster/alp_nightmare_alt	variant				monsters/alp_nightmare_alt.gif
+monster	monster/brain_slayer	entry	Hirntöter	Brain slayer	hirntoeter	monsters/brain_slayer.gif
+monster	monster/demons	entry	Dämonen	Demons	daemonen|Dämonen|Demons	monsters/demons.gif
+monster	monster/demons_alt	variant				monsters/demons_alt.gif
+monster	monster/dragons	entry	Drachen	Dragons	drachen	monsters/dragons.gif
+monster	monster/ents	entry	Ents	Ents	ents	monsters/ents.gif
+monster	monster/ents_alt	variant				monsters/ents_alt.gif
+monster	monster/fairies	entry	Feen	Fairies	feen	monsters/fairies.gif
+monster	monster/ghast	entry	Ghaste	Ghast	ghaste	monsters/ghast.gif
+monster	monster/ghosts	entry	Geister	Ghosts	geister	monsters/ghosts.gif
+monster	monster/ghoul	entry	Ghul	Ghoul	ghoul|Ghul|Ghoul	monsters/ghoul.gif
+monster	monster/ghouls	entry	Ghule	Ghouls	ghoule|Ghule|Ghouls	monsters/ghouls.gif
+monster	monster/giants	entry	Riesen	Giants	riesen	monsters/giants.gif
+monster	monster/hydras	entry	Hydren	Hydras	hydren	monsters/hydras.gif
+monster	monster/iron_golem	entry	Irongolem	Iron golem	irongolem	monsters/iron_golem.gif
+monster	monster/iron_golems	entry	Eisengolems	Iron golems	eisengolems	monsters/iron_golems.gif
+monster	monster/juju_zombies	entry	Juju-Zombies	Juju zombies	juju_zombies|juju-zombies	monsters/juju_zombies.gif
+monster	monster/juju_zombies_alt	variant				monsters/juju_zombies_alt.gif
+monster	monster/kobold	entry	Kobold	Kobold	kobold	monsters/kobold.gif
+monster	monster/kobold_alt	variant				monsters/kobold_alt.gif
+monster	monster/krake	entry	Krake	Krake	krake|Krake	monsters/krake.gif
+monster	monster/kraken	entry	Kraken	Kraken	kraken|Kraken	monsters/kraken.gif
+monster	monster/kraken_alt	variant				monsters/kraken_alt.gif
+monster	monster/little_devil	entry	Teufelchen	Little devil	teufelchen	monsters/little_devil.gif
+monster	monster/mountain_guardian	entry	Bergwächter	Mountain guardian	bergwaechter	monsters/mountain_guardian.gif
+monster	monster/sea_serpents	entry	Seeschlangen	Sea serpents	seeschlangen	monsters/sea_serpents.gif
+monster	monster/shadow	entry	Schatten	Shadow	schatten	monsters/shadow.gif
+monster	monster/shadow_demons	entry	Schattendämonen	Shadow demons	schattendaemonen	monsters/shadow_demons.gif
+monster	monster/shadow_master	entry	Schattenmeister	Shadow master	schattenmeister	monsters/shadow_master.gif
+monster	monster/skeleton	entry	Skelett	Skeleton	skelett|Skelett|Skeleton	monsters/skeleton.gif
+monster	monster/skeleton_lords	entry	Skelettherren	Skeleton lords	skelettherren	monsters/skeleton_lords.gif
+monster	monster/skeleton_master	entry	Skelettmeister	Skeleton master	skelettmeister	monsters/skeleton_master.gif
+monster	monster/skeletons	entry	Skelette	Skeletons	skelette|Skelette|Skeletons	monsters/skeletons.gif
+monster	monster/snotlings	entry	Snotlinge	Snotlings	snotlinge	monsters/snotlings.gif
+monster	monster/snowmen	entry	Schneemänner	Snowmen	schneemaenner	monsters/snowmen.gif
+monster	monster/song_dragons	entry	Singdrachen	Song dragons	singdrachen	monsters/song_dragons.gif
+monster	monster/stone_golem	entry	Stonegolem	Stone golem	stonegolem	monsters/stone_golem.gif
+monster	monster/stone_golems	entry	Steingolems	Stone golems	steingolems	monsters/stone_golems.gif
+monster	monster/tree_shepherd	entry	Baumhirte	Tree shepherd	baumhirte	monsters/tree_shepherd.gif
+monster	monster/trolls	entry	Trolle	Trolls	trolle	monsters/trolls.gif
+monster	monster/tunnel_worms	entry	Tunnelwürmer	Tunnel worms	tunnelwuermer	monsters/tunnel_worms.gif
+monster	monster/undead	entry	Untote	Undead	untote	monsters/undead.gif
+monster	monster/vampires	entry	Vampire	Vampires	vampire	monsters/vampires.gif
+monster	monster/vampires_alt	variant				monsters/vampires_alt.gif
+monster	monster/will_o_the_wisps	entry	Irrlichter	Will-o'-the-wisps	irrlichter	monsters/will_o_the_wisps.gif
+monster	monster/wyrm	entry	Wyrme	Wyrm	wyrme	monsters/wyrm.gif
+monster	monster/young_dragons	entry	Jungdrachen	Young dragons	jungdrachen	monsters/young_dragons.gif
+monster	monster/zombie	entry	Zombie	Zombie	zombie|Zombie	monsters/zombie.gif
+monster	monster/zombie_alt	variant				monsters/zombie_alt.gif
+monster	monster/zombie_master	entry	Zombiemeister	Zombie master	zombiemeister	monsters/zombie_master.gif
+monster	monster/zombies	entry	Zombies	Zombies	zombies|Zombies	monsters/zombies.gif
+monster	monster/zombies_alt	variant				monsters/zombies_alt.gif
+race	race/cats	entry	Katzen	Cats	katzen	races/cats.gif
+race	race/cats_alt	variant				races/cats_alt.gif
+race	race/centaurs	entry	Zentauren	Centaurs	zentauren	races/centaurs.gif
+race	race/centaurs_alt	variant				races/centaurs_alt.gif
+race	race/demons	entry	Dämonen	Demons	daemonen|Dämonen|Demons	races/demons.gif
+race	race/demons_alt	variant				races/demons_alt.gif
+race	race/dracoid	entry	Dracoid	Dracoid	dracoide|Dracoid	races/dracoid.gif
+race	race/dracoids	entry	Dracoiden	Dracoids	dracoiden|Dracoiden|Dracoids	races/dracoids.gif
+race	race/dragons	entry	Drachen	Dragons	drachen	races/dragons.gif
+race	race/dragons_alt	variant				races/dragons_alt.gif
+race	race/dwarves	entry	Zwerge	Dwarves	zwerge	races/dwarves.gif
+race	race/dwarves_alt	variant				races/dwarves_alt.gif
+race	race/elves	entry	Elfen	Elves	elfen	races/elves.gif
+race	race/elves_alt	variant				races/elves_alt.gif
+race	race/ents	entry	Ents	Ents	ents	races/ents.gif
+race	race/ents_alt	variant				races/ents_alt.gif
+race	race/ghast	entry	Ghaste	Ghast	ghaste	races/ghast.gif
+race	race/ghosts	entry	Geister	Ghosts	ghosts|geister	races/ghosts.gif
+race	race/ghouls	entry	Ghule	Ghouls	ghoule|Ghule|Ghouls	races/ghouls.gif
+race	race/ghouls_alt	variant				races/ghouls_alt.gif
+race	race/goblins	entry	Goblins	Goblins	goblins	races/goblins.gif
+race	race/goblins_alt	variant				races/goblins_alt.gif
+race	race/halflings	entry	Halblinge	Halflings	halblinge	races/halflings.gif
+race	race/halflings_alt	variant				races/halflings_alt.gif
+race	race/humans	entry	Menschen	Humans	menschen	races/humans.gif
+race	race/humans_alt	variant				races/humans_alt.gif
+race	race/insects	entry	Insekten	Insects	insekten	races/insects.gif
+race	race/insects_alt	variant				races/insects_alt.gif
+race	race/merfolk	entry	Meermenschen	Merfolk	meermenschen|aquarians	races/merfolk.gif
+race	race/merfolk_alt	variant				races/merfolk_alt.gif
+race	race/orcs	entry	Orks	Orcs	orks|Orks|Orcs	races/orcs.gif
+race	race/orcs_alt	variant				races/orcs_alt.gif
+race	race/orkas	entry	Orkas	Orkas	orkas|Orkas	races/orkas.gif
+race	race/owls	entry	Eulen	Owls	eulen	races/owls.gif
+race	race/race	category	Rasse	Race	rasse	races/race.gif
+race	race/race_alt	variant				races/race_alt.gif
+race	race/rats	entry	Ratten	Rats	ratten	races/rats.gif
+race	race/rats_alt	variant				races/rats_alt.gif
+race	race/skeletons	entry	Skelette	Skeletons	skelette|Skelette|Skeletons	races/skeletons.gif
+race	race/skeletons_alt	variant				races/skeletons_alt.gif
+race	race/trolls	entry	Trolle	Trolls	trolle	races/trolls.gif
+race	race/trolls_alt	variant				races/trolls_alt.gif
+race	race/vampires	entry	Vampire	Vampires	vampire	races/vampires.gif
+race	race/vampires_alt	variant				races/vampires_alt.gif
+race	race/wolves	entry	Wölfe	Wolves	woelfe|Wölfe|Wolves	races/wolves.gif
+race	race/wolves_alt	variant				races/wolves_alt.gif
+race	race/zombies	entry	Zombies	Zombies	zombies|Zombies	races/zombies.gif
+race	race/zombies_alt	variant				races/zombies_alt.gif
+resource	resource/adamantium	entry	Adamantium	Adamantium	adamantium	resources/adamantium.gif
+resource	resource/basilisk_tongue	entry	Basiliskenzunge	Basilisk tongue	basiliskenzunge	resources/basilisk_tongue.gif
+resource	resource/guilder	entry	Gulden	Guilder	gulden	resources/guilder.gif
+resource	resource/herbs	category	Kräuter	Herbs	kraeuter|Kräuter|Herbs	resources/herbs.gif
+resource	resource/herbs_alt	variant				resources/herbs_alt.gif
+resource	resource/horses	entry	Pferde	Horses	pferd	resources/horses.gif
+resource	resource/incense	entry	Weihrauch	Incense	weihrauch	resources/incense.gif
+resource	resource/iron	entry	Eisen	Iron	eisen	resources/iron.gif
+resource	resource/laen	entry	Laen	Laen	laen	resources/laen.gif
+resource	resource/luxuries	entry	Luxusgüter	Luxury goods	luxusgueter|Luxusgüter|Luxury goods	resources/luxuries.gif
+resource	resource/luxuries_alt	variant				resources/luxuries_alt.gif
+resource	resource/mallorn_saplings	entry	Mallornsößlinge	Mallorn saplings	mallornschoesslinge	resources/mallorn_saplings.gif
+resource	resource/mallorn_trees	entry	Mallornbäume	Mallorn trees	mallornbaeume	resources/mallorn_trees.gif
+resource	resource/raw_materials	entry	Rohstoffe	Raw materials	rohstoffe|Rohstoffe|Raw materials	resources/raw_materials.gif
+resource	resource/resources	category	Ressourcen	Resources	ressourcen|Ressourcen|Resources	resources/resources.gif
+resource	resource/resources_alt	variant				resources/resources_alt.gif
+resource	resource/saplings	entry	Sößlinge	Saplings	schoesslinge	resources/saplings.gif
+resource	resource/silver	entry	Silber	Silver	silber|Silber|Silver	resources/silver.gif
+resource	resource/silver_alt	variant				resources/silver_alt.gif
+resource	resource/stone	entry	Stein	Stone	stein	resources/stone.gif
+resource	resource/trade_goods	entry	Handelsgüter	Trade goods	handelsgueter	resources/trade_goods.gif
+resource	resource/trees	entry	Bäume	Trees	baeume	resources/trees.gif
+ship	ship/ballista	entry	Balliste	Ballista	balliste	ships/ballista.gif
+ship	ship/balloon	entry	Ballon	Balloon	ballon|luftschiff	ships/balloon.gif
+ship	ship/barge	entry	Barke	Barge	barke	ships/barge.gif
+ship	ship/boat	entry	Boot	Boat	boot|Boot|Boat	ships/boat.gif
+ship	ship/canoe	entry	Einbaum	Canoe	einbaum|Einbaum|Canoe	ships/canoe.gif
+ship	ship/caravan	entry	Karawane	Caravan	karawane	ships/caravan.gif
+ship	ship/caravel	entry	Karavelle	Caravel	karavelle	ships/caravel.gif
+ship	ship/catamaran	entry	Katamaran	Catamaran	katamaran	ships/catamaran.gif
+ship	ship/catapult	entry	Katapult	Catapult	katapult|catapult	ships/catapult.gif
+ship	ship/catapult_alt	variant				ships/catapult_alt.gif
+ship	ship/cog	entry	Kogge	Cog	kogge	ships/cog.gif
+ship	ship/cruiser	entry	Kreuzer	Cruiser	kreuzer	ships/cruiser.gif
+ship	ship/cutter	entry	Kutter	Cutter	kutter	ships/cutter.gif
+ship	ship/dragon_ship	entry	Drachenschiff	Dragon ship	drachenschiff	ships/dragon_ship.gif
+ship	ship/frigate	entry	Fregatte	Frigate	fregatte	ships/frigate.gif
+ship	ship/galleon	entry	Galeone	Galleon	galeone	ships/galleon.gif
+ship	ship/longboat	entry	Langboot	Longboat	langboot	ships/longboat.gif
+ship	ship/raft	entry	Floß	Raft	floss	ships/raft.gif
+ship	ship/royal_barge	entry	Königsbarke	Royal barge	koenigsbarke	ships/royal_barge.gif
+ship	ship/ships	entry	Schiffe	Ships	schiffe|ships	ships/ships.gif
+ship	ship/ships_alt	variant				ships/ships_alt.gif
+ship	ship/ships_alt2	variant				ships/ships_alt2.gif
+ship	ship/trireme	entry	Trireme	Trireme	trireme|tireme	ships/trireme.gif
+ship	ship/trireme_alt	variant				ships/trireme_alt.gif
+skill	skill/alchemy	entry	Alchemie	Alchemy	alchemie|Alchemie|Alchemy	skills/alchemy.gif
+skill	skill/alchemy_alchimie	entry	Alchimie	Alchimie	alchimie|Alchimie	skills/alchemy_alchimie.gif
+skill	skill/alchemy_alt	variant				skills/alchemy_alt.gif
+skill	skill/animal_training	entry	Tierdressur	Animal training	tierdressur	skills/animal_training.gif
+skill	skill/archery	entry	Bogenschießen	Archery	bogenschiessen	skills/archery.gif
+skill	skill/architecture	entry	Baukunst	Architecture	baukunst	skills/architecture.gif
+skill	skill/armour	category	Rüstung(en)	Armour	ruestungen|Rüstung(en)|Armour	skills/armour.gif
+skill	skill/armoursmithing	entry	Rüstungsbau	Armoursmithing	ruestungsbau|Rüstungsbau|Armoursmithing	skills/armoursmithing.gif
+skill	skill/armoursmithing_alt	variant				skills/armoursmithing_alt.gif
+skill	skill/assassination	entry	Meucheln	Assassination	meucheln	skills/assassination.gif
+skill	skill/bow	category	Bogen	Bow	bow	skills/bow.gif
+skill	skill/bowyery	entry	Bogenbau	Bowyery	bogenbau	skills/bowyery.gif
+skill	skill/cartmaking	entry	Wagenbau	Cartmaking	wagenbau|Wagenbau|Cartmaking	skills/cartmaking.gif
+skill	skill/cartmaking_alt	variant				skills/cartmaking_alt.gif
+skill	skill/catapult	entry	Katapult	Catapult	catapult	skills/catapult.gif
+skill	skill/catapult_operation	entry	Katapultbedienung	Catapult operation	katapultbedienung	skills/catapult_operation.gif
+skill	skill/catapult_shooting	entry	Katapultschießen	Catapult shooting	katapultschiessen	skills/catapult_shooting.gif
+skill	skill/cooking	entry	Kochkunst	Cooking	kochkunst	skills/cooking.gif
+skill	skill/crossbow_shooting	entry	Armbrustschießen	Crossbow shooting	armbrustschiessen	skills/crossbow_shooting.gif
+skill	skill/endurance	entry	Ausdauer	Endurance	ausdauer|Ausdauer|Endurance	skills/endurance.gif
+skill	skill/endurance_alt	variant				skills/endurance_alt.gif
+skill	skill/entertainment	entry	Unterhaltung	Entertainment	unterhaltung|Unterhaltung|Entertainment	skills/entertainment.gif
+skill	skill/entertainment_alt	variant				skills/entertainment_alt.gif
+skill	skill/espionage	entry	Spionage	Espionage	spionage|Spionage|Espionage	skills/espionage.gif
+skill	skill/espionage_alt	variant				skills/espionage_alt.gif
+skill	skill/espionage_spy	entry	Spionage (Spy)	Espionage (Spy)	spy|Spionage (Spy)|Espionage (Spy)	skills/espionage_spy.gif
+skill	skill/flying	entry	Flugkunst	Flying	flugkunst	skills/flying.gif
+skill	skill/forestry	entry	Forstwirtschaft	Forestry	forstwirtschaft|forestry	skills/forestry.gif
+skill	skill/forestry_alt	variant				skills/forestry_alt.gif
+skill	skill/griffin_breeding	entry	Greifenzucht	Griffin breeding	greifenzucht	skills/griffin_breeding.gif
+skill	skill/herbalism	entry	Kräuterkunde	Herbalism	kraeuterkunde|Kräuterkunde|Herbalism	skills/herbalism.gif
+skill	skill/herbalism_alt	variant				skills/herbalism_alt.gif
+skill	skill/horse_breeding	entry	Pferdezucht	Horse breeding	pferdezucht	skills/horse_breeding.gif
+skill	skill/horse_training	entry	Pferdedressur	Horse training	pferdedressur	skills/horse_training.gif
+skill	skill/jewellery_making	entry	Juwelierkunst	Jewellery making	juwelierskunst	skills/jewellery_making.gif
+skill	skill/loading	entry	Beladung	Loading	beladung	skills/loading.gif
+skill	skill/magic	entry	Magie	Magic	magie|Magie|Magic	skills/magic.gif
+skill	skill/magic_alt	variant				skills/magic_alt.gif
+skill	skill/masonry	entry	Burgenbau	Masonry	burgenbau	skills/masonry.gif
+skill	skill/masonry_alt	variant				skills/masonry_alt.gif
+skill	skill/melee	entry	Nahkampf	Melee	nahkampf|melee	skills/melee.gif
+skill	skill/melee_alt	variant				skills/melee_alt.gif
+skill	skill/mining	entry	Bergbau	Mining	bergbau|Bergbau|Mining	skills/mining.gif
+skill	skill/mining_alt	variant				skills/mining_alt.gif
+skill	skill/perception	entry	Wahrnehmung	Perception	wahrnehmung|Wahrnehmung|Perception	skills/perception.gif
+skill	skill/perception_alt	variant				skills/perception_alt.gif
+skill	skill/polearm_alt	variant				skills/polearm_alt.gif
+skill	skill/polearms	category	Stangenwaffen	Polearms	stangenwaffen|Stangenwaffen|Polearms	skills/polearms.gif
+skill	skill/quarry	entry	Steinbruch	Quarry	steinbruch|Steinbruch|Quarry	skills/quarry.gif
+skill	skill/quarrying	entry	Steinbruch (Abbau)	Quarrying	quarrying	skills/quarrying.gif
+skill	skill/ranged_combat	entry	Fernkampf	Ranged combat	fernkampf	skills/ranged_combat.gif
+skill	skill/recruit	entry	Anwerben	Recruit	anwerben	skills/recruit.gif
+skill	skill/riding	entry	Reiten	Riding	reiten|Reiten|Riding	skills/riding.gif
+skill	skill/riding_alt	variant				skills/riding_alt.gif
+skill	skill/roadwork	entry	Straßenbau	Roadwork	strassenbau|Straßenbau|Roadwork	skills/roadwork.gif
+skill	skill/roadwork_alt	variant				skills/roadwork_alt.gif
+skill	skill/sailing	entry	Segeln	Sailing	segeln|Segeln|Sailing	skills/sailing.gif
+skill	skill/sailing_alt	variant				skills/sailing_alt.gif
+skill	skill/shipcraft	entry	Schiffbau	Shipbuilding	schiffbau|Schiffbau|Shipbuilding	skills/shipcraft.gif
+skill	skill/shipcraft_alt	variant				skills/shipcraft_alt.gif
+skill	skill/siege	entry	Belagerung	Siege	belagerung|siege	skills/siege.gif
+skill	skill/siege_alt	variant				skills/siege_alt.gif
+skill	skill/skills	category	Fähigkeiten	Skills	faehigkeiten|skills	skills/skills.gif
+skill	skill/skills_alt	variant				skills/skills_alt.gif
+skill	skill/slashing_weapons	entry	Hiebwaffen	Slashing weapons	hiebwaffen	skills/slashing_weapons.gif
+skill	skill/stealth	entry	Tarnung	Stealth	tarnung|Tarnung|Stealth	skills/stealth.gif
+skill	skill/stealth_alt	variant				skills/stealth_alt.gif
+skill	skill/stone_building	entry	Steinbau	Stone building	steinbau	skills/stone_building.gif
+skill	skill/tactics	entry	Taktik	Tactics	taktik|Taktik|Tactics	skills/tactics.gif
+skill	skill/tactics_alt	variant				skills/tactics_alt.gif
+skill	skill/taming	entry	Zähmen	Taming	zaehmen|taming	skills/taming.gif
+skill	skill/taming_alt	variant				skills/taming_alt.gif
+skill	skill/tax_collection	entry	Steuereintreiben	Tax collection	steuereintreiben|Steuereintreiben|Tax collection	skills/tax_collection.gif
+skill	skill/tax_collection_alt	variant				skills/tax_collection_alt.gif
+skill	skill/trade	entry	Handeln	Trade	handeln|Handeln|Trade	skills/trade.gif
+skill	skill/trade_alt	variant				skills/trade_alt.gif
+skill	skill/unarmed_combat	entry	Waffenloser Kampf	Unarmed combat	waffenloser_kampf|Waffenloser Kampf|Unarmed combat	skills/unarmed_combat.gif
+skill	skill/unarmed_combat_alt	variant				skills/unarmed_combat_alt.gif
+skill	skill/weaponsmithing	entry	Waffenbau	Weaponsmithing	waffenbau|Waffenbau|Weaponsmithing	skills/weaponsmithing.gif
+skill	skill/weaponsmithing_alt	variant				skills/weaponsmithing_alt.gif
+skill	skill/woodcutting	entry	Holzfällen	Woodcutting	holzfaellen	skills/woodcutting.gif
+skill	skill/work	entry	Arbeiten	Work	arbeiten	skills/work.gif
+spell	spell/aura	entry	Aura	Aura	aura	spells/aura.gif
+spell	spell/aura_alt	variant				spells/aura_alt.gif
+spell	spell/blessed_stone_circle	entry	Gesegneter Steinkreis	Blessed stone circle	gesegneter_steinkreis|gesegneter steinkreis	spells/blessed_stone_circle.gif
+spell	spell/combat_spell	entry	Kampfzauber	Combat spell	combatspell	spells/combat_spell.gif
+spell	spell/magic	entry	Magie	Magic	magie|Magie|Magic	spells/magic.gif
+spell	spell/magic_alt	variant				spells/magic_alt.gif
+spell	spell/magic_school	entry	Magieschule	Magic school	magicschool	spells/magic_school.gif
+spell	spell/ocean_spell	entry	Ozeanzauber	Ocean spell	spell_ocean	spells/ocean_spell.gif
+spell	spell/permanent_aura	entry	Permanente Aura	Permanent aura	permanentaura	spells/permanent_aura.gif
+spell	spell/portal	entry	Portal	Portal	portal	spells/portal.gif
+spell	spell/portal_alt	variant				spells/portal_alt.gif
+spell	spell/ship_spell	entry	Schiffszauber	Ship spell	spell_ship	spells/ship_spell.gif
+spell	spell/spell	entry	Zauber	Spell	zauber|spell	spells/spell.gif
+spell	spell/spell_alt	variant				spells/spell_alt.gif
+spell	spell/spell_level	entry	Zauberstufe	Spell level	zauberstufe|spell_level	spells/spell_level.gif
+spell	spell/spell_level_alt	variant				spells/spell_level_alt.gif
+spell	spell/spell_range	entry	Zauberreichweite	Spell range	spell_far	spells/spell_range.gif
+spell	spell/spell_rank	entry	Zaubergrad	Spell rank	zaubergrad|spell_rank	spells/spell_rank.gif
+spell	spell/spell_rank_alt	variant				spells/spell_rank_alt.gif
+spell	spell/spell_syntax	entry	Zaubersyntax	Spell syntax	zaubersyntax|spell_syntax	spells/spell_syntax.gif
+spell	spell/spell_syntax_alt	variant				spells/spell_syntax_alt.gif
+spell	spell/spell_type	entry	Zaubertyp	Spell type	zaubertyp|spell_type	spells/spell_type.gif
+spell	spell/spell_type_alt	variant				spells/spell_type_alt.gif
+spell	spell/spell_without_info	entry	Zauber ohne Info	Spell without info	zauber_ohne_info|spell_noinfo	spells/spell_without_info.gif
+spell	spell/spell_without_info_alt	variant				spells/spell_without_info_alt.gif
+spell	spell/wall_of_fire	entry	Feuerwand	Wall of fire	feuerwand|Feuerwand|Wall of fire	spells/wall_of_fire.gif
+spell	spell/wall_of_fire_detail	variant				spells/wall_of_fire_detail.gif
+spell	spell/wormhole	entry	Wurmloch	Wormhole	wurmloch	spells/wormhole.gif
+status	status/age	entry	Alter	Age	alter	status/age.gif
+status	status/age_alt	variant				status/age_alt.gif
+status	status/attacker	entry	Angreifer	Attacker	angreifer	status/attacker.gif
+status	status/attacker_alt	variant				status/attacker_alt.gif
+status	status/back	entry	Zurück	Back	zurueck	status/back.gif
+status	status/badly_wounded	entry	Schwer verwundet	Badly wounded	schwer_verwundet|Schwer verwundet|Badly wounded	status/badly_wounded.gif
+status	status/badly_wounded_alt	variant				status/badly_wounded_alt.gif
+status	status/birthday	entry	Geburtstag	Birthday	geburtstag	status/birthday.gif
+status	status/building_cost	entry	Gebäudekosten	Building cost	buildingcost	status/building_cost.gif
+status	status/building_size	entry	Gebäudegröße	Building size	build_size	status/building_size.gif
+status	status/captain	entry	Kapitän	Captain	kapitaen	status/captain.gif
+status	status/captain_alt	variant				status/captain_alt.gif
+status	status/carriers	entry	Träger	Carriers	traeger	status/carriers.gif
+status	status/carriers_alt	variant				status/carriers_alt.gif
+status	status/combat_status	entry	Kampfstatus	Combat status	kampfstatus	status/combat_status.gif
+status	status/crew	entry	Besatzung	Crew	besatzung	status/crew.gif
+status	status/crew_alt	variant				status/crew_alt.gif
+status	status/damage	entry	Schaden	Damage	schaden	status/damage.gif
+status	status/damage_alt	variant				status/damage_alt.gif
+status	status/e_mail	entry	E-Mail	E-mail	email2	status/e_mail.gif
+status	status/endurance	entry	Ausdauer	Endurance	ausdauer|Ausdauer|Endurance	status/endurance.gif
+status	status/endurance_alt	variant				status/endurance_alt.gif
+status	status/exhausted	entry	Erschöpft	Exhausted	erschoepft	status/exhausted.gif
+status	status/give	entry	Geben	Give	geben	status/give.gif
+status	status/give_alt	variant				status/give_alt.gif
+status	status/give_and_transfer	entry	Geben und Übertragen	Give and transfer	givetrans	status/give_and_transfer.gif
+status	status/groups	entry	Gruppen	Groups	gruppen	status/groups.gif
+status	status/groups_alt	variant				status/groups_alt.gif
+status	status/guarded	entry	Bewacht	Guarded	bewacht	status/guarded.gif
+status	status/healthy	entry	Gesund	Healthy	gesund	status/healthy.gif
+status	status/hero	entry	Held	Hero	hero|Held|Hero	status/hero.gif
+status	status/heroes	entry	Helden	Heroes	helden|Helden|Heroes	status/heroes.gif
+status	status/heroes_alt	variant				status/heroes_alt.gif
+status	status/homeless	entry	Obdachlos	Homeless	obdachlos	status/homeless.gif
+status	status/homeless_alt	variant				status/homeless_alt.gif
+status	status/hunger	entry	Hunger	Hunger	hunger	status/hunger.gif
+status	status/hunger_alt	variant				status/hunger_alt.gif
+status	status/migrants	entry	Migranten	Migrants	migranten	status/migrants.gif
+status	status/migrants_alt	variant				status/migrants_alt.gif
+status	status/morale	entry	Moral	Morale	moral	status/morale.gif
+status	status/morale_alt	variant				status/morale_alt.gif
+status	status/occupants	entry	Bewohner	Occupants	bewohner	status/occupants.gif
+status	status/occupants_alt	variant				status/occupants_alt.gif
+status	status/passengers	entry	Passagiere	Passengers	passagiere	status/passengers.gif
+status	status/passengers_alt	variant				status/passengers_alt.gif
+status	status/person	entry	Person	Person	person|Person	status/person.gif
+status	status/persons	entry	Personen	Persons	personen|Personen|Persons	status/persons.gif
+status	status/persons_alt	variant				status/persons_alt.gif
+status	status/persons_of_other_race	entry	Personen anderer Rasse	Persons of other race	personen_anderer_rasse	status/persons_of_other_race.gif
+status	status/persons_of_other_race_alt	variant				status/persons_of_other_race_alt.gif
+status	status/pupils	entry	Schüler	Pupils	schueler	status/pupils.gif
+status	status/pupils_alt	variant				status/pupils_alt.gif
+status	status/radius	entry	Radius	Radius	radius	status/radius.gif
+status	status/radius_alt	variant				status/radius_alt.gif
+status	status/reserve	entry	Reserve	Reserve	reserve	status/reserve.gif
+status	status/reserve_alt	variant				status/reserve_alt.gif
+status	status/score	entry	Punkte	Score	punkte	status/score.gif
+status	status/score_alt	variant				status/score_alt.gif
+status	status/speech	entry	Sprache	Speech	sprache	status/speech.gif
+status	status/speech_alt	variant				status/speech_alt.gif
+status	status/strong	entry	Stark	Strong	stark	status/strong.gif
+status	status/take	entry	Nehmen	Take	get	status/take.gif
+status	status/take_and_give	entry	Nehmen und Geben	Take and give	getgive	status/take_and_give.gif
+status	status/take_and_transfer	entry	Nehmen und Übertragen	Take and transfer	gettrans	status/take_and_transfer.gif
+status	status/teacher	entry	Lehrer	Teacher	lehrer	status/teacher.gif
+status	status/teacher_alt	variant				status/teacher_alt.gif
+status	status/units	entry	Einheiten	Units	einheiten	status/units.gif
+status	status/units_alt	variant				status/units_alt.gif
+status	status/very_strong	entry	Sehr stark	Very strong	sehr_stark|sehr stark	status/very_strong.gif
+status	status/victim	entry	Opfer	Victim	opfer	status/victim.gif
+status	status/victim_alt	variant				status/victim_alt.gif
+status	status/warning	entry	Warnung	Warning	warnung	status/warning.gif
+status	status/weight	entry	Gewicht	Weight	gewicht	status/weight.gif
+status	status/wounded	entry	Verwundet	Wounded	verwundet	status/wounded.gif
+technical	technical/coordinate_translation	entry		coordinate translation	coordinatetranslation	misc/coordinate_translation.gif
+technical	technical/coordinates	entry		coordinates	koordinaten	misc/coordinates.gif
+technical	technical/empty_detail	variant				misc/empty_detail.gif
+technical	technical/image_too_big	entry		image too big	tobig	misc/image_too_big.gif
+technical	technical/image_too_big_alt	variant				misc/image_too_big_alt.gif
+technical	technical/image_too_big_alt2	variant				misc/image_too_big_alt2.gif
+technical	technical/load_foot	entry		load foot	ladfuss	misc/load_foot.gif
+technical	technical/magellan_empty_detail	variant				misc/magellan_empty_detail.gif
+technical	technical/misc	entry		misc	misc	misc/misc.gif
+technical	technical/miscellaneous	entry		miscellaneous	sonstiges	misc/miscellaneous.gif
+technical	technical/unknown_detail	variant				misc/unknown_detail.gif
+terrain	terrain/active_volcano	entry	Aktiver Vulkan	Active volcano	aktiver_vulkan|Aktiver Vulkan|Active volcano	terrains/active_volcano.gif
+terrain	terrain/active_volcano_detail	variant				terrains/active_volcano_detail.gif
+terrain	terrain/active_volcano_detail_alt	variant				terrains/active_volcano_detail_alt.gif
+terrain	terrain/cave	entry	Höhle	Cave	hoehle	terrains/cave.gif
+terrain	terrain/current	entry	Strömung	Current	stroemung	terrains/current.gif
+terrain	terrain/current_alt	variant				terrains/current_alt.gif
+terrain	terrain/dense_fog	entry	Dichter Nebel	Dense fog	dichter_nebel|thickfog	terrains/dense_fog.gif
+terrain	terrain/dense_fog_alt	variant				terrains/dense_fog_alt.gif
+terrain	terrain/dense_fog_detail	variant				terrains/dense_fog_detail.gif
+terrain	terrain/desert	entry	Wüste	Desert	wueste|Wüste|Desert	terrains/desert.gif
+terrain	terrain/desert_alt	variant				terrains/desert_alt.gif
+terrain	terrain/desert_detail	variant				terrains/desert_detail.gif
+terrain	terrain/firewall	entry	Feuerwand	Firewall	firewall	terrains/firewall.gif
+terrain	terrain/fog	entry	Nebel	Fog	nebel|Nebel|Fog	terrains/fog.gif
+terrain	terrain/fog_alt	variant				terrains/fog_alt.gif
+terrain	terrain/fog_detail	variant				terrains/fog_detail.gif
+terrain	terrain/forest	entry	Wald	Forest	wald|Wald|Forest	terrains/forest.gif
+terrain	terrain/forest_alt	variant				terrains/forest_alt.gif
+terrain	terrain/forest_detail	variant				terrains/forest_detail.gif
+terrain	terrain/glacier	entry	Gletscher	Glacier	gletscher|Gletscher|Glacier	terrains/glacier.gif
+terrain	terrain/glacier_alt	variant				terrains/glacier_alt.gif
+terrain	terrain/glacier_detail	variant				terrains/glacier_detail.gif
+terrain	terrain/hall	entry	Halle	Hall	hall|Halle|Hall	terrains/hall.gif
+terrain	terrain/highlands	entry	Hochland	Highlands	hochland|Hochland|Highlands	terrains/highlands.gif
+terrain	terrain/highlands_alt	variant				terrains/highlands_alt.gif
+terrain	terrain/highlands_detail	variant				terrains/highlands_detail.gif
+terrain	terrain/ice_floe	entry	Eisscholle	Ice floe	eisscholle|Eisscholle|Ice floe	terrains/ice_floe.gif
+terrain	terrain/ice_floe_detail	variant				terrains/ice_floe_detail.gif
+terrain	terrain/iceberg	entry	Eisberg	Iceberg	eisberg|Eisberg|Iceberg	terrains/iceberg.gif
+terrain	terrain/iceberg_alt	variant				terrains/iceberg_alt.gif
+terrain	terrain/iceberg_detail	variant				terrains/iceberg_detail.gif
+terrain	terrain/island	entry	Insel	Island	insel	terrains/island.gif
+terrain	terrain/lake	entry	See	Lake	see|See|Lake	terrains/lake.gif
+terrain	terrain/lake_detail	variant				terrains/lake_detail.gif
+terrain	terrain/maelstrom	entry	Mahlstrom	Maelstrom	mahlstrom|Mahlstrom|Maelstrom	terrains/maelstrom.gif
+terrain	terrain/maelstrom_detail	variant				terrains/maelstrom_detail.gif
+terrain	terrain/mountains	entry	Berge / Gebirge	Mountains	berge|Berge / Gebirge|Mountains	terrains/mountains.gif
+terrain	terrain/mountains_alt	variant				terrains/mountains_alt.gif
+terrain	terrain/mountains_alt2	variant				terrains/mountains_alt2.gif
+terrain	terrain/mountains_detail	variant				terrains/mountains_detail.gif
+terrain	terrain/mountains_detail_alt	variant				terrains/mountains_detail_alt.gif
+terrain	terrain/mushroom_cave	entry	Pilzhöhle	Mushroom cave	pilzhoehle	terrains/mushroom_cave.gif
+terrain	terrain/oasis	entry	Oase	Oasis	oase	terrains/oasis.gif
+terrain	terrain/ocean	entry	Ozean	Ocean	ozean|Ozean|Ocean	terrains/ocean.gif
+terrain	terrain/ocean_alt	variant				terrains/ocean_alt.gif
+terrain	terrain/ocean_detail	variant				terrains/ocean_detail.gif
+terrain	terrain/pack_ice	entry	Packeis	Pack ice	packeis|Packeis|Pack ice	terrains/pack_ice.gif
+terrain	terrain/pack_ice_detail	variant				terrains/pack_ice_detail.gif
+terrain	terrain/passage	entry	Gang	Passage	gang|corridor	terrains/passage.gif
+terrain	terrain/passage_alt	variant				terrains/passage_alt.gif
+terrain	terrain/passage_detail	variant				terrains/passage_detail.gif
+terrain	terrain/plains	entry	Ebene	Plains	ebene|Ebene|Plains	terrains/plains.gif
+terrain	terrain/plains_alt	variant				terrains/plains_alt.gif
+terrain	terrain/plains_detail	variant				terrains/plains_detail.gif
+terrain	terrain/road	entry	Straße	Road	strasse	terrains/road.gif
+terrain	terrain/swamp	entry	Sumpf	Swamp	sumpf|Sumpf|Swamp	terrains/swamp.gif
+terrain	terrain/swamp_detail	variant				terrains/swamp_detail.gif
+terrain	terrain/transition_detail	variant				terrains/transition_detail.gif
+terrain	terrain/trees	entry	Bäume	Trees	baeume	terrains/trees.gif
+terrain	terrain/tunnel	entry	Tunnel	Tunnel	tunnel	terrains/tunnel.gif
+terrain	terrain/tunnel_alt	variant				terrains/tunnel_alt.gif
+terrain	terrain/undefined	entry	Unbekannt	Undefined	undefined	terrains/undefined.gif
+terrain	terrain/volcano	entry	Vulkan	Volcano	vulkan|Vulkan|Volcano	terrains/volcano.gif
+terrain	terrain/volcano_alt	variant				terrains/volcano_alt.gif
+terrain	terrain/volcano_detail	variant				terrains/volcano_detail.gif
+terrain	terrain/wall_cliff	entry	Wand	Wall (cliff)	wand|wall	terrains/wall_cliff.gif
+terrain	terrain/wall_cliff_alt	variant				terrains/wall_cliff_alt.gif
+terrain	terrain/wall_cliff_detail	variant				terrains/wall_cliff_detail.gif
+trade	trade/balm	entry	Balsam	Balm	balsam	trade/balm.gif
+trade	trade/gem	entry	Juwel	Gem	juwel	trade/gem.gif
+trade	trade/incense	entry	Weihrauch	Incense	weihrauch	trade/incense.gif
+trade	trade/myrrh	entry	Myrrhe	Myrrh	myrrhe	trade/myrrh.gif
+trade	trade/oil	entry	Öl	Oil	oel_en	trade/oil.gif
+trade	trade/silk	entry	Seide	Silk	seide	trade/silk.gif
+trade	trade/spice	entry	Gewürz	Spice	gewuerz	trade/spice.gif
+trade	trade/trees	entry	Bäume	Trees	baeume	trade/trees.gif

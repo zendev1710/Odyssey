@@ -1,0 +1,66 @@
+﻿<UserControl x:Class="Odyssey.Views.Tools.MapView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:vm="using:Odyssey.ViewModels.Tools"
+			 xmlns:controls="clr-namespace:Odyssey.Controls"
+			 x:DataType="vm:MapViewModel" x:CompileBindings="True"
+             mc:Ignorable="d"
+             d:DesignWidth="300" d:DesignHeight="400">
+  <Grid RowDefinitions="Auto,*" ColumnDefinitions="*,Auto">
+      <!-- ToolTip.Tip="Zoom" -->
+      <Slider x:Name="ZoomSlider"  Minimum="20"  Maximum="400"
+            Value="{Binding ElementName=HexMap, Path=Zoom, Mode=TwoWay}"
+            IsVisible="{Binding HasDocument}"
+            TickFrequency="10"
+            TickPlacement="TopLeft"
+            SmallChange="10"
+            LargeChange="50"
+            Margin="10,10,0,0"
+            Grid.Row="0"
+            Grid.Column="0"
+            PointerPressed="Slider_PointerPressed"
+            PointerReleased="Slider_PointerReleased" 
+      />
+      <Popup x:Name="ZoomPopup" IsOpen="{Binding IsDragging, Mode=TwoWay}" PlacementTarget="{Binding ElementName=ZoomSlider}"
+             Placement="Top">
+          <Border Background="Red" Padding="6" CornerRadius="4"> <TextBlock Foreground="Yellow" Text="{Binding Zoom, StringFormat='{}{0:0}%'}"/>
+          </Border>
+      </Popup>
+      <ComboBox x:Name="PlanesComboBox"
+            ItemsSource="{Binding Planes}"
+            SelectedItem="{Binding SelectedPlane, Mode=TwoWay}"
+            Width="120"
+            Margin="8,0,0,0"
+            IsVisible="{Binding HasSeveralPlanes}"
+            ToolTip.Tip="Select plane"
+            Grid.Row="0"
+            Grid.Column="1"
+      />
+    <!-- Map with ScrollViewer -->
+    <ScrollViewer x:Name="MapScrollViewer"
+                  Grid.Row="1"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="2" 
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  HorizontalScrollBarVisibility="Auto"
+                  VerticalScrollBarVisibility="Auto">
+      <controls:HexMapControl
+        x:Name="HexMap"
+        IsStandardPlane="{Binding IsStandardPlane}"
+		Season="{Binding Season}"
+        OccupiedRegions="{Binding OccupiedRegions}"
+        UnoccupiedRegions="{Binding UnoccupiedRegions}"
+        Ships="{Binding Ships}"
+        Buildings="{Binding Buildings}"
+        ActiveFactionIds="{Binding ActiveFactionIds}"
+        AlliedFactionIds="{Binding AlliedFactionIds}"
+        SelectedShip="{Binding SelectedShip, Mode=OneWay}"
+		SelectedRegion="{Binding SelectedRegion, Mode=TwoWay}"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch" />
+    </ScrollViewer>
+  </Grid>
+</UserControl>

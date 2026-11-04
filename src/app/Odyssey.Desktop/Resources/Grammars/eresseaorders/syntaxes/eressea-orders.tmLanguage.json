@@ -1,0 +1,61 @@
+{
+  "scopeName": "source.eressea-orders",
+  "name": "Eressea Orders",
+  "patterns": [
+    { "include": "#region" },
+    { "include": "#unit" },
+    { "include": "#commands" },
+    { "include": "#comments" },
+    { "include": "#meta" }
+  ],
+  "repository": {
+    "region": {
+      "patterns": [
+        {
+          "name": "entity.name.section.region.eressea",
+          "match": "^REGION\\s+[-\\d]+,[-\\d]+\\s*;.*$"
+        }
+      ]
+    },
+    "unit": {
+      "patterns": [
+        {
+          "name": "entity.name.type.unit.eressea",
+          "match": "^UNIT\\s+\\w+;\\s+.*$"
+        }
+      ]
+    },
+    "commands": {
+      "patterns": [
+        {
+          "name": "keyword.control.command.eressea",
+          "match": "^(@\\w+)\\b.*$"
+        },
+        {
+          "name": "keyword.control.action.eressea",
+          "match": "^(WORK|LEARN|TEACH|MAKE|NEXT|@HELP|@GIVE|@RESERVE|@GROUP|@COMBAT|@GUARD|@FOLLOW|@RECRUIT|@HIDE|@COMBATSPELL)\\b.*$"
+        }
+      ]
+    },
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.semicolon.eressea",
+          "match": "^;.*$"
+        },
+        {
+          "name": "comment.line.double-slash.eressea",
+          "match": "^//.*$"
+        }
+      ]
+    },
+    "meta": {
+      "patterns": [
+        {
+          "name": "meta.header.eressea",
+          "match": "^(ERESSEA|LOCALE|TIMESTAMP|Magellan Version|ECHECK).*"
+        }
+      ]
+    }
+  }
+}

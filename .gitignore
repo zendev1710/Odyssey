@@ -361,3 +361,13 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Continue.dev
+.continue/
+
+# Local pilot/test workspaces (local only)
+.src/.localpilot/
+.analysis/
+
+# VS Code
+.vscode/

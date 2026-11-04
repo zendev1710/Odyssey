@@ -1,0 +1,894 @@
+﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Fragment>
+    <ComponentGroup Id="ComponentsForNet80" Directory="INSTALLFOLDER">
+	  <Component Id="AsyncImageLoader_Avalonia_dll" Guid="ef81011f-df70-4948-a1da-f9dd059fbf7b" >
+        <File Source="..\publish\net8.0\AsyncImageLoader.Avalonia.dll" />
+      </Component>
+      <Component Id="Avalonia_Base_dll" Guid="74894d7e-651d-44c2-bada-b25a7d11e8d4">
+        <File Source="..\publish\net8.0\Avalonia.Base.dll" />
+      </Component>
+      <Component Id="Avalonia_Controls_DataGrid_dll" Guid="d2a792a4-d371-4d28-aefe-750e11358748">
+        <File Source="..\publish\net8.0\Avalonia.Controls.DataGrid.dll" />
+      </Component>
+      <Component Id="Avalonia_Controls_dll" Guid="88c900b1-a107-4c0d-a8dc-a4396e192307">
+        <File Source="..\publish\net8.0\Avalonia.Controls.dll" />
+      </Component>
+      <Component Id="Avalonia_DesignerSupport_dll" Guid="1af00d31-3d61-4aec-9e4b-5b1c863b9980">
+        <File Source="..\publish\net8.0\Avalonia.DesignerSupport.dll" />
+      </Component>
+      <Component Id="Avalonia_Desktop_dll" Guid="ef9c6d6a-2a27-47b4-96d9-dc7953b11727">
+        <File Source="..\publish\net8.0\Avalonia.Desktop.dll" />
+      </Component>
+      <Component Id="Avalonia_Dialogs_dll" Guid="bf3c57e5-d4f2-40e1-bbf9-6b6a4039f914">
+        <File Source="..\publish\net8.0\Avalonia.Dialogs.dll" />
+      </Component>
+      <Component Id="Avalonia_dll" Guid="0a196fc0-88b3-4b20-86fd-0fe71918e9d9">
+        <File Source="..\publish\net8.0\Avalonia.dll" />
+      </Component>
+      <Component Id="Avalonia_Fonts_Inter_dll" Guid="1b62bb99-5df8-4606-b945-9c8c821c52a4">
+        <File Source="..\publish\net8.0\Avalonia.Fonts.Inter.dll" />
+      </Component>
+      <Component Id="Avalonia_FreeDesktop_dll" Guid="c304ba84-0a30-4e4b-aa9e-f6eb2c8a1b36">
+        <File Source="..\publish\net8.0\Avalonia.FreeDesktop.dll" />
+      </Component>
+      <Component Id="Avalonia_Markup_dll" Guid="0972b4b5-be49-4702-a014-6c9d03c82318">
+        <File Source="..\publish\net8.0\Avalonia.Markup.dll" />
+      </Component>
+      <Component Id="Avalonia_Markup_Xaml_dll" Guid="43fc3c95-cc08-49a6-b9a8-881be0e96f7e">
+        <File Source="..\publish\net8.0\Avalonia.Markup.Xaml.dll" />
+      </Component>
+      <Component Id="Avalonia_Markup_Xaml_Loader_dll" Guid="206503de-0d5e-47ab-ba9d-5d1de7ce61a2">
+        <File Source="..\publish\net8.0\Avalonia.Markup.Xaml.Loader.dll" />
+      </Component>
+      <Component Id="Avalonia_Metal_dll" Guid="7a183e45-d6ba-489c-800f-6b0e0e2a1515">
+        <File Source="..\publish\net8.0\Avalonia.Metal.dll" />
+      </Component>
+      <Component Id="Avalonia_MicroCom_dll" Guid="eb5e6efa-e947-481d-925c-8f286f71b9e3">
+        <File Source="..\publish\net8.0\Avalonia.MicroCom.dll" />
+      </Component>
+      <Component Id="Avalonia_Native_dll" Guid="2e0bf4b1-1b78-4e5d-851c-059e5c4db850">
+        <File Source="..\publish\net8.0\Avalonia.Native.dll" />
+      </Component>
+      <Component Id="Avalonia_OpenGL_dll" Guid="84b15925-b7df-47fc-9a43-23e9ab6843b9">
+        <File Source="..\publish\net8.0\Avalonia.OpenGL.dll" />
+      </Component>
+      <Component Id="Avalonia_Remote_Protocol_dll" Guid="b56014a4-3c00-4b34-abb3-2e92198bd81c">
+        <File Source="..\publish\net8.0\Avalonia.Remote.Protocol.dll" />
+      </Component>
+      <Component Id="Avalonia_Skia_dll" Guid="d2888b5e-d271-4c2c-ab83-7b41554671fb">
+        <File Source="..\publish\net8.0\Avalonia.Skia.dll" />
+      </Component>
+      <Component Id="Avalonia_Svg_dll" Guid="7ac98dcb-73a6-4c22-95bd-3f34dcd6e601">
+        <File Source="..\publish\net8.0\Avalonia.Svg.dll" />
+      </Component>
+      <Component Id="Avalonia_Themes_Fluent_dll" Guid="138510f8-574d-4e64-bf18-1a085b2a324f">
+        <File Source="..\publish\net8.0\Avalonia.Themes.Fluent.dll" />
+      </Component>
+      <Component Id="Avalonia_Themes_Simple_dll" Guid="199f42dd-b20f-4bc5-ba76-63702556bb02">
+        <File Source="..\publish\net8.0\Avalonia.Themes.Simple.dll" />
+      </Component>
+      <Component Id="Avalonia_Vulkan_dll" Guid="f531a0e8-0f0b-4721-a5ee-be7131e833b7">
+        <File Source="..\publish\net8.0\Avalonia.Vulkan.dll" />
+      </Component>
+      <Component Id="Avalonia_WebView_dll" Guid="97270ccd-9df2-4e42-88d3-72f348cd337b">
+        <File Source="..\publish\net8.0\Avalonia.WebView.dll" />
+      </Component>
+      <Component Id="Avalonia_Win32_Automation_dll" Guid="4130638e-80bb-4025-b89a-e32503015388">
+        <File Source="..\publish\net8.0\Avalonia.Win32.Automation.dll" />
+      </Component>
+      <Component Id="Avalonia_Win32_dll" Guid="85fa2f70-56cf-437c-8f0b-f7b2935ff1e6">
+        <File Source="..\publish\net8.0\Avalonia.Win32.dll" />
+      </Component>
+      <Component Id="Avalonia_X11_dll" Guid="a0266bcb-362a-4d3b-9d18-7297a56be59e">
+        <File Source="..\publish\net8.0\Avalonia.X11.dll" />
+      </Component>
+      <Component Id="Avalonia_Xaml_Interactions_Custom_dll" Guid="a53b4b3a-3e45-4222-80b6-6b9c66715300">
+        <File Source="..\publish\net8.0\Avalonia.Xaml.Interactions.Custom.dll" />
+      </Component>
+      <Component Id="Avalonia_Xaml_Interactions_dll" Guid="0e6a2efa-3479-464d-a927-28ad3e0e09d0">
+        <File Source="..\publish\net8.0\Avalonia.Xaml.Interactions.dll" />
+      </Component>
+      <Component Id="Avalonia_Xaml_Interactions_DragAndDrop_dll" Guid="342eca8d-4b59-4db0-b940-77c25787a960">
+        <File Source="..\publish\net8.0\Avalonia.Xaml.Interactions.DragAndDrop.dll" />
+      </Component>
+      <Component Id="Avalonia_Xaml_Interactions_Draggable_dll" Guid="d07499ac-d0f8-4225-9d23-1d1be6772727">
+        <File Source="..\publish\net8.0\Avalonia.Xaml.Interactions.Draggable.dll" />
+      </Component>
+      <Component Id="Avalonia_Xaml_Interactions_Events_dll" Guid="2dfaf42a-c8fb-4314-a650-ecb6915f659a">
+        <File Source="..\publish\net8.0\Avalonia.Xaml.Interactions.Events.dll" />
+      </Component>
+      <Component Id="Avalonia_Xaml_Interactions_Responsive_dll" Guid="3c4cff96-1354-415f-bbe0-d804d449b16e">
+        <File Source="..\publish\net8.0\Avalonia.Xaml.Interactions.Responsive.dll" />
+      </Component>
+      <Component Id="Avalonia_Xaml_Interactivity_dll" Guid="bc1e3f70-05ca-4cbb-90d1-4c45b0c3b8fd">
+        <File Source="..\publish\net8.0\Avalonia.Xaml.Interactivity.dll" />
+      </Component>
+      <Component Id="AvaloniaEdit_dll" Guid="00e09e96-1c2e-4c06-bf92-9bc38f6b75e9">
+        <File Source="..\publish\net8.0\AvaloniaEdit.dll" />
+      </Component>
+      <Component Id="AvaloniaEdit_TextMate_dll" Guid="5b3e15c6-3548-49b7-abac-8a31650d172a">
+        <File Source="..\publish\net8.0\AvaloniaEdit.TextMate.dll" />
+      </Component>
+      <Component Id="AvaloniaEdit_TextMate_Grammars_dll" Guid="d3372578-9a46-408f-8c99-4e18ff6ad8aa">
+        <File Source="..\publish\net8.0\AvaloniaEdit.TextMate.Grammars.dll" />
+      </Component>
+      <Component Id="AvaloniaWebView_Shared_dll" Guid="b355a78a-7362-42f9-8c03-12e2fc7488f4">
+        <File Source="..\publish\net8.0\AvaloniaWebView.Shared.dll" />
+      </Component>
+      <Component Id="av_libglesv2_dll" Guid="f4420df9-03ef-42d0-a280-c18d7eb462a9">
+        <File Source="..\publish\net8.0\av_libglesv2.dll" />
+      </Component>
+      <Component Id="clretwrc_dll" Guid="230293e5-de93-4d2b-a0d9-1990a8fa324a">
+        <File Source="..\publish\net8.0\clretwrc.dll" />
+      </Component>
+      <Component Id="clrgc_dll" Guid="24481f32-f79b-40d1-ad26-af32cf48683c">
+        <File Source="..\publish\net8.0\clrgc.dll" />
+      </Component>
+      <Component Id="clrjit_dll" Guid="f2818d07-9589-4667-999f-5dcb9fac39c7">
+        <File Source="..\publish\net8.0\clrjit.dll" />
+      </Component>
+      <Component Id="ColorDocument_Avalonia_dll" Guid="a4ceeb0a-e573-4eee-afc7-525e5a56209f">
+        <File Source="..\publish\net8.0\ColorDocument.Avalonia.dll" />
+      </Component>
+      <Component Id="ColorTextBlock_Avalonia_dll" Guid="16d1d027-1667-467f-9c12-57d2febc111a">
+        <File Source="..\publish\net8.0\ColorTextBlock.Avalonia.dll" />
+      </Component>
+      <Component Id="CommunityToolkit_Common_dll" Guid="9b3a104f-6440-447f-bd38-d28cee8300c7">
+        <File Source="..\publish\net8.0\CommunityToolkit.Common.dll" />
+      </Component>
+      <Component Id="CommunityToolkit_Diagnostics_dll" Guid="5d5be08a-7ef6-44d8-9895-25b433467357">
+        <File Source="..\publish\net8.0\CommunityToolkit.Diagnostics.dll" />
+      </Component>
+      <Component Id="CommunityToolkit_HighPerformance_dll" Guid="266582a3-3b5d-48c0-8d83-53e0a0929362">
+        <File Source="..\publish\net8.0\CommunityToolkit.HighPerformance.dll" />
+      </Component>
+      <Component Id="CommunityToolkit_Mvvm_dll" Guid="e32f8d74-8f98-40de-857c-f6b31e12b1c1">
+        <File Source="..\publish\net8.0\CommunityToolkit.Mvvm.dll" />
+      </Component>
+      <Component Id="ConfigFactory_Avalonia_dll" Guid="008077c0-58c9-4e62-b1b0-a67e21c8e737">
+        <File Source="..\publish\net8.0\ConfigFactory.Avalonia.dll" />
+      </Component>
+      <Component Id="ConfigFactory_Core_dll" Guid="178219da-472f-4fd8-a4c5-63fd554f0d09">
+        <File Source="..\publish\net8.0\ConfigFactory.Core.dll" />
+      </Component>
+      <Component Id="ConfigFactory_dll" Guid="9fe0d183-0d93-497f-b922-329d2f2df505">
+        <File Source="..\publish\net8.0\ConfigFactory.dll" />
+      </Component>
+      <Component Id="coreclr_dll" Guid="00e90cea-a1be-4cb2-925c-8f7ab67eb80d">
+        <File Source="..\publish\net8.0\coreclr.dll" />
+      </Component>
+      <Component Id="createdump_exe" Guid="16e988b2-53be-4d6e-bb7d-16ebe7b92548">
+        <File Source="..\publish\net8.0\createdump.exe" />
+      </Component>
+      <Component Id="Dock_Avalonia_dll" Guid="eb78c5d8-6217-4b3c-a3a8-188aa2f376f9">
+        <File Source="..\publish\net8.0\Dock.Avalonia.dll" />
+      </Component>
+      <Component Id="Dock_Avalonia_Themes_Fluent_dll" Guid="9a6748a9-ecde-4d61-b082-bbe837a7fb30">
+        <File Source="..\publish\net8.0\Dock.Avalonia.Themes.Fluent.dll" />
+      </Component>
+      <Component Id="Dock_Avalonia_Themes_Simple_dll" Guid="dbe214cb-77e0-46a5-9c59-03b9c2799722">
+        <File Source="..\publish\net8.0\Dock.Avalonia.Themes.Simple.dll" />
+      </Component>
+      <Component Id="Dock_Controls_ProportionalStackPanel_dll" Guid="01c377a1-94fd-410d-a1f5-2f263296cce9">
+        <File Source="..\publish\net8.0\Dock.Controls.ProportionalStackPanel.dll" />
+      </Component>
+      <Component Id="Dock_Controls_Recycling_dll" Guid="44bea6e6-dddd-4450-897b-d9084736ad5e">
+        <File Source="..\publish\net8.0\Dock.Controls.Recycling.dll" />
+      </Component>
+      <Component Id="Dock_Controls_Recycling_Model_dll" Guid="35a5702f-14ac-4f53-a96e-d9ae79f15a07">
+        <File Source="..\publish\net8.0\Dock.Controls.Recycling.Model.dll" />
+      </Component>
+      <Component Id="Dock_MarkupExtension_dll" Guid="6fb14048-a987-4c24-b21a-f67c9a32f9ed">
+        <File Source="..\publish\net8.0\Dock.MarkupExtension.dll" />
+      </Component>
+      <Component Id="Dock_Model_dll" Guid="3fa817be-a088-428a-badd-cb1847718f3c">
+        <File Source="..\publish\net8.0\Dock.Model.dll" />
+      </Component>
+      <Component Id="Dock_Model_Mvvm_dll" Guid="d3321cb5-e533-41ef-b4f0-2715fad11406">
+        <File Source="..\publish\net8.0\Dock.Model.Mvvm.dll" />
+      </Component>
+      <Component Id="Dock_Serializer_dll" Guid="82187062-337b-45d7-8e94-9b4e1d93788c">
+        <File Source="..\publish\net8.0\Dock.Serializer.dll" />
+      </Component>
+      <Component Id="Dock_Settings_dll" Guid="7135fda7-c236-41b3-90fc-6d57e925cc14">
+        <File Source="..\publish\net8.0\Dock.Settings.dll" />
+      </Component>
+      <Component Id="DryIoc_dll" Guid="cbf00cc5-a419-4aab-bba2-7c726368b4cc">
+        <File Source="..\publish\net8.0\DryIoc.dll" />
+      </Component>
+      <Component Id="DryIoc_Shared_dll" Guid="be26687b-f7d3-4c91-b636-d458239643be">
+        <File Source="..\publish\net8.0\DryIoc.Shared.dll" />
+      </Component>
+      <Component Id="ExCSS_dll" Guid="7da5a6d2-2bca-42ef-8fe8-f3dece795dc2">
+        <File Source="..\publish\net8.0\ExCSS.dll" />
+      </Component>
+      <Component Id="Fizzler_dll" Guid="af3063ce-80f1-46af-93df-8e7662aa3d08">
+        <File Source="..\publish\net8.0\Fizzler.dll" />
+      </Component>
+      <Component Id="HarfBuzzSharp_dll" Guid="acd9a12b-9f20-4e2e-aa3f-762c5c3c46d9">
+        <File Source="..\publish\net8.0\HarfBuzzSharp.dll" />
+      </Component>
+      <Component Id="hostfxr_dll" Guid="cf14ac17-dd73-4cec-a259-b69435b08134">
+        <File Source="..\publish\net8.0\hostfxr.dll" />
+      </Component>
+      <Component Id="hostpolicy_dll" Guid="c5b7b970-7789-4a99-abff-443ee3d0d9b2">
+        <File Source="..\publish\net8.0\hostpolicy.dll" />
+      </Component>
+      <Component Id="HtmlAgilityPack_dll" Guid="7120d5fb-3377-48ad-9b41-49d04e9d99a5">
+        <File Source="..\publish\net8.0\HtmlAgilityPack.dll" />
+      </Component>
+      <Component Id="libHarfBuzzSharp_dll" Guid="a9567fda-aa76-4bf0-9930-4657abcc1734">
+        <File Source="..\publish\net8.0\libHarfBuzzSharp.dll" />
+      </Component>
+      <Component Id="libonigwrap_dll" Guid="36c8d78f-3852-494d-b777-4ab22af91f6f">
+        <File Source="..\publish\net8.0\libonigwrap.dll" />
+      </Component>
+      <Component Id="libSkiaSharp_dll" Guid="53750767-ec9c-4acd-a722-94499771c81b">
+        <File Source="..\publish\net8.0\libSkiaSharp.dll" />
+      </Component>
+      <Component Id="Markdown_Avalonia_dll" Guid="c0b0d235-920a-41b3-82e0-d279044fb736">
+        <File Source="..\publish\net8.0\Markdown.Avalonia.dll" />
+      </Component>
+      <Component Id="Markdown_Avalonia_Full_dll" Guid="2ae7ca77-aac3-41ab-8a8a-eb41eeadfa22">
+        <File Source="..\publish\net8.0\Markdown.Avalonia.Full.dll" />
+      </Component>
+      <Component Id="Markdown_Avalonia_Html_dll" Guid="6860668f-b12f-4916-8fe1-8884f5403ff3">
+        <File Source="..\publish\net8.0\Markdown.Avalonia.Html.dll" />
+      </Component>
+      <Component Id="Markdown_Avalonia_Svg_dll" Guid="181a300b-a0cd-4cb8-8778-c72717690011">
+        <File Source="..\publish\net8.0\Markdown.Avalonia.Svg.dll" />
+      </Component>
+      <Component Id="Markdown_Avalonia_SyntaxHigh_dll" Guid="77089671-26d5-4b23-8986-35cdfb2f9f88">
+        <File Source="..\publish\net8.0\Markdown.Avalonia.SyntaxHigh.dll" />
+      </Component>
+      <Component Id="MicroCom_Runtime_dll" Guid="4e5e65c8-bf7c-4820-9c9d-00f8cb1cae78">
+        <File Source="..\publish\net8.0\MicroCom.Runtime.dll" />
+      </Component>
+      <Component Id="Microsoft_Bcl_AsyncInterfaces_dll" Guid="d6a42aa7-cd1a-45fd-bba5-c03defedd42b">
+        <File Source="..\publish\net8.0\Microsoft.Bcl.AsyncInterfaces.dll" />
+      </Component>
+      <Component Id="Microsoft_CSharp_dll" Guid="98c9f809-fa76-4c6a-8796-d0aee48c6e5d">
+        <File Source="..\publish\net8.0\Microsoft.CSharp.dll" />
+      </Component>
+      <Component Id="Microsoft_DiaSymReader_Native_amd64_dll" Guid="7bc2dea1-c3b0-481b-b876-f197ca0eb968">
+        <File Source="..\publish\net8.0\Microsoft.DiaSymReader.Native.amd64.dll" />
+      </Component>
+      <Component Id="Microsoft_Extensions_DependencyInjection_Abstractions_dll" Guid="b2ae5c93-adcc-408d-84c7-0e407b811720">
+        <File Source="..\publish\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll" />
+      </Component>
+      <Component Id="Microsoft_Extensions_FileProviders_Abstractions_dll" Guid="8a2a9b67-8bae-47e9-ab75-90152eac1d63">
+        <File Source="..\publish\net8.0\Microsoft.Extensions.FileProviders.Abstractions.dll" />
+      </Component>
+      <Component Id="Microsoft_Extensions_Primitives_dll" Guid="33551b83-822b-4bd7-a872-4fb405fb5906">
+        <File Source="..\publish\net8.0\Microsoft.Extensions.Primitives.dll" />
+      </Component>
+      <Component Id="Microsoft_VisualBasic_Core_dll" Guid="cb2de075-0b4f-46b2-a256-121956d8bd31">
+        <File Source="..\publish\net8.0\Microsoft.VisualBasic.Core.dll" />
+      </Component>
+      <Component Id="Microsoft_VisualBasic_dll" Guid="aac409c1-0b63-410b-8087-80d3bfcce5fe">
+        <File Source="..\publish\net8.0\Microsoft.VisualBasic.dll" />
+      </Component>
+      <Component Id="Microsoft_Win32_Primitives_dll" Guid="61ddc562-ab41-4222-a4e0-15421cd54fe6">
+        <File Source="..\publish\net8.0\Microsoft.Win32.Primitives.dll" />
+      </Component>
+      <Component Id="Microsoft_Win32_Registry_dll" Guid="622cae20-be49-473e-98ff-5a68e847b8f4">
+        <File Source="..\publish\net8.0\Microsoft.Win32.Registry.dll" />
+      </Component>
+      <Component Id="Microsoft_Win32_SystemEvents_dll" Guid="c99cbcbb-f87f-4a57-9861-80260e40ba00">
+        <File Source="..\publish\net8.0\Microsoft.Win32.SystemEvents.dll" />
+      </Component>
+      <Component Id="mscordaccore_dll" Guid="bef55347-a7f4-4b3a-a79c-8c486457a971">
+        <File Source="..\publish\net8.0\mscordaccore.dll" />
+      </Component>
+      <Component Id="mscordaccore_amd64_amd64_8_0_1925_36514_dll" Guid="9931081f-7c48-4018-a8c7-d487dc7d39ea">
+        <File Source="..\publish\net8.0\mscordaccore_amd64_amd64_8.0.1925.36514.dll" />
+      </Component>
+      <Component Id="mscordbi_dll" Guid="a85913ae-9345-4181-bc5d-4eaa133e2b4f">
+        <File Source="..\publish\net8.0\mscordbi.dll" />
+      </Component>
+      <Component Id="mscorlib_dll" Guid="5b380c2d-9577-42b4-b777-788cfaefaae3">
+        <File Source="..\publish\net8.0\mscorlib.dll" />
+      </Component>
+      <Component Id="mscorrc_dll" Guid="b4741d3e-4f33-426d-a3e4-85b8090ad7d3">
+        <File Source="..\publish\net8.0\mscorrc.dll" />
+      </Component>
+      <Component Id="msquic_dll" Guid="9b2630fa-59ca-4c7f-9f1b-d270312bd5ee">
+        <File Source="..\publish\net8.0\msquic.dll" />
+      </Component>
+      <Component Id="netstandard_dll" Guid="f523eaad-5761-41cf-b73e-b43b48c4ecba">
+        <File Source="..\publish\net8.0\netstandard.dll" />
+      </Component>
+      <Component Id="Newtonsoft_Json_dll" Guid="b3a8ad19-2872-4c94-8d45-ba5b574b89d2">
+        <File Source="..\publish\net8.0\Newtonsoft.Json.dll" />
+      </Component>
+      <Component Id="Odyssey_deps_json" Guid="9aa90789-ab3f-4864-b183-fc7fdfa4684e">
+        <File Source="..\publish\net8.0\Odyssey.deps.json" />
+      </Component>
+      <Component Id="Odyssey_dll" Guid="274ca8de-594e-4387-9203-3b1e495572d1">
+        <File Source="..\publish\net8.0\Odyssey.dll" />
+      </Component>
+      <Component Id="Odyssey_exe" Guid="d410710b-51e6-4ed7-bb70-f1fdbc994f33">
+        <File Source="..\publish\net8.0\Odyssey.exe" />
+      </Component>
+      <Component Id="Odyssey_pdb" Guid="ab21e5ac-a86e-4d0c-8a39-bbfd831e92b1">
+        <File Source="..\publish\net8.0\Odyssey.pdb" />
+      </Component>
+      <Component Id="Odyssey_runtimeconfig_json" Guid="8498c0f8-a528-4e3c-b3d8-cd0951a2828b">
+        <File Source="..\publish\net8.0\Odyssey.runtimeconfig.json" />
+      </Component>
+      <Component Id="Onigwrap_dll" Guid="9eea542c-7df4-46ca-8f6a-2df94eca8a40">
+        <File Source="..\publish\net8.0\Onigwrap.dll" />
+      </Component>
+      <Component Id="Prism_Avalonia_dll" Guid="e7d18741-667c-4264-8ad7-930805a940cc">
+        <File Source="..\publish\net8.0\Prism.Avalonia.dll" />
+      </Component>
+      <Component Id="Prism_Container_Abstractions_dll" Guid="be024956-ea96-4186-afaa-f3e55f672c52">
+        <File Source="..\publish\net8.0\Prism.Container.Abstractions.dll" />
+      </Component>
+      <Component Id="Prism_Container_DryIoc_dll" Guid="308d3bf7-fdc8-4d22-bdc3-cd0bf2a7712d">
+        <File Source="..\publish\net8.0\Prism.Container.DryIoc.dll" />
+      </Component>
+      <Component Id="Prism_dll" Guid="935ddb4f-4bbd-4ce8-93ff-8819e45579fd">
+        <File Source="..\publish\net8.0\Prism.dll" />
+      </Component>
+      <Component Id="Prism_DryIoc_Avalonia_dll" Guid="f7267a50-81cd-4272-bbaf-a0830236521f">
+        <File Source="..\publish\net8.0\Prism.DryIoc.Avalonia.dll" />
+      </Component>
+      <Component Id="Prism_Events_dll" Guid="ee81bc9f-ccf1-4316-bce3-962f1f168728">
+        <File Source="..\publish\net8.0\Prism.Events.dll" />
+      </Component>
+      <Component Id="Projektanker_Icons_Avalonia_dll" Guid="094ecfa4-8cd6-46b3-aae6-06291efcf1fd">
+        <File Source="..\publish\net8.0\Projektanker.Icons.Avalonia.dll" />
+      </Component>
+      <Component Id="Projektanker_Icons_Avalonia_FontAwesome_dll" Guid="9c209a1e-9ec1-4ed6-8a5b-da10089cd2f8">
+        <File Source="..\publish\net8.0\Projektanker.Icons.Avalonia.FontAwesome.dll" />
+      </Component>
+      <Component Id="ShimSkiaSharp_dll" Guid="fe8d91b0-15ec-4997-b9e9-8b9a25e3dfb3">
+        <File Source="..\publish\net8.0\ShimSkiaSharp.dll" />
+      </Component>
+      <Component Id="ShowMeTheXaml_Avalonia_dll" Guid="f935ed40-bd8f-4543-aa83-bddd5fe03b84">
+        <File Source="..\publish\net8.0\ShowMeTheXaml.Avalonia.dll" />
+      </Component>
+      <Component Id="ShowMeTheXaml_Avalonia_Generator_dll" Guid="7b152987-69ba-4eeb-be19-17a986c47825">
+        <File Source="..\publish\net8.0\ShowMeTheXaml.Avalonia.Generator.dll" />
+      </Component>
+      <Component Id="SkiaSharp_dll" Guid="722900d7-f61b-454f-a753-f24fd95a2c08">
+        <File Source="..\publish\net8.0\SkiaSharp.dll" />
+      </Component>
+      <Component Id="Splat_Builder_dll" Guid="e8f2af9c-bd08-4ca4-a2ee-b94581e5ba2a">
+        <File Source="..\publish\net8.0\Splat.Builder.dll" />
+      </Component>
+      <Component Id="Splat_dll" Guid="4ebf3abc-c77a-4068-ad78-47735fd36961">
+        <File Source="..\publish\net8.0\Splat.dll" />
+      </Component>
+      <Component Id="Svg_Custom_dll" Guid="3ee4a30d-61e5-49e1-8372-4b5af513062b">
+        <File Source="..\publish\net8.0\Svg.Custom.dll" />
+      </Component>
+      <Component Id="Svg_Model_dll" Guid="d6069eef-c4ae-4c30-a5e9-895ffca42a22">
+        <File Source="..\publish\net8.0\Svg.Model.dll" />
+      </Component>
+      <Component Id="System_AppContext_dll" Guid="af6f9334-21bc-4fae-80cf-753cdefcb7cf">
+        <File Source="..\publish\net8.0\System.AppContext.dll" />
+      </Component>
+      <Component Id="System_Buffers_dll" Guid="1a2ef863-b9d7-4014-92fc-1de47ca894a2">
+        <File Source="..\publish\net8.0\System.Buffers.dll" />
+      </Component>
+      <Component Id="System_Collections_Concurrent_dll" Guid="d1cdc2dd-cdbd-4639-8658-fe2106b74d08">
+        <File Source="..\publish\net8.0\System.Collections.Concurrent.dll" />
+      </Component>
+      <Component Id="System_Collections_dll" Guid="85d9f459-3b1d-47bd-955e-756f66930bf9">
+        <File Source="..\publish\net8.0\System.Collections.dll" />
+      </Component>
+      <Component Id="System_Collections_Immutable_dll" Guid="84e69113-ea80-475c-82d7-d27390a5b850">
+        <File Source="..\publish\net8.0\System.Collections.Immutable.dll" />
+      </Component>
+      <Component Id="System_Collections_NonGeneric_dll" Guid="605df7ec-8a55-46c8-addb-55d1f1475052">
+        <File Source="..\publish\net8.0\System.Collections.NonGeneric.dll" />
+      </Component>
+      <Component Id="System_Collections_Specialized_dll" Guid="fe11900b-d172-4bd3-baf2-68dae328cd7f">
+        <File Source="..\publish\net8.0\System.Collections.Specialized.dll" />
+      </Component>
+      <Component Id="System_ComponentModel_Annotations_dll" Guid="a7b481e1-847c-4a45-b172-208d127d18ff">
+        <File Source="..\publish\net8.0\System.ComponentModel.Annotations.dll" />
+      </Component>
+      <Component Id="System_ComponentModel_DataAnnotations_dll" Guid="a862bc91-3ff3-461b-a1e1-b8a438c5d273">
+        <File Source="..\publish\net8.0\System.ComponentModel.DataAnnotations.dll" />
+      </Component>
+      <Component Id="System_ComponentModel_dll" Guid="200d3b2e-89ca-429f-a2fc-33ca875ecd25">
+        <File Source="..\publish\net8.0\System.ComponentModel.dll" />
+      </Component>
+      <Component Id="System_ComponentModel_EventBasedAsync_dll" Guid="3103c9c2-f26f-4fb7-b895-cc25ceda62a2">
+        <File Source="..\publish\net8.0\System.ComponentModel.EventBasedAsync.dll" />
+      </Component>
+      <Component Id="System_ComponentModel_Primitives_dll" Guid="733ff076-afd6-479c-bd0b-7fd9762e00b2">
+        <File Source="..\publish\net8.0\System.ComponentModel.Primitives.dll" />
+      </Component>
+      <Component Id="System_ComponentModel_TypeConverter_dll" Guid="1cf5ef3c-73ac-4fe4-8021-6a931b2218e5">
+        <File Source="..\publish\net8.0\System.ComponentModel.TypeConverter.dll" />
+      </Component>
+      <Component Id="System_Configuration_ConfigurationManager_dll" Guid="85a7e8d0-3576-4c77-b5f4-41d155432044">
+        <File Source="..\publish\net8.0\System.Configuration.ConfigurationManager.dll" />
+      </Component>
+      <Component Id="System_Configuration_dll" Guid="dc31906f-81fd-4180-9b36-dd61d4f122f0">
+        <File Source="..\publish\net8.0\System.Configuration.dll" />
+      </Component>
+      <Component Id="System_Console_dll" Guid="163a434e-580a-41bb-a1e2-1b6a0dd3ec1d">
+        <File Source="..\publish\net8.0\System.Console.dll" />
+      </Component>
+      <Component Id="System_Core_dll" Guid="63acc1c8-879a-484d-a034-4a7fa07a2be3">
+        <File Source="..\publish\net8.0\System.Core.dll" />
+      </Component>
+      <Component Id="System_Data_Common_dll" Guid="8deb65b0-6378-4389-9aa7-6fb3cbb32d08">
+        <File Source="..\publish\net8.0\System.Data.Common.dll" />
+      </Component>
+      <Component Id="System_Data_DataSetExtensions_dll" Guid="5b1a276f-b413-4e60-b699-40be25859d5b">
+        <File Source="..\publish\net8.0\System.Data.DataSetExtensions.dll" />
+      </Component>
+      <Component Id="System_Data_dll" Guid="a62b0487-898d-46fa-b0f8-841c36e74545">
+        <File Source="..\publish\net8.0\System.Data.dll" />
+      </Component>
+      <Component Id="System_Diagnostics_Contracts_dll" Guid="e4f999e1-a3ee-4e04-8e83-2edc7175bc7e">
+        <File Source="..\publish\net8.0\System.Diagnostics.Contracts.dll" />
+      </Component>
+      <Component Id="System_Diagnostics_Debug_dll" Guid="573126ea-f4ae-48ec-ad81-1dde93710feb">
+        <File Source="..\publish\net8.0\System.Diagnostics.Debug.dll" />
+      </Component>
+      <Component Id="System_Diagnostics_DiagnosticSource_dll" Guid="64712c4e-3e1f-4530-9cca-aa404760e790">
+        <File Source="..\publish\net8.0\System.Diagnostics.DiagnosticSource.dll" />
+      </Component>
+      <Component Id="System_Diagnostics_EventLog_dll" Guid="04a3b99f-45ae-4ed6-8944-e8a85e8fbe3a">
+        <File Source="..\publish\net8.0\System.Diagnostics.EventLog.dll" />
+      </Component>
+      <Component Id="System_Diagnostics_EventLog_Messages_dll" Guid="031a37e1-eac8-45ac-97a1-2a13bddeabab">
+        <File Source="..\publish\net8.0\System.Diagnostics.EventLog.Messages.dll" />
+      </Component>
+      <Component Id="System_Diagnostics_FileVersionInfo_dll" Guid="90f9dde3-a0f9-401f-a864-956b4390410b">
+        <File Source="..\publish\net8.0\System.Diagnostics.FileVersionInfo.dll" />
+      </Component>
+      <Component Id="System_Diagnostics_Process_dll" Guid="c4301ba4-0f81-4a1f-9ba7-1f9fd5910f3d">
+        <File Source="..\publish\net8.0\System.Diagnostics.Process.dll" />
+      </Component>
+      <Component Id="System_Diagnostics_StackTrace_dll" Guid="61e809db-15e2-4b6c-98b7-42d1046d238d">
+        <File Source="..\publish\net8.0\System.Diagnostics.StackTrace.dll" />
+      </Component>
+      <Component Id="System_Diagnostics_TextWriterTraceListener_dll" Guid="5fbeaf8a-8522-43ec-be1c-fa26a4905004">
+        <File Source="..\publish\net8.0\System.Diagnostics.TextWriterTraceListener.dll" />
+      </Component>
+      <Component Id="System_Diagnostics_Tools_dll" Guid="c9c59cee-f097-476b-9f92-a387ff8330e1">
+        <File Source="..\publish\net8.0\System.Diagnostics.Tools.dll" />
+      </Component>
+      <Component Id="System_Diagnostics_TraceSource_dll" Guid="ada34507-5b3c-46dd-9a00-518a5e641ecf">
+        <File Source="..\publish\net8.0\System.Diagnostics.TraceSource.dll" />
+      </Component>
+      <Component Id="System_Diagnostics_Tracing_dll" Guid="a175679f-33cf-4993-9390-d9127d941287">
+        <File Source="..\publish\net8.0\System.Diagnostics.Tracing.dll" />
+      </Component>
+      <Component Id="System_dll" Guid="b77e9d4c-67e5-4eee-a3ab-0f171db42d92">
+        <File Source="..\publish\net8.0\System.dll" />
+      </Component>
+      <Component Id="System_Drawing_dll" Guid="eb62f46b-fc1f-4171-a5bd-143cbf8b0d97">
+        <File Source="..\publish\net8.0\System.Drawing.dll" />
+      </Component>
+      <Component Id="System_Drawing_Primitives_dll" Guid="98442313-62e6-4393-ac4d-cc2a4cdcb7dd">
+        <File Source="..\publish\net8.0\System.Drawing.Primitives.dll" />
+      </Component>
+      <Component Id="System_Dynamic_Runtime_dll" Guid="12520f74-1da5-4a1a-af8b-e947cbf3cfd6">
+        <File Source="..\publish\net8.0\System.Dynamic.Runtime.dll" />
+      </Component>
+      <Component Id="System_Formats_Asn1_dll" Guid="db6976ab-b5f6-4fe3-b545-fe5d4eda500e">
+        <File Source="..\publish\net8.0\System.Formats.Asn1.dll" />
+      </Component>
+      <Component Id="System_Formats_Tar_dll" Guid="0622b028-2131-49b9-a1d3-55f8a2b2e6cf">
+        <File Source="..\publish\net8.0\System.Formats.Tar.dll" />
+      </Component>
+      <Component Id="System_Globalization_Calendars_dll" Guid="7b19f7c1-b659-4e0c-bd2b-62c7ffd967a7">
+        <File Source="..\publish\net8.0\System.Globalization.Calendars.dll" />
+      </Component>
+      <Component Id="System_Globalization_dll" Guid="9a44a9a6-1c04-4b88-a749-aaca5c816081">
+        <File Source="..\publish\net8.0\System.Globalization.dll" />
+      </Component>
+      <Component Id="System_Globalization_Extensions_dll" Guid="e2065fbc-500e-41b1-900b-b0ff394d10d0">
+        <File Source="..\publish\net8.0\System.Globalization.Extensions.dll" />
+      </Component>
+      <Component Id="System_IO_Compression_Brotli_dll" Guid="9a4e7be8-4d55-4927-9ee8-53d216f874ba">
+        <File Source="..\publish\net8.0\System.IO.Compression.Brotli.dll" />
+      </Component>
+      <Component Id="System_IO_Compression_dll" Guid="e309abba-9069-49ff-affd-26d0e7e52ed3">
+        <File Source="..\publish\net8.0\System.IO.Compression.dll" />
+      </Component>
+      <Component Id="System_IO_Compression_FileSystem_dll" Guid="39c4c6b7-eb26-46e7-8633-b1f161d3f756">
+        <File Source="..\publish\net8.0\System.IO.Compression.FileSystem.dll" />
+      </Component>
+      <Component Id="System_IO_Compression_Native_dll" Guid="001421cc-382b-47f7-acab-abfc53c561df">
+        <File Source="..\publish\net8.0\System.IO.Compression.Native.dll" />
+      </Component>
+      <Component Id="System_IO_Compression_ZipFile_dll" Guid="21de771a-5e66-4bda-98d2-63f820a73c2a">
+        <File Source="..\publish\net8.0\System.IO.Compression.ZipFile.dll" />
+      </Component>
+      <Component Id="System_IO_dll" Guid="b43aa586-7ca8-45dc-8575-35de085b3a6c">
+        <File Source="..\publish\net8.0\System.IO.dll" />
+      </Component>
+      <Component Id="System_IO_FileSystem_AccessControl_dll" Guid="d3918064-ad70-4944-a4f7-37d4fc45f7a1">
+        <File Source="..\publish\net8.0\System.IO.FileSystem.AccessControl.dll" />
+      </Component>
+      <Component Id="System_IO_FileSystem_dll" Guid="11770ad4-0e42-4d95-b946-df452d71ea41">
+        <File Source="..\publish\net8.0\System.IO.FileSystem.dll" />
+      </Component>
+      <Component Id="System_IO_FileSystem_DriveInfo_dll" Guid="b0ee5ffc-442e-482e-a23c-74a9e6d64b87">
+        <File Source="..\publish\net8.0\System.IO.FileSystem.DriveInfo.dll" />
+      </Component>
+      <Component Id="System_IO_FileSystem_Primitives_dll" Guid="1bb893e2-2b2b-42a2-aa75-b531440d7bbd">
+        <File Source="..\publish\net8.0\System.IO.FileSystem.Primitives.dll" />
+      </Component>
+      <Component Id="System_IO_FileSystem_Watcher_dll" Guid="0990d4be-ac89-4ab9-8432-9e0c5022ce16">
+        <File Source="..\publish\net8.0\System.IO.FileSystem.Watcher.dll" />
+      </Component>
+      <Component Id="System_IO_IsolatedStorage_dll" Guid="278eaf1c-f9c4-4e4d-bc80-5d2b0616b71d">
+        <File Source="..\publish\net8.0\System.IO.IsolatedStorage.dll" />
+      </Component>
+      <Component Id="System_IO_MemoryMappedFiles_dll" Guid="14203d97-cf8b-4ad4-8422-da4df610ef5e">
+        <File Source="..\publish\net8.0\System.IO.MemoryMappedFiles.dll" />
+      </Component>
+      <Component Id="System_IO_Pipelines_dll" Guid="4649ee10-87fe-4ffd-b8fe-7ca93199802d">
+        <File Source="..\publish\net8.0\System.IO.Pipelines.dll" />
+      </Component>
+      <Component Id="System_IO_Pipes_AccessControl_dll" Guid="14197bf2-329b-4842-b978-f123d3ecde77">
+        <File Source="..\publish\net8.0\System.IO.Pipes.AccessControl.dll" />
+      </Component>
+      <Component Id="System_IO_Pipes_dll" Guid="27ed12b1-b5ae-4dce-bec8-f884bdcf7aa2">
+        <File Source="..\publish\net8.0\System.IO.Pipes.dll" />
+      </Component>
+      <Component Id="System_IO_UnmanagedMemoryStream_dll" Guid="607e43b1-04f7-4a8f-bc9e-200e1a8e16f4">
+        <File Source="..\publish\net8.0\System.IO.UnmanagedMemoryStream.dll" />
+      </Component>
+      <Component Id="System_Linq_dll" Guid="bcd70fe8-906f-4eb0-82ca-5626aef55dae">
+        <File Source="..\publish\net8.0\System.Linq.dll" />
+      </Component>
+      <Component Id="System_Linq_Expressions_dll" Guid="336058ca-0a60-49f1-a232-927b7c88e69d">
+        <File Source="..\publish\net8.0\System.Linq.Expressions.dll" />
+      </Component>
+      <Component Id="System_Linq_Parallel_dll" Guid="82df90dc-f8e1-4aef-9a7f-ef6ad27e75d5">
+        <File Source="..\publish\net8.0\System.Linq.Parallel.dll" />
+      </Component>
+      <Component Id="System_Linq_Queryable_dll" Guid="14e883eb-4d53-4c36-a166-dd036e40e374">
+        <File Source="..\publish\net8.0\System.Linq.Queryable.dll" />
+      </Component>
+      <Component Id="System_Memory_dll" Guid="732403d1-3729-423f-8fe2-37ddbd24d5a6">
+        <File Source="..\publish\net8.0\System.Memory.dll" />
+      </Component>
+      <Component Id="System_Net_dll" Guid="bca85f59-c5a0-417a-83bc-68ba266b7505">
+        <File Source="..\publish\net8.0\System.Net.dll" />
+      </Component>
+      <Component Id="System_Net_Http_dll" Guid="b85e777b-0f97-4914-b2fd-3d2d5f8f1429">
+        <File Source="..\publish\net8.0\System.Net.Http.dll" />
+      </Component>
+      <Component Id="System_Net_Http_Json_dll" Guid="eac98e37-acd4-4e6b-bda7-96d35803ad9c">
+        <File Source="..\publish\net8.0\System.Net.Http.Json.dll" />
+      </Component>
+      <Component Id="System_Net_HttpListener_dll" Guid="1bfc6739-f411-40b5-9cdc-f7907a8060f3">
+        <File Source="..\publish\net8.0\System.Net.HttpListener.dll" />
+      </Component>
+      <Component Id="System_Net_Mail_dll" Guid="821205c1-8f0e-404a-a30c-f013e9bf38e4">
+        <File Source="..\publish\net8.0\System.Net.Mail.dll" />
+      </Component>
+      <Component Id="System_Net_NameResolution_dll" Guid="8e6507c9-5aba-4313-a340-2372c7a91f41">
+        <File Source="..\publish\net8.0\System.Net.NameResolution.dll" />
+      </Component>
+      <Component Id="System_Net_NetworkInformation_dll" Guid="3c54e498-ac07-40f6-ac12-2e18fda3c5cb">
+        <File Source="..\publish\net8.0\System.Net.NetworkInformation.dll" />
+      </Component>
+      <Component Id="System_Net_Ping_dll" Guid="3309087d-0757-46cb-a848-bf9a68c132f8">
+        <File Source="..\publish\net8.0\System.Net.Ping.dll" />
+      </Component>
+      <Component Id="System_Net_Primitives_dll" Guid="d378b050-162d-4a43-8e57-ee90ed9dd798">
+        <File Source="..\publish\net8.0\System.Net.Primitives.dll" />
+      </Component>
+      <Component Id="System_Net_Quic_dll" Guid="ee36ba44-7911-4395-a8e1-c7586ffff8c5">
+        <File Source="..\publish\net8.0\System.Net.Quic.dll" />
+      </Component>
+      <Component Id="System_Net_Requests_dll" Guid="331a3154-bb79-4013-a716-2a8d900e4290">
+        <File Source="..\publish\net8.0\System.Net.Requests.dll" />
+      </Component>
+      <Component Id="System_Net_Security_dll" Guid="2d579a96-4b6c-424a-b1a2-a937a8a3434a">
+        <File Source="..\publish\net8.0\System.Net.Security.dll" />
+      </Component>
+      <Component Id="System_Net_ServicePoint_dll" Guid="2e30bd38-b501-427a-8a73-fca57e07fa76">
+        <File Source="..\publish\net8.0\System.Net.ServicePoint.dll" />
+      </Component>
+      <Component Id="System_Net_Sockets_dll" Guid="ad81aa34-c7a1-43b2-b59b-7f220b6a3633">
+        <File Source="..\publish\net8.0\System.Net.Sockets.dll" />
+      </Component>
+      <Component Id="System_Net_WebClient_dll" Guid="442e3bc1-813d-4d80-bb54-3dce0696ba93">
+        <File Source="..\publish\net8.0\System.Net.WebClient.dll" />
+      </Component>
+      <Component Id="System_Net_WebHeaderCollection_dll" Guid="4e50d798-97ec-4485-b47b-61b1cb79ed37">
+        <File Source="..\publish\net8.0\System.Net.WebHeaderCollection.dll" />
+      </Component>
+      <Component Id="System_Net_WebProxy_dll" Guid="596cab89-7285-4784-b7ed-240c4cb27284">
+        <File Source="..\publish\net8.0\System.Net.WebProxy.dll" />
+      </Component>
+      <Component Id="System_Net_WebSockets_Client_dll" Guid="21b15949-8b74-477a-a5c7-1afeccf4cfca">
+        <File Source="..\publish\net8.0\System.Net.WebSockets.Client.dll" />
+      </Component>
+      <Component Id="System_Net_WebSockets_dll" Guid="6ddad7dd-4976-4603-a2f6-30b6b61bd81c">
+        <File Source="..\publish\net8.0\System.Net.WebSockets.dll" />
+      </Component>
+      <Component Id="System_Numerics_dll" Guid="950b8d4e-1c3e-4eb0-a603-56e11db6566c">
+        <File Source="..\publish\net8.0\System.Numerics.dll" />
+      </Component>
+      <Component Id="System_Numerics_Vectors_dll" Guid="b7b95b32-384f-4156-afbb-667f24653d7b">
+        <File Source="..\publish\net8.0\System.Numerics.Vectors.dll" />
+      </Component>
+      <Component Id="System_ObjectModel_dll" Guid="dc82fed8-d865-41fc-9a68-8a7b186a3837">
+        <File Source="..\publish\net8.0\System.ObjectModel.dll" />
+      </Component>
+      <Component Id="System_Private_CoreLib_dll" Guid="5ca7b6ad-cdce-4bc2-b3f0-8e07d149bf55">
+        <File Source="..\publish\net8.0\System.Private.CoreLib.dll" />
+      </Component>
+      <Component Id="System_Private_DataContractSerialization_dll" Guid="5a1e6d17-aec5-461c-8110-5bf693379d40">
+        <File Source="..\publish\net8.0\System.Private.DataContractSerialization.dll" />
+      </Component>
+      <Component Id="System_Private_Uri_dll" Guid="2dc096a0-9fb8-4b5f-affd-b3022e1585cd">
+        <File Source="..\publish\net8.0\System.Private.Uri.dll" />
+      </Component>
+      <Component Id="System_Private_Xml_dll" Guid="f055fba4-2295-4051-b5e2-fe4105baa25a">
+        <File Source="..\publish\net8.0\System.Private.Xml.dll" />
+      </Component>
+      <Component Id="System_Private_Xml_Linq_dll" Guid="f5e4a4e0-296d-4205-b342-677e9afad4e6">
+        <File Source="..\publish\net8.0\System.Private.Xml.Linq.dll" />
+      </Component>
+      <Component Id="System_Reactive_dll" Guid="8bc965f2-2596-446a-9372-6ce5cfd11a41">
+        <File Source="..\publish\net8.0\System.Reactive.dll" />
+      </Component>
+      <Component Id="System_Reactive_Linq_dll" Guid="07ec062d-370a-4c9e-af4c-86ec5636f6df">
+        <File Source="..\publish\net8.0\System.Reactive.Linq.dll" />
+      </Component>
+      <Component Id="System_Reflection_DispatchProxy_dll" Guid="6d819e16-c137-4106-af30-7148472eb415">
+        <File Source="..\publish\net8.0\System.Reflection.DispatchProxy.dll" />
+      </Component>
+      <Component Id="System_Reflection_dll" Guid="b14a41ca-a937-4348-8ae9-424c1b2cad3a">
+        <File Source="..\publish\net8.0\System.Reflection.dll" />
+      </Component>
+      <Component Id="System_Reflection_Emit_dll" Guid="6157266e-52bd-4526-a5bb-8094de897e3a">
+        <File Source="..\publish\net8.0\System.Reflection.Emit.dll" />
+      </Component>
+      <Component Id="System_Reflection_Emit_ILGeneration_dll" Guid="3619163a-f735-4ab3-b89d-47a9bd62d347">
+        <File Source="..\publish\net8.0\System.Reflection.Emit.ILGeneration.dll" />
+      </Component>
+      <Component Id="System_Reflection_Emit_Lightweight_dll" Guid="3bbf5ec0-63a6-4581-b18f-c2777fc48ccb">
+        <File Source="..\publish\net8.0\System.Reflection.Emit.Lightweight.dll" />
+      </Component>
+      <Component Id="System_Reflection_Extensions_dll" Guid="662ef1c1-65de-4b99-b425-e19121a12b41">
+        <File Source="..\publish\net8.0\System.Reflection.Extensions.dll" />
+      </Component>
+      <Component Id="System_Reflection_Metadata_dll" Guid="2f06289c-b397-4d44-854c-d99139acc914">
+        <File Source="..\publish\net8.0\System.Reflection.Metadata.dll" />
+      </Component>
+      <Component Id="System_Reflection_Primitives_dll" Guid="2fef3b2e-ab3c-4e33-adc8-97a9532363dd">
+        <File Source="..\publish\net8.0\System.Reflection.Primitives.dll" />
+      </Component>
+      <Component Id="System_Reflection_TypeExtensions_dll" Guid="4b5e9bce-4f7a-4a95-943c-941c7eb303e9">
+        <File Source="..\publish\net8.0\System.Reflection.TypeExtensions.dll" />
+      </Component>
+      <Component Id="System_Resources_Reader_dll" Guid="8e5b5d08-a657-4567-9a06-cbaada634b4b">
+        <File Source="..\publish\net8.0\System.Resources.Reader.dll" />
+      </Component>
+      <Component Id="System_Resources_ResourceManager_dll" Guid="6b43534a-9fc0-4d2e-a494-04919d33d245">
+        <File Source="..\publish\net8.0\System.Resources.ResourceManager.dll" />
+      </Component>
+      <Component Id="System_Resources_Writer_dll" Guid="b4177aee-c987-43ac-a064-7771b28ceeb1">
+        <File Source="..\publish\net8.0\System.Resources.Writer.dll" />
+      </Component>
+      <Component Id="System_Runtime_CompilerServices_Unsafe_dll" Guid="5ce681b9-1468-4a82-9df9-344eab24d29f">
+        <File Source="..\publish\net8.0\System.Runtime.CompilerServices.Unsafe.dll" />
+      </Component>
+      <Component Id="System_Runtime_CompilerServices_VisualC_dll" Guid="b3f204f2-3437-493c-8cac-d604a3d539fa">
+        <File Source="..\publish\net8.0\System.Runtime.CompilerServices.VisualC.dll" />
+      </Component>
+      <Component Id="System_Runtime_dll" Guid="142e8451-ee87-4d80-857a-be937f8cc248">
+        <File Source="..\publish\net8.0\System.Runtime.dll" />
+      </Component>
+      <Component Id="System_Runtime_Extensions_dll" Guid="24884b20-9465-41f1-9994-9bc8defc3171">
+        <File Source="..\publish\net8.0\System.Runtime.Extensions.dll" />
+      </Component>
+      <Component Id="System_Runtime_Handles_dll" Guid="a106a37a-24a7-4bac-b974-eb62add14857">
+        <File Source="..\publish\net8.0\System.Runtime.Handles.dll" />
+      </Component>
+      <Component Id="System_Runtime_InteropServices_dll" Guid="cbe0925b-9946-4989-9dd9-b2412f0a16f7">
+        <File Source="..\publish\net8.0\System.Runtime.InteropServices.dll" />
+      </Component>
+      <Component Id="System_Runtime_InteropServices_JavaScript_dll" Guid="7a548300-8b42-4722-8186-c72a36d6a649">
+        <File Source="..\publish\net8.0\System.Runtime.InteropServices.JavaScript.dll" />
+      </Component>
+      <Component Id="System_Runtime_InteropServices_RuntimeInformation_dll" Guid="a7f7ce6f-68cb-413e-a71c-b6dccd5fe392">
+        <File Source="..\publish\net8.0\System.Runtime.InteropServices.RuntimeInformation.dll" />
+      </Component>
+      <Component Id="System_Runtime_Intrinsics_dll" Guid="38c2260a-ddc6-4a44-a7b2-bc9c8b418ac2">
+        <File Source="..\publish\net8.0\System.Runtime.Intrinsics.dll" />
+      </Component>
+      <Component Id="System_Runtime_Loader_dll" Guid="5186be11-05af-4827-93ff-46b29b9b2c3a">
+        <File Source="..\publish\net8.0\System.Runtime.Loader.dll" />
+      </Component>
+      <Component Id="System_Runtime_Numerics_dll" Guid="7c7ec94a-5c05-43f2-ab49-4a0814772e71">
+        <File Source="..\publish\net8.0\System.Runtime.Numerics.dll" />
+      </Component>
+      <Component Id="System_Runtime_Serialization_dll" Guid="b6e7a45c-be63-493c-a0cd-4d7cc8ea3d30">
+        <File Source="..\publish\net8.0\System.Runtime.Serialization.dll" />
+      </Component>
+      <Component Id="System_Runtime_Serialization_Formatters_dll" Guid="333c4d7f-23f3-472d-8572-488cf5afcff6">
+        <File Source="..\publish\net8.0\System.Runtime.Serialization.Formatters.dll" />
+      </Component>
+      <Component Id="System_Runtime_Serialization_Json_dll" Guid="72234894-8cc4-4175-8f71-2ae9e8775672">
+        <File Source="..\publish\net8.0\System.Runtime.Serialization.Json.dll" />
+      </Component>
+      <Component Id="System_Runtime_Serialization_Primitives_dll" Guid="4c3dc7dc-0587-4abe-910c-62d78e576a32">
+        <File Source="..\publish\net8.0\System.Runtime.Serialization.Primitives.dll" />
+      </Component>
+      <Component Id="System_Runtime_Serialization_Xml_dll" Guid="cf227b4a-b4c4-49f9-856f-d9ae6a098a00">
+        <File Source="..\publish\net8.0\System.Runtime.Serialization.Xml.dll" />
+      </Component>
+      <Component Id="System_Security_AccessControl_dll" Guid="f2d46682-bcea-4381-8172-296de707e0cc">
+        <File Source="..\publish\net8.0\System.Security.AccessControl.dll" />
+      </Component>
+      <Component Id="System_Security_Claims_dll" Guid="9421e260-3455-4581-9d61-4e40a61ecd9b">
+        <File Source="..\publish\net8.0\System.Security.Claims.dll" />
+      </Component>
+      <Component Id="System_Security_Cryptography_Algorithms_dll" Guid="02e67958-d302-46fe-98e2-5a4cb7e81ddc">
+        <File Source="..\publish\net8.0\System.Security.Cryptography.Algorithms.dll" />
+      </Component>
+      <Component Id="System_Security_Cryptography_Cng_dll" Guid="da1a2565-619b-4b65-8cf7-d1b6514cea37">
+        <File Source="..\publish\net8.0\System.Security.Cryptography.Cng.dll" />
+      </Component>
+      <Component Id="System_Security_Cryptography_Csp_dll" Guid="53832f89-3f2c-4929-813c-2f951befdba3">
+        <File Source="..\publish\net8.0\System.Security.Cryptography.Csp.dll" />
+      </Component>
+      <Component Id="System_Security_Cryptography_dll" Guid="6d833e84-f14f-4f23-8d28-13b12cab7777">
+        <File Source="..\publish\net8.0\System.Security.Cryptography.dll" />
+      </Component>
+      <Component Id="System_Security_Cryptography_Encoding_dll" Guid="b4d88ea9-21d7-4bdc-a3e6-2f94e8262d8f">
+        <File Source="..\publish\net8.0\System.Security.Cryptography.Encoding.dll" />
+      </Component>
+      <Component Id="System_Security_Cryptography_OpenSsl_dll" Guid="3c9d8a2b-fc99-44ea-8d42-79ffcc23eac7">
+        <File Source="..\publish\net8.0\System.Security.Cryptography.OpenSsl.dll" />
+      </Component>
+      <Component Id="System_Security_Cryptography_Primitives_dll" Guid="d0af82f0-14aa-4444-8b15-19ac2097f541">
+        <File Source="..\publish\net8.0\System.Security.Cryptography.Primitives.dll" />
+      </Component>
+      <Component Id="System_Security_Cryptography_ProtectedData_dll" Guid="6a72be8b-f652-476f-a0fa-a91c9c38342a">
+        <File Source="..\publish\net8.0\System.Security.Cryptography.ProtectedData.dll" />
+      </Component>
+      <Component Id="System_Security_Cryptography_X509Certificates_dll" Guid="ceee5df2-d895-4d65-87a2-be18f180c8f4">
+        <File Source="..\publish\net8.0\System.Security.Cryptography.X509Certificates.dll" />
+      </Component>
+      <Component Id="System_Security_dll" Guid="fdae38e8-ebfa-4cf0-a14a-67dc5c58669a">
+        <File Source="..\publish\net8.0\System.Security.dll" />
+      </Component>
+      <Component Id="System_Security_Principal_dll" Guid="977594a1-cfc9-4193-a134-10276e88c571">
+        <File Source="..\publish\net8.0\System.Security.Principal.dll" />
+      </Component>
+      <Component Id="System_Security_Principal_Windows_dll" Guid="65bb6cd6-933c-4856-9a3a-f56ad79ab8d8">
+        <File Source="..\publish\net8.0\System.Security.Principal.Windows.dll" />
+      </Component>
+      <Component Id="System_Security_SecureString_dll" Guid="53440c2d-6913-48c2-b519-274661279df6">
+        <File Source="..\publish\net8.0\System.Security.SecureString.dll" />
+      </Component>
+      <Component Id="System_ServiceModel_Web_dll" Guid="9052aab3-2308-4786-9c55-58f1dba140e5">
+        <File Source="..\publish\net8.0\System.ServiceModel.Web.dll" />
+      </Component>
+      <Component Id="System_ServiceProcess_dll" Guid="5bc6deb2-c5b1-453c-a69b-18a8458036e0">
+        <File Source="..\publish\net8.0\System.ServiceProcess.dll" />
+      </Component>
+      <Component Id="System_Text_Encoding_CodePages_dll" Guid="82f887e7-d473-4013-b980-125fbf6ba50e">
+        <File Source="..\publish\net8.0\System.Text.Encoding.CodePages.dll" />
+      </Component>
+      <Component Id="System_Text_Encoding_dll" Guid="90f770f6-3dad-47df-9445-126678aa3b75">
+        <File Source="..\publish\net8.0\System.Text.Encoding.dll" />
+      </Component>
+      <Component Id="System_Text_Encoding_Extensions_dll" Guid="62490195-6b0a-472b-a14c-180006a4afa2">
+        <File Source="..\publish\net8.0\System.Text.Encoding.Extensions.dll" />
+      </Component>
+      <Component Id="System_Text_Encodings_Web_dll" Guid="bc34dfec-5c17-40de-a6ce-96f54402a74d">
+        <File Source="..\publish\net8.0\System.Text.Encodings.Web.dll" />
+      </Component>
+      <Component Id="System_Text_Json_dll" Guid="0619a147-476f-453b-9b9d-cb8cf54030ed">
+        <File Source="..\publish\net8.0\System.Text.Json.dll" />
+      </Component>
+      <Component Id="System_Text_RegularExpressions_dll" Guid="60ab01d7-a44a-4388-a368-234b417a7818">
+        <File Source="..\publish\net8.0\System.Text.RegularExpressions.dll" />
+      </Component>
+      <Component Id="System_Threading_Channels_dll" Guid="bfd9c2b0-bc2f-4d05-aff8-d065f2efcef0">
+        <File Source="..\publish\net8.0\System.Threading.Channels.dll" />
+      </Component>
+      <Component Id="System_Threading_dll" Guid="ab05f519-8dca-48ad-90e0-cc354ea5337c">
+        <File Source="..\publish\net8.0\System.Threading.dll" />
+      </Component>
+      <Component Id="System_Threading_Overlapped_dll" Guid="02652560-4f68-4466-b805-d99fdfe8a341">
+        <File Source="..\publish\net8.0\System.Threading.Overlapped.dll" />
+      </Component>
+      <Component Id="System_Threading_Tasks_Dataflow_dll" Guid="79a00c3c-b31f-4d4e-8b74-e78f5139836e">
+        <File Source="..\publish\net8.0\System.Threading.Tasks.Dataflow.dll" />
+      </Component>
+      <Component Id="System_Threading_Tasks_dll" Guid="f4c063e0-7a7b-4c37-a75e-c2f65b90f332">
+        <File Source="..\publish\net8.0\System.Threading.Tasks.dll" />
+      </Component>
+      <Component Id="System_Threading_Tasks_Extensions_dll" Guid="360a84f6-df7a-4945-859c-ca2548bde461">
+        <File Source="..\publish\net8.0\System.Threading.Tasks.Extensions.dll" />
+      </Component>
+      <Component Id="System_Threading_Tasks_Parallel_dll" Guid="08df9779-4fea-4e78-815f-aa9abe641b52">
+        <File Source="..\publish\net8.0\System.Threading.Tasks.Parallel.dll" />
+      </Component>
+      <Component Id="System_Threading_Thread_dll" Guid="1d61511b-c0ab-4333-9f74-5a23245d4a8b">
+        <File Source="..\publish\net8.0\System.Threading.Thread.dll" />
+      </Component>
+      <Component Id="System_Threading_ThreadPool_dll" Guid="cb0e5876-9461-4d4e-8d59-3e7f38b5f3fd">
+        <File Source="..\publish\net8.0\System.Threading.ThreadPool.dll" />
+      </Component>
+      <Component Id="System_Threading_Timer_dll" Guid="4bda0114-c267-4a77-8fd1-1c20766e52cc">
+        <File Source="..\publish\net8.0\System.Threading.Timer.dll" />
+      </Component>
+      <Component Id="System_Transactions_dll" Guid="17bc9881-e15c-42c9-b035-2403e30d3209">
+        <File Source="..\publish\net8.0\System.Transactions.dll" />
+      </Component>
+      <Component Id="System_Transactions_Local_dll" Guid="897fb57f-d3e9-4c46-90a4-05fdf23bf970">
+        <File Source="..\publish\net8.0\System.Transactions.Local.dll" />
+      </Component>
+      <Component Id="System_ValueTuple_dll" Guid="9bcbe344-5bb0-47b0-9ae9-f05149baa0ab">
+        <File Source="..\publish\net8.0\System.ValueTuple.dll" />
+      </Component>
+      <Component Id="System_Web_dll" Guid="24010c77-5323-4013-aed3-341c49293864">
+        <File Source="..\publish\net8.0\System.Web.dll" />
+      </Component>
+      <Component Id="System_Web_HttpUtility_dll" Guid="2914c6f7-b3a2-4308-b54a-b2f3a569b845">
+        <File Source="..\publish\net8.0\System.Web.HttpUtility.dll" />
+      </Component>
+      <Component Id="System_Windows_dll" Guid="3caf23ca-a13f-481c-bfaa-c082df8aae56">
+        <File Source="..\publish\net8.0\System.Windows.dll" />
+      </Component>
+      <Component Id="System_Xml_dll" Guid="105e819f-a42c-4ec2-92ec-d0cec8d73f11">
+        <File Source="..\publish\net8.0\System.Xml.dll" />
+      </Component>
+      <Component Id="System_Xml_Linq_dll" Guid="e042062b-9a33-4a39-92d0-76cced37fe9f">
+        <File Source="..\publish\net8.0\System.Xml.Linq.dll" />
+      </Component>
+      <Component Id="System_Xml_ReaderWriter_dll" Guid="f636df92-73dd-476d-9d06-2efccf878c76">
+        <File Source="..\publish\net8.0\System.Xml.ReaderWriter.dll" />
+      </Component>
+      <Component Id="System_Xml_Serialization_dll" Guid="3fbd74ba-81d5-49ba-b9db-5148ce613e0e">
+        <File Source="..\publish\net8.0\System.Xml.Serialization.dll" />
+      </Component>
+      <Component Id="System_Xml_XDocument_dll" Guid="6dbebc9c-3237-443d-ab7c-707978b4eac9">
+        <File Source="..\publish\net8.0\System.Xml.XDocument.dll" />
+      </Component>
+      <Component Id="System_Xml_XmlDocument_dll" Guid="8dd8480d-3fb8-47a3-b9ec-5754194b06d5">
+        <File Source="..\publish\net8.0\System.Xml.XmlDocument.dll" />
+      </Component>
+      <Component Id="System_Xml_XmlSerializer_dll" Guid="4c8d0869-9f3a-4c69-a783-d0c61fefa0d2">
+        <File Source="..\publish\net8.0\System.Xml.XmlSerializer.dll" />
+      </Component>
+      <Component Id="System_Xml_XPath_dll" Guid="906f0392-c1e8-4634-a4f5-b97d3ea6db52">
+        <File Source="..\publish\net8.0\System.Xml.XPath.dll" />
+      </Component>
+      <Component Id="System_Xml_XPath_XDocument_dll" Guid="96fe2e5e-b2ef-4a53-a715-063e4fba2e98">
+        <File Source="..\publish\net8.0\System.Xml.XPath.XDocument.dll" />
+      </Component>
+      <Component Id="TextMateSharp_dll" Guid="fdc84edc-f15c-4260-bb07-d03597390a67">
+        <File Source="..\publish\net8.0\TextMateSharp.dll" />
+      </Component>
+      <Component Id="TextMateSharp_Grammars_dll" Guid="ade66b09-1190-4bc5-be9e-0943033c67ff">
+        <File Source="..\publish\net8.0\TextMateSharp.Grammars.dll" />
+      </Component>
+      <Component Id="Tmds_DBus_Protocol_dll" Guid="e9fdcd48-8b63-4a49-8a2f-40b076ee90ee">
+        <File Source="..\publish\net8.0\Tmds.DBus.Protocol.dll" />
+      </Component>
+      <Component Id="WebView_Avalonia_dll" Guid="14361cd3-965a-4d40-afd6-183115d84aa4">
+        <File Source="..\publish\net8.0\WebView.Avalonia.dll" />
+      </Component>
+      <Component Id="WebView_Core_dll" Guid="d5a81bd7-ceb6-4eda-aaf7-ff5f345daa5a">
+        <File Source="..\publish\net8.0\WebView.Core.dll" />
+      </Component>
+      <Component Id="WindowsBase_dll" Guid="5724589f-d99c-40da-96bf-31cc00881f9d">
+        <File Source="..\publish\net8.0\WindowsBase.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

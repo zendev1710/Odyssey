@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="Odyssey.Views.Tools.RegionStatsView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="using:Odyssey.ViewModels.Tools"
+             mc:Ignorable="d"
+             d:DesignWidth="300" d:DesignHeight="400"
+             x:DataType="vm:RegionStatsViewModel" x:CompileBindings="True">
+  <Grid Focusable="True" ColumnDefinitions="Auto,Auto" RowDefinitions="Auto" IsVisible="{Binding HasDocument}">
+      <ComboBox Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" MinWidth="200" ItemsSource="{Binding Factions}" SelectedIndex="{Binding SelectedFactionIndex}" />
+	  <!--ListBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Domains}" SelectionMode="Multiple" /-->
+      <!-- TODO Multiselect listbox with checkbox on each item) being on the same line as the combobox -->
+	  <!--
+      <Expander Header="Filter">
+        <StackPanel>
+          <CheckBox IsChecked="True">People</CheckBox>
+          <CheckBox IsChecked="True">Objects</CheckBox>
+          <CheckBox IsChecked="True">Skills</CheckBox>
+          <CheckBox IsChecked="True">Buildings</CheckBox>
+          <CheckBox IsChecked="True">Ships</CheckBox>
+        </StackPanel>
+      </Expander>
+	  -->
+	  <ListBox Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding StatItems}" />
+  </Grid>
+</UserControl>

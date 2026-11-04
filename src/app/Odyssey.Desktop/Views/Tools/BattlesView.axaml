@@ -1,0 +1,22 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="using:Odyssey.ViewModels.Tools"
+			 xmlns:a="clr-namespace:Odyssey.Assets"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
+			 x:DataType="vm:BattlesViewModel" x:CompileBindings="True"
+             x:Class="Odyssey.Views.Tools.BattlesView">
+	<Grid Focusable="True" IsVisible="{Binding HasDocument}" RowDefinitions="Auto,*,Auto" ColumnDefinitions="*,Auto" >
+		<ComboBox Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Battles}" SelectedIndex="{Binding SelectedBattleIndex}" HorizontalAlignment="Stretch" MinWidth="200"  IsVisible="{Binding HasBattle}" Margin="5,5,5,5">
+			<ComboBox.ItemTemplate>
+				<DataTemplate>
+					<TextBlock Text="{Binding Label}" />
+				</DataTemplate>
+			</ComboBox.ItemTemplate>
+		</ComboBox>
+		<Button Content="{x:Static a:Lang.btn_reveal_in_explorer}" ToolTip.Tip="{x:Static a:Lang.btn_reveal_in_explorer_tip}" Grid.Row="0" Grid.Column="2" IsVisible="{Binding HasBattle}" Command="{Binding RevealBattleInExplorerCommand}" Margin="5,5,5,5" />
+		<TextBox Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding SelectedBattleText}" IsReadOnly="True" TextWrapping="NoWrap" IsVisible="{Binding HasBattle}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,5"/>
+		<TextBlock Grid.Row="2"  Grid.Column="0" Grid.ColumnSpan="3" Text="{x:Static a:Lang.there_is_no_battle}" IsVisible="{Binding !HasBattle}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,5"/>
+	</Grid>
+</UserControl>

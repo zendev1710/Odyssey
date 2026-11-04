@@ -1,0 +1,287 @@
+GitHub Copilot
+
+Voici une réponse concrète, courte et pragmatique pour éviter d'exposer `DataBlock` partout tout en restant efficace sur un CR très volumineux.
+
+Résumé de la stratégie
+- Construire et maintenir des index/structures légères (ex : map regionId -> liste d'ids d'unités) lors du parsing du CR. Evite de parcourir la chaîne à chaque requête.
+- Garder la source de vérité (les `DataBlock`) dans `CRDocument`. Ne modifiez les `DataBlock` qu'au moment d'écrire le CR ; pour l'édition garder un overlay/delta (vous avez déjà `OrdersDocument` — même idée).
+- Exposer aux ViewModels des objets légers (DTO) contenant juste les champs nécessaires (id, name, coords, faction, confirmed). Créer ces DTO à la demande (ou en batch pour la région affichée) et les jeter ou les mettre en cache LRU.
+- UI virtualization : ne créer des ViewModels que pour les éléments visibles (quelques dizaines), pas tous les milliers.
+- Si vous avez besoin d'accès fréquent mais limité en mémoire : stocker seulement des index (ints+strings) et résoudre `DataBlock` via lookup à la demande.
+
+Exemples de code (minimaux)
+
+1) Indexer les units par région dans `CRDocument`
+```csharp
+// add field
+public Dictionary<int, List<int>> UnitsByRegion { get; } = new();
+
+// call this when vous enregistrez / parsez une unit block
+public void IndexUnit(DataBlock unit)
+{
+    int id = unit.GetId();
+    Units[id] = unit; // déjà présent dans votre code existant
+
+    int regionId = unit.ValueInt(KeyType.REGION, -1);
+    if (regionId <= 0) return;
+
+    if (!UnitsByRegion.TryGetValue(regionId, out var list))
+    {
+        list = new List<int>();
+        UnitsByRegion[regionId] = list;
+    }
+    list.Add(id);
+}
+
+// helper pour récupérer les ids d'unités d'une région rapidement
+public IReadOnlyList<int> GetUnitIdsInRegion(int regionId)
+{
+    return UnitsByRegion.TryGetValue(regionId, out var list) ? list : Array.Empty<int>();
+}
+
+// helper pour récupérer les DataBlock (si nécessaire)
+public IEnumerable<DataBlock> GetUnitBlocksInRegion(int regionId)
+{
+    if (!UnitsByRegion.TryGetValue(regionId, out var ids)) yield break;
+    foreach (var id in ids)
+    {
+        if (Units.TryGetValue(id, out var blk)) yield return blk;
+    }
+}
+```
+
+2) Factory qui crée des ViewModel/DTO légers (pas de DataBlock stocké)
+```csharp
+using CommunityToolkit.Mvvm.ComponentModel;
+using Odyssey.Models.Documents;
+using static Odyssey.Models.Documents.CRDocument;
+
+public partial class UnitViewModel : ObservableObject
+{
+    public int Id { get; }
+    [ObservableProperty] private string _name = string.Empty;
+    [ObservableProperty] private int _factionId;
+    [ObservableProperty] private bool _isConfirmed;
+    [ObservableProperty] private int _x;
+    [ObservableProperty] private int _y;
+
+    private UnitViewModel(int id) { Id = id; }
+
+    // Factory qui lit le DataBlock et extrait uniquement les champs utiles
+    public static UnitViewModel FromDocument(CRDocument doc, int unitId)
+    {
+        var vm = new UnitViewModel(unitId);
+        if (doc.Units.TryGetValue(unitId, out var block))
+        {
+            vm._name = block.GetUILabel() ?? string.Empty;
+            vm._factionId = block.ValueInt(KeyType.FACTION, 0);
+            vm._isConfirmed = block.ValueInt(KeyType.ORDERS_CONFIRMED, 0) != 0;
+            vm._x = block.ValueInt(KeyType.COORDX, 0);
+            vm._y = block.ValueInt(KeyType.COORDY, 0);
+        }
+        return vm;
+    }
+
+    public override string ToString() => $"{_name} ({Id})";
+}
+```
+
+3) Exemple d'utilisation dans `UnitOrdersViewModel.UpdateContextData()` (remplir la liste sans parcourir les blocks)
+```csharp
+private void UpdateContextData()
+{
+    UnitsInRegion.Clear();
+    if (Selection?.Region != null)
+    {
+        int regionId = Selection.Region.GetId();
+        var ids = Report.GetUnitIdsInRegion(regionId);
+        // si grand nombre, ne créer que les N premiers visibles ou page = virtualization
+        foreach (var id in ids)
+        {
+            var uvm = UnitViewModel.FromDocument(Report, id);
+            UnitsInRegion.Add(uvm);
+        }
+    }
+}
+```
+
+Points d'architecture / gotchas
+- Cohérence index/blocks : tenir les index à jour à chaque modification du `Blocks` ou lors du reparse complet. Si vous appliquez seulement un overlay pour les ordres, l'index n'a pas besoin de changer.
+- Mémoire vs CPU : les index accélèrent les lectures (coût mémoire O(n ids) avec des listes d'int). Un int par lien est très peu coûteux comparé à stocker des objets complets. Pour un million d'unités, 1M * 4 bytes ≈ 4MB + overhead listes — mesurable mais souvent acceptable.
+- Virtualisation UI : crucial. Ne pas remplir un ObservableCollection avec des milliers d'objets ViewModel si la vue n'en montre que 50.
+- Lazy vs eager : factory `FromDocument` copie quelques champs (string peut coûter). Si le nom est la seule string lourde, pensez à stocker seulement un id + short label pré-calculé (ou interned) et charger les autres champs à la demande.
+- Caching : utiliser un cache à capacité limitée (LRU) si vous recréez souvent les mêmes UnitViewModels ; utilisez WeakReference si vous voulez laisser le GC libérer quand nécessaire.
+- Sauvegarde : conservez votre overlay/delta pour commandes et n'écrasez le CR original qu'à l'export/sauvegarde. Cela évite de toucher `DataBlock` en lecture/édition quotidienne.
+- Thread-safety : si parsing / UI occurrent, protégez vos index (`ConcurrentDictionary` ou locks) ou construisez-les avant d'exposer le document à l'UI.
+
+Si tu veux, je peux :
+- te générer le patch complet pour `CRDocument` (index + peuplement pendant CreateHashTables) et adapter `UpdateContextData()` pour virtualiser la création de `UnitViewModel`, ou
+- te proposer un cache LRU thread-safe pour `UnitViewModel`.
+
+=====================================================================================
+
+Non — ta description ne contredit pas la proposition. Au contraire : un TreeView hiérarchique (region → faction → bâtiment/ship → unités) est exactement le bon endroit pour appliquer les recommandations (garder les `DataBlock` dans la couche bas‑niveau, exposer des ViewModels légers, lazy‑loading/virtualisation et indexer pour éviter de parcourir la chaîne à chaque requête).
+
+Résumé concret et pratique
+- Conserver les `DataBlock` comme source de vérité uniquement dans `CRDocument` / couche modèle.  
+- Construire des index u⃰tiles pendant le parsing (ex : units par région, units par building/ship/owner). Ces index sont des listes d'int (ids) — faible coût mémoire, très rapides pour lookup.  
+- Exposer au TreeView des NodeViewModels légers (RegionNodeViewModel, FactionNodeViewModel, UnitNodeViewModel) qui contiennent seulement les champs nécessaires (id, shortLabel, coords, faction). Charger les enfants à la demande (on Expand) en appelant `CRDocument` via les index.  
+- Pour les vues dockées : utiliser un SelectionToken (type + id) et une factory/service qui crée des DTO/VM légers à la demande (pas de référence DataBlock dans les ViewModels UI sauf si vraiment nécessaire).  
+- Garder un overlay/delta pour les ordres (tu as `OrdersDocument`) — évite de modifier `DataBlock` tant que tu n’écris pas le CR.
+
+Exemples rapides (patchs minimes)
+
+1) Index dans `CRDocument` — map region -> unit ids et index par clé courante (building/ship/owner)
+```csharp
+// add fields near other dictionaries
+public Dictionary<int, List<int>> UnitsByRegion { get; } = new();
+public Dictionary<(KeyType key, int value), List<int>> UnitsByKey { get; } = new();
+
+// call from parsing/indexing routine for each unit block
+public void IndexUnit(DataBlock unit)
+{
+    int id = unit.GetId();
+    Units[id] = unit;
+
+    int regionId = unit.ValueInt(KeyType.REGION, -1);
+    if (regionId > 0)
+    {
+        if (!UnitsByRegion.TryGetValue(regionId, out var list)) { list = new List<int>(); UnitsByRegion[regionId] = list; }
+        list.Add(id);
+    }
+
+    // common container keys: BUILDING, SHIP, OWNER, maybe CONTAINER etc.
+    foreach (var kt in new[] { KeyType.BUILDING, KeyType.SHIP, KeyType.OWNER })
+    {
+        int v = unit.ValueInt(kt, -1);
+        if (v > 0)
+        {
+            var key = (kt, v);
+            if (!UnitsByKey.TryGetValue(key, out var lst)) { lst = new List<int>(); UnitsByKey[key] = lst; }
+            lst.Add(id);
+        }
+    }
+}
+
+public IReadOnlyList<int> GetUnitIdsInRegion(int regionId)
+    => UnitsByRegion.TryGetValue(regionId, out var l) ? l : Array.Empty<int>();
+
+public IReadOnlyList<int> GetUnitIdsByKey(KeyType key, int value)
+    => UnitsByKey.TryGetValue((key, value), out var l) ? l : Array.Empty<int>();
+```
+
+2) Utiliser l’index dans `ContainerModel` au lieu de parcourir la chaîne :
+```csharp
+// nouveau helper qui utilise CRDocument index (évite d'itérer Region.GetNextBlock())
+protected bool CollectUnitsIndexed(CRDocument report, KeyType key, int containerId)
+{
+    Units.Clear();
+    var ids = report.GetUnitIdsByKey(key, containerId);
+    foreach (var id in ids)
+    {
+        if (report.Units.TryGetValue(id, out var blk))
+            Units.Add(blk); // si tu veux garder DataBlock ici ; sinon remplis une List<int> d'ids
+    }
+    return Units.Count > 0;
+}
+```
+Si tu veux éviter de stocker `DataBlock` même dans `ContainerModel`, change `Units` en `List<int>` (unit ids) et résous `DataBlock` uniquement quand nécessaire.
+
+3) NodeViewModel lazy children (extrait)
+```csharp
+public class RegionNodeViewModel : ObservableObject
+{
+    public int RegionId { get; }
+    public string Label { get; }
+    public ObservableCollection<object> Children { get; } = new(); // types: FactionNodeViewModel, BuildingNodeViewModel, UnitNodeViewModel
+
+    private readonly CRDocument _doc;
+    public RegionNodeViewModel(CRDocument doc, int regionId, string label) { _doc = doc; RegionId = regionId; Label = label; }
+
+    // call when tree node expands
+    public void LoadChildren()
+    {
+        if (Children.Count > 0) return;
+        // factions/buildings/ships can be created from indexes kept in CRDocument
+        var unitIds = _doc.GetUnitIdsInRegion(RegionId);
+        // create lightweight UnitNodeViewModel (id + short name)
+        foreach (var id in unitIds)
+        {
+            var uvm = UnitViewModel.FromDocument(_doc, id); // factory builds lightweight VM
+            Children.Add(new UnitNodeViewModel(uvm));
+        }
+    }
+}
+```
+
+Gotchas et conseils pratiques
+- Index maintenance : remplir les index à la lecture/parse du CR. Si le CR est ré‑parsé, rebuild. Si tu modifies réellement la structure (rare), mets à jour l’index en conséquence.  
+- Mémoire vs CPU : index de type List<int> est très rentable. Pour des millions d’éléments, tu peux compacter/stocker en arrays ou pages.  
+- UI virtualisation : ne créer que les ViewModels visibles (load on expand / virtualization). Ne mets pas des milliers d’ObservableCollection éléments en mémoire si inutile.  
+- Chaîne source (DataBlock) : conserve‑la pour l’écriture finale et pour opérations détaillées (items, talents). Pour la plupart des vues, un DTO léger suffit.  
+- Concurrence : si parsing est fait en background, protège les index ou expose une snapshot immuable au UI thread.
+
+Souhaites‑tu que je :
+- génère un patch complet pour ajouter `UnitsByRegion` / `UnitsByKey` dans `CRDocument` et remplace `CollectUnits` par `CollectUnitsIndexed`, ou
+- crée des exemples complets de `RegionNodeViewModel` / `FactionNodeViewModel` + factory `UnitViewModel.FromDocument` et un `SelectionService` pour les dock views ?
+
+=======================================================================================================================
+
+GitHub Copilot
+
+Oui — voici une méthode progressive, itérative et sûre pour migrer sans tout casser. Chaque étape est petite, testable et réversible.
+
+1) Audit et règles de migration (1–2 jours)
+- Inventorie les usages de `DataBlock` dans `ViewModels` / `Views` (recherche `DataBlock` usages).
+- Règle simple : seuls les fichiers sous `Models`/`Documents` accèdent directement aux `DataBlock`. Les autres n'utilisent que des ids ou DTO légers.
+
+2) Ajout d'indices rapides dans `CRDocument` (low-risk)
+- Ajouter `Dictionary<int, List<int>> UnitsByRegion` et éventuellement `UnitsByKey` (building/ship/owner).
+- Peupler ces indices dans `CreateHashTables()` / `UpdateHashTables()` (au parsing).
+- Tests: vérifie que `GetUnitIdsInRegion(regionId)` renvoie rapidement des ids corrects.
+- Bénéfice : évite les parcours de chaines répétitifs.
+
+3) Introduire DTO/VM légers + factory (very small commits)
+- Crée `UnitDto` ou `UnitViewModel` factory `FromDocument(CRDocument, int unitId)` qui copie uniquement champs utiles (id, name, x,y, faction, confirmed).
+- Remplace un seul emplacement d'utilisation (ex: `UnitOrdersViewModel.UpdateContextData`) pour consommer `GetUnitIdsInRegion` + `FromDocument`.
+- Tests manuels + unit tests simples (création DTO à partir d'un DataBlock).
+
+4) Remplacer parcours par index (iteratif)
+- Refactorise `ContainerModel.CollectUnits` pour appeler `CRDocument.GetUnitIdsInRegion` ou `GetUnitIdsByKey` au lieu d'itérer `Region.GetNextBlock`.
+- Fais une PR par type (container, region, building) pour limiter la surface de changement.
+
+5) TreeView / Explorer : lazy-loading des nœuds (safe)
+- Introduis `RegionNodeViewModel`, `FactionNodeViewModel`, `UnitNodeViewModel`.
+- Chaque node garde `id` et `shortLabel`. Au `Expand`, le node appelle `_doc.GetUnitIdsInRegion(regionId)` et crée des `UnitNodeViewModel` en utilisant `UnitViewModel.FromDocument` (ou seulement l'id si list longue).
+- Utilise virtualisation (TreeView virtualization ou pagination) pour éviter de créer tous les VMs.
+
+6) SelectionToken + SelectionService (docking)
+- Remplace passage direct de `DataBlock` dans l’événement de sélection par un `SelectionToken { Type, Id }`.
+- Les vues dockées demandent au `SelectionService` un DTO via `CreateViewModel(token)` : service construit VM léger sur demande.
+- Avantage : aucune ViewModel dockée ne référence `DataBlock`.
+
+7) Orders overlay / delta (existing `OrdersDocument`)
+- Continue d’utiliser `OrdersDocument` comme overlay pour modifications d’ordres.
+- Lors de l’enregistrement, applique l’overlay aux `DataBlock` ou reconstruit le CR final.
+
+8) Cache LRU & lazy resolution (opt.)
+- Implémente un cache LRU pour `UnitViewModel` si recreation fréquente.
+- Stocke uniquement `string` courts et `int`; évite gros objets ou copies de listes complètes.
+
+9) Tests & profilage
+- Ajoute tests unitaires pour : indexation, `FromDocument`, `GetUnitIdsInRegion`.
+- Profile mémoire/CPU sur gros CR (mesure avant/après). Corrige hotspots (strings, allocations temporaires).
+
+10) Déploiement progressif / feature-flag
+- Déploie par modules : commence par `UnitOrders` → `Explorer` → autres vues.
+- Garde branche de repli et petits PRs (une responsabilité à la fois).
+
+Règles pratiques et gotchas
+- Index = mémoire mais très low-cost (ints). Pour millions d’éléments, envisager `int[]` ou pages.
+- Ne duplique pas tout : copie seulement les `string` affichées ; pour champs rarement lus, résous à la demande.
+- Si parsing est en background, expose une snapshot immuable au UI pour éviter locks.
+- Conserve `DataBlock` comme source de vérité et pour l’écriture finale.
+
+Veux‑tu que je :
+- génère le patch pour ajouter `UnitsByRegion` + peuplement dans `CreateHashTables()` (étape 2), ou
+- crée `UnitViewModel.FromDocument` et modifie `UnitOrdersViewModel.UpdateContextData()` (étape 3) ?

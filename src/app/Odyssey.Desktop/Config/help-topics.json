@@ -1,0 +1,82 @@
+[
+  {
+    "id": "getting-started",
+    "title": "Gettting started"
+  },
+  {
+    "id": "menus",
+    "title": "Menus",
+    "children": [
+      {
+        "id": "menus/file",
+        "title": "File"
+      },
+      {
+        "id": "menus/view",
+        "title": "View"
+      },
+      {
+        "id": "menus/bookmarks",
+        "title": "Bookmarks"
+      },
+      {
+        "id": "menus/window",
+        "title": "Window"
+      },
+      {
+        "id": "menus/help",
+        "title": "Help"
+      }
+    ]
+  },
+  {
+    "id": "advanced-features",
+    "title": "Advanced features"
+  },
+  {
+    "id": "bookmarks",
+    "title": "Bookmarks"
+  },
+  {
+    "id": "keyboard-shortcuts",
+    "title": "Keyboard Shortcuts"
+  },
+  {
+    "id": "samples",
+    "title": "Samples",
+    "children": [
+      {
+        "id": "samples/Emphasis",
+        "title": "Emphasis"
+      },
+      {
+        "id": "samples/Everywhere",
+        "title": "Everywhere"
+      },
+      {
+        "id": "samples/Headings",
+        "title": "Headings"
+      },
+      {
+        "id": "samples/LaTeX",
+        "title": "LaTeX"
+      },
+      {
+        "id": "samples/Link",
+        "title": "Link"
+      },
+      {
+        "id": "samples/Markdig",
+        "title": "Markdig"
+      },
+      {
+        "id": "samples/Tables",
+        "title": "Tables"
+      },
+      {
+        "id": "samples/Test",
+        "title": "Test"
+      }
+    ]
+  }
+]

@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="Odyssey.Views.UnitDetailsView"
+			  xmlns="https://github.com/avaloniaui"
+			  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			  xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+			  xmlns:vm="using:Odyssey.ViewModels"
+			  xmlns:vmtools="using:Odyssey.ViewModels.Tools"
+			  xmlns:controls="using:Odyssey.Controls"
+			  xmlns:conv="using:Odyssey.Converters"
+			  mc:Ignorable="d"
+			  d:DesignWidth="300" d:DesignHeight="400"
+			  x:DataType="vm:UnitDetailsViewModel" x:CompileBindings="True">
+	<Design.DataContext>
+		<vm:UnitDetailsViewModel />
+	</Design.DataContext>
+	<UserControl.Resources>
+		<conv:UnitItemConverter x:Key="UnitItemConverter" />
+	</UserControl.Resources>
+	<Grid Focusable="True" IsVisible="{Binding HasDocument}">
+		<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="*" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+
+				<TextBox Grid.Row="0" Text="{Binding Description}" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True" IsVisible="{Binding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+
+				<Border Grid.Row="2"
+						Margin="0,8,0,0"
+						Height="65"
+						Padding="8"
+						CornerRadius="10"
+						BorderBrush="#5b4b3a"
+						BorderThickness="1.5"
+						Background="#4a4742"
+						IsVisible="{Binding InventoryItems.Count}">
+					<ItemsControl ItemsSource="{Binding InventoryItems}">
+						<ItemsControl.ItemsPanel>
+							<ItemsPanelTemplate>
+								<controls:InventoryGridPanel CellSize="46" CellGap="5" />
+							</ItemsPanelTemplate>
+						</ItemsControl.ItemsPanel>
+						<ItemsControl.ItemTemplate>
+							<DataTemplate x:DataType="vmtools:UnitItemViewModel">
+								<controls:UnitItemBadgeControl DataContext="{Binding}" Zoom="1" />
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+				</Border>
+
+				<Border Grid.Row="3"
+						Margin="0,8,0,0"
+						Height="65"
+						Padding="8"
+						CornerRadius="10"
+						BorderBrush="#3a5b6b"
+						BorderThickness="1.5"
+						Background="{DynamicResource PanelBackgroundBrush}"
+						IsVisible="{Binding SkillItems.Count}">
+					<ItemsControl ItemsSource="{Binding SkillItems}">
+						<ItemsControl.ItemsPanel>
+							<ItemsPanelTemplate>
+								<controls:InventoryGridPanel CellSize="46" CellGap="5" />
+							</ItemsPanelTemplate>
+						</ItemsControl.ItemsPanel>
+						<ItemsControl.ItemTemplate>
+							<DataTemplate x:DataType="vmtools:UnitSkillViewModel">
+								<controls:UnitSkillBadgeControl DataContext="{Binding}" Zoom="1" />
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+				</Border>
+
+				<TreeView Grid.Row="1" Name="DetailsTreeView" ItemsSource="{Binding Items}">
+					<TreeView.Styles>
+						<Style Selector="TreeViewItem" x:DataType="vm:TreeNodeViewModel">
+							<Setter Property="IsExpanded" Value="True"/>
+						</Style>
+					</TreeView.Styles>
+					<TreeView.ItemTemplate>
+						<TreeDataTemplate ItemsSource="{Binding Children}"  >
+							<StackPanel Orientation="Horizontal">
+								<asyncImageLoader:AdvancedImage  Source="{Binding Data, Converter={StaticResource UnitItemConverter}}" IsVisible="{Binding Data, Converter={x:Static ObjectConverters.IsNotNull}}" Margin="0,0,5,0"/>
+								<TextBlock Text="{Binding Header}" ToolTip.Tip="{Binding Description}" />
+							</StackPanel>
+						</TreeDataTemplate>
+					</TreeView.ItemTemplate>
+				</TreeView>
+			</Grid>
+		</ScrollViewer>
+	</Grid>
+</UserControl>

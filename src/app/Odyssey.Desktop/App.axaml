@@ -1,0 +1,342 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:Odyssey"
+             xmlns:core="using:Dock.Model.Core"
+             Name="Odyssey"
+             x:Class="Odyssey.App">
+
+	<Application.DataTemplates>
+		<local:ViewLocator />
+	</Application.DataTemplates>
+	<Application.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<!--ResourceInclude Source="/Controls/BookmarkStyles.axaml"/-->
+				<ResourceInclude Source="/Controls/StarStyles.axaml"/>
+				<ResourceDictionary>
+					<ControlRecycling x:Key="ControlRecyclingKey" />
+				</ResourceDictionary>
+				<ResourceDictionary>
+					
+					<ResourceDictionary.ThemeDictionaries>
+						<ResourceDictionary x:Key='Default'>
+							<!--ResourceInclude Source="avares://LiveMarkdown.Avalonia/Defaults.axaml"/-->
+							<!---->
+							<SolidColorBrush x:Key="TextControlBackground">#EFEFEF</SolidColorBrush>
+							<SolidColorBrush x:Key="TextControlBackgroundFocused">#EFEFEF</SolidColorBrush>
+							<SolidColorBrush x:Key="TextControlBackgroundPointerOver">#EFEFEF</SolidColorBrush>
+							<SolidColorBrush x:Key="TextControlForeground">#212121</SolidColorBrush>
+							<SolidColorBrush x:Key="TextForegroundColor">#212121</SolidColorBrush>
+							<SolidColorBrush x:Key="TextControlBorderBrush">#33323232</SolidColorBrush>
+							<SolidColorBrush x:Key="TextControlBorderBrushPointerOver">#33323232</SolidColorBrush>
+							<!---->
+							<!-- GAME COLORS FOR LIGHT - BEGIN -->
+							<!-- Specific colors -->
+							<SolidColorBrush x:Key="UnitInShipForegroundColor">#8B0000</SolidColorBrush>
+							<SolidColorBrush x:Key="UnitInBuildingForegroundColor">#008B8B</SolidColorBrush>
+							<SolidColorBrush x:Key="ShipInNotActiveFactionForegroundColor">#008000</SolidColorBrush>
+							<SolidColorBrush x:Key="BuildingInNotActiveFactionForegroundColor">#696969</SolidColorBrush>
+							<SolidColorBrush x:Key="RegionRareItemForegroundColor">#BE721B</SolidColorBrush>
+							<!-- Background colors for terrains -->
+							<SolidColorBrush x:Key="UnknownTerrainBackgroundColor">#222222</SolidColorBrush>
+							<SolidColorBrush x:Key="OceanTerrainBackgroundColor">#5264d6</SolidColorBrush>
+							<SolidColorBrush x:Key="SwampTerrainBackgroundColor">#19332a</SolidColorBrush>
+							<SolidColorBrush x:Key="PlainsTerrainBackgroundColor">#defcae</SolidColorBrush>
+							<SolidColorBrush x:Key="DesertTerrainBackgroundColor">#f4c354</SolidColorBrush>
+							<SolidColorBrush x:Key="ForestTerrainBackgroundColor">#72ba66</SolidColorBrush>
+							<SolidColorBrush x:Key="HighlandTerrainBackgroundColor">#e8c98e</SolidColorBrush>
+							<SolidColorBrush x:Key="MountainTerrainBackgroundColor">#8c8683</SolidColorBrush>
+							<SolidColorBrush x:Key="GlacierTerrainBackgroundColor">#ebebeb</SolidColorBrush>
+							<!-- GAME COLORS FOR LIGHT - END -->
+							<Color x:Key="RegionColor">#FFFAFAFA</Color>
+							<Color x:Key="AcrylicFallbackColor">#E2E2E2</Color>
+							<Color x:Key="AcrylicTintColor">#FFFFFF</Color>
+						</ResourceDictionary>
+						<ResourceDictionary x:Key='Light'>
+							<!---->
+							<SolidColorBrush x:Key="TextControlBackground">#EFEFEF</SolidColorBrush>
+							<SolidColorBrush x:Key="TextControlBackgroundFocused">#EFEFEF</SolidColorBrush>
+							<SolidColorBrush x:Key="TextControlBackgroundPointerOver">#EFEFEF</SolidColorBrush>
+							<SolidColorBrush x:Key="TextControlForeground">#212121</SolidColorBrush>
+							<SolidColorBrush x:Key="TextForegroundColor">#212121</SolidColorBrush>
+							<SolidColorBrush x:Key="TextControlBorderBrush">#33323232</SolidColorBrush>
+							<SolidColorBrush x:Key="TextControlBorderBrushPointerOver">#33323232</SolidColorBrush>
+							<!---->
+							<!-- GAME COLORS FOR LIGHT - BEGIN -->
+							<!-- Specific colors -->
+							<SolidColorBrush x:Key="UnitInShipForegroundColor">#8B0000</SolidColorBrush>
+							<SolidColorBrush x:Key="UnitInBuildingForegroundColor">#008B8B</SolidColorBrush>
+							<SolidColorBrush x:Key="ShipInNotActiveFactionForegroundColor">#008000</SolidColorBrush>
+							<SolidColorBrush x:Key="BuildingInNotActiveFactionForegroundColor">#696969</SolidColorBrush>
+							<SolidColorBrush x:Key="RegionRareItemForegroundColor">#BE721B</SolidColorBrush>
+							<!-- Background colors for terrains -->
+							<SolidColorBrush x:Key="UnknownTerrainBackgroundColor">#222222</SolidColorBrush>
+							<SolidColorBrush x:Key="OceanTerrainBackgroundColor">#5264d6</SolidColorBrush>
+							<SolidColorBrush x:Key="SwampTerrainBackgroundColor">#19332a</SolidColorBrush>
+							<SolidColorBrush x:Key="PlainsTerrainBackgroundColor">#defcae</SolidColorBrush>
+							<SolidColorBrush x:Key="DesertTerrainBackgroundColor">#f4c354</SolidColorBrush>
+							<SolidColorBrush x:Key="ForestTerrainBackgroundColor">#72ba66</SolidColorBrush>
+							<SolidColorBrush x:Key="HighlandTerrainBackgroundColor">#e8c98e</SolidColorBrush>
+							<SolidColorBrush x:Key="MountainTerrainBackgroundColor">#8c8683</SolidColorBrush>
+							<SolidColorBrush x:Key="GlacierTerrainBackgroundColor">#ebebeb</SolidColorBrush>
+							<!-- GAME COLORS FOR LIGHT - END -->
+							<Color x:Key="RegionColor">#FFFAFAFA</Color>
+							<Color x:Key="AcrylicFallbackColor">#E2E2E2</Color>
+							<Color x:Key="AcrylicTintColor">#FFFFFF</Color>
+						</ResourceDictionary>
+						<ResourceDictionary x:Key='Dark'>
+							<!---->
+							<SolidColorBrush x:Key="TextControlBackground">#2F2F2F</SolidColorBrush>
+							<SolidColorBrush x:Key="TextControlBackgroundFocused">#2F2F2F</SolidColorBrush>
+							<SolidColorBrush x:Key="TextControlBackgroundPointerOver">#2F2F2F</SolidColorBrush>
+							<SolidColorBrush x:Key="TextControlForeground">#FFFFFF</SolidColorBrush>
+							<SolidColorBrush x:Key="TextForegroundColor">#FFFFFF</SolidColorBrush>
+							<SolidColorBrush x:Key="TextControlBorderBrush">#434343</SolidColorBrush>
+							<SolidColorBrush x:Key="TextControlBorderBrushPointerOver">#434343</SolidColorBrush>
+							<!---->
+							<!-- GAME COLORS FOR DARK - BEGIN -->
+							<!-- Specific colors -->
+							<SolidColorBrush x:Key="UnitInShipForegroundColor">#8B0000</SolidColorBrush>
+							<SolidColorBrush x:Key="UnitInBuildingForegroundColor">#008B8B</SolidColorBrush>
+							<SolidColorBrush x:Key="ShipInNotActiveFactionForegroundColor">#008000</SolidColorBrush>
+							<SolidColorBrush x:Key="BuildingInNotActiveFactionForegroundColor">#696969</SolidColorBrush>
+							<SolidColorBrush x:Key="RegionRareItemForegroundColor">#FF9800</SolidColorBrush>
+							<!-- Background colors for terrains -->
+							<SolidColorBrush x:Key="UnknownTerrainBackgroundColor">#222222</SolidColorBrush>
+							<SolidColorBrush x:Key="OceanTerrainBackgroundColor">#5264d6</SolidColorBrush>
+							<SolidColorBrush x:Key="SwampTerrainBackgroundColor">#19332a</SolidColorBrush>
+							<SolidColorBrush x:Key="PlainsTerrainBackgroundColor">#defcae</SolidColorBrush>
+							<SolidColorBrush x:Key="DesertTerrainBackgroundColor">#f4c354</SolidColorBrush>
+							<SolidColorBrush x:Key="ForestTerrainBackgroundColor">#72ba66</SolidColorBrush>
+							<SolidColorBrush x:Key="HighlandTerrainBackgroundColor">#e8c98e</SolidColorBrush>
+							<SolidColorBrush x:Key="MountainTerrainBackgroundColor">#8c8683</SolidColorBrush>
+							<SolidColorBrush x:Key="GlacierTerrainBackgroundColor">#ebebeb</SolidColorBrush>
+							<!-- GAME COLORS FOR DARK - END -->
+							<Color x:Key="RegionColor">#FF212121</Color>
+							<Color x:Key="AcrylicFallbackColor">#1F1F1F</Color>
+							<Color x:Key="AcrylicTintColor">#2F2F2F</Color>
+						</ResourceDictionary>
+					</ResourceDictionary.ThemeDictionaries>
+				</ResourceDictionary>
+			</ResourceDictionary.MergedDictionaries>
+			<SolidColorBrush x:Key="ApplicationThemeBackgroundBrush">#EFEFEF</SolidColorBrush>
+			<Color x:Key="ApplicationThemeBackgroundColor">#EFEFEF</Color>
+			<SolidColorBrush x:Key="ApplicationThemeForegroundBrush">#212121</SolidColorBrush>
+			<Color x:Key="ApplicationThemeForegroundColor">#212121</Color>
+			<SolidColorBrush x:Key="ApplicationThemeSurfaceBrush">#EFEFEF</SolidColorBrush>
+			<Color x:Key="ApplicationThemeSurfaceColor">#EFEFEF</Color>
+			<Color x:Key="ApplicationThemeHoverColor">#E5E5E5</Color>
+			<SolidColorBrush x:Key="ApplicationThemeInputBrush">#EFEFEF</SolidColorBrush>
+			<SolidColorBrush x:Key="ApplicationThemeSelectionBrush">#0078D4</SolidColorBrush>
+			<SolidColorBrush x:Key="ApplicationThemeSelectionForegroundBrush">#212121</SolidColorBrush>
+			<SolidColorBrush x:Key="ApplicationThemeHoverBrush">#E5E5E5</SolidColorBrush>
+			<SolidColorBrush x:Key="ApplicationThemeMenuBackgroundBrush">#EFEFEF</SolidColorBrush>
+			<SolidColorBrush x:Key="ApplicationThemeMenuForegroundBrush">#212121</SolidColorBrush>
+			<SolidColorBrush x:Key="ApplicationThemeMenuBorderBrush">#33323232</SolidColorBrush>
+			<SolidColorBrush x:Key="ApplicationThemeTooltipBackgroundBrush">#EFEFEF</SolidColorBrush>
+			<SolidColorBrush x:Key="ApplicationThemeTooltipForegroundBrush">#212121</SolidColorBrush>
+			<SolidColorBrush x:Key="ApplicationThemeTooltipBorderBrush">#33323232</SolidColorBrush>
+			<SolidColorBrush x:Key="ApplicationThemeFindInputBrush">#EFEFEF</SolidColorBrush>
+			<!-- Styles attached dynamically depending on current theme (simple or fluent) -->
+			<StyleInclude x:Key="AvaloniaEditFluent" Source="avares://AvaloniaEdit/Themes/Fluent/AvaloniaEdit.xaml" />
+			<StyleInclude x:Key="AvaloniaEditSimple" Source="avares://AvaloniaEdit/Themes/Simple/AvaloniaEdit.xaml" />
+			<StyleInclude x:Key="DataGridFluent" Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
+			<StyleInclude x:Key="DataGridSimple" Source="avares://Avalonia.Controls.DataGrid/Themes/Simple.xaml"/>
+			<StyleInclude x:Key="ConfigFactoryFluent" Source="avares://ConfigFactory.Avalonia/Themes/Fluent/ConfigFactory.Avalonia.axaml" />
+			<!-- must not be set in SimpleTheme: no simple theme for ConfigFactory -->
+			<!--StyleInclude x:Key="ConfigFactorySimple" Source="avares://ConfigFactory.Avalonia/Themes/Simple/ConfigFactory.Avalonia.axaml" /-->
+			<!-- Not clear if the both themes should be added here -->
+			<FluentTheme x:Key="FluentTheme" />
+			<SimpleTheme x:Key="SimpleTheme" />
+		</ResourceDictionary>
+	</Application.Resources>
+	<Application.Styles>
+		<StyleInclude Source="avares://LiveMarkdown.Avalonia/Styles.axaml"/>
+		<StyleInclude Source="avares://AsyncImageLoader.Avalonia/AdvancedImage.axaml" />
+		<Style Selector="DockControl">
+			<Setter Property="(ControlRecyclingDataTemplate.ControlRecycling)" Value="{StaticResource ControlRecyclingKey}" />
+		</Style>
+		<Style Selector="Window">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeBackgroundBrush}" />
+		</Style>
+		<Style Selector="UserControl">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeBackgroundBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeForegroundBrush}" />
+		</Style>
+		<Style Selector="TextBlock">
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeForegroundBrush}" />
+		</Style>
+		<Style Selector="Expander">
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeForegroundBrush}" />
+		</Style>
+		<Style Selector="Menu">
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeMenuForegroundBrush}" />
+		</Style>
+		<Style Selector="Menu > MenuItem">
+			<Setter Property="Background" Value="Transparent" />
+		</Style>
+		<Style Selector="MenuItem">
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeMenuForegroundBrush}" />
+		</Style>
+		<Style Selector="MenuItem:selected /template/ Border#root">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeHoverBrush}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource ApplicationThemeHoverBrush}" />
+		</Style>
+		<Style Selector="MenuItem:selected /template/ Border#PART_LayoutRoot">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeHoverBrush}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource ApplicationThemeHoverBrush}" />
+		</Style>
+		<Style Selector="MenuItem /template/ Border#root:pointerover, MenuItem /template/ Border#PART_LayoutRoot:pointerover">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeHoverBrush}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource ApplicationThemeHoverBrush}" />
+		</Style>
+		<Style Selector="MenuItem:pressed /template/ Border#root:pointerover, MenuItem:pressed /template/ Border#PART_LayoutRoot:pointerover">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeHoverBrush}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource ApplicationThemeHoverBrush}" />
+		</Style>
+		<Style Selector="MenuItem /template/ Popup Border">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeMenuBackgroundBrush}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource ApplicationThemeMenuBorderBrush}" />
+		</Style>
+		<Style Selector="ToolTip">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeTooltipBackgroundBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeTooltipForegroundBrush}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource ApplicationThemeTooltipBorderBrush}" />
+		</Style>
+		<Style Selector="ToolTip TextBlock">
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeTooltipForegroundBrush}" />
+		</Style>
+		<Style Selector="ContextMenu, MenuFlyoutPresenter">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeMenuBackgroundBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeMenuForegroundBrush}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource ApplicationThemeMenuBorderBrush}" />
+		</Style>
+		<Style Selector="TextBox">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeInputBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeForegroundBrush}" />
+		</Style>
+		<Style Selector="TextBox#PART_searchTextBox">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeFindInputBrush}" />
+		</Style>
+		<Style Selector="TextBox#PART_searchTextBox /template/ Border#PART_BorderElement, TextBox#PART_searchTextBox:pointerover /template/ Border#PART_BorderElement, TextBox#PART_searchTextBox:focus /template/ Border#PART_BorderElement">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeFindInputBrush}" />
+		</Style>
+		<Style Selector="TextBox#PART_searchTextBox /template/ Border#border, TextBox#PART_searchTextBox:pointerover /template/ Border#border, TextBox#PART_searchTextBox:focus /template/ Border#border">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeFindInputBrush}" />
+		</Style>
+		<Style Selector="ListBox">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSurfaceBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeForegroundBrush}" />
+		</Style>
+		<Style Selector="TreeView">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSurfaceBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeForegroundBrush}" />
+		</Style>
+		<Style Selector="DataGrid">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSurfaceBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeForegroundBrush}" />
+		</Style>
+		<Style Selector="ListBoxItem /template/ ContentPresenter:pointerover">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeHoverBrush}" />
+		</Style>
+		<Style Selector="DataGridRow:pointerover">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeHoverBrush}" />
+		</Style>
+		<Style Selector="ListBoxItem:selected">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeSelectionForegroundBrush}" />
+		</Style>
+		<Style Selector="TreeViewItem:selected">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeSelectionForegroundBrush}" />
+		</Style>
+		<Style Selector="ComboBoxItem:selected">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeSelectionForegroundBrush}" />
+		</Style>
+		<Style Selector="DataGridRow:selected">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeSelectionForegroundBrush}" />
+		</Style>
+		<Style Selector="ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter, ComboBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeSelectionForegroundBrush}" />
+		</Style>
+		<Style Selector="ListBoxItem:selected:pointerover /template/ ContentPresenter#PART_ContentPresenter, ComboBoxItem:selected:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeSelectionForegroundBrush}" />
+		</Style>
+		<Style Selector="ListBoxItem:selected:focus /template/ ContentPresenter#PART_ContentPresenter, ComboBoxItem:selected:focus /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeSelectionForegroundBrush}" />
+		</Style>
+		<Style Selector="ListBoxItem:selected:pointerover:focus /template/ ContentPresenter#PART_ContentPresenter, ComboBoxItem:selected:pointerover:focus /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeSelectionForegroundBrush}" />
+		</Style>
+		<Style Selector="ListBoxItem:selected:pressed /template/ ContentPresenter#PART_ContentPresenter, ComboBoxItem:selected:pressed /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeSelectionForegroundBrush}" />
+		</Style>
+		<Style Selector="TreeViewItem:selected /template/ Border#PART_LayoutRoot, TreeViewItem:selected /template/ Border#SelectionBorder">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+		</Style>
+		<Style Selector="TreeViewItem:selected:pointerover /template/ Border#PART_LayoutRoot, TreeViewItem:selected:pointerover /template/ Border#SelectionBorder">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+		</Style>
+		<Style Selector="TreeViewItem:selected:pressed /template/ Border#PART_LayoutRoot">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+		</Style>
+		<Style Selector="TreeViewItem:selected:focus /template/ Border#SelectionBorder">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+		</Style>
+		<Style Selector="TreeViewItem:selected:pointerover:focus /template/ Border#SelectionBorder">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+		</Style>
+		<Style Selector="TreeViewItem:selected /template/ ContentPresenter#PART_HeaderPresenter">
+			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeSelectionForegroundBrush}" />
+		</Style>
+		<Style Selector="DataGridRow:selected /template/ Rectangle#BackgroundRectangle">
+			<Setter Property="Fill" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+			<Setter Property="Opacity" Value="1" />
+		</Style>
+		<Style Selector="DataGridRow:selected:pointerover /template/ Rectangle#BackgroundRectangle, DataGridRow:selected:focus /template/ Rectangle#BackgroundRectangle, DataGridRow:selected:pointerover:focus /template/ Rectangle#BackgroundRectangle">
+			<Setter Property="Fill" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+			<Setter Property="Opacity" Value="1" />
+		</Style>
+		<Style Selector="DocumentControl">
+			<Setter Property="IconTemplate">
+				<DataTemplate DataType="core:IDockable">
+					<PathIcon
+					  Data="M5 1C3.89543 1 3 1.89543 3 3V13C3 14.1046 3.89543 15 5 15H11C12.1046 15 13 14.1046 13 13V5.41421C13 5.01639 12.842 4.63486 12.5607 4.35355L9.64645 1.43934C9.36514 1.15804 8.98361 1 8.58579 1H5ZM4 3C4 2.44772 4.44772 2 5 2H8V4.5C8 5.32843 8.67157 6 9.5 6H12V13C12 13.5523 11.5523 14 11 14H5C4.44772 14 4 13.5523 4 13V3ZM11.7929 5H9.5C9.22386 5 9 4.77614 9 4.5V2.20711L11.7929 5Z"
+					  Width="16"
+					  Height="16"
+					  Margin="0"
+					  Padding="0,0,2,0" />
+				</DataTemplate>
+			</Setter>
+		</Style>
+		<Style Selector="DocumentControl">
+			<Setter Property="HeaderTemplate">
+				<DataTemplate DataType="core:IDockable">
+					<TextBlock Text="{Binding Title}"
+							   VerticalAlignment="Center"
+							   Padding="2"  />
+				</DataTemplate>
+			</Setter>
+		</Style>
+		<Style Selector="ToolControl">
+			<Setter Property="HeaderTemplate">
+				<DataTemplate DataType="core:IDockable">
+					<TextBlock Text="{Binding Title}" Padding="2" />
+				</DataTemplate>
+			</Setter>
+		</Style>
+		<Style Selector="ToolChromeControl /template/ Grid#PART_Grip">
+			<Setter Property="Background" Value="{DynamicResource ApplicationDockTitleBarInactiveBrush}" />
+		</Style>
+		<Style Selector="ToolChromeControl:active /template/ Grid#PART_Grip">
+			<Setter Property="Background" Value="{DynamicResource ApplicationDockTitleBarActiveBrush}" />
+		</Style>
+	</Application.Styles>
+</Application>

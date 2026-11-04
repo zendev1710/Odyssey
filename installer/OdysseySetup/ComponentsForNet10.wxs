@@ -1,0 +1,7 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Fragment>
+	<ComponentGroup Id="ComponentsForNet10" Directory="INSTALLFOLDER">
+	  <Files Include="..\publish\net10.0\**" />
+	</ComponentGroup>
+  </Fragment>
+</Wix>

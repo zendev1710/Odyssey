@@ -1,0 +1,650 @@
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Odyssey.Models;
+using Odyssey.Models.Data;
+using Odyssey.Models.Documents;
+using Odyssey.Models.Localization;
+using Odyssey.Models.Tools;
+using Odyssey.ViewModels.Tools;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using static Odyssey.Models.Tools.DataProperty;
+using static Odyssey.Models.Tools.UnitModel;
+using static Odyssey.Utils.Converters;
+
+namespace Odyssey.ViewModels;
+
+public partial class UnitDetailsViewModel : ViewModelBase
+{
+    public ObservableCollection<UnitItemViewModel> InventoryItems { get; } = new();
+    public ObservableCollection<UnitSkillViewModel> SkillItems { get; } = new();
+    private readonly NodeViewModel _root = new();
+
+    protected NodeViewModel Root { get { return _root; } }
+    public ObservableCollection<NodeViewModel> Items { get; }
+
+    [ObservableProperty]
+    private string _description;
+
+    /// <summary>
+    /// Unit name, with "<name> (id)" format
+    /// </summary>
+    [ObservableProperty]
+    private string _name;
+
+    [ObservableProperty]
+    private string _factionName;
+
+    [ObservableProperty]
+    private string _otherFactionName;
+
+    [ObservableProperty]
+    private string _groupName;
+
+    [ObservableProperty]
+    private string _mageNameIfFamiliar;
+
+    [ObservableProperty]
+    private bool _isFamiliar;
+
+    [ObservableProperty]
+    private bool _isHero;
+
+    [ObservableProperty]
+    private bool _isStarving;
+
+    [ObservableProperty]
+    private bool _isGuarding;
+
+    [ObservableProperty]
+    private bool _isFactionDisguised;
+
+    [ObservableProperty]
+    private int _peopleNumber;
+
+    [ObservableProperty]
+    private bool _areSkillsVisible;
+
+    [ObservableProperty]
+    private string _race;
+
+    [ObservableProperty]
+    private string _aura;
+
+    [ObservableProperty]
+    private string _auramax;
+
+    [ObservableProperty]
+    private string _hero;
+
+    [ObservableProperty]
+    private string _hp;
+
+    [ObservableProperty]
+    private string _hungry;
+
+    [ObservableProperty]
+    private string _combatStatus;
+
+    [ObservableProperty]
+    private string _guards;
+
+    [ObservableProperty]
+    private int _familiarMage;
+
+    [ObservableProperty]
+    private int _weight;
+
+    public UnitDetailsViewModel() : base(Ids.UnitDetails)
+    {
+        Items = Root.Children;
+
+        _description = string.Empty;
+        _name = string.Empty;
+        _factionName = string.Empty;
+        _otherFactionName = string.Empty;
+        _groupName = string.Empty;
+        _mageNameIfFamiliar = string.Empty;
+        _isFamiliar = false;
+        _isHero = false;
+        _peopleNumber = 0;
+        _race = string.Empty;
+        _aura = string.Empty;
+        _auramax = string.Empty;
+        _hero = string.Empty;
+        _hp = string.Empty;
+        _hungry = string.Empty;
+        _combatStatus = string.Empty;
+        _guards = string.Empty;
+    }
+
+    protected override void OnSelectionChanged(IEntitySelection selection, SelectionChangeTypes selType, object? sender)
+    {
+        if (ReferenceEquals(sender, this))
+            return;
+
+        bool unitChanged = selType.HasFlag(SelectionChangeTypes.Unit);
+        bool unitSelected = selection.HasUnit();
+
+        Debug.WriteLine($"[VM-REGION-INF] OnSelectionChanged: unit changed={unitChanged}, unit selected={unitSelected}");
+
+        if (unitChanged)
+        {
+            MakeItems(selection);
+        }
+    }
+
+    public void MakeItems(IEntitySelection selection)
+    {
+        Items.Clear();
+
+        UnitModel? unitModel = selection.Item as UnitModel;
+        if (unitModel is null)
+        {
+            AreSkillsVisible = false;
+            SkillItems.Clear();
+            InventoryItems.Clear();
+            return;
+        }
+
+        AreSkillsVisible = Report.GetFactionStatus(unitModel.EffectiveFactionId) is FactionStatus.ACTIVE or FactionStatus.ALLIED;
+
+        string factionName = string.Empty;
+        string otherFactionName = string.Empty;
+        string mageNameIfFamiliar = string.Empty;
+
+        bool isFamiliar = false;
+        bool isHero = false;
+        bool isStarving;
+        bool isGuarding;
+        bool isFactionDisguised = false;
+
+        // The unit data is collected once, then reused (see UnitModel.CollectData)
+        unitModel.CollectData(Report);
+
+        string unitName = $"{unitModel.Name} ({unitModel.EncodedId})";
+        DataProperty unitProperty = new(Categories.None, unitName, string.Empty, unitName, string.Empty, unitModel);
+        NodeViewModel unitNode = AddItem(Root, unitProperty);
+
+        //////////
+        // FACTION
+
+        string factionLabel = string.Empty;
+        if (unitModel.FactionId < 0 && unitModel.OtherFactionId < 0)
+        {
+            factionLabel = Labels.Localize(Labels.DISGUISED);
+            isFactionDisguised = true;
+        }
+        else
+        {
+            FactionModel? factionModel = null;
+            if (unitModel.FactionId > 0)
+            {
+                if (Report.GetFaction(ref factionModel, unitModel.FactionId))
+                {
+                    factionLabel = factionModel!.Name;
+                }
+                else
+                {
+                    string factionId = IdToString(unitModel.FactionId);
+                    factionLabel = Labels.Localize(Labels.UNKNOWN_ID, [factionId]);
+                }
+                factionName = factionLabel;
+            }
+
+            if (unitModel.OtherFactionId > 0)
+            {
+                string otherFactionLabel = string.Empty;
+                FactionModel? anotherFactionModel = null;
+                if (Report.GetFaction(ref anotherFactionModel, unitModel.OtherFactionId))
+                {
+                    string otherFactionDataName = anotherFactionModel!.FactionName;
+                    if (string.IsNullOrEmpty(otherFactionDataName))
+                    {
+                        otherFactionLabel = Labels.Localize(Labels.FACTION_DISGUISED_AS_FACTION);
+                    }
+                    else
+                    {
+                        string otherFactionId = IdToString(unitModel.OtherFactionId);
+                        otherFactionLabel = Labels.Localize(Labels.FACTION_DISGUISED_AS, [$"{otherFactionDataName} ({otherFactionId})"]);
+                    }
+                }
+                else
+                {
+                    string otherFactionId = IdToString(unitModel.OtherFactionId);
+                    otherFactionLabel = Labels.Localize(Labels.UNKNOWN_ID, [otherFactionId]);
+                }
+                otherFactionName = otherFactionLabel;
+                factionLabel += $", {otherFactionLabel}";
+            }
+        }
+
+        DataProperty factionProperty = new(Categories.None, factionName, string.Empty, factionLabel, string.Empty);
+
+        // First item is the faction name
+        _ = AddItem(unitNode, factionProperty);
+
+        ////////
+        // GROUP
+
+        DataProperty? groupProperty = null;
+        if (unitModel.Group > 0)
+        {
+            int group = unitModel.Group;
+            string groupNameValue;
+            if (Report.TryGetGroupName(group, out string groupName))
+            {
+                groupNameValue = groupName;
+            }
+            else
+            {
+                groupNameValue = ToStringVal(group);
+            }
+            //groupName = groupNameValue;
+            string groupLabel = Labels.Localize(Categories.Node, Labels.GROUP, [groupNameValue]);
+            groupProperty = new DataProperty(Categories.Node, groupNameValue, groupLabel);
+
+            // Second item is group name (if any)
+            _ = AddItem(unitNode, groupProperty);
+        }
+
+        ///////////
+        // FAMILIAR
+
+        DataProperty? familiarProperty = null;
+        if (unitModel.FamiliarMageId > 0)
+        {
+            isFamiliar = true;
+            if (Report.FindUnit(unitModel.FamiliarMageId, out UnitModel? mageModel) && mageModel is not null)
+            {
+                string mageName = mageModel.Name;
+                string id = mageModel.EncodedId;
+                string familiarMageName = $"{mageName} ({id})";
+                string familiarLabel = Labels.Localize(Categories.None, Labels.FAMILIAR_INFO, [familiarMageName]);
+                familiarProperty = new DataProperty(Categories.None, Labels.FAMILIAR_INFO, familiarMageName, familiarLabel, string.Empty, mageModel);
+
+                // Third item is familiar name (if any)
+                _ = AddItem(unitNode, familiarProperty);
+                mageNameIfFamiliar = familiarLabel;
+            }
+        }
+
+        ///////
+        // UNIT
+
+        string raceName = string.IsNullOrEmpty(unitModel.Race) ? Labels.PERSONS : unitModel.Race;
+        string raceLabel = Labels.LocalizeCountable(Categories.Race, raceName, unitModel.PeopleNumber == 1);
+        if (!string.IsNullOrEmpty(unitModel.Prefix))
+        {
+            string racePrefixLabel = Labels.Localize(unitModel.Prefix);
+            raceLabel = Labels.Localize(Labels.RACE_INFO, [racePrefixLabel, raceLabel]);
+        }
+        if (!string.IsNullOrEmpty(unitModel.TrueRaceType))
+        {
+            // add true race name as a suffix
+            raceLabel += $" ({Labels.LocalizeCountable(Categories.Race, unitModel.TrueRaceType, unitModel.PeopleNumber == 1)})";
+        }
+
+        // number + persons + prefix + race (+ hero)
+        string fullNameLabel = $"{unitModel.PeopleNumber} {raceLabel}";
+        if (!string.IsNullOrEmpty(unitModel.Hero))
+        {
+            isHero = true;
+            string heroesLabel = Labels.LocalizeCountable(Categories.None, Labels.HEROES, unitModel.PeopleNumber == 1, 2);
+            fullNameLabel += $", {heroesLabel}";
+        }
+
+        DataProperty fullNameProperty = new DataProperty(fullNameLabel);
+
+        // Fourth item is full name (if any)
+        NodeViewModel unitFirstChildNote = AddItem(unitNode, fullNameProperty);
+
+        // DE: hungert / "Starving"
+        string combatStatusLabel = (unitModel.CombatStatus == CombatStatusType.Undefined) ? string.Empty : Labels.Localize(Categories.CombatStatus, $"{(int)unitModel.CombatStatus}");
+        string hungryLabel = Labels.Localize(Categories.Status, $"{unitModel.Hungry}");
+        string guardsLabel = unitModel.IsGuarding ? Labels.Localize(Categories.Status, Labels.GUARDING) : string.Empty;
+        string hpLabel = Labels.Localize(Categories.Status, $"{unitModel.Hp}");
+
+        isStarving = !string.IsNullOrEmpty(hungryLabel);
+        isGuarding = !string.IsNullOrEmpty(guardsLabel);
+
+        string statusLabel = string.Empty;
+
+        statusLabel += string.IsNullOrEmpty(combatStatusLabel) ? string.Empty : $"{combatStatusLabel},";
+        statusLabel += string.IsNullOrEmpty(hungryLabel) ? string.Empty : $"{hungryLabel},"; // hunger
+        statusLabel += string.IsNullOrEmpty(guardsLabel) ? string.Empty : $"{guardsLabel},";
+        statusLabel += string.IsNullOrEmpty(hpLabel) ? string.Empty : $"{hpLabel},";
+        statusLabel = statusLabel.TrimEnd(',').Replace(",", ", ");
+        if (!string.IsNullOrEmpty(statusLabel))
+        {
+            DataProperty statusProperty = new(statusLabel);
+            unitFirstChildNote = AddItem(unitNode, statusProperty);
+        }
+
+        if (!string.IsNullOrEmpty(unitModel.Aura) || !string.IsNullOrEmpty(unitModel.AuraMax))
+        {
+            string auraLabel = Labels.Localize(Labels.AURA_FROM_AURAMAX, [unitModel.Aura, unitModel.AuraMax]);
+            DataProperty auraProperty = new DataProperty(auraLabel);
+            unitFirstChildNote = AddItem(unitNode, auraProperty);
+        }
+
+        int weight = unitModel.Weight;
+        if (weight > 0)
+        {
+            string weightValue = ToStringWithDecimals(weight);
+            //string weightValue = weight % 100 == 0 ? $"{weight / 100}" : $"{(weight / 100.0F):F2}";
+            string weightLabel = Labels.Localize(Categories.Node, Labels.WEIGHT_INFO, [weightValue]);
+            DataProperty weightProperty = new(Categories.Node, Labels.WEIGHT_INFO, string.Empty, weightLabel);
+
+            // Fifth item is weight
+            unitFirstChildNote = AddItem(unitNode, weightProperty);
+        }
+
+        // Then add each property as an item
+        foreach (DataProperty k in unitModel.DataProperties)
+        {
+            _ = AddItem(unitNode, k);
+        }
+
+        /////////
+        // SPELLS
+
+        if (unitModel.Spells is not null)
+        {
+            string spellsLabel = Labels.Localize(Categories.Node, Labels.SPELLS);
+            DataProperty spellsProperty = new(Categories.Node, Labels.SPELLS, string.Empty, spellsLabel);
+            NodeViewModel spellsNode = AddItem(unitNode, spellsProperty);
+            foreach (string spellName in unitModel.Spells)
+            {
+                // Values in CR are already translated in English for EN CR
+                string spellLabel = Labels.Localize(Categories.Spell, spellName);
+                string spellTip = Labels.Localize(Categories.Spell, $"{spellName}_tip");
+                DataProperty spellProperty = new(Categories.Spell, spellName, string.Empty, spellLabel, spellTip);
+                _ = AddItem(spellsNode, spellProperty);
+            }
+        }
+
+        ////////////////
+        // COMBAT SPELLS
+
+        if (unitModel.CombatSpells.Count > 0)
+        {
+            string combatSpellsLabel = Labels.Localize(Categories.Node, Labels.COMBAT_SPELLS);
+            DataProperty combatSpellsProperty = new(Categories.Node, Labels.COMBAT_SPELLS, string.Empty, combatSpellsLabel);
+            NodeViewModel combatSpellsNode = AddItem(unitNode, combatSpellsProperty);
+            foreach (KeyValuePair<int, CombatSpellData> combatSpellEntry in unitModel.CombatSpells)
+            {
+                CombatSpellData combatSpell = combatSpellEntry.Value;
+                int period = combatSpellEntry.Key;
+                if (period > (int)CombatSpellPeriod.PostCombat) { period = 1; }
+                string combatSpellPeriodLabel = Labels.Localize($"{Labels.COMBAT_SPELL_PERIOD}_{period}");
+                // TODO: replace localization key from rules_spell to rules_combatspell_ in resx files
+                string spell = Labels.Localize(Categories.Spell, combatSpell.SpellName);
+                string level = combatSpell.Level;
+                // type spell level
+                string combatSpellLabel = $"{combatSpellPeriodLabel}: {spell} ({level})";
+                DataProperty spellProperty = new(Categories.CombatSpell, combatSpellLabel, string.Empty, combatSpellLabel);
+                AddItem(combatSpellsNode, spellProperty);
+            }
+        }
+
+        if (unitModel.Effects is not null)
+        {
+            string effectsLabel = Labels.Localize(Categories.Node, Labels.EFFECTS);
+            DataProperty effectsProperty = new(Categories.Node, Labels.EFFECTS, string.Empty, effectsLabel);
+            NodeViewModel effectsNode = AddItem(unitNode, effectsProperty);
+            foreach (string effectKey in unitModel.Effects)
+            {
+                string effectName = effectKey;
+                string effectValue = string.Empty;
+                string effectLabel;
+                // if effectValue starts with a numeric value; extracts effectname to localize it
+                string[] effectParts = effectName.Split(' ', 2);
+                if (effectParts.Length == 2 && int.TryParse(effectParts[0], out _))
+                {
+                    effectValue = effectParts[0];
+                    effectName = effectParts[1];
+                    effectLabel = $"{effectValue} {Labels.Localize(Categories.Effect, effectName)}";
+                }
+                else
+                {
+                    effectLabel = effectName;
+                    //effectLabel = effectValue.StartsWith('"') ? effectName : Labels.Localize(Categories.Effect, effectValue);
+                }
+                DataProperty effectProperty = new(Categories.None, effectName, effectValue, effectLabel);
+                AddItem(effectsNode, effectProperty);
+            }
+        }
+
+        List<DataProperty> skillsProperties = [];
+        List<DataProperty> itemsProperties = [];
+
+        SkillItems.Clear();
+        if (AreSkillsVisible && unitModel.CollectSkills(ref skillsProperties))
+        {
+            foreach (DataProperty sp in skillsProperties)
+            {
+                SkillItems.Add(new UnitSkillViewModel(sp.Name, sp.Label, int.TryParse(sp.Value, out int level) ? level : 0, sp.Change));
+            }
+        }
+
+        ////////
+        // ITEMS
+        InventoryItems.Clear();
+        //List<DataProperty> itemsProperties = [];
+        if (unitModel.CollectItems(ref itemsProperties))
+        {
+            foreach (var itemProp in itemsProperties)
+            {
+                // Supposons que itemProp.Label soit le nom et itemProp.Value soit la quantité
+                // Adaptez selon votre structure de données DataProperty
+                var itemVm = new UnitItemViewModel(
+                    itemProp.Name,
+                    itemProp.Label,
+                    int.TryParse(itemProp.Value, out int q) ? q : 0,
+                    itemProp.Category.ToString()
+                );
+                InventoryItems.Add(itemVm);
+            }
+        }
+        /*
+        if (unitModel.CollectItems(ref itemsProperties))
+        {
+            string itemsLabel = Labels.Localize(Categories.Node, Labels.ITEMS);
+            DataProperty itemsProperty = new(Categories.Node, Labels.ITEMS, string.Empty, itemsLabel);
+            NodeViewModel itemsNode = AddItem(unitNode, itemsProperty);
+            foreach (DataProperty itemProperty in itemsProperties)
+            {
+                _ = AddItem(itemsNode, itemProperty, $"{itemProperty.Value} {itemProperty.Label}");
+            }
+        }
+        */
+
+        int walkCapacity;
+        int rideCapacity;
+        int maxHorsesNumber;
+
+        // walking capacity
+        (walkCapacity, maxHorsesNumber) = unitModel.ComputeWalkingCapacity(Report);
+        string capacityLabel;
+        if (unitModel.HorsesNumber > maxHorsesNumber)
+        {
+            int n = unitModel.HorsesNumber - maxHorsesNumber;
+            capacityLabel = n == 1 ? $"{walkCapacity / 100.0f:F2} ({n} horse too much)" : $"{walkCapacity / 100.0f:F2} ({n} horses too much)";
+        }
+        else
+        {
+            capacityLabel = $"{walkCapacity / 100.0f:F2}";
+        }
+        string capacityOnFootLabel = Labels.Localize(Labels.CAPACITY_ON_FOOT_INFO, [capacityLabel]);
+        DataProperty capacityOnFootProperty = new(Categories.None, Labels.CAPACITY_ON_FOOT_INFO, string.Empty, capacityOnFootLabel);
+        _ = InsertItem(unitNode, unitFirstChildNote, capacityOnFootProperty);
+
+        // Riding capacity
+        (rideCapacity, maxHorsesNumber) = unitModel.ComputeRidingCapacity();
+        if (maxHorsesNumber > 0)
+        {
+            string ridingCapacityLabel;
+            if (unitModel.HorsesNumber > maxHorsesNumber)
+            {
+                int n = unitModel.HorsesNumber - maxHorsesNumber;
+                // TODO: localize "horses too much"
+                ridingCapacityLabel = n == 1 ? $"{rideCapacity / 100.0f} ({n} horses too much)" : "";
+                // label = n == 1 ? "%.2f (%d horses too much)" : "%.2f (%d horses too much)"), ride_cap / 100.0f, n) : "";
+            }
+            else
+            {
+                ridingCapacityLabel = $"{(rideCapacity / 100.0F):F2}";
+            }
+            string capacityOnHorseLabel = Labels.Localize(Categories.None, Labels.CAPACITY_ON_HORSE_INFO, [ridingCapacityLabel]);
+            DataProperty capacityOnHorseProperty = new(Categories.None, Labels.CAPACITY_ON_HORSE_INFO, string.Empty, capacityOnHorseLabel);
+            InsertItem(unitNode, unitFirstChildNote, capacityOnHorseProperty);
+        }
+
+        NodeViewModel? structureNode = null;
+
+        //////////////////////////////////////////
+        // CONTAINER - BUILDING OR SHIP
+        DataProperty? containerProperty = null;
+        if (unitModel.CollectContainerData(Report, ref containerProperty) && containerProperty is not null)
+        {
+            bool isBuilding = unitModel.StructureType == KeyType.BUILDING;
+            structureNode = AddItem(Root, containerProperty, string.Empty, 0);
+            _ = AddContainerOwner(structureNode, unitModel, isBuilding);
+
+            if (isBuilding)
+            {
+                foreach (DataProperty p in unitModel.StructureDataProperties)
+                {
+                    _ = AddItem(structureNode, p, $"{p.Label}: {p.Value}");
+                }
+            }
+            else
+            {
+                if (unitModel.ShipPercentDamage > 0)
+                {
+                    string damageLabel = Labels.Localize(Categories.None, Labels.SHIP_DAMAGE, [$"{unitModel.ShipPercentDamage}"]);
+                    DataProperty damageProperty = new(damageLabel);
+                    AddItem(structureNode, damageProperty);
+                }
+                if (unitModel.ShipCoast >= 0)
+                {
+                    string coastLabel = Labels.GetCoastName(unitModel.ShipCoast);
+                    DataProperty coastProperty = new(coastLabel);
+                    AddItem(structureNode, coastProperty);
+                }
+                if (unitModel.ShipCargo > 0 || unitModel.ShipCapacity > 0)
+                {
+                    string shipCapacityLabel = Labels.Localize(Categories.None, Labels.CAPACITY_SHIP_INFO, [ToStringWithDecimals(unitModel.ShipCargo), ToStringWithDecimals(unitModel.ShipCapacity)]);
+                    DataProperty shipCapacityProperty = new(Categories.None, Labels.CAPACITY_SHIP_INFO, string.Empty, shipCapacityLabel);
+                    AddItem(structureNode, shipCapacityProperty);
+                }
+            }
+        }
+
+        if (structureNode != null && unitModel.DataProperties.Count > 0)
+        {
+            foreach (DataProperty p in unitModel.DataProperties)
+            {
+                _ = AddItem(structureNode, p, $"{p.Label}: {p.Value}");
+            }
+        }
+
+        /////////////////////////////////////////
+        // CONTAINER - BUILDING OR SHIP - EFFECTS
+
+        if (unitModel.StructureEffects.Count > 0 && structureNode != null)
+        {
+            string effectsLabel = Labels.Localize(Categories.Node, Labels.EFFECTS);
+            DataProperty effectsProperty = new(Categories.Node, Labels.EFFECTS, string.Empty, effectsLabel);
+            NodeViewModel effectsNode = AddItem(structureNode, effectsProperty);
+            foreach (string effectName in unitModel.StructureEffects)
+            {
+                // effectName is already localized in english (or german) in report
+                // LATER: localize in any current other language than english
+                DataProperty effectProperty = new(effectName);
+                AddItem(effectsNode, effectProperty);
+            }
+        }
+
+        ////////////////////////////
+
+        Name = unitModel.Name;
+        PeopleNumber = unitModel.PeopleNumber;
+        Race = unitModel.Race;
+        Aura = unitModel.Aura;
+        Auramax = unitModel.AuraMax;
+        Hero = unitModel.Hero;
+        Hp = unitModel.Hp;
+        Hungry = unitModel.Hungry;
+        FamiliarMage = unitModel.FamiliarMageId;
+        Weight = unitModel.Weight;
+
+        IsFamiliar = isFamiliar;
+        IsHero = isHero;
+        IsStarving = isStarving;
+        IsGuarding = isGuarding;
+        IsFactionDisguised = isFactionDisguised;
+        OtherFactionName = otherFactionName;
+        MageNameIfFamiliar = mageNameIfFamiliar;
+
+        Description = unitModel.Description;
+
+        /*
+        // TODO: what about the folowing ?
+        _factionName = string.Empty;
+        _groupName = string.Empty;
+        _combatStatus = string.Empty;
+        _guards = string.Empty;
+        */
+    }
+    private static bool AddContainerOwner(NodeViewModel parent, UnitModel unitModel, bool buildingContainer)
+    {
+        if (!string.IsNullOrEmpty(unitModel.StructureOwnerName))
+        {
+            string ownerLabel = Labels.Localize(Categories.Node, buildingContainer ? Labels.OWNER : Labels.CAPTAIN);
+            string ownerFullNameLabel = $"{ownerLabel}: {unitModel.StructureOwnerName}";
+            DataProperty ownerProperty = new(Categories.None, ownerFullNameLabel, string.Empty, ownerFullNameLabel, "", unitModel.StructureOwnerUnit);
+            AddItem(parent, ownerProperty);
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Dispatch the select node Event.
+    /// Normally called by a double-click or a space key pressed on the currently selected item of this tree messages list in the corresponding view.
+    /// Event is published only if the selected item is linked to an entity model.
+    /// </summary>
+    public void DispatchSelectedNode(NodeViewModel? node)
+    {
+        if (node is null)
+            return;
+
+        EntityModel? entityModel = node?.Data?.Reference;
+        if (entityModel is null)
+            return;
+
+        // TODO : how to get region
+        IEntitySelection newSelection = new EntitySelection(entityModel, null, null);
+
+        SendSelectionChangedEvent(newSelection);
+    }
+
+    /// <summary>
+    /// Append item under parent if index is -1; otherwise insert item at the specified index.
+    /// </summary>
+    private static TreeNodeViewModel AddItem(NodeViewModel parent, DataProperty? property, string header = "", int index = -1)
+    {
+        return new(parent, property, header, index);
+    }
+    /// <summary>
+    /// Insert item just before the specified brother node.
+    /// </summary>
+    private static TreeNodeViewModel InsertItem(NodeViewModel parent, NodeViewModel brother, DataProperty? property, string header = "")
+    {
+        return new(parent, property, header, parent.Children.IndexOf(brother));
+    }
+
+}
+
