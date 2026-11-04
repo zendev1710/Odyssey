@@ -181,8 +181,12 @@ public class App : Application
         Color acrylicTint = GetThemeColor(themeColors, "titleBar.activeBackground", surface);
 
         Resources["ApplicationThemeBackgroundBrush"] = GetThemeBrush(themeColors, "editor.background", dockWorkbench, background);
+        Resources["ApplicationThemeBackgroundColor"] = background;
         Resources["ApplicationThemeForegroundBrush"] = GetThemeBrush(themeColors, "editor.foreground", dockForeground, foreground);
+        Resources["ApplicationThemeForegroundColor"] = foreground;
         Resources["ApplicationThemeSurfaceBrush"] = GetThemeBrush(themeColors, "sideBar.background", dockPanel, surface);
+        Resources["ApplicationThemeSurfaceColor"] = surface;
+        Resources["ApplicationThemeHoverColor"] = GetBrushColor(itemHover, menuBackground);
         Resources["ApplicationThemeInputBrush"] = GetThemeBrush(themeColors, "input.background", dockEditor, inputBackground);
         Resources["ApplicationThemeSelectionBrush"] = GetThemeBrush(
             themeColors,
@@ -226,7 +230,11 @@ public class App : Application
             "editorHoverWidget.border",
             dockBorder,
             tooltipBorder);
-        Resources["ApplicationThemeFindInputBrush"] = dockEditor;
+        Resources["ApplicationThemeFindInputBrush"] = GetThemeBrush(
+            themeColors,
+            "input.background",
+            dockEditor,
+            inputBackground);
         Resources["SearchPanelBackgroundBrush"] = dockPanel;
         Resources["SearchPanelBorderBrush"] = dockBorder;
         Resources["PanelBackgroundBrush"] = GetThemeBrush(themeColors, "sideBar.background", dockPanel, surface);

@@ -120,8 +120,12 @@
 				</ResourceDictionary>
 			</ResourceDictionary.MergedDictionaries>
 			<SolidColorBrush x:Key="ApplicationThemeBackgroundBrush">#EFEFEF</SolidColorBrush>
+			<Color x:Key="ApplicationThemeBackgroundColor">#EFEFEF</Color>
 			<SolidColorBrush x:Key="ApplicationThemeForegroundBrush">#212121</SolidColorBrush>
+			<Color x:Key="ApplicationThemeForegroundColor">#212121</Color>
 			<SolidColorBrush x:Key="ApplicationThemeSurfaceBrush">#EFEFEF</SolidColorBrush>
+			<Color x:Key="ApplicationThemeSurfaceColor">#EFEFEF</Color>
+			<Color x:Key="ApplicationThemeHoverColor">#E5E5E5</Color>
 			<SolidColorBrush x:Key="ApplicationThemeInputBrush">#EFEFEF</SolidColorBrush>
 			<SolidColorBrush x:Key="ApplicationThemeSelectionBrush">#0078D4</SolidColorBrush>
 			<SolidColorBrush x:Key="ApplicationThemeSelectionForegroundBrush">#212121</SolidColorBrush>
@@ -212,6 +216,12 @@
 			<Setter Property="Foreground" Value="{DynamicResource ApplicationThemeForegroundBrush}" />
 		</Style>
 		<Style Selector="TextBox#PART_searchTextBox">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeFindInputBrush}" />
+		</Style>
+		<Style Selector="TextBox#PART_searchTextBox /template/ Border#PART_BorderElement, TextBox#PART_searchTextBox:pointerover /template/ Border#PART_BorderElement, TextBox#PART_searchTextBox:focus /template/ Border#PART_BorderElement">
+			<Setter Property="Background" Value="{DynamicResource ApplicationThemeFindInputBrush}" />
+		</Style>
+		<Style Selector="TextBox#PART_searchTextBox /template/ Border#border, TextBox#PART_searchTextBox:pointerover /template/ Border#border, TextBox#PART_searchTextBox:focus /template/ Border#border">
 			<Setter Property="Background" Value="{DynamicResource ApplicationThemeFindInputBrush}" />
 		</Style>
 		<Style Selector="ListBox">

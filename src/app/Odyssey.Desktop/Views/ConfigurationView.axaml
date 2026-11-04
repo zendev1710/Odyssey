@@ -7,5 +7,13 @@
         d:DesignHeight="450"
         d:DesignWidth="800"
         mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <SolidColorBrush x:Key="SystemChromeLowColor" Color="{DynamicResource ApplicationThemeBackgroundColor}" />
+            <SolidColorBrush x:Key="SystemChromeHighColor" Color="{DynamicResource ApplicationThemeForegroundColor}" />
+            <SolidColorBrush x:Key="SystemChromeMediumColor" Color="{DynamicResource ApplicationThemeSurfaceColor}" />
+            <SolidColorBrush x:Key="SystemChromeMediumLowColor" Color="{DynamicResource ApplicationThemeHoverColor}" />
+        </ResourceDictionary>
+    </UserControl.Resources>
     <controls:ConfigPage Name="ConfigPage" />
 </UserControl>
