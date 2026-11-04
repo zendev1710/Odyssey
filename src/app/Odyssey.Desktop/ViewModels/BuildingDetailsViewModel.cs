@@ -43,12 +43,9 @@ public partial class BuildingDetailsViewModel : StructureViewModel
         if (item is null)
             return;
 
-        //Block = selection.Item!.DataBlock;
         Region = selection.Region;
-        //StructureModel = selection.Item as StructureModel;
-
         BuildingModel? buildingModel = null;
-        if (!Report.FindBuilding(item.Id/*Block!.GetId()*/, out buildingModel))
+        if (!Report.FindBuilding(item.Id, out buildingModel))
         {
             return;
         }
@@ -57,7 +54,7 @@ public partial class BuildingDetailsViewModel : StructureViewModel
 
         DataProperty? property = null;
 
-        if (StructureModel!.CollectData(Report/*, selection?.Region*/, ref property))
+        if (StructureModel!.CollectData(Report, ref property))
         {
             OwnerName = StructureModel.OwnerName;
             OwnerUnit = StructureModel.OwnerUnit;

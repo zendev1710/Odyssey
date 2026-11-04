@@ -220,7 +220,7 @@ public partial class MapViewModel : DocumentToolViewModelBase/*, IRecipient<Cent
             _isUpdatingSelection = true;
             try
             {
-                SelectedRegion = selection.Region/*!.DataBlock as RegionDataBlock*/;
+                SelectedRegion = selection.Region;
             }
             finally
             {

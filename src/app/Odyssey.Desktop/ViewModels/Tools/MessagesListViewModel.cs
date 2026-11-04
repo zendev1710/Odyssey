@@ -34,9 +34,7 @@ public abstract partial class MessagesListViewModel : DocumentToolViewModelBase
     private void RevealInExplorer(MessageEntry? messageEntry)
     {
         EntityModel? item = messageEntry?.Selection?.GetDefaultTarget();
-        //DataBlock? item = messageEntry?.Selection?.GetDefaultTarget()?.DataBlock;
         RegionModel? region = messageEntry?.Selection?.Region;
-        //RegionDataBlock? region = messageEntry?.Selection?.Region?.DataBlock as RegionDataBlock;
         if (item != null || region != null)
         {
             IEntitySelection sel = new EntitySelection(item, region, null);

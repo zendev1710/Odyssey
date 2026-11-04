@@ -56,17 +56,15 @@ public partial class ShipDetailsViewModel : StructureViewModel
             return;
 
 
-        //Block = selection?.Item!.DataBlock;
-        //Region = selection?.Region!.DataBlock as RegionDataBlock;
         ShipModel? shipModel = null;
-        if (!Report.FindShip(item.Id/*Block!.GetId()*/, out shipModel))
+        if (!Report.FindShip(item.Id, out shipModel))
         {
             return;
         }
 
         StructureModel = shipModel;
         DataProperty? property = null;
-        if (StructureModel!.CollectData(Report/*, selection?.Region*/, ref property))
+        if (StructureModel!.CollectData(Report, ref property))
         {
             OwnerName = StructureModel.OwnerName;
             OwnerUnit = StructureModel.OwnerUnit;

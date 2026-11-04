@@ -57,7 +57,7 @@ public partial class StructureViewModel : ViewModelBase
     {
         EntityModel? entityModel = node?.Data?.Reference;
         //DataBlock? block = node?.Data?.Reference;
-        if (entityModel is not null /*&& CurrentSelection.Item!.DataBlock != block*/)
+        if (entityModel is not null)
         //if (block is not null && CurrentSelection.Item!.DataBlock != block)
         {
             // TODO: set selection to a ExplorerChildNodeSelection objet systematically
