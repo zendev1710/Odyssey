@@ -54,19 +54,19 @@
 				<Separator />
 
 				<MenuItem Header="{x:Static a:Lang.mainmenu_file_recent_files}" ItemsSource="{Binding RecentFiles}">
+					<MenuItem.ItemContainerTheme>
+						<ControlTheme TargetType="MenuItem"
+									  BasedOn="{StaticResource {x:Type MenuItem}}"
+									  x:DataType="x:String">
+							<Setter Property="Command" Value="{Binding #RootView.DataContext.OpenRecentFileCommand}" />
+							<Setter Property="CommandParameter" Value="{Binding}" />
+						</ControlTheme>
+					</MenuItem.ItemContainerTheme>
 					<MenuItem.ItemTemplate>
-						<DataTemplate>
-							<!-- On lie le texte au nom du fichier -->
-							<!-- Le Command est lié à une méthode dans votre ViewModel -->
-							<MenuItem Header="{Binding}"
-									Command="{Binding #RootView.DataContext.OpenRecentFileCommand}"
-									CommandParameter="{Binding}" />
+						<DataTemplate x:DataType="x:String">
+							<TextBlock Text="{Binding}" />
 						</DataTemplate>
 					</MenuItem.ItemTemplate>
-
-								<!--Command="{Binding OpenRecentFileCommand}"-->
-								<!--MenuItem Header="{Binding .}" Command="{Binding DataContext.OpenRecentFileCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding .}" /-->
-
 				</MenuItem>
 
 				<!--MenuItem Header="Recent Files" ItemsSource="{Binding RecentFiles}"-->
