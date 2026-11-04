@@ -124,13 +124,13 @@
 
   <ItemGroup>
     <PackageReference Include="AsyncImageLoader.Avalonia" Version="4.0.0" />
-	<PackageReference Include="Avalonia" Version="12.1.4" />
+	<PackageReference Include="Avalonia" Version="12.1.5" />
 	<PackageReference Include="Avalonia.AvaloniaEdit" Version="12.0.0" />
 	<PackageReference Include="Avalonia.Controls.DataGrid" Version="12.1.2" />
-	<PackageReference Include="Avalonia.Desktop" Version="12.1.4" />
-	<PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.4" />
-	<PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.4" />
-	<PackageReference Include="Avalonia.Themes.Simple" Version="12.1.4" />
+	<PackageReference Include="Avalonia.Desktop" Version="12.1.5" />
+	<PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.5" />
+	<PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.5" />
+	<PackageReference Include="Avalonia.Themes.Simple" Version="12.1.5" />
     <PackageReference Include="AvaloniaEdit.TextMate" Version="12.0.0" />
     <PackageReference Include="AvaloniaEdit.TextMate.Grammars" Version="0.10.12" />
     <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
@@ -155,8 +155,8 @@
     <PackageReference Include="Projektanker.Icons.Avalonia.FontAwesome" Version="9.6.2" />
     <PackageReference Include="Splat" Version="21.0.0" />
     <PackageReference Include="Svg.Skia" Version="5.2.3" />
-    <PackageReference Include="TextMateSharp" Version="2.0.4" />
-    <PackageReference Include="TextMateSharp.Grammars" Version="2.0.4" />
+    <PackageReference Include="TextMateSharp" Version="2.0.5" />
+    <PackageReference Include="TextMateSharp.Grammars" Version="2.0.5" />
     <PackageReference Include="WebView.Avalonia" Version="11.0.0.1" />
   </ItemGroup>
 
