@@ -16,60 +16,37 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: |
-            8.0.x
-            9.0.x
+          dotnet-version: 10.0.x
 
       - name: Restore dependencies
-        run: dotnet restore app/Odyssey.Desktop/Odyssey.csproj
+        run: dotnet restore src/app/Odyssey.Desktop/Odyssey.csproj
 
       - name: Set version from tag
         run: |
           $version = "${{ github.ref_name }}".TrimStart("v")
-          (Get-Content app/Odyssey.Desktop/Odyssey.csproj) -replace '<Version>.*</Version>', "<Version>$version</Version>" `
+          (Get-Content src/app/Odyssey.Desktop/Odyssey.csproj) -replace '<Version>.*</Version>', "<Version>$version</Version>" `
             -replace '<AssemblyVersion>.*</AssemblyVersion>', "<AssemblyVersion>$version.0</AssemblyVersion>" `
             -replace '<FileVersion>.*</FileVersion>', "<FileVersion>$version.0</FileVersion>" `
             -replace '<InformationalVersion>.*</InformationalVersion>', "<InformationalVersion>$version</InformationalVersion>" |
-            Set-Content app/Odyssey.Desktop/Odyssey.csproj
+            Set-Content src/app/Odyssey.Desktop/Odyssey.csproj
 
-      - name: Build for .NET 8.0
-        run: dotnet build app/Odyssey.Desktop/Odyssey.csproj --configuration Release -f net8.0
+      - name: Build for .NET 10.0
+        run: dotnet build src/app/Odyssey.Desktop/Odyssey.csproj --configuration Release
 
-      - name: Publish for .NET 8.0
-        run: dotnet publish app/Odyssey.Desktop/Odyssey.csproj --configuration Release -f net8.0 --output ./publish/net8.0
+      - name: Publish for Windows installer
+        run: dotnet publish src/app/Odyssey.Desktop/Odyssey.csproj --configuration Release --framework net10.0 --runtime win-x64 --self-contained true --output installer/publish/net10.0
 
-      - name: Build for .NET 9.0
-        run: dotnet build app/Odyssey.Desktop/Odyssey.csproj --configuration Release -f net9.0
-
-      - name: Publish for .NET 9.0
-        run: dotnet publish app/Odyssey.Desktop/Odyssey.csproj --configuration Release -f net9.0 --output ./publish/net9.0
-
-      - name: Zip .NET 8.0 published files
-        run: Compress-Archive -Path ./publish/net8.0/* -DestinationPath ./Odyssey-net8.0-${{ github.ref_name }}.zip
-
-      - name: Zip .NET 9.0 published files
-        run: Compress-Archive -Path ./publish/net9.0/* -DestinationPath ./Odyssey-net9.0-${{ github.ref_name }}.zip
-
-      - name: Install WiX Toolset
-        run: choco install wix --version=3.11.2 -y
+      - name: Zip published files
+        run: Compress-Archive -Path installer/publish/net10.0/* -DestinationPath Odyssey-net10.0-${{ github.ref_name }}.zip
 
       - name: Build MSI Installer
-        run: |
-          candle installer/OdysseyInstaller.wxs -out installer/OdysseyInstaller.wixobj
-          light installer/OdysseyInstaller.wixobj -out OdysseyInstaller.msi
+        run: dotnet build installer/OdysseySetup/OdysseySetup.wixproj --configuration Release
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            Odyssey-net8.0-${{ github.ref_name }}.zip
-            Odyssey-net9.0-${{ github.ref_name }}.zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload MSI to Release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: OdysseyInstaller.msi
+            Odyssey-net10.0-${{ github.ref_name }}.zip
+            installer/OdysseySetup/bin/Release/en-US/OdysseySetup.msi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

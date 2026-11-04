@@ -4,8 +4,9 @@
     <PackageReference Include="WixToolset.Util.wixext" Version="6.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\app\Odyssey.Desktop\Odyssey.csproj">
-      <TargetFrameworks>net8.0,net9.0</TargetFrameworks>
-    </ProjectReference>
+    <ProjectReference Include="..\..\src\app\Odyssey.Desktop\Odyssey.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="ComponentsForNet80.wxs;ComponentsForNet90.wxs" />
   </ItemGroup>
 </Project>
