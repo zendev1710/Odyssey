@@ -95,7 +95,6 @@ public class App : Application
         Theme initialTheme = (Theme)GlobalSettings.Get<int>(GlobalSettings.THEME);
         ApplicationThemeMode initialThemeMode = (ApplicationThemeMode)GlobalSettings.Get<int>(GlobalSettings.THEME_MODE);
 
-        // Note: Simple theme does not exist for ConfigFactory, so Settings view will not be styled when Simple theme is used
         SetThemes(initialTheme);
 
         ThemeModeManager.SetMode(initialThemeMode);
@@ -690,7 +689,7 @@ public class App : Application
     /// - Dock
     /// - DataGrid
     /// - AvaloniaEdit
-    /// - ConfigFactory (limitation: only Fluent theme is available for these controls)
+    /// - ConfigFactory (its ConfigItem template is shared by both application themes)
     /// </summary>
     /// <param name="theme"></param>
     public static void SetThemes(Theme theme)
@@ -724,7 +723,7 @@ public class App : Application
             app._themeStylesContainer[1] = app._dockSimple!;
             app._themeStylesContainer[2] = app._dataGridSimple!;
             app._themeStylesContainer[3] = app._avaloniaEditSimple!;
-            //app._themeStylesContainer[4] = app._configFactorySimple!;
+            app._themeStylesContainer[4] = app._configFactoryFluent!;
         }
 
         if (shouldReopenWindow)
