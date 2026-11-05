@@ -3196,8 +3196,19 @@
   </data>
   <data name="settings_global_display" xml:space="preserve"><value>Globale Anzeige</value></data>
   <data name="skills_display_title" xml:space="preserve"><value>Reihenfolge der Einheitsfertigkeiten</value></data>
-  <data name="skills_display_description" xml:space="preserve"><value>Legt die Sortierung der in den Einheitsdetails angezeigten Fertigkeiten fest.</value></data>
+  <data name="skills_display_description" xml:space="preserve"><value>Legt die Sortierung der angezeigten Fertigkeiten fest. Bei Gruppierung gilt diese Sortierung innerhalb jeder Kategorie.</value></data>
   <data name="skill_sort_mode_level" xml:space="preserve"><value>Stufe absteigend, dann alphabetisch</value></data>
   <data name="skill_sort_mode_alphabetical" xml:space="preserve"><value>Alphabetisch</value></data>
   <data name="skill_sort_mode_custom" xml:space="preserve"><value>Benutzerdefinierte Reihenfolge</value></data>
+  <data name="skills_group_by_category" xml:space="preserve"><value>Fertigkeiten nach Kategorie gruppieren</value></data>
+  <data name="skill_category_order_title" xml:space="preserve"><value>Kategorienreihenfolge</value></data>
+  <data name="skill_category_order_description" xml:space="preserve"><value>Bei Gruppierung werden die Kategorien in dieser Reihenfolge angezeigt.</value></data>
+  <data name="skill_category_reset_default" xml:space="preserve"><value>Standardreihenfolge wiederherstellen</value></data>
+  <data name="skill_order_title" xml:space="preserve"><value>Reihenfolge der Fertigkeiten</value></data>
+  <data name="skill_category_combat" xml:space="preserve"><value>Kampf</value></data>
+  <data name="skill_category_movement" xml:space="preserve"><value>Bewegung</value></data>
+  <data name="skill_category_production" xml:space="preserve"><value>Produktion</value></data>
+  <data name="skill_category_economy" xml:space="preserve"><value>Wirtschaft</value></data>
+  <data name="skill_category_magic" xml:space="preserve"><value>Magie</value></data>
+  <data name="skill_category_reconnaissance" xml:space="preserve"><value>Aufkl&#xE4;rung und verdeckte Operationen</value></data>
 </root>

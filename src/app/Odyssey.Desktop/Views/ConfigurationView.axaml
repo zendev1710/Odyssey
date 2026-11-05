@@ -28,19 +28,44 @@
                     <TextBlock x:Name="SkillSortDescription" TextWrapping="Wrap" />
                     <ComboBox ItemsSource="{Binding SkillSortModes}" SelectedIndex="{Binding Settings.UnitSkillSortMode, Mode=TwoWay}" HorizontalAlignment="Stretch" />
                 </StackPanel>
-                <Button x:Name="SortAlphabeticallyButton" Grid.Row="1" HorizontalAlignment="Left" Margin="0,12,0,8" Padding="10,5" Click="SortAlphabetically_Click" />
-                <ListBox Grid.Row="2" ItemsSource="{Binding SkillOrderItems}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate x:DataType="vm:SkillOrderItemViewModel">
-                            <Grid ColumnDefinitions="40,*,Auto,Auto" MinHeight="42">
-                                <asyncImageLoader:AdvancedImage Grid.Column="0" Width="32" Height="32" Source="{Binding IconPath}" VerticalAlignment="Center" />
-                                <TextBlock Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center" Margin="8,0" />
-                                <Button Grid.Column="2" Content="&#x2191;" Tag="move-up" Click="MoveSkill_Click" Margin="2" Padding="8,3" />
-                                <Button Grid.Column="3" Content="&#x2193;" Tag="move-down" Click="MoveSkill_Click" Margin="2" Padding="8,3" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                <CheckBox x:Name="GroupSkillsByCategoryCheckBox" Grid.Row="1" Margin="0,12,0,8"
+                          IsChecked="{Binding Settings.UnitSkillGroupByCategory, Mode=TwoWay}" />
+                <Grid Grid.Row="2" ColumnDefinitions="*,2*">
+                    <Grid Grid.Column="0" RowDefinitions="Auto,Auto,Auto,*" IsEnabled="{Binding Settings.UnitSkillGroupByCategory}" Margin="0,0,8,0">
+                        <TextBlock x:Name="CategoryOrderTitle" FontWeight="Bold" />
+                        <TextBlock x:Name="CategoryOrderDescription" Grid.Row="1" TextWrapping="Wrap" Margin="0,4,0,0" />
+                        <Button x:Name="RestoreCategoryOrderButton" Grid.Row="2" HorizontalAlignment="Left" Margin="0,8,0,8" Padding="10,5" Click="RestoreCategoryOrder_Click" />
+                        <ListBox Grid.Row="3" ItemsSource="{Binding SkillCategoryOrderItems}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate x:DataType="vm:SkillCategoryOrderItemViewModel">
+                                    <Grid ColumnDefinitions="*,Auto,Auto" MinHeight="42">
+                                        <TextBlock Grid.Column="0" Text="{Binding Name}" VerticalAlignment="Center" Margin="8,0" />
+                                        <Button Grid.Column="1" Content="&#x2191;" Tag="move-up" Click="MoveCategory_Click" Margin="2" Padding="8,3" />
+                                        <Button Grid.Column="2" Content="&#x2193;" Tag="move-down" Click="MoveCategory_Click" Margin="2" Padding="8,3" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                    <Grid Grid.Column="1" RowDefinitions="Auto,*">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBlock x:Name="SkillOrderTitle" FontWeight="Bold" VerticalAlignment="Center" />
+                            <Button x:Name="SortAlphabeticallyButton" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,0,8" Padding="10,5" Click="SortAlphabetically_Click" />
+                        </Grid>
+                        <ListBox Grid.Row="1" ItemsSource="{Binding SkillOrderItems}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate x:DataType="vm:SkillOrderItemViewModel">
+                                    <Grid ColumnDefinitions="40,*,Auto,Auto" MinHeight="42">
+                                        <asyncImageLoader:AdvancedImage Grid.Column="0" Width="32" Height="32" Source="{Binding IconPath}" VerticalAlignment="Center" />
+                                        <TextBlock Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center" Margin="8,0" />
+                                        <Button Grid.Column="2" Content="&#x2191;" Tag="move-up" Click="MoveSkill_Click" Margin="2" Padding="8,3" />
+                                        <Button Grid.Column="3" Content="&#x2193;" Tag="move-down" Click="MoveSkill_Click" Margin="2" Padding="8,3" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </Grid>
                 <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8" Margin="0,12,0,0">
                     <Button x:Name="CancelButton" Click="Cancel_Click" Padding="12,6" />
                     <Button x:Name="SaveButton" Click="Save_Click" Padding="12,6" />

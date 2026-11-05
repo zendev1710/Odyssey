@@ -124,7 +124,10 @@ public partial class UnitDetailsViewModel : ViewModelBase
 
     private void OnGlobalSettingChanged(object? sender, SettingChangedEventArgs e)
     {
-        if (e.SettingName is GlobalSettings.UNIT_SKILL_SORT_MODE or GlobalSettings.UNIT_SKILL_CUSTOM_ORDER)
+        if (e.SettingName is GlobalSettings.UNIT_SKILL_SORT_MODE
+            or GlobalSettings.UNIT_SKILL_CUSTOM_ORDER
+            or GlobalSettings.UNIT_SKILL_GROUP_BY_CATEGORY
+            or GlobalSettings.UNIT_SKILL_CATEGORY_ORDER)
         {
             SortSkillItems();
         }
@@ -133,13 +136,23 @@ public partial class UnitDetailsViewModel : ViewModelBase
     private void SortSkillItems()
     {
         int sortMode = GlobalSettings.Get<int>(GlobalSettings.UNIT_SKILL_SORT_MODE);
-        IOrderedEnumerable<UnitSkillViewModel> sortedItems;
+        bool groupByCategory = GlobalSettings.Get<bool>(GlobalSettings.UNIT_SKILL_GROUP_BY_CATEGORY);
+        string[] categoryOrder = SkillCategoryCatalog.NormalizeCategoryOrder(
+            (GlobalSettings.Get<string>(GlobalSettings.UNIT_SKILL_CATEGORY_ORDER) ?? string.Empty)
+                .Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries));
+        Dictionary<string, int> categoryOrderIndexes = categoryOrder
+            .Select((key, index) => new { key, index })
+            .ToDictionary(item => item.key, item => item.index, StringComparer.Ordinal);
+        IOrderedEnumerable<UnitSkillViewModel> sortedItems = SkillItems
+            .OrderBy(item => groupByCategory
+                ? SkillCategoryCatalog.GetCategoryOrderIndex(item.Key, categoryOrderIndexes)
+                : 0);
         StringComparer nameComparer = StringComparer.CurrentCultureIgnoreCase;
 
         if (sortMode == 1)
         {
-            sortedItems = SkillItems
-                .OrderBy(item => Labels.Localize(Categories.Skill, item.Key), nameComparer)
+            sortedItems = sortedItems
+                .ThenBy(item => Labels.Localize(Categories.Skill, item.Key), nameComparer)
                 .ThenBy(item => item.Key, StringComparer.Ordinal);
         }
         else if (sortMode == 2)
@@ -151,15 +164,15 @@ public partial class UnitDetailsViewModel : ViewModelBase
                 .Select((key, index) => new { key, index })
                 .ToDictionary(item => item.key, item => item.index, StringComparer.Ordinal);
 
-            sortedItems = SkillItems
-                .OrderBy(item => orderIndexes.TryGetValue(item.Key, out int index) ? index : int.MaxValue)
+            sortedItems = sortedItems
+                .ThenBy(item => orderIndexes.TryGetValue(item.Key, out int index) ? index : int.MaxValue)
                 .ThenBy(item => Labels.Localize(Categories.Skill, item.Key), nameComparer)
                 .ThenBy(item => item.Key, StringComparer.Ordinal);
         }
         else
         {
-            sortedItems = SkillItems
-                .OrderByDescending(item => item.Level)
+            sortedItems = sortedItems
+                .ThenByDescending(item => item.Level)
                 .ThenBy(item => Labels.Localize(Categories.Skill, item.Key), nameComparer)
                 .ThenBy(item => item.Key, StringComparer.Ordinal);
         }

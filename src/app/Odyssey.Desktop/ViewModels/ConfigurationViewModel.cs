@@ -12,21 +12,13 @@ namespace Odyssey.ViewModels
 {
     public partial class ConfigurationViewModel : ClientAreaDockBase
     {
-        private static readonly string[] SkillKeys =
-        [
-            "Alchemie", "Armbrustschießen", "Ausdauer", "Bergbau", "Bogenschießen", "Burgenbau",
-            "Handeln", "Hiebwaffen", "Holzfällen", "Katapultbedienung", "Kräuterkunde", "Magie",
-            "Pferdedressur", "Reiten", "Rüstungsbau", "Schiffbau", "Segeln", "Spionage",
-            "Stangenwaffen", "Steinbau", "Steuereintreiben", "Straßenbau", "Taktik", "Tarnung",
-            "Unterhaltung", "Waffenbau", "WaffenloserKampf", "Wagenbau", "Wahrnehmung"
-        ];
-
         [ObservableProperty]
         private ConfigPageModel _configPageModel;
 
         public GlobalSettings Settings { get; }
         public ObservableCollection<string> SkillSortModes { get; } = new();
         public ObservableCollection<SkillOrderItemViewModel> SkillOrderItems { get; } = new();
+        public ObservableCollection<SkillCategoryOrderItemViewModel> SkillCategoryOrderItems { get; } = new();
 
         public ConfigurationViewModel(IDocumentService? documentService = null) : base(documentService)
         {
@@ -38,18 +30,19 @@ namespace Odyssey.ViewModels
             SkillSortModes.Add(Labels.Localize("skill_sort_mode_alphabetical"));
             SkillSortModes.Add(Labels.Localize("skill_sort_mode_custom"));
             LoadSkillOrder();
+            LoadCategoryOrder();
         }
 
         private void LoadSkillOrder()
         {
             string[] savedKeys = Settings.UnitSkillCustomOrder
                 .Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-            HashSet<string> knownKeys = new(SkillKeys, StringComparer.Ordinal);
+            HashSet<string> knownKeys = new(SkillCategoryCatalog.SkillKeys, StringComparer.Ordinal);
             List<string> orderedKeys = savedKeys
                 .Where(knownKeys.Contains)
                 .Distinct(StringComparer.Ordinal)
                 .ToList();
-            orderedKeys.AddRange(SkillKeys.Where(key => !orderedKeys.Contains(key, StringComparer.Ordinal)));
+            orderedKeys.AddRange(SkillCategoryCatalog.SkillKeys.Where(key => !orderedKeys.Contains(key, StringComparer.Ordinal)));
 
             foreach (string key in orderedKeys)
             {
@@ -65,6 +58,20 @@ namespace Odyssey.ViewModels
                 SortSkillOrderItemsAlphabetically();
             }
             SaveSkillOrder();
+        }
+
+        private void LoadCategoryOrder()
+        {
+            string[] savedKeys = (Settings.UnitSkillCategoryOrder ?? string.Empty)
+                .Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            string[] orderedKeys = SkillCategoryCatalog.NormalizeCategoryOrder(savedKeys);
+
+            foreach (string key in orderedKeys)
+            {
+                SkillCategoryOrderItems.Add(new SkillCategoryOrderItemViewModel(key));
+            }
+
+            SaveCategoryOrder();
         }
 
         private void LoadSkillOrder(string[] orderedKeys)
@@ -88,6 +95,10 @@ namespace Odyssey.ViewModels
 
         public void MoveSkillDown(SkillOrderItemViewModel? item) => MoveSkill(item, 1);
 
+        public void MoveCategoryUp(SkillCategoryOrderItemViewModel? item) => MoveCategory(item, -1);
+
+        public void MoveCategoryDown(SkillCategoryOrderItemViewModel? item) => MoveCategory(item, 1);
+
         private void MoveSkill(SkillOrderItemViewModel? item, int offset)
         {
             int currentIndex = item is null ? -1 : SkillOrderItems.IndexOf(item);
@@ -101,6 +112,19 @@ namespace Odyssey.ViewModels
             SaveSkillOrder();
         }
 
+        private void MoveCategory(SkillCategoryOrderItemViewModel? item, int offset)
+        {
+            int currentIndex = item is null ? -1 : SkillCategoryOrderItems.IndexOf(item);
+            int targetIndex = currentIndex + offset;
+            if (currentIndex < 0 || targetIndex < 0 || targetIndex >= SkillCategoryOrderItems.Count)
+            {
+                return;
+            }
+
+            SkillCategoryOrderItems.Move(currentIndex, targetIndex);
+            SaveCategoryOrder();
+        }
+
         public void SortSkillsAlphabetically()
         {
             SortSkillOrderItemsAlphabetically();
@@ -108,6 +132,16 @@ namespace Odyssey.ViewModels
             {
                 SaveSkillOrder();
             }
+        }
+
+        public void RestoreDefaultCategoryOrder()
+        {
+            SkillCategoryOrderItems.Clear();
+            foreach (string key in SkillCategoryCatalog.DefaultCategoryOrder)
+            {
+                SkillCategoryOrderItems.Add(new SkillCategoryOrderItemViewModel(key));
+            }
+            SaveCategoryOrder();
         }
 
         private void SortSkillOrderItemsAlphabetically()
@@ -128,6 +162,11 @@ namespace Odyssey.ViewModels
             Settings.UnitSkillCustomOrder = string.Join('|', SkillOrderItems.Select(item => item.Key));
         }
 
+        private void SaveCategoryOrder()
+        {
+            Settings.UnitSkillCategoryOrder = string.Join('|', SkillCategoryOrderItems.Select(item => item.Key));
+        }
+
         public void SaveAndClose()
         {
             Settings.Save();
@@ -136,6 +175,10 @@ namespace Odyssey.ViewModels
         public void CancelAndClose()
         {
             Settings.Reset();
+            SkillOrderItems.Clear();
+            SkillCategoryOrderItems.Clear();
+            LoadSkillOrder();
+            LoadCategoryOrder();
             GoBackToWorkspace();
         }
 

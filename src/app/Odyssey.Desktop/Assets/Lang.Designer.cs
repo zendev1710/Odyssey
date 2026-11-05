@@ -8948,6 +8948,96 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Combat.
+        /// </summary>
+        public static string skill_category_combat {
+            get {
+                return ResourceManager.GetString("skill_category_combat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Economy.
+        /// </summary>
+        public static string skill_category_economy {
+            get {
+                return ResourceManager.GetString("skill_category_economy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Magic.
+        /// </summary>
+        public static string skill_category_magic {
+            get {
+                return ResourceManager.GetString("skill_category_magic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Movement.
+        /// </summary>
+        public static string skill_category_movement {
+            get {
+                return ResourceManager.GetString("skill_category_movement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Categories are displayed in this order when grouping is enabled..
+        /// </summary>
+        public static string skill_category_order_description {
+            get {
+                return ResourceManager.GetString("skill_category_order_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category order.
+        /// </summary>
+        public static string skill_category_order_title {
+            get {
+                return ResourceManager.GetString("skill_category_order_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Production.
+        /// </summary>
+        public static string skill_category_production {
+            get {
+                return ResourceManager.GetString("skill_category_production", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reconnaissance &amp; covert operations.
+        /// </summary>
+        public static string skill_category_reconnaissance {
+            get {
+                return ResourceManager.GetString("skill_category_reconnaissance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore default order.
+        /// </summary>
+        public static string skill_category_reset_default {
+            get {
+                return ResourceManager.GetString("skill_category_reset_default", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skill order.
+        /// </summary>
+        public static string skill_order_title {
+            get {
+                return ResourceManager.GetString("skill_order_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alphabetical.
         /// </summary>
         public static string skill_sort_mode_alphabetical {
@@ -8975,7 +9065,7 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose how the skills shown in unit details are sorted..
+        ///   Looks up a localized string similar to Choose the skill sorting order. When grouping is enabled, this order applies within each category..
         /// </summary>
         public static string skills_display_description {
             get {
@@ -8989,6 +9079,15 @@ namespace Odyssey.Assets {
         public static string skills_display_title {
             get {
                 return ResourceManager.GetString("skills_display_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Group skills by category.
+        /// </summary>
+        public static string skills_group_by_category {
+            get {
+                return ResourceManager.GetString("skills_group_by_category", resourceCulture);
             }
         }
         

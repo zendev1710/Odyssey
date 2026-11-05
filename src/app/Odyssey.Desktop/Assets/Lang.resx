@@ -3186,8 +3186,19 @@
   </data>
   <data name="settings_global_display" xml:space="preserve"><value>Global display</value></data>
   <data name="skills_display_title" xml:space="preserve"><value>Unit skill display order</value></data>
-  <data name="skills_display_description" xml:space="preserve"><value>Choose how the skills shown in unit details are sorted.</value></data>
+  <data name="skills_display_description" xml:space="preserve"><value>Choose the skill sorting order. When grouping is enabled, this order applies within each category.</value></data>
   <data name="skill_sort_mode_level" xml:space="preserve"><value>Level, descending; then alphabetical</value></data>
   <data name="skill_sort_mode_alphabetical" xml:space="preserve"><value>Alphabetical</value></data>
   <data name="skill_sort_mode_custom" xml:space="preserve"><value>Custom order</value></data>
+  <data name="skills_group_by_category" xml:space="preserve"><value>Group skills by category</value></data>
+  <data name="skill_category_order_title" xml:space="preserve"><value>Category order</value></data>
+  <data name="skill_category_order_description" xml:space="preserve"><value>Categories are displayed in this order when grouping is enabled.</value></data>
+  <data name="skill_category_reset_default" xml:space="preserve"><value>Restore default order</value></data>
+  <data name="skill_order_title" xml:space="preserve"><value>Skill order</value></data>
+  <data name="skill_category_combat" xml:space="preserve"><value>Combat</value></data>
+  <data name="skill_category_movement" xml:space="preserve"><value>Movement</value></data>
+  <data name="skill_category_production" xml:space="preserve"><value>Production</value></data>
+  <data name="skill_category_economy" xml:space="preserve"><value>Economy</value></data>
+  <data name="skill_category_magic" xml:space="preserve"><value>Magic</value></data>
+  <data name="skill_category_reconnaissance" xml:space="preserve"><value>Reconnaissance &amp; covert operations</value></data>
 </root>

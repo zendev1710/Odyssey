@@ -92,6 +92,14 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
     public const string MAP_REGION_NAME_BANNER = "RegionNameBanner";
     public const string UNIT_SKILL_SORT_MODE = "UnitSkillSortMode";
     public const string UNIT_SKILL_CUSTOM_ORDER = "UnitSkillCustomOrder";
+    public const string UNIT_SKILL_GROUP_BY_CATEGORY = "UnitSkillGroupByCategory";
+    public const string UNIT_SKILL_CATEGORY_ORDER = "UnitSkillCategoryOrder";
+
+    [ObservableProperty]
+    private bool _unitSkillGroupByCategory;
+
+    [ObservableProperty]
+    private string _unitSkillCategoryOrder = string.Empty;
 
     public const string HIDE_IN_PROGRESS_FEATURES = "HideInProgressFeatures";
 
