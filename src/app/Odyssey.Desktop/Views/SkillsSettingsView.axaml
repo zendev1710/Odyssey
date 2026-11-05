@@ -1,0 +1,42 @@
+<UserControl x:Class="Odyssey.Views.SkillsSettingsView"
+        xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+        xmlns:vm="using:Odyssey.ViewModels"
+        x:DataType="vm:ConfigurationViewModel">
+    <StackPanel x:Name="SettingsPanels" Spacing="8">
+        <StackPanel x:Name="SkillSortPanel" Spacing="8">
+            <ComboBox ItemsSource="{Binding SkillSortModes}" SelectedIndex="{Binding Settings.UnitSkillSortMode, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+            <CheckBox x:Name="GroupSkillsByCategoryCheckBox" IsChecked="{Binding Settings.UnitSkillGroupByCategory, Mode=TwoWay}" />
+        </StackPanel>
+        <Grid x:Name="CategoryOrderPanel" RowDefinitions="Auto,*" IsEnabled="{Binding Settings.UnitSkillGroupByCategory}" MinHeight="280">
+            <Button x:Name="RestoreCategoryOrderButton" HorizontalAlignment="Left" Margin="0,0,0,8" Padding="10,5" Click="RestoreCategoryOrder_Click" />
+            <ListBox Grid.Row="1" ItemsSource="{Binding SkillCategoryOrderItems}" Height="240">
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="vm:SkillCategoryOrderItemViewModel">
+                        <Grid ColumnDefinitions="*,Auto,Auto" MinHeight="42">
+                            <TextBlock Grid.Column="0" Text="{Binding Name}" VerticalAlignment="Center" Margin="8,0" />
+                            <Button Grid.Column="1" Content="&#x2191;" Tag="move-up" Click="MoveCategory_Click" Margin="2" Padding="8,3" />
+                            <Button Grid.Column="2" Content="&#x2193;" Tag="move-down" Click="MoveCategory_Click" Margin="2" Padding="8,3" />
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+        <Grid x:Name="SkillOrderPanel" RowDefinitions="Auto,*" MinHeight="420">
+            <Button x:Name="SortAlphabeticallyButton" HorizontalAlignment="Right" Margin="0,0,0,8" Padding="10,5" Click="SortAlphabetically_Click" />
+            <ListBox Grid.Row="1" ItemsSource="{Binding SkillOrderItems}" Height="360">
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="vm:SkillOrderItemViewModel">
+                        <Grid ColumnDefinitions="40,*,Auto,Auto" MinHeight="42">
+                            <asyncImageLoader:AdvancedImage Grid.Column="0" Width="32" Height="32" Source="{Binding IconPath}" VerticalAlignment="Center" />
+                            <TextBlock Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center" Margin="8,0" />
+                            <Button Grid.Column="2" Content="&#x2191;" Tag="move-up" Click="MoveSkill_Click" Margin="2" Padding="8,3" />
+                            <Button Grid.Column="3" Content="&#x2193;" Tag="move-down" Click="MoveSkill_Click" Margin="2" Padding="8,3" />
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+    </StackPanel>
+    </UserControl>

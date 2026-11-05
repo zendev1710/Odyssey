@@ -165,6 +165,7 @@ public partial class UnitViewModel : ObservableObject
                     int.TryParse(property.Value, out int level) ? level : 0,
                     property.Change));
             }
+            SortSkillItems();
         }
 
         properties = [];
@@ -190,6 +191,8 @@ public partial class UnitViewModel : ObservableObject
             }
         }
     }
+
+    public void SortSkillItems() => UnitSkillSorter.Sort(SkillItems);
 
     public override string ToString() => $"{Name} ({Id})";
 }

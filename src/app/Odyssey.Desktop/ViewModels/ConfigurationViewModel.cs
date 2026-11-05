@@ -175,11 +175,16 @@ namespace Odyssey.ViewModels
         public void CancelAndClose()
         {
             Settings.Reset();
+            ReloadSkillSortingSettings();
+            GoBackToWorkspace();
+        }
+
+        public void ReloadSkillSortingSettings()
+        {
             SkillOrderItems.Clear();
             SkillCategoryOrderItems.Clear();
             LoadSkillOrder();
             LoadCategoryOrder();
-            GoBackToWorkspace();
         }
 
         private void _configPageModelPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)

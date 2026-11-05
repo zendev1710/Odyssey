@@ -2859,6 +2859,12 @@
   <data name="parm_inf_echeck_program" xml:space="preserve">
     <value>Wählen Sie die ausführbare Datei des ECheck Programms</value>
   </data>
+  <data name="parm_hdr_bookmarks_folder" xml:space="preserve">
+    <value>Lesezeichenordner</value>
+  </data>
+  <data name="parm_inf_bookmarks_folder" xml:space="preserve">
+    <value>Ordner zum Speichern und Laden von Lesezeichendateien</value>
+  </data>
   <data name="parm_cat_game" xml:space="preserve">
     <value>Spiel</value>
   </data>
@@ -3195,6 +3201,7 @@
     <value>{0}: Stufe {1} (um {2} gesunken)</value>
   </data>
   <data name="settings_global_display" xml:space="preserve"><value>Globale Anzeige</value></data>
+  <data name="settings_skills" xml:space="preserve"><value>Fertigkeiten</value></data>
   <data name="skills_display_title" xml:space="preserve"><value>Reihenfolge der Einheitsfertigkeiten</value></data>
   <data name="skills_display_description" xml:space="preserve"><value>Legt die Sortierung der angezeigten Fertigkeiten fest. Bei Gruppierung gilt diese Sortierung innerhalb jeder Kategorie.</value></data>
   <data name="skill_sort_mode_level" xml:space="preserve"><value>Stufe absteigend, dann alphabetisch</value></data>

@@ -2853,6 +2853,12 @@
   <data name="parm_inf_echeck_program" xml:space="preserve">
     <value>Select the ECheck program executable file</value>
   </data>
+  <data name="parm_hdr_bookmarks_folder" xml:space="preserve">
+    <value>Bookmarks folder</value>
+  </data>
+  <data name="parm_inf_bookmarks_folder" xml:space="preserve">
+    <value>Folder used to store and load bookmark files</value>
+  </data>
   <data name="parm_cat_game" xml:space="preserve">
     <value>Game</value>
   </data>
@@ -3185,6 +3191,7 @@
     <value>{0}: level {1} (decreased by {2})</value>
   </data>
   <data name="settings_global_display" xml:space="preserve"><value>Global display</value></data>
+  <data name="settings_skills" xml:space="preserve"><value>Skills</value></data>
   <data name="skills_display_title" xml:space="preserve"><value>Unit skill display order</value></data>
   <data name="skills_display_description" xml:space="preserve"><value>Choose the skill sorting order. When grouping is enabled, this order applies within each category.</value></data>
   <data name="skill_sort_mode_level" xml:space="preserve"><value>Level, descending; then alphabetical</value></data>

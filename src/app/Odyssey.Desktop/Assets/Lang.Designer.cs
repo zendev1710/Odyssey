@@ -3256,6 +3256,15 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bookmarks folder.
+        /// </summary>
+        public static string parm_hdr_bookmarks_folder {
+            get {
+                return ResourceManager.GetString("parm_hdr_bookmarks_folder", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to ECheck program.
         /// </summary>
         public static string parm_hdr_echeck_program {
@@ -3498,6 +3507,15 @@ namespace Odyssey.Assets {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Folder used to store and load bookmark files.
+        /// </summary>
+        public static string parm_inf_bookmarks_folder {
+            get {
+                return ResourceManager.GetString("parm_inf_bookmarks_folder", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Select the ECheck program executable file.
         /// </summary>
@@ -8938,6 +8956,15 @@ namespace Odyssey.Assets {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Skills.
+        /// </summary>
+        public static string settings_skills {
+            get {
+                return ResourceManager.GetString("settings_skills", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Damage: {0} %.
         /// </summary>

@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using Odyssey.Models;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Tools;
+using Odyssey.Settings;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -34,6 +35,21 @@ public partial class UnitStripViewModel : DocumentToolViewModelBase
 
     public UnitStripViewModel() : base()
     {
+        GlobalSettings.Shared.SettingChanged += OnGlobalSettingChanged;
+    }
+
+    private void OnGlobalSettingChanged(object? sender, SettingChangedEventArgs e)
+    {
+        if (e.SettingName is GlobalSettings.UNIT_SKILL_SORT_MODE
+            or GlobalSettings.UNIT_SKILL_CUSTOM_ORDER
+            or GlobalSettings.UNIT_SKILL_GROUP_BY_CATEGORY
+            or GlobalSettings.UNIT_SKILL_CATEGORY_ORDER)
+        {
+            foreach (UnitViewModel unit in Units)
+            {
+                unit.SortSkillItems();
+            }
+        }
     }
 
     protected override void OnActiveDocumentChanged(CRDocument report)

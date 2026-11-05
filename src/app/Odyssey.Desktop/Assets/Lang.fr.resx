@@ -2859,6 +2859,12 @@
   <data name="parm_inf_echeck_program" xml:space="preserve">
     <value>Sélectionner le fichier exécutable du programme ECheck</value>
   </data>
+  <data name="parm_hdr_bookmarks_folder" xml:space="preserve">
+    <value>Dossier des signets</value>
+  </data>
+  <data name="parm_inf_bookmarks_folder" xml:space="preserve">
+    <value>Dossier utilisé pour enregistrer et charger les fichiers de signets</value>
+  </data>
   <data name="parm_cat_game" xml:space="preserve">
     <value>Jeu</value>
   </data>
@@ -3197,6 +3203,7 @@
     <value>{0} : niveau {1} (diminution de {2})</value>
   </data>
   <data name="settings_global_display" xml:space="preserve"><value>Affichage global</value></data>
+  <data name="settings_skills" xml:space="preserve"><value>Compétences</value></data>
   <data name="skills_display_title" xml:space="preserve"><value>Ordre des comp&#xE9;tences des unit&#xE9;s</value></data>
   <data name="skills_display_description" xml:space="preserve"><value>Choisissez le tri des comp&#xE9;tences affich&#xE9;es. Avec le regroupement par cat&#xE9;gorie, ce tri s'applique dans chaque cat&#xE9;gorie.</value></data>
   <data name="skill_sort_mode_level" xml:space="preserve"><value>Niveau d&#xE9;croissant, puis ordre alphab&#xE9;tique</value></data>
