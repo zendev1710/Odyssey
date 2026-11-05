@@ -211,7 +211,7 @@
     <value>unarmed combat</value>
   </data>
   <data name="rules_skill_Wagenbau" xml:space="preserve">
-    <value>Wagenbau</value>
+    <value>Cartmaking</value>
   </data>
   <data name="rules_skill_Wahrnehmung" xml:space="preserve">
     <value>perception</value>
@@ -3184,4 +3184,10 @@
   <data name="unit_skill_tooltip_decreased" xml:space="preserve">
     <value>{0}: level {1} (decreased by {2})</value>
   </data>
+  <data name="settings_global_display" xml:space="preserve"><value>Global display</value></data>
+  <data name="skills_display_title" xml:space="preserve"><value>Unit skill display order</value></data>
+  <data name="skills_display_description" xml:space="preserve"><value>Choose how the skills shown in unit details are sorted.</value></data>
+  <data name="skill_sort_mode_level" xml:space="preserve"><value>Level, descending; then alphabetical</value></data>
+  <data name="skill_sort_mode_alphabetical" xml:space="preserve"><value>Alphabetical</value></data>
+  <data name="skill_sort_mode_custom" xml:space="preserve"><value>Custom order</value></data>
 </root>

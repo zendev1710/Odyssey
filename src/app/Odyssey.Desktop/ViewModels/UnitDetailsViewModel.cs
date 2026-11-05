@@ -4,10 +4,13 @@ using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Localization;
 using Odyssey.Models.Tools;
+using Odyssey.Settings;
 using Odyssey.ViewModels.Tools;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using static Odyssey.Models.Tools.DataProperty;
 using static Odyssey.Models.Tools.UnitModel;
 using static Odyssey.Utils.Converters;
@@ -98,6 +101,7 @@ public partial class UnitDetailsViewModel : ViewModelBase
     public UnitDetailsViewModel() : base(Ids.UnitDetails)
     {
         Items = Root.Children;
+        GlobalSettings.Shared.SettingChanged += OnGlobalSettingChanged;
 
         _description = string.Empty;
         _name = string.Empty;
@@ -116,6 +120,56 @@ public partial class UnitDetailsViewModel : ViewModelBase
         _hungry = string.Empty;
         _combatStatus = string.Empty;
         _guards = string.Empty;
+    }
+
+    private void OnGlobalSettingChanged(object? sender, SettingChangedEventArgs e)
+    {
+        if (e.SettingName is GlobalSettings.UNIT_SKILL_SORT_MODE or GlobalSettings.UNIT_SKILL_CUSTOM_ORDER)
+        {
+            SortSkillItems();
+        }
+    }
+
+    private void SortSkillItems()
+    {
+        int sortMode = GlobalSettings.Get<int>(GlobalSettings.UNIT_SKILL_SORT_MODE);
+        IOrderedEnumerable<UnitSkillViewModel> sortedItems;
+        StringComparer nameComparer = StringComparer.CurrentCultureIgnoreCase;
+
+        if (sortMode == 1)
+        {
+            sortedItems = SkillItems
+                .OrderBy(item => Labels.Localize(Categories.Skill, item.Key), nameComparer)
+                .ThenBy(item => item.Key, StringComparer.Ordinal);
+        }
+        else if (sortMode == 2)
+        {
+            string[] customOrder = GlobalSettings.Get<string>(GlobalSettings.UNIT_SKILL_CUSTOM_ORDER)
+                .Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            Dictionary<string, int> orderIndexes = customOrder
+                .Distinct(StringComparer.Ordinal)
+                .Select((key, index) => new { key, index })
+                .ToDictionary(item => item.key, item => item.index, StringComparer.Ordinal);
+
+            sortedItems = SkillItems
+                .OrderBy(item => orderIndexes.TryGetValue(item.Key, out int index) ? index : int.MaxValue)
+                .ThenBy(item => Labels.Localize(Categories.Skill, item.Key), nameComparer)
+                .ThenBy(item => item.Key, StringComparer.Ordinal);
+        }
+        else
+        {
+            sortedItems = SkillItems
+                .OrderByDescending(item => item.Level)
+                .ThenBy(item => Labels.Localize(Categories.Skill, item.Key), nameComparer)
+                .ThenBy(item => item.Key, StringComparer.Ordinal);
+        }
+
+        UnitSkillViewModel[] orderedItems = sortedItems.ToArray();
+        SkillItems.Clear();
+        foreach (UnitSkillViewModel item in orderedItems)
+        {
+            SkillItems.Add(item);
+        }
     }
 
     protected override void OnSelectionChanged(IEntitySelection selection, SelectionChangeTypes selType, object? sender)
@@ -426,6 +480,7 @@ public partial class UnitDetailsViewModel : ViewModelBase
             {
                 SkillItems.Add(new UnitSkillViewModel(sp.Name, sp.Label, int.TryParse(sp.Value, out int level) ? level : 0, sp.Change));
             }
+            SortSkillItems();
         }
 
         ////////

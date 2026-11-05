@@ -1,5 +1,37 @@
 # SPECIFICATIONS
 
+## Skills
+
+- Alchemy
+- Armoursmithing
+- Bow
+- Cartmaking
+- Catapult
+- Crossbow
+- Endurance
+- Entertainment
+- Espionage
+- Forestry
+- Herbalism
+- Magic
+- Masonry
+- Melee
+- Mining
+- Perception
+- Polearm
+- Quarrying
+- Riding
+- Roadwork
+- Sailing
+- Shipcraft
+- Stealth
+- Tactics
+- Taming
+- Taxation
+- Trade
+- Unarmed combat
+- Weaponsmithing
+
 ## Keyboards shortcuts
 
 - F11: toggle fullscreen

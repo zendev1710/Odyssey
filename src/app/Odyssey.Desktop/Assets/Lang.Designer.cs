@@ -3128,7 +3128,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("opt_confirmed_orders_tip", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unconfirmed only.
         /// </summary>
@@ -3137,7 +3137,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("opt_navigate_unconfirmed_only", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unconfirmed only: when enabled, Previous/Next navigates only to units with unconfirmed orders..
         /// </summary>
@@ -3146,7 +3146,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("opt_navigate_unconfirmed_only_tip", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
@@ -3290,7 +3290,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("parm_hdr_explorer_region_order", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Select the active region when opening report.
         /// </summary>
@@ -3308,7 +3308,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("parm_hdr_explorer_unit_order", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to In-progress features hidden.
         /// </summary>
@@ -3470,7 +3470,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("parm_hdr_unit_orders_dark_theme", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Application color theme (light mode).
         /// </summary>
@@ -3479,7 +3479,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("parm_hdr_unit_orders_light_theme", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Navigate directly to editable units.
         /// </summary>
@@ -3488,7 +3488,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("parm_hdr_unit_orders_navigate_editable_only", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Navigate only to units with unconfirmed orders.
         /// </summary>
@@ -3497,7 +3497,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("parm_hdr_unit_orders_navigate_unconfirmed_only", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Select the ECheck program executable file.
         /// </summary>
@@ -3533,7 +3533,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("parm_inf_explorer_region_order", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The active region is the one selected at the last report closing. If disabled, the (0,0 region will be selected.
         /// </summary>
@@ -3551,7 +3551,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("parm_inf_explorer_unit_order", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Hide in-progress features (taken into accoun after app restart).
         /// </summary>
@@ -3713,7 +3713,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("parm_inf_unit_orders_dark_theme", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Color theme used across the application in light mode..
         /// </summary>
@@ -3722,7 +3722,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("parm_inf_unit_orders_light_theme", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Previous/Next skips units without an editable orders block. Enabled by default..
         /// </summary>
@@ -3731,7 +3731,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("parm_inf_unit_orders_navigate_editable_only", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to When enabled, Previous/Next skips units whose orders are confirmed. Disabled by default..
         /// </summary>
@@ -3740,7 +3740,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("parm_inf_unit_orders_navigate_unconfirmed_only", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to None.
         /// </summary>
@@ -3803,7 +3803,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("parm_key_explorer_region_order_coordinates", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Island name (alphabetical).
         /// </summary>
@@ -3812,7 +3812,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("parm_key_explorer_region_order_island", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to None (report order).
         /// </summary>
@@ -3821,7 +3821,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("parm_key_explorer_region_order_report", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
@@ -3830,7 +3830,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("parm_key_explorer_unit_order_name", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Report order.
         /// </summary>
@@ -3839,7 +3839,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("parm_key_explorer_unit_order_report", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Best skill level.
         /// </summary>
@@ -3848,7 +3848,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("parm_key_explorer_unit_order_skill", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to English.
         /// </summary>
@@ -6064,7 +6064,7 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wagenbau.
+        ///   Looks up a localized string similar to Cartmaking.
         /// </summary>
         public static string rules_skill_Wagenbau {
             get {
@@ -8930,11 +8930,65 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Global display.
+        /// </summary>
+        public static string settings_global_display {
+            get {
+                return ResourceManager.GetString("settings_global_display", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Damage: {0} %.
         /// </summary>
         public static string ship_damage {
             get {
                 return ResourceManager.GetString("ship_damage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alphabetical.
+        /// </summary>
+        public static string skill_sort_mode_alphabetical {
+            get {
+                return ResourceManager.GetString("skill_sort_mode_alphabetical", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom order.
+        /// </summary>
+        public static string skill_sort_mode_custom {
+            get {
+                return ResourceManager.GetString("skill_sort_mode_custom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Level, descending; then alphabetical.
+        /// </summary>
+        public static string skill_sort_mode_level {
+            get {
+                return ResourceManager.GetString("skill_sort_mode_level", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose how the skills shown in unit details are sorted..
+        /// </summary>
+        public static string skills_display_description {
+            get {
+                return ResourceManager.GetString("skills_display_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unit skill display order.
+        /// </summary>
+        public static string skills_display_title {
+            get {
+                return ResourceManager.GetString("skills_display_title", resourceCulture);
             }
         }
         
@@ -9000,7 +9054,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("statusbar_orders_left_tip", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Taxes income.
         /// </summary>

@@ -90,6 +90,8 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
     public const string MAP_SELECTED_SHIP_ROUTE_OPACITY = "SelectedShipRouteOpacity";
     public const string MAP_SHOW_REGION_NAMES = "ShowRegionNames";
     public const string MAP_REGION_NAME_BANNER = "RegionNameBanner";
+    public const string UNIT_SKILL_SORT_MODE = "UnitSkillSortMode";
+    public const string UNIT_SKILL_CUSTOM_ORDER = "UnitSkillCustomOrder";
 
     public const string HIDE_IN_PROGRESS_FEATURES = "HideInProgressFeatures";
 
@@ -364,6 +366,12 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
         Category = "parm_cat_views",
         Group = "parm_grp_map")]
     private bool _regionNameBanner = false;
+
+    [ObservableProperty]
+    private int _unitSkillSortMode = 0;
+
+    [ObservableProperty]
+    private string _unitSkillCustomOrder = string.Empty;
 
     [ObservableProperty]
     [property: Config(
