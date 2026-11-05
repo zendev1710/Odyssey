@@ -1,5 +1,50 @@
 # SPECIFICATIONS
 
+## Skills
+
+- Alchemy
+- Armoursmithing
+- Bow
+- Cartmaking
+- Catapult
+- Crossbow
+- Endurance
+- Entertainment
+- Espionage
+- Forestry
+- Herbalism
+- Magic
+- Masonry
+- Melee
+- Mining
+- Perception
+- Polearm
+- Quarrying
+- Riding
+- Roadwork
+- Sailing
+- Shipcraft
+- Stealth
+- Tactics
+- Taming
+- Taxation
+- Trade
+- Unarmed combat
+- Weaponsmithing
+
+### Default skill category order
+
+When category grouping is enabled, the default category order is:
+
+1. Combat: Bow, Catapult, Crossbow, Melee, Polearm, Unarmed combat, Endurance, Tactics
+2. Movement: Sailing, Riding
+3. Production: Alchemy, Taming, Shipcraft, Roadwork, Quarrying, Mining, Weaponsmithing, Armoursmithing, Cartmaking, Herbalism, Masonry, Forestry
+4. Economy: Trade, Taxation, Entertainment
+5. Magic: Magic
+6. Reconnaissance and covert operations: Espionage, Stealth, Perception
+
+Skills within each category follow the selected skill sorting mode.
+
 ## Keyboards shortcuts
 
 - F11: toggle fullscreen
