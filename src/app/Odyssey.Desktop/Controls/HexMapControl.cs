@@ -3575,7 +3575,7 @@ public class HexMapControl : Control
     private static readonly SolidColorBrush _plateShadow = new(Color.FromArgb(55, 0, 0, 0));
 
     // Icon used for fortifications owned by the player's faction.
-    private const string OwnedCastleIconPath = "/Assets/map/symbols/castle_owned.gif";
+    private const string OwnedCastleIconPath = "/Assets/Map/Symbols/castle_owned.gif";
 
     private Bitmap? GetTerrainImage(int terrain)
     {
@@ -3654,7 +3654,7 @@ public class HexMapControl : Control
             default: return string.Empty;
         }
         string imageFullname = string.IsNullOrEmpty(suffix) ? imageName : $"{imageName}_{suffix}";
-        return $"/Assets/map/terrains/{imageFullname}.png";
+        return $"/Assets/Map/Terrains/{imageFullname}.png";
     }
 
     private static void PreloadStandardTerrainImages()
