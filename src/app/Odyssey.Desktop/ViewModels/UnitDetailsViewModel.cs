@@ -262,7 +262,7 @@ public partial class UnitDetailsViewModel : ViewModelBase
             }
             //groupName = groupNameValue;
             string groupLabel = Labels.Localize(Categories.Node, Labels.GROUP, [groupNameValue]);
-            groupProperty = new DataProperty(Categories.Node, groupNameValue, groupLabel);
+            groupProperty = new DataProperty(Categories.Node, groupNameValue, string.Empty, groupLabel);
 
             // Second item is group name (if any)
             _ = AddItem(unitNode, groupProperty);

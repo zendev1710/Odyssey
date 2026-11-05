@@ -777,10 +777,10 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
 
     private static string GetFactionStatusIconUri(FactionStatus status) => status switch
     {
-        FactionStatus.ACTIVE => "/Assets/factionstatus/blue.gif",
-        FactionStatus.ALLIED => "/Assets/factionstatus/green.gif",
-        FactionStatus.ANONYMOUS => "/Assets/factionstatus/gray.gif",
-        _ => "/Assets/factionstatus/red.gif",
+        FactionStatus.ACTIVE => "/Assets/FactionStatus/blue.gif",
+        FactionStatus.ALLIED => "/Assets/FactionStatus/green.gif",
+        FactionStatus.ANONYMOUS => "/Assets/FactionStatus/gray.gif",
+        _ => "/Assets/FactionStatus/red.gif",
     };
 
     private static void AddShip(ExplorerNodeViewModel parentNode, string label, ShipModel ship, BelongsToStatus status, string? iconUri = null)

@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Odyssey.Models;
 using Odyssey.Models.Data;
+using Odyssey.Models.Tools;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 namespace Odyssey.ViewModels;
@@ -37,7 +38,7 @@ public partial class ExplorerNodeViewModel : ObservableObject
     public string? IconUri { get; }
     public string? RaceIconUri { get; }
     public string? StatusIconUri { get; }
-    public object? IconSource => IconUri ?? (AdditionalInfo is FactionStatus ? null : AdditionalInfo);
+    public object? IconSource => IconUri ?? (AdditionalInfo is FactionStatus or BelongsToStatus ? null : AdditionalInfo);
     public bool Hightlighted { get; private set; }
     public ObservableCollection<ExplorerNodeViewModel> Children => _children ??= [];
     public bool HasChildren() => Children.Count > 0;
