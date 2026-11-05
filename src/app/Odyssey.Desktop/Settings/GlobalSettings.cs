@@ -404,16 +404,15 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
 
     [ObservableProperty]
     [property: BrowserConfig(
-    BrowserMode = BrowserMode.OpenFolder,
-    Filter = "",
-    InstanceBrowserKey = "some-browser-field-key")]
+        BrowserMode = BrowserMode.OpenFolder,
+        Filter = "",
+        InstanceBrowserKey = "bookmarks-folder")]
     [property: Config(
-    Header = "parm_hdr_bookmarks_folder",
-    Description = "parm_inf_bookmarks_folder",
-    Category = "parm_cat_",
-    Group = "parm_grp_")]
+        Header = "parm_hdr_bookmarks_folder",
+        Description = "parm_inf_bookmarks_folder",
+        Category = "parm_cat_game",
+        Group = "parm_grp_tools")]
     private string _bookmarksFolder = string.Empty;
-
 
     public ObservableCollection<KeyValuePair<string, string>> GetLanguages()
     {

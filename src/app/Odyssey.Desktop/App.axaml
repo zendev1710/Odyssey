@@ -126,6 +126,7 @@
 			<SolidColorBrush x:Key="ApplicationThemeSurfaceBrush">#EFEFEF</SolidColorBrush>
 			<Color x:Key="ApplicationThemeSurfaceColor">#EFEFEF</Color>
 			<Color x:Key="ApplicationThemeHoverColor">#E5E5E5</Color>
+			<Color x:Key="ApplicationConfigItemHoverColor">#C6C6C6</Color>
 			<SolidColorBrush x:Key="ApplicationThemeInputBrush">#EFEFEF</SolidColorBrush>
 			<SolidColorBrush x:Key="ApplicationThemeSelectionBrush">#0078D4</SolidColorBrush>
 			<SolidColorBrush x:Key="ApplicationThemeSelectionForegroundBrush">#212121</SolidColorBrush>
