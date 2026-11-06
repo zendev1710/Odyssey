@@ -226,7 +226,7 @@
     <value>fortification</value>
   </data>
   <data name="rules_building_Bergwerk" xml:space="preserve">
-    <value>le mien</value>
+    <value>mine</value>
   </data>
   <data name="rules_building_Burg" xml:space="preserve">
     <value>château</value>
@@ -1905,6 +1905,12 @@
   <data name="parm_inf_map_building_contrast" xml:space="preserve">
     <value>Fond dessiné derrière les icônes de bâtiments pour qu'elles restent lisibles sur le terrain. Pastille : fond clair avec liseré coloré ; Liseré seul : contour sans fond ; Aucun : pas de fond.</value>
   </data>
+  <data name="parm_hdr_map_building_english_initials" xml:space="preserve">
+    <value>Utiliser les initiales anglaises pour les symboles de bâtiments</value>
+  </data>
+  <data name="parm_inf_map_building_english_initials" xml:space="preserve">
+    <value>Activée par défaut : les symboles utilisent toujours l'initiale du nom anglais. Désactivée : l'initiale suit la langue de l'interface.</value>
+  </data>
   <data name="parm_key_building_contrast_plate" xml:space="preserve">
     <value>Pastille (recommandé)</value>
   </data>
@@ -3201,6 +3207,9 @@
   </data>
   <data name="unit_skill_tooltip_decreased" xml:space="preserve">
     <value>{0} : niveau {1} (diminution de {2})</value>
+  </data>
+  <data name="unit_skill_level_short" xml:space="preserve">
+    <value>N{0}</value>
   </data>
   <data name="settings_global_display" xml:space="preserve"><value>Affichage global</value></data>
   <data name="settings_skills" xml:space="preserve"><value>Compétences</value></data>

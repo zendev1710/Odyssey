@@ -183,33 +183,12 @@ public abstract class StructureModel : EntityModel
 
     protected bool CollectUnits(in CRDocument report, KeyType key, int structureId)
     {
-        if (Region == null)
-        { 
-            return false; 
-        }
-        /**/
         Units.Clear();
-        /*
-        if (region == null) {
-            return false; 
-        }
-        */
-
-        // TODO: another way without using DataBlock
-        DataBlock? startBlock = Region.GetNextBlock();
-        for (DataBlock? block = startBlock; block != null; block = block.GetNextBlock())
+        foreach (int unitId in report.GetUnitIdsByKey(key, structureId))
         {
-            BlockType t = block.GetBlockType();
-            if (t == BlockType.REGION)
+            if (report.FindUnit(unitId, out UnitModel? unitModel) && unitModel is not null)
             {
-                break;
-            }
-            if (t == BlockType.UNIT && block.ValueInt(key) == structureId)
-            {
-                if (report.FindUnit(block.GetId(), out UnitModel? unitModel))
-                {
-                    Units.Add(unitModel!);
-                }
+                Units.Add(unitModel);
             }
         }
         return Units.Count > 0;

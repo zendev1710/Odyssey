@@ -3346,6 +3346,15 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use English initials for building symbols.
+        /// </summary>
+        public static string parm_hdr_map_building_english_initials {
+            get {
+                return ResourceManager.GetString("parm_hdr_map_building_english_initials", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Building display style.
         /// </summary>
         public static string parm_hdr_map_building_style {
@@ -3597,6 +3606,15 @@ namespace Odyssey.Assets {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Enabled by default: building symbols always use the English name&apos;s initial. When disabled, the initial follows the UI language..
+        /// </summary>
+        public static string parm_inf_map_building_english_initials {
+            get {
+                return ResourceManager.GetString("parm_inf_map_building_english_initials", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Icons use the building graphics when available, symbols use colored shapes, and automatic uses icons with a shape fallback..
         /// </summary>
@@ -9253,6 +9271,15 @@ namespace Odyssey.Assets {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to L{0}.
+        /// </summary>
+        public static string unit_skill_level_short {
+            get {
+                return ResourceManager.GetString("unit_skill_level_short", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to {0}: level {1} (decreased by {2}).
         /// </summary>

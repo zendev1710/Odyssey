@@ -1905,6 +1905,12 @@
   <data name="parm_inf_map_building_contrast" xml:space="preserve">
     <value>Hintergrund hinter den Gebäudesymbolen, damit sie auf dem Gelände lesbar bleiben. Platte: helle Platte mit farbigem Rand; Nur Rand: Umriss ohne Hintergrund; Keiner: kein Hintergrund.</value>
   </data>
+  <data name="parm_hdr_map_building_english_initials" xml:space="preserve">
+    <value>Englische Anfangsbuchstaben für Gebäudesymbole verwenden</value>
+  </data>
+  <data name="parm_inf_map_building_english_initials" xml:space="preserve">
+    <value>Standardmäßig aktiviert: Gebäudesymbole verwenden immer den Anfangsbuchstaben des englischen Namens. Deaktiviert: Der Anfangsbuchstabe richtet sich nach der UI-Sprache.</value>
+  </data>
   <data name="parm_key_building_contrast_plate" xml:space="preserve">
     <value>Platte (empfohlen)</value>
   </data>
@@ -3199,6 +3205,9 @@
   </data>
   <data name="unit_skill_tooltip_decreased" xml:space="preserve">
     <value>{0}: Stufe {1} (um {2} gesunken)</value>
+  </data>
+  <data name="unit_skill_level_short" xml:space="preserve">
+    <value>S{0}</value>
   </data>
   <data name="settings_global_display" xml:space="preserve"><value>Globale Anzeige</value></data>
   <data name="settings_skills" xml:space="preserve"><value>Fertigkeiten</value></data>

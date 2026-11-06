@@ -1905,6 +1905,12 @@
   <data name="parm_inf_map_building_contrast" xml:space="preserve">
     <value>Backdrop drawn behind building icons so they stay readable over the terrain. Plate: light plate with a colored rim; Rim only: outline without background; None: no backdrop.</value>
   </data>
+  <data name="parm_hdr_map_building_english_initials" xml:space="preserve">
+    <value>Use English initials for building symbols</value>
+  </data>
+  <data name="parm_inf_map_building_english_initials" xml:space="preserve">
+    <value>Enabled by default: building symbols always use the English name's initial. When disabled, the initial follows the UI language.</value>
+  </data>
   <data name="parm_key_building_contrast_plate" xml:space="preserve">
     <value>Plate (recommended)</value>
   </data>
@@ -3189,6 +3195,9 @@
   </data>
   <data name="unit_skill_tooltip_decreased" xml:space="preserve">
     <value>{0}: level {1} (decreased by {2})</value>
+  </data>
+  <data name="unit_skill_level_short" xml:space="preserve">
+    <value>L{0}</value>
   </data>
   <data name="settings_global_display" xml:space="preserve"><value>Global display</value></data>
   <data name="settings_skills" xml:space="preserve"><value>Skills</value></data>

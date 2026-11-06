@@ -2,37 +2,37 @@
 
 ## Skills
 
-| Skill | Category |
-| --- | --- |
-| Alchemy | Production |
-| Armoursmithing | Production |
-| Bow | Combat |
-| Cartmaking | Production |
-| Catapult | Combat |
-| Crossbow | Combat |
-| Endurance | Combat |
-| Entertainment | Economy |
-| Espionage | Reconnaissance and covert operations |
-| Forestry | Production |
-| Herbalism | Production |
-| Magic | Magic |
-| Masonry | Production |
-| Melee | Combat |
-| Mining | Production |
-| Perception | Reconnaissance and covert operations |
-| Polearm | Combat |
-| Quarrying | Production |
-| Riding | Movement |
-| Roadwork | Production |
-| Sailing | Movement |
-| Shipcraft | Production |
-| Stealth | Reconnaissance and covert operations |
-| Tactics | Combat |
-| Taming | Production |
-| Taxation | Economy |
-| Trade | Economy |
-| Unarmed combat | Combat |
-| Weaponsmithing | Production |
+| Skill          | Category                             |
+|----------------|--------------------------------------|
+| Alchemy        | Production                           |
+| Armoursmithing | Production                           |
+| Bow            | Combat                               |
+| Cartmaking     | Production                           |
+| Catapult       | Combat                               |
+| Crossbow       | Combat                               |
+| Endurance      | Combat                               |
+| Entertainment  | Economy                              |
+| Espionage      | Reconnaissance and covert operations |
+| Forestry       | Production                           |
+| Herbalism      | Production                           |
+| Magic          | Magic                                |
+| Masonry        | Production                           |
+| Melee          | Combat                               |
+| Mining         | Production                           |
+| Perception     | Reconnaissance and covert operations |
+| Polearm        | Combat                               |
+| Quarrying      | Production                           |
+| Riding         | Movement                             |
+| Roadwork       | Production                           |
+| Sailing        | Movement                             |
+| Shipcraft      | Production                           |
+| Stealth        | Reconnaissance and covert operations |
+| Tactics        | Combat                               |
+| Taming         | Production                           |
+| Taxation       | Economy                              |
+| Trade          | Economy                              |
+| Unarmed combat | Combat                               |
+| Weaponsmithing | Production                           |
 
 ### Default skill category order
 
@@ -46,6 +46,73 @@ When category grouping is enabled, the default category order is:
 6. Reconnaissance and covert operations
 
 Skills within each category follow the selected skill sorting mode.
+
+## Map: building symbols
+
+The building display style defaults to **Auto**: use a building icon when one is available,
+otherwise draw a colored vector symbol. **Icons** draws only icons; **Symbols** always draws the
+vector symbols described below. The fill colors apply to these vector symbols, not to the building
+artwork. Symbol colors do not change with faction ownership.
+
+### Shape and color by building type
+
+| Building type  | Shape            | Fill color                       | Letter (EN) | Letter (FR) | Letter (DE) |
+|----------------|------------------|----------------------------------|:-----------:|:-----------:|:-----------:|
+| Tower          | Square           | Fortification brown `#8A5A44`    |      T      |      T      |      T      |
+| Guard tower    | Square           | Fortification brown `#8A5A44`    |      G      |      T      |      W      |
+| Guardhouse     | Square           | Fortification brown `#8A5A44`    |      G      |      C      |      W      |
+| Scaffold       | Square           | Fortification brown `#8A5A44`    |      F      |      C      |      G      |
+| Foundation     | Square           | Fortification brown `#8A5A44`    |      F      |      F      |      G      |
+| Fortification  | Square           | Fortification brown `#8A5A44`    |      F      |      F      |      B      |
+| Castle         | Square           | Fortification brown `#8A5A44`    |      C      |      C      |      B      |
+| Fortress       | Square           | Fortification brown `#8A5A44`    |      F      |      F      |      F      |
+| Citadel        | Square           | Fortification brown `#8A5A44`    |      C      |      C      |      Z      |
+| Harbor         | Circle           | Water blue `#3F6FA8`             |      H      |      P      |      H      |
+| Tavern         | Circle           | Default slate `#6E7C8C`          |      T      |      T      |      T      |
+| Portal         | Circle           | Magic purple `#6A4FA8`           |      P      |      P      |      P      |
+| Wormhole       | Circle           | Magic purple `#6A4FA8`           |      W      |      T      |      W      |
+| Lighthouse     | Tall rectangle   | Water blue `#3F6FA8`             |      L      |      P      |      L      |
+| Sawmill        | Square           | Forest green `#3F7A46`           |      S      |      S      |      S      |
+| Stable         | Square           | Forest green `#3F7A46`           |      S      |      É      |      P      |
+| Quarry         | Square           | Light gray `#B8B8B8`             |      Q      |      C      |      S      |
+| Mine           | Square           | Anthracite `#42464A`             |      M      |      M      |      B      |
+| Dam            | Rhombus          | Teal `#3E7C7C`                   |      D      |      B      |      D      |
+| Caravanserai   | Square           | Sand gold `#B08A3E`              |      C      |      C      |      K      |
+| Trading post   | Rhombus          | Sand gold `#B08A3E`              |      T      |      P      |      H      |
+| Tunnel         | Rhombus          | Ice blue `#6FA8C8`               |      T      |      T      |      T      |
+| Mage tower     | Tall rectangle   | Magic purple `#6A4FA8`           |      M      |      T      |      M      |
+| Academy        | Square           | Default slate `#6E7C8C`          |      A      |      A      |      A      |
+| Smithy         | Square           | Rust brown `#8A4A3A`             |      S      |      F      |      S      |
+| Marketplace    | Circle           | Sand gold `#B08A3E`              |      M      |      M      |      M      |
+| Monument       | Triangle         | Monument gray `#9A9A9A`          |      M      |      M      |      M      |
+| Stone circle   | Circle           | Monument gray `#9A9A9A`          |      S      |      C      |      S      |
+| Unknown type   | Square           | Default slate `#6E7C8C`          |      *      |      *      |      *      |
+
+Vector symbols have a slightly emphasized dark outline (`#141414`). Contrast plates and shadows
+from the building-contrast setting are drawn behind bitmap icons only; vector symbols are drawn
+directly on the terrain.
+
+### Symbol size and placement
+
+The base marker size is relative to the rendered hexagon size:
+
+| Number of buildings in the region | Base marker size  |
+|-----------------------------------|-------------------|
+| 1                                 | `0.65 ×` hex size |
+| 2–4                               | `0.50 ×` hex size |
+| 5 or more                         | `0.40 ×` hex size |
+
+Each vector symbol contains the uppercase first letter of the building type localized to the UI
+language. A map setting, enabled by default, forces the English initial; when disabled, the initial
+follows the UI language. The table lists the English, French, and German initials. Unknown types
+(`*`) use the initial of the source type name. The letter is black or white, whichever has the
+stronger contrast with the symbol fill.
+The vector shape itself uses 78% of the base size. Fortification markers are enlarged by a further
+10%. Tall rectangles use that same size as their height and are 78% as wide. Up to seven buildings
+use the center and six perimeter positions; when there are more, six
+buildings are placed around the perimeter and a `+n` badge is shown at the center for the remainder.
+Fortifications prefer the center, while buildings with a terrain affinity prefer the perimeter slot
+facing a matching neighboring region.
 
 ## Keyboards shortcuts
 
