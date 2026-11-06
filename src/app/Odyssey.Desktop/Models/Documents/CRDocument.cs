@@ -166,6 +166,7 @@ public class CRDocument : EresseaDocument, ILocationResolver
         }
     }
 
+    public string? SourcePath { get; set; }
     public string Name { get; private set; }
     public string Version { get; private set; }
     public bool HasData() => Blocks.Count > 0;

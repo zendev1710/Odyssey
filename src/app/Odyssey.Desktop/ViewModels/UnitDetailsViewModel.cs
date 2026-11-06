@@ -646,8 +646,10 @@ public partial class UnitDetailsViewModel : ViewModelBase
         if (entityModel is null)
             return;
 
-        // TODO : how to get region
-        IEntitySelection newSelection = new EntitySelection(entityModel, null, null);
+        RegionModel? region = entityModel is RegionModel selectedRegion
+            ? selectedRegion
+            : Report.FindRegionById(entityModel.LocationId);
+        IEntitySelection newSelection = new EntitySelection(entityModel, region, null);
 
         SendSelectionChangedEvent(newSelection);
     }

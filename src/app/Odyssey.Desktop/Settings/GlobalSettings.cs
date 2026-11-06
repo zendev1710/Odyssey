@@ -83,6 +83,7 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
     public const string MAP_SHOW_BUILDINGS = "ShowBuildings";
     public const string MAP_BUILDING_STYLE = "BuildingStyle";
     public const string MAP_BUILDING_CONTRAST = "BuildingContrast";
+    public const string MAP_BUILDING_SYMBOL_ENGLISH_INITIALS = "BuildingSymbolEnglishInitials";
     public const string MAP_SHOW_SHIPS = "ShowShips";
     public const string MAP_SHIP_STYLE = "ShipStyle";
     public const string MAP_SHIP_ROUTE_MODE = "ShipRouteMode";
@@ -90,10 +91,17 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
     public const string MAP_SELECTED_SHIP_ROUTE_OPACITY = "SelectedShipRouteOpacity";
     public const string MAP_SHOW_REGION_NAMES = "ShowRegionNames";
     public const string MAP_REGION_NAME_BANNER = "RegionNameBanner";
+    public const string MAP_ZOOM_PERCENTAGE = "MapZoomPercentage";
     public const string UNIT_SKILL_SORT_MODE = "UnitSkillSortMode";
     public const string UNIT_SKILL_CUSTOM_ORDER = "UnitSkillCustomOrder";
     public const string UNIT_SKILL_GROUP_BY_CATEGORY = "UnitSkillGroupByCategory";
     public const string UNIT_SKILL_CATEGORY_ORDER = "UnitSkillCategoryOrder";
+
+    [ObservableProperty]
+    private int _mapZoomPercentage = 100;
+
+    [ObservableProperty]
+    private string _reportSelectionBookmarksJson = string.Empty;
 
     [ObservableProperty]
     private bool _unitSkillGroupByCategory;
@@ -102,6 +110,27 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
     private string _unitSkillCategoryOrder = string.Empty;
 
     public const string HIDE_IN_PROGRESS_FEATURES = "HideInProgressFeatures";
+
+    [ObservableProperty]
+    private int _mainWindowPositionX;
+
+    [ObservableProperty]
+    private int _mainWindowPositionY;
+
+    [ObservableProperty]
+    private double _mainWindowClientWidth = 1200;
+
+    [ObservableProperty]
+    private double _mainWindowClientHeight = 680;
+
+    [ObservableProperty]
+    private bool _mainWindowIsFullscreen;
+
+    [ObservableProperty]
+    private bool _mainWindowWasMaximized;
+
+    [ObservableProperty]
+    private bool _hasSavedMainWindowBounds;
 
     [ObservableProperty]
     [property: DropdownConfig(
@@ -301,6 +330,14 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
         Category = "parm_cat_views",
         Group = "parm_grp_map")]
     private int _buildingContrast = BuildingContrastModes.Plate;
+
+    [ObservableProperty]
+    [property: Config(
+        Header = "parm_hdr_map_building_english_initials",
+        Description = "parm_inf_map_building_english_initials",
+        Category = "parm_cat_views",
+        Group = "parm_grp_map")]
+    private bool _buildingSymbolEnglishInitials = true;
 
     // whether ships are displayed on the map
     [ObservableProperty]

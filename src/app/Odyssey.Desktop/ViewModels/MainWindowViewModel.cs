@@ -1363,6 +1363,11 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
         FileViewModel? fileViewModel = null;
         if (loaded)
         {
+            if (eresseaDocument is CRDocument reportDocument)
+            {
+                reportDocument.SourcePath = pathname;
+            }
+
             string title = System.IO.Path.GetFileNameWithoutExtension(pathname);
             if (fileType == DocumentType.ERESSEA_REPORT_FROM_ZIP)
             {
@@ -1625,6 +1630,10 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
     {
         fileViewModel.Path = path;
         fileViewModel.Title = Path.GetFileNameWithoutExtension(path);
+        if (fileViewModel.Document is CRDocument reportDocument)
+        {
+            reportDocument.SourcePath = path;
+        }
     }
 
     private void OnDockableClosed(object? sender, DockableClosedEventArgs args)

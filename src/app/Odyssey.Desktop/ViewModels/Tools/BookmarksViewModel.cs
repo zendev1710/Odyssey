@@ -280,12 +280,14 @@ public partial class BookmarksViewModel : DocumentToolViewModelBase
 
         Debug.WriteLine($"[BOOKMARKS] Reveal bookmark {bookmarkModel.Type} {bookmarkModel.Id} for target {target} (current selection {SelectedObject})");
 
-        // A region is selected with itself as its region. The other entities are selected without any
-        // region: the explorer resolves the region of a unit, a ship or a building from its item.
+        RegionModel? region = target is RegionModel selectedRegion
+            ? selectedRegion
+            : Report.FindRegionById(target.LocationId);
+
         // Note: the selection is always sent, even when the target is already the current selection
         // (as MessagesListViewModel does when revealing an item in the explorer): the explorer is then
         // asked to show the item (expand its parents) in the tree.
-        SendSelectionChangedEvent(new EntitySelection(target, target as RegionModel, null));
+        SendSelectionChangedEvent(new EntitySelection(target, region, null));
     }
 
     /// <summary>

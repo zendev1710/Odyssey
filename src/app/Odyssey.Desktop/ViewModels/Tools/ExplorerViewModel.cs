@@ -14,6 +14,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
+using System.Text.Json;
 using static Odyssey.Models.Tools.DataProperty;
 using static Odyssey.ViewModels.ExplorerNodeViewModel;
 
@@ -21,8 +23,27 @@ namespace Odyssey.ViewModels.Tools;
 
 public partial class ExplorerViewModel : DocumentToolViewModelBase
 {
+    private sealed class SavedExplorerSelectionBookmark
+    {
+        public SavedExplorerSelectionBookmark()
+        {
+        }
+
+        public string NodeType { get; set; } = string.Empty;
+        public int NodeId { get; set; }
+        public int RegionX { get; set; }
+        public int RegionY { get; set; }
+        public int RegionPlane { get; set; }
+    }
+
+    private static readonly StringComparer ReportPathComparer = OperatingSystem.IsWindows()
+        ? StringComparer.OrdinalIgnoreCase
+        : StringComparer.Ordinal;
+
     [ObservableProperty]
     private ExplorerNodeViewModel? selectedItem;
+
+    internal bool IsRestoringReportSelection { get; private set; }
 
     private readonly ExplorerNodeViewModel _root;
     private readonly Dictionary<int, int> _reportRegionOrder = [];
@@ -154,7 +175,30 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         // LATER: check what to do if newValue is null (maybe it never happens !?)
         if (oldValue != newValue && newValue != null)
         {
+            SaveSelectionBookmark(newValue);
             SendSelectionChangedEvent(new ExplorerNodeSelection(newValue, Report));
+        }
+    }
+
+    protected override void OnActiveDocumentReady(CRDocument report)
+    {
+        if (!HasDocument || !ReferenceEquals(report, Report) || report.Planes.Count == 0)
+        {
+            return;
+        }
+
+        // Restore only after every document-bound view model has processed the new report.
+        IsRestoringReportSelection = true;
+        try
+        {
+            if (!TryRestoreSelectionBookmark())
+            {
+                HandleSelection(new EntitySelection(report, 0, 0, 0));
+            }
+        }
+        finally
+        {
+            IsRestoringReportSelection = false;
         }
     }
 
@@ -568,9 +612,6 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
 
         PublishUnitNavigationOrder();
 
-        // Force selection of origin region (0,0) to avoid no selection at all when opening a document
-        HandleSelection(new EntitySelection(Report, 0, 0, 0));
-
         if (regionsNumber != Report.Planes[0].OccupiedRegions.Count)
         {
             Debug.WriteLine($"[EXPLORER] WARNING | {regionsNumber} regions found instead of {Report.Planes[0].OccupiedRegions.Count} known regions ");
@@ -765,6 +806,136 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
         SelectedItem = null;
     }
 
+    private void SaveSelectionBookmark(ExplorerNodeViewModel selectedItem)
+    {
+        string? sourcePath = Report.SourcePath;
+        if (string.IsNullOrWhiteSpace(sourcePath) || Report.Planes.Count == 0)
+        {
+            return;
+        }
+
+        ExplorerNodeViewModel? regionNode = selectedItem;
+        while (regionNode is not null && regionNode.NodeType != NodeTypes.REGION)
+        {
+            regionNode = regionNode.Parent;
+        }
+
+        if (regionNode is null ||
+            !Report.Planes[0].OccupiedRegions.TryGetValue(regionNode.Id, out RegionModel? region))
+        {
+            return;
+        }
+
+        Dictionary<string, SavedExplorerSelectionBookmark> bookmarks = LoadSelectionBookmarks();
+        bookmarks[Path.GetFullPath(sourcePath)] = new SavedExplorerSelectionBookmark
+        {
+            NodeType = selectedItem.NodeType.ToString(),
+            NodeId = selectedItem.Id,
+            RegionX = region.GetX(),
+            RegionY = region.GetY(),
+            RegionPlane = region.GetPlane()
+        };
+        GlobalSettings.Shared.ReportSelectionBookmarksJson = JsonSerializer.Serialize(bookmarks);
+    }
+
+    private bool TryRestoreSelectionBookmark()
+    {
+        string? sourcePath = Report.SourcePath;
+        if (string.IsNullOrWhiteSpace(sourcePath))
+        {
+            return false;
+        }
+
+        Dictionary<string, SavedExplorerSelectionBookmark> bookmarks = LoadSelectionBookmarks();
+        if (!bookmarks.TryGetValue(Path.GetFullPath(sourcePath), out SavedExplorerSelectionBookmark? bookmark)
+            || !Enum.TryParse(bookmark.NodeType, ignoreCase: false, out NodeTypes nodeType)
+            || !Enum.IsDefined(typeof(NodeTypes), nodeType))
+        {
+            return false;
+        }
+
+        if (nodeType is NodeTypes.UNIT or NodeTypes.SHIP or NodeTypes.BUILDING
+            && FindTreeItem(Root, nodeType, bookmark.NodeId) is ExplorerNodeViewModel entityNode)
+        {
+            SelectItem(entityNode);
+            return true;
+        }
+
+        if (!Report.Planes.ContainsKey(bookmark.RegionPlane)
+            || !Report.FindOccupiedRegion(bookmark.RegionX, bookmark.RegionY, (PlaneType)bookmark.RegionPlane, out RegionModel? region)
+            || region is null)
+        {
+            return false;
+        }
+
+        ExplorerNodeViewModel? regionNode = FindImmediateTreeItem(Root, region.Id);
+        if (regionNode is null)
+        {
+            return false;
+        }
+
+        ExplorerNodeViewModel? node = nodeType == NodeTypes.REGION
+            ? regionNode
+            : FindTreeItem(regionNode, nodeType, bookmark.NodeId);
+        if (node is null)
+        {
+            return false;
+        }
+
+        SelectItem(node);
+        return true;
+    }
+
+    private Dictionary<string, SavedExplorerSelectionBookmark> LoadSelectionBookmarks()
+    {
+        string bookmarksJson = GlobalSettings.Shared.ReportSelectionBookmarksJson;
+        if (string.IsNullOrWhiteSpace(bookmarksJson))
+        {
+            return new Dictionary<string, SavedExplorerSelectionBookmark>(ReportPathComparer);
+        }
+
+        try
+        {
+            Dictionary<string, SavedExplorerSelectionBookmark>? bookmarks =
+                JsonSerializer.Deserialize<Dictionary<string, SavedExplorerSelectionBookmark>>(bookmarksJson);
+            return bookmarks is null
+                ? new Dictionary<string, SavedExplorerSelectionBookmark>(ReportPathComparer)
+                : new Dictionary<string, SavedExplorerSelectionBookmark>(bookmarks, ReportPathComparer);
+        }
+        catch (JsonException ex)
+        {
+            Debug.WriteLine($"[EXPLORER] Failed to load saved report selections: {ex.Message}");
+            return new Dictionary<string, SavedExplorerSelectionBookmark>(ReportPathComparer);
+        }
+    }
+
+    private static ExplorerNodeViewModel? FindTreeItem(
+        ExplorerNodeViewModel? node,
+        NodeTypes nodeType,
+        int id)
+    {
+        if (node is null)
+        {
+            return null;
+        }
+
+        if (node.NodeType == nodeType && node.Id == id)
+        {
+            return node;
+        }
+
+        foreach (ExplorerNodeViewModel child in node.Children)
+        {
+            ExplorerNodeViewModel? found = FindTreeItem(child, nodeType, id);
+            if (found is not null)
+            {
+                return found;
+            }
+        }
+
+        return null;
+    }
+
     private LocatedFactionModel CreateLocatedFaction(int factionId, RegionModel region)
     {
         FactionModel? faction = Report.GetFaction(factionId);
@@ -862,12 +1033,12 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
             }
         }
 
-        string? statusIconUri = GetUnitStatusIconUri(unit);
+        string? statusIconUri = GetUnitStatusIconUri(unit, status);
         bool isConfirmed = !Report.IsActiveFaction(unit.FactionId) || unit.IsOrdersConfirmed;
         _ = new ExplorerNodeViewModel(parentNode, unitlabel, unit.Id, NodeTypes.UNIT, !isConfirmed, status, index, statusIconUri: statusIconUri, locatedFaction: locatedFaction);
     }
 
-    private string? GetUnitStatusIconUri(UnitModel unitModel)
+    private string? GetUnitStatusIconUri(UnitModel unitModel, BelongsToStatus status)
     {
         int unitId = unitModel.Id;
 
@@ -887,6 +1058,16 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
             {
                 return GetStatusIconUri("owner", "captain");
             }
+        }
+
+        if ((status & BelongsToStatus.UnitInShip) != 0)
+        {
+            return GetStatusIconUri("crew");
+        }
+
+        if ((status & BelongsToStatus.UnitInBuilding) != 0)
+        {
+            return GetStatusIconUri("occupants");
         }
 
         return null;
