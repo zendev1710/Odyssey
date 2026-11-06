@@ -29,7 +29,7 @@ public partial class ShipDetailsViewModel : StructureViewModel
     [ObservableProperty]
     private int _capacity;
 
-    public ShipDetailsViewModel() : base(Ids.ShipDetails)
+    public ShipDetailsViewModel() : base(Ids.ShipDetails, StructureKind.Ship)
     {
         Items = Root.Children;
     }
@@ -55,6 +55,7 @@ public partial class ShipDetailsViewModel : StructureViewModel
         if (item is null)
             return;
 
+        Region = selection.Region;
 
         ShipModel? shipModel = null;
         if (!Report.FindShip(item.Id, out shipModel))
@@ -69,6 +70,7 @@ public partial class ShipDetailsViewModel : StructureViewModel
             OwnerName = StructureModel.OwnerName;
             OwnerUnit = StructureModel.OwnerUnit;
             Name = StructureModel.Name;
+            StructureId = StructureModel.EncodedId;
             Type = StructureModel.Type;
             Size = StructureModel.Size;
             Description = StructureModel.Description;
@@ -78,43 +80,40 @@ public partial class ShipDetailsViewModel : StructureViewModel
             Cargo = shipModel.Cargo;
             Capacity = shipModel.Capacity;
 
-            NodeViewModel structureNode = AddItem(Root, property, string.Empty, 0);
-            AddOwner(structureNode, false);
-
             if (Coast >= 0)
             {
                 string coastLabel = Labels.GetCoastName(Coast);
                 DataProperty coastProperty = new(coastLabel);
-                AddItem(structureNode, coastProperty);
+                AddItem(Root, coastProperty);
             }
             if (Cargo > 0 || Capacity > 0)
             {
                 string shipCapacityLabel = Labels.Localize(Categories.None, Labels.CAPACITY_SHIP_INFO, [ToStringWithDecimals(shipModel.Cargo), ToStringWithDecimals(shipModel.Capacity)]);
                 DataProperty shipCapacityProperty = new(Categories.None, Labels.CAPACITY_SHIP_INFO, string.Empty, shipCapacityLabel);
-                AddItem(structureNode, shipCapacityProperty);
+                AddItem(Root, shipCapacityProperty);
             }
             if (DamagePercent > 0)
             {
                 string damageLabel = Labels.Localize(Categories.None, Labels.SHIP_DAMAGE, [$"{DamagePercent}"]);
                 DataProperty damageProperty = new(damageLabel);
-                AddItem(structureNode, damageProperty);
+                AddItem(Root, damageProperty);
             }
             foreach (DataProperty p in shipModel.DataProperties)
             {
-                _ = AddItem(structureNode, p, $"{p.Label}: {p.Value}");
+                _ = AddItem(Root, p, $"{p.Label}: {p.Value}");
             }
 
-            AddEffects(structureNode);
+            AddEffects(Root);
 
             if (shipModel.TotalSkill > 0)
             {
                 string sailingSkillLabel = Labels.Localize(Categories.Node, Labels.TOTAL_SAILING_SKILL);
                 string totalSkillLabel = $"{sailingSkillLabel}: {shipModel.TotalSkill}";
                 DataProperty totalSkillProperty = new(Categories.None, totalSkillLabel, string.Empty, totalSkillLabel);
-                AddItem(structureNode, totalSkillProperty);
+                AddItem(Root, totalSkillProperty);
             }
 
-            AddUnits(structureNode);
+            PopulateOccupants(ownerFirst: true);
         }
     }
 }

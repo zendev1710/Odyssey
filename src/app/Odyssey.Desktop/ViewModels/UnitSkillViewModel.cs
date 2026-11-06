@@ -17,12 +17,16 @@ public partial class UnitSkillViewModel : ObservableObject
     private string _name = string.Empty;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(LevelText))]
     private int _level;
 
     [ObservableProperty]
     private int _change;
 
-    public string LevelText => Level.ToString();
+    public string LevelText => string.Format(
+        Lang.Culture,
+        Lang.ResourceManager.GetString("unit_skill_level_short", Lang.Culture) ?? "Lv {0}",
+        Level);
     public string TooltipLabel
     {
         get

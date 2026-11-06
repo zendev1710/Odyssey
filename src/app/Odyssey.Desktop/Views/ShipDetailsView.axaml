@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
              xmlns:vm="using:Odyssey.ViewModels"
+			 xmlns:controls="using:Odyssey.Controls"
 			 xmlns:conv="using:Odyssey.Converters"
              mc:Ignorable="d"
              d:DesignWidth="300" d:DesignHeight="400"
@@ -16,28 +17,39 @@
 		<conv:UnitItemConverter x:Key="UnitItemConverter" />
 	</UserControl.Resources>
 	<Grid Focusable="True" IsVisible="{Binding HasDocument}">
-		<Grid>
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto" />
-				<!-- * means that vertical scrollbar will be automatically managed when a node has a lot of children -->
-				<RowDefinition Height="*" />
-			</Grid.RowDefinitions>
-			<TextBox Grid.Row="0" Text="{Binding Description}" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True" IsVisible="{Binding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
-			<TreeView Grid.Row="1" Name="DetailsTreeView" ItemsSource="{Binding Items}">
-				<TreeView.Styles>
-					<Style Selector="TreeViewItem" x:DataType="vm:TreeNodeViewModel">
-						<Setter Property="IsExpanded" Value="True"/>
-					</Style>
-				</TreeView.Styles>
-				<TreeView.ItemTemplate>
-					<TreeDataTemplate ItemsSource="{Binding Children}"  >
-						<StackPanel Orientation="Horizontal">
-							<asyncImageLoader:AdvancedImage  Source="{Binding Data, Converter={StaticResource UnitItemConverter}}" IsVisible="{Binding Data, Converter={x:Static ObjectConverters.IsNotNull}}" Margin="0,0,5,0"/>
-							<TextBlock Text="{Binding Header}" ToolTip.Tip="{Binding Description}" />
-						</StackPanel>
-					</TreeDataTemplate>
-				</TreeView.ItemTemplate>
-			</TreeView>
-		</Grid>
+		<ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+			<Grid ColumnDefinitions="*,Auto">
+				<StackPanel Grid.Column="0">
+					<controls:StructureIdentityCardControl DataContext="{Binding}" />
+					<TextBox Text="{Binding Description}" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True" IsVisible="{Binding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+					<TreeView Name="DetailsTreeView" ItemsSource="{Binding Items}" IsVisible="{Binding Items.Count}">
+						<TreeView.Styles>
+							<Style Selector="TreeViewItem" x:DataType="vm:TreeNodeViewModel">
+								<Setter Property="IsExpanded" Value="True"/>
+							</Style>
+						</TreeView.Styles>
+						<TreeView.ItemTemplate>
+							<TreeDataTemplate ItemsSource="{Binding Children}">
+								<StackPanel Orientation="Horizontal">
+									<asyncImageLoader:AdvancedImage Source="{Binding Data, Converter={StaticResource UnitItemConverter}}" IsVisible="{Binding Data, Converter={x:Static ObjectConverters.IsNotNull}}" Margin="0,0,5,0"/>
+									<SelectableTextBlock Text="{Binding Header}" ToolTip.Tip="{Binding Description}" />
+								</StackPanel>
+							</TreeDataTemplate>
+						</TreeView.ItemTemplate>
+					</TreeView>
+					<StackPanel Spacing="3" Margin="0,14,0,0" IsVisible="{Binding Occupants.Count}">
+						<SelectableTextBlock Text="{Binding OccupantsLabel}" FontWeight="SemiBold" />
+						<ItemsControl ItemsSource="{Binding Occupants}">
+							<ItemsControl.ItemTemplate>
+								<DataTemplate x:DataType="vm:StructureUnitLinkViewModel">
+									<controls:SelectableLinkTextBlock Text="{Binding DisplayName}" HorizontalAlignment="Left" Command="{Binding SelectCommand}" ToolTip.Tip="{Binding Tooltip}" />
+								</DataTemplate>
+							</ItemsControl.ItemTemplate>
+						</ItemsControl>
+					</StackPanel>
+				</StackPanel>
+				<controls:StructureTypeSizeControl Grid.Column="1" DataContext="{Binding}" VerticalAlignment="Stretch" />
+			</Grid>
+		</ScrollViewer>
 	</Grid>
 </UserControl>

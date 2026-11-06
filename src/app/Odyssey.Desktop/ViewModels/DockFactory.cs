@@ -65,7 +65,6 @@ public class DockFactory : Factory
         var regionStatisticsViewModel = new RegionStatsViewModel() {Id = Ids.RegionStatistics, Title = LocalizedTitle(Ids.RegionStatistics), CanClose = canCloseTool };
         var detailsViewModel = new DetailsViewModel() {Id = Ids.Details, Title = LocalizedTitle(Ids.Details), CanClose = canCloseTool };
         var unitsInspectorViewModel = new UnitsInspectorViewModel() { Id = Ids.UnitsInspector, Title = LocalizedTitle(Ids.UnitsInspector), CanClose = canCloseTool };
-        //var unittripViewModel = new UnitStripViewModel() { Id = Ids.UnitStrip, Title = LocalizedTitle(Ids.UnitStrip), CanClose = canCloseTool };
         //var unitInspectorViewModel = new UnitInspectorViewModel() { Id = Ids.UnitInspector, Title = LocalizedTitle(Ids.UnitInspector), CanClose = canCloseTool };
         var unitOrdersViewModel = new UnitOrdersViewModel() { Id = Ids.UnitOrders, Title = LocalizedTitle(Ids.UnitOrders), CanClose = canCloseTool };
         var regionInfoViewModel = new RegionInfoViewModel() {Id = Ids.RegionInfo, Title = LocalizedTitle(Ids.RegionInfo), CanClose = canCloseTool };
@@ -187,14 +186,14 @@ public class DockFactory : Factory
 
         var detailsDock = new ToolDock
         {
-            Proportion = 0.5,
+            Proportion = 0.6,
             ActiveDockable = detailsViewModel,
             VisibleDockables = CreateList<IDockable>(detailsViewModel, regionStatisticsViewModel),
         };
 
         var ordersDock = new ToolDock
         {
-            Proportion = 0.5,
+            Proportion = 0.4,
             ActiveDockable = unitOrdersViewModel,
             VisibleDockables = CreateList<IDockable>(unitOrdersViewModel),
         };
@@ -205,9 +204,9 @@ public class DockFactory : Factory
             Orientation = Orientation.Horizontal,
             VisibleDockables = CreateList<IDockable>
             (
-                ordersDock,
+                detailsDock,
                 new ProportionalDockSplitter(),
-                detailsDock
+                ordersDock
             )
         };
 

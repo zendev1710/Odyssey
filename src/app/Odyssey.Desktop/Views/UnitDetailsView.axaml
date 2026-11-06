@@ -31,48 +31,59 @@
 
 				<Border Grid.Row="2"
 						Margin="0,8,0,0"
-						Height="65"
+						Height="84"
 						Padding="8"
 						CornerRadius="10"
 						BorderBrush="#5b4b3a"
 						BorderThickness="1.5"
-						Background="#4a4742"
 						IsVisible="{Binding InventoryItems.Count}">
-					<ItemsControl ItemsSource="{Binding InventoryItems}">
-						<ItemsControl.ItemsPanel>
-							<ItemsPanelTemplate>
-								<controls:InventoryGridPanel CellSize="46" CellGap="5" />
-							</ItemsPanelTemplate>
-						</ItemsControl.ItemsPanel>
-						<ItemsControl.ItemTemplate>
-							<DataTemplate x:DataType="vmtools:UnitItemViewModel">
-								<controls:UnitItemBadgeControl DataContext="{Binding}" Zoom="1" />
-							</DataTemplate>
-						</ItemsControl.ItemTemplate>
-					</ItemsControl>
+					<Grid ColumnDefinitions="Auto,*,Auto">
+						<RepeatButton Grid.Column="0" Content="◀" Width="28" Height="32" Padding="0" VerticalAlignment="Center" IsVisible="False" Click="ScrollLeft_Click" />
+						<ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled" LayoutUpdated="ScrollViewer_LayoutUpdated">
+							<ItemsControl ItemsSource="{Binding InventoryItems}">
+								<ItemsControl.ItemsPanel>
+									<ItemsPanelTemplate>
+									<StackPanel Orientation="Horizontal" Spacing="5" />
+									</ItemsPanelTemplate>
+								</ItemsControl.ItemsPanel>
+								<ItemsControl.ItemTemplate>
+									<DataTemplate x:DataType="vmtools:UnitItemViewModel">
+										<controls:UnitItemBadgeControl DataContext="{Binding}" Zoom="1" />
+									</DataTemplate>
+								</ItemsControl.ItemTemplate>
+							</ItemsControl>
+						</ScrollViewer>
+						<RepeatButton Grid.Column="2" Content="▶" Width="28" Height="32" Padding="0" VerticalAlignment="Center" IsVisible="False" Click="ScrollRight_Click" />
+					</Grid>
 				</Border>
 
 				<Border Grid.Row="3"
 						Margin="0,8,0,0"
-						Height="65"
+						Height="84"
 						Padding="8"
 						CornerRadius="10"
 						BorderBrush="#3a5b6b"
 						BorderThickness="1.5"
 						Background="{DynamicResource PanelBackgroundBrush}"
 						IsVisible="{Binding SkillItems.Count}">
-					<ItemsControl ItemsSource="{Binding SkillItems}">
-						<ItemsControl.ItemsPanel>
-							<ItemsPanelTemplate>
-								<controls:InventoryGridPanel CellSize="46" CellGap="5" />
-							</ItemsPanelTemplate>
-						</ItemsControl.ItemsPanel>
-						<ItemsControl.ItemTemplate>
-							<DataTemplate x:DataType="vmtools:UnitSkillViewModel">
-								<controls:UnitSkillBadgeControl DataContext="{Binding}" Zoom="1" />
-							</DataTemplate>
-						</ItemsControl.ItemTemplate>
-					</ItemsControl>
+					<Grid ColumnDefinitions="Auto,*,Auto">
+						<RepeatButton Grid.Column="0" Content="◀" Width="28" Height="32" Padding="0" VerticalAlignment="Center" IsVisible="False" Click="ScrollLeft_Click" />
+						<ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled" LayoutUpdated="ScrollViewer_LayoutUpdated">
+							<ItemsControl ItemsSource="{Binding SkillItems}">
+								<ItemsControl.ItemsPanel>
+									<ItemsPanelTemplate>
+									<StackPanel Orientation="Horizontal" Spacing="5" />
+									</ItemsPanelTemplate>
+								</ItemsControl.ItemsPanel>
+								<ItemsControl.ItemTemplate>
+									<DataTemplate x:DataType="vmtools:UnitSkillViewModel">
+										<controls:UnitSkillBadgeControl DataContext="{Binding}" Zoom="1" />
+									</DataTemplate>
+								</ItemsControl.ItemTemplate>
+							</ItemsControl>
+						</ScrollViewer>
+						<RepeatButton Grid.Column="2" Content="▶" Width="28" Height="32" Padding="0" VerticalAlignment="Center" IsVisible="False" Click="ScrollRight_Click" />
+					</Grid>
 				</Border>
 
 				<TreeView Grid.Row="1" Name="DetailsTreeView" ItemsSource="{Binding Items}">

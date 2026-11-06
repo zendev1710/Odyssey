@@ -1,3 +1,4 @@
+using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Odyssey.Core.Services;
@@ -5,9 +6,11 @@ using Odyssey.Models;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Tools;
+using Odyssey.Settings;
 using Odyssey.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Odyssey.ViewModels.Tools
@@ -17,7 +20,26 @@ namespace Odyssey.ViewModels.Tools
     /// </summary>
     public partial class UnitsInspectorViewModel : DocumentToolViewModelBase
     {
-        public UnitStripViewModel StripViewModel { get; }
+        public event Action<int>? SelectedUnitNeedsReveal;
+
+        public ObservableCollection<UnitViewModel> Units { get; } = new();
+
+        private readonly List<int> _loadedUnitIds = [];
+        private RegionModel? _regionContext;
+        private LocatedFactionModel? _locatedFactionContext;
+        private int? _badgeSelectionInProgress;
+        private CRDocument? _confirmationReport;
+
+        [ObservableProperty]
+        private int? _selectedUnitId;
+
+        [ObservableProperty]
+        private GridLength _ordersColumnWidth = new(2, GridUnitType.Star);
+
+        [ObservableProperty]
+        private bool _isOrdersColumnVisible = true;
+
+        private GridLength _lastVisibleOrdersColumnWidth = new(2, GridUnitType.Star);
 
         [ObservableProperty]
         private LocatedFactionModel? locatedFaction;
@@ -33,8 +55,137 @@ namespace Odyssey.ViewModels.Tools
 
         public UnitsInspectorViewModel() : base()
         {
-            StripViewModel = new UnitStripViewModel();
+            GlobalSettings.Shared.SettingChanged += OnGlobalSettingChanged;
             ServiceLocator.UnitNavigationOrderService.OrderChanged += OnUnitNavigationOrderChanged;
+        }
+
+        private void OnGlobalSettingChanged(object? sender, SettingChangedEventArgs e)
+        {
+            if (e.SettingName is GlobalSettings.UNIT_SKILL_SORT_MODE
+                or GlobalSettings.UNIT_SKILL_CUSTOM_ORDER
+                or GlobalSettings.UNIT_SKILL_GROUP_BY_CATEGORY
+                or GlobalSettings.UNIT_SKILL_CATEGORY_ORDER)
+            {
+                foreach (UnitViewModel unit in Units)
+                {
+                    unit.SortSkillItems();
+                }
+            }
+        }
+
+        public void SetUnits(IEnumerable<int> unitIds, bool revealSelectedUnit = true)
+        {
+            List<int> requestedIds = [.. unitIds];
+            if (requestedIds.SequenceEqual(_loadedUnitIds))
+            {
+                return;
+            }
+
+            _loadedUnitIds.Clear();
+            _loadedUnitIds.AddRange(requestedIds);
+            Units.Clear();
+            if (!HasDocument)
+            {
+                return;
+            }
+
+            foreach (int unitId in requestedIds)
+            {
+                Units.Add(UnitViewModel.FromDocument(Report, unitId, includeSummary: true));
+            }
+            UpdateSelectedBadge();
+            if (revealSelectedUnit && SelectedUnitId is int selectedUnitId &&
+                _badgeSelectionInProgress != selectedUnitId && requestedIds.Contains(selectedUnitId))
+            {
+                SelectedUnitNeedsReveal?.Invoke(selectedUnitId);
+            }
+        }
+
+        public void SetSelectedUnit(int? unitId)
+        {
+            SelectedUnitId = unitId;
+            UpdateSelectedBadge();
+            if (unitId is int selectedUnitId && _badgeSelectionInProgress != selectedUnitId)
+            {
+                SelectedUnitNeedsReveal?.Invoke(selectedUnitId);
+            }
+        }
+
+        public void RefreshConfirmedStatuses()
+        {
+            foreach (UnitViewModel unit in Units)
+            {
+                if (unit.Model is UnitModel model)
+                {
+                    unit.IsConfirmed = model.OrdersConfirmed;
+                }
+            }
+        }
+
+        private void UpdateSelectedBadge()
+        {
+            foreach (UnitViewModel unit in Units)
+            {
+                unit.IsSelected = unit.Model?.Id == SelectedUnitId;
+            }
+        }
+
+        public void SetSelectionContext(RegionModel? region, LocatedFactionModel? locatedFaction)
+        {
+            _regionContext = region;
+            _locatedFactionContext = locatedFaction;
+        }
+
+        public void SetOrdersColumnVisible(bool isVisible)
+        {
+            IsOrdersColumnVisible = isVisible;
+            if (isVisible)
+            {
+                if (OrdersColumnWidth.Value <= 0)
+                {
+                    OrdersColumnWidth = _lastVisibleOrdersColumnWidth;
+                }
+            }
+            else
+            {
+                if (OrdersColumnWidth.Value > 0)
+                {
+                    _lastVisibleOrdersColumnWidth = OrdersColumnWidth;
+                }
+                OrdersColumnWidth = new GridLength(0);
+            }
+        }
+
+        partial void OnOrdersColumnWidthChanged(GridLength value)
+        {
+            if (value.Value > 0)
+            {
+                _lastVisibleOrdersColumnWidth = value;
+            }
+        }
+
+        [RelayCommand]
+        private void SelectUnit(UnitViewModel? unit)
+        {
+            if (unit?.Model is not UnitModel selectedUnit)
+            {
+                return;
+            }
+
+            SelectedUnitId = selectedUnit.Id;
+            UpdateSelectedBadge();
+            _badgeSelectionInProgress = selectedUnit.Id;
+            try
+            {
+                SendSelectionChangedEvent(new EntitySelection(
+                    selectedUnit,
+                    _regionContext,
+                    locatedFaction: _locatedFactionContext));
+            }
+            finally
+            {
+                _badgeSelectionInProgress = null;
+            }
         }
 
         private void OnUnitNavigationOrderChanged(object? sender, EventArgs e)
@@ -46,38 +197,52 @@ namespace Odyssey.ViewModels.Tools
 
             if (LocatedFaction is not null)
             {
-                StripViewModel.SetUnits(GetUnitIdsForFaction(LocatedFaction));
+                SetUnits(GetUnitIdsForFaction(LocatedFaction));
             }
             else if (CurrentSelection.Region is RegionModel region)
             {
-                StripViewModel.SetUnits(GetUnitIdsForRegion(region));
+                SetUnits(GetUnitIdsForRegion(region));
             }
 
-            StripViewModel.RefreshConfirmedStatuses();
+            RefreshConfirmedStatuses();
         }
 
         protected override void OnActiveDocumentChanged(CRDocument report)
         {
             base.OnActiveDocumentChanged(report);
+            if (_confirmationReport is not null)
+            {
+                _confirmationReport.OrderConfirmationChanged -= OnOrderConfirmationChanged;
+            }
+            _confirmationReport = report;
+            _confirmationReport.OrderConfirmationChanged += OnOrderConfirmationChanged;
+
             LocatedFaction = null;
-            StripViewModel.SetUnits([]);
-            StripViewModel.SetSelectionContext(null, null);
-            StripViewModel.SetSelectedUnit(null);
-            StripViewModel.SetOrdersColumnVisible(true);
+            SetUnits([]);
+            SetSelectionContext(null, null);
+            SetSelectedUnit(null);
+            SetOrdersColumnVisible(true);
             ResetLocatedFactionNavigation();
+        }
+
+        private void OnOrderConfirmationChanged(object? sender, EventArgs e)
+        {
+            if (ReferenceEquals(sender, _confirmationReport))
+            {
+                RefreshConfirmedStatuses();
+            }
         }
 
         protected override void OnSelectionChanged(IEntitySelection selection, SelectionChangeTypes selType, object? sender)
         {
             if (ReferenceEquals(sender, this)) return;
-            bool selectionFromStrip = ReferenceEquals(sender, StripViewModel);
             if (!HasDocument)
             {
                 LocatedFaction = null;
-                StripViewModel.SetUnits([]);
-                StripViewModel.SetSelectionContext(null, null);
-                StripViewModel.SetSelectedUnit(null);
-                StripViewModel.SetOrdersColumnVisible(true);
+                SetUnits([]);
+                SetSelectionContext(null, null);
+                SetSelectedUnit(null);
+                SetOrdersColumnVisible(true);
                 ResetLocatedFactionNavigation();
                 return;
             }
@@ -110,8 +275,8 @@ namespace Odyssey.ViewModels.Tools
             }
 
             bool showOrdersColumn = selectedFaction is null || Report.GetFactionStatus(selectedFaction.FactionId) is FactionStatus.ACTIVE or FactionStatus.ALLIED;
-            StripViewModel.SetOrdersColumnVisible(showOrdersColumn);
-            StripViewModel.SetSelectionContext(selectedFaction?.Region ?? selection.Region, selectedFaction);
+            SetOrdersColumnVisible(showOrdersColumn);
+            SetSelectionContext(selectedFaction?.Region ?? selection.Region, selectedFaction);
 
             bool factionChanged = !IsSameLocatedFaction(LocatedFaction, selectedFaction);
             if (factionChanged)
@@ -123,23 +288,20 @@ namespace Odyssey.ViewModels.Tools
             {
                 if (factionChanged)
                 {
-                    StripViewModel.SetUnits(GetUnitIdsForFaction(selectedFaction), revealSelectedUnit: !selectionFromStrip);
+                    SetUnits(GetUnitIdsForFaction(selectedFaction));
                 }
             }
             else if (region is not null)
             {
-                StripViewModel.SetUnits(GetUnitIdsForRegion(region), revealSelectedUnit: !selectionFromStrip);
+                SetUnits(GetUnitIdsForRegion(region));
             }
             else
             {
-                StripViewModel.SetUnits([], revealSelectedUnit: !selectionFromStrip);
+                SetUnits([]);
             }
 
-            if (!selectionFromStrip)
-            {
-                StripViewModel.SetSelectedUnit(selection.Item is UnitModel selectedUnit ? selectedUnit.Id : null);
-            }
-            StripViewModel.RefreshConfirmedStatuses();
+            SetSelectedUnit(selection.Item is UnitModel selectedUnit ? selectedUnit.Id : null);
+            RefreshConfirmedStatuses();
             LocatedFactionIndex = _locatedFactionsInRegion.FindIndex(faction => IsSameLocatedFaction(faction, selectedFaction));
         }
 
@@ -299,11 +461,11 @@ namespace Odyssey.ViewModels.Tools
             LocatedFactionModel faction = _locatedFactionsInRegion[index];
             LocatedFaction = faction;
             LocatedFactionIndex = index;
-            StripViewModel.SetOrdersColumnVisible(Report.GetFactionStatus(faction.FactionId) is FactionStatus.ACTIVE or FactionStatus.ALLIED);
-            StripViewModel.SetSelectionContext(faction.Region, faction);
-            StripViewModel.SetUnits(GetUnitIdsForFaction(faction));
-            StripViewModel.SetSelectedUnit(null);
-            StripViewModel.RefreshConfirmedStatuses();
+            SetOrdersColumnVisible(Report.GetFactionStatus(faction.FactionId) is FactionStatus.ACTIVE or FactionStatus.ALLIED);
+            SetSelectionContext(faction.Region, faction);
+            SetUnits(GetUnitIdsForFaction(faction));
+            SetSelectedUnit(null);
+            RefreshConfirmedStatuses();
             SendSelectionChangedEvent(new EntitySelection(null, faction.Region, locatedFaction: faction));
         }
 

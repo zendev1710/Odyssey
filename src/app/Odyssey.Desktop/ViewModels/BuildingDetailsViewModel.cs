@@ -14,8 +14,7 @@ public partial class BuildingDetailsViewModel : StructureViewModel
     protected NodeViewModel Root { get { return _root; } }
 
     public ObservableCollection<NodeViewModel> Items { get; }
-
-    public BuildingDetailsViewModel() : base(Ids.BuildingDetails)
+    public BuildingDetailsViewModel() : base(Ids.BuildingDetails, StructureKind.Building)
     {
         Items = Root.Children;
     }
@@ -59,18 +58,17 @@ public partial class BuildingDetailsViewModel : StructureViewModel
             OwnerName = StructureModel.OwnerName;
             OwnerUnit = StructureModel.OwnerUnit;
             Name = StructureModel.Name;
+            StructureId = StructureModel.EncodedId;
             Type = StructureModel.Type;
             Size = StructureModel.Size;
             Description = StructureModel.Description;
 
-            NodeViewModel structureNode = AddItem(Root, property, string.Empty, 0);
-            AddOwner(structureNode, true);
             foreach (DataProperty p in StructureModel.DataProperties)
             {
-                _ = AddItem(structureNode, p, $"{p.Label}: {p.Value}");
+                _ = AddItem(Root, p, $"{p.Label}: {p.Value}");
             }
-            AddEffects(structureNode);
-            AddUnits(structureNode);
+            AddEffects(Root);
+            PopulateOccupants(ownerFirst: true);
         }
     }
 }
