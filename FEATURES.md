@@ -35,12 +35,10 @@ A back/return button has the same effect as the Esc key.
 
 ### Settings system
 
-TO BE FINISHED.
-
 - [x] Use [ConfigFactory.Avalonia](https://www.nuget.org/packages/ConfigFactory.Avalonia) for GUI settings pages
 - [x] Restore/save settings by (de)serializing into an application settings JSON file (config.json)
 - [x] Restore/override settings by (de)serializing into an user settings JSON file (config.json)
-- [ ] Makes settings page visually correct in Simple theme
+- [x] Makes settings page visually correct in Simple theme
 
 ### Translation system
 
@@ -78,6 +76,11 @@ Optional:
 
 - [x] Multi active factions management
 - [ ] Report owner taken into account when opening a Report .cr file
+
+## Layout management
+
+- [x] Save/restore layout system (docking windows, tabs, etc.)
+- [ ] 
 
 ## Features upcoming
 
