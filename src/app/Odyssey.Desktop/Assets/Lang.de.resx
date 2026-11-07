@@ -2307,14 +2307,11 @@
   <data name="mainmenu_window" xml:space="preserve">
     <value>[DE]</value>
   </data>
-  <data name="mainmenu_window_layout_reset" xml:space="preserve">
-    <value>Layout zurücksetzen</value>
-  </data>
   <data name="mainmenu_window_layout_open" xml:space="preserve">
     <value>Layout öffnen...</value>
   </data>
   <data name="mainmenu_window_layout_save" xml:space="preserve">
-    <value>Layout speichern</value>
+    <value>Aktuelles Layout speichern</value>
   </data>
   <data name="mainmenu_window_layout_save_as" xml:space="preserve">
     <value>Layout speichern unter...</value>

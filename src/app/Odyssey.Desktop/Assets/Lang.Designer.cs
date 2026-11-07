@@ -3184,16 +3184,7 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _Reset layout.
-        /// </summary>
-        public static string mainmenu_window_layout_reset {
-            get {
-                return ResourceManager.GetString("mainmenu_window_layout_reset", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save layout.
+        ///   Looks up a localized string similar to Save current layout.
         /// </summary>
         public static string mainmenu_window_layout_save {
             get {

@@ -2307,14 +2307,11 @@
   <data name="mainmenu_window" xml:space="preserve">
     <value>_Fenêtre</value>
   </data>
-  <data name="mainmenu_window_layout_reset" xml:space="preserve">
-    <value>_Réinitialiser la disposition</value>
-  </data>
   <data name="mainmenu_window_layout_open" xml:space="preserve">
     <value>_Ouvrir une disposition de fenêtres...</value>
   </data>
   <data name="mainmenu_window_layout_save" xml:space="preserve">
-    <value>Enregistrer la disposition</value>
+    <value>Enregistrer la disposition actuelle</value>
   </data>
   <data name="mainmenu_window_layout_save_as" xml:space="preserve">
     <value>Enregistrer la disposition sous...</value>
