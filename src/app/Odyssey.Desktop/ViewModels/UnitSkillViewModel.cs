@@ -5,6 +5,7 @@ using Odyssey.Icons;
 using Odyssey.Services;
 using Avalonia;
 using Avalonia.Media;
+using Odyssey.Settings;
 
 namespace Odyssey.ViewModels.Tools;
 
@@ -23,10 +24,14 @@ public partial class UnitSkillViewModel : ObservableObject
     [ObservableProperty]
     private int _change;
 
-    public string LevelText => string.Format(
-        Lang.Culture,
-        Lang.ResourceManager.GetString("unit_skill_level_short", Lang.Culture) ?? "Lv {0}",
-        Level);
+    public string LevelText => GetLevelText(GlobalSettings.Shared.UnitSkillBadgeShowLevelPrefix);
+
+    public string GetLevelText(bool showPrefix) => showPrefix
+        ? string.Format(
+            Lang.Culture,
+            Lang.ResourceManager.GetString("unit_skill_level_short", Lang.Culture) ?? "Lv {0}",
+            Level)
+        : Level.ToString(Lang.Culture);
     public string TooltipLabel
     {
         get

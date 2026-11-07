@@ -8,8 +8,11 @@ using Avalonia.Data;
 using Avalonia.Data.Converters;
 using Avalonia.Input;
 using Avalonia.Media;
+using Avalonia.VisualTree;
 using Odyssey.ViewModels;
 using Odyssey.ViewModels.Tools;
+using Odyssey.Settings;
+using System.ComponentModel;
 using System.Windows.Input;
 
 namespace Odyssey.Controls;
@@ -18,6 +21,8 @@ public sealed class UnitItemBadgeControl : UserControl
 {
     private const double BadgeSize = 60;
     private readonly Viewbox _viewbox;
+    private readonly Border _badge;
+    private readonly GlobalSettings _settings = GlobalSettings.Shared;
     private double _zoom = 1;
 
     public double Zoom
@@ -106,7 +111,7 @@ public sealed class UnitItemBadgeControl : UserControl
         grid.Children.Add(itemName);
         grid.Children.Add(quantityBadge);
 
-        var badge = new Border
+        _badge = new Border
         {
             Width = BadgeSize,
             Height = BadgeSize,
@@ -116,16 +121,42 @@ public sealed class UnitItemBadgeControl : UserControl
             Background = new SolidColorBrush(Color.Parse("#A6A39E")),
             Child = grid,
         };
-        badge.Bind(ToolTip.TipProperty, new Binding(nameof(UnitItemViewModel.TooltipLabel)));
+        _badge.Bind(ToolTip.TipProperty, new Binding(nameof(UnitItemViewModel.TooltipLabel)));
+        UpdateBadgeBackground();
+        AttachedToVisualTree += OnAttachedToVisualTree;
+        DetachedFromVisualTree += OnDetachedFromVisualTree;
 
         _viewbox = new Viewbox
         {
             Width = BadgeSize,
             Height = BadgeSize,
             Stretch = Stretch.Uniform,
-            Child = badge,
+            Child = _badge,
         };
         Content = _viewbox;
+    }
+
+    private void OnAttachedToVisualTree(object? sender, VisualTreeAttachmentEventArgs e) =>
+        _settings.SettingChanged += OnSettingChanged;
+
+    private void OnDetachedFromVisualTree(object? sender, VisualTreeAttachmentEventArgs e) =>
+        _settings.SettingChanged -= OnSettingChanged;
+
+    private void OnSettingChanged(object? sender, SettingChangedEventArgs e)
+    {
+        if (e.SettingName == GlobalSettings.UNIT_ITEM_BADGE_TRANSPARENT)
+        {
+            UpdateBadgeBackground();
+        }
+    }
+
+    private void UpdateBadgeBackground()
+    {
+        bool transparent = _settings.UnitItemBadgeTransparent;
+        _badge.Background = transparent
+            ? Brushes.Transparent
+            : new SolidColorBrush(Color.Parse("#A6A39E"));
+        _badge.BorderThickness = transparent ? new Thickness(0) : new Thickness(1.2);
     }
 }
 
@@ -299,6 +330,12 @@ public sealed class UnitSkillBadgeControl : UserControl
 {
     private const double BadgeSize = 60;
     private readonly Viewbox _viewbox;
+    private readonly Border _badge;
+    private readonly Border _changeOverlay;
+    private readonly Border _levelBadge;
+    private readonly TextBlock _level;
+    private readonly GlobalSettings _settings = GlobalSettings.Shared;
+    private UnitSkillViewModel? _skillModel;
     private double _zoom = 1;
 
     public double Zoom
@@ -319,8 +356,7 @@ public sealed class UnitSkillBadgeControl : UserControl
 
     public UnitSkillBadgeControl()
     {
-        var changeOverlay = new Border { CornerRadius = new CornerRadius(16) };
-        changeOverlay.Bind(Border.BackgroundProperty, new Binding(nameof(UnitSkillViewModel.ChangeCircleOverlay)));
+        _changeOverlay = new Border { CornerRadius = new CornerRadius(BadgeSize / 2) };
 
         var image = new AdvancedImage((Uri)null!)
         {
@@ -356,58 +392,133 @@ public sealed class UnitSkillBadgeControl : UserControl
             Converter = IconVisibilityConverter.Hidden,
         });
 
-        var level = new TextBlock
+        _level = new TextBlock
         {
             FontSize = 14,
             FontWeight = FontWeight.Black,
             Foreground = Brushes.White,
             TextAlignment = TextAlignment.Center,
+            VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
         };
-        level.Bind(TextBlock.TextProperty, new Binding(nameof(UnitSkillViewModel.LevelText)));
-
-        var levelBadge = new Border
+        _levelBadge = new Border
         {
-            MinWidth = 44,
+            MinWidth = 26,
             MinHeight = 22,
             CornerRadius = new CornerRadius(11),
             HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
             VerticalAlignment = Avalonia.Layout.VerticalAlignment.Bottom,
             Margin = new Thickness(0, 0, 0, 3),
             Padding = new Thickness(4, 0),
-            Child = level,
+            Child = _level,
         };
-        levelBadge.Bind(Border.BackgroundProperty, new Binding(nameof(UnitSkillViewModel.LevelBackground)));
+        _levelBadge.Bind(Border.BackgroundProperty, new Binding(nameof(UnitSkillViewModel.LevelBackground)));
 
         var grid = new Grid { RowDefinitions = new RowDefinitions("*,Auto") };
-        grid.Children.Add(changeOverlay);
+        grid.Children.Add(_changeOverlay);
         Grid.SetRow(image, 0);
         Grid.SetRow(skillName, 0);
-        Grid.SetRow(levelBadge, 1);
+        Grid.SetRow(_levelBadge, 1);
         grid.Children.Add(image);
         grid.Children.Add(skillName);
-        grid.Children.Add(levelBadge);
+        grid.Children.Add(_levelBadge);
 
-        var badge = new Border
+        _badge = new Border
         {
             Width = BadgeSize,
             Height = BadgeSize,
-            CornerRadius = new CornerRadius(16),
+            CornerRadius = new CornerRadius(BadgeSize / 2),
             BorderThickness = new Thickness(3),
             Background = new SolidColorBrush(Color.Parse("#B8B8B8")),
             Child = grid,
         };
-        badge.Bind(Border.BorderBrushProperty, new Binding(nameof(UnitSkillViewModel.ChangeBorderBrush)));
-        badge.Bind(Border.BorderThicknessProperty, new Binding(nameof(UnitSkillViewModel.ChangeBorderThickness)));
-        badge.Bind(ToolTip.TipProperty, new Binding(nameof(UnitSkillViewModel.TooltipLabel)));
+        _badge.Bind(ToolTip.TipProperty, new Binding(nameof(UnitSkillViewModel.TooltipLabel)));
+        UpdateBadgeAppearance();
+
+        DataContextChanged += (_, _) =>
+        {
+            if (_skillModel is not null)
+            {
+                _skillModel.PropertyChanged -= OnSkillModelPropertyChanged;
+            }
+
+            _skillModel = DataContext as UnitSkillViewModel;
+            if (_skillModel is not null)
+            {
+                _skillModel.PropertyChanged += OnSkillModelPropertyChanged;
+            }
+
+            UpdateBadgeAppearance();
+            UpdateLevelText();
+        };
+        AttachedToVisualTree += OnAttachedToVisualTree;
+        DetachedFromVisualTree += OnDetachedFromVisualTree;
 
         _viewbox = new Viewbox
         {
             Width = BadgeSize,
             Height = BadgeSize,
             Stretch = Stretch.Uniform,
-            Child = badge,
+            Child = _badge,
         };
         Content = _viewbox;
+    }
+
+    private void OnAttachedToVisualTree(object? sender, VisualTreeAttachmentEventArgs e) =>
+        _settings.SettingChanged += OnSettingChanged;
+
+    private void OnDetachedFromVisualTree(object? sender, VisualTreeAttachmentEventArgs e) =>
+        _settings.SettingChanged -= OnSettingChanged;
+
+    private void OnSettingChanged(object? sender, SettingChangedEventArgs e)
+    {
+        if (e.SettingName is GlobalSettings.UNIT_SKILL_BADGE_SHOW_LEVEL_PREFIX or GlobalSettings.UNIT_SKILL_BADGE_TRANSPARENT)
+        {
+            UpdateBadgeAppearance();
+            UpdateLevelText();
+        }
+    }
+
+    private void OnSkillModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(UnitSkillViewModel.Change))
+        {
+            UpdateBadgeAppearance();
+        }
+
+        if (e.PropertyName is nameof(UnitSkillViewModel.Level) or nameof(UnitSkillViewModel.LevelText))
+        {
+            UpdateLevelText();
+        }
+    }
+
+    private void UpdateBadgeAppearance()
+    {
+        bool transparent = _settings.UnitSkillBadgeTransparent;
+        bool skillLevelChanged = _skillModel?.Change != 0;
+
+        _badge.Background = transparent
+            ? Brushes.Transparent
+            : new SolidColorBrush(Color.Parse("#B8B8B8"));
+        _badge.BorderBrush = _skillModel?.ChangeBorderBrush ?? Brushes.Transparent;
+        _badge.BorderThickness = transparent && !skillLevelChanged
+            ? new Thickness(0)
+            : _skillModel?.ChangeBorderThickness ?? new Thickness(0);
+        _changeOverlay.Background = transparent
+            ? Brushes.Transparent
+            : _skillModel?.ChangeCircleOverlay ?? Brushes.Transparent;
+        _levelBadge.Background = transparent
+            ? Brushes.Transparent
+            : new SolidColorBrush(Color.Parse(_skillModel?.LevelBackground ?? "#4b5563"));
+        _level.Foreground = Brushes.White;
+        _levelBadge.MinWidth = _settings.UnitSkillBadgeShowLevelPrefix ? 44 : 26;
+    }
+
+    private void UpdateLevelText()
+    {
+        if (_skillModel is not null)
+        {
+            _level.Text = _skillModel.GetLevelText(_settings.UnitSkillBadgeShowLevelPrefix);
+        }
     }
 }
 
