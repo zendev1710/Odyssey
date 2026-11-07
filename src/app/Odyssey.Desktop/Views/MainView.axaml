@@ -40,6 +40,20 @@
         <KeyBinding Gesture="F8" Command="{Binding CenterMapOnSelectedRegionCommand}" />
         <KeyBinding Gesture="Ctrl+F8" Command="{Binding CenterMapGloballyCommand}" />
         <KeyBinding Gesture="Ctrl+Shift+R" Command="{Binding ToggleAllShipRoutesCommand}" />
+		<KeyBinding Gesture="Ctrl+NumPad1" Command="{Binding ToggleViewCommand}" CommandParameter="map" />
+		<KeyBinding Gesture="Ctrl+NumPad2" Command="{Binding ToggleViewCommand}" CommandParameter="minimap" />
+		<KeyBinding Gesture="Ctrl+NumPad3" Command="{Binding ToggleViewCommand}" CommandParameter="history" />
+		<KeyBinding Gesture="Ctrl+NumPad4" Command="{Binding ToggleViewCommand}" CommandParameter="bookmarks" />
+		<KeyBinding Gesture="Ctrl+NumPad5" Command="{Binding ToggleViewCommand}" CommandParameter="region_info" />
+		<KeyBinding Gesture="Ctrl+NumPad6" Command="{Binding ToggleViewCommand}" CommandParameter="battles" />
+		<KeyBinding Gesture="Ctrl+NumPad7" Command="{Binding ToggleViewCommand}" CommandParameter="search_results" />
+		<KeyBinding Gesture="Ctrl+NumPad8" Command="{Binding ToggleViewCommand}" CommandParameter="report_info" />
+		<KeyBinding Gesture="Ctrl+NumPad9" Command="{Binding ToggleViewCommand}" CommandParameter="error_list" />
+		<KeyBinding Gesture="Ctrl+NumPad0" Command="{Binding ToggleViewCommand}" CommandParameter="details" />
+		<KeyBinding Gesture="Ctrl+Shift+NumPad1" Command="{Binding ToggleViewCommand}" CommandParameter="region_statistics" />
+		<KeyBinding Gesture="Ctrl+Shift+NumPad2" Command="{Binding ToggleViewCommand}" CommandParameter="unit_orders" />
+		<KeyBinding Gesture="Ctrl+Shift+NumPad3" Command="{Binding ToggleViewCommand}" CommandParameter="region_properties" />
+		<KeyBinding Gesture="Ctrl+Shift+NumPad4" Command="{Binding ToggleViewCommand}" CommandParameter="explorer" />
 	</UserControl.KeyBindings>
 	<Grid RowDefinitions="Auto,*,25" ColumnDefinitions="Auto,*" Background="Transparent" DragDrop.AllowDrop="True">
 		<!--MENUS -->
