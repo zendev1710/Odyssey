@@ -705,7 +705,11 @@ public class App : Application
             mainWindow.AttachDockDebugOverlay(new KeyGesture(Key.F9));
 #endif
 
-            mainWindow.Closing += (_, _) => { mainWindowViewModel.CloseLayout(); };
+            mainWindow.Closing += (_, _) =>
+            {
+                mainWindowViewModel.SaveSessionOnApplicationClosing();
+                mainWindowViewModel.CloseLayout();
+            };
             desktopLifetime.MainWindow = mainWindow;
             desktopLifetime.Exit += (_, _) => { mainWindowViewModel.CloseLayout();};
         }

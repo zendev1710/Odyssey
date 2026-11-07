@@ -192,9 +192,53 @@ public class CRDocument : EresseaDocument, ILocationResolver
     public bool HasEditedCommands => _editedCommands.Count > 0;
     public bool HasEditedOrderData => HasEditedCommands || _editedUnitConfirmationStatuses.Count > 0;
 
+    public EditedOrderChanges CaptureEditedOrderChanges()
+    {
+        return new EditedOrderChanges
+        {
+            Commands = _editedCommands.ToDictionary(entry => entry.Key, entry => entry.Value.ToArray()),
+            ConfirmationStatuses = new Dictionary<int, bool>(_editedUnitConfirmationStatuses)
+        };
+    }
+
+    public void RestoreEditedOrderChanges(EditedOrderChanges changes)
+    {
+        ArgumentNullException.ThrowIfNull(changes);
+
+        foreach ((int unitId, string[] commands) in changes.Commands)
+        {
+            if (Units.TryGetValue(unitId, out UnitModel? unit) && unit.HasEditableOrders)
+            {
+                SetEditedCommands(unitId, commands);
+            }
+            else
+            {
+                Debug.WriteLine($"[CRDOCUMENT] Skipping saved order edits for missing or non-editable unit {unitId}.");
+            }
+        }
+
+        foreach ((int unitId, bool isConfirmed) in changes.ConfirmationStatuses)
+        {
+            if (Units.TryGetValue(unitId, out UnitModel? unit) && unit.HasEditableOrders)
+            {
+                SetEditedUnitConfirmationStatus(unitId, isConfirmed);
+            }
+            else
+            {
+                Debug.WriteLine($"[CRDOCUMENT] Skipping saved confirmation status for missing or non-editable unit {unitId}.");
+            }
+        }
+    }
+
     public bool TryGetEditedCommands(int unitId, out IReadOnlyList<string> commands)
     {
         return _editedCommands.TryGetValue(unitId, out commands!);
+    }
+
+    public sealed class EditedOrderChanges
+    {
+        public Dictionary<int, string[]> Commands { get; set; } = [];
+        public Dictionary<int, bool> ConfirmationStatuses { get; set; } = [];
     }
 
     public void SetEditedCommands(int unitId, IEnumerable<string> commands)
