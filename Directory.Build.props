@@ -1,0 +1,11 @@
+<Project>
+  <PropertyGroup>
+	<OdysseyVersion Condition="'$(OdysseyVersion)' == ''">0.10.3</OdysseyVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(MSBuildProjectName)' == 'Odyssey'">
+	<Version>$(OdysseyVersion)</Version>
+	<AssemblyVersion>$(OdysseyVersion).0</AssemblyVersion>
+	<FileVersion>$(OdysseyVersion).0</FileVersion>
+	<InformationalVersion>$(OdysseyVersion)</InformationalVersion>
+  </PropertyGroup>
+</Project>

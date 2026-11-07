@@ -1,4 +1,7 @@
 ﻿<Project Sdk="WixToolset.Sdk/6.0.1">
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);OdysseyVersion=$(OdysseyVersion)</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="WixToolset.UI.wixext" Version="6.0.1" />
     <PackageReference Include="WixToolset.Util.wixext" Version="6.0.1" />
