@@ -123,6 +123,42 @@ public class IconCatalogBuilderTests
     }
 
     [Fact]
+    public void Resolves_french_building_and_ship_names_to_their_catalog_entries()
+    {
+        var result = IconCatalogBuilder.Build(ManifestPath, AssetsRoot);
+        var catalog = IconCatalog.Parse(IconCatalogBuilder.Serialize(result.Catalog));
+
+        Assert.Equal("building/lighthouse", catalog.Find("building", "phare")?.Id);
+        Assert.Equal("ship/dragon_ship", catalog.Find("ship", "drakkar")?.Id);
+        Assert.Equal("ship/dragon_ship", catalog.Find("ship", "dragonship")?.Id);
+    }
+
+    [Fact]
+    public void Resolves_french_race_and_terrain_names_to_their_catalog_entries()
+    {
+        var result = IconCatalogBuilder.Build(ManifestPath, AssetsRoot);
+        var catalog = IconCatalog.Parse(IconCatalogBuilder.Serialize(result.Catalog));
+
+        Assert.Equal("race/humans", catalog.Find("race", "Humains")?.Id);
+        Assert.Equal("terrain/plains", catalog.Find("terrain", "Plaine")?.Id);
+    }
+
+    [Fact]
+    public void Resolves_french_search_terms_for_items_unit_roles_and_monsters()
+    {
+        var result = IconCatalogBuilder.Build(ManifestPath, AssetsRoot);
+        var catalog = IconCatalog.Parse(IconCatalogBuilder.Serialize(result.Catalog));
+
+        Assert.Equal("item/goliath_water", catalog.Find("item", "eau de goliath")?.Id);
+        Assert.Equal("skill/alchemy", catalog.Find("skill", "alchimiste")?.Id);
+        Assert.Equal("skill/magic", catalog.Find("skill", "magicienne")?.Id);
+        Assert.Equal("skill/tactics", catalog.Find("skill", "tacticien")?.Id);
+        Assert.Equal("status/hero", catalog.Find("status", "héros")?.Id);
+        Assert.Equal("monster/undead", catalog.Find("monster", "morts-vivants")?.Id);
+        Assert.Equal("monster/dragons", catalog.Find("monster", "dragon")?.Id);
+    }
+
+    [Fact]
     public void Resolver_ignores_variants()
     {
         var result = IconCatalogBuilder.Build(ManifestPath, AssetsRoot);

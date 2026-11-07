@@ -20,11 +20,20 @@ namespace Odyssey.ViewModels
         {
             RegionNodeViewModel = regionNodeViewModel;
             LocationResolver = locationResolver;
-            // The region node id is the region's id (and location id), so it can be resolved directly.
-            RegionModel? region = locationResolver.ResolveItem(regionNodeViewModel.Id, out EntityModel? resolvedItem)
+            RegionModel? region = ResolveRegion(regionNodeViewModel, locationResolver);
+            SetItem(item, region, null, locationResolver);
+        }
+
+        protected static RegionModel? ResolveRegion(ExplorerNodeViewModel regionNodeViewModel, ILocationResolver locationResolver)
+        {
+            if (locationResolver is CRDocument report)
+            {
+                return report.FindRegionById(regionNodeViewModel.Id);
+            }
+
+            return locationResolver.ResolveItem(regionNodeViewModel.Id, out EntityModel? resolvedItem)
                 ? resolvedItem as RegionModel
                 : null;
-            SetItem(item, region, null, locationResolver);
         }
     }
 }

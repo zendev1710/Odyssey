@@ -1,8 +1,11 @@
-﻿using Avalonia;
+﻿using System;
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Odyssey.Controls;
 using Odyssey.ViewModels;
 
 namespace Odyssey.Views;
@@ -21,6 +24,26 @@ public partial class UnitDetailsView : UserControl
     private void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);
+    }
+
+    private void ScrollLeft_Click(object? sender, RoutedEventArgs e) => ScrollHorizontally(sender, -24);
+
+    private void ScrollRight_Click(object? sender, RoutedEventArgs e) => ScrollHorizontally(sender, 24);
+
+    private void ScrollHorizontally(object? sender, double amount)
+    {
+        if (sender is RepeatButton arrow && HorizontalScrollHelper.FindScrollViewer(arrow) is ScrollViewer scrollViewer)
+        {
+            HorizontalScrollHelper.ScrollBy(scrollViewer, amount);
+        }
+    }
+
+    private void ScrollViewer_LayoutUpdated(object? sender, EventArgs e)
+    {
+        if (sender is ScrollViewer scrollViewer)
+        {
+            HorizontalScrollHelper.UpdateArrowVisibility(scrollViewer);
+        }
     }
 
     private void TreeView_PointerPressed(object? sender, PointerPressedEventArgs e)

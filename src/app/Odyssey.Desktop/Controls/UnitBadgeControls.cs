@@ -6,15 +6,23 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Data.Converters;
+using Avalonia.Input;
 using Avalonia.Media;
+using Avalonia.VisualTree;
+using Odyssey.ViewModels;
 using Odyssey.ViewModels.Tools;
+using Odyssey.Settings;
+using System.ComponentModel;
+using System.Windows.Input;
 
 namespace Odyssey.Controls;
 
 public sealed class UnitItemBadgeControl : UserControl
 {
-    private const double BadgeSize = 46;
+    private const double BadgeSize = 60;
     private readonly Viewbox _viewbox;
+    private readonly Border _badge;
+    private readonly GlobalSettings _settings = GlobalSettings.Shared;
     private double _zoom = 1;
 
     public double Zoom
@@ -67,7 +75,7 @@ public sealed class UnitItemBadgeControl : UserControl
 
         var quantity = new TextBlock
         {
-            FontSize = 11,
+            FontSize = 12,
             FontFamily = "Segoe UI",
             FontWeight = FontWeight.Black,
             Foreground = new SolidColorBrush(Color.Parse("#101010")),
@@ -80,11 +88,13 @@ public sealed class UnitItemBadgeControl : UserControl
         {
             Background = new SolidColorBrush(Color.Parse("#f5d67b")),
             Opacity = 0.96,
-            CornerRadius = new CornerRadius(4),
-            HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Right,
+            MinWidth = 26,
+            MinHeight = 20,
+            CornerRadius = new CornerRadius(10),
+            HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
             VerticalAlignment = Avalonia.Layout.VerticalAlignment.Bottom,
-            Margin = new Thickness(0, 2, 0, 0),
-            Padding = new Thickness(3, 0),
+            Margin = new Thickness(0, 0, 0, 5),
+            Padding = new Thickness(5, 0),
             BorderBrush = new SolidColorBrush(Color.Parse("#7a6146")),
             BorderThickness = new Thickness(1),
             Child = quantity,
@@ -101,33 +111,231 @@ public sealed class UnitItemBadgeControl : UserControl
         grid.Children.Add(itemName);
         grid.Children.Add(quantityBadge);
 
-        var badge = new Border
+        _badge = new Border
         {
             Width = BadgeSize,
             Height = BadgeSize,
-            CornerRadius = new CornerRadius(8),
+            CornerRadius = new CornerRadius(10),
             BorderBrush = new SolidColorBrush(Color.Parse("#8f6d42")),
             BorderThickness = new Thickness(1.2),
-            Background = new SolidColorBrush(Color.Parse("#d9d9d9")),
+            Background = new SolidColorBrush(Color.Parse("#A6A39E")),
             Child = grid,
         };
-        badge.Bind(ToolTip.TipProperty, new Binding(nameof(UnitItemViewModel.TooltipLabel)));
+        _badge.Bind(ToolTip.TipProperty, new Binding(nameof(UnitItemViewModel.TooltipLabel)));
+        UpdateBadgeBackground();
+        AttachedToVisualTree += OnAttachedToVisualTree;
+        DetachedFromVisualTree += OnDetachedFromVisualTree;
 
         _viewbox = new Viewbox
         {
             Width = BadgeSize,
             Height = BadgeSize,
             Stretch = Stretch.Uniform,
-            Child = badge,
+            Child = _badge,
         };
         Content = _viewbox;
+    }
+
+    private void OnAttachedToVisualTree(object? sender, VisualTreeAttachmentEventArgs e) =>
+        _settings.SettingChanged += OnSettingChanged;
+
+    private void OnDetachedFromVisualTree(object? sender, VisualTreeAttachmentEventArgs e) =>
+        _settings.SettingChanged -= OnSettingChanged;
+
+    private void OnSettingChanged(object? sender, SettingChangedEventArgs e)
+    {
+        if (e.SettingName == GlobalSettings.UNIT_ITEM_BADGE_TRANSPARENT)
+        {
+            UpdateBadgeBackground();
+        }
+    }
+
+    private void UpdateBadgeBackground()
+    {
+        bool transparent = _settings.UnitItemBadgeTransparent;
+        _badge.Background = transparent
+            ? Brushes.Transparent
+            : new SolidColorBrush(Color.Parse("#A6A39E"));
+        _badge.BorderThickness = transparent ? new Thickness(0) : new Thickness(1.2);
+    }
+}
+
+public sealed class StructureIdentityCardControl : UserControl
+{
+    public StructureIdentityCardControl()
+    {
+        var name = new SelectableTextBlock
+        {
+            FontWeight = FontWeight.SemiBold,
+            TextWrapping = TextWrapping.NoWrap,
+            TextTrimming = TextTrimming.CharacterEllipsis,
+        };
+        name.Bind(TextBlock.TextProperty, new Binding(nameof(StructureViewModel.Name)));
+
+        var id = new SelectableTextBlock
+        {
+            FontSize = 10,
+            TextWrapping = TextWrapping.NoWrap,
+            TextTrimming = TextTrimming.CharacterEllipsis,
+            Margin = new Thickness(0, 3, 0, 0),
+        };
+        id.Bind(TextBlock.TextProperty, new Binding(nameof(StructureViewModel.StructureId)));
+
+        var ownerLabel = new SelectableTextBlock { VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center };
+        ownerLabel.Bind(TextBlock.TextProperty, new Binding(nameof(StructureViewModel.OwnerLabel)));
+
+        var colon = new SelectableTextBlock { Text = ":", VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center };
+
+        var ownerLinkText = new SelectableLinkTextBlock
+        {
+            HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Left,
+            TextWrapping = TextWrapping.NoWrap,
+            TextTrimming = TextTrimming.CharacterEllipsis,
+        };
+        ownerLinkText.Bind(TextBlock.TextProperty, new Binding(nameof(StructureViewModel.OwnerName)));
+        ownerLinkText.Bind(SelectableLinkTextBlock.CommandProperty, new Binding(nameof(StructureViewModel.SelectOwnerCommand)));
+        ownerLinkText.Bind(ToolTip.TipProperty, new Binding(nameof(StructureViewModel.OwnerTooltip)));
+        ownerLinkText.Bind(Visual.IsVisibleProperty, new Binding(nameof(StructureViewModel.HasOwnerUnit)));
+
+        var unlinkedOwner = new SelectableTextBlock { VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center };
+        unlinkedOwner.Bind(TextBlock.TextProperty, new Binding(nameof(StructureViewModel.OwnerName)));
+        unlinkedOwner.Bind(Visual.IsVisibleProperty, new Binding(nameof(StructureViewModel.HasUnlinkedOwner)));
+
+        var ownerRow = new Grid
+        {
+            ColumnDefinitions = new ColumnDefinitions("Auto,Auto,*"),
+            Margin = new Thickness(0, 8, 0, 0),
+            Children = { ownerLabel, colon, ownerLinkText, unlinkedOwner },
+        };
+        Grid.SetColumn(ownerLabel, 0);
+        Grid.SetColumn(colon, 1);
+        Grid.SetColumn(ownerLinkText, 2);
+        Grid.SetColumn(unlinkedOwner, 2);
+        ownerRow.Bind(Visual.IsVisibleProperty, new Binding(nameof(StructureViewModel.HasOwner)));
+
+        var content = new StackPanel
+        {
+            Spacing = 3,
+            Children = { name, id, ownerRow },
+        };
+
+        var card = new Border
+        {
+            Padding = new Thickness(6),
+            Background = Brushes.Transparent,
+            CornerRadius = new CornerRadius(12),
+            Child = content,
+        };
+        Content = card;
+    }
+}
+
+public sealed class StructureTypeSizeControl : UserControl
+{
+    public StructureTypeSizeControl()
+    {
+        var typeIcon = new AdvancedImage((Uri)null!)
+        {
+            Width = 28,
+            Height = 28,
+            Stretch = Stretch.Uniform,
+            VerticalAlignment = Avalonia.Layout.VerticalAlignment.Top,
+        };
+        typeIcon.Bind(AdvancedImage.SourceProperty, new Binding(nameof(StructureViewModel.StructureTypeIconPath))
+        {
+            Converter = IconAssetUriConverter.Instance,
+        });
+        typeIcon.Bind(Visual.IsVisibleProperty, new Binding(nameof(StructureViewModel.StructureTypeIconPath))
+        {
+            Converter = IconVisibilityConverter.Visible,
+        });
+        typeIcon.Bind(ToolTip.TipProperty, new Binding(nameof(StructureViewModel.StructureTypeTooltip)));
+
+        var size = new SelectableTextBlock
+        {
+            FontSize = 20,
+            FontWeight = FontWeight.Black,
+            TextAlignment = TextAlignment.Center,
+            VerticalAlignment = Avalonia.Layout.VerticalAlignment.Bottom,
+        };
+        size.Bind(TextBlock.TextProperty, new Binding(nameof(StructureViewModel.Size)));
+        size.Bind(Visual.IsVisibleProperty, new Binding(nameof(StructureViewModel.HasSize)));
+        size.Bind(ToolTip.TipProperty, new Binding(nameof(StructureViewModel.SizeLabel)));
+
+        Content = new StackPanel
+        {
+            Orientation = Avalonia.Layout.Orientation.Horizontal,
+            Spacing = 8,
+            HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Right,
+            VerticalAlignment = Avalonia.Layout.VerticalAlignment.Top,
+            Margin = new Thickness(8, 6, 6, 0),
+            Children = { typeIcon, size },
+        };
+    }
+}
+
+public sealed class SelectableLinkTextBlock : SelectableTextBlock
+{
+    public static readonly StyledProperty<ICommand?> CommandProperty =
+        AvaloniaProperty.Register<SelectableLinkTextBlock, ICommand?>(nameof(Command));
+
+    public static readonly StyledProperty<object?> CommandParameterProperty =
+        AvaloniaProperty.Register<SelectableLinkTextBlock, object?>(nameof(CommandParameter));
+
+    public ICommand? Command
+    {
+        get => GetValue(CommandProperty);
+        set => SetValue(CommandProperty, value);
+    }
+
+    public object? CommandParameter
+    {
+        get => GetValue(CommandParameterProperty);
+        set => SetValue(CommandParameterProperty, value);
+    }
+
+    public SelectableLinkTextBlock()
+    {
+        TextDecorations = Avalonia.Media.TextDecorations.Underline;
+        Cursor = new Cursor(StandardCursorType.Hand);
+        Focusable = true;
+        IsTabStop = true;
+        Tapped += OnTapped;
+    }
+
+    protected override void OnKeyDown(KeyEventArgs e)
+    {
+        if (e.Key is Key.Enter or Key.Space)
+        {
+            ExecuteCommand();
+            e.Handled = true;
+            return;
+        }
+
+        base.OnKeyDown(e);
+    }
+
+    private void OnTapped(object? sender, TappedEventArgs e) => ExecuteCommand();
+
+    private void ExecuteCommand()
+    {
+        if (Command?.CanExecute(CommandParameter) == true)
+        {
+            Command.Execute(CommandParameter);
+        }
     }
 }
 
 public sealed class UnitSkillBadgeControl : UserControl
 {
-    private const double BadgeSize = 46;
+    private const double BadgeSize = 60;
     private readonly Viewbox _viewbox;
+    private readonly Border _badge;
+    private readonly Border _changeOverlay;
+    private readonly Border _levelBadge;
+    private readonly TextBlock _level;
+    private readonly GlobalSettings _settings = GlobalSettings.Shared;
+    private UnitSkillViewModel? _skillModel;
     private double _zoom = 1;
 
     public double Zoom
@@ -148,14 +356,12 @@ public sealed class UnitSkillBadgeControl : UserControl
 
     public UnitSkillBadgeControl()
     {
-        var changeOverlay = new Border { CornerRadius = new CornerRadius(23) };
-        changeOverlay.Bind(Border.BackgroundProperty, new Binding(nameof(UnitSkillViewModel.ChangeCircleOverlay)));
+        _changeOverlay = new Border { CornerRadius = new CornerRadius(BadgeSize / 2) };
 
         var image = new AdvancedImage((Uri)null!)
         {
-            Width = 24,
-            Height = 24,
-            Margin = new Thickness(0, 0, 0, 8),
+            Width = 22,
+            Height = 22,
             HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
             VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
             Stretch = Stretch.Uniform,
@@ -171,7 +377,7 @@ public sealed class UnitSkillBadgeControl : UserControl
 
         var skillName = new TextBlock
         {
-            Margin = new Thickness(4, 4, 4, 12),
+            Margin = new Thickness(4, 4, 4, 0),
             FontSize = 9,
             FontWeight = FontWeight.SemiBold,
             TextAlignment = TextAlignment.Center,
@@ -186,53 +392,133 @@ public sealed class UnitSkillBadgeControl : UserControl
             Converter = IconVisibilityConverter.Hidden,
         });
 
-        var level = new TextBlock
+        _level = new TextBlock
         {
-            FontSize = 11,
+            FontSize = 14,
             FontWeight = FontWeight.Black,
             Foreground = Brushes.White,
             TextAlignment = TextAlignment.Center,
+            VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
         };
-        level.Bind(TextBlock.TextProperty, new Binding(nameof(UnitSkillViewModel.LevelText)));
-
-        var levelBadge = new Border
+        _levelBadge = new Border
         {
-            CornerRadius = new CornerRadius(8),
+            MinWidth = 26,
+            MinHeight = 22,
+            CornerRadius = new CornerRadius(11),
             HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
             VerticalAlignment = Avalonia.Layout.VerticalAlignment.Bottom,
-            Margin = new Thickness(0, 0, 0, 2),
-            Padding = new Thickness(5, 0),
-            Child = level,
+            Margin = new Thickness(0, 0, 0, 3),
+            Padding = new Thickness(4, 0),
+            Child = _level,
         };
-        levelBadge.Bind(Border.BackgroundProperty, new Binding(nameof(UnitSkillViewModel.LevelBackground)));
+        _levelBadge.Bind(Border.BackgroundProperty, new Binding(nameof(UnitSkillViewModel.LevelBackground)));
 
-        var grid = new Grid();
-        grid.Children.Add(changeOverlay);
+        var grid = new Grid { RowDefinitions = new RowDefinitions("*,Auto") };
+        grid.Children.Add(_changeOverlay);
+        Grid.SetRow(image, 0);
+        Grid.SetRow(skillName, 0);
+        Grid.SetRow(_levelBadge, 1);
         grid.Children.Add(image);
         grid.Children.Add(skillName);
-        grid.Children.Add(levelBadge);
+        grid.Children.Add(_levelBadge);
 
-        var badge = new Border
+        _badge = new Border
         {
             Width = BadgeSize,
             Height = BadgeSize,
-            CornerRadius = new CornerRadius(23),
-            BorderThickness = new Thickness(4),
-            Background = new SolidColorBrush(Color.Parse("#cfe6f0")),
+            CornerRadius = new CornerRadius(BadgeSize / 2),
+            BorderThickness = new Thickness(3),
+            Background = new SolidColorBrush(Color.Parse("#B8B8B8")),
             Child = grid,
         };
-        badge.Bind(Border.BorderBrushProperty, new Binding(nameof(UnitSkillViewModel.ChangeBorderBrush)));
-        badge.Bind(Border.BorderThicknessProperty, new Binding(nameof(UnitSkillViewModel.ChangeBorderThickness)));
-        badge.Bind(ToolTip.TipProperty, new Binding(nameof(UnitSkillViewModel.TooltipLabel)));
+        _badge.Bind(ToolTip.TipProperty, new Binding(nameof(UnitSkillViewModel.TooltipLabel)));
+        UpdateBadgeAppearance();
+
+        DataContextChanged += (_, _) =>
+        {
+            if (_skillModel is not null)
+            {
+                _skillModel.PropertyChanged -= OnSkillModelPropertyChanged;
+            }
+
+            _skillModel = DataContext as UnitSkillViewModel;
+            if (_skillModel is not null)
+            {
+                _skillModel.PropertyChanged += OnSkillModelPropertyChanged;
+            }
+
+            UpdateBadgeAppearance();
+            UpdateLevelText();
+        };
+        AttachedToVisualTree += OnAttachedToVisualTree;
+        DetachedFromVisualTree += OnDetachedFromVisualTree;
 
         _viewbox = new Viewbox
         {
             Width = BadgeSize,
             Height = BadgeSize,
             Stretch = Stretch.Uniform,
-            Child = badge,
+            Child = _badge,
         };
         Content = _viewbox;
+    }
+
+    private void OnAttachedToVisualTree(object? sender, VisualTreeAttachmentEventArgs e) =>
+        _settings.SettingChanged += OnSettingChanged;
+
+    private void OnDetachedFromVisualTree(object? sender, VisualTreeAttachmentEventArgs e) =>
+        _settings.SettingChanged -= OnSettingChanged;
+
+    private void OnSettingChanged(object? sender, SettingChangedEventArgs e)
+    {
+        if (e.SettingName is GlobalSettings.UNIT_SKILL_BADGE_SHOW_LEVEL_PREFIX or GlobalSettings.UNIT_SKILL_BADGE_TRANSPARENT)
+        {
+            UpdateBadgeAppearance();
+            UpdateLevelText();
+        }
+    }
+
+    private void OnSkillModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(UnitSkillViewModel.Change))
+        {
+            UpdateBadgeAppearance();
+        }
+
+        if (e.PropertyName is nameof(UnitSkillViewModel.Level) or nameof(UnitSkillViewModel.LevelText))
+        {
+            UpdateLevelText();
+        }
+    }
+
+    private void UpdateBadgeAppearance()
+    {
+        bool transparent = _settings.UnitSkillBadgeTransparent;
+        bool skillLevelChanged = _skillModel?.Change != 0;
+
+        _badge.Background = transparent
+            ? Brushes.Transparent
+            : new SolidColorBrush(Color.Parse("#B8B8B8"));
+        _badge.BorderBrush = _skillModel?.ChangeBorderBrush ?? Brushes.Transparent;
+        _badge.BorderThickness = transparent && !skillLevelChanged
+            ? new Thickness(0)
+            : _skillModel?.ChangeBorderThickness ?? new Thickness(0);
+        _changeOverlay.Background = transparent
+            ? Brushes.Transparent
+            : _skillModel?.ChangeCircleOverlay ?? Brushes.Transparent;
+        _levelBadge.Background = transparent
+            ? Brushes.Transparent
+            : new SolidColorBrush(Color.Parse(_skillModel?.LevelBackground ?? "#4b5563"));
+        _level.Foreground = Brushes.White;
+        _levelBadge.MinWidth = _settings.UnitSkillBadgeShowLevelPrefix ? 44 : 26;
+    }
+
+    private void UpdateLevelText()
+    {
+        if (_skillModel is not null)
+        {
+            _level.Text = _skillModel.GetLevelText(_settings.UnitSkillBadgeShowLevelPrefix);
+        }
     }
 }
 

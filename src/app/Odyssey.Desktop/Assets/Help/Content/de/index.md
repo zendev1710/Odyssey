@@ -23,4 +23,4 @@ an alle Magellan-Entwickler für einen tollen Eressea-Client und die Unterstütz
 
 Diese Dokumentation wurde mit größter Sorgfalt erstellt. Trotzdem können die Autoren keine Gewähr für irgendwelche Fehler oder Falschdarstellungen übernehmen. Die Autoren haften nicht für irgendwelche Schäden, die mittelbar oder unmittelbar aus der Benutzung oder Nichtbenutzung dieser Dokumentation entstehen. Was also immer passiert, lieber Leser: Du bist selber schuld!
 
-Die Verwendung und Verbreitung dieser Dokumentation unterliegt der [GNU Public License (GPL)](license.md).
+Die Verwendung und Verbreitung dieser Dokumentation unterliegt der [GNU General Public License, Version 2.0 (GPL-2.0)](license.md).

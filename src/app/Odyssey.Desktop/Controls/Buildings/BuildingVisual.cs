@@ -25,6 +25,7 @@ public enum BuildingShape
     Triangle,
     Circle,
     Rhombus,
+    TallRectangle,
 }
 
 /// <summary>
@@ -109,7 +110,8 @@ public static class BuildingCatalog
     private static readonly Color FortColor = Color.FromRgb(0x8A, 0x5A, 0x44);
     private static readonly Color WaterColor = Color.FromRgb(0x3F, 0x6F, 0xA8);
     private static readonly Color ForestColor = Color.FromRgb(0x3F, 0x7A, 0x46);
-    private static readonly Color StoneColor = Color.FromRgb(0x7A, 0x7A, 0x7A);
+    private static readonly Color QuarryColor = Color.FromRgb(0xB8, 0xB8, 0xB8);
+    private static readonly Color MineColor = Color.FromRgb(0x42, 0x46, 0x4A);
     private static readonly Color SandColor = Color.FromRgb(0xB0, 0x8A, 0x3E);
     private static readonly Color IceColor = Color.FromRgb(0x6F, 0xA8, 0xC8);
     private static readonly Color MagicColor = Color.FromRgb(0x6A, 0x4F, 0xA8);
@@ -131,19 +133,19 @@ public static class BuildingCatalog
 
         // Water-bound
         ["hafen"] = V("hafen", BuildingShape.Circle, WaterColor, affinity: Terrains.OCEAN),
-        ["leuchtturm"] = V("leuchtturm", BuildingShape.Triangle, WaterColor, affinity: Terrains.OCEAN),
+        ["leuchtturm"] = V("leuchtturm", BuildingShape.TallRectangle, WaterColor, affinity: Terrains.OCEAN),
 
         // Resource buildings with a terrain affinity
         ["saegewerk"] = V("saegewerk", BuildingShape.Square, ForestColor, affinity: Terrains.FOREST),
         ["pferdezucht"] = V("pferdezucht", BuildingShape.Square, ForestColor, affinity: Terrains.PLAINS),
-        ["steinbruch"] = V("steinbruch", BuildingShape.Square, StoneColor, affinity: Terrains.MOUNTAIN),
-        ["bergwerk"] = V("bergwerk", BuildingShape.Square, StoneColor, affinity: Terrains.MOUNTAIN),
+        ["steinbruch"] = V("steinbruch", BuildingShape.Square, QuarryColor, affinity: Terrains.MOUNTAIN),
+        ["bergwerk"] = V("bergwerk", BuildingShape.Square, MineColor, affinity: Terrains.MOUNTAIN),
         ["damm"] = V("damm", BuildingShape.Rhombus, Color.FromRgb(0x3E, 0x7C, 0x7C), affinity: Terrains.SWAMP),
         ["karawanserei"] = V("karawanserei", BuildingShape.Square, SandColor, affinity: Terrains.DESERT),
         ["tunnel"] = V("tunnel", BuildingShape.Rhombus, IceColor, affinity: Terrains.GLACIER),
 
         // Other buildings
-        ["magierturm"] = V("magierturm", BuildingShape.Triangle, MagicColor),
+        ["magierturm"] = V("magierturm", BuildingShape.TallRectangle, MagicColor),
         ["akademie"] = V("akademie", BuildingShape.Square, DefaultColor),
         ["schmiede"] = V("schmiede", BuildingShape.Square, Color.FromRgb(0x8A, 0x4A, 0x3A)),
         ["taverne"] = V("taverne", BuildingShape.Circle, DefaultColor),

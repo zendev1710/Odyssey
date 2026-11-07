@@ -1,5 +1,6 @@
 ﻿using Odyssey.Assets;
 using System.Diagnostics;
+using System.Globalization;
 using static Odyssey.Models.Tools.DataProperty;
 
 namespace Odyssey.Models.Localization
@@ -22,6 +23,7 @@ namespace Odyssey.Models.Localization
         public const string COAST = "coast";
         public const string COMBAT_SPELLS = "combat_spells";
         public const string COMBAT_SPELL_PERIOD = "combat_spell_period";
+        public const string CREW = "crew";
         public const string DIALOG_TITLE_BOOKMARKS_LOAD = "dlg_title_bookmarks_load";
         public const string DIALOG_TITLE_BOOKMARKS_SAVE_AS = "dlg_title_bookmarks_save_as";
         public const string DIRECTION = "direction";
@@ -89,13 +91,18 @@ namespace Odyssey.Models.Localization
 
         public static string Localize(Categories category, string name, string[]? arguments = null)
         {
+            return LocalizeWithCulture(category, name, Lang.Culture, arguments);
+        }
+
+        public static string LocalizeWithCulture(Categories category, string name, CultureInfo culture, string[]? arguments = null)
+        {
             if (string.IsNullOrEmpty(name)) { return string.Empty; }
             string? label = string.Empty;
             string localizationKey = CategoryToLocalizationKey(category, name);
             if (!string.IsNullOrEmpty(localizationKey))
             {
                 bool translationFailed = false;
-                label = Lang.ResourceManager.GetString(localizationKey, Lang.Culture);
+                label = Lang.ResourceManager.GetString(localizationKey, culture);
                 if (string.IsNullOrEmpty(label))
                 {
                     Debug.WriteLine($"[TRANSLAT] WARNING | coudl not find resource. name={name} key={localizationKey}");

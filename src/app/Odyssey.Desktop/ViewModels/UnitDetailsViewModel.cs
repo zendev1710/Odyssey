@@ -4,10 +4,13 @@ using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Localization;
 using Odyssey.Models.Tools;
+using Odyssey.Settings;
 using Odyssey.ViewModels.Tools;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using static Odyssey.Models.Tools.DataProperty;
 using static Odyssey.Models.Tools.UnitModel;
 using static Odyssey.Utils.Converters;
@@ -98,6 +101,7 @@ public partial class UnitDetailsViewModel : ViewModelBase
     public UnitDetailsViewModel() : base(Ids.UnitDetails)
     {
         Items = Root.Children;
+        GlobalSettings.Shared.SettingChanged += OnGlobalSettingChanged;
 
         _description = string.Empty;
         _name = string.Empty;
@@ -116,6 +120,22 @@ public partial class UnitDetailsViewModel : ViewModelBase
         _hungry = string.Empty;
         _combatStatus = string.Empty;
         _guards = string.Empty;
+    }
+
+    private void OnGlobalSettingChanged(object? sender, SettingChangedEventArgs e)
+    {
+        if (e.SettingName is GlobalSettings.UNIT_SKILL_SORT_MODE
+            or GlobalSettings.UNIT_SKILL_CUSTOM_ORDER
+            or GlobalSettings.UNIT_SKILL_GROUP_BY_CATEGORY
+            or GlobalSettings.UNIT_SKILL_CATEGORY_ORDER)
+        {
+            SortSkillItems();
+        }
+    }
+
+    private void SortSkillItems()
+    {
+        UnitSkillSorter.Sort(SkillItems);
     }
 
     protected override void OnSelectionChanged(IEntitySelection selection, SelectionChangeTypes selType, object? sender)
@@ -242,7 +262,7 @@ public partial class UnitDetailsViewModel : ViewModelBase
             }
             //groupName = groupNameValue;
             string groupLabel = Labels.Localize(Categories.Node, Labels.GROUP, [groupNameValue]);
-            groupProperty = new DataProperty(Categories.Node, groupNameValue, groupLabel);
+            groupProperty = new DataProperty(Categories.Node, groupNameValue, string.Empty, groupLabel);
 
             // Second item is group name (if any)
             _ = AddItem(unitNode, groupProperty);
@@ -426,6 +446,7 @@ public partial class UnitDetailsViewModel : ViewModelBase
             {
                 SkillItems.Add(new UnitSkillViewModel(sp.Name, sp.Label, int.TryParse(sp.Value, out int level) ? level : 0, sp.Change));
             }
+            SortSkillItems();
         }
 
         ////////
@@ -625,8 +646,10 @@ public partial class UnitDetailsViewModel : ViewModelBase
         if (entityModel is null)
             return;
 
-        // TODO : how to get region
-        IEntitySelection newSelection = new EntitySelection(entityModel, null, null);
+        RegionModel? region = entityModel is RegionModel selectedRegion
+            ? selectedRegion
+            : Report.FindRegionById(entityModel.LocationId);
+        IEntitySelection newSelection = new EntitySelection(entityModel, region, null);
 
         SendSelectionChangedEvent(newSelection);
     }

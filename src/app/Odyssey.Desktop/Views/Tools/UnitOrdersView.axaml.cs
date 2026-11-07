@@ -14,6 +14,7 @@ using AvaloniaEdit.Rendering;
 using AvaloniaEdit.Snippets;
 
 using AvaloniaEdit.TextMate;
+using Odyssey.Controls;
 using Odyssea.TextMate;
 using Odyssey.TextMate;
 using Odyssey.Settings;
@@ -62,6 +63,7 @@ public partial class UnitOrdersView : UserControl
 
             _textEditor.VerticalScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility.Auto;
             _textEditor.HorizontalScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility.Auto;
+            UnitOrdersEditorContextMenu.Attach(_textEditor, allowPaste: true);
             //_textEditor.Background = Brushes.Transparent;
             _textEditor.ShowLineNumbers = false;
             _textEditor.TextArea.Background = this.Background;
@@ -427,14 +429,7 @@ public partial class UnitOrdersView : UserControl
 
     private void UpdateConfiguredThemeForApplicationMode()
     {
-        bool isDarkMode = CurrentApplicationThemeVariant == ThemeVariant.Dark;
-        string settingName = isDarkMode
-            ? GlobalSettings.UNIT_ORDERS_DARK_THEME
-            : GlobalSettings.UNIT_ORDERS_LIGHT_THEME;
-        int configuredTheme = GlobalSettings.Get<int>(settingName);
-        ExtendedThemeName themeName = configuredTheme == GlobalSettings.DOCK_DEFAULT_TEXT_EDITOR_THEME
-            ? (isDarkMode ? ExtendedThemeName.DarkPlus : ExtendedThemeName.LightPlus)
-            : (ExtendedThemeName)configuredTheme;
+        ExtendedThemeName themeName = UnitOrdersThemeHelper.GetConfiguredTheme(CurrentApplicationThemeVariant);
         ApplyThemeToView(themeName);
         UpdateOrderConfirmationAppearance();
     }
@@ -461,9 +456,10 @@ public partial class UnitOrdersView : UserControl
             return;
         }
 
-        Color background = showUnconfirmedState
-            ? ApplyUnconfirmedTint(themeBackground, CurrentApplicationThemeVariant == ThemeVariant.Dark)
-            : themeBackground;
+        Color background = UnitOrdersThemeHelper.GetConfirmationBackground(
+            themeBackground,
+            showUnconfirmedState,
+            CurrentApplicationThemeVariant == ThemeVariant.Dark);
         var backgroundBrush = new SolidColorBrush(background);
         Background = backgroundBrush;
         if (_textEditor is not null)
@@ -473,21 +469,6 @@ public partial class UnitOrdersView : UserControl
             //_textEditor.TextArea.TextView.Background = backgroundBrush;
         }
     }
-
-    private static Color ApplyUnconfirmedTint(Color background, bool isDarkMode)
-    {
-        const double overlayOpacity = 0.10;
-        byte overlay = isDarkMode ? byte.MaxValue : (byte)0;
-
-        return Color.FromArgb(
-            background.A,
-            BlendChannel(background.R, overlay, overlayOpacity),
-            BlendChannel(background.G, overlay, overlayOpacity),
-            BlendChannel(background.B, overlay, overlayOpacity));
-    }
-
-    private static byte BlendChannel(byte original, byte overlay, double opacity) =>
-        (byte)Math.Round(original * (1 - opacity) + overlay * opacity);
 
     bool ApplyBrushAction(AvaloniaEdit.TextMate.TextMate.Installation e, string colorKeyNameFromJson, Action<IBrush> applyColorAction)
     {

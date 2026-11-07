@@ -21,8 +21,8 @@ public sealed record IconCatalogResult(
 /// </summary>
 /// <remarks>
 /// The TSV is the source of truth. It lists every asset, including preserved variants. Only
-/// entries with role <c>entry</c> or <c>category</c> participate in name lookup, so German report
-/// words and English aliases always resolve to the canonical Eressea artwork.
+/// entries with role <c>entry</c> or <c>category</c> participate in name lookup, so report terms
+/// and localized aliases resolve to the canonical Eressea artwork.
 /// </remarks>
 public static partial class IconCatalogBuilder
 {

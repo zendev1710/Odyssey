@@ -1905,6 +1905,12 @@
   <data name="parm_inf_map_building_contrast" xml:space="preserve">
     <value>Hintergrund hinter den Gebäudesymbolen, damit sie auf dem Gelände lesbar bleiben. Platte: helle Platte mit farbigem Rand; Nur Rand: Umriss ohne Hintergrund; Keiner: kein Hintergrund.</value>
   </data>
+  <data name="parm_hdr_map_building_english_initials" xml:space="preserve">
+    <value>Englische Anfangsbuchstaben für Gebäudesymbole verwenden</value>
+  </data>
+  <data name="parm_inf_map_building_english_initials" xml:space="preserve">
+    <value>Standardmäßig aktiviert: Gebäudesymbole verwenden immer den Anfangsbuchstaben des englischen Namens. Deaktiviert: Der Anfangsbuchstabe richtet sich nach der UI-Sprache.</value>
+  </data>
   <data name="parm_key_building_contrast_plate" xml:space="preserve">
     <value>Platte (empfohlen)</value>
   </data>
@@ -2301,17 +2307,20 @@
   <data name="mainmenu_window" xml:space="preserve">
     <value>[DE]</value>
   </data>
-  <data name="mainmenu_window_layout_new" xml:space="preserve">
-    <value>New Layout [DE]</value>
-  </data>
-  <data name="mainmenu_window_layout_close" xml:space="preserve">
-    <value>Close layout [DE]</value>
-  </data>
   <data name="mainmenu_window_layout_open" xml:space="preserve">
-    <value>Open layout [DE]</value>
+    <value>Layout öffnen...</value>
   </data>
   <data name="mainmenu_window_layout_save" xml:space="preserve">
-    <value>Save layout [DE]</value>
+    <value>Aktuelles Layout speichern</value>
+  </data>
+  <data name="mainmenu_window_layout_save_as" xml:space="preserve">
+    <value>Layout speichern unter...</value>
+  </data>
+  <data name="mainmenu_window_layout_current" xml:space="preserve">
+    <value>Aktuelles Layout: {0}</value>
+  </data>
+  <data name="mainmenu_window_layout_default" xml:space="preserve">
+    <value>Standard (nicht gespeichert)</value>
   </data>
   <data name="mainmenu_tools_advanced_search" xml:space="preserve">
     <value>_Suchen</value>
@@ -2330,6 +2339,45 @@
   </data>
   <data name="find_watermark" xml:space="preserve">
     <value>Suchen...</value>
+  </data>
+  <data name="find_invalid_regex" xml:space="preserve">
+    <value>Ungültiger regulärer Ausdruck.</value>
+  </data>
+  <data name="find_minimum_characters" xml:space="preserve">
+    <value>Geben Sie mindestens 3 Zeichen ein oder drücken Sie die Eingabetaste, um zu suchen.</value>
+  </data>
+  <data name="find_regex_timeout" xml:space="preserve">
+    <value>Die Auswertung des regulären Ausdrucks hat zu lange gedauert.</value>
+  </data>
+  <data name="find_result_count" xml:space="preserve">
+    <value>Ergebnisse: {0}</value>
+  </data>
+  <data name="find_filter_categories" xml:space="preserve">
+    <value>Kategorien</value>
+  </data>
+  <data name="find_filter_deselect_all" xml:space="preserve">
+    <value>Alle Kategorien abwählen</value>
+  </data>
+  <data name="find_filter_select_all" xml:space="preserve">
+    <value>Alle Kategorien auswählen</value>
+  </data>
+  <data name="find_result_kind_building" xml:space="preserve">
+    <value>Gebäude</value>
+  </data>
+  <data name="find_result_kind_faction" xml:space="preserve">
+    <value>Fraktion</value>
+  </data>
+  <data name="find_result_kind_region" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="find_result_kind_ship" xml:space="preserve">
+    <value>Schiff</value>
+  </data>
+  <data name="find_result_kind_unit" xml:space="preserve">
+    <value>Einheit</value>
+  </data>
+  <data name="find_searching" xml:space="preserve">
+    <value>Suche läuft...</value>
   </data>
   <data name="find_tip" xml:space="preserve">
     <value>Suchen...</value>
@@ -2859,6 +2907,12 @@
   <data name="parm_inf_echeck_program" xml:space="preserve">
     <value>Wählen Sie die ausführbare Datei des ECheck Programms</value>
   </data>
+  <data name="parm_hdr_bookmarks_folder" xml:space="preserve">
+    <value>Lesezeichenordner</value>
+  </data>
+  <data name="parm_inf_bookmarks_folder" xml:space="preserve">
+    <value>Ordner zum Speichern und Laden von Lesezeichendateien</value>
+  </data>
   <data name="parm_cat_game" xml:space="preserve">
     <value>Spiel</value>
   </data>
@@ -3194,4 +3248,34 @@
   <data name="unit_skill_tooltip_decreased" xml:space="preserve">
     <value>{0}: Stufe {1} (um {2} gesunken)</value>
   </data>
+  <data name="unit_skill_level_short" xml:space="preserve">
+    <value>S{0}</value>
+  </data>
+  <data name="settings_global_display" xml:space="preserve"><value>Globale Anzeige</value></data>
+  <data name="settings_skills" xml:space="preserve"><value>Fertigkeiten</value></data>
+  <data name="skills_display_title" xml:space="preserve"><value>Reihenfolge der Einheitsfertigkeiten</value></data>
+  <data name="skills_display_description" xml:space="preserve"><value>Legt die Sortierung der angezeigten Fertigkeiten fest. Bei Gruppierung gilt diese Sortierung innerhalb jeder Kategorie.</value></data>
+  <data name="skill_sort_mode_level" xml:space="preserve"><value>Stufe absteigend, dann alphabetisch</value></data>
+  <data name="skill_sort_mode_alphabetical" xml:space="preserve"><value>Alphabetisch</value></data>
+  <data name="skill_sort_mode_custom" xml:space="preserve"><value>Benutzerdefinierte Reihenfolge</value></data>
+  <data name="skills_group_by_category" xml:space="preserve"><value>Fertigkeiten nach Kategorie gruppieren</value></data>
+  <data name="skill_category_order_title" xml:space="preserve"><value>Kategorienreihenfolge</value></data>
+  <data name="skill_category_order_description" xml:space="preserve"><value>Bei Gruppierung werden die Kategorien in dieser Reihenfolge angezeigt.</value></data>
+  <data name="skill_category_reset_default" xml:space="preserve"><value>Standardreihenfolge wiederherstellen</value></data>
+  <data name="skill_order_title" xml:space="preserve"><value>Reihenfolge der Fertigkeiten</value></data>
+  <data name="skill_category_combat" xml:space="preserve"><value>Kampf</value></data>
+  <data name="skill_category_movement" xml:space="preserve"><value>Bewegung</value></data>
+  <data name="skill_category_production" xml:space="preserve"><value>Produktion</value></data>
+  <data name="skill_category_economy" xml:space="preserve"><value>Wirtschaft</value></data>
+  <data name="skill_category_magic" xml:space="preserve"><value>Magie</value></data>
+  <data name="skill_category_reconnaissance" xml:space="preserve"><value>Aufkl&#xE4;rung und verdeckte Operationen</value></data>
+  <data name="parm_grp_badges" xml:space="preserve"><value>Einheiten-Badges</value></data>
+  <data name="parm_hdr_unit_skill_badge_show_level_prefix" xml:space="preserve"><value>Fertigkeitsstufe mit einem Buchstaben pr&#xE4;fixieren</value></data>
+  <data name="parm_inf_unit_skill_badge_show_level_prefix" xml:space="preserve"><value>Einen Buchstaben vor der Fertigkeitsstufe im Badge anzeigen.</value></data>
+  <data name="parm_hdr_unit_skill_badge_transparent" xml:space="preserve"><value>Transparenter Hintergrund des Fertigkeits-Badges</value></data>
+  <data name="parm_inf_unit_skill_badge_transparent" xml:space="preserve"><value>Die F&#xFC;llung des Fertigkeits-Badges transparent machen, Kontur und Stufenkapsel bleiben sichtbar.</value></data>
+  <data name="parm_hdr_unit_item_badge_transparent" xml:space="preserve"><value>Transparenter Hintergrund des Inventar-Badges</value></data>
+  <data name="parm_inf_unit_item_badge_transparent" xml:space="preserve"><value>Die F&#xFC;llung des Inventar-Badges transparent machen, Kontur und Mengenkapsel bleiben sichtbar.</value></data>
+  <data name="parm_hdr_auto_save_session" xml:space="preserve"><value>Sitzung beim Beenden automatisch speichern</value></data>
+  <data name="parm_inf_auto_save_session" xml:space="preserve"><value>Die aktuelle Sitzung speichern und beim nächsten Start von Odyssey wiederherstellen.</value></data>
 </root>

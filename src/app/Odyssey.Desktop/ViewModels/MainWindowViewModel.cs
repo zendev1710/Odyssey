@@ -20,6 +20,7 @@ using Odyssey.Messages;
 using Odyssey.Models.Dal;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
+using Odyssey.Search;
 using Odyssey.Settings;
 using Odyssey.Utils;
 using Odyssey.ViewModels.Documents;
@@ -33,6 +34,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -58,6 +61,18 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
 
     [ObservableProperty]
     private bool _enableLayoutFeature;
+
+    [ObservableProperty]
+    private string _searchQuery = string.Empty;
+
+    [ObservableProperty]
+    private bool _searchMatchCase = true;
+
+    [ObservableProperty]
+    private bool _searchWholeWords;
+
+    [ObservableProperty]
+    private bool _searchUseRegex;
 
     [ObservableProperty]
     private bool _hasDocument;
@@ -131,6 +146,43 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
 
     private IDockSerializer? _serializer;
     private IDockState? _dockState;
+    private List<SavedDocumentState>? _documentsToRestore;
+
+    private const int SavedLayoutVersion = 1;
+    private const string AutoSessionFileName = "last-session.json";
+    private const string LegacyAutoSessionFileName = "layout.json";
+    private static readonly StringComparer DocumentPathComparer = OperatingSystem.IsWindows()
+        ? StringComparer.OrdinalIgnoreCase
+        : StringComparer.Ordinal;
+    private static readonly JsonSerializerOptions SavedLayoutJsonOptions = new() { WriteIndented = true };
+
+    private sealed class SavedSessionState
+    {
+        public SavedSessionState()
+        {
+        }
+
+        public int Version { get; set; } = SavedLayoutVersion;
+        public string LayoutJson { get; set; } = string.Empty;
+        public string? CurrentLayoutProfilePath { get; set; }
+        public string SelectionBookmarks { get; set; } = string.Empty;
+        public List<SavedDocumentState>? Documents { get; set; } = [];
+    }
+
+    private sealed class SavedDocumentState
+    {
+        public SavedDocumentState()
+        {
+        }
+
+        public string Path { get; set; } = string.Empty;
+        public DocumentType DocumentType { get; set; }
+        public bool IsActive { get; set; }
+        public string? Text { get; set; }
+        public string? Encoding { get; set; }
+        public bool IsModified { get; set; }
+        public CRDocument.EditedOrderChanges? EditedOrderChanges { get; set; }
+    }
 
     private static readonly Dictionary<string, Action<MainWindowViewModel, bool>> _viewVisibilitySetters = new()
     {
@@ -158,8 +210,14 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
         Ids.ErrorList,
     ];
 
-    private readonly IFactory _factory;
+    private readonly DockFactory _factory;
     private readonly IDocumentService _activeDocumentService;
+    private readonly GlobalSearchEngine _globalSearchEngine = new();
+    private const int GlobalSearchMinimumQueryLength = 3;
+    private SearchResultsViewModel? _searchResultsViewModel;
+    private CancellationTokenSource? _globalSearchCancellation;
+    private bool _isGlobalSearchPending;
+    private bool _searchResultsAreCurrent;
     private CRDocument? _modifiedDocument;
 
     private readonly IEntitySelectionService _selectionService;
@@ -174,6 +232,14 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
     // Default to the selected region: unchecking "all routes" must still show the routes
     // related to the current selection instead of hiding every route.
     private int _lastNonAllShipRouteMode = ShipRouteModes.SelectedRegion;
+
+    partial void OnSearchQueryChanged(string value) => ScheduleGlobalSearch();
+
+    partial void OnSearchMatchCaseChanged(bool value) => ScheduleGlobalSearch();
+
+    partial void OnSearchWholeWordsChanged(bool value) => ScheduleGlobalSearch();
+
+    partial void OnSearchUseRegexChanged(bool value) => ScheduleGlobalSearch();
 
     /// <summary>True when the map currently draws every ship route.</summary>
     public bool AreAllShipRoutesVisible =>
@@ -206,13 +272,23 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
         set => SetProperty(ref _layout, value);
     }
 
-    public ICommand LayoutNew { get; }
+    public string CurrentLayoutProfileLabel
+    {
+        get
+        {
+            string profilePath = GlobalSettings.Shared.CurrentLayoutProfilePath;
+            string profileName = string.IsNullOrWhiteSpace(profilePath)
+                ? Lang.mainmenu_window_layout_default
+                : Path.GetFileNameWithoutExtension(profilePath);
+            return string.Format(Lang.mainmenu_window_layout_current, profileName);
+        }
+    }
+
+    public ICommand LayoutSaveAs { get; }
 
     public ICommand LayoutOpen { get; }
 
     public ICommand LayoutSave { get; }
-
-    public ICommand LayoutClose { get; }
 
     public ICommand FindSetFocus  { get; }
 
@@ -249,14 +325,32 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
         //_serializer = new DockSerializer(typeof(AvaloniaList<>));
         //_dockState = new DockState();
 
-        Layout = _factory?.CreateLayout();
-        InitLayout();
+        // TODO: check when it should be called exactly
+        InitializeDockState();
+
+        if (Layout is null)
+        {
+            Layout = _factory?.CreateLayout();
+            InitLayout();
+            if (Layout is not null)
+            {
+                _dockState?.Save(Layout);
+            }
+        }
+
+        if (!Design.IsDesignMode)
+        {
+            bool restoredSession = GlobalSettings.Get<bool>(GlobalSettings.AUTO_SAVE_SESSION)
+                && TryRestoreAutoSession();
+            if (!restoredSession)
+            {
+                TryRestoreCurrentLayoutProfile();
+            }
+        }
+
         GlobalStatus = Layout is null
             ? "Global: (none)"
             : FormatGlobalStatus(_factory?.GlobalDockTrackingState ?? GlobalDockTrackingState.Empty);
-
-        // TODO: check when it should be called exactly
-        InitializeDockState();
 
         if (Layout is { } root)
         {
@@ -265,18 +359,19 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
         }
 
         _bookmarksViewModel = _factory.GetDockable<IDockable>(Ids.Bookmarks) as BookmarksViewModel;
+        _searchResultsViewModel = _factory.GetDockable<IDockable>(Ids.SearchResults) as SearchResultsViewModel;
+        if (_searchResultsViewModel is not null)
+        {
+            _searchResultsViewModel.PropertyChanged += SearchResultsViewModel_PropertyChanged;
+        }
 
-        LayoutNew = new RelayCommand(ResetLayout);
-        LayoutOpen = new RelayCommand(FileOpenLayout);
-        LayoutSave = new RelayCommand(FileSaveLayout);
-        LayoutClose = new RelayCommand(CloseLayout);
+        LayoutOpen = new AsyncRelayCommand(OpenLayout);
+        LayoutSave = new AsyncRelayCommand(SaveLayout);
+        LayoutSaveAs = new AsyncRelayCommand(SaveLayoutAs);
 
         FindSetFocus = new RelayCommand(ActivateFindArea);
 
-        foreach (var setter in _viewVisibilitySetters.Values)
-        {
-            setter(this, true);
-        }
+        UpdateViewVisibilityFromLayout();
 
         /*
         foreach (var id in _viewVisibilitySetters.Keys)
@@ -329,12 +424,8 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
 
     private void InitializeDockState()
     {
-        _serializer = new DockSerializer(typeof(ObservableCollection<>));
+        _serializer = new LayoutDockSerializer();
         _dockState = new DockState();
-        if (Layout is not null)
-        {
-            _dockState.Save(Layout);
-         }
     }
 
     [RelayCommand]
@@ -410,7 +501,8 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
     {
         if (e.SettingName != GlobalSettings.MAP_SHIP_ROUTE_MODE &&
             e.SettingName != GlobalSettings.MAP_SHOW_REGION_NAMES &&
-            e.SettingName != GlobalSettings.MAP_REGION_NAME_BANNER)
+            e.SettingName != GlobalSettings.MAP_REGION_NAME_BANNER &&
+            e.SettingName != nameof(GlobalSettings.CurrentLayoutProfilePath))
         {
             return;
         }
@@ -439,6 +531,10 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
         {
             OnPropertyChanged(nameof(IsRegionNameBannerEnabled));
         }
+        else if (e.SettingName == nameof(GlobalSettings.CurrentLayoutProfilePath))
+        {
+            OnPropertyChanged(nameof(CurrentLayoutProfileLabel));
+        }
     }
 
     private bool CanExecuteIfReportExists()
@@ -446,13 +542,190 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
         return HasDocument;
     }
 
+    private bool CanNavigateSearchResults()
+    {
+        return !_isGlobalSearchPending && _searchResultsAreCurrent && (_searchResultsViewModel?.FilteredResults.Count ?? 0) > 0;
+    }
+
+    private void SearchResultsViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(SearchResultsViewModel.FilteredResults))
+        {
+            NotifySearchNavigationCanExecuteChanged();
+        }
+    }
+
+    [RelayCommand(CanExecute = nameof(CanNavigateSearchResults))]
+    private void FindPreviousSearchResult()
+    {
+        _searchResultsViewModel?.MoveSelection(-1);
+    }
+
+    [RelayCommand(CanExecute = nameof(CanNavigateSearchResults))]
+    private void FindNextSearchResult()
+    {
+        _searchResultsViewModel?.MoveSelection(1);
+    }
+
+    [RelayCommand]
+    private async Task SelectCurrentSearchResult()
+    {
+        CRDocument report = _activeDocumentService.ActiveDocument;
+        if (!report.HasData() || string.IsNullOrWhiteSpace(SearchQuery))
+        {
+            return;
+        }
+
+        if (!_searchResultsAreCurrent)
+        {
+            _globalSearchCancellation?.Cancel();
+            _globalSearchCancellation = null;
+            CancellationTokenSource cancellation = new();
+            _globalSearchCancellation = cancellation;
+            _isGlobalSearchPending = true;
+            NotifySearchNavigationCanExecuteChanged();
+
+            bool searchCompleted = await ExecuteGlobalSearchAsync(
+                cancellation,
+                report,
+                SearchQuery,
+                SearchMatchCase,
+                SearchWholeWords,
+                SearchUseRegex,
+                waitForDebounce: false);
+            if (!searchCompleted)
+            {
+                return;
+            }
+        }
+
+        _searchResultsViewModel?.SelectFirstResultAndApply();
+    }
+
+    private void ScheduleGlobalSearch()
+    {
+        _globalSearchCancellation?.Cancel();
+        _globalSearchCancellation = null;
+        _searchResultsAreCurrent = false;
+
+        CRDocument report = _activeDocumentService.ActiveDocument;
+        if (string.IsNullOrWhiteSpace(SearchQuery) || !report.HasData())
+        {
+            _isGlobalSearchPending = false;
+            _searchResultsViewModel?.ReplaceResults([], string.Empty);
+            NotifySearchNavigationCanExecuteChanged();
+            return;
+        }
+
+        if (SearchQuery.Trim().Length < GlobalSearchMinimumQueryLength)
+        {
+            _isGlobalSearchPending = false;
+            _searchResultsViewModel?.ReplaceResults([], Lang.find_minimum_characters);
+            NotifySearchNavigationCanExecuteChanged();
+            return;
+        }
+
+        _isGlobalSearchPending = true;
+        _searchResultsViewModel?.ReplaceResults([], Lang.find_searching);
+        CancellationTokenSource cancellation = new();
+        _globalSearchCancellation = cancellation;
+        NotifySearchNavigationCanExecuteChanged();
+        _ = ExecuteGlobalSearchAsync(
+            cancellation,
+            report,
+            SearchQuery,
+            SearchMatchCase,
+            SearchWholeWords,
+            SearchUseRegex,
+            waitForDebounce: true);
+    }
+
+    private async Task<bool> ExecuteGlobalSearchAsync(
+        CancellationTokenSource cancellation,
+        CRDocument report,
+        string query,
+        bool matchCase,
+        bool wholeWords,
+        bool useRegex,
+        bool waitForDebounce)
+    {
+        CancellationToken cancellationToken = cancellation.Token;
+        try
+        {
+            if (waitForDebounce)
+            {
+                await Task.Delay(180);
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    return false;
+                }
+            }
+
+            GlobalSearchResponse response = await Task.Run(
+                () => _globalSearchEngine.Search(report, query, matchCase, wholeWords, useRegex, cancellationToken));
+
+            if (response.Error == GlobalSearchError.Cancelled ||
+                cancellationToken.IsCancellationRequested ||
+                !ReferenceEquals(_activeDocumentService.ActiveDocument, report))
+            {
+                return false;
+            }
+
+            string status = response.Error switch
+            {
+                GlobalSearchError.InvalidPattern => Lang.find_invalid_regex,
+                GlobalSearchError.TimedOut => Lang.find_regex_timeout,
+                _ => string.Format(Lang.find_result_count, response.Results.Count)
+            };
+            _searchResultsViewModel?.ReplaceResults(response.Results, status);
+            if (waitForDebounce && response.Results.Count == 1 && _searchResultsViewModel?.FilteredResults.Count == 1)
+            {
+                _searchResultsViewModel?.ApplySelectedResult();
+            }
+
+            _searchResultsAreCurrent = true;
+            _isGlobalSearchPending = false;
+            if (!IsSearchResultsViewVisible)
+            {
+                ToggleView(Ids.SearchResults);
+            }
+            NotifySearchNavigationCanExecuteChanged();
+            return true;
+        }
+        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+        {
+            return false;
+        }
+        finally
+        {
+            if (ReferenceEquals(_globalSearchCancellation, cancellation))
+            {
+                _globalSearchCancellation = null;
+                _isGlobalSearchPending = false;
+                NotifySearchNavigationCanExecuteChanged();
+            }
+            cancellation.Dispose();
+        }
+    }
+
+    private void NotifySearchNavigationCanExecuteChanged()
+    {
+        FindPreviousSearchResultCommand.NotifyCanExecuteChanged();
+        FindNextSearchResultCommand.NotifyCanExecuteChanged();
+    }
+
     public void OpenInitialDocumentIfNeeded()
     {
+        RestorePendingDocuments();
+
         if (!string.IsNullOrEmpty(InitialDocumentPathname))
         {
             if (File.Exists(InitialDocumentPathname))
             {
-                OpenDocument(InitialDocumentPathname);
+                if (!OpenDocument(InitialDocumentPathname) && FindFileViewModelByPath(InitialDocumentPathname) is { } existingFile)
+                {
+                    _factory?.SetActiveDockable(existingFile);
+                }
             }
             InitialDocumentPathname = string.Empty;
         }
@@ -476,19 +749,21 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
         }
     }
 
+    private void UpdateViewVisibilityFromLayout()
+    {
+        foreach ((string id, Action<MainWindowViewModel, bool> setter) in _viewVisibilitySetters)
+        {
+            IDockable? dockable = _factory.GetDockable<IDockable>(id);
+            IRootDock? rootDock = dockable is null ? null : _factory.FindRoot(dockable, _ => true);
+            bool isHidden = rootDock?.HiddenDockables?.Any(hiddenDockable =>
+                string.Equals(hiddenDockable.Id, id, StringComparison.Ordinal)) == true;
+            setter(this, !isHidden);
+        }
+    }
+
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
     {
         base.OnPropertyChanged(e);
-    }
-
-    public async void FileOpenLayout()
-    {
-        await OpenLayout();
-    }
-
-    public async void FileSaveLayout()
-    {
-        await SaveLayout();
     }
 
     public void CloseLayout()
@@ -507,23 +782,6 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
         }
         Layout = null;
         Debug.WriteLine("[MAINWINDOW] CloseLayout ended.");
-    }
-
-    private void ResetLayout()
-    {
-        Debug.WriteLine("[MAINWINDOW] ResetLayout...");
-        if (Layout is not null)
-        {
-            if (Layout.Close.CanExecute(null))
-            {
-                Layout.Close.Execute(null);
-            }
-        }
-
-        Layout = _factory.CreateLayout();
-        InitLayout();
-
-        Debug.WriteLine("[MAINWINDOW] ResetLayout ended.");
     }
 
     public void ActivateFindArea()
@@ -626,6 +884,9 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
         _modifiedDocument.OrderConfirmationChanged += OnOrderConfirmationChanged;
         SaveFileCommand.NotifyCanExecuteChanged();
         OnActiveReportDocumentChanged(report);
+        _globalSearchCancellation?.Cancel();
+        _globalSearchEngine.ClearIndex();
+        ScheduleGlobalSearch();
     }
 
     private void OnDocumentModifiedChanged(object? sender, EventArgs args)
@@ -684,21 +945,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
 
     private bool FileViewModelExists(string pathname)
     {
-        var files = _factory.GetDockable<IDocumentDock>(DockFactory.DocumentDockId);
-        if (files is { })
-        {
-            // TODO: Check if a FileViewModel with the same Id and pathname already exists in the document dock
-            /*
-            foreach (var dockable in files)
-            {
-                if (dockable is FileViewModel fvm && fvm.Path == pathname)
-                {
-                    return true;
-                }
-            }
-            */
-        }
-        return false;
+        return FindFileViewModelByPath(pathname) is not null;
     }
 
     private void AddFileViewModel(FileViewModel fileViewModel)
@@ -1100,12 +1347,14 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
             return;
         }
 
+        string layoutsDirectory = GetLayoutsDirectory();
+        Directory.CreateDirectory(layoutsDirectory);
         var result = await storageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            // TODO: translate title
-            Title = "Open layout",
+            Title = Lang.mainmenu_window_layout_open,
             FileTypeFilter = GetOpenLayoutFileTypes(),
-            AllowMultiple = false
+            AllowMultiple = false,
+            SuggestedStartLocation = await storageProvider.TryGetFolderFromPathAsync(layoutsDirectory)
         });
 
         var file = result.FirstOrDefault();
@@ -1116,17 +1365,16 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
             {
                 await using var stream = await file.OpenReadAsync();
                 using var reader = new StreamReader(stream);
-                var layout = _serializer.Load<IRootDock?>(stream);
-                if (layout is not null)
-                {
-                    _dockState.Restore(layout);
-                     Layout = layout;
-                    _factory?.InitLayout(Layout);
-                }
+                string json = await reader.ReadToEndAsync();
+                SavedSessionState savedLayout = ParseLayoutState(json, []);
+                savedLayout.SelectionBookmarks = string.Empty;
+                RestoreLayoutState(savedLayout, preserveCurrentContext: true);
+                GlobalSettings.Shared.CurrentLayoutProfilePath = Path.GetFullPath(file.Path.LocalPath);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Debug.WriteLine($"[MAINWINDOW] ERROR | Failed to open layout: {e}");
+                Console.Error.WriteLine(e);
             }
         }
     }
@@ -1138,30 +1386,22 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
             return;
         }
 
-        // Close all docked documents before serializing the layout state.
-        // This prevents DockSerializer from persisting domain object references
-        // (DataBlock, Bookmarks, Explorer selections, ...) that are lost on restore.
-        var filesDock = _factory.GetDockable<IDocumentDock>(DockFactory.DocumentDockId);
-
-        List<FileViewModel> filesToClose = [];
-        if (filesDock?.VisibleDockables != null)
+        string profilePath = GlobalSettings.Shared.CurrentLayoutProfilePath;
+        if (string.IsNullOrWhiteSpace(profilePath))
         {
-            foreach (var dockable in filesDock.VisibleDockables)
-            {
-                if (dockable is FileViewModel fvm && fvm.Document is not null)
-                {
-                    filesToClose.Add(fvm);
-                }
-            }
+            await SaveLayoutAs();
+            return;
         }
 
-        foreach (var fvm in filesToClose)
-        {
-            _factory?.RemoveDockable(fvm, false);
-        }
+        await SaveLayoutToPath(profilePath);
+    }
 
-        // Save the layout to the user-selected file path.
-        Debug.WriteLine($"[MAINWINDOW] SaveLayout: closing {filesToClose.Count} documents");
+    private async Task SaveLayoutAs()
+    {
+        if (_serializer is null || _dockState is null || Layout is null)
+        {
+            return;
+        }
 
         var storageProvider = StorageService.GetStorageProvider();
         if (storageProvider is null)
@@ -1169,30 +1409,373 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
             return;
         }
 
+        string layoutsDirectory = GetLayoutsDirectory();
+        Directory.CreateDirectory(layoutsDirectory);
+        string activePath = GlobalSettings.Shared.CurrentLayoutProfilePath;
+        string suggestedName = string.IsNullOrWhiteSpace(activePath)
+            ? "layout"
+            : Path.GetFileNameWithoutExtension(activePath);
         var file = await storageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Title = "Save layout",
+            Title = Lang.mainmenu_window_layout_save_as,
             FileTypeChoices = GetSaveLayoutFileTypes(),
-            SuggestedFileName = "layout",
+            SuggestedFileName = suggestedName,
             DefaultExtension = "json",
-            ShowOverwritePrompt = true
+            ShowOverwritePrompt = true,
+            SuggestedStartLocation = await storageProvider.TryGetFolderFromPathAsync(layoutsDirectory)
         });
 
         if (file is not null)
         {
-            try
+            await SaveLayoutToPath(file.Path.LocalPath);
+        }
+    }
+
+    private async Task SaveLayoutToPath(string profilePath)
+    {
+        if (_serializer is null || _dockState is null || Layout is null)
+        {
+            return;
+        }
+
+        try
+        {
+            string? directory = Path.GetDirectoryName(profilePath);
+            if (!string.IsNullOrEmpty(directory))
             {
-                await using var stream = await file.OpenWriteAsync();
-                _serializer.Save(stream, Layout);
-                Debug.WriteLine("[MAINWINDOW] SaveLayout succeeded to " + file.Path.LocalPath);
+                Directory.CreateDirectory(directory);
             }
-            catch (Exception e)
+
+            await File.WriteAllTextAsync(profilePath, SerializeLayoutProfile(), Encoding.UTF8);
+            GlobalSettings.Shared.CurrentLayoutProfilePath = profilePath;
+            Debug.WriteLine("[MAINWINDOW] Saved layout profile to " + profilePath);
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine($"[MAINWINDOW] ERROR | Failed to save layout profile: {e}");
+            Console.Error.WriteLine(e);
+        }
+    }
+
+    private string SerializeLayoutProfile()
+    {
+        if (_serializer is null || Layout is null)
+        {
+            throw new InvalidOperationException("The Dock layout is not initialized.");
+        }
+
+        _dockState?.Reset();
+        _dockState?.Save(Layout);
+        return _serializer.Serialize(Layout);
+    }
+
+    public void SaveSessionOnApplicationClosing()
+    {
+        if (!GlobalSettings.Get<bool>(GlobalSettings.AUTO_SAVE_SESSION) || Layout is null)
+        {
+            return;
+        }
+
+        try
+        {
+            string path = GetAutoSessionPath();
+            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+            File.WriteAllText(path, SerializeSessionState(), Encoding.UTF8);
+            Debug.WriteLine($"[MAINWINDOW] Auto-saved session to '{path}'.");
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine($"[MAINWINDOW] ERROR | Failed to auto-save session: {e}");
+            Console.Error.WriteLine(e);
+        }
+    }
+
+    private string SerializeSessionState()
+    {
+        if (_serializer is null || Layout is null)
+        {
+            throw new InvalidOperationException("The Dock layout is not initialized.");
+        }
+
+        _dockState?.Reset();
+        _dockState?.Save(Layout);
+        return JsonSerializer.Serialize(new SavedSessionState
+        {
+            LayoutJson = _serializer.Serialize(Layout),
+            CurrentLayoutProfilePath = GlobalSettings.Shared.CurrentLayoutProfilePath,
+            SelectionBookmarks = GlobalSettings.Shared.ReportSelectionBookmarksJson,
+            Documents = CaptureOpenDocuments()
+        }, SavedLayoutJsonOptions);
+    }
+
+    private List<SavedDocumentState> CaptureOpenDocuments()
+    {
+        List<SavedDocumentState> documents = [];
+        IDocumentDock? filesDock = _factory?.GetDockable<IDocumentDock>(DockFactory.DocumentDockId);
+        if (filesDock?.VisibleDockables is not { } dockables)
+        {
+            return documents;
+        }
+
+        foreach (FileViewModel fileViewModel in dockables.OfType<FileViewModel>())
+        {
+            if (string.IsNullOrWhiteSpace(fileViewModel.Path))
             {
-                Console.WriteLine(e);
+                continue;
+            }
+
+            documents.Add(new SavedDocumentState
+            {
+                Path = Path.GetFullPath(fileViewModel.Path),
+                DocumentType = fileViewModel.DocumentType,
+                IsActive = ReferenceEquals(filesDock.ActiveDockable, fileViewModel),
+                Text = !fileViewModel.DocumentType.IsReportType() && fileViewModel.IsModified
+                    ? fileViewModel.Text
+                    : null,
+                Encoding = fileViewModel.Encoding,
+                IsModified = fileViewModel.IsModified,
+                EditedOrderChanges = (fileViewModel.Document as CRDocument)?.CaptureEditedOrderChanges()
+            });
+        }
+
+        return documents;
+    }
+
+    private SavedSessionState ParseLayoutState(string json, List<SavedDocumentState> fallbackDocuments)
+    {
+        using JsonDocument document = JsonDocument.Parse(json);
+        if (document.RootElement.ValueKind == JsonValueKind.Object
+            && document.RootElement.EnumerateObject().Any(property => string.Equals(property.Name, nameof(SavedSessionState.LayoutJson), StringComparison.OrdinalIgnoreCase)))
+        {
+            SavedSessionState? savedLayout = JsonSerializer.Deserialize<SavedSessionState>(json, SavedLayoutJsonOptions);
+            if (savedLayout is null || savedLayout.Version != SavedLayoutVersion || string.IsNullOrWhiteSpace(savedLayout.LayoutJson))
+            {
+                throw new InvalidDataException("The saved layout file is invalid or uses an unsupported version.");
+            }
+
+            savedLayout.Documents ??= fallbackDocuments;
+            return savedLayout;
+        }
+
+        return new SavedSessionState
+        {
+            LayoutJson = json,
+            Documents = fallbackDocuments
+        };
+    }
+
+    private bool TryRestoreAutoSession()
+    {
+        string path = GetAutoSessionPath();
+        if (!File.Exists(path))
+        {
+            path = GetLegacyAutoSessionPath();
+        }
+        if (!File.Exists(path))
+        {
+            return false;
+        }
+
+        try
+        {
+            SavedSessionState savedLayout = ParseLayoutState(File.ReadAllText(path, Encoding.UTF8), []);
+            RestoreLayoutState(savedLayout);
+            Debug.WriteLine($"[MAINWINDOW] Restored auto-saved session from '{path}'.");
+            return true;
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine($"[MAINWINDOW] ERROR | Failed to restore auto-saved session: {e}");
+            Console.Error.WriteLine(e);
+            return false;
+        }
+    }
+
+    private bool TryRestoreCurrentLayoutProfile()
+    {
+        string profilePath = GlobalSettings.Shared.CurrentLayoutProfilePath;
+        if (string.IsNullOrWhiteSpace(profilePath) || !File.Exists(profilePath))
+        {
+            return false;
+        }
+
+        try
+        {
+            SavedSessionState savedLayout = ParseLayoutState(File.ReadAllText(profilePath, Encoding.UTF8), []);
+            savedLayout.Documents = [];
+            savedLayout.SelectionBookmarks = string.Empty;
+            RestoreLayoutState(savedLayout);
+            GlobalSettings.Shared.CurrentLayoutProfilePath = Path.GetFullPath(profilePath);
+            Debug.WriteLine($"[MAINWINDOW] Restored current layout profile from '{profilePath}'.");
+            return true;
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine($"[MAINWINDOW] ERROR | Failed to restore current layout profile '{profilePath}': {e}");
+            Console.Error.WriteLine(e);
+            return false;
+        }
+    }
+
+    private void RestoreLayoutState(SavedSessionState savedLayout, bool preserveCurrentContext = false)
+    {
+        if (_serializer is null)
+        {
+            throw new InvalidOperationException("The Dock serializer is not initialized.");
+        }
+
+        List<SavedDocumentState> documentsToRestore;
+        if (preserveCurrentContext)
+        {
+            documentsToRestore = [];
+        }
+        else if (savedLayout.Documents is { Count: > 0 } savedDocuments)
+        {
+            documentsToRestore = savedDocuments;
+        }
+        else
+        {
+            documentsToRestore = CaptureOpenDocuments();
+        }
+
+        IRootDock? layout = _serializer.Deserialize<IRootDock?>(savedLayout.LayoutJson);
+        if (layout is null)
+        {
+            throw new InvalidDataException("The saved layout does not contain a Dock root.");
+        }
+
+        _dockState?.Reset();
+        if (Layout is not null)
+        {
+            _dockState?.Save(Layout);
+        }
+        _dockState?.Restore(layout);
+
+        Layout = layout;
+        _factory?.InitLayout(layout);
+        UpdateViewVisibilityFromLayout();
+        if (!preserveCurrentContext)
+        {
+            RemoveDeserializedDocuments();
+        }
+        _dockState?.Save(layout);
+        _documentsToRestore = preserveCurrentContext ? null : documentsToRestore;
+
+        if (!preserveCurrentContext && !string.IsNullOrEmpty(savedLayout.SelectionBookmarks))
+        {
+            GlobalSettings.Shared.ReportSelectionBookmarksJson = savedLayout.SelectionBookmarks;
+        }
+
+        if (!preserveCurrentContext && savedLayout.CurrentLayoutProfilePath is not null)
+        {
+            GlobalSettings.Shared.CurrentLayoutProfilePath = savedLayout.CurrentLayoutProfilePath;
+        }
+    }
+
+    private void RemoveDeserializedDocuments()
+    {
+        IDocumentDock? filesDock = _factory?.GetDockable<IDocumentDock>(DockFactory.DocumentDockId);
+        if (filesDock?.VisibleDockables is not { } dockables)
+        {
+            return;
+        }
+
+        foreach (FileViewModel fileViewModel in dockables.OfType<FileViewModel>().ToList())
+        {
+            dockables.Remove(fileViewModel);
+        }
+
+        if (filesDock.ActiveDockable is FileViewModel)
+        {
+            filesDock.ActiveDockable = null;
+        }
+    }
+
+    private void RestorePendingDocuments()
+    {
+        if (_documentsToRestore is not { } documents)
+        {
+            return;
+        }
+
+        _documentsToRestore = null;
+        FileViewModel? activeFile = null;
+        foreach (SavedDocumentState savedDocument in documents)
+        {
+            if (string.IsNullOrWhiteSpace(savedDocument.Path) || !File.Exists(savedDocument.Path))
+            {
+                Debug.WriteLine($"[MAINWINDOW] Skipping saved document that no longer exists: '{savedDocument.Path}'.");
+                continue;
+            }
+
+            FileViewModel? fileViewModel = FindFileViewModelByPath(savedDocument.Path);
+            if (fileViewModel is null && !OpenDocument(savedDocument.Path, savedDocument.DocumentType, out fileViewModel))
+            {
+                Debug.WriteLine($"[MAINWINDOW] WARNING | Could not restore document '{savedDocument.Path}'.");
+                continue;
+            }
+
+            if (fileViewModel is null)
+            {
+                continue;
+            }
+
+            RestoreDocumentState(fileViewModel, savedDocument);
+            if (savedDocument.IsActive)
+            {
+                activeFile = fileViewModel;
             }
         }
 
-        Debug.WriteLine("[MAINWINDOW] SaveLayout ended.");
+        if (activeFile is not null)
+        {
+            _factory?.SetActiveDockable(activeFile);
+        }
+    }
+
+    private static void RestoreDocumentState(FileViewModel fileViewModel, SavedDocumentState savedDocument)
+    {
+        if (savedDocument.Text is not null)
+        {
+            fileViewModel.Text = savedDocument.Text;
+        }
+        if (savedDocument.Encoding is not null)
+        {
+            fileViewModel.Encoding = savedDocument.Encoding;
+        }
+        fileViewModel.IsModified = savedDocument.IsModified;
+
+        if (fileViewModel.Document is CRDocument report && savedDocument.EditedOrderChanges is not null)
+        {
+            report.RestoreEditedOrderChanges(savedDocument.EditedOrderChanges);
+        }
+    }
+
+    private FileViewModel? FindFileViewModelByPath(string pathname)
+    {
+        string fullPath = Path.GetFullPath(pathname);
+        IDocumentDock? filesDock = _factory?.GetDockable<IDocumentDock>(DockFactory.DocumentDockId);
+        return filesDock?.VisibleDockables?.OfType<FileViewModel>()
+            .FirstOrDefault(fileViewModel => !string.IsNullOrWhiteSpace(fileViewModel.Path)
+                && DocumentPathComparer.Equals(Path.GetFullPath(fileViewModel.Path), fullPath));
+    }
+
+    private static string GetAutoSessionPath()
+    {
+        string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        return Path.Combine(appDataPath, "Odyssey", AutoSessionFileName);
+    }
+
+    private static string GetLegacyAutoSessionPath()
+    {
+        string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        return Path.Combine(appDataPath, "Odyssey", LegacyAutoSessionFileName);
+    }
+
+    private static string GetLayoutsDirectory()
+    {
+        string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        return Path.Combine(appDataPath, "Odyssey", "Layouts");
     }
 
     /*
@@ -1363,6 +1946,11 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
         FileViewModel? fileViewModel = null;
         if (loaded)
         {
+            if (eresseaDocument is CRDocument reportDocument)
+            {
+                reportDocument.SourcePath = pathname;
+            }
+
             string title = System.IO.Path.GetFileNameWithoutExtension(pathname);
             if (fileType == DocumentType.ERESSEA_REPORT_FROM_ZIP)
             {
@@ -1406,24 +1994,48 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
     private void ToggleView(string viewModelId)
     {
         // See https://github.com/wieslawsoltes/Dock/blob/master/docs/dock-restore-dockable.md
-        if (_factory is { })
+        if (_factory is { } factory && Layout is { } rootDock)
         {
-            IDockable? viewModel = _factory.GetDockable<IDockable>(viewModelId);
+            IDockable? viewModel = factory.GetDockable<IDockable>(viewModelId);
             if (viewModel is not null)
             {
-                IRootDock? rootDock = _factory.FindRoot(viewModel, _ => true);
-                IList<IDockable>? hiddenDockables = rootDock?.HiddenDockables;
-                bool isVisible = hiddenDockables is null ? true : !hiddenDockables.Contains(viewModel);
+                rootDock = factory.FindRoot(viewModel, _ => true) ?? rootDock;
+                IList<IDockable>? hiddenDockables = rootDock.HiddenDockables;
+                IDockable? hiddenDockable = hiddenDockables?.FirstOrDefault(dockable =>
+                    string.Equals(dockable.Id, viewModelId, StringComparison.Ordinal));
 
-                if (isVisible)
+                if (hiddenDockable is null)
                 {
-                    _factory.HideDockable(viewModelId);
+                    factory.HideDockable(viewModel);
                 }
                 else
                 {
-                    _factory.RestoreDockable(viewModelId);
-                    _factory.SetActiveDockable(viewModel);
-                    _factory.SetFocusedDockable(Layout!, viewModel);
+                    if (hiddenDockable.OriginalOwner is null)
+                    {
+                        List<IToolDock> emptyToolDocks = factory.Find(rootDock, dockable => dockable is IToolDock { IsEmpty: true })
+                            .OfType<IToolDock>()
+                            .ToList();
+                        IToolDock? restoreOwner = emptyToolDocks
+                            .OrderByDescending(dock => !double.IsNaN(dock.CollapsedProportion) && dock.CollapsedProportion > 0)
+                            .FirstOrDefault()
+                            ?? factory.Find(rootDock, dockable => dockable is IToolDock).OfType<IToolDock>().FirstOrDefault();
+
+                        if (restoreOwner is null)
+                        {
+                            Debug.WriteLine($"[MAINWINDOW] Cannot restore hidden view '{viewModelId}': no tool dock is available.");
+                            return;
+                        }
+
+                        hiddenDockable.OriginalOwner = restoreOwner;
+                    }
+
+                    // Restore the item from the active root; the ID overload searches DockControls.
+                    factory.RestoreDockable(hiddenDockable);
+                    if (hiddenDockable.Owner is IDock && hiddenDockables?.Contains(hiddenDockable) != true)
+                    {
+                        factory.SetActiveDockable(hiddenDockable);
+                        factory.SetFocusedDockable(rootDock, hiddenDockable);
+                    }
                 }
             }
         }
@@ -1625,6 +2237,10 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
     {
         fileViewModel.Path = path;
         fileViewModel.Title = Path.GetFileNameWithoutExtension(path);
+        if (fileViewModel.Document is CRDocument reportDocument)
+        {
+            reportDocument.SourcePath = path;
+        }
     }
 
     private void OnDockableClosed(object? sender, DockableClosedEventArgs args)

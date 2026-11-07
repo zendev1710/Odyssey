@@ -211,7 +211,7 @@
     <value>unarmed combat</value>
   </data>
   <data name="rules_skill_Wagenbau" xml:space="preserve">
-    <value>Wagenbau</value>
+    <value>Cartmaking</value>
   </data>
   <data name="rules_skill_Wahrnehmung" xml:space="preserve">
     <value>perception</value>
@@ -1905,6 +1905,12 @@
   <data name="parm_inf_map_building_contrast" xml:space="preserve">
     <value>Backdrop drawn behind building icons so they stay readable over the terrain. Plate: light plate with a colored rim; Rim only: outline without background; None: no backdrop.</value>
   </data>
+  <data name="parm_hdr_map_building_english_initials" xml:space="preserve">
+    <value>Use English initials for building symbols</value>
+  </data>
+  <data name="parm_inf_map_building_english_initials" xml:space="preserve">
+    <value>Enabled by default: building symbols always use the English name's initial. When disabled, the initial follows the UI language.</value>
+  </data>
   <data name="parm_key_building_contrast_plate" xml:space="preserve">
     <value>Plate (recommended)</value>
   </data>
@@ -2301,17 +2307,20 @@
   <data name="mainmenu_window" xml:space="preserve">
     <value>_Window</value>
   </data>
-  <data name="mainmenu_window_layout_new" xml:space="preserve">
-    <value>_New layout</value>
-  </data>
-  <data name="mainmenu_window_layout_close" xml:space="preserve">
-    <value>Close layout</value>
-  </data>
   <data name="mainmenu_window_layout_open" xml:space="preserve">
     <value>Open layout...</value>
   </data>
   <data name="mainmenu_window_layout_save" xml:space="preserve">
-    <value>Save layout...</value>
+    <value>Save current layout</value>
+  </data>
+  <data name="mainmenu_window_layout_save_as" xml:space="preserve">
+    <value>Save layout as...</value>
+  </data>
+  <data name="mainmenu_window_layout_current" xml:space="preserve">
+    <value>Current layout: {0}</value>
+  </data>
+  <data name="mainmenu_window_layout_default" xml:space="preserve">
+    <value>Default (not saved)</value>
   </data>
   <data name="mainmenu_tools_advanced_search" xml:space="preserve">
     <value>_Advanced search</value>
@@ -2330,6 +2339,45 @@
   </data>
   <data name="find_watermark" xml:space="preserve">
     <value>Find...</value>
+  </data>
+  <data name="find_invalid_regex" xml:space="preserve">
+    <value>Invalid regular expression.</value>
+  </data>
+  <data name="find_minimum_characters" xml:space="preserve">
+    <value>Type at least 3 characters, or press Enter to search.</value>
+  </data>
+  <data name="find_regex_timeout" xml:space="preserve">
+    <value>The regular expression took too long to evaluate.</value>
+  </data>
+  <data name="find_result_count" xml:space="preserve">
+    <value>Results: {0}</value>
+  </data>
+  <data name="find_filter_categories" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="find_filter_deselect_all" xml:space="preserve">
+    <value>Deselect all categories</value>
+  </data>
+  <data name="find_filter_select_all" xml:space="preserve">
+    <value>Select all categories</value>
+  </data>
+  <data name="find_result_kind_building" xml:space="preserve">
+    <value>Building</value>
+  </data>
+  <data name="find_result_kind_faction" xml:space="preserve">
+    <value>Faction</value>
+  </data>
+  <data name="find_result_kind_region" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="find_result_kind_ship" xml:space="preserve">
+    <value>Ship</value>
+  </data>
+  <data name="find_result_kind_unit" xml:space="preserve">
+    <value>Unit</value>
+  </data>
+  <data name="find_searching" xml:space="preserve">
+    <value>Searching...</value>
   </data>
   <data name="find_tip" xml:space="preserve">
     <value>Find...</value>
@@ -2853,6 +2901,12 @@
   <data name="parm_inf_echeck_program" xml:space="preserve">
     <value>Select the ECheck program executable file</value>
   </data>
+  <data name="parm_hdr_bookmarks_folder" xml:space="preserve">
+    <value>Bookmarks folder</value>
+  </data>
+  <data name="parm_inf_bookmarks_folder" xml:space="preserve">
+    <value>Folder used to store and load bookmark files</value>
+  </data>
   <data name="parm_cat_game" xml:space="preserve">
     <value>Game</value>
   </data>
@@ -3184,4 +3238,34 @@
   <data name="unit_skill_tooltip_decreased" xml:space="preserve">
     <value>{0}: level {1} (decreased by {2})</value>
   </data>
+  <data name="unit_skill_level_short" xml:space="preserve">
+    <value>L{0}</value>
+  </data>
+  <data name="settings_global_display" xml:space="preserve"><value>Global display</value></data>
+  <data name="settings_skills" xml:space="preserve"><value>Skills</value></data>
+  <data name="skills_display_title" xml:space="preserve"><value>Unit skill display order</value></data>
+  <data name="skills_display_description" xml:space="preserve"><value>Choose the skill sorting order. When grouping is enabled, this order applies within each category.</value></data>
+  <data name="skill_sort_mode_level" xml:space="preserve"><value>Level, descending; then alphabetical</value></data>
+  <data name="skill_sort_mode_alphabetical" xml:space="preserve"><value>Alphabetical</value></data>
+  <data name="skill_sort_mode_custom" xml:space="preserve"><value>Custom order</value></data>
+  <data name="skills_group_by_category" xml:space="preserve"><value>Group skills by category</value></data>
+  <data name="skill_category_order_title" xml:space="preserve"><value>Category order</value></data>
+  <data name="skill_category_order_description" xml:space="preserve"><value>Categories are displayed in this order when grouping is enabled.</value></data>
+  <data name="skill_category_reset_default" xml:space="preserve"><value>Restore default order</value></data>
+  <data name="skill_order_title" xml:space="preserve"><value>Skill order</value></data>
+  <data name="skill_category_combat" xml:space="preserve"><value>Combat</value></data>
+  <data name="skill_category_movement" xml:space="preserve"><value>Movement</value></data>
+  <data name="skill_category_production" xml:space="preserve"><value>Production</value></data>
+  <data name="skill_category_economy" xml:space="preserve"><value>Economy</value></data>
+  <data name="skill_category_magic" xml:space="preserve"><value>Magic</value></data>
+  <data name="skill_category_reconnaissance" xml:space="preserve"><value>Reconnaissance &amp; covert operations</value></data>
+  <data name="parm_grp_badges" xml:space="preserve"><value>Unit badges</value></data>
+  <data name="parm_hdr_unit_skill_badge_show_level_prefix" xml:space="preserve"><value>Prefix skill level with a letter</value></data>
+  <data name="parm_inf_unit_skill_badge_show_level_prefix" xml:space="preserve"><value>Show a letter before the skill level in its badge.</value></data>
+  <data name="parm_hdr_unit_skill_badge_transparent" xml:space="preserve"><value>Transparent skill badge background</value></data>
+  <data name="parm_inf_unit_skill_badge_transparent" xml:space="preserve"><value>Make the skill badge fill transparent while keeping its outline and level capsule.</value></data>
+  <data name="parm_hdr_unit_item_badge_transparent" xml:space="preserve"><value>Transparent inventory badge background</value></data>
+  <data name="parm_inf_unit_item_badge_transparent" xml:space="preserve"><value>Make the inventory badge fill transparent while keeping its outline and quantity capsule.</value></data>
+  <data name="parm_hdr_auto_save_session" xml:space="preserve"><value>Automatically save session on exit</value></data>
+  <data name="parm_inf_auto_save_session" xml:space="preserve"><value>Save the current session on exit and restore it the next time Odyssey starts.</value></data>
 </root>

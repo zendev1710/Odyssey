@@ -176,9 +176,6 @@
     <Compile Update="Views\Tools\ReportInfoView.axaml.cs">
       <DependentUpon>ReportInfoView.axaml</DependentUpon>
     </Compile>
-	<Compile Update="Views\Tools\UnitStripView.axaml.cs">
-	  <DependentUpon>UnitStripView.axaml</DependentUpon>
-	</Compile>
     <Compile Update="Views\Tools\RegionInfoView.axaml.cs">
       <DependentUpon>RegionInfoView.axaml</DependentUpon>
     </Compile>
@@ -209,9 +206,6 @@
     <Compile Update="Views\Tools\UnitOrdersView.axaml.cs">
       <DependentUpon>UnitOrdersView.axaml</DependentUpon>
     </Compile>
-	<Compile Update="Views\Tools\UnitInspectorView.axaml.cs">
-	  <DependentUpon>UnitInspectorView.axaml</DependentUpon>
-	</Compile>
 	<Compile Update="Views\Tools\DetailsView.axaml.cs">
 	  <DependentUpon>DetailsView.axaml</DependentUpon>
 	</Compile>

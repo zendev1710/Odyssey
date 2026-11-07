@@ -4,7 +4,9 @@ using Odyssey.Models;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Tools;
+using Odyssey.Settings;
 using Odyssey.Utils;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -17,8 +19,19 @@ public partial class MapViewModel : DocumentToolViewModelBase/*, IRecipient<Cent
     [ObservableProperty]
     double _zoom = 100.0;
 
+    partial void OnZoomChanged(double value)
+    {
+        if (double.IsFinite(value))
+        {
+            GlobalSettings.Shared.MapZoomPercentage = Math.Clamp((int)Math.Round(value), 20, 400);
+        }
+    }
+
     [ObservableProperty]
     bool _isDragging;
+
+    [ObservableProperty]
+    bool _isSelectionCenterPending;
 
     [ObservableProperty]
     RegionModel? _selectedRegion;
@@ -170,6 +183,7 @@ public partial class MapViewModel : DocumentToolViewModelBase/*, IRecipient<Cent
 
     public MapViewModel() : base()
     {
+        Zoom = Math.Clamp(GlobalSettings.Shared.MapZoomPercentage, 20, 400);
     }
 
     partial void OnSelectedPlaneChanged(WorldPlane? oldValue, WorldPlane? newValue)
@@ -210,6 +224,8 @@ public partial class MapViewModel : DocumentToolViewModelBase/*, IRecipient<Cent
         if (ReferenceEquals(sender, this))
             return;
 
+        bool isRestoredReportSelection = sender is ExplorerViewModel { IsRestoringReportSelection: true };
+
         // Keep track of the selected ship so its route can be highlighted on the map.
         SelectedShip = ResolveSelectedShip(selection);
 
@@ -221,12 +237,21 @@ public partial class MapViewModel : DocumentToolViewModelBase/*, IRecipient<Cent
             try
             {
                 SelectedRegion = selection.Region;
+                if (isRestoredReportSelection)
+                {
+                    IsSelectionCenterPending = true;
+                }
             }
             finally
             {
                 _isUpdatingSelection = false;
             }
         }
+    }
+
+    public void CompleteSelectionCenterRequest()
+    {
+        IsSelectionCenterPending = false;
     }
 
     /// <summary>

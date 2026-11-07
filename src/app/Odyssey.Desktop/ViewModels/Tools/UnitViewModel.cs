@@ -52,11 +52,12 @@ public partial class UnitViewModel : ObservableObject
     private bool _isSelected;
 
     public string OrdersSummary { get; private set; } = "-";
-    public IBrush FactionStatusBrush { get; private set; } = CreateFactionStatusBrush(FactionStatus.UNKNOWN);
-    public IBrush FactionStatusBackground { get; private set; } = CreateFactionStatusBackground(FactionStatus.UNKNOWN);
-    public IBrush FactionStatusSelectedBackground { get; private set; } = CreateFactionStatusSelectedBackground(FactionStatus.UNKNOWN);
-    public IBrush FactionStatusConfirmedBackground { get; private set; } = CreateDarkenedBrush(CreateFactionStatusBackground(FactionStatus.UNKNOWN));
-    public IBrush FactionStatusSelectedConfirmedBackground { get; private set; } = CreateDarkenedBrush(CreateFactionStatusSelectedBackground(FactionStatus.UNKNOWN));
+    public bool CanEditOrders { get; private set; }
+    public IBrush FactionStatusBrush { get; private set; } = FactionStatusPalette.GetBorderBrush(FactionStatus.UNKNOWN);
+    public IBrush FactionStatusBackground { get; private set; } = FactionStatusPalette.GetBackgroundBrush(FactionStatus.UNKNOWN);
+    public IBrush FactionStatusSelectedBackground { get; private set; } = FactionStatusPalette.GetSelectedBackgroundBrush(FactionStatus.UNKNOWN);
+    public IBrush FactionStatusConfirmedBackground { get; private set; } = FactionStatusPalette.Darken(FactionStatusPalette.GetBackgroundBrush(FactionStatus.UNKNOWN));
+    public IBrush FactionStatusSelectedConfirmedBackground { get; private set; } = FactionStatusPalette.Darken(FactionStatusPalette.GetSelectedBackgroundBrush(FactionStatus.UNKNOWN));
     public IBrush IdentityBackground => IsSelected
         ? IsConfirmed == true ? FactionStatusSelectedConfirmedBackground : FactionStatusSelectedBackground
         : IsConfirmed == true ? FactionStatusConfirmedBackground : FactionStatusBackground;
@@ -89,12 +90,13 @@ public partial class UnitViewModel : ObservableObject
             vm.PeopleNumber = unit.PeopleNumber;
             vm.Model = unit;
             FactionStatus factionStatus = doc.GetFactionStatus(unit.EffectiveFactionId);
+            vm.CanEditOrders = unit.HasEditableOrders;
             vm.AreSkillsVisible = factionStatus is FactionStatus.ACTIVE or FactionStatus.ALLIED;
-            vm.FactionStatusBrush = CreateFactionStatusBrush(factionStatus);
-            vm.FactionStatusBackground = CreateFactionStatusBackground(factionStatus);
-            vm.FactionStatusSelectedBackground = CreateFactionStatusSelectedBackground(factionStatus);
-            vm.FactionStatusConfirmedBackground = CreateDarkenedBrush(vm.FactionStatusBackground);
-            vm.FactionStatusSelectedConfirmedBackground = CreateDarkenedBrush(vm.FactionStatusSelectedBackground);
+            vm.FactionStatusBrush = FactionStatusPalette.GetBorderBrush(factionStatus);
+            vm.FactionStatusBackground = FactionStatusPalette.GetBackgroundBrush(factionStatus);
+            vm.FactionStatusSelectedBackground = FactionStatusPalette.GetSelectedBackgroundBrush(factionStatus);
+            vm.FactionStatusConfirmedBackground = FactionStatusPalette.Darken(vm.FactionStatusBackground);
+            vm.FactionStatusSelectedConfirmedBackground = FactionStatusPalette.Darken(vm.FactionStatusSelectedBackground);
             if (includeSummary)
             {
                 vm.LoadUnitSummary(unit);
@@ -104,52 +106,6 @@ public partial class UnitViewModel : ObservableObject
             vm.Summary = $"{vm.Name} ({vm.Id})";
         }
         return vm;
-    }
-
-    private static IBrush CreateFactionStatusBrush(FactionStatus status)
-    {
-        string color = status switch
-        {
-            FactionStatus.ACTIVE => "#3B82F6",
-            FactionStatus.ALLIED => "#22C55E",
-            FactionStatus.ANONYMOUS => "#9CA3AF",
-            _ => "#EF4444",
-        };
-        return new SolidColorBrush(Color.Parse(color));
-    }
-
-    private static IBrush CreateFactionStatusBackground(FactionStatus status)
-    {
-        string color = status switch
-        {
-            FactionStatus.ACTIVE => "#DCEBFF",
-            FactionStatus.ALLIED => "#DDF4E3",
-            FactionStatus.ANONYMOUS => "#E5E7EB",
-            _ => "#FCE0E0",
-        };
-        return new SolidColorBrush(Color.Parse(color));
-    }
-
-    private static IBrush CreateFactionStatusSelectedBackground(FactionStatus status)
-    {
-        string color = status switch
-        {
-            FactionStatus.ACTIVE => "#1D4ED8",
-            FactionStatus.ALLIED => "#15803D",
-            FactionStatus.ANONYMOUS => "#4B5563",
-            _ => "#B91C1C",
-        };
-        return new SolidColorBrush(Color.Parse(color));
-    }
-
-    private static IBrush CreateDarkenedBrush(IBrush brush)
-    {
-        var baseColor = ((SolidColorBrush)brush).Color;
-        return new SolidColorBrush(Color.FromArgb(
-            baseColor.A,
-            (byte)(baseColor.R / 2),
-            (byte)(baseColor.G / 2),
-            (byte)(baseColor.B / 2)));
     }
 
     private void LoadUnitSummary(UnitModel unit)
@@ -165,6 +121,7 @@ public partial class UnitViewModel : ObservableObject
                     int.TryParse(property.Value, out int level) ? level : 0,
                     property.Change));
             }
+            SortSkillItems();
         }
 
         properties = [];
@@ -190,6 +147,8 @@ public partial class UnitViewModel : ObservableObject
             }
         }
     }
+
+    public void SortSkillItems() => UnitSkillSorter.Sort(SkillItems);
 
     public override string ToString() => $"{Name} ({Id})";
 }

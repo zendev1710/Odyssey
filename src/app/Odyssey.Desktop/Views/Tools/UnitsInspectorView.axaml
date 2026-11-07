@@ -2,30 +2,138 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:views="using:Odyssey.Views.Tools"
+             xmlns:controls="using:Odyssey.Controls"
              xmlns:vm="using:Odyssey.ViewModels.Tools"
              x:Class="Odyssey.Views.Tools.UnitsInspectorView"
+             x:Name="Root"
              x:DataType="vm:UnitsInspectorViewModel"
-             mc:Ignorable="d">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Border Grid.Row="0" Padding="8" Background="{DynamicResource PanelBackgroundBrush}">
-            <Grid ColumnDefinitions="*,Auto">
-                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
-                    <TextBlock Text="{Binding LocatedFaction.Name}" FontWeight="SemiBold" />
-                    <TextBlock Text="{Binding LocatedFaction.Region.Name}" Foreground="#FF888888" />
-                </StackPanel>
-                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="2">
-                    <Button Content="⇤" Command="{Binding NavigateToFirstLocatedFactionCommand}" IsVisible="{Binding ShowFirstLastLocatedFactionButtons}" />
-                    <Button Content="←" Command="{Binding NavigateToPreviousLocatedFactionCommand}" />
-                    <Button Content="→" Command="{Binding NavigateToNextLocatedFactionCommand}" />
-                    <Button Content="⇥" Command="{Binding NavigateToLastLocatedFactionCommand}" IsVisible="{Binding ShowFirstLastLocatedFactionButtons}" />
-                </StackPanel>
+             x:CompileBindings="False"
+             mc:Ignorable="d"
+             d:DesignWidth="1200"
+             d:DesignHeight="700">
+    <UserControl.Resources>
+        <DataTemplate x:Key="UnitIdentityTemplate" x:DataType="vm:UnitViewModel">
+            <Button Width="160" Height="100" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Padding="0" BorderThickness="0" Background="Transparent"
+                    Command="{Binding DataContext.SelectUnitCommand, ElementName=Root}"
+                    CommandParameter="{Binding}">
+                <Button.Styles>
+                    <Style Selector="Button:pointerover">
+                        <Setter Property="Opacity" Value="0.85" />
+                    </Style>
+                </Button.Styles>
+                <Border Width="160" Height="100" Padding="6" HorizontalAlignment="Center"
+                        CornerRadius="12" BorderBrush="{Binding FactionStatusBrush}" BorderThickness="4"
+                        Background="{Binding IdentityBackground}">
+                    <Grid ColumnDefinitions="*,42">
+                        <StackPanel Grid.Column="0" Spacing="3" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding Name}" FontWeight="SemiBold"
+                                       Foreground="{Binding IdentityForeground}" TextWrapping="NoWrap"
+                                       TextTrimming="CharacterEllipsis" />
+                            <TextBlock Text="{Binding Id}" FontSize="10"
+                                       Foreground="{Binding IdentityForeground}" TextWrapping="NoWrap" />
+                        </StackPanel>
+                        <TextBlock Grid.Column="1" Text="{Binding PeopleNumber}" FontSize="20"
+                                   FontWeight="Black" Foreground="{Binding IdentityForeground}"
+                                   TextAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+                </Border>
+            </Button>
+        </DataTemplate>
+        <DataTemplate x:Key="UnitSkillsAndInventoryTemplate" x:DataType="vm:UnitViewModel">
+            <Grid RowDefinitions="Auto,Auto" RowSpacing="4" VerticalAlignment="Center">
+                <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" IsVisible="{Binding InventoryItems.Count}">
+                    <RepeatButton Grid.Column="0" Content="◀" Width="24" Padding="0"
+                                  VerticalAlignment="Center" IsVisible="False" />
+                    <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Hidden"
+                                  VerticalScrollBarVisibility="Disabled">
+                        <ItemsControl ItemsSource="{Binding InventoryItems}" VerticalAlignment="Center">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate><StackPanel Orientation="Horizontal" Spacing="2" /></ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="vm:UnitItemViewModel">
+                                    <controls:UnitItemBadgeControl DataContext="{Binding}" Zoom="0.8" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    <RepeatButton Grid.Column="2" Content="▶" Width="24" Padding="0"
+                                  VerticalAlignment="Center" IsVisible="False" />
+                </Grid>
+                <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto" IsVisible="{Binding AreSkillsVisible}">
+                    <RepeatButton Grid.Column="0" Content="◀" Width="24" Padding="0"
+                                  VerticalAlignment="Center" IsVisible="False" />
+                    <ScrollViewer Grid.Column="1" Background="{DynamicResource PanelBackgroundBrush}"
+                                  HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled">
+                        <ItemsControl ItemsSource="{Binding SkillItems}" VerticalAlignment="Center">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate><StackPanel Orientation="Horizontal" Spacing="2" /></ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="vm:UnitSkillViewModel">
+                                    <controls:UnitSkillBadgeControl DataContext="{Binding}" Zoom="0.8" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    <RepeatButton Grid.Column="2" Content="▶" Width="24" Padding="0"
+                                  VerticalAlignment="Center" IsVisible="False" />
+                </Grid>
             </Grid>
-        </Border>
-        <views:UnitStripView Grid.Row="1" DataContext="{Binding StripViewModel}" />
+        </DataTemplate>
+        <DataTemplate x:Key="UnitOrdersTemplate" x:DataType="vm:UnitViewModel">
+            <Border BorderBrush="{DynamicResource TextControlBorderBrush}" BorderThickness="1">
+                <controls:UnitOrdersViewer OrdersText="{Binding OrdersSummary}"
+                                           IsConfirmed="{Binding IsConfirmed}"
+                                           CanEditOrders="{Binding CanEditOrders}" />
+            </Border>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid Background="{DynamicResource PanelBackground}" RowDefinitions="Auto,*">
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                <TextBlock Text="{Binding LocatedFaction.Name}" FontWeight="SemiBold" />
+                <TextBlock Text="{Binding LocatedFaction.Region.Name}" Foreground="#FF888888" />
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="2">
+                <Button Content="⇤" Command="{Binding NavigateToFirstLocatedFactionCommand}" IsVisible="{Binding ShowFirstLastLocatedFactionButtons}" />
+                <Button Content="←" Command="{Binding NavigateToPreviousLocatedFactionCommand}" />
+                <Button Content="→" Command="{Binding NavigateToNextLocatedFactionCommand}" />
+                <Button Content="⇥" Command="{Binding NavigateToLastLocatedFactionCommand}" IsVisible="{Binding ShowFirstLastLocatedFactionButtons}" />
+            </StackPanel>
+        </Grid>
+        <ScrollViewer Grid.Row="1" x:Name="UnitsScrollViewer"
+                      HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <Grid x:Name="UnitsGrid" ColumnSpacing="0" IsVisible="{Binding HasDocument}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="{Binding OrdersColumnWidth, Mode=TwoWay}" />
+                </Grid.ColumnDefinitions>
+                <GridSplitter x:Name="UnitsGridSplitter" Grid.Row="0" Grid.Column="0" Width="10"
+                              HorizontalAlignment="Right" ResizeDirection="Columns"
+                              ResizeBehavior="CurrentAndNext" ShowsPreview="False"
+                              IsVisible="{Binding IsOrdersColumnVisible}" Cursor="SizeWestEast">
+                    <GridSplitter.Template>
+                        <ControlTemplate>
+                            <Border Background="Transparent">
+                                <Border x:Name="SplitterGrip" Width="1" HorizontalAlignment="Center"
+                                        Background="{DynamicResource TextControlBorderBrushPointerOver}"
+                                        Opacity="0" />
+                            </Border>
+                        </ControlTemplate>
+                    </GridSplitter.Template>
+                    <GridSplitter.Styles>
+                        <Style Selector="GridSplitter:pointerover /template/ Border#SplitterGrip">
+                            <Setter Property="Opacity" Value="1" />
+                        </Style>
+                        <Style Selector="GridSplitter:pressed /template/ Border#SplitterGrip">
+                            <Setter Property="Opacity" Value="1" />
+                        </Style>
+                    </GridSplitter.Styles>
+                </GridSplitter>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </UserControl>

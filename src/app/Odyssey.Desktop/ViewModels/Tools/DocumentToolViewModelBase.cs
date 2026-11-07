@@ -29,12 +29,17 @@ namespace Odyssey.ViewModels.Tools
             _selectionService = ServiceLocator.EntitySelectionService;
 
             _documentService.ActiveDocumentChanged += OnActiveDocumentChanged;
+            _documentService.ActiveDocumentReady += OnActiveDocumentReady;
             _selectionService.SelectionChanged += OnSelectionChanged;
         }
 
         protected virtual void OnActiveDocumentChanged(CRDocument report)
         {
             HasDocument = report.HasData();
+        }
+
+        protected virtual void OnActiveDocumentReady(CRDocument report)
+        {
         }
 
         protected virtual void OnSelectionChanged(IEntitySelection selection, SelectionChangeTypes selType, object? sender)

@@ -10,7 +10,6 @@
 			 xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
 			 xmlns:conv="using:Odyssey.Converters"
              xmlns:vm="using:Odyssey.ViewModels"
-			 xmlns:search="using:Odyssey.Search"
 			 xmlns:a="clr-namespace:Odyssey.Assets"
              mc:Ignorable="d"
              d:DesignWidth="1000" d:DesignHeight="550"
@@ -41,6 +40,20 @@
         <KeyBinding Gesture="F8" Command="{Binding CenterMapOnSelectedRegionCommand}" />
         <KeyBinding Gesture="Ctrl+F8" Command="{Binding CenterMapGloballyCommand}" />
         <KeyBinding Gesture="Ctrl+Shift+R" Command="{Binding ToggleAllShipRoutesCommand}" />
+		<KeyBinding Gesture="Ctrl+NumPad1" Command="{Binding ToggleViewCommand}" CommandParameter="map" />
+		<KeyBinding Gesture="Ctrl+NumPad2" Command="{Binding ToggleViewCommand}" CommandParameter="minimap" />
+		<KeyBinding Gesture="Ctrl+NumPad3" Command="{Binding ToggleViewCommand}" CommandParameter="history" />
+		<KeyBinding Gesture="Ctrl+NumPad4" Command="{Binding ToggleViewCommand}" CommandParameter="bookmarks" />
+		<KeyBinding Gesture="Ctrl+NumPad5" Command="{Binding ToggleViewCommand}" CommandParameter="region_info" />
+		<KeyBinding Gesture="Ctrl+NumPad6" Command="{Binding ToggleViewCommand}" CommandParameter="battles" />
+		<KeyBinding Gesture="Ctrl+NumPad7" Command="{Binding ToggleViewCommand}" CommandParameter="search_results" />
+		<KeyBinding Gesture="Ctrl+NumPad8" Command="{Binding ToggleViewCommand}" CommandParameter="report_info" />
+		<KeyBinding Gesture="Ctrl+NumPad9" Command="{Binding ToggleViewCommand}" CommandParameter="error_list" />
+		<KeyBinding Gesture="Ctrl+NumPad0" Command="{Binding ToggleViewCommand}" CommandParameter="details" />
+		<KeyBinding Gesture="Ctrl+Shift+NumPad1" Command="{Binding ToggleViewCommand}" CommandParameter="region_statistics" />
+		<KeyBinding Gesture="Ctrl+Shift+NumPad2" Command="{Binding ToggleViewCommand}" CommandParameter="unit_orders" />
+		<KeyBinding Gesture="Ctrl+Shift+NumPad3" Command="{Binding ToggleViewCommand}" CommandParameter="region_properties" />
+		<KeyBinding Gesture="Ctrl+Shift+NumPad4" Command="{Binding ToggleViewCommand}" CommandParameter="explorer" />
 	</UserControl.KeyBindings>
 	<Grid RowDefinitions="Auto,*,25" ColumnDefinitions="Auto,*" Background="Transparent" DragDrop.AllowDrop="True">
 		<!--MENUS -->
@@ -121,103 +134,101 @@
 							  Command="{Binding ToggleViewCommand}"
 							  CommandParameter="map"
 							  ToggleType="CheckBox"
-							  HotKey="Ctrl+W,M"
-							  InputGesture="Ctrl+W,M"/>
+							  HotKey="Ctrl+D1"
+							  InputGesture="Ctrl+D1"/>
 					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_minimap}"
 							  IsChecked="{Binding IsMiniMapViewVisible}"
 							  Command="{Binding ToggleViewCommand}"
 							  CommandParameter="minimap"
 							  ToggleType="CheckBox"
-							  HotKey="Ctrl+W,J"
-							  InputGesture="Ctrl+W,J"/>
+							  HotKey="Ctrl+D2"
+							  InputGesture="Ctrl+D2"/>
 					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_history}"
 							  IsChecked="{Binding IsHistoryViewVisible}"
 							  Command="{Binding ToggleViewCommand}"
 							  CommandParameter="history"
 							  ToggleType="CheckBox"
-							  HotKey="Ctrl+W,T"
-							  InputGesture="Ctrl+W,T"/>
+							  HotKey="Ctrl+D3"
+							  InputGesture="Ctrl+D3"/>
 					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_bookmarks}"
 							  IsChecked="{Binding IsBookmarksViewVisible}"
 							  Command="{Binding ToggleViewCommand}"
 							  CommandParameter="bookmarks"
 							  ToggleType="CheckBox"
-							  HotKey="Ctrl+W,K"
-							  InputGesture="Ctrl+W,K"/>
+							  HotKey="Ctrl+D4"
+							  InputGesture="Ctrl+D4"/>
 					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_region_info}"
 							  IsChecked="{Binding IsRegionInfoViewVisible}"
 							  Command="{Binding ToggleViewCommand}"
 							  CommandParameter="region_info"
 							  ToggleType="CheckBox"
-							  HotKey="Ctrl+W,I"
-							  InputGesture="Ctrl+W,I"/>
+							  HotKey="Ctrl+D5"
+							  InputGesture="Ctrl+D5"/>
 					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_battles}"
 							  IsChecked="{Binding IsBattlesViewVisible}"
 							  Command="{Binding ToggleViewCommand}"
 							  ToggleType="CheckBox"
 							  CommandParameter="battles"
-							  HotKey="Ctrl+W,B"
-							  InputGesture="Ctrl+W,B"/>
+							  HotKey="Ctrl+D6"
+							  InputGesture="Ctrl+D6"/>
 					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_search_results}"
 							  IsChecked="{Binding IsSearchResultsViewVisible}"
 							  Command="{Binding ToggleViewCommand}"
 							  CommandParameter="search_results"
 							  ToggleType="CheckBox"
-							  HotKey="Ctrl+W,F"
-							  InputGesture="Ctrl+W,F"/>
+							  HotKey="Ctrl+D7"
+							  InputGesture="Ctrl+D7"/>
 					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_report_info}"
 							  IsChecked="{Binding IsReportInfoViewVisible}"
 							  Command="{Binding ToggleViewCommand}"
 							  ToggleType="CheckBox"
 							  CommandParameter="report_info"
-							  HotKey="Ctrl+W,R"
-							  InputGesture="Ctrl+W,R"/>
+							  HotKey="Ctrl+D8"
+							  InputGesture="Ctrl+D8"/>
 					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_error_list}"
 							  IsChecked="{Binding IsErrorsListViewVisible}"
 							  Command="{Binding ToggleViewCommand}"
 							  CommandParameter="error_list"
 							  ToggleType="CheckBox"
-							  HotKey="Ctrl+W,E"
-							  InputGesture="Ctrl+W,E"/>
+							  HotKey="Ctrl+D9"
+							  InputGesture="Ctrl+D9"/>
 					<Separator />
 					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_details}"
 							  IsChecked="{Binding IsDetailsViewVisible}"
 							  Command="{Binding ToggleViewCommand}"
 							  CommandParameter="details"
 							  ToggleType="CheckBox"
-							  HotKey="Ctrl+W,D"
-							  InputGesture="Ctrl+W,D"/>
+							  HotKey="Ctrl+D0"
+							  InputGesture="Ctrl+D0"/>
 					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_region_statistics}"
 							  IsChecked="{Binding IsRegionStatisticsViewVisible}"
 							  Command="{Binding ToggleViewCommand}"
 							  CommandParameter="region_statistics"
 							  ToggleType="CheckBox"
-							  HotKey="Ctrl+W,S"
-							  InputGesture="Ctrl+W,S"/>
+							  HotKey="Ctrl+Shift+D1"
+							  InputGesture="Ctrl+Shift+D1"/>
 					<Separator />
-					<!-- InputGeture bug: Ctrl+<key1>+<key2> displays Ctrl+<key2> -->
-					<!-- InputGeture/HotKey bug: Ctrl+W+O does not work, instead Ctrl+O is called (File/Open) -->
 					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_unit_orders}"
 							  IsChecked="{Binding IsUnitOrdersViewVisible}"
 							  Command="{Binding ToggleViewCommand}"
 							  CommandParameter="unit_orders"
 							  ToggleType="CheckBox"
-							  HotKey="Ctrl+W,O"
-							  InputGesture="Ctrl+W,O"/>
+							  HotKey="Ctrl+Shift+D2"
+							  InputGesture="Ctrl+Shift+D2"/>
 					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_region_properties}"
 							  IsChecked="{Binding IsRegionPropertiesViewVisible}"
 							  Command="{Binding ToggleViewCommand}"
 							  CommandParameter="region_properties"
 							  ToggleType="CheckBox"
-							  HotKey="Ctrl+W,P"
-							  InputGesture="Ctrl+W,P"/>
+							  HotKey="Ctrl+Shift+D3"
+							  InputGesture="Ctrl+Shift+D3"/>
 					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_explorer}"
 							  IsChecked="{Binding IsExplorerViewVisible}"
 							  Command="{Binding ToggleViewCommand}"
 							  CommandParameter="explorer"
 							  ToggleType="CheckBox"
-							  HotKey="Ctrl+W,X"
-							  InputGesture="Ctrl+W,X"/>
+							  HotKey="Ctrl+Shift+D4"
+							  InputGesture="Ctrl+Shift+D4"/>
 			  </MenuItem>
 			</MenuItem>
 			<!-- Bookmarks menu -->
@@ -253,10 +264,12 @@
 			</MenuItem>
 			<!-- Window menu -->
 			<MenuItem Header="{x:Static a:Lang.mainmenu_window}" IsVisible="{Binding EnableLayoutFeature}">
-				<MenuItem Header="{x:Static a:Lang.mainmenu_window_layout_save}" Command="{Binding LayoutSave}" />
+				<MenuItem Header="{Binding CurrentLayoutProfileLabel}" IsEnabled="False" />
+				<Separator />
 				<MenuItem Header="{x:Static a:Lang.mainmenu_window_layout_open}" Command="{Binding LayoutOpen}" />
-				<MenuItem Header="{x:Static a:Lang.mainmenu_window_layout_new}" Command="{Binding LayoutNew}" />
-				<MenuItem Header="{x:Static a:Lang.mainmenu_window_layout_close}" Command="{Binding LayoutClose}" />
+				<Separator />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_window_layout_save}" Command="{Binding LayoutSave}" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_window_layout_save_as}" Command="{Binding LayoutSaveAs}" />
 				<!--TODO : dynamic menu items to navigate from one document to another, with checkbox on current active document -->
 				<!-- Separator /-->
 				<!-- ... /-->
@@ -317,17 +330,18 @@
 				<StackPanel IsVisible="{Binding EnableSearchFeature}" Orientation="Horizontal" Grid.Column="0" Margin="5,0,0,0">
 					<TextBox Watermark="{x:Static a:Lang.find_watermark}"
 							 Name="PART_searchTextBox"
+							 KeyDown="SearchTextBox_OnKeyDown"
 							 Grid.Column="1"
 							 Grid.Row="0"
 							 Width="205"
 							 Margin="0,0,0,0"
-							 Text=""
+							 Text="{Binding SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 						>
 						<TextBox.InnerRightContent>
 							<StackPanel Orientation="Horizontal">
 								<ToggleButton Theme="{StaticResource SearchPanelTextBoxButton}"
 											  HotKey="Alt+C"
-											  IsChecked="True"
+											  IsChecked="{Binding SearchMatchCase, Mode=TwoWay}"
 											  ToolTip.Tip="{x:Static a:Lang.btn_find_opt_match_case_tip}"
 											  VerticalAlignment="Center">
 									<Path Data="{StaticResource CaseSensitiveIconPath}"
@@ -341,7 +355,7 @@
 								</ToggleButton>
 								<ToggleButton Theme="{StaticResource SearchPanelTextBoxButton}"
 											  HotKey="Alt+W"
-											  IsChecked="True"
+											  IsChecked="{Binding SearchWholeWords, Mode=TwoWay}"
 											  ToolTip.Tip="{x:Static a:Lang.btn_find_opt_whole_word_tip}"
 											  Margin="3,0,0,0"
 											  VerticalAlignment="Center">
@@ -356,7 +370,7 @@
 								</ToggleButton>
 								<ToggleButton Theme="{StaticResource SearchPanelTextBoxButton}"
 											  HotKey="Alt+R"
-											  IsChecked="True"
+											  IsChecked="{Binding SearchUseRegex, Mode=TwoWay}"
 											  ToolTip.Tip="{x:Static a:Lang.btn_find_opt_use_reg_exp_tip}"
 											  Margin="3,0,5,0"
 											  VerticalAlignment="Center">
@@ -376,7 +390,7 @@
 							MinWidth="34"
 							HotKey="Shift+Enter"
 							VerticalAlignment="Stretch"
-							Command="{x:Static search:SearchCommands.FindPrevious}">
+							Command="{Binding FindPreviousSearchResultCommand}">
 						<ToolTip.Tip>
 							<TextBlock Text="{x:Static a:Lang.btn_find_opt_prev_match_tip}" />
 						</ToolTip.Tip>
@@ -392,8 +406,7 @@
 					<Button Margin="3,0,0,0"
 							VerticalAlignment="Stretch"
 							MinWidth="34"
-							HotKey="Enter"
-							Command="{x:Static search:SearchCommands.FindNext}">
+							Command="{Binding FindNextSearchResultCommand}">
 						<ToolTip.Tip>
 							<TextBlock Text="{x:Static a:Lang.btn_find_opt_next_match_tip}" />
 						</ToolTip.Tip>

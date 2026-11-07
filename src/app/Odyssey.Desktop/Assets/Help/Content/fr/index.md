@@ -23,6 +23,6 @@ Malheureusement, cette documentation est incomplète. Plusieurs parties sont man
 
 Cette documentation a été rédigée avec le plus grand soin. Néanmoins, les auteurs ne peuvent être tenus responsables des erreurs ou des informations erronées qu'elle contient, ni des dommages qui pourraient résulter de l'utilisation ou de la non-utilisation de cette documentation. Alors, quoi qu'il arrive, cher lecteur, chère lectrice : C'est de votre faute !
 
-Cette documentation est distribuée sous la [Licence publique GNU (GPL)](license.html).
+Cette documentation est distribuée sous la [Licence publique générale GNU, version 2.0 (GPL-2.0)](license.html).
 
 Mark Gerritsen (traduction anglaise), Doetinchem, Pays-Bas, 15/03/2008

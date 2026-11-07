@@ -4,17 +4,61 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vm="using:Odyssey.ViewModels.Tools"
+				 xmlns:a="clr-namespace:Odyssey.Assets"
+			   xmlns:search="using:Odyssey.Search"
              mc:Ignorable="d"
              d:DesignWidth="300" d:DesignHeight="400"
+			  Loaded="SearchResultsView_OnLoaded"
              x:DataType="vm:SearchResultsViewModel"
 			 x:CompileBindings="True">
 	<Grid Focusable="True" IsVisible="{Binding HasDocument}">
-		<StackPanel>
-			<!--
-			<TextBlock Text="{Binding Id}" Padding="2" />
-			<TextBlock Text="{Binding Title}" Padding="2" />
-			<TextBlock Text="{Binding Context}" Padding="2" />
-			-->
-		</StackPanel>
+		<Grid RowDefinitions="Auto,*">
+			<Grid x:Name="HeaderGrid" ColumnDefinitions="*,Auto" SizeChanged="HeaderGrid_OnSizeChanged">
+				<TextBlock Text="{Binding SearchStatus}" Margin="6,4" MinWidth="100" />
+				<Button x:Name="CategoryFilterButton"
+						Grid.Column="1"
+						Content="{x:Static a:Lang.find_filter_categories}"
+						IsEnabled="{Binding HasResults}"
+						Margin="4,2,6,2"
+						Padding="8,2">
+					<Button.Flyout>
+						<MenuFlyout>
+							<MenuItem Header="{Binding CategorySelectionActionLabel}" Command="{Binding ToggleAllCategoriesCommand}" />
+							<Separator />
+							<MenuItem Header="{Binding RegionCategoryFilterLabel}" IsChecked="{Binding ShowRegions, Mode=TwoWay}" ToggleType="CheckBox" />
+							<MenuItem Header="{Binding UnitCategoryFilterLabel}" IsChecked="{Binding ShowUnits, Mode=TwoWay}" ToggleType="CheckBox" />
+							<MenuItem Header="{Binding BuildingCategoryFilterLabel}" IsChecked="{Binding ShowBuildings, Mode=TwoWay}" ToggleType="CheckBox" />
+							<MenuItem Header="{Binding ShipCategoryFilterLabel}" IsChecked="{Binding ShowShips, Mode=TwoWay}" ToggleType="CheckBox" />
+							<MenuItem Header="{Binding FactionCategoryFilterLabel}" IsChecked="{Binding ShowFactions, Mode=TwoWay}" ToggleType="CheckBox" />
+						</MenuFlyout>
+					</Button.Flyout>
+				</Button>
+			</Grid>
+			<ListBox x:Name="ResultsListBox"
+					 Grid.Row="1"
+					 ItemsSource="{Binding FilteredResults}"
+					  SelectedItem="{Binding SelectedResult, Mode=TwoWay}"
+					 PointerReleased="ResultsListBox_OnPointerReleased"
+					 KeyDown="ResultsListBox_OnKeyDown"
+					 KeyUp="ResultsListBox_OnKeyUp">
+				<ListBox.ItemTemplate>
+					<DataTemplate x:DataType="search:GlobalSearchResult">
+						<Grid Margin="3,2" ColumnDefinitions="2*,3*">
+							<TextBlock Text="{Binding Name}"
+									   FontWeight="SemiBold"
+									   TextWrapping="NoWrap"
+									   TextTrimming="CharacterEllipsis" />
+							<TextBlock Grid.Column="1"
+									   Text="{Binding Details}"
+									   Margin="6,0,0,0"
+									   FontSize="11"
+									   Opacity="0.75"
+									   TextWrapping="NoWrap"
+									   TextTrimming="CharacterEllipsis" />
+						</Grid>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
+		</Grid>
 	</Grid>
 </UserControl>

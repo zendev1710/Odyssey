@@ -26,5 +26,5 @@ This documentation was put together with the greatest care.
 Even so, the authors can not take responsibility for any errors or misinformation within it, or any damages that may occur through the use or non-use of this documentation.
 So whatever happens, dear reader: It's your own fault!  
 
-This documentation is distributed under the GNU Public License (GPL).  
+This documentation is distributed under the GNU General Public License, version 2.0 (GPL-2.0).
 Mark Gerritsen (English translation), Doetinchem, the Netherlands, 03/15/2008
