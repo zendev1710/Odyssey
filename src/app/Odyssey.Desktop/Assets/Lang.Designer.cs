@@ -3040,20 +3040,20 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Close layout.
+        ///   Looks up a localized string similar to Current layout: {0}.
         /// </summary>
-        public static string mainmenu_window_layout_close {
+        public static string mainmenu_window_layout_current {
             get {
-                return ResourceManager.GetString("mainmenu_window_layout_close", resourceCulture);
+                return ResourceManager.GetString("mainmenu_window_layout_current", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _New layout.
+        ///   Looks up a localized string similar to Default (not saved).
         /// </summary>
-        public static string mainmenu_window_layout_new {
+        public static string mainmenu_window_layout_default {
             get {
-                return ResourceManager.GetString("mainmenu_window_layout_new", resourceCulture);
+                return ResourceManager.GetString("mainmenu_window_layout_default", resourceCulture);
             }
         }
         
@@ -3067,11 +3067,29 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save layout....
+        ///   Looks up a localized string similar to _Reset layout.
+        /// </summary>
+        public static string mainmenu_window_layout_reset {
+            get {
+                return ResourceManager.GetString("mainmenu_window_layout_reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save layout.
         /// </summary>
         public static string mainmenu_window_layout_save {
             get {
                 return ResourceManager.GetString("mainmenu_window_layout_save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save layout as....
+        /// </summary>
+        public static string mainmenu_window_layout_save_as {
+            get {
+                return ResourceManager.GetString("mainmenu_window_layout_save_as", resourceCulture);
             }
         }
         
@@ -3211,6 +3229,15 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unit badges.
+        /// </summary>
+        public static string parm_grp_badges {
+            get {
+                return ResourceManager.GetString("parm_grp_badges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Behaviours.
         /// </summary>
         public static string parm_grp_behaviours {
@@ -3256,6 +3283,15 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Automatically save session on exit.
+        /// </summary>
+        public static string parm_hdr_auto_save_session {
+            get {
+                return ResourceManager.GetString("parm_hdr_auto_save_session", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bookmarks folder.
         /// </summary>
         public static string parm_hdr_bookmarks_folder {
@@ -3263,7 +3299,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("parm_hdr_bookmarks_folder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to ECheck program.
         /// </summary>
@@ -3353,7 +3389,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("parm_hdr_map_building_english_initials", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Building display style.
         /// </summary>
@@ -3481,6 +3517,15 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Transparent inventory badge background.
+        /// </summary>
+        public static string parm_hdr_unit_item_badge_transparent {
+            get {
+                return ResourceManager.GetString("parm_hdr_unit_item_badge_transparent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Application color theme (dark mode).
         /// </summary>
         public static string parm_hdr_unit_orders_dark_theme {
@@ -3517,6 +3562,33 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Prefix skill level with a letter.
+        /// </summary>
+        public static string parm_hdr_unit_skill_badge_show_level_prefix {
+            get {
+                return ResourceManager.GetString("parm_hdr_unit_skill_badge_show_level_prefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transparent skill badge background.
+        /// </summary>
+        public static string parm_hdr_unit_skill_badge_transparent {
+            get {
+                return ResourceManager.GetString("parm_hdr_unit_skill_badge_transparent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save the current session on exit and restore it the next time Odyssey starts..
+        /// </summary>
+        public static string parm_inf_auto_save_session {
+            get {
+                return ResourceManager.GetString("parm_inf_auto_save_session", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Folder used to store and load bookmark files.
         /// </summary>
         public static string parm_inf_bookmarks_folder {
@@ -3524,7 +3596,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("parm_inf_bookmarks_folder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Select the ECheck program executable file.
         /// </summary>
@@ -3614,7 +3686,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("parm_inf_map_building_english_initials", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Icons use the building graphics when available, symbols use colored shapes, and automatic uses icons with a shape fallback..
         /// </summary>
@@ -3742,6 +3814,15 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Make the inventory badge fill transparent while keeping its outline and quantity capsule..
+        /// </summary>
+        public static string parm_inf_unit_item_badge_transparent {
+            get {
+                return ResourceManager.GetString("parm_inf_unit_item_badge_transparent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Color theme used across the application in dark mode..
         /// </summary>
         public static string parm_inf_unit_orders_dark_theme {
@@ -3774,6 +3855,24 @@ namespace Odyssey.Assets {
         public static string parm_inf_unit_orders_navigate_unconfirmed_only {
             get {
                 return ResourceManager.GetString("parm_inf_unit_orders_navigate_unconfirmed_only", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show a letter before the skill level in its badge..
+        /// </summary>
+        public static string parm_inf_unit_skill_badge_show_level_prefix {
+            get {
+                return ResourceManager.GetString("parm_inf_unit_skill_badge_show_level_prefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Make the skill badge fill transparent while keeping its outline and level capsule..
+        /// </summary>
+        public static string parm_inf_unit_skill_badge_transparent {
+            get {
+                return ResourceManager.GetString("parm_inf_unit_skill_badge_transparent", resourceCulture);
             }
         }
         
@@ -8982,7 +9081,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("settings_skills", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Damage: {0} %.
         /// </summary>
@@ -9279,7 +9378,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("unit_skill_level_short", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to {0}: level {1} (decreased by {2}).
         /// </summary>

@@ -2307,17 +2307,23 @@
   <data name="mainmenu_window" xml:space="preserve">
     <value>_Fenêtre</value>
   </data>
-  <data name="mainmenu_window_layout_new" xml:space="preserve">
-    <value>_Créer une disposition de fenêtres</value>
-  </data>
-  <data name="mainmenu_window_layout_close" xml:space="preserve">
-    <value>_Nettoie le contenu de la disposition des fenêtres</value>
+  <data name="mainmenu_window_layout_reset" xml:space="preserve">
+    <value>_Réinitialiser la disposition</value>
   </data>
   <data name="mainmenu_window_layout_open" xml:space="preserve">
     <value>_Ouvrir une disposition de fenêtres...</value>
   </data>
   <data name="mainmenu_window_layout_save" xml:space="preserve">
-    <value>_Enregistrer la disposition des fenêtres</value>
+    <value>Enregistrer la disposition</value>
+  </data>
+  <data name="mainmenu_window_layout_save_as" xml:space="preserve">
+    <value>Enregistrer la disposition sous...</value>
+  </data>
+  <data name="mainmenu_window_layout_current" xml:space="preserve">
+    <value>Disposition actuelle : {0}</value>
+  </data>
+  <data name="mainmenu_window_layout_default" xml:space="preserve">
+    <value>Par défaut (non enregistrée)</value>
   </data>
   <data name="mainmenu_tools_advanced_search" xml:space="preserve">
     <value>_Recherche avancée</value>
@@ -3229,4 +3235,13 @@
   <data name="skill_category_economy" xml:space="preserve"><value>&#xC9;conomie</value></data>
   <data name="skill_category_magic" xml:space="preserve"><value>Magie</value></data>
   <data name="skill_category_reconnaissance" xml:space="preserve"><value>Reconnaissance et op&#xE9;rations secr&#xE8;tes</value></data>
+  <data name="parm_grp_badges" xml:space="preserve"><value>Badges des unités</value></data>
+  <data name="parm_hdr_unit_skill_badge_show_level_prefix" xml:space="preserve"><value>Préfixer le niveau de compétence par une lettre</value></data>
+  <data name="parm_inf_unit_skill_badge_show_level_prefix" xml:space="preserve"><value>Afficher une lettre avant le niveau de compétence dans son badge.</value></data>
+  <data name="parm_hdr_unit_skill_badge_transparent" xml:space="preserve"><value>Fond transparent du badge de compétence</value></data>
+  <data name="parm_inf_unit_skill_badge_transparent" xml:space="preserve"><value>Rendre le fond du badge de compétence transparent tout en conservant son contour et sa capsule de niveau.</value></data>
+  <data name="parm_hdr_unit_item_badge_transparent" xml:space="preserve"><value>Fond transparent du badge d'inventaire</value></data>
+  <data name="parm_inf_unit_item_badge_transparent" xml:space="preserve"><value>Rendre le fond du badge d'inventaire transparent tout en conservant son contour et sa capsule de quantité.</value></data>
+  <data name="parm_hdr_auto_save_session" xml:space="preserve"><value>Enregistrer automatiquement la session à la fermeture</value></data>
+  <data name="parm_inf_auto_save_session" xml:space="preserve"><value>Enregistrer la session actuelle et la restaurer au prochain démarrage d'Odyssey.</value></data>
 </root>
