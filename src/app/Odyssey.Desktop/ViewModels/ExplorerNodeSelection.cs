@@ -55,11 +55,9 @@ namespace Odyssey.ViewModels
 
             if (LocationResolver is not null)
             {
-                // The region node id is the region's id (and location id), so it can be resolved directly.
-                if (RegionNodeViewModel is not null &&
-                    LocationResolver.ResolveItem(RegionNodeViewModel.Id, out EntityModel? regionItem))
+                if (RegionNodeViewModel is not null)
                 {
-                    region = regionItem as RegionModel;
+                    region = ResolveRegion(RegionNodeViewModel, LocationResolver);
                 }
 
                 if (NodeViewModel is not null)
@@ -78,14 +76,13 @@ namespace Odyssey.ViewModels
                         case NodeTypes.SHIPS:
                             SetContainer(SelectionTypes.Ships, region, NodeViewModel);
                             return;
+                        case NodeTypes.FACTION:
+                            break;
 
                         default:
                             LocationResolver.ResolveItem(NodeViewModel.Id, out item);
                             break;
                     }
-
-                    // Faction nodes have no matching entity; keep the region as their item context.
-                    item ??= region;
                 }
             }
 

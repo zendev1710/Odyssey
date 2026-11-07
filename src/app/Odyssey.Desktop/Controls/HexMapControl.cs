@@ -6,6 +6,7 @@ using Avalonia.Media.TextFormatting; // added for TextLayout
 using Avalonia.Platform;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
+using Odyssey.Assets;
 using Odyssey.Controls.Buildings;
 using Odyssey.Controls.Ships;
 using Odyssey.Models;
@@ -18,6 +19,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 
 namespace Odyssey.Controls;
@@ -233,6 +235,7 @@ public class HexMapControl : Control
     private bool _showBuildings = true;
     private int _buildingStyle = BuildingStyles.Auto;
     private int _buildingContrast = BuildingContrastModes.Plate;
+    private bool _buildingSymbolEnglishInitials = true;
 
     // Map ship renderer settings (read from GlobalSettings).
     private bool _showShips = true;
@@ -246,6 +249,7 @@ public class HexMapControl : Control
     // Map region-name settings (read from GlobalSettings).
     private bool _showRegionNames = true;
     private bool _regionNameBanner = false;
+    private const double MaxRegionNameFontSize = 14;
 
     public HexMapControl()
     {
@@ -280,6 +284,7 @@ public class HexMapControl : Control
         _showBuildings = GlobalSettings.Get<bool>(GlobalSettings.MAP_SHOW_BUILDINGS);
         _buildingStyle = GlobalSettings.Get<int>(GlobalSettings.MAP_BUILDING_STYLE);
         _buildingContrast = GlobalSettings.Get<int>(GlobalSettings.MAP_BUILDING_CONTRAST);
+        _buildingSymbolEnglishInitials = GlobalSettings.Get<bool>(GlobalSettings.MAP_BUILDING_SYMBOL_ENGLISH_INITIALS);
         _showShips = GlobalSettings.Get<bool>(GlobalSettings.MAP_SHOW_SHIPS);
         _shipStyle = GlobalSettings.Get<int>(GlobalSettings.MAP_SHIP_STYLE);
         _shipRouteMode = GlobalSettings.Get<int>(GlobalSettings.MAP_SHIP_ROUTE_MODE);
@@ -330,6 +335,7 @@ public class HexMapControl : Control
             case GlobalSettings.MAP_SHOW_BUILDINGS:
             case GlobalSettings.MAP_BUILDING_STYLE:
             case GlobalSettings.MAP_BUILDING_CONTRAST:
+            case GlobalSettings.MAP_BUILDING_SYMBOL_ENGLISH_INITIALS:
             case GlobalSettings.MAP_SHOW_SHIPS:
             case GlobalSettings.MAP_SHIP_STYLE:
             case GlobalSettings.MAP_SHIP_ROUTE_MODE:
@@ -674,15 +680,12 @@ public class HexMapControl : Control
         try
         {
             // Font size and width are relative to the hex size, so names scale with the map zoom.
-            double fontSize = Math.Max(8, hexSize * 0.33);
+            double fontSize = Math.Clamp(hexSize * 0.33, 8, MaxRegionNameFontSize);
             double maxTextWidth = Math.Max(10, hexSize * Math.Sqrt(3) * 0.95);
             TextDecorationCollection? textDecorations = null;
             var typeface = new Typeface("Segoe UI", FontStyle.Normal, FontWeight.SemiBold);
 
-            // On a gold banner, dark text is far more readable than the terrain-dependent colour.
-            var labelBrush = _regionNameBanner
-                ? new SolidColorBrush(Color.FromRgb(0x1A, 0x1A, 0x1A))
-                : GetLabelBrushForTerrain(terrain);
+            var labelBrush = GetLabelBrushForTerrain(terrain);
             var shadowBrush = new SolidColorBrush(Color.FromArgb(220, 0, 0, 0));
 
             using (var layout = new TextLayout(
@@ -723,28 +726,26 @@ public class HexMapControl : Control
 
                 if (_regionNameBanner)
                 {
-                    double padX = Math.Max(4.0, fontSize * 0.50);
-                    double padY = Math.Max(2.0, fontSize * 0.28);
+                    double padX = Math.Max(2.0, fontSize * 0.16);
+                    double padY = Math.Max(1.0, fontSize * 0.10);
                     var bannerRect = new Rect(
                         origin.X - padX,
                         origin.Y - padY,
                         measuredWidth + padX * 2.0,
                         measuredHeight + padY * 2.0);
 
-                    var bannerBrush = new SolidColorBrush(Color.FromRgb(0xF2, 0xC2, 0x3A));
+                    var bannerBrush = new SolidColorBrush(Color.FromArgb(224, 0xC8, 0xBE, 0xA1));
                     var borderPen = new Pen(
-                        new SolidColorBrush(Color.FromArgb(255, 0x24, 0x24, 0x24)),
-                        Math.Max(1.5, fontSize * 0.12));
+                        new SolidColorBrush(Color.FromArgb(180, 0x40, 0x3D, 0x36)),
+                        Math.Max(0.75, fontSize * 0.05));
 
-                    context.DrawRectangle(bannerBrush, borderPen, bannerRect, 3.0, 3.0);
-                    layout.Draw(context, origin);
+                    double cornerRadius = Math.Min(2.0, fontSize * 0.12);
+                    context.DrawRectangle(bannerBrush, borderPen, bannerRect, cornerRadius, cornerRadius);
                 }
-                else
-                {
-                    double shadowOffset = Math.Max(1.0, fontSize * 0.07);
-                    shadowLayout.Draw(context, new Point(origin.X + shadowOffset, origin.Y + shadowOffset));
-                    layout.Draw(context, origin);
-                }
+
+                double shadowOffset = Math.Max(1.0, fontSize * 0.07);
+                shadowLayout.Draw(context, new Point(origin.X + shadowOffset, origin.Y + shadowOffset));
+                layout.Draw(context, origin);
             }
         }
         catch
@@ -2346,7 +2347,7 @@ public class HexMapControl : Control
     /// <summary>Size of a single building icon, shrinking as the number of buildings grows.</summary>
     private static double ComputeBuildingIconSize(double hexSize, int count)
     {
-        double factor = count <= 1 ? 0.78 : count <= 4 ? 0.50 : 0.40;
+        double factor = count <= 1 ? 0.65 : count <= 4 ? 0.50 : 0.40;
         return hexSize * factor;
     }
 
@@ -2357,15 +2358,13 @@ public class HexMapControl : Control
         // Fortifications owned by the player use a dedicated graphic.
         string iconPath = visual.IsFortification && owned ? OwnedCastleIconPath : visual.IconPath;
 
-        // Contrast plate: keeps the small, mostly dark pixel-art icons readable over the
-        // textured terrain images (forest, mountain, glacier...).
-        DrawBuildingPlate(context, terrain, center, size * BuildingContrastModes.PlateScale, _buildingContrast);
-
         if (_buildingStyle != BuildingStyles.Symbols)
         {
             Bitmap? bitmap = GetBuildingImage(iconPath);
             if (bitmap != null)
             {
+                // The contrast plate helps bitmap artwork stand out from textured terrain.
+                DrawBuildingPlate(context, terrain, center, size * BuildingContrastModes.PlateScale, _buildingContrast);
                 DrawBuildingImage(context, bitmap, center, size);
                 return;
             }
@@ -2377,7 +2376,21 @@ public class HexMapControl : Control
             return;
         }
 
-        DrawBuildingShape(context, visual.FallbackShape, visual.FallbackColor, center, size * 0.78);
+        string buildingType = GetBuildingType(building);
+        CultureInfo initialCulture = _buildingSymbolEnglishInitials
+            ? CultureInfo.GetCultureInfo("en")
+            : Lang.Culture;
+        string localizedType = Labels.LocalizeWithCulture(
+            Odyssey.Models.Tools.DataProperty.Categories.Building,
+            buildingType,
+            initialCulture);
+        if (localizedType.StartsWith("--- ", StringComparison.Ordinal))
+        {
+            localizedType = buildingType;
+        }
+
+        string initial = GetBuildingInitial(localizedType, initialCulture);
+        DrawBuildingShape(context, visual.FallbackShape, visual.FallbackColor, center, size * 0.78, initial);
     }
 
     /// <summary>
@@ -2453,7 +2466,7 @@ public class HexMapControl : Control
         }
     }
 
-    private static void DrawBuildingShape(DrawingContext context, BuildingShape shape, Color color, Point center, double size)
+    private static void DrawBuildingShape(DrawingContext context, BuildingShape shape, Color color, Point center, double size, string initial)
     {
         if (size <= 0)
         {
@@ -2461,7 +2474,7 @@ public class HexMapControl : Control
         }
 
         var brush = new SolidColorBrush(color);
-        var pen = new Pen(new SolidColorBrush(Color.FromArgb(200, 20, 20, 20)), Math.Max(1.0, size * 0.06));
+        var pen = new Pen(new SolidColorBrush(Color.FromRgb(20, 20, 20)), Math.Max(1.25, size * 0.08));
 
         Geometry geometry;
         switch (shape)
@@ -2486,6 +2499,17 @@ public class HexMapControl : Control
                     new Point(center.X - size / 2.0, center.Y),
                 ]);
                 break;
+            case BuildingShape.TallRectangle:
+                double halfHeight = size / 2.0;
+                double halfWidth = size * 0.39;
+                geometry = BuildPolygon(
+                [
+                    new Point(center.X - halfWidth, center.Y - halfHeight),
+                    new Point(center.X + halfWidth, center.Y - halfHeight),
+                    new Point(center.X + halfWidth, center.Y + halfHeight),
+                    new Point(center.X - halfWidth, center.Y + halfHeight),
+                ]);
+                break;
             default: // Square
                 double half = size / 2.0;
                 geometry = BuildPolygon(
@@ -2499,6 +2523,52 @@ public class HexMapControl : Control
         }
 
         context.DrawGeometry(brush, pen, geometry);
+
+        if (initial.Length > 0)
+        {
+            double fontSize = Math.Clamp(size * 0.52, 7.0, 16.0);
+            if (shape == BuildingShape.TallRectangle)
+            {
+                fontSize = Math.Min(fontSize, size * 0.64);
+            }
+            var typeface = new Typeface("Segoe UI", FontStyle.Normal, FontWeight.Black);
+            using var layout = new TextLayout(
+                initial,
+                typeface,
+                fontSize,
+                GetContrastingBrush(color),
+                TextAlignment.Center,
+                TextWrapping.NoWrap);
+            layout.Draw(context, new Point(center.X - layout.Width / 2.0, center.Y - layout.Height / 2.0));
+        }
+    }
+
+    private static string GetBuildingInitial(string buildingType, CultureInfo culture)
+    {
+        string trimmedType = buildingType.Trim();
+        if (trimmedType.Length == 0)
+        {
+            return string.Empty;
+        }
+
+        string firstTextElement = StringInfo.GetNextTextElement(trimmedType);
+        return culture.TextInfo.ToUpper(firstTextElement);
+    }
+
+    private static IBrush GetContrastingBrush(Color background)
+    {
+        static double Linearize(byte channel)
+        {
+            double value = channel / 255.0;
+            return value <= 0.04045 ? value / 12.92 : Math.Pow((value + 0.055) / 1.055, 2.4);
+        }
+
+        double luminance = 0.2126 * Linearize(background.R)
+            + 0.7152 * Linearize(background.G)
+            + 0.0722 * Linearize(background.B);
+        double blackContrast = (luminance + 0.05) / 0.05;
+        double whiteContrast = 1.05 / (luminance + 0.05);
+        return blackContrast >= whiteContrast ? Brushes.Black : Brushes.White;
     }
 
     private static Geometry BuildPolygon(Point[] points)

@@ -1,8 +1,10 @@
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
 using Odyssey.Models;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Tools;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Odyssey.ViewModels;
 
@@ -12,19 +14,13 @@ namespace Odyssey.ViewModels;
 /// </summary>
 public abstract partial class StructureListViewModel : StructureViewModel
 {
-    private readonly NodeViewModel _root = new();
-    private readonly bool _isBuildingStructure;
-
-    protected NodeViewModel Root { get { return _root; } }
-
-    public ObservableCollection<NodeViewModel> Items { get; }
+    public ObservableCollection<StructureListItemViewModel> Structures { get; } = new();
 
     /// <param name="id">The view model id (see <see cref="Ids"/>).</param>
-    /// <param name="isBuildingStructure">True for buildings, false for ships (used for the owner label).</param>
-    protected StructureListViewModel(string id, bool isBuildingStructure) : base(id)
+    /// <param name="isBuildingStructure">True for buildings, false for ships.</param>
+    protected StructureListViewModel(string id, bool isBuildingStructure)
+        : base(id, isBuildingStructure ? StructureKind.Building : StructureKind.Ship)
     {
-        _isBuildingStructure = isBuildingStructure;
-        Items = _root.Children;
     }
 
     /// <summary>
@@ -52,20 +48,21 @@ public abstract partial class StructureListViewModel : StructureViewModel
     {
         base.OnActiveDocumentChanged(report);
 
-        Items.Clear();
+        Structures.Clear();
     }
 
     public void MakeItems(IEntitySelection selection)
     {
-        Items.Clear();
+        Structures.Clear();
 
-        Region = selection.Region;
-        if (Region is null)
+        RegionModel? region = selection.Region;
+        Region = region;
+        if (region is null)
         {
             return;
         }
 
-        foreach (StructureModel structure in GetStructures(Report, Region))
+        foreach (StructureModel structure in GetStructures(Report, region))
         {
             DataProperty? structureProperty = null;
             if (!structure.CollectData(Report, ref structureProperty) || structureProperty is null)
@@ -73,18 +70,21 @@ public abstract partial class StructureListViewModel : StructureViewModel
                 continue;
             }
 
-            // Only the structure owner and its properties are displayed: the full details
-            // are available by double-clicking the structure (which selects it).
-            StructureModel = structure;
-            OwnerName = structure.OwnerName;
-            OwnerUnit = structure.OwnerUnit;
-
-            NodeViewModel structureNode = AddItem(Root, structureProperty, structureProperty.Label);
-            AddOwner(structureNode, _isBuildingStructure);
-            foreach (DataProperty property in structure.DataProperties)
-            {
-                _ = AddItem(structureNode, property, $"{property.Label}: {property.Value}");
-            }
+            Structures.Add(new StructureListItemViewModel(
+                structureProperty.Label,
+                new RelayCommand(() => SendSelectionChangedEvent(new EntitySelection(structure, region)))));
         }
+    }
+}
+
+public sealed class StructureListItemViewModel
+{
+    public string DisplayName { get; }
+    public ICommand SelectCommand { get; }
+
+    public StructureListItemViewModel(string displayName, ICommand selectCommand)
+    {
+        DisplayName = displayName;
+        SelectCommand = selectCommand;
     }
 }

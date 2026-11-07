@@ -211,7 +211,7 @@
     <value>Combat à mains nues</value>
   </data>
   <data name="rules_skill_Wagenbau" xml:space="preserve">
-    <value>cartmaking</value>
+    <value>construction de chariots</value>
   </data>
   <data name="rules_skill_Wahrnehmung" xml:space="preserve">
     <value>perception</value>
@@ -226,7 +226,7 @@
     <value>fortification</value>
   </data>
   <data name="rules_building_Bergwerk" xml:space="preserve">
-    <value>le mien</value>
+    <value>mine</value>
   </data>
   <data name="rules_building_Burg" xml:space="preserve">
     <value>château</value>
@@ -1905,6 +1905,12 @@
   <data name="parm_inf_map_building_contrast" xml:space="preserve">
     <value>Fond dessiné derrière les icônes de bâtiments pour qu'elles restent lisibles sur le terrain. Pastille : fond clair avec liseré coloré ; Liseré seul : contour sans fond ; Aucun : pas de fond.</value>
   </data>
+  <data name="parm_hdr_map_building_english_initials" xml:space="preserve">
+    <value>Utiliser les initiales anglaises pour les symboles de bâtiments</value>
+  </data>
+  <data name="parm_inf_map_building_english_initials" xml:space="preserve">
+    <value>Activée par défaut : les symboles utilisent toujours l'initiale du nom anglais. Désactivée : l'initiale suit la langue de l'interface.</value>
+  </data>
   <data name="parm_key_building_contrast_plate" xml:space="preserve">
     <value>Pastille (recommandé)</value>
   </data>
@@ -2301,17 +2307,20 @@
   <data name="mainmenu_window" xml:space="preserve">
     <value>_Fenêtre</value>
   </data>
-  <data name="mainmenu_window_layout_new" xml:space="preserve">
-    <value>_Créer une disposition de fenêtres</value>
-  </data>
-  <data name="mainmenu_window_layout_close" xml:space="preserve">
-    <value>_Nettoie le contenu de la disposition des fenêtres</value>
-  </data>
   <data name="mainmenu_window_layout_open" xml:space="preserve">
     <value>_Ouvrir une disposition de fenêtres...</value>
   </data>
   <data name="mainmenu_window_layout_save" xml:space="preserve">
-    <value>_Enregistrer la disposition des fenêtres</value>
+    <value>Enregistrer la disposition actuelle</value>
+  </data>
+  <data name="mainmenu_window_layout_save_as" xml:space="preserve">
+    <value>Enregistrer la disposition sous...</value>
+  </data>
+  <data name="mainmenu_window_layout_current" xml:space="preserve">
+    <value>Disposition actuelle : {0}</value>
+  </data>
+  <data name="mainmenu_window_layout_default" xml:space="preserve">
+    <value>Par défaut (non enregistrée)</value>
   </data>
   <data name="mainmenu_tools_advanced_search" xml:space="preserve">
     <value>_Recherche avancée</value>
@@ -2330,6 +2339,45 @@
   </data>
   <data name="find_watermark" xml:space="preserve">
     <value>Rechercher...</value>
+  </data>
+  <data name="find_invalid_regex" xml:space="preserve">
+    <value>Expression régulière invalide.</value>
+  </data>
+  <data name="find_minimum_characters" xml:space="preserve">
+    <value>Saisissez au moins 3 caractères, ou appuyez sur Entrée pour lancer la recherche.</value>
+  </data>
+  <data name="find_regex_timeout" xml:space="preserve">
+    <value>L’expression régulière a pris trop de temps à évaluer.</value>
+  </data>
+  <data name="find_result_count" xml:space="preserve">
+    <value>Résultats : {0}</value>
+  </data>
+  <data name="find_filter_categories" xml:space="preserve">
+    <value>Catégories</value>
+  </data>
+  <data name="find_filter_deselect_all" xml:space="preserve">
+    <value>Désélectionner toutes les catégories</value>
+  </data>
+  <data name="find_filter_select_all" xml:space="preserve">
+    <value>Sélectionner toutes les catégories</value>
+  </data>
+  <data name="find_result_kind_building" xml:space="preserve">
+    <value>Bâtiment</value>
+  </data>
+  <data name="find_result_kind_faction" xml:space="preserve">
+    <value>Faction</value>
+  </data>
+  <data name="find_result_kind_region" xml:space="preserve">
+    <value>Région</value>
+  </data>
+  <data name="find_result_kind_ship" xml:space="preserve">
+    <value>Bateau</value>
+  </data>
+  <data name="find_result_kind_unit" xml:space="preserve">
+    <value>Unité</value>
+  </data>
+  <data name="find_searching" xml:space="preserve">
+    <value>Recherche en cours...</value>
   </data>
   <data name="find_tip" xml:space="preserve">
     <value>Rechercher...</value>
@@ -2859,6 +2907,12 @@
   <data name="parm_inf_echeck_program" xml:space="preserve">
     <value>Sélectionner le fichier exécutable du programme ECheck</value>
   </data>
+  <data name="parm_hdr_bookmarks_folder" xml:space="preserve">
+    <value>Dossier des signets</value>
+  </data>
+  <data name="parm_inf_bookmarks_folder" xml:space="preserve">
+    <value>Dossier utilisé pour enregistrer et charger les fichiers de signets</value>
+  </data>
   <data name="parm_cat_game" xml:space="preserve">
     <value>Jeu</value>
   </data>
@@ -3196,4 +3250,34 @@
   <data name="unit_skill_tooltip_decreased" xml:space="preserve">
     <value>{0} : niveau {1} (diminution de {2})</value>
   </data>
+  <data name="unit_skill_level_short" xml:space="preserve">
+    <value>N{0}</value>
+  </data>
+  <data name="settings_global_display" xml:space="preserve"><value>Affichage global</value></data>
+  <data name="settings_skills" xml:space="preserve"><value>Compétences</value></data>
+  <data name="skills_display_title" xml:space="preserve"><value>Ordre des comp&#xE9;tences des unit&#xE9;s</value></data>
+  <data name="skills_display_description" xml:space="preserve"><value>Choisissez le tri des comp&#xE9;tences affich&#xE9;es. Avec le regroupement par cat&#xE9;gorie, ce tri s'applique dans chaque cat&#xE9;gorie.</value></data>
+  <data name="skill_sort_mode_level" xml:space="preserve"><value>Niveau d&#xE9;croissant, puis ordre alphab&#xE9;tique</value></data>
+  <data name="skill_sort_mode_alphabetical" xml:space="preserve"><value>Ordre alphab&#xE9;tique</value></data>
+  <data name="skill_sort_mode_custom" xml:space="preserve"><value>Ordre personnalis&#xE9;</value></data>
+  <data name="skills_group_by_category" xml:space="preserve"><value>Regrouper les comp&#xE9;tences par cat&#xE9;gorie</value></data>
+  <data name="skill_category_order_title" xml:space="preserve"><value>Ordre des cat&#xE9;gories</value></data>
+  <data name="skill_category_order_description" xml:space="preserve"><value>Les cat&#xE9;gories sont affich&#xE9;es dans cet ordre lorsque le regroupement est activ&#xE9;.</value></data>
+  <data name="skill_category_reset_default" xml:space="preserve"><value>R&#xE9;tablir l'ordre par d&#xE9;faut</value></data>
+  <data name="skill_order_title" xml:space="preserve"><value>Ordre des comp&#xE9;tences</value></data>
+  <data name="skill_category_combat" xml:space="preserve"><value>Combat</value></data>
+  <data name="skill_category_movement" xml:space="preserve"><value>D&#xE9;placement</value></data>
+  <data name="skill_category_production" xml:space="preserve"><value>Production</value></data>
+  <data name="skill_category_economy" xml:space="preserve"><value>&#xC9;conomie</value></data>
+  <data name="skill_category_magic" xml:space="preserve"><value>Magie</value></data>
+  <data name="skill_category_reconnaissance" xml:space="preserve"><value>Reconnaissance et op&#xE9;rations secr&#xE8;tes</value></data>
+  <data name="parm_grp_badges" xml:space="preserve"><value>Badges des unités</value></data>
+  <data name="parm_hdr_unit_skill_badge_show_level_prefix" xml:space="preserve"><value>Préfixer le niveau de compétence par une lettre</value></data>
+  <data name="parm_inf_unit_skill_badge_show_level_prefix" xml:space="preserve"><value>Afficher une lettre avant le niveau de compétence dans son badge.</value></data>
+  <data name="parm_hdr_unit_skill_badge_transparent" xml:space="preserve"><value>Fond transparent du badge de compétence</value></data>
+  <data name="parm_inf_unit_skill_badge_transparent" xml:space="preserve"><value>Rendre le fond du badge de compétence transparent tout en conservant son contour et sa capsule de niveau.</value></data>
+  <data name="parm_hdr_unit_item_badge_transparent" xml:space="preserve"><value>Fond transparent du badge d'inventaire</value></data>
+  <data name="parm_inf_unit_item_badge_transparent" xml:space="preserve"><value>Rendre le fond du badge d'inventaire transparent tout en conservant son contour et sa capsule de quantité.</value></data>
+  <data name="parm_hdr_auto_save_session" xml:space="preserve"><value>Enregistrer automatiquement la session à la fermeture</value></data>
+  <data name="parm_inf_auto_save_session" xml:space="preserve"><value>Enregistrer la session actuelle et la restaurer au prochain démarrage d'Odyssey.</value></data>
 </root>

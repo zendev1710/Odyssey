@@ -71,27 +71,27 @@ TO BE FINISHED.
 
 ## Features upcoming
 
-- Multi-CR file open system using drag and drop
-- Add the default theme based on system theme (theming)
-- Add a combobox in a settings panel to select a theme among the 4 themes: default simple, dark, light (theming)
-- Closed dock windows display handling
-- Copy/Paste from/to clipboard for data
-- Persisten layout system (save/load layout)
-- App-wide persistent settings system, with :
-  - group of active factions (`ActiveFactionGroup`) - Regions explrer
-  - Toobar switch status (visible or not)
-  - `Show only map` option (maximize and hide other dock windows / restore layout) - Ctrl + Shift + K
-  - Map/minimap display options
-  - Theme selection
-- Recently opened CR system
-- Map simple display (regions/islands/oceans...) - using OpenGL ?
-- Orders check system
-- Toolbar with theme icons
-- Translations system (language selection, resources files...)
-- Remove the switch theme icon from the top bar (when themes combox is available)
-- Add the simple theme for a lighter app (theming)
-- Overview map (minimap)
-- Send Orders
+- [ ] Multi-CR file open system using drag and drop
+- [ ] Add the default theme based on system theme (theming)
+- [ ] Add a combobox in a settings panel to select a theme among the 4 themes: default simple, dark, light (theming)
+- [ ] Closed dock windows display handling
+- [ ] Copy/Paste from/to clipboard for data
+- [ ] Persisten layout system (save/load layout)
+- [ ] App-wide persistent settings system, with :
+  - [ ] group of active factions (`ActiveFactionGroup`) - Regions explrer
+  - [ ] Toobar switch status (visible or not)
+  - [ ] `Show only map` option (maximize and hide other dock windows / restore layout) - Ctrl + Shift + K
+  - [ ] Map/minimap display options
+  - [ ] Theme selection
+- [ ] Recently opened CR system
+- [ ] Map simple display (regions/islands/oceans...) - using OpenGL ?
+- [ ] Orders check system
+- [ ] Toolbar with theme icons
+- [ ] Translations system (language selection, resources files...)
+- [ ] Remove the switch theme icon from the top bar (when themes combox is available)
+- [ ] Add the simple theme for a lighter app (theming)
+- [ ] Overview map (minimap)
+- [ ] Send Orders
 
 ### Information view
 
@@ -99,11 +99,11 @@ TO BE DONE.
 
 ### Orders view additional features
 
-- Set Unit orders view or text editor as readonly when other than an orders-editable unit is selected
-- [Define the language grammar](https://benparizek.com/notebook/notes-on-how-to-create-a-language-grammar-and-custom-theme-for-a-textmate-bundle) for orders instructions, with [TextMateSharp](https://github.com/danipen/TextMateSharp)
-- Implement syntax color using [TextMateSharp](https://github.com/danipen/TextMateSharp), see [AvaloniaEdit](https://github.com/AvaloniaUI/AvaloniaEdit/)
-- Implement auto-completion using [TextMateSharp](https://github.com/danipen/TextMateSharp), see [AvaloniaEdit](https://github.com/AvaloniaUI/AvaloniaEdit/)
-- Add a "navigate between unconfirmed only/editable units" toggle fluent icon button
+- [ ] Set Unit orders view or text editor as readonly when other than an orders-editable unit is selected
+- [ ] [Define the language grammar](https://benparizek.com/notebook/notes-on-how-to-create-a-language-grammar-and-custom-theme-for-a-textmate-bundle) for orders instructions, with [TextMateSharp](https://github.com/danipen/TextMateSharp)
+- [ ] Implement syntax color using [TextMateSharp](https://github.com/danipen/TextMateSharp), see [AvaloniaEdit](https://github.com/AvaloniaUI/AvaloniaEdit/)
+- [ ] Implement auto-completion using [TextMateSharp](https://github.com/danipen/TextMateSharp), see [AvaloniaEdit](https://github.com/AvaloniaUI/AvaloniaEdit/)
+- [ ] Add a "navigate between unconfirmed only/editable units" toggle fluent icon button
 
 ## Improvements
 
@@ -136,15 +136,15 @@ Script: `scripts/convert-gif-assets-to-png.ps1`
 Convert all existing GIF icon assets to transparent PNG files as a first step before a dark-mode-friendly SVG migration.
 
 ### Strategy used
-- Prefer ImageMagick when it can process a GIF cleanly.
-- Detect light/dirty-white backgrounds using a white-pixel ratio heuristic.
-- When ImageMagick fails on palette-heavy or malformed GIFs, use a .NET fallback that loads the image, strips near-white pixels to transparency, and saves it as PNG with alpha.
-- Keep a generated PNG alongside each GIF source, without deleting the original asset.
+- [ ] Prefer ImageMagick when it can process a GIF cleanly.
+- [ ] Detect light/dirty-white backgrounds using a white-pixel ratio heuristic.
+- [ ] When ImageMagick fails on palette-heavy or malformed GIFs, use a .NET fallback that loads the image, strips near-white pixels to transparency, and saves it as PNG with alpha.
+- [ ] Keep a generated PNG alongside each GIF source, without deleting the original asset.
 
 ### Result
-- GIFs checked: 1135
-- PNGs generated/available after conversion: 1237
-- Missing PNGs after conversion: 0
+- [ ] GIFs checked: 1135
+- [ ] PNGs generated/available after conversion: 1237
+- [ ] Missing PNGs after conversion: 0
 
 ### Notes
 - This conversion is intended as a safe preparation step for theme-aware icon usage.

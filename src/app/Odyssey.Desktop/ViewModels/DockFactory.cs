@@ -11,6 +11,7 @@ using Odyssey.ViewModels.Tools;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Odyssey.ViewModels;
 
@@ -65,8 +66,6 @@ public class DockFactory : Factory
         var regionStatisticsViewModel = new RegionStatsViewModel() {Id = Ids.RegionStatistics, Title = LocalizedTitle(Ids.RegionStatistics), CanClose = canCloseTool };
         var detailsViewModel = new DetailsViewModel() {Id = Ids.Details, Title = LocalizedTitle(Ids.Details), CanClose = canCloseTool };
         var unitsInspectorViewModel = new UnitsInspectorViewModel() { Id = Ids.UnitsInspector, Title = LocalizedTitle(Ids.UnitsInspector), CanClose = canCloseTool };
-        //var unittripViewModel = new UnitStripViewModel() { Id = Ids.UnitStrip, Title = LocalizedTitle(Ids.UnitStrip), CanClose = canCloseTool };
-        //var unitInspectorViewModel = new UnitInspectorViewModel() { Id = Ids.UnitInspector, Title = LocalizedTitle(Ids.UnitInspector), CanClose = canCloseTool };
         var unitOrdersViewModel = new UnitOrdersViewModel() { Id = Ids.UnitOrders, Title = LocalizedTitle(Ids.UnitOrders), CanClose = canCloseTool };
         var regionInfoViewModel = new RegionInfoViewModel() {Id = Ids.RegionInfo, Title = LocalizedTitle(Ids.RegionInfo), CanClose = canCloseTool };
         var battlesViewModel = new BattlesViewModel() {Id = Ids.Battles, Title = LocalizedTitle(Ids.Battles), CanClose = canCloseTool };
@@ -187,14 +186,14 @@ public class DockFactory : Factory
 
         var detailsDock = new ToolDock
         {
-            Proportion = 0.5,
+            Proportion = 0.6,
             ActiveDockable = detailsViewModel,
             VisibleDockables = CreateList<IDockable>(detailsViewModel, regionStatisticsViewModel),
         };
 
         var ordersDock = new ToolDock
         {
-            Proportion = 0.5,
+            Proportion = 0.4,
             ActiveDockable = unitOrdersViewModel,
             VisibleDockables = CreateList<IDockable>(unitOrdersViewModel),
         };
@@ -205,9 +204,9 @@ public class DockFactory : Factory
             Orientation = Orientation.Horizontal,
             VisibleDockables = CreateList<IDockable>
             (
-                ordersDock,
+                detailsDock,
                 new ProportionalDockSplitter(),
-                detailsDock
+                ordersDock
             )
         };
 
@@ -304,6 +303,12 @@ public class DockFactory : Factory
     {
         Debug.WriteLine("[DOCK-FACTO] InitLayout...");
 
+        if (_rootDock is not null && !ReferenceEquals(_rootDock, layout))
+        {
+            ReplaceToolDockables(layout, CaptureToolDockables(_rootDock));
+            TransferDocumentDockContents(_documentDock, layout);
+        }
+
         // ContextLocator is used by FactoryBase::GetContext(<context-id>) 
         ContextLocator = new Dictionary<string, Func<object?>>
         {
@@ -348,9 +353,221 @@ public class DockFactory : Factory
             [nameof(IDockWindow)] = () => new HostWindow()
         };
 
+        BindDockables(layout);
         base.InitLayout(layout);
 
+        BindDockables(layout);
+
         Debug.WriteLine("[DOCK-FACTO] InitLayout done");
+    }
+
+    private static Dictionary<string, ITool> CaptureToolDockables(IDockable? layout)
+    {
+        Dictionary<string, ITool> tools = new(StringComparer.Ordinal);
+        if (layout is null)
+        {
+            return tools;
+        }
+
+        Dictionary<string, IDockable> dockables = new(StringComparer.Ordinal);
+        CollectDockables(layout, dockables, new HashSet<IDockable>());
+        foreach (ITool tool in dockables.Values.OfType<ITool>())
+        {
+            if (!string.IsNullOrEmpty(tool.Id))
+            {
+                tools[tool.Id] = tool;
+            }
+        }
+
+        return tools;
+    }
+
+    private static void ReplaceToolDockables(IDockable layout, IReadOnlyDictionary<string, ITool> tools)
+    {
+        ReplaceDockable(layout, tools, new HashSet<IDockable>());
+    }
+
+    private static void ReplaceDockable(IDockable dockable, IReadOnlyDictionary<string, ITool> tools, ISet<IDockable> visited)
+    {
+        if (!visited.Add(dockable))
+        {
+            return;
+        }
+
+        if (dockable is IDock dock)
+        {
+            ReplaceToolDockablesInList(dock.VisibleDockables, tools, visited, dock);
+            dock.ActiveDockable = GetCurrentTool(dock.ActiveDockable, tools);
+        }
+
+        if (dockable is IRootDock rootDock)
+        {
+            ReplaceToolDockablesInList(rootDock.HiddenDockables, tools, visited, rootDock);
+            ReplaceToolDockablesInList(rootDock.LeftPinnedDockables, tools, visited, rootDock);
+            ReplaceToolDockablesInList(rootDock.RightPinnedDockables, tools, visited, rootDock);
+            ReplaceToolDockablesInList(rootDock.TopPinnedDockables, tools, visited, rootDock);
+            ReplaceToolDockablesInList(rootDock.BottomPinnedDockables, tools, visited, rootDock);
+            rootDock.DefaultDockable = GetCurrentTool(rootDock.DefaultDockable, tools);
+
+            if (rootDock.Windows is { } windows)
+            {
+                foreach (IDockWindow window in windows)
+                {
+                    if (window.Layout is { } windowLayout)
+                    {
+                        ReplaceDockable(windowLayout, tools, visited);
+                    }
+                }
+            }
+        }
+    }
+
+    private static void ReplaceToolDockablesInList(
+        IList<IDockable>? dockables,
+        IReadOnlyDictionary<string, ITool> tools,
+        ISet<IDockable> visited,
+        IDockable owner)
+    {
+        if (dockables is null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < dockables.Count; i++)
+        {
+            IDockable serializedDockable = dockables[i];
+            IDockable? dockable = GetCurrentTool(serializedDockable, tools);
+            if (dockable is null)
+            {
+                continue;
+            }
+
+            if (!ReferenceEquals(dockable, serializedDockable))
+            {
+                dockable.Owner = owner;
+                dockable.OriginalOwner = serializedDockable.OriginalOwner;
+                dockable.Factory = serializedDockable.Factory ?? dockable.Factory;
+            }
+
+            dockables[i] = dockable;
+            ReplaceDockable(dockable, tools, visited);
+        }
+    }
+
+    private static IDockable? GetCurrentTool(IDockable? dockable, IReadOnlyDictionary<string, ITool> tools)
+    {
+        if (dockable is ITool tool && !string.IsNullOrEmpty(tool.Id) && tools.TryGetValue(tool.Id, out ITool? currentTool))
+        {
+            return currentTool;
+        }
+
+        return dockable;
+    }
+
+    private void TransferDocumentDockContents(IDocumentDock? source, IDockable targetLayout)
+    {
+        if (source is null)
+        {
+            return;
+        }
+
+        Dictionary<string, IDockable> dockables = new(StringComparer.Ordinal);
+        CollectDockables(targetLayout, dockables, new HashSet<IDockable>());
+        if (!dockables.TryGetValue(DocumentDockId, out IDockable? targetDockable) || targetDockable is not IDocumentDock target)
+        {
+            return;
+        }
+
+        List<IDockable> documents = source.VisibleDockables?.ToList() ?? [];
+        IDockable? activeDocument = source.ActiveDockable;
+        target.VisibleDockables = CreateList<IDockable>(documents.ToArray());
+        target.ActiveDockable = activeDocument is not null && documents.Contains(activeDocument) ? activeDocument : null;
+
+        if (!ReferenceEquals(source, target))
+        {
+            source.VisibleDockables?.Clear();
+            source.ActiveDockable = null;
+        }
+    }
+
+    private void BindDockables(IDockable layout)
+    {
+        Dictionary<string, IDockable> dockables = new(StringComparer.Ordinal);
+        CollectDockables(layout, dockables, new HashSet<IDockable>());
+
+        _rootDock = layout as IRootDock;
+        _documentDock = FindDockable<IDocumentDock>(DocumentDockId);
+        _mapViewModel = FindTool(Ids.Map);
+        _miniMapViewModel = FindTool(Ids.MiniMap);
+        _explorerViewModel = FindTool(Ids.Explorer);
+        _bookmarksViewModel = FindTool(Ids.Bookmarks);
+        _historyViewModel = FindTool(Ids.History);
+        _regionPropertiesViewModel = FindTool(Ids.RegionProperties);
+        _regionStatisticsViewModel = FindTool(Ids.RegionStatistics);
+        _detailsViewModel = FindTool(Ids.Details);
+        _unitOrdersViewModel = FindTool(Ids.UnitOrders);
+        _regionInfoViewModel = FindTool(Ids.RegionInfo);
+        _battlesViewModel = FindTool(Ids.Battles);
+        _searchResultsViewModel = FindTool(Ids.SearchResults);
+        _reportInfoViewModel = FindTool(Ids.ReportInfo);
+        _errorListViewModel = FindTool(Ids.ErrorList);
+
+        ITool? FindTool(string id) => dockables.TryGetValue(id, out IDockable? dockable) ? dockable as ITool : null;
+        T? FindDockable<T>(string id) where T : class, IDockable => dockables.TryGetValue(id, out IDockable? dockable) ? dockable as T : null;
+    }
+
+    private static void CollectDockables(IDockable dockable, IDictionary<string, IDockable> dockables, ISet<IDockable> visited)
+    {
+        if (!visited.Add(dockable))
+        {
+            return;
+        }
+
+        if (!string.IsNullOrEmpty(dockable.Id))
+        {
+            dockables[dockable.Id] = dockable;
+        }
+
+        if (dockable is IDock dock && dock.VisibleDockables is { } visibleDockables)
+        {
+            foreach (IDockable child in visibleDockables)
+            {
+                CollectDockables(child, dockables, visited);
+            }
+        }
+
+        if (dockable is IRootDock rootDock)
+        {
+            CollectDockablesFromList(rootDock.HiddenDockables, dockables, visited);
+            CollectDockablesFromList(rootDock.LeftPinnedDockables, dockables, visited);
+            CollectDockablesFromList(rootDock.RightPinnedDockables, dockables, visited);
+            CollectDockablesFromList(rootDock.TopPinnedDockables, dockables, visited);
+            CollectDockablesFromList(rootDock.BottomPinnedDockables, dockables, visited);
+
+            if (rootDock.Windows is { } windows)
+            {
+                foreach (IDockWindow window in windows)
+                {
+                    if (window.Layout is { } windowLayout)
+                    {
+                        CollectDockables(windowLayout, dockables, visited);
+                    }
+                }
+            }
+        }
+    }
+
+    private static void CollectDockablesFromList(IList<IDockable>? children, IDictionary<string, IDockable> dockables, ISet<IDockable> visited)
+    {
+        if (children is null)
+        {
+            return;
+        }
+
+        foreach (IDockable child in children)
+        {
+            CollectDockables(child, dockables, visited);
+        }
     }
 
     private static string LocalizedTitle(string id)

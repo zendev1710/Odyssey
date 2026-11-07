@@ -391,7 +391,8 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
             return;
         }
 
-        IEntitySelection newSelection = new EntitySelection(unitModel, null, null);
+        RegionModel? region = Report.FindRegionById(unitModel.LocationId);
+        IEntitySelection newSelection = new EntitySelection(unitModel, region, null);
         OnEditableUnitSelected(newSelection, SelectionChangeTypes.Unit);
         SendSelectionChangedEvent(newSelection);
     }

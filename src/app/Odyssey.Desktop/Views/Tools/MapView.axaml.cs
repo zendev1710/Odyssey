@@ -10,6 +10,7 @@ using Odyssey.Models;
 using Odyssey.Models.Data;
 using Odyssey.ViewModels.Tools;
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -20,9 +21,30 @@ public partial class MapView : UserControl, IRecipient<CenterMapMessage>
     public MapView()
     {
         InitializeComponent();
+        _mapScrollViewer = this.FindControl<ScrollViewer>("MapScrollViewer");
+        _hexMap = this.FindControl<HexMapControl>("HexMap");
+
+        if (_mapScrollViewer is not null)
+        {
+            _mapScrollViewer.SizeChanged += (_, _) => TryCenterPendingSelection();
+        }
+        if (_hexMap is not null)
+        {
+            _hexMap.LayoutUpdated += (_, _) => TryCenterPendingSelection();
+        }
 
         // Center after layout is complete
-        this.AttachedToVisualTree += (_, __) => CenterMap();
+        this.AttachedToVisualTree += (_, __) =>
+        {
+            if (DataContext is MapViewModel { IsSelectionCenterPending: true })
+            {
+                ScheduleSelectionCenterCheck();
+            }
+            else
+            {
+                _ = CenterMap();
+            }
+        };
 
         // La vue écoute directement le signal de raccourci clavier
         WeakReferenceMessenger.Default.Register<CenterMapMessage>(this);
@@ -30,6 +52,10 @@ public partial class MapView : UserControl, IRecipient<CenterMapMessage>
 
     private Slider? _zoomSlider;
     private Popup? _zoomPopup;
+    private ScrollViewer? _mapScrollViewer;
+    private HexMapControl? _hexMap;
+    private MapViewModel? _subscribedViewModel;
+    private bool _selectionCenterCheckPosted;
 
     public async void Receive(CenterMapMessage message)
     {
@@ -125,10 +151,23 @@ public partial class MapView : UserControl, IRecipient<CenterMapMessage>
 
         // Wire slider value updates to ViewModel.Zoom so the popup text updates live
         var vm = this.DataContext as MapViewModel;
+        if (_subscribedViewModel is not null)
+        {
+            _subscribedViewModel.PropertyChanged -= MapViewModel_PropertyChanged;
+        }
+        _subscribedViewModel = vm;
+        if (_subscribedViewModel is not null)
+        {
+            _subscribedViewModel.PropertyChanged += MapViewModel_PropertyChanged;
+        }
 
         // Find controls
         _zoomSlider = this.FindControl<Slider>("ZoomSlider");
         _zoomPopup = this.FindControl<Popup>("ZoomPopup");
+        if (vm is not null && this.FindControl<HexMapControl>("HexMap") is { } hexMap)
+        {
+            hexMap.Zoom = Math.Clamp((int)Math.Round(vm.Zoom), 20, 400);
+        }
 
         // Unsubscribe previous event handler if any
         if (_zoomSlider is not null)
@@ -144,6 +183,78 @@ public partial class MapView : UserControl, IRecipient<CenterMapMessage>
             // Attach property-changed handler to update VM.Zoom live
             _zoomSlider.PropertyChanged += ZoomSlider_PropertyChanged;
         }
+
+        if (vm?.IsSelectionCenterPending == true)
+        {
+            ScheduleSelectionCenterCheck();
+        }
+    }
+
+    private void MapViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (sender is not MapViewModel viewModel)
+        {
+            return;
+        }
+
+        if (e.PropertyName == nameof(viewModel.IsSelectionCenterPending)
+            || (viewModel.IsSelectionCenterPending && e.PropertyName is nameof(viewModel.SelectedRegion)
+                or nameof(viewModel.OccupiedRegions)
+                or nameof(viewModel.UnoccupiedRegions)))
+        {
+            if (viewModel.IsSelectionCenterPending)
+            {
+                ScheduleSelectionCenterCheck();
+            }
+        }
+    }
+
+    private void ScheduleSelectionCenterCheck()
+    {
+        if (_selectionCenterCheckPosted)
+        {
+            return;
+        }
+
+        _selectionCenterCheckPosted = true;
+        Dispatcher.UIThread.Post(() =>
+        {
+            _selectionCenterCheckPosted = false;
+            TryCenterPendingSelection();
+        }, DispatcherPriority.Background);
+    }
+
+    private void TryCenterPendingSelection()
+    {
+        if (DataContext is not MapViewModel viewModel
+            || !viewModel.IsSelectionCenterPending
+            || viewModel.SelectedRegion is not RegionModel selectedRegion
+            || _mapScrollViewer is null
+            || _hexMap is null
+            || _mapScrollViewer.Viewport.Width <= 0
+            || _mapScrollViewer.Viewport.Height <= 0
+            || _mapScrollViewer.Extent.Width <= 0
+            || _mapScrollViewer.Extent.Height <= 0
+            || (!_hexMap.OccupiedRegions.ContainsValue(selectedRegion)
+                && !_hexMap.UnoccupiedRegions.ContainsValue(selectedRegion)))
+        {
+            return;
+        }
+
+        Vector? offset = _hexMap.CenterToRegionCoordinates(
+            selectedRegion.GetX(),
+            selectedRegion.GetY(),
+            _mapScrollViewer.Offset,
+            _mapScrollViewer.Viewport,
+            _mapScrollViewer.Extent,
+            evenIfAlreadyVisible: true);
+        if (offset is null)
+        {
+            return;
+        }
+
+        _mapScrollViewer.Offset = offset.Value;
+        viewModel.CompleteSelectionCenterRequest();
     }
 
     private void Slider_PointerPressed(object? sender, Avalonia.Input.PointerPressedEventArgs e)

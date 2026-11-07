@@ -95,6 +95,8 @@ public class EntitySelection : IEntitySelection
     public bool SetItem(EntityModel? item, RegionModel? region, object? data = null, ILocationResolver? regionResolver = null, LocatedFactionModel? locatedFaction = null)
     {
         EntityModel? previousItem = Item;
+        SelectionType = SelectionTypes.None;
+        Item = null;
         LocatedFaction = locatedFaction;
         if (locatedFaction is not null)
         {
@@ -103,8 +105,8 @@ public class EntitySelection : IEntitySelection
 
         // TODO: it should return false when it does not change the selection compared with the previously one
 
-        // Note: the instance is expected to be reset before applying a new selection
-        // (see EntitySelectionService which owns and reuses its selection instance).
+        // Rebuild item and faction flags from the new values; the region is retained only
+        // when this selection supplies one.
         RegionModel? r = region;
         Data = data;
         EntityType newType = item is not null ? item.Type : EntityType.Unknown;
@@ -172,6 +174,7 @@ public class EntitySelection : IEntitySelection
             {
                 // TODO: use regionResolver
             }
+            Region = null;
         }
         return previousRegion != Region;
     }

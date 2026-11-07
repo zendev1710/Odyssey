@@ -1,0 +1,19 @@
+<UserControl x:Class="Odyssey.Controls.StructuresListControl"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Odyssey.ViewModels"
+             xmlns:controls="using:Odyssey.Controls"
+             x:DataType="vm:StructureListViewModel"
+             x:CompileBindings="True">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <ItemsControl ItemsSource="{Binding Structures}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:StructureListItemViewModel">
+                    <controls:SelectableLinkTextBlock Text="{Binding DisplayName}"
+                                                      HorizontalAlignment="Left"
+                                                      Command="{Binding SelectCommand}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </ScrollViewer>
+</UserControl>

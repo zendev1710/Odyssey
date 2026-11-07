@@ -186,6 +186,9 @@ public class App : Application
         Resources["ApplicationThemeSurfaceBrush"] = GetThemeBrush(themeColors, "sideBar.background", dockPanel, surface);
         Resources["ApplicationThemeSurfaceColor"] = surface;
         Resources["ApplicationThemeHoverColor"] = GetBrushColor(itemHover, menuBackground);
+        Resources["ApplicationConfigItemHoverColor"] = hasSelectedTheme
+            ? GetBrushColor(itemHover, menuBackground)
+            : GetReadableHoverColor(surface, foreground);
         Resources["ApplicationThemeInputBrush"] = GetThemeBrush(themeColors, "input.background", dockEditor, inputBackground);
         Resources["ApplicationThemeSelectionBrush"] = GetThemeBrush(
             themeColors,
@@ -591,6 +594,49 @@ public class App : Application
             Mix(background.B, foreground.B, foregroundOpacity));
     }
 
+    private static Color GetReadableHoverColor(Color background, Color foreground)
+    {
+        Color blendTarget = GetRelativeLuminance(background) > 0.5 ? Colors.Black : Colors.White;
+        double opacity = 0.15;
+
+        while (opacity < 1)
+        {
+            Color candidate = Blend(background, blendTarget, opacity);
+            if (GetContrastRatio(candidate, foreground) >= 4.5)
+            {
+                return candidate;
+            }
+
+            opacity += 0.05;
+        }
+
+        return blendTarget;
+    }
+
+    private static double GetContrastRatio(Color first, Color second)
+    {
+        double firstLuminance = GetRelativeLuminance(first);
+        double secondLuminance = GetRelativeLuminance(second);
+        double lighter = Math.Max(firstLuminance, secondLuminance);
+        double darker = Math.Min(firstLuminance, secondLuminance);
+        return (lighter + 0.05) / (darker + 0.05);
+    }
+
+    private static double GetRelativeLuminance(Color color)
+    {
+        static double Linearize(byte channel)
+        {
+            double value = channel / 255.0;
+            return value <= 0.04045
+                ? value / 12.92
+                : Math.Pow((value + 0.055) / 1.055, 2.4);
+        }
+
+        return 0.2126 * Linearize(color.R)
+            + 0.7152 * Linearize(color.G)
+            + 0.0722 * Linearize(color.B);
+    }
+
     private static Color GetMutedThemeHoverColor(
         IReadOnlyDictionary<string, string> themeColors,
         string colorKey,
@@ -659,7 +705,11 @@ public class App : Application
             mainWindow.AttachDockDebugOverlay(new KeyGesture(Key.F9));
 #endif
 
-            mainWindow.Closing += (_, _) => { mainWindowViewModel.CloseLayout(); };
+            mainWindow.Closing += (_, _) =>
+            {
+                mainWindowViewModel.SaveSessionOnApplicationClosing();
+                mainWindowViewModel.CloseLayout();
+            };
             desktopLifetime.MainWindow = mainWindow;
             desktopLifetime.Exit += (_, _) => { mainWindowViewModel.CloseLayout();};
         }

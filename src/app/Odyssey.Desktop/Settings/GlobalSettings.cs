@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
@@ -83,6 +84,7 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
     public const string MAP_SHOW_BUILDINGS = "ShowBuildings";
     public const string MAP_BUILDING_STYLE = "BuildingStyle";
     public const string MAP_BUILDING_CONTRAST = "BuildingContrast";
+    public const string MAP_BUILDING_SYMBOL_ENGLISH_INITIALS = "BuildingSymbolEnglishInitials";
     public const string MAP_SHOW_SHIPS = "ShowShips";
     public const string MAP_SHIP_STYLE = "ShipStyle";
     public const string MAP_SHIP_ROUTE_MODE = "ShipRouteMode";
@@ -90,8 +92,86 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
     public const string MAP_SELECTED_SHIP_ROUTE_OPACITY = "SelectedShipRouteOpacity";
     public const string MAP_SHOW_REGION_NAMES = "ShowRegionNames";
     public const string MAP_REGION_NAME_BANNER = "RegionNameBanner";
+    public const string MAP_ZOOM_PERCENTAGE = "MapZoomPercentage";
+    public const string UNIT_SKILL_SORT_MODE = "UnitSkillSortMode";
+    public const string UNIT_SKILL_CUSTOM_ORDER = "UnitSkillCustomOrder";
+    public const string UNIT_SKILL_GROUP_BY_CATEGORY = "UnitSkillGroupByCategory";
+    public const string UNIT_SKILL_CATEGORY_ORDER = "UnitSkillCategoryOrder";
+    public const string UNIT_SKILL_BADGE_SHOW_LEVEL_PREFIX = "UnitSkillBadgeShowLevelPrefix";
+    public const string UNIT_SKILL_BADGE_TRANSPARENT = "UnitSkillBadgeTransparent";
+    public const string UNIT_ITEM_BADGE_TRANSPARENT = "UnitItemBadgeTransparent";
+    private const string LegacyAutoSaveLayoutSettingName = "AutoSaveLayout";
+    public const string AUTO_SAVE_SESSION = "AutoSaveSession";
+
+    [ObservableProperty]
+    private int _mapZoomPercentage = 100;
+
+    [ObservableProperty]
+    private string _reportSelectionBookmarksJson = string.Empty;
+
+    [ObservableProperty]
+    private bool _unitSkillGroupByCategory;
+
+    [ObservableProperty]
+    private string _unitSkillCategoryOrder = string.Empty;
+
+    [ObservableProperty]
+    [property: Config(
+        Header = "parm_hdr_unit_skill_badge_show_level_prefix",
+        Description = "parm_inf_unit_skill_badge_show_level_prefix",
+        Category = "parm_cat_views",
+        Group = "parm_grp_badges")]
+    private bool _unitSkillBadgeShowLevelPrefix;
+
+    [ObservableProperty]
+    [property: Config(
+        Header = "parm_hdr_unit_skill_badge_transparent",
+        Description = "parm_inf_unit_skill_badge_transparent",
+        Category = "parm_cat_views",
+        Group = "parm_grp_badges")]
+    private bool _unitSkillBadgeTransparent;
+
+    [ObservableProperty]
+    [property: Config(
+        Header = "parm_hdr_unit_item_badge_transparent",
+        Description = "parm_inf_unit_item_badge_transparent",
+        Category = "parm_cat_views",
+        Group = "parm_grp_badges")]
+    private bool _unitItemBadgeTransparent;
+
+    [ObservableProperty]
+    [property: Config(
+        Header = "parm_hdr_auto_save_session",
+        Description = "parm_inf_auto_save_session",
+        Category = "parm_cat_general",
+        Group = "parm_grp_appearance")]
+    private bool _autoSaveSession;
 
     public const string HIDE_IN_PROGRESS_FEATURES = "HideInProgressFeatures";
+
+    [ObservableProperty]
+    private int _mainWindowPositionX;
+
+    [ObservableProperty]
+    private int _mainWindowPositionY;
+
+    [ObservableProperty]
+    private double _mainWindowClientWidth = 1200;
+
+    [ObservableProperty]
+    private double _mainWindowClientHeight = 680;
+
+    [ObservableProperty]
+    private bool _mainWindowIsFullscreen;
+
+    [ObservableProperty]
+    private bool _mainWindowWasMaximized;
+
+    [ObservableProperty]
+    private bool _hasSavedMainWindowBounds;
+
+    [ObservableProperty]
+    private string _currentLayoutProfilePath = string.Empty;
 
     [ObservableProperty]
     [property: DropdownConfig(
@@ -292,6 +372,14 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
         Group = "parm_grp_map")]
     private int _buildingContrast = BuildingContrastModes.Plate;
 
+    [ObservableProperty]
+    [property: Config(
+        Header = "parm_hdr_map_building_english_initials",
+        Description = "parm_inf_map_building_english_initials",
+        Category = "parm_cat_views",
+        Group = "parm_grp_map")]
+    private bool _buildingSymbolEnglishInitials = true;
+
     // whether ships are displayed on the map
     [ObservableProperty]
     [property: Config(
@@ -366,6 +454,12 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
     private bool _regionNameBanner = false;
 
     [ObservableProperty]
+    private int _unitSkillSortMode = 0;
+
+    [ObservableProperty]
+    private string _unitSkillCustomOrder = string.Empty;
+
+    [ObservableProperty]
     [property: Config(
     Header = "parm_hdr_features_hide_in_progress",
     Description = "parm_inf_features_hide_in_progress",
@@ -388,16 +482,15 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
 
     [ObservableProperty]
     [property: BrowserConfig(
-    BrowserMode = BrowserMode.OpenFolder,
-    Filter = "",
-    InstanceBrowserKey = "some-browser-field-key")]
+        BrowserMode = BrowserMode.OpenFolder,
+        Filter = "",
+        InstanceBrowserKey = "bookmarks-folder")]
     [property: Config(
-    Header = "parm_hdr_bookmarks_folder",
-    Description = "parm_inf_bookmarks_folder",
-    Category = "parm_cat_",
-    Group = "parm_grp_")]
+        Header = "parm_hdr_bookmarks_folder",
+        Description = "parm_inf_bookmarks_folder",
+        Category = "parm_cat_game",
+        Group = "parm_grp_tools")]
     private string _bookmarksFolder = string.Empty;
-
 
     public ObservableCollection<KeyValuePair<string, string>> GetLanguages()
     {
@@ -588,10 +681,16 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
     public override void Load(ref GlobalSettings module)
     {
         Debug.WriteLine("[APPCONFIG] Load -> BEGIN");
+        bool migrateAutoSaveLayout = TryReadLegacyAutoSaveLayout(module.LocalPath, out bool legacyAutoSaveValue);
         try
         {
-            // A JsonException is thrown if the config.json file is empty (0 KB)
+            // A JsonException is thrown if the config file is empty (0 KB)
             base.Load(ref module);
+            if (migrateAutoSaveLayout)
+            {
+                module.AutoSaveSession = legacyAutoSaveValue;
+                Debug.WriteLine("[APPCONFIG] Migrated AutoSaveLayout to AutoSaveSession.");
+            }
         }
         catch (JsonException ex)
         {
@@ -599,6 +698,56 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
         }
         Debug.WriteLine("[APPCONFIG] Load -> ENDED");
     }
+
+    private static bool TryReadLegacyAutoSaveLayout(string configurationPath, out bool value)
+    {
+        value = false;
+        if (!File.Exists(configurationPath))
+        {
+            return false;
+        }
+
+        try
+        {
+            using JsonDocument document = JsonDocument.Parse(File.ReadAllText(configurationPath));
+            if (document.RootElement.ValueKind != JsonValueKind.Object)
+            {
+                return false;
+            }
+
+            bool hasNewSetting = document.RootElement.EnumerateObject()
+                .Any(property => string.Equals(property.Name, nameof(AutoSaveSession), StringComparison.OrdinalIgnoreCase));
+            if (hasNewSetting)
+            {
+                return false;
+            }
+
+            foreach (JsonProperty property in document.RootElement.EnumerateObject())
+            {
+                if (string.Equals(property.Name, LegacyAutoSaveLayoutSettingName, StringComparison.OrdinalIgnoreCase)
+                    && property.Value.ValueKind is JsonValueKind.True or JsonValueKind.False)
+                {
+                    value = property.Value.GetBoolean();
+                    return true;
+                }
+            }
+        }
+        catch (JsonException ex)
+        {
+            Debug.WriteLine($"[APPCONFIG] Could not inspect legacy auto-save setting: {ex.Message}");
+        }
+        catch (IOException ex)
+        {
+            Debug.WriteLine($"[APPCONFIG] Could not read configuration for migration: {ex.Message}");
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            Debug.WriteLine($"[APPCONFIG] Could not read configuration for migration: {ex.Message}");
+        }
+
+        return false;
+    }
+
     /// <summary>
     /// Resets the settings to their config.json values.
     /// All modified settings using GUI are restored to their values that were last saved.

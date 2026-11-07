@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using Odyssey.Models;
 using Odyssey.Models.Documents;
+using Odyssey.Models.Tools;
 using static Odyssey.Models.Documents.EntitySelection;
 
 namespace Odyssey.Core.Services;
@@ -31,6 +32,28 @@ public class EntitySelectionService : IEntitySelectionService
 
     public void SelectItem(EntityModel? item, RegionModel? region, object? sender, object? data = null, SelectionTypes containerTypes = SelectionTypes.None, LocatedFactionModel? locatedFaction = null)
     {
+        CRDocument report = ServiceLocator.DocumentService.ActiveDocument;
+        if (item is RegionModel selectedRegion)
+        {
+            region ??= selectedRegion;
+        }
+        else if (region is null && item is not null)
+        {
+            region = report.FindRegionById(item.LocationId);
+        }
+
+        if (region is null && item is null && locatedFaction is not null)
+        {
+            region = locatedFaction.Region;
+        }
+
+        if (locatedFaction is null && item is UnitModel unit && region is not null)
+        {
+            int factionId = unit.EffectiveFactionId;
+            locatedFaction = new LocatedFactionModel(
+                report.GetFaction(factionId), region, factionId, report.GetFactionName(factionId));
+        }
+
         Debug.WriteLine($"[ENTITY-SERVICE-SEL] Select from {sender} for item={item} region={region} container={containerTypes}");
 
         // Keep the previous selection state to know whether the selection actually changed.
@@ -39,6 +62,7 @@ public class EntitySelectionService : IEntitySelectionService
         EntityModel? previousItem = _selection.Item;
         RegionModel? previousRegion = _selection.Region;
         SelectionTypes previousTypes = _selection.SelectionType;
+        LocatedFactionModel? previousLocatedFaction = _selection.LocatedFaction;
         object? previousData = _selection.Data;
 
         // The service owns the single shared selection instance: reset it before applying the
@@ -53,17 +77,19 @@ public class EntitySelectionService : IEntitySelectionService
         {
             _selection.SetItem(item, region, data: null, locatedFaction: locatedFaction);
         }
+        _selection.Data = data;
 
         if (previousItem != _selection.Item ||
             previousRegion != _selection.Region ||
             previousTypes != _selection.SelectionType ||
+            !AreSameLocatedFaction(previousLocatedFaction, _selection.LocatedFaction) ||
             !ReferenceEquals(previousData, data))
         {
-            _selection.Data = data;
             SelectionChanged?.Invoke(
                 _selection,
                 GetSelectionChangeTypes(previousItem, previousRegion, previousTypes,
-                                        _selection.Item, _selection.Region, _selection.SelectionType),
+                                        previousLocatedFaction, _selection.Item, _selection.Region,
+                                        _selection.SelectionType, _selection.LocatedFaction),
                 sender);
         }
     }
@@ -107,7 +133,8 @@ public class EntitySelectionService : IEntitySelectionService
     /// <returns>The change types of the new selection compared with the previous one.</returns>
     static private SelectionChangeTypes GetSelectionChangeTypes(
         EntityModel? previousItem, RegionModel? previousRegion, SelectionTypes previousTypes,
-        EntityModel? item, RegionModel? region, SelectionTypes types)
+        LocatedFactionModel? previousLocatedFaction, EntityModel? item, RegionModel? region,
+        SelectionTypes types, LocatedFactionModel? locatedFaction)
     {
         SelectionChangeTypes result = SelectionChangeTypes.None;
 
@@ -153,7 +180,8 @@ public class EntitySelectionService : IEntitySelectionService
         }
 
         if (Has(types, SelectionTypes.Faction) &&
-            !Has(previousTypes, SelectionTypes.Faction))
+            (!Has(previousTypes, SelectionTypes.Faction) ||
+             !AreSameLocatedFaction(previousLocatedFaction, locatedFaction)))
         {
             result |= SelectionChangeTypes.Faction;
         }
@@ -164,5 +192,10 @@ public class EntitySelectionService : IEntitySelectionService
     static private bool Has(SelectionTypes types, SelectionTypes mask)
     {
         return (types & mask) != SelectionTypes.None;
+    }
+
+    static private bool AreSameLocatedFaction(LocatedFactionModel? left, LocatedFactionModel? right)
+    {
+        return left?.FactionId == right?.FactionId && left?.Region.Id == right?.Region.Id;
     }
 }

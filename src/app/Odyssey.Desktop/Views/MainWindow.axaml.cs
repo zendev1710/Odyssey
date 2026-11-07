@@ -1,6 +1,8 @@
-﻿using Avalonia.Controls;
+﻿using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
+using Odyssey.Settings;
 using Odyssey.ViewModels;
 using System.ComponentModel;
 
@@ -10,17 +12,29 @@ public partial class MainWindow : Window
 {
     private WindowState _previousWindowState = WindowState.Normal;
     private WindowDecorations _previousWindowDecorations = WindowDecorations.Full;
+    private PixelPoint _lastNormalPosition;
+    private Size _lastNormalClientSize;
+    private bool _hasLastNormalBounds;
 
     public MainWindow()
     {
         InitializeComponent();
+        RestoreWindowBounds();
+        PositionChanged += (_, _) => CaptureNormalBounds();
+        SizeChanged += (_, _) => CaptureNormalBounds();
+        Closing += (_, _) => SaveWindowBounds();
 
         this.DataContextChanged += (_, e) =>
         {
             if (this.DataContext is MainWindowViewModel vm)
             {
+                vm.IsFullscreen = GlobalSettings.Shared.MainWindowIsFullscreen;
                 // Handle ViewModel property changed events
                 vm.PropertyChanged += ViewModel_PropertyChanged;
+                if (vm.IsFullscreen)
+                {
+                    ApplyFullscreenState(true);
+                }
                 vm.OpenInitialDocumentIfNeeded();
             }
         };
@@ -42,20 +56,89 @@ public partial class MainWindow : Window
     {
         if (sender is MainWindowViewModel vm && e.PropertyName == nameof(vm.IsFullscreen))
         {
-            if (vm.IsFullscreen)
-            {
-                // Store the window state before going fullscreen
-                this._previousWindowState = this.WindowState;
-                this._previousWindowDecorations = this.WindowDecorations;
-                this.WindowState = WindowState.FullScreen;
-                this.WindowDecorations = WindowDecorations.None;
-            }
-            else
-            {
-                // Set the Window state to the previous one, stored on the last toggle fullscreen command
-                this.WindowState = this._previousWindowState;
-                this.WindowDecorations = _previousWindowDecorations;
-            }
+            ApplyFullscreenState(vm.IsFullscreen);
+        }
+    }
+
+    private void RestoreWindowBounds()
+    {
+        GlobalSettings settings = GlobalSettings.Shared;
+        if (settings.HasSavedMainWindowBounds
+            && double.IsFinite(settings.MainWindowClientWidth)
+            && double.IsFinite(settings.MainWindowClientHeight)
+            && settings.MainWindowClientWidth > 0
+            && settings.MainWindowClientHeight > 0)
+        {
+            WindowStartupLocation = WindowStartupLocation.Manual;
+            Position = new PixelPoint(settings.MainWindowPositionX, settings.MainWindowPositionY);
+            Width = settings.MainWindowClientWidth;
+            Height = settings.MainWindowClientHeight;
+            _previousWindowState = settings.MainWindowWasMaximized
+                ? WindowState.Maximized
+                : WindowState.Normal;
+            WindowState = _previousWindowState;
+        }
+
+        CaptureNormalBounds();
+    }
+
+    private void CaptureNormalBounds()
+    {
+        if (WindowState != WindowState.Normal)
+        {
+            return;
+        }
+
+        Size clientSize = ClientSize;
+        if (clientSize.Width <= 0 || clientSize.Height <= 0)
+        {
+            clientSize = new Size(Width, Height);
+        }
+
+        if (!double.IsFinite(clientSize.Width) || !double.IsFinite(clientSize.Height)
+            || clientSize.Width <= 0 || clientSize.Height <= 0)
+        {
+            return;
+        }
+
+        _lastNormalPosition = Position;
+        _lastNormalClientSize = clientSize;
+        _hasLastNormalBounds = true;
+    }
+
+    private void SaveWindowBounds()
+    {
+        CaptureNormalBounds();
+        GlobalSettings settings = GlobalSettings.Shared;
+        if (_hasLastNormalBounds)
+        {
+            settings.MainWindowPositionX = _lastNormalPosition.X;
+            settings.MainWindowPositionY = _lastNormalPosition.Y;
+            settings.MainWindowClientWidth = _lastNormalClientSize.Width;
+            settings.MainWindowClientHeight = _lastNormalClientSize.Height;
+            settings.HasSavedMainWindowBounds = true;
+        }
+
+        settings.MainWindowIsFullscreen = WindowState == WindowState.FullScreen;
+        settings.MainWindowWasMaximized = WindowState == WindowState.Maximized
+            || (WindowState == WindowState.FullScreen && _previousWindowState == WindowState.Maximized);
+        settings.Save();
+    }
+
+    private void ApplyFullscreenState(bool isFullscreen)
+    {
+        if (isFullscreen)
+        {
+            CaptureNormalBounds();
+            _previousWindowState = WindowState;
+            _previousWindowDecorations = WindowDecorations;
+            WindowState = WindowState.FullScreen;
+            WindowDecorations = WindowDecorations.None;
+        }
+        else
+        {
+            WindowState = _previousWindowState;
+            WindowDecorations = _previousWindowDecorations;
         }
     }
 

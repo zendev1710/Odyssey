@@ -115,6 +115,20 @@ public partial class MainView : UserControl
         }
     }
 
+    private void SearchTextBox_OnKeyDown(object? sender, KeyEventArgs e)
+    {
+        if (e.Key != Key.Enter || e.KeyModifiers.HasFlag(KeyModifiers.Shift))
+        {
+            return;
+        }
+
+        e.Handled = true;
+        if (DataContext is MainWindowViewModel viewModel)
+        {
+            viewModel.SelectCurrentSearchResultCommand.Execute(null);
+        }
+    }
+
     /////// Other view features management ///////
 
     private void InitializeComponent()

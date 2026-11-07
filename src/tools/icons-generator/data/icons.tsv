@@ -21,40 +21,40 @@ animal	animal/unicorns	entry	Einhörner	Unicorns	einhoerner	animals/unicorns.gif
 animal	animal/wolf	entry	Wolf	Wolf	wolf|Wolf	animals/wolf.gif
 animal	animal/wolf_alt	variant				animals/wolf_alt.gif
 animal	animal/wolves	entry	Wölfe	Wolves	woelfe|Wölfe|Wolves	animals/wolves.gif
-building	building/academy	entry	Akademie	Academy	akademie|Akademie|Academy	buildings/academy.gif
+building	building/academy	entry	Akademie	Academy	akademie|Akademie|Academy|académie	buildings/academy.gif
 building	building/acropolis	entry	Akropolis	Acropolis	akropolis	buildings/acropolis.gif
 building	building/alchemist_s_kitchen	entry	Alchemistenküche	Alchemist's kitchen	alchemistenkueche	buildings/alchemist_s_kitchen.gif
-building	building/art_academy	entry	Akademie der Künste	Art academy	akademie_der_kuenste|Akademie der Künste|Art academy	buildings/art_academy.gif
-building	building/blessed_stone_circle	entry	Gesegneter Steinkreis	Blessed stone circle	gesegneter_steinkreis|gesegneter steinkreis	buildings/blessed_stone_circle.gif
+building	building/art_academy	entry	Akademie der Künste	Art academy	akademie_der_kuenste|Akademie der Künste|Art academy|Académie des Arts	buildings/art_academy.gif
+building	building/blessed_stone_circle	entry	Gesegneter Steinkreis	Blessed stone circle	gesegneter_steinkreis|gesegneter steinkreis|cercle de pierres sacrées	buildings/blessed_stone_circle.gif
 building	building/buildings	category	Gebäude	Buildings	buildings	buildings/buildings.gif
 building	building/buildings_alt	variant				buildings/buildings_alt.gif
 building	building/buildings_alt2	variant				buildings/buildings_alt2.gif
-building	building/caravanserai	entry	Karawanserei	Caravanserai	karawanserei	buildings/caravanserai.gif
+building	building/caravanserai	entry	Karawanserei	Caravanserai	karawanserei|caravanserei	buildings/caravanserai.gif
 building	building/carpentry	entry	Schreinerei	Carpentry	schreinerei	buildings/carpentry.gif
-building	building/castle	entry	Burg	Castle	burg|Burg|Castle	buildings/castle.gif
-building	building/citadel	entry	Zitadelle	Citadel	zitadelle|Zitadelle|Citadel	buildings/citadel.gif
+building	building/castle	entry	Burg	Castle	burg|Burg|Castle|château	buildings/castle.gif
+building	building/citadel	entry	Zitadelle	Citadel	zitadelle|Zitadelle|Citadel|citadelle	buildings/citadel.gif
 building	building/coal_mine	entry	Kohlebergwerk	Coal mine	kohlebergwerk	buildings/coal_mine.gif
 building	building/construction_site	entry	Baustelle	Construction site	baustelle	buildings/construction_site.gif
-building	building/dam	entry	Damm	Dam	damm	buildings/dam.gif
+building	building/dam	entry	Damm	Dam	damm|barrage	buildings/dam.gif
 building	building/dockyard	entry	Werft	Dockyard	werft|Werft|Dockyard	buildings/dockyard.gif
 building	building/forester_s_house	entry	Forsthaus	Forester's house	forsthaus	buildings/forester_s_house.gif
 building	building/forge_smithy	entry	Schmiede	Forge / Smithy	schmiede	buildings/forge_smithy.gif
-building	building/fortification	entry	Befestigung	Fortification	befestigung	buildings/fortification.gif
-building	building/fortress	entry	Festung	Fortress	festung|Festung|Fortress	buildings/fortress.gif
-building	building/foundations	entry	Grundmauern	Foundations	grundmauern	buildings/foundations.gif
+building	building/fortification	entry	Befestigung	Fortification	befestigung|fortification	buildings/fortification.gif
+building	building/fortress	entry	Festung	Fortress	festung|Festung|Fortress|forteresse	buildings/fortress.gif
+building	building/foundations	entry	Grundmauern	Foundations	grundmauern|fondation	buildings/foundations.gif
 building	building/greenhouse	entry	Gewächshaus	Greenhouse	gewaechshaus	buildings/greenhouse.gif
-building	building/guardroom	entry	Wachstube	Guardroom	wachstube	buildings/guardroom.gif
+building	building/guardroom	entry	Wachstube	Guardroom	wachstube|corps de garde	buildings/guardroom.gif
 building	building/hall	entry	Halle	Hall	halle|Halle|Hall	buildings/hall.gif
 building	building/hall_detail	variant				buildings/hall_detail.gif
-building	building/harbour	entry	Hafen	Harbour	hafen	buildings/harbour.gif
+building	building/harbour	entry	Hafen	Harbour	hafen|port	buildings/harbour.gif
 building	building/herbalist_s_hut	entry	Kräuterhütte	Herbalist's hut	kraeuterhuette	buildings/herbalist_s_hut.gif
-building	building/horse_breeding	entry	Pferdezucht	Horse breeding	pferdezucht	buildings/horse_breeding.gif
+building	building/horse_breeding	entry	Pferdezucht	Horse breeding	pferdezucht|écurie	buildings/horse_breeding.gif
 building	building/hunting_lodge	entry	Jagdhaus	Hunting lodge	jagdhaus	buildings/hunting_lodge.gif
 building	building/hut	entry	Hütte	Hut	huette	buildings/hut.gif
 building	building/iron_mine	entry	Eisenbergwerk	Iron mine	eisenbergwerk	buildings/iron_mine.gif
-building	building/lighthouse	entry	Leuchtturm	Lighthouse	leuchtturm	buildings/lighthouse.gif
-building	building/mage_tower	entry	Magierturm	Mage tower	magierturm	buildings/mage_tower.gif
-building	building/market	entry	Marktplatz	Market	marktplatz|Marktplatz|Market	buildings/market.gif
+building	building/lighthouse	entry	Leuchtturm	Lighthouse	leuchtturm|phare	buildings/lighthouse.gif
+building	building/mage_tower	entry	Magierturm	Mage tower	magierturm|tour des mages	buildings/mage_tower.gif
+building	building/market	entry	Marktplatz	Market	marktplatz|Marktplatz|Market|marché	buildings/market.gif
 building	building/marketplace	entry	Markt	Marketplace	markt|Markt|Marketplace	buildings/marketplace.gif
 building	building/megapolis	entry	Megapolis	Megapolis	megapolis	buildings/megapolis.gif
 building	building/megapolis_alt	variant				buildings/megapolis_alt.gif
@@ -65,32 +65,32 @@ building	building/monument_alt	variant				buildings/monument_alt.gif
 building	building/palace	entry	Schloss	Palace	schloss|Schloss|Palace	buildings/palace.gif
 building	building/plantation	entry	Plantage	Plantation	plantage	buildings/plantation.gif
 building	building/portal	entry	Portal	Portal	portal	buildings/portal.gif
-building	building/quarry	entry	Steinbruch	Quarry	steinbruch|Steinbruch|Quarry	buildings/quarry.gif
+building	building/quarry	entry	Steinbruch	Quarry	steinbruch|Steinbruch|Quarry|carrière	buildings/quarry.gif
 building	building/saddlery	entry	Sattlerei	Saddlery	sattlerei	buildings/saddlery.gif
-building	building/sawmill	entry	Sägewerk	Sawmill	saegewerk	buildings/sawmill.gif
-building	building/scaffold	entry	Gerüst	Scaffold	geruest	buildings/scaffold.gif
+building	building/sawmill	entry	Sägewerk	Sawmill	saegewerk|scierie	buildings/sawmill.gif
+building	building/scaffold	entry	Gerüst	Scaffold	geruest|cadre	buildings/scaffold.gif
 building	building/scout_tower	entry	Spähturm	Scout tower	spaehturm	buildings/scout_tower.gif
 building	building/shipyard	entry	Schiffswerft	Shipyard	schiffswerft|Schiffswerft|Shipyard	buildings/shipyard.gif
 building	building/signs	entry	Schilder	Signs	schilder	buildings/signs.gif
-building	building/stone_circle	entry	Steinkreis	Stone circle	steinkreis	buildings/stone_circle.gif
+building	building/stone_circle	entry	Steinkreis	Stone circle	steinkreis|cercle de pierre	buildings/stone_circle.gif
 building	building/stone_pit	entry	Steingrube	Stone pit	steingrube|Steingrube|Stone pit	buildings/stone_pit.gif
 building	building/tavern	entry	Taverne	Tavern	taverne	buildings/tavern.gif
 building	building/temple	entry	Tempel	Temple	tempel	buildings/temple.gif
-building	building/tower	entry	Turm	Tower	turm|Turm|Tower	buildings/tower.gif
-building	building/trading_post	entry	Handelsposten	Trading post	handelsposten	buildings/trading_post.gif
+building	building/tower	entry	Turm	Tower	turm|Turm|Tower|tour	buildings/tower.gif
+building	building/trading_post	entry	Handelsposten	Trading post	handelsposten|poste commercial	buildings/trading_post.gif
 building	building/tree_nursery	entry	Baumschule	Tree nursery	baumschule	buildings/tree_nursery.gif
 building	building/tunnel	entry	Tunnel	Tunnel	tunnel	buildings/tunnel.gif
 building	building/university	entry	Universität	University	universitaet	buildings/university.gif
-building	building/watchtower	entry	Wachturm	Watchtower	wachturm|Wachturm|Watchtower	buildings/watchtower.gif
+building	building/watchtower	entry	Wachturm	Watchtower	wachturm|Wachturm|Watchtower|tour de garde	buildings/watchtower.gif
 building	building/woodcutter_s_hut	entry	Holzfällerhütte	Woodcutter's hut	holzfaellerhuette	buildings/woodcutter_s_hut.gif
 building	building/workshop	entry	Werkstatt	Workshop	werkstatt	buildings/workshop.gif
-building	building/wormhole	entry	Wurmloch	Wormhole	wurmloch	buildings/wormhole.gif
+building	building/wormhole	entry	Wurmloch	Wormhole	wurmloch|trou de ver	buildings/wormhole.gif
 effect	effect/berserkers_blood	entry	Berserkerblut	Berserkers blood	berserkerblut	effects/berserkers_blood.gif
 effect	effect/brain_wax	entry	Gehirnschmalz	Brain wax	gehirnschmalz	effects/brain_wax.gif
 effect	effect/busybeer	entry	Schaffenstrunk	Busybeer	schaffenstrunk	effects/busybeer.gif
 effect	effect/duncebun	entry	Dumpfbackenbrot	Duncebun	dumpfbackenbrot	effects/duncebun.gif
 effect	effect/elixir_of_power	entry	Elixier der Macht	Elixir of power	elixier_der_macht	effects/elixir_of_power.gif
-effect	effect/goliath_water	entry	Goliathwasser	Goliath water	goliathwasser	effects/goliath_water.gif
+effect	effect/goliath_water	entry	Goliathwasser	Goliath water	goliathwasser|eau de goliath	effects/goliath_water.gif
 effect	effect/healing_potion	entry	Heiltrank	Healing potion	heiltrank	effects/healing_potion.gif
 effect	effect/horsepower_potion	entry	Pferdeglück	Horsepower potion	pferdeglueck	effects/horsepower_potion.gif
 effect	effect/ointment	entry	Wundsalbe	Ointment	wundsalbe	effects/ointment.gif
@@ -233,7 +233,7 @@ item	item/gapgrowth	entry	Gapgrowth	gapgrowth	gapgrowth	items/gapgrowth.gif
 item	item/gem	entry	Juwel	gem	juwel	items/gem.gif
 item	item/germander	entry	Gamander	germander	gamander	items/germander.gif
 item	item/goblin_head	entry	Goblinkopf	goblin head	goblinkopf	items/goblin_head.gif
-item	item/goliath_water	entry	Goliathwasser	goliath water	goliathwasser	items/goliath_water.gif
+item	item/goliath_water	entry	Goliathwasser	goliath water	goliathwasser|eau de goliath	items/goliath_water.gif
 item	item/grain	entry	Korn	grain	korn	items/grain.gif
 item	item/grain_alt	variant				items/grain_alt.gif
 item	item/griffin_wing	entry	Griphonwing	griffin wing	griphonwing	items/griffin_wing.gif
@@ -429,7 +429,7 @@ monster	monster/alp_nightmare_alt	variant				monsters/alp_nightmare_alt.gif
 monster	monster/brain_slayer	entry	Hirntöter	Brain slayer	hirntoeter	monsters/brain_slayer.gif
 monster	monster/demons	entry	Dämonen	Demons	daemonen|Dämonen|Demons	monsters/demons.gif
 monster	monster/demons_alt	variant				monsters/demons_alt.gif
-monster	monster/dragons	entry	Drachen	Dragons	drachen	monsters/dragons.gif
+monster	monster/dragons	entry	Drachen	Dragons	drachen|dragon|dragons	monsters/dragons.gif
 monster	monster/ents	entry	Ents	Ents	ents	monsters/ents.gif
 monster	monster/ents_alt	variant				monsters/ents_alt.gif
 monster	monster/fairies	entry	Feen	Fairies	feen	monsters/fairies.gif
@@ -466,7 +466,7 @@ monster	monster/stone_golems	entry	Steingolems	Stone golems	steingolems	monsters
 monster	monster/tree_shepherd	entry	Baumhirte	Tree shepherd	baumhirte	monsters/tree_shepherd.gif
 monster	monster/trolls	entry	Trolle	Trolls	trolle	monsters/trolls.gif
 monster	monster/tunnel_worms	entry	Tunnelwürmer	Tunnel worms	tunnelwuermer	monsters/tunnel_worms.gif
-monster	monster/undead	entry	Untote	Undead	untote	monsters/undead.gif
+monster	monster/undead	entry	Untote	Undead	untote|morts-vivants|mort-vivant	monsters/undead.gif
 monster	monster/vampires	entry	Vampire	Vampires	vampire	monsters/vampires.gif
 monster	monster/vampires_alt	variant				monsters/vampires_alt.gif
 monster	monster/will_o_the_wisps	entry	Irrlichter	Will-o'-the-wisps	irrlichter	monsters/will_o_the_wisps.gif
@@ -477,19 +477,19 @@ monster	monster/zombie_alt	variant				monsters/zombie_alt.gif
 monster	monster/zombie_master	entry	Zombiemeister	Zombie master	zombiemeister	monsters/zombie_master.gif
 monster	monster/zombies	entry	Zombies	Zombies	zombies|Zombies	monsters/zombies.gif
 monster	monster/zombies_alt	variant				monsters/zombies_alt.gif
-race	race/cats	entry	Katzen	Cats	katzen	races/cats.gif
+race	race/cats	entry	Katzen	Cats	katzen|Hommes-chats|Homme-chat	races/cats.gif
 race	race/cats_alt	variant				races/cats_alt.gif
 race	race/centaurs	entry	Zentauren	Centaurs	zentauren	races/centaurs.gif
 race	race/centaurs_alt	variant				races/centaurs_alt.gif
-race	race/demons	entry	Dämonen	Demons	daemonen|Dämonen|Demons	races/demons.gif
+race	race/demons	entry	Dämonen	Demons	daemonen|Dämonen|Demons|Démons|Démon	races/demons.gif
 race	race/demons_alt	variant				races/demons_alt.gif
 race	race/dracoid	entry	Dracoid	Dracoid	dracoide|Dracoid	races/dracoid.gif
 race	race/dracoids	entry	Dracoiden	Dracoids	dracoiden|Dracoiden|Dracoids	races/dracoids.gif
 race	race/dragons	entry	Drachen	Dragons	drachen	races/dragons.gif
 race	race/dragons_alt	variant				races/dragons_alt.gif
-race	race/dwarves	entry	Zwerge	Dwarves	zwerge	races/dwarves.gif
+race	race/dwarves	entry	Zwerge	Dwarves	zwerge|Nains|Nain	races/dwarves.gif
 race	race/dwarves_alt	variant				races/dwarves_alt.gif
-race	race/elves	entry	Elfen	Elves	elfen	races/elves.gif
+race	race/elves	entry	Elfen	Elves	elfen|Elfes|Elfe	races/elves.gif
 race	race/elves_alt	variant				races/elves_alt.gif
 race	race/ents	entry	Ents	Ents	ents	races/ents.gif
 race	race/ents_alt	variant				races/ents_alt.gif
@@ -497,27 +497,27 @@ race	race/ghast	entry	Ghaste	Ghast	ghaste	races/ghast.gif
 race	race/ghosts	entry	Geister	Ghosts	ghosts|geister	races/ghosts.gif
 race	race/ghouls	entry	Ghule	Ghouls	ghoule|Ghule|Ghouls	races/ghouls.gif
 race	race/ghouls_alt	variant				races/ghouls_alt.gif
-race	race/goblins	entry	Goblins	Goblins	goblins	races/goblins.gif
+race	race/goblins	entry	Goblins	Goblins	goblins|Gobelins|Gobelin	races/goblins.gif
 race	race/goblins_alt	variant				races/goblins_alt.gif
-race	race/halflings	entry	Halblinge	Halflings	halblinge	races/halflings.gif
+race	race/halflings	entry	Halblinge	Halflings	halblinge|Halfelins|Halfelin	races/halflings.gif
 race	race/halflings_alt	variant				races/halflings_alt.gif
-race	race/humans	entry	Menschen	Humans	menschen	races/humans.gif
+race	race/humans	entry	Menschen	Humans	menschen|Humains|Humain	races/humans.gif
 race	race/humans_alt	variant				races/humans_alt.gif
-race	race/insects	entry	Insekten	Insects	insekten	races/insects.gif
+race	race/insects	entry	Insekten	Insects	insekten|Insectes|Insecte	races/insects.gif
 race	race/insects_alt	variant				races/insects_alt.gif
-race	race/merfolk	entry	Meermenschen	Merfolk	meermenschen|aquarians	races/merfolk.gif
+race	race/merfolk	entry	Meermenschen	Merfolk	meermenschen|aquarians|Aquariens|Aquarien	races/merfolk.gif
 race	race/merfolk_alt	variant				races/merfolk_alt.gif
 race	race/orcs	entry	Orks	Orcs	orks|Orks|Orcs	races/orcs.gif
 race	race/orcs_alt	variant				races/orcs_alt.gif
 race	race/orkas	entry	Orkas	Orkas	orkas|Orkas	races/orkas.gif
 race	race/owls	entry	Eulen	Owls	eulen	races/owls.gif
-race	race/race	category	Rasse	Race	rasse	races/race.gif
+race	race/race	category	Rasse	Race	rasse|Wiedergänger|Revenants|Schrecken|Spectres|Spectre|Luchse|Lynx|Untote|Morts-Vivants|Mort-Vivant|Unknown|Unbekannt|Personnes|Personne	races/race.gif
 race	race/race_alt	variant				races/race_alt.gif
 race	race/rats	entry	Ratten	Rats	ratten	races/rats.gif
 race	race/rats_alt	variant				races/rats_alt.gif
-race	race/skeletons	entry	Skelette	Skeletons	skelette|Skelette|Skeletons	races/skeletons.gif
+race	race/skeletons	entry	Skelette	Skeletons	skelette|Skelette|Skeletons|Skelettherren|Seigneurs Squelettes|Seigneur Squelette	races/skeletons.gif
 race	race/skeletons_alt	variant				races/skeletons_alt.gif
-race	race/trolls	entry	Trolle	Trolls	trolle	races/trolls.gif
+race	race/trolls	entry	Trolle	Trolls	trolle|Troll	races/trolls.gif
 race	race/trolls_alt	variant				races/trolls_alt.gif
 race	race/vampires	entry	Vampire	Vampires	vampire	races/vampires.gif
 race	race/vampires_alt	variant				races/vampires_alt.gif
@@ -550,28 +550,28 @@ resource	resource/trees	entry	Bäume	Trees	baeume	resources/trees.gif
 ship	ship/ballista	entry	Balliste	Ballista	balliste	ships/ballista.gif
 ship	ship/balloon	entry	Ballon	Balloon	ballon|luftschiff	ships/balloon.gif
 ship	ship/barge	entry	Barke	Barge	barke	ships/barge.gif
-ship	ship/boat	entry	Boot	Boat	boot|Boot|Boat	ships/boat.gif
+ship	ship/boat	entry	Boot	Boat	boot|Boot|Boat|bateau	ships/boat.gif
 ship	ship/canoe	entry	Einbaum	Canoe	einbaum|Einbaum|Canoe	ships/canoe.gif
 ship	ship/caravan	entry	Karawane	Caravan	karawane	ships/caravan.gif
-ship	ship/caravel	entry	Karavelle	Caravel	karavelle	ships/caravel.gif
+ship	ship/caravel	entry	Karavelle	Caravel	karavelle|caravelle	ships/caravel.gif
 ship	ship/catamaran	entry	Katamaran	Catamaran	katamaran	ships/catamaran.gif
 ship	ship/catapult	entry	Katapult	Catapult	katapult|catapult	ships/catapult.gif
 ship	ship/catapult_alt	variant				ships/catapult_alt.gif
 ship	ship/cog	entry	Kogge	Cog	kogge	ships/cog.gif
 ship	ship/cruiser	entry	Kreuzer	Cruiser	kreuzer	ships/cruiser.gif
 ship	ship/cutter	entry	Kutter	Cutter	kutter	ships/cutter.gif
-ship	ship/dragon_ship	entry	Drachenschiff	Dragon ship	drachenschiff	ships/dragon_ship.gif
+ship	ship/dragon_ship	entry	Drachenschiff	Dragon ship	drachenschiff|dragonship|drakkar	ships/dragon_ship.gif
 ship	ship/frigate	entry	Fregatte	Frigate	fregatte	ships/frigate.gif
-ship	ship/galleon	entry	Galeone	Galleon	galeone	ships/galleon.gif
-ship	ship/longboat	entry	Langboot	Longboat	langboot	ships/longboat.gif
+ship	ship/galleon	entry	Galeone	Galleon	galeone|galion	ships/galleon.gif
+ship	ship/longboat	entry	Langboot	Longboat	langboot|chaloupe	ships/longboat.gif
 ship	ship/raft	entry	Floß	Raft	floss	ships/raft.gif
 ship	ship/royal_barge	entry	Königsbarke	Royal barge	koenigsbarke	ships/royal_barge.gif
 ship	ship/ships	entry	Schiffe	Ships	schiffe|ships	ships/ships.gif
 ship	ship/ships_alt	variant				ships/ships_alt.gif
 ship	ship/ships_alt2	variant				ships/ships_alt2.gif
-ship	ship/trireme	entry	Trireme	Trireme	trireme|tireme	ships/trireme.gif
+ship	ship/trireme	entry	Trireme	Trireme	trireme|tireme|trirème	ships/trireme.gif
 ship	ship/trireme_alt	variant				ships/trireme_alt.gif
-skill	skill/alchemy	entry	Alchemie	Alchemy	alchemie|Alchemie|Alchemy	skills/alchemy.gif
+skill	skill/alchemy	entry	Alchemie	Alchemy	alchemie|Alchemie|Alchemy|alchemist|alchemists|alchemistin|alchemisten|alchimiste|alchimistes|alchémiste|alchémistes	skills/alchemy.gif
 skill	skill/alchemy_alchimie	entry	Alchimie	Alchimie	alchimie|Alchimie	skills/alchemy_alchimie.gif
 skill	skill/alchemy_alt	variant				skills/alchemy_alt.gif
 skill	skill/animal_training	entry	Tierdressur	Animal training	tierdressur	skills/animal_training.gif
@@ -607,7 +607,7 @@ skill	skill/horse_breeding	entry	Pferdezucht	Horse breeding	pferdezucht	skills/h
 skill	skill/horse_training	entry	Pferdedressur	Horse training	pferdedressur	skills/horse_training.gif
 skill	skill/jewellery_making	entry	Juwelierkunst	Jewellery making	juwelierskunst	skills/jewellery_making.gif
 skill	skill/loading	entry	Beladung	Loading	beladung	skills/loading.gif
-skill	skill/magic	entry	Magie	Magic	magie|Magie|Magic	skills/magic.gif
+skill	skill/magic	entry	Magie	Magic	magie|Magie|Magic|mage|mages|magier|magierin|magicien|magicienne|magiciens|magiciennes	skills/magic.gif
 skill	skill/magic_alt	variant				skills/magic_alt.gif
 skill	skill/masonry	entry	Burgenbau	Masonry	burgenbau	skills/masonry.gif
 skill	skill/masonry_alt	variant				skills/masonry_alt.gif
@@ -639,7 +639,7 @@ skill	skill/slashing_weapons	entry	Hiebwaffen	Slashing weapons	hiebwaffen	skills
 skill	skill/stealth	entry	Tarnung	Stealth	tarnung|Tarnung|Stealth	skills/stealth.gif
 skill	skill/stealth_alt	variant				skills/stealth_alt.gif
 skill	skill/stone_building	entry	Steinbau	Stone building	steinbau	skills/stone_building.gif
-skill	skill/tactics	entry	Taktik	Tactics	taktik|Taktik|Tactics	skills/tactics.gif
+skill	skill/tactics	entry	Taktik	Tactics	taktik|Taktik|Tactics|tactician|tacticians|taktiker|taktikerin|tacticien|tacticienne|tacticiens|tacticiennes	skills/tactics.gif
 skill	skill/tactics_alt	variant				skills/tactics_alt.gif
 skill	skill/taming	entry	Zähmen	Taming	zaehmen|taming	skills/taming.gif
 skill	skill/taming_alt	variant				skills/taming_alt.gif
@@ -711,7 +711,7 @@ status	status/groups	entry	Gruppen	Groups	gruppen	status/groups.gif
 status	status/groups_alt	variant				status/groups_alt.gif
 status	status/guarded	entry	Bewacht	Guarded	bewacht	status/guarded.gif
 status	status/healthy	entry	Gesund	Healthy	gesund	status/healthy.gif
-status	status/hero	entry	Held	Hero	hero|Held|Hero	status/hero.gif
+status	status/hero	entry	Held	Hero	hero|Held|Hero|héros|heros|héroïne|héroïnes	status/hero.gif
 status	status/heroes	entry	Helden	Heroes	helden|Helden|Heroes	status/heroes.gif
 status	status/heroes_alt	variant				status/heroes_alt.gif
 status	status/homeless	entry	Obdachlos	Homeless	obdachlos	status/homeless.gif
@@ -775,7 +775,7 @@ terrain	terrain/current_alt	variant				terrains/current_alt.gif
 terrain	terrain/dense_fog	entry	Dichter Nebel	Dense fog	dichter_nebel|thickfog	terrains/dense_fog.gif
 terrain	terrain/dense_fog_alt	variant				terrains/dense_fog_alt.gif
 terrain	terrain/dense_fog_detail	variant				terrains/dense_fog_detail.gif
-terrain	terrain/desert	entry	Wüste	Desert	wueste|Wüste|Desert	terrains/desert.gif
+terrain	terrain/desert	entry	Wüste	Desert	wueste|Wüste|Desert|Désert	terrains/desert.gif
 terrain	terrain/desert_alt	variant				terrains/desert_alt.gif
 terrain	terrain/desert_detail	variant				terrains/desert_detail.gif
 terrain	terrain/firewall	entry	Feuerwand	Firewall	firewall	terrains/firewall.gif
@@ -789,7 +789,7 @@ terrain	terrain/glacier	entry	Gletscher	Glacier	gletscher|Gletscher|Glacier	terr
 terrain	terrain/glacier_alt	variant				terrains/glacier_alt.gif
 terrain	terrain/glacier_detail	variant				terrains/glacier_detail.gif
 terrain	terrain/hall	entry	Halle	Hall	hall|Halle|Hall	terrains/hall.gif
-terrain	terrain/highlands	entry	Hochland	Highlands	hochland|Hochland|Highlands	terrains/highlands.gif
+terrain	terrain/highlands	entry	Hochland	Highlands	hochland|Hochland|Highlands|Highland	terrains/highlands.gif
 terrain	terrain/highlands_alt	variant				terrains/highlands_alt.gif
 terrain	terrain/highlands_detail	variant				terrains/highlands_detail.gif
 terrain	terrain/ice_floe	entry	Eisscholle	Ice floe	eisscholle|Eisscholle|Ice floe	terrains/ice_floe.gif
@@ -802,7 +802,7 @@ terrain	terrain/lake	entry	See	Lake	see|See|Lake	terrains/lake.gif
 terrain	terrain/lake_detail	variant				terrains/lake_detail.gif
 terrain	terrain/maelstrom	entry	Mahlstrom	Maelstrom	mahlstrom|Mahlstrom|Maelstrom	terrains/maelstrom.gif
 terrain	terrain/maelstrom_detail	variant				terrains/maelstrom_detail.gif
-terrain	terrain/mountains	entry	Berge / Gebirge	Mountains	berge|Berge / Gebirge|Mountains	terrains/mountains.gif
+terrain	terrain/mountains	entry	Berge / Gebirge	Mountains	berge|Berge / Gebirge|Mountains|Montagne	terrains/mountains.gif
 terrain	terrain/mountains_alt	variant				terrains/mountains_alt.gif
 terrain	terrain/mountains_alt2	variant				terrains/mountains_alt2.gif
 terrain	terrain/mountains_detail	variant				terrains/mountains_detail.gif
@@ -817,7 +817,7 @@ terrain	terrain/pack_ice_detail	variant				terrains/pack_ice_detail.gif
 terrain	terrain/passage	entry	Gang	Passage	gang|corridor	terrains/passage.gif
 terrain	terrain/passage_alt	variant				terrains/passage_alt.gif
 terrain	terrain/passage_detail	variant				terrains/passage_detail.gif
-terrain	terrain/plains	entry	Ebene	Plains	ebene|Ebene|Plains	terrains/plains.gif
+terrain	terrain/plains	entry	Ebene	Plains	ebene|Ebene|Plains|Plaine	terrains/plains.gif
 terrain	terrain/plains_alt	variant				terrains/plains_alt.gif
 terrain	terrain/plains_detail	variant				terrains/plains_detail.gif
 terrain	terrain/road	entry	Straße	Road	strasse	terrains/road.gif

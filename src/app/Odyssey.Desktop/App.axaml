@@ -32,10 +32,6 @@
 							<!---->
 							<!-- GAME COLORS FOR LIGHT - BEGIN -->
 							<!-- Specific colors -->
-							<SolidColorBrush x:Key="UnitInShipForegroundColor">#8B0000</SolidColorBrush>
-							<SolidColorBrush x:Key="UnitInBuildingForegroundColor">#008B8B</SolidColorBrush>
-							<SolidColorBrush x:Key="ShipInNotActiveFactionForegroundColor">#008000</SolidColorBrush>
-							<SolidColorBrush x:Key="BuildingInNotActiveFactionForegroundColor">#696969</SolidColorBrush>
 							<SolidColorBrush x:Key="RegionRareItemForegroundColor">#BE721B</SolidColorBrush>
 							<!-- Background colors for terrains -->
 							<SolidColorBrush x:Key="UnknownTerrainBackgroundColor">#222222</SolidColorBrush>
@@ -64,10 +60,6 @@
 							<!---->
 							<!-- GAME COLORS FOR LIGHT - BEGIN -->
 							<!-- Specific colors -->
-							<SolidColorBrush x:Key="UnitInShipForegroundColor">#8B0000</SolidColorBrush>
-							<SolidColorBrush x:Key="UnitInBuildingForegroundColor">#008B8B</SolidColorBrush>
-							<SolidColorBrush x:Key="ShipInNotActiveFactionForegroundColor">#008000</SolidColorBrush>
-							<SolidColorBrush x:Key="BuildingInNotActiveFactionForegroundColor">#696969</SolidColorBrush>
 							<SolidColorBrush x:Key="RegionRareItemForegroundColor">#BE721B</SolidColorBrush>
 							<!-- Background colors for terrains -->
 							<SolidColorBrush x:Key="UnknownTerrainBackgroundColor">#222222</SolidColorBrush>
@@ -96,10 +88,6 @@
 							<!---->
 							<!-- GAME COLORS FOR DARK - BEGIN -->
 							<!-- Specific colors -->
-							<SolidColorBrush x:Key="UnitInShipForegroundColor">#8B0000</SolidColorBrush>
-							<SolidColorBrush x:Key="UnitInBuildingForegroundColor">#008B8B</SolidColorBrush>
-							<SolidColorBrush x:Key="ShipInNotActiveFactionForegroundColor">#008000</SolidColorBrush>
-							<SolidColorBrush x:Key="BuildingInNotActiveFactionForegroundColor">#696969</SolidColorBrush>
 							<SolidColorBrush x:Key="RegionRareItemForegroundColor">#FF9800</SolidColorBrush>
 							<!-- Background colors for terrains -->
 							<SolidColorBrush x:Key="UnknownTerrainBackgroundColor">#222222</SolidColorBrush>
@@ -126,6 +114,7 @@
 			<SolidColorBrush x:Key="ApplicationThemeSurfaceBrush">#EFEFEF</SolidColorBrush>
 			<Color x:Key="ApplicationThemeSurfaceColor">#EFEFEF</Color>
 			<Color x:Key="ApplicationThemeHoverColor">#E5E5E5</Color>
+			<Color x:Key="ApplicationConfigItemHoverColor">#C6C6C6</Color>
 			<SolidColorBrush x:Key="ApplicationThemeInputBrush">#EFEFEF</SolidColorBrush>
 			<SolidColorBrush x:Key="ApplicationThemeSelectionBrush">#0078D4</SolidColorBrush>
 			<SolidColorBrush x:Key="ApplicationThemeSelectionForegroundBrush">#212121</SolidColorBrush>
