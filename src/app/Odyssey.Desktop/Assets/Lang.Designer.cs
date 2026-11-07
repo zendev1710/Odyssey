@@ -2347,6 +2347,123 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Categories.
+        /// </summary>
+        public static string find_filter_categories {
+            get {
+                return ResourceManager.GetString("find_filter_categories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deselect all categories.
+        /// </summary>
+        public static string find_filter_deselect_all {
+            get {
+                return ResourceManager.GetString("find_filter_deselect_all", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select all categories.
+        /// </summary>
+        public static string find_filter_select_all {
+            get {
+                return ResourceManager.GetString("find_filter_select_all", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid regular expression..
+        /// </summary>
+        public static string find_invalid_regex {
+            get {
+                return ResourceManager.GetString("find_invalid_regex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type at least 3 characters, or press Enter to search..
+        /// </summary>
+        public static string find_minimum_characters {
+            get {
+                return ResourceManager.GetString("find_minimum_characters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The regular expression took too long to evaluate..
+        /// </summary>
+        public static string find_regex_timeout {
+            get {
+                return ResourceManager.GetString("find_regex_timeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Results: {0}.
+        /// </summary>
+        public static string find_result_count {
+            get {
+                return ResourceManager.GetString("find_result_count", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Building.
+        /// </summary>
+        public static string find_result_kind_building {
+            get {
+                return ResourceManager.GetString("find_result_kind_building", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Faction.
+        /// </summary>
+        public static string find_result_kind_faction {
+            get {
+                return ResourceManager.GetString("find_result_kind_faction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Region.
+        /// </summary>
+        public static string find_result_kind_region {
+            get {
+                return ResourceManager.GetString("find_result_kind_region", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ship.
+        /// </summary>
+        public static string find_result_kind_ship {
+            get {
+                return ResourceManager.GetString("find_result_kind_ship", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unit.
+        /// </summary>
+        public static string find_result_kind_unit {
+            get {
+                return ResourceManager.GetString("find_result_kind_unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Searching....
+        /// </summary>
+        public static string find_searching {
+            get {
+                return ResourceManager.GetString("find_searching", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Find....
         /// </summary>
         public static string find_tip {

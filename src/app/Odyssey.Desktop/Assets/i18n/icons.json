@@ -278,6 +278,7 @@
         "akademie",
         "Akademie",
         "Academy",
+        "académie",
         "academies"
       ],
       "file": "buildings/academy.gif"
@@ -316,6 +317,7 @@
         "akademie_der_kuenste",
         "Akademie der Künste",
         "Art academy",
+        "Académie des Arts",
         "artacademies"
       ],
       "file": "buildings/art_academy.gif"
@@ -329,6 +331,7 @@
       "aliases": [
         "gesegneter_steinkreis",
         "gesegneter steinkreis",
+        "cercle de pierres sacrées",
         "blessedstonecircles"
       ],
       "file": "buildings/blessed_stone_circle.gif"
@@ -371,6 +374,7 @@
       "en": "Caravanserai",
       "aliases": [
         "karawanserei",
+        "caravanserei",
         "caravanserais"
       ],
       "file": "buildings/caravanserai.gif"
@@ -397,6 +401,7 @@
         "burg",
         "Burg",
         "Castle",
+        "château",
         "castles"
       ],
       "file": "buildings/castle.gif"
@@ -411,6 +416,7 @@
         "zitadelle",
         "Zitadelle",
         "Citadel",
+        "citadelle",
         "citadels"
       ],
       "file": "buildings/citadel.gif"
@@ -447,6 +453,7 @@
       "en": "Dam",
       "aliases": [
         "damm",
+        "barrage",
         "dams"
       ],
       "file": "buildings/dam.gif"
@@ -497,6 +504,7 @@
       "en": "Fortification",
       "aliases": [
         "befestigung",
+        "fortification",
         "fortifications"
       ],
       "file": "buildings/fortification.gif"
@@ -511,6 +519,7 @@
         "festung",
         "Festung",
         "Fortress",
+        "forteresse",
         "fortres"
       ],
       "file": "buildings/fortress.gif"
@@ -523,6 +532,7 @@
       "en": "Foundations",
       "aliases": [
         "grundmauern",
+        "fondation",
         "foundation"
       ],
       "file": "buildings/foundations.gif"
@@ -547,6 +557,7 @@
       "en": "Guardroom",
       "aliases": [
         "wachstube",
+        "corps de garde",
         "guardrooms"
       ],
       "file": "buildings/guardroom.gif"
@@ -582,6 +593,7 @@
       "en": "Harbour",
       "aliases": [
         "hafen",
+        "port",
         "harbours"
       ],
       "file": "buildings/harbour.gif"
@@ -606,6 +618,7 @@
       "en": "Horse breeding",
       "aliases": [
         "pferdezucht",
+        "écurie",
         "horsebreedings"
       ],
       "file": "buildings/horse_breeding.gif"
@@ -654,6 +667,7 @@
       "en": "Lighthouse",
       "aliases": [
         "leuchtturm",
+        "phare",
         "lighthouses"
       ],
       "file": "buildings/lighthouse.gif"
@@ -666,6 +680,7 @@
       "en": "Mage tower",
       "aliases": [
         "magierturm",
+        "tour des mages",
         "magetowers"
       ],
       "file": "buildings/mage_tower.gif"
@@ -680,6 +695,7 @@
         "marktplatz",
         "Marktplatz",
         "Market",
+        "marché",
         "markets"
       ],
       "file": "buildings/market.gif"
@@ -811,6 +827,7 @@
         "steinbruch",
         "Steinbruch",
         "Quarry",
+        "carrière",
         "quarries"
       ],
       "file": "buildings/quarry.gif"
@@ -835,6 +852,7 @@
       "en": "Sawmill",
       "aliases": [
         "saegewerk",
+        "scierie",
         "sawmills"
       ],
       "file": "buildings/sawmill.gif"
@@ -847,6 +865,7 @@
       "en": "Scaffold",
       "aliases": [
         "geruest",
+        "cadre",
         "scaffolds"
       ],
       "file": "buildings/scaffold.gif"
@@ -897,6 +916,7 @@
       "en": "Stone circle",
       "aliases": [
         "steinkreis",
+        "cercle de pierre",
         "stonecircles"
       ],
       "file": "buildings/stone_circle.gif"
@@ -949,6 +969,7 @@
         "turm",
         "Turm",
         "Tower",
+        "tour",
         "towers"
       ],
       "file": "buildings/tower.gif"
@@ -961,6 +982,7 @@
       "en": "Trading post",
       "aliases": [
         "handelsposten",
+        "poste commercial",
         "tradingposts"
       ],
       "file": "buildings/trading_post.gif"
@@ -1011,6 +1033,7 @@
         "wachturm",
         "Wachturm",
         "Watchtower",
+        "tour de garde",
         "watchtowers"
       ],
       "file": "buildings/watchtower.gif"
@@ -1047,6 +1070,7 @@
       "en": "Wormhole",
       "aliases": [
         "wurmloch",
+        "trou de ver",
         "wormholes"
       ],
       "file": "buildings/wormhole.gif"
@@ -1119,6 +1143,7 @@
       "en": "Goliath water",
       "aliases": [
         "goliathwasser",
+        "eau de goliath",
         "goliathwaters"
       ],
       "file": "effects/goliath_water.gif"
@@ -2766,6 +2791,7 @@
       "en": "goliath water",
       "aliases": [
         "goliathwasser",
+        "eau de goliath",
         "goliathwaters"
       ],
       "file": "items/goliath_water.gif"
@@ -5051,7 +5077,8 @@
       "en": "Dragons",
       "aliases": [
         "drachen",
-        "dragon"
+        "dragon",
+        "dragons"
       ],
       "file": "monsters/dragons.gif"
     },
@@ -5486,6 +5513,8 @@
       "en": "Undead",
       "aliases": [
         "untote",
+        "morts-vivants",
+        "mort-vivant",
         "undeads"
       ],
       "file": "monsters/undead.gif"
@@ -5610,6 +5639,8 @@
       "en": "Cats",
       "aliases": [
         "katzen",
+        "Hommes-chats",
+        "Homme-chat",
         "cat"
       ],
       "file": "races/cats.gif"
@@ -5654,6 +5685,8 @@
         "daemonen",
         "Dämonen",
         "Demons",
+        "Démons",
+        "Démon",
         "demon"
       ],
       "file": "races/demons.gif"
@@ -5721,6 +5754,8 @@
       "en": "Dwarves",
       "aliases": [
         "zwerge",
+        "Nains",
+        "Nain",
         "dwarf",
         "dwarfe"
       ],
@@ -5743,8 +5778,9 @@
       "en": "Elves",
       "aliases": [
         "elfen",
-        "elf",
-        "elfe"
+        "Elfes",
+        "Elfe",
+        "elf"
       ],
       "file": "races/elves.gif"
     },
@@ -5834,6 +5870,8 @@
       "en": "Goblins",
       "aliases": [
         "goblins",
+        "Gobelins",
+        "Gobelin",
         "goblin"
       ],
       "file": "races/goblins.gif"
@@ -5855,6 +5893,8 @@
       "en": "Halflings",
       "aliases": [
         "halblinge",
+        "Halfelins",
+        "Halfelin",
         "halfling"
       ],
       "file": "races/halflings.gif"
@@ -5876,6 +5916,8 @@
       "en": "Humans",
       "aliases": [
         "menschen",
+        "Humains",
+        "Humain",
         "human"
       ],
       "file": "races/humans.gif"
@@ -5897,6 +5939,8 @@
       "en": "Insects",
       "aliases": [
         "insekten",
+        "Insectes",
+        "Insecte",
         "insect"
       ],
       "file": "races/insects.gif"
@@ -5919,6 +5963,8 @@
       "aliases": [
         "meermenschen",
         "aquarians",
+        "Aquariens",
+        "Aquarien",
         "merfolks"
       ],
       "file": "races/merfolk.gif"
@@ -5988,6 +6034,20 @@
       "en": "Race",
       "aliases": [
         "rasse",
+        "Wiedergänger",
+        "Revenants",
+        "Schrecken",
+        "Spectres",
+        "Spectre",
+        "Luchse",
+        "Lynx",
+        "Untote",
+        "Morts-Vivants",
+        "Mort-Vivant",
+        "Unknown",
+        "Unbekannt",
+        "Personnes",
+        "Personne",
         "races"
       ],
       "file": "races/race.gif"
@@ -6032,6 +6092,9 @@
         "skelette",
         "Skelette",
         "Skeletons",
+        "Skelettherren",
+        "Seigneurs Squelettes",
+        "Seigneur Squelette",
         "skeleton"
       ],
       "file": "races/skeletons.gif"
@@ -6053,7 +6116,7 @@
       "en": "Trolls",
       "aliases": [
         "trolle",
-        "troll"
+        "Troll"
       ],
       "file": "races/trolls.gif"
     },
@@ -6446,6 +6509,7 @@
         "boot",
         "Boot",
         "Boat",
+        "bateau",
         "boats"
       ],
       "file": "ships/boat.gif"
@@ -6484,6 +6548,7 @@
       "en": "Caravel",
       "aliases": [
         "karavelle",
+        "caravelle",
         "caravels"
       ],
       "file": "ships/caravel.gif"
@@ -6566,6 +6631,8 @@
       "en": "Dragon ship",
       "aliases": [
         "drachenschiff",
+        "dragonship",
+        "drakkar",
         "dragonships"
       ],
       "file": "ships/dragon_ship.gif"
@@ -6590,6 +6657,7 @@
       "en": "Galleon",
       "aliases": [
         "galeone",
+        "galion",
         "galleons"
       ],
       "file": "ships/galleon.gif"
@@ -6602,6 +6670,7 @@
       "en": "Longboat",
       "aliases": [
         "langboot",
+        "chaloupe",
         "longboats"
       ],
       "file": "ships/longboat.gif"
@@ -6670,6 +6739,7 @@
       "aliases": [
         "trireme",
         "tireme",
+        "trirème",
         "triremes"
       ],
       "file": "ships/trireme.gif"
@@ -6693,6 +6763,14 @@
         "alchemie",
         "Alchemie",
         "Alchemy",
+        "alchemist",
+        "alchemists",
+        "alchemistin",
+        "alchemisten",
+        "alchimiste",
+        "alchimistes",
+        "alchémiste",
+        "alchémistes",
         "alchemies"
       ],
       "file": "skills/alchemy.gif"
@@ -7121,6 +7199,14 @@
         "magie",
         "Magie",
         "Magic",
+        "mage",
+        "mages",
+        "magier",
+        "magierin",
+        "magicien",
+        "magicienne",
+        "magiciens",
+        "magiciennes",
         "magics"
       ],
       "file": "skills/magic.gif"
@@ -7489,6 +7575,14 @@
         "taktik",
         "Taktik",
         "Tactics",
+        "tactician",
+        "tacticians",
+        "taktiker",
+        "taktikerin",
+        "tacticien",
+        "tacticienne",
+        "tacticiens",
+        "tacticiennes",
         "tactic"
       ],
       "file": "skills/tactics.gif"
@@ -8084,18 +8178,6 @@
     },
     {
       "category": "status",
-      "id": "status/owner",
-      "role": "entry",
-      "de": "Besitzer",
-      "en": "Owner",
-      "aliases": [
-        "besitzer",
-        "owners"
-      ],
-      "file": "status/owner.gif"
-    },
-    {
-      "category": "status",
       "id": "status/captain_alt",
       "role": "variant",
       "de": "",
@@ -8313,7 +8395,10 @@
         "hero",
         "Held",
         "Hero",
-        "heros"
+        "héros",
+        "heros",
+        "héroïne",
+        "héroïnes"
       ],
       "file": "status/hero.gif"
     },
@@ -9010,6 +9095,7 @@
         "wueste",
         "Wüste",
         "Desert",
+        "Désert",
         "deserts"
       ],
       "file": "terrains/desert.gif"
@@ -9164,7 +9250,7 @@
         "hochland",
         "Hochland",
         "Highlands",
-        "highland"
+        "Highland"
       ],
       "file": "terrains/highlands.gif"
     },
@@ -9309,6 +9395,7 @@
         "berge",
         "Berge / Gebirge",
         "Mountains",
+        "Montagne",
         "mountain"
       ],
       "file": "terrains/mountains.gif"
@@ -9469,6 +9556,7 @@
         "ebene",
         "Ebene",
         "Plains",
+        "Plaine",
         "plain"
       ],
       "file": "terrains/plains.gif"

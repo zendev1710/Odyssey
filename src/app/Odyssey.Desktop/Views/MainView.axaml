@@ -10,7 +10,6 @@
 			 xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
 			 xmlns:conv="using:Odyssey.Converters"
              xmlns:vm="using:Odyssey.ViewModels"
-			 xmlns:search="using:Odyssey.Search"
 			 xmlns:a="clr-namespace:Odyssey.Assets"
              mc:Ignorable="d"
              d:DesignWidth="1000" d:DesignHeight="550"
@@ -319,17 +318,18 @@
 				<StackPanel IsVisible="{Binding EnableSearchFeature}" Orientation="Horizontal" Grid.Column="0" Margin="5,0,0,0">
 					<TextBox Watermark="{x:Static a:Lang.find_watermark}"
 							 Name="PART_searchTextBox"
+							 KeyDown="SearchTextBox_OnKeyDown"
 							 Grid.Column="1"
 							 Grid.Row="0"
 							 Width="205"
 							 Margin="0,0,0,0"
-							 Text=""
+							 Text="{Binding SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 						>
 						<TextBox.InnerRightContent>
 							<StackPanel Orientation="Horizontal">
 								<ToggleButton Theme="{StaticResource SearchPanelTextBoxButton}"
 											  HotKey="Alt+C"
-											  IsChecked="True"
+											  IsChecked="{Binding SearchMatchCase, Mode=TwoWay}"
 											  ToolTip.Tip="{x:Static a:Lang.btn_find_opt_match_case_tip}"
 											  VerticalAlignment="Center">
 									<Path Data="{StaticResource CaseSensitiveIconPath}"
@@ -343,7 +343,7 @@
 								</ToggleButton>
 								<ToggleButton Theme="{StaticResource SearchPanelTextBoxButton}"
 											  HotKey="Alt+W"
-											  IsChecked="True"
+											  IsChecked="{Binding SearchWholeWords, Mode=TwoWay}"
 											  ToolTip.Tip="{x:Static a:Lang.btn_find_opt_whole_word_tip}"
 											  Margin="3,0,0,0"
 											  VerticalAlignment="Center">
@@ -358,7 +358,7 @@
 								</ToggleButton>
 								<ToggleButton Theme="{StaticResource SearchPanelTextBoxButton}"
 											  HotKey="Alt+R"
-											  IsChecked="True"
+											  IsChecked="{Binding SearchUseRegex, Mode=TwoWay}"
 											  ToolTip.Tip="{x:Static a:Lang.btn_find_opt_use_reg_exp_tip}"
 											  Margin="3,0,5,0"
 											  VerticalAlignment="Center">
@@ -378,7 +378,7 @@
 							MinWidth="34"
 							HotKey="Shift+Enter"
 							VerticalAlignment="Stretch"
-							Command="{x:Static search:SearchCommands.FindPrevious}">
+							Command="{Binding FindPreviousSearchResultCommand}">
 						<ToolTip.Tip>
 							<TextBlock Text="{x:Static a:Lang.btn_find_opt_prev_match_tip}" />
 						</ToolTip.Tip>
@@ -394,8 +394,7 @@
 					<Button Margin="3,0,0,0"
 							VerticalAlignment="Stretch"
 							MinWidth="34"
-							HotKey="Enter"
-							Command="{x:Static search:SearchCommands.FindNext}">
+							Command="{Binding FindNextSearchResultCommand}">
 						<ToolTip.Tip>
 							<TextBlock Text="{x:Static a:Lang.btn_find_opt_next_match_tip}" />
 						</ToolTip.Tip>

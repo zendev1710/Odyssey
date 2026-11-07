@@ -20,6 +20,7 @@ using Odyssey.Messages;
 using Odyssey.Models.Dal;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
+using Odyssey.Search;
 using Odyssey.Settings;
 using Odyssey.Utils;
 using Odyssey.ViewModels.Documents;
@@ -34,6 +35,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -59,6 +61,18 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
 
     [ObservableProperty]
     private bool _enableLayoutFeature;
+
+    [ObservableProperty]
+    private string _searchQuery = string.Empty;
+
+    [ObservableProperty]
+    private bool _searchMatchCase = true;
+
+    [ObservableProperty]
+    private bool _searchWholeWords;
+
+    [ObservableProperty]
+    private bool _searchUseRegex;
 
     [ObservableProperty]
     private bool _hasDocument;
@@ -198,6 +212,12 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
 
     private readonly DockFactory _factory;
     private readonly IDocumentService _activeDocumentService;
+    private readonly GlobalSearchEngine _globalSearchEngine = new();
+    private const int GlobalSearchMinimumQueryLength = 3;
+    private SearchResultsViewModel? _searchResultsViewModel;
+    private CancellationTokenSource? _globalSearchCancellation;
+    private bool _isGlobalSearchPending;
+    private bool _searchResultsAreCurrent;
     private CRDocument? _modifiedDocument;
 
     private readonly IEntitySelectionService _selectionService;
@@ -212,6 +232,14 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
     // Default to the selected region: unchecking "all routes" must still show the routes
     // related to the current selection instead of hiding every route.
     private int _lastNonAllShipRouteMode = ShipRouteModes.SelectedRegion;
+
+    partial void OnSearchQueryChanged(string value) => ScheduleGlobalSearch();
+
+    partial void OnSearchMatchCaseChanged(bool value) => ScheduleGlobalSearch();
+
+    partial void OnSearchWholeWordsChanged(bool value) => ScheduleGlobalSearch();
+
+    partial void OnSearchUseRegexChanged(bool value) => ScheduleGlobalSearch();
 
     /// <summary>True when the map currently draws every ship route.</summary>
     public bool AreAllShipRoutesVisible =>
@@ -333,6 +361,11 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
         }
 
         _bookmarksViewModel = _factory.GetDockable<IDockable>(Ids.Bookmarks) as BookmarksViewModel;
+        _searchResultsViewModel = _factory.GetDockable<IDockable>(Ids.SearchResults) as SearchResultsViewModel;
+        if (_searchResultsViewModel is not null)
+        {
+            _searchResultsViewModel.PropertyChanged += SearchResultsViewModel_PropertyChanged;
+        }
 
         LayoutReset = new RelayCommand(ResetLayout);
         LayoutOpen = new AsyncRelayCommand(OpenLayout);
@@ -510,6 +543,178 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
     private bool CanExecuteIfReportExists()
     {
         return HasDocument;
+    }
+
+    private bool CanNavigateSearchResults()
+    {
+        return !_isGlobalSearchPending && _searchResultsAreCurrent && (_searchResultsViewModel?.FilteredResults.Count ?? 0) > 0;
+    }
+
+    private void SearchResultsViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(SearchResultsViewModel.FilteredResults))
+        {
+            NotifySearchNavigationCanExecuteChanged();
+        }
+    }
+
+    [RelayCommand(CanExecute = nameof(CanNavigateSearchResults))]
+    private void FindPreviousSearchResult()
+    {
+        _searchResultsViewModel?.MoveSelection(-1);
+    }
+
+    [RelayCommand(CanExecute = nameof(CanNavigateSearchResults))]
+    private void FindNextSearchResult()
+    {
+        _searchResultsViewModel?.MoveSelection(1);
+    }
+
+    [RelayCommand]
+    private async Task SelectCurrentSearchResult()
+    {
+        CRDocument report = _activeDocumentService.ActiveDocument;
+        if (!report.HasData() || string.IsNullOrWhiteSpace(SearchQuery))
+        {
+            return;
+        }
+
+        if (!_searchResultsAreCurrent)
+        {
+            _globalSearchCancellation?.Cancel();
+            _globalSearchCancellation = null;
+            CancellationTokenSource cancellation = new();
+            _globalSearchCancellation = cancellation;
+            _isGlobalSearchPending = true;
+            NotifySearchNavigationCanExecuteChanged();
+
+            bool searchCompleted = await ExecuteGlobalSearchAsync(
+                cancellation,
+                report,
+                SearchQuery,
+                SearchMatchCase,
+                SearchWholeWords,
+                SearchUseRegex,
+                waitForDebounce: false);
+            if (!searchCompleted)
+            {
+                return;
+            }
+        }
+
+        _searchResultsViewModel?.SelectFirstResultAndApply();
+    }
+
+    private void ScheduleGlobalSearch()
+    {
+        _globalSearchCancellation?.Cancel();
+        _globalSearchCancellation = null;
+        _searchResultsAreCurrent = false;
+
+        CRDocument report = _activeDocumentService.ActiveDocument;
+        if (string.IsNullOrWhiteSpace(SearchQuery) || !report.HasData())
+        {
+            _isGlobalSearchPending = false;
+            _searchResultsViewModel?.ReplaceResults([], string.Empty);
+            NotifySearchNavigationCanExecuteChanged();
+            return;
+        }
+
+        if (SearchQuery.Trim().Length < GlobalSearchMinimumQueryLength)
+        {
+            _isGlobalSearchPending = false;
+            _searchResultsViewModel?.ReplaceResults([], Lang.find_minimum_characters);
+            NotifySearchNavigationCanExecuteChanged();
+            return;
+        }
+
+        _isGlobalSearchPending = true;
+        _searchResultsViewModel?.ReplaceResults([], Lang.find_searching);
+        CancellationTokenSource cancellation = new();
+        _globalSearchCancellation = cancellation;
+        NotifySearchNavigationCanExecuteChanged();
+        _ = ExecuteGlobalSearchAsync(
+            cancellation,
+            report,
+            SearchQuery,
+            SearchMatchCase,
+            SearchWholeWords,
+            SearchUseRegex,
+            waitForDebounce: true);
+    }
+
+    private async Task<bool> ExecuteGlobalSearchAsync(
+        CancellationTokenSource cancellation,
+        CRDocument report,
+        string query,
+        bool matchCase,
+        bool wholeWords,
+        bool useRegex,
+        bool waitForDebounce)
+    {
+        CancellationToken cancellationToken = cancellation.Token;
+        try
+        {
+            if (waitForDebounce)
+            {
+                await Task.Delay(180);
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    return false;
+                }
+            }
+
+            GlobalSearchResponse response = await Task.Run(
+                () => _globalSearchEngine.Search(report, query, matchCase, wholeWords, useRegex, cancellationToken));
+
+            if (response.Error == GlobalSearchError.Cancelled ||
+                cancellationToken.IsCancellationRequested ||
+                !ReferenceEquals(_activeDocumentService.ActiveDocument, report))
+            {
+                return false;
+            }
+
+            string status = response.Error switch
+            {
+                GlobalSearchError.InvalidPattern => Lang.find_invalid_regex,
+                GlobalSearchError.TimedOut => Lang.find_regex_timeout,
+                _ => string.Format(Lang.find_result_count, response.Results.Count)
+            };
+            _searchResultsViewModel?.ReplaceResults(response.Results, status);
+            if (waitForDebounce && response.Results.Count == 1 && _searchResultsViewModel?.FilteredResults.Count == 1)
+            {
+                _searchResultsViewModel?.ApplySelectedResult();
+            }
+
+            _searchResultsAreCurrent = true;
+            _isGlobalSearchPending = false;
+            if (!IsSearchResultsViewVisible)
+            {
+                ToggleView(Ids.SearchResults);
+            }
+            NotifySearchNavigationCanExecuteChanged();
+            return true;
+        }
+        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+        {
+            return false;
+        }
+        finally
+        {
+            if (ReferenceEquals(_globalSearchCancellation, cancellation))
+            {
+                _globalSearchCancellation = null;
+                _isGlobalSearchPending = false;
+                NotifySearchNavigationCanExecuteChanged();
+            }
+            cancellation.Dispose();
+        }
+    }
+
+    private void NotifySearchNavigationCanExecuteChanged()
+    {
+        FindPreviousSearchResultCommand.NotifyCanExecuteChanged();
+        FindNextSearchResultCommand.NotifyCanExecuteChanged();
     }
 
     public void OpenInitialDocumentIfNeeded()
@@ -694,6 +899,9 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
         _modifiedDocument.OrderConfirmationChanged += OnOrderConfirmationChanged;
         SaveFileCommand.NotifyCanExecuteChanged();
         OnActiveReportDocumentChanged(report);
+        _globalSearchCancellation?.Cancel();
+        _globalSearchEngine.ClearIndex();
+        ScheduleGlobalSearch();
     }
 
     private void OnDocumentModifiedChanged(object? sender, EventArgs args)

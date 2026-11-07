@@ -187,6 +187,7 @@ public class CRDocument : EresseaDocument, ILocationResolver
     public Dictionary<int, IslandDataBlock> Islands { get; private set; } = [];
     public Dictionary<int, WorldPlane> Planes { get; private set; } = [];
     private Dictionary<int, FactionModel> Factions { get; set; } = [];
+    public IReadOnlyCollection<FactionModel> FactionModels => Factions.Values;
     public int Turn { get; private set; } = -1;
 
     public bool HasEditedCommands => _editedCommands.Count > 0;

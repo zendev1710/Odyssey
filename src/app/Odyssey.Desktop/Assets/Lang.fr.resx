@@ -2343,6 +2343,45 @@
   <data name="find_watermark" xml:space="preserve">
     <value>Rechercher...</value>
   </data>
+  <data name="find_invalid_regex" xml:space="preserve">
+    <value>Expression régulière invalide.</value>
+  </data>
+  <data name="find_minimum_characters" xml:space="preserve">
+    <value>Saisissez au moins 3 caractères, ou appuyez sur Entrée pour lancer la recherche.</value>
+  </data>
+  <data name="find_regex_timeout" xml:space="preserve">
+    <value>L’expression régulière a pris trop de temps à évaluer.</value>
+  </data>
+  <data name="find_result_count" xml:space="preserve">
+    <value>Résultats : {0}</value>
+  </data>
+  <data name="find_filter_categories" xml:space="preserve">
+    <value>Catégories</value>
+  </data>
+  <data name="find_filter_deselect_all" xml:space="preserve">
+    <value>Désélectionner toutes les catégories</value>
+  </data>
+  <data name="find_filter_select_all" xml:space="preserve">
+    <value>Sélectionner toutes les catégories</value>
+  </data>
+  <data name="find_result_kind_building" xml:space="preserve">
+    <value>Bâtiment</value>
+  </data>
+  <data name="find_result_kind_faction" xml:space="preserve">
+    <value>Faction</value>
+  </data>
+  <data name="find_result_kind_region" xml:space="preserve">
+    <value>Région</value>
+  </data>
+  <data name="find_result_kind_ship" xml:space="preserve">
+    <value>Bateau</value>
+  </data>
+  <data name="find_result_kind_unit" xml:space="preserve">
+    <value>Unité</value>
+  </data>
+  <data name="find_searching" xml:space="preserve">
+    <value>Recherche en cours...</value>
+  </data>
   <data name="find_tip" xml:space="preserve">
     <value>Rechercher...</value>
   </data>

@@ -3,7 +3,7 @@ using System.Text.Json;
 namespace Odyssey.Icons;
 
 /// <summary>
-/// Resolves German report vocabulary and English aliases to English icon files.
+/// Resolves report vocabulary and localized aliases to English icon files.
 /// </summary>
 public sealed class IconCatalog
 {
