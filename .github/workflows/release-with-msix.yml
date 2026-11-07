@@ -3,8 +3,6 @@ name: Odyssey CI and Windows Installer
 on:
   push:
     branches: [ "main" ]
-    tags:
-      - 'v*'
   pull_request:
     branches: [ "main" ]
 
@@ -35,15 +33,15 @@ jobs:
       run: dotnet test ${{ env.Solution_Name }} --configuration ${{ matrix.configuration }}
 
     - name: Publish the application for the installer
-      if: matrix.configuration == 'Release'
+      if: matrix.configuration == 'Release' && github.event_name == 'pull_request'
       run: dotnet publish src/app/Odyssey.Desktop/Odyssey.csproj --configuration Release --framework net10.0 --runtime win-x64 --self-contained true --output installer/publish/net10.0
 
     - name: Build the WiX installer
-      if: matrix.configuration == 'Release'
+      if: matrix.configuration == 'Release' && github.event_name == 'pull_request'
       run: dotnet build ${{ env.Installer_Project_Path }} --configuration Release
 
     - name: Upload MSI installer
-      if: matrix.configuration == 'Release'
+      if: matrix.configuration == 'Release' && github.event_name == 'pull_request'
       uses: actions/upload-artifact@v4
       with:
         name: Odyssey MSI installer
