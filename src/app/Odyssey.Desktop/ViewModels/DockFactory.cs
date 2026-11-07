@@ -289,19 +289,6 @@ public class DockFactory : Factory
         return rootDock;
     }
 
-    public IRootDock CreateLayoutPreservingContext()
-    {
-        Dictionary<string, ITool> currentTools = CaptureToolDockables(_rootDock);
-        IDocumentDock? currentDocumentDock = _documentDock;
-        IRootDock layout = CreateLayout();
-
-        ReplaceToolDockables(layout, currentTools);
-        TransferDocumentDockContents(currentDocumentDock, layout);
-        BindDockables(layout);
-
-        return layout;
-    }
-
     public override IDockWindow? CreateWindowFrom(IDockable dockable)
     {
         var window = base.CreateWindowFrom(dockable);

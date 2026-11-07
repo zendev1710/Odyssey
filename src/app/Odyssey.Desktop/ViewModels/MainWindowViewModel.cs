@@ -284,8 +284,6 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
         }
     }
 
-    public ICommand LayoutReset { get; }
-
     public ICommand LayoutSaveAs { get; }
 
     public ICommand LayoutOpen { get; }
@@ -367,7 +365,6 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
             _searchResultsViewModel.PropertyChanged += SearchResultsViewModel_PropertyChanged;
         }
 
-        LayoutReset = new RelayCommand(ResetLayout);
         LayoutOpen = new AsyncRelayCommand(OpenLayout);
         LayoutSave = new AsyncRelayCommand(SaveLayout);
         LayoutSaveAs = new AsyncRelayCommand(SaveLayoutAs);
@@ -785,18 +782,6 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
         }
         Layout = null;
         Debug.WriteLine("[MAINWINDOW] CloseLayout ended.");
-    }
-
-    private void ResetLayout()
-    {
-        Debug.WriteLine("[MAINWINDOW] ResetLayout...");
-        Layout = _factory.CreateLayoutPreservingContext();
-        InitLayout();
-        _dockState?.Reset();
-        _dockState?.Save(Layout);
-        GlobalSettings.Shared.CurrentLayoutProfilePath = string.Empty;
-
-        Debug.WriteLine("[MAINWINDOW] ResetLayout ended.");
     }
 
     public void ActivateFindArea()
