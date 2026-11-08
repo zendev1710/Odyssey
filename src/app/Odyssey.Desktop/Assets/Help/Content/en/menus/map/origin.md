@@ -2,7 +2,7 @@
 
 Here you can adjust the coordinate origin of the map. The following dialogue appears when the menu item is selected:
 
-![map_origin](../../images/menu_map_origin.gif)
+![map_origin](../../images/gif/menu_map_origin.gif)
 
 Here you simply enter the coordinates of the region that should be at 0,0 in future and the CR level (if available) for which the change should apply. The coordinates of all regions are then automatically adjusted.
 

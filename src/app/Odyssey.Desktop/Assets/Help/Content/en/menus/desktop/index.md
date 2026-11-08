@@ -9,7 +9,7 @@ Within the desktop menu you will find functions to customise the appearance of M
 
 Below the menu items mentioned above, you can see all the [Docks](../../docks/index.md) currently known for Magellan. Each of these docks represents a specific part of Magellan. This can be the region overview, the commands or the map. Each of these docks has some function buttons at the top right, which we will explain in more detail below.
 
-![decoration](../../images/windows_decorations.gif)
+![decoration](../../images/gif/windows_decorations.gif)
 
 The buttons may look slightly different depending on the system. Their meaning is (from left to right):
 

@@ -1,12 +1,12 @@
 # Save commands
 
-![Save commands](../../images/menu_file_saveorders.gif)
+![Save commands](../../images/gif/menu_file_saveorders.gif)
 
 The following options (tabs) are available for saving or sending commands:
 
 * **Email**
     Sends the commands directly by e-mail. Magellan can guess the necessary settings for some popular mail providers. Then you only have to enter the password. If this is not possible, you can fill in the remaining settings yourself. If you do not know the settings, a simple Internet search for "SMTP settings for provider name" often helps. With some providers, this function must first be activated in the e-mail settings. To do this, visit your provider's website. These settings have nothing to do with Eressea, but the Eressea community will be happy to help with such questions if you ask nicely.  
-    ![Save commands](../../images/menu_file_saveorders_email.gif)
+    ![Save commands](../../images/gif/menu_file_saveorders_email.gif)
   * **Settings guess**
         Attempts to guess the server settings from the sender address or offers the option of selecting from a list of popular providers.
   * **Sender address**
@@ -47,7 +47,7 @@ The following options (tabs) are available for saving or sending commands:
 
 Clicking on "Details" gives you access to further functions that determine the exact appearance of the exported commands.
 
-![Output options](../../images/menu_file_saveorders_details.gif)
+![Output options](../../images/gif/menu_file_saveorders_details.gif)
 
 * **Automatic line break**
     Breaks the command file after _n_ characters. Longer lines (descriptions, messages, etc.) are automatically separated with " \\" in the process. Avoids problems with the automatic line break of mail programmes.

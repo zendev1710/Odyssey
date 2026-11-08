@@ -2,7 +2,7 @@
 
 Hier kann man den Koordinatenursprung der Karte anpassen. Bei Wahl des Menüpunktes erscheint folgender Dialog:
 
-![map_origin](../../images/menu_map_origin.gif)
+![map_origin](../../images/gif/menu_map_origin.gif)
 
 Hier trägt man einfach die Koordinaten der Region ein, die künftig auf 0,0 liegen soll sowie die CR-Ebene (falls vorhanden) für die die Änderung gelten soll. Die Koordinaten aller Regionen werden dann automatisch angepasst.
 

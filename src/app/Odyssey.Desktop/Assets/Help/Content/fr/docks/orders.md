@@ -2,7 +2,7 @@
 
 Cette fenêtre est utilisée pour donner de nouveaux ordres aux unités.
 
-![windows_orders](../images/windows_orders.gif)
+![windows_orders](../images/gif/windows_orders.gif)
 
 Si une unité est sélectionnée, les ordres de cette unité sont affichés ici et peuvent être modifiés. Magellan n'affiche que les ordres des unités qui appartiennent à une faction dont le mot de passe est défini. Par conséquent, si aucun ordre n'est affiché, vous devez entrer un mot de passe pour votre faction dans [Faction statistics](../menus/extras/factionstatistics.html).
 
@@ -16,20 +16,20 @@ Magellan offre un moyen facile de travailler avec les unités TEMP. Celles-ci so
 
 ### Création d'unités TEMP (CTRL+T)
 
-![windows_orders_button_maketemp](../images/windows_orders_button_maketemp.gif)
+![windows_orders_button_maketemp](../images/gif/windows_orders_button_maketemp.gif)
 
 En cliquant sur ce bouton, vous pouvez créer une unité TEMP. Dans la boîte de dialogue qui s'ouvre, vous pouvez saisir le nom de l'unité et l'ID TEMP. Les commandes correspondantes sont créées automatiquement.
 
-![windows_orders_maketemp](../images/windows_orders_maketemp.gif)
+![windows_orders_maketemp](../images/gif/windows_orders_maketemp.gif)
 
 En cliquant sur _Plus..._, vous obtenez la boîte de dialogue suivante :
 
-![windows_orders_maketempmore](../images/windows_orders_maketempmore.gif)
+![windows_orders_maketempmore](../images/gif/windows_orders_maketempmore.gif)
 
 Vous pouvez y entrer le nombre d'hommes à recruter, un ordre et la description de l'unité.
 
 ### Suppression des unités TEMP (Ctrl+Shift+T)
 
-![windows_orders_button_deltemp](../images/windows_orders_button_deltemp.gif)
+![windows_orders_button_deltemp](../images/gif/windows_orders_button_deltemp.gif)
 
 En cliquant sur ce bouton, vous pouvez supprimer l'unité TEMP en cours.

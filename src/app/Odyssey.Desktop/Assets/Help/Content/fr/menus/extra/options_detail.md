@@ -2,7 +2,7 @@
 
 Les options pour l'affichage détaillé et le supplément de commande peuvent être configurées dans cette boîte de dialogue :
 
-![Options - Affichage détaillé](../../images/menu_extras_options_detail.gif)
+![Options - Affichage détaillé](../../images/gif/menu_extras_options_detail.gif)
 
 ## Affichage des données
 
@@ -18,7 +18,7 @@ Les options pour l'affichage détaillé et le supplément de commande peuvent ê
 
 ## Éditeur de commandes
 
-![Options - Affichage détaillé - Editeur de commandes](../../images/menu_extras_options_detail_orders.gif)
+![Options - Affichage détaillé - Editeur de commandes](../../images/gif/menu_extras_options_detail_orders.gif)
 
 **Mise en page multi-éditeurs**
     Si cette option est activée, les ordres de toutes les unités de la région sont affichés les uns à la suite des autres dans la fenêtre d'ordre.  
@@ -38,7 +38,7 @@ Les options pour l'affichage détaillé et le supplément de commande peuvent ê
 
 ### Achèvement de la commande
 
-![Options - Exécution des commandes](../../images/menu_extras_options_detail_ordercompletion.gif)
+![Options - Exécution des commandes](../../images/gif/menu_extras_options_detail_ordercompletion.gif)
 
 La complétion automatique des commandes facilite la saisie des commandes pour les unités. En fonction du contexte, des commandes utiles ou possibles sont suggérées et peuvent être sélectionnées en quelques frappes ou clics.
 

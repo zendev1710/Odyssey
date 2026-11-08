@@ -2,7 +2,7 @@
 
 The type of display on the map and the overview map can be configured here. The map is drawn by different "renderers", which can be configured and switched off separately here.
 
-![Options - Map](../../images/menu_extras_options_map.gif)
+![Options - Map](../../images/gif/menu_extras_options_map.gif)
 
 **Display of the navigation bar at the top edge of the map.
 A number of setting options can be displayed above the main map. On the one hand, there is a slider for enlarging or zooming the map, a selection option for the level or layer displayed and finally, if hotspots have been defined, you can jump to these hotspots.
@@ -100,6 +100,6 @@ The rendering layer divides the display into logical sub-objects, such as region
 
 ## MiniMap
 
-![Options - Overview map](../../images/menu_extras_options_map_minimap.gif)
+![Options - Overview map](../../images/gif/menu_extras_options_map_minimap.gif)
 
 The overview map supports all display modes of the region renderer (geometric/political). The colour assignment can therefore also be set for this. The scaling of the MiniMap can also be set here.

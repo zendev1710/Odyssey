@@ -4,7 +4,7 @@ STRG-F
 
 Mit dieser Funktion kann man den Report nach Stichwörtern durchsuchen und so "verlorene" Einheiten, Schiffe usw. finden. Dabei kann man den Suchbereich in folgendem Dialog einstellen:
 
-![menu_extras_search](../../images/menu_extras_search.gif)
+![menu_extras_search](../../images/gif/menu_extras_search.gif)
 
 Das Feld **_Suchmuster_** kann dabei auch leer bleiben. Die Suche nach einem leeren Suchmuster und dem Suchbereich "Schiffe" liefert z.B. als Ergebnis alle Schiffe, die im Report auftauchen.
 

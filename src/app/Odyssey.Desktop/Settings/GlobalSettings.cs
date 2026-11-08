@@ -100,6 +100,7 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
     public const string UNIT_SKILL_BADGE_SHOW_LEVEL_PREFIX = "UnitSkillBadgeShowLevelPrefix";
     public const string UNIT_SKILL_BADGE_TRANSPARENT = "UnitSkillBadgeTransparent";
     public const string UNIT_ITEM_BADGE_TRANSPARENT = "UnitItemBadgeTransparent";
+    public const string UNIT_ITEM_ICON_ASSET_FORMAT = "UnitItemIconAssetFormatSetting";
     private const string LegacyAutoSaveLayoutSettingName = "AutoSaveLayout";
     public const string AUTO_SAVE_SESSION = "AutoSaveSession";
 
@@ -138,6 +139,23 @@ public partial class GlobalSettings : ConfigModule<GlobalSettings>, ISettingsPro
         Category = "parm_cat_views",
         Group = "parm_grp_badges")]
     private bool _unitItemBadgeTransparent;
+
+    [ObservableProperty]
+    [property: DropdownConfig(
+        RuntimeItemsSourceMethodName = "GetIconAssetFormats",
+        DisplayMemberPath = "Key",
+        SelectedValuePath = "Value")]
+    [property: Config(
+        Header = "parm_hdr_unit_item_icon_asset_format",
+        Description = "parm_inf_unit_item_icon_asset_format",
+        Category = "parm_cat_views",
+        Group = "parm_grp_badges")]
+    private int _unitItemIconAssetFormatSetting = (int)IconAssetFormatMode.SvgTheme;
+
+    public IconAssetFormatMode UnitItemIconAssetFormatMode =>
+        Enum.IsDefined(typeof(IconAssetFormatMode), UnitItemIconAssetFormatSetting)
+            ? (IconAssetFormatMode)UnitItemIconAssetFormatSetting
+            : IconAssetFormatMode.SvgTheme;
 
     [ObservableProperty]
     [property: Config(

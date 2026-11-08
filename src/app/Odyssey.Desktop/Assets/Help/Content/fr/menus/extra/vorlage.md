@@ -4,7 +4,7 @@ Il s'agit d'une interface graphique pour Template. Template est un puissant gén
 
 Après avoir sélectionné l'élément de menu, la boîte de dialogue suivante s'ouvre :
 
-![menu_extras_template](../../images/menu_extras_template.gif)
+![menu_extras_template](../../images/gif/menu_extras_vorlage.gif)
 
 Dans le champ **_source CR(s)_**, entrez le chemin d'accès à un ou plusieurs CR qui doivent être édités par le modèle. Normalement, il s'agit du CR envoyé par le serveur Eressea.
 

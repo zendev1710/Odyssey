@@ -2,7 +2,7 @@
 
 Hier lässt sich die Art der Anzeige auf der Karte und der Übersichtskarte konfigurieren. Die Karte wird von verschiedenen "Renderern" gezeichnet, die sich hier getrennt voneinander konfigurieren und abschalten lassen.
 
-![Optionen - Karte](../../images/menu_extras_options_map.gif)
+![Optionen - Karte](../../images/gif/menu_extras_options_map.gif)
 
 **Anzeige der Navigationsleiste am oberen Kartenrand.**  
 Oberhalb der Hauptkarte können einige Einstellmöglichkeiten eingeblendet werden. Zum einen ein Regler für die Vergrößerung oder Zoom der Karte, weiterhin eine Auswahlmöglichkeit des angezeigten Levels bzw. der angezeigten Ebene und abschließend kann, falls Hotspots definiert wurden, zu diesen Hotspots gesprungen werden.
@@ -99,6 +99,6 @@ Die Rendering-Ebene unterteilt die Darstellung in logische Unterobjekte, wie Reg
 
 ## MiniMap
 
-![Optionen - Übersichtskarte](../../images/menu_extras_options_map_minimap.gif)
+![Optionen - Übersichtskarte](../../images/gif/menu_extras_options_map_minimap.gif)
 
 Die Übersichtskarte beherrscht alle Darstellungsmodi des Regionsrenderers (geometrisch/politisch). Die Farbzuordnung ist demnach auch bei diesem einzustellen. Auch die Skalierung der MiniMap kann hier eingestellt werden.

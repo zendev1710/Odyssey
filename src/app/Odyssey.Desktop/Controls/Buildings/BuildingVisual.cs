@@ -37,7 +37,7 @@ public sealed record BuildingVisual
     /// <summary>Normalized (canonical) type key, e.g. "saegewerk".</summary>
     public string TypeKey { get; init; } = string.Empty;
 
-    /// <summary>avares-relative path of the icon bitmap, e.g. "/Assets/buildings/sawmill.gif".</summary>
+    /// <summary>avares-relative path of the icon bitmap, e.g. "/Assets/buildings/gif/sawmill.gif".</summary>
     public string IconPath { get; init; } = string.Empty;
 
     /// <summary>Shape drawn when the icon bitmap is missing.</summary>
@@ -69,7 +69,7 @@ public sealed record BuildingVisual
 /// </summary>
 public static class BuildingCatalog
 {
-    private const string ExplorerFallbackIconPath = "/Assets/buildings/buildings.gif";
+    private const string ExplorerFallbackIconPath = "/Assets/buildings/gif/buildings.gif";
 
     // English (or alternate) type names -> canonical German type key.
     private static readonly Dictionary<string, string> Aliases = new()

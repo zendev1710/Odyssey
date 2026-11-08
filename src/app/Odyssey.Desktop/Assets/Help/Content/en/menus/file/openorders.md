@@ -2,7 +2,7 @@
 
 Here you can add an Eressea command file, which can also be created with other tools. The following dialogue box appears when the menu item is selected:
 
-![Open orders](../../images/menu_file_openorders.gif)
+![Open orders](../../images/gif/menu_file_openorders.gif)
 
 It largely corresponds to the familiar file selection dialogue. However, there are two additional options:
 

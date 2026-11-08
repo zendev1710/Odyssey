@@ -1,12 +1,12 @@
 # Befehle speichern
 
-![Befehle speichern](../../images/menu_file_saveorders.gif)
+![Befehle speichern](../../images/gif/menu_file_saveorders.gif)
 
 Zum Speichern oder Verschicken der Befehle stehen folgende Optionen (Reiter) zur Verfügung:
 
 * **E-Mail**  
     Verschickt die Befehle direkt per Mail. Magellan kann für einige populäre Mailprovider die nötigen Einstellungen erraten. Dann müssen Sie nur noch das Passwort eingeben. Sollte dies nicht möglich sein können Sie die restlichen Einstellungen selber ausfüllen. Falls Sie die Einstellungen nicht kennen, hilft häufig eine einfache Internetsuche nach "SMTP-Einstellungen für Providername". Bei manchen Providern muss man diese Funktion erst in den Emaileinstellungen freischalten. Besuchen Sie dazu die Internetseite Ihres Providers. Diese Einstellungen haben nichts mit Eressea zu tun, aber die Eressea-Community hilft in solchen Fragen gerne weiter, wenn man nett fragt.  
-    ![Befehle speichern](../../images/menu_file_saveorders_email.gif)
+    ![Befehle speichern](../../images/gif/menu_file_saveorders_email.gif)
   * **Einstellungen erraten**  
         Versucht die Servereinstellungen aus der Absenderadresse zu erraten oder bietet die Möglichkeit, aus einer Liste populärer Anbieter auszuwählen.
   * **Absenderadresse**  
@@ -47,7 +47,7 @@ Zum Speichern oder Verschicken der Befehle stehen folgende Optionen (Reiter) zur
 
 Durch Klicken auf "Details" erhalten Sie Zugriff auf weitere Funktionen, die das genaue Aussehen der exportierten Befehle bestimmen.
 
-![Ausgabeoptionen](../../images/menu_file_saveorders_details.gif)
+![Ausgabeoptionen](../../images/gif/menu_file_saveorders_details.gif)
 
 * **Automatischer Zeilenumbruch**  
     Bricht die Befehlsdatei nach _n_ Zeichen um. Längere Zeilen (Beschreibungen, Botschaften, etc.) werden dabei automatisch mit " \\" getrennt. Vermeidet Probleme mit dem automatischen Zeilenumbruch von Mailprogrammen.

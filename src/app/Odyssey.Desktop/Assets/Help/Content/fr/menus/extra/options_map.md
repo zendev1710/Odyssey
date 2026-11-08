@@ -2,7 +2,7 @@
 
 Le type d'affichage de la carte et de la carte d'ensemble peut être configuré ici. La carte est dessinée par différents "renderers", qui peuvent être configurés et désactivés séparément ici.
 
-![Options - Carte](../../images/menu_extras_options_map.gif)
+![Options - Carte](../../images/gif/menu_extras_options_map.gif)
 
 **Affichage de la barre de navigation sur le bord supérieur de la carte.
 Un certain nombre d'options de réglage peuvent être affichées au-dessus de la carte principale. D'une part, il y a un curseur pour agrandir ou zoomer la carte, une option de sélection pour le niveau ou la couche affichée et enfin, si des hotspots ont été définis, vous pouvez sauter à ces hotspots.
@@ -100,6 +100,6 @@ inactif&gt ;
 
 ## MiniMap
 
-![Options - Aperçu de la carte](../../images/menu_extras_options_map_minimap.gif)
+![Options - Aperçu de la carte](../../images/gif/menu_extras_options_map_minimap.gif)
 
 La carte d'ensemble supporte tous les modes d'affichage du moteur de rendu de région (géométrique/politique). L'attribution des couleurs peut donc également être définie pour ce mode. L'échelle de la mini-carte peut également être réglée ici.

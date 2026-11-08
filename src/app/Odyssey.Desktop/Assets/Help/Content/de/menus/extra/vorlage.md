@@ -4,7 +4,7 @@ Dies ist ein grafisches Frontend für Vorlage. Vorlage ist ein leistungsfähiger
 
 Nach Auswahl des Menüpunktes öffnet sich folgender Dialog:
 
-![menu_extras_vorlage](../../images/menu_extras_vorlage.gif)
+![menu_extras_vorlage](../../images/gif/menu_extras_vorlage.gif)
 
 Im Feld **_Quell-CR(s)_** gibt man den Pfad zu einem oder mehreren CRs an, die von Vorlage bearbeitet werden sollen. Normalerweise ist dies der CR, der vom Eressea-Server geschickt wurde.
 

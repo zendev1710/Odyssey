@@ -2,13 +2,13 @@
 
 Here you can set the desktop mode of Magellan.
 
-![Options - Desktop](../../images/menu_extras_options_desktop.gif)
+![Options - Desktop](../../images/gif/menu_extras_options_desktop.gif)
 
 * **Desktop settings**
     Here you can specify whether the [Tabs](../desktop/hidetabs.md) should be displayed or not.  
     The function Show workspace selection dialogue cannot be used actively at the moment.
 
-![Options - Desktop - Shortcuts](../../images/menu_extras_options_desktop_shortcuts.gif)
+![Options - Desktop - Shortcuts](../../images/gif/menu_extras_options_desktop_shortcuts.gif)
 
 ## Shortcuts
 

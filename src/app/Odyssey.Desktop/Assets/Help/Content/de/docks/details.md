@@ -2,7 +2,7 @@
 
 Das Detailfenster ist die wohl wichtigste Informationsquelle in Magellan. Hier werden Details zu den gerade aktiven Objekten angezeigt.
 
-![details window](../images/windows_detail.gif)
+![details window](../images/gif/windows_detail.gif)
 
 Im oberen Bereich werden permanent die wichtigsten Daten einer Region dargestellt, in der sich das gerade aktive Objekt befindet. Hierzu gehören: Bauernanzahl, maximal mögliche Rekruten, Verdienst der Bauern (Steuern), Unterhaltungslimit, Poolsilber (Silber aller Parteien mit gesetzem Passwort), Handelsvolumen, Bäume, Pferde, und Eisen/Laen so vorhanden. Die Informationen im unteren Bereich ändern sich je nach aktiviertem Objekt und sind ebenfalls in einer Baumstruktur angelegt, so dass sich die Informationen einfach ausblenden lassen.
 

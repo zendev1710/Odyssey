@@ -2,7 +2,7 @@
 
 Here the map of the known world is displayed.
 
-![windows_map](../images/windows_map.gif)
+![windows_map](../images/gif/windows_map.gif)
 
 When "Fog of War" (FOW) is enabled, regions that do not contain units or have not been traveled through, as well as ocean regions that can not be glimpsed from atop a lighthouse, are displayed darker. This mode can be toggled with shortcut key Ctrl+W .
 

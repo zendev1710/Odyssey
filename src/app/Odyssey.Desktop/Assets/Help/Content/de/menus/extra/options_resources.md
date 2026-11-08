@@ -2,7 +2,7 @@
 
 In diesem Dialog kann man externe Dateien in Magellan einbinden. Dazu zählen z.B. alternative Grafiksets, externe Plugins, Anpassungen für andere Spiele (z.B. Verdanon) usw.
 
-![Optionen - Ressourcen](../../images/menu_extras_options_resources.gif)
+![Optionen - Ressourcen](../../images/gif/menu_extras_options_resources.gif)
 
 Hier können die Pfade/Verzeichnisse eingestellt werden, in dem die Zusatzprogramme Vorlage, zum Erstellen von Zugvorlagen, und ECheck, dem Syntaxchecker für Eressea, liegen.
 

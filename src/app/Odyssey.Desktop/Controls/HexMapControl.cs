@@ -266,8 +266,8 @@ public class HexMapControl : Control
         // Set a short default tooltip show delay (optional)
         ToolTip.SetShowDelay(this, 500);
         
-        // Load directional wake image (add a PNG at Assets/map/effects/boat_wake.png)
-        //_boatWakeBitmap = LoadBitmap("/Assets/map/effects/boat_wake.png", -1, false);
+        // Load directional wake image (add a PNG at Assets/Map/effects/png/boat_wake.png)
+        //_boatWakeBitmap = LoadBitmap("/Assets/Map/effects/png/boat_wake.png", -1, false);
     }
 
     // True while the control listens to GlobalSettings.SettingChanged.
@@ -3645,7 +3645,7 @@ public class HexMapControl : Control
     private static readonly SolidColorBrush _plateShadow = new(Color.FromArgb(55, 0, 0, 0));
 
     // Icon used for fortifications owned by the player's faction.
-    private const string OwnedCastleIconPath = "/Assets/Map/Symbols/castle_owned.gif";
+    private const string OwnedCastleIconPath = "/Assets/Map/Symbols/gif/castle_owned.gif";
 
     private Bitmap? GetTerrainImage(int terrain)
     {
@@ -3724,7 +3724,7 @@ public class HexMapControl : Control
             default: return string.Empty;
         }
         string imageFullname = string.IsNullOrEmpty(suffix) ? imageName : $"{imageName}_{suffix}";
-        return $"/Assets/Map/Terrains/{imageFullname}.png";
+        return $"/Assets/Map/Terrains/png/{imageFullname}.png";
     }
 
     private static void PreloadStandardTerrainImages()

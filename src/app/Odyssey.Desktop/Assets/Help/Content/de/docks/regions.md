@@ -7,7 +7,7 @@ Im Regionsfenster werden alle Einheiten und Regionen in einer Baumstruktur darge
 3. Parteien / Gebäude / Schiffe / Straßen
 4. Einheiten
 
-![region](../images/windows_region.gif)
+![region](../images/gif/windows_region.gif)
 
 Knotenpunkte, unterhalb denen sich noch Einheiten mit [unbestätigten Befehlen](orders.md) befinden, werden in Fettschrift dargestellt andere in normaler. Die Anzeige im Regionsfenster lässt sich in den [Optionen](../menus/extras/options_region.md) in weiten Bereichen an den jeweiligen persönlichen Geschmack anpassen.
 

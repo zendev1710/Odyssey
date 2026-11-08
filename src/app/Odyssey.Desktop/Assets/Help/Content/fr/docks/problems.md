@@ -1,6 +1,6 @@
 # Tâches ouvertes
 
-![windows_problems](../images/windows_problems.gif)
+![windows_problems](../images/gif/windows_problems.gif)
 
 Dans cette liste, Magellan affiche tous les problèmes qu'il a reconnus. Cette liste peut être utilisée comme point de départ pour les commandes qui doivent encore être éditées. Veuillez noter que Magellan n'est pas en mesure de trouver et de signaler tous les problèmes qui peuvent survenir. Néanmoins, il s'agit d'un outil puissant qui rend d'autres outils comme ECheck redondants.
 

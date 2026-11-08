@@ -22,11 +22,11 @@ namespace Odyssey.Converters
                     // BLUE bullet for active faction
                     // GREEN bullet for allied faction
                     // GRAY bullet for anonymous faction
-                    FactionStatus.ACTIVE => "/Assets/FactionStatus/blue.gif",
-                    FactionStatus.ALLIED => "/Assets/FactionStatus/green.gif",
-                    FactionStatus.ANONYMOUS => "/Assets/FactionStatus/gray.gif",
-                    FactionStatus.TRAITOR => "/Assets/FactionStatus/red.gif",
-                    FactionStatus.UNKNOWN => "/Assets/FactionStatus/red.gif",
+                    FactionStatus.ACTIVE => "/Assets/FactionStatus/gif/blue.gif",
+                    FactionStatus.ALLIED => "/Assets/FactionStatus/gif/green.gif",
+                    FactionStatus.ANONYMOUS => "/Assets/FactionStatus/gif/gray.gif",
+                    FactionStatus.TRAITOR => "/Assets/FactionStatus/gif/red.gif",
+                    FactionStatus.UNKNOWN => "/Assets/FactionStatus/gif/red.gif",
                     _ => null,
                 };
             }

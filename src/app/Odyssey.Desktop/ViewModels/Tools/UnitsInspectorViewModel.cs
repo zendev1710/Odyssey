@@ -7,7 +7,6 @@ using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Odyssey.Models.Tools;
 using Odyssey.Settings;
-using Odyssey.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

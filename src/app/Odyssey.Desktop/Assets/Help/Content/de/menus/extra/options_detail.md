@@ -2,7 +2,7 @@
 
 In diesem Dialog können die Optionen der Detailanzeige und der Befehlsergänzung konfiguriert werden:
 
-![Optionen - Detailanzeige](../../images/menu_extras_options_detail.gif)
+![Optionen - Detailanzeige](../../images/gif/menu_extras_options_detail.gif)
 
 ## Datenanzeige
 
@@ -17,7 +17,7 @@ In diesem Dialog können die Optionen der Detailanzeige und der Befehlsergänzun
 
 ## Befehlseditor
 
-![Optionen - Detailanzeige - Befehlseditor](../../images/menu_extras_options_detail_orders.gif)
+![Optionen - Detailanzeige - Befehlseditor](../../images/gif/menu_extras_options_detail_orders.gif)
 
 * **Multi-Editor Layout**  
     Wird diese Option aktiviert, stehen die Befehle aller Einheiten der Region untereinander im Befehlsfenster.  
@@ -36,7 +36,7 @@ In diesem Dialog können die Optionen der Detailanzeige und der Befehlsergänzun
 
 ### Befehlsvervollständigung
 
-![Optionen - Befehlsvervollständigung](../../images/menu_extras_options_detail_ordercompletion.gif)
+![Optionen - Befehlsvervollständigung](../../images/gif/menu_extras_options_detail_ordercompletion.gif)
 
 Die automatische Befehlsvervollständigung erleichtert das Eingeben von Befehlen für die Einheiten. Dabei werden je nach Kontext sinnvolle bzw. mögliche Befehle vorgeschlagen und können mit wenigen Tastendrücken oder Klicks ausgewählt werden.
 

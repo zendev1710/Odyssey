@@ -2,7 +2,7 @@
 
 The details window is probably the most important source of information in Magellan. The details of the currently selected objects are shown here.
 
-![Detailfenster](../images/windows_detail.gif)
+![Detailfenster](../images/gif/windows_detail.gif)
 
 The most important information about the region the object is in is shown at the top. This includes: Number of peasants, maximum number of recruits, income of the peasants (possible tax), entertainment limit, pool silver (the silver of all factions with a password entered), trade volume, available trees, horses and iron/laen. The information in the lower part differs depending on the selected object and is shown in a tree, so that information can easily be called upon or hidden at will.
 

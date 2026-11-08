@@ -82,7 +82,7 @@ asset tree under `Assets/`:
   "de": "Bergwerk",
   "en": "Mine",
   "aliases": ["bergwerk", "mines"],
-  "file": "buildings/mine.gif"
+  "file": "buildings/gif/mine.gif"
 }
 ```
 
@@ -97,7 +97,11 @@ It has one row per asset:
 | `de` | German report name, or empty for variants. |
 | `en` | English name, or empty for variants. |
 | `aliases` | Additional lookup names separated by `|`. |
-| `file` | Path below `Assets/`, for example `items/sword.gif`. |
+| `file` | Path below `Assets/`, including its format folder, for example `items/gif/sword.gif` or `status/svg/combat_aggressive.svg`. |
+
+The runtime resolver may select a same-name raster or SVG variant according to
+the user's icon format preference. The image converter then loads raster files
+as bitmaps or SVG files as Skia-backed vector images, caching each resolved asset.
 
 The generator validates that ids and files are unique, paths are lowercase ASCII,
 and no two primary icons in the same category claim the same normalized alias. It

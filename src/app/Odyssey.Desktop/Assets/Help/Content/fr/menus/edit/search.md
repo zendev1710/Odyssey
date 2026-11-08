@@ -4,7 +4,7 @@ CTRL-F
 
 Cette fonction vous permet de rechercher des mots-clés dans le rapport afin de trouver des unités, des navires, etc. "perdus". Vous pouvez définir l'étendue de la recherche dans la boîte de dialogue suivante. Vous pouvez définir la plage de recherche dans la boîte de dialogue suivante :
 
-![menu_extras_search](../../images/menu_extras_search.gif)
+![menu_extras_search](../../images/gif/menu_extras_search.gif)
 
 Le champ **Modèle_de_recherche** peut également rester vide. La recherche d'un motif de recherche vide et de la zone de recherche "Navires", par exemple, renvoie tous les navires qui apparaissent dans le rapport.
 

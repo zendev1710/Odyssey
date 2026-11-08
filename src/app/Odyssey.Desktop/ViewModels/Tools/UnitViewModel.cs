@@ -4,9 +4,13 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Odyssey.Icons;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
+using Odyssey.Models.Localization;
 using Odyssey.Models.Tools;
+using Odyssey.Settings;
+using Odyssey.Services;
 
 namespace Odyssey.ViewModels.Tools;
 
@@ -17,6 +21,23 @@ namespace Odyssey.ViewModels.Tools;
 public partial class UnitViewModel : ObservableObject
 {
     public UnitModel? Model { get; private set; }
+    public UnitModel.CombatStatusType CombatStatus => Model?.CombatStatus ?? UnitModel.CombatStatusType.Undefined;
+    public string? CombatStatusIconUri => CombatStatus switch
+    {
+        UnitModel.CombatStatusType.Aggressive => GetCombatStatusIconUri("combat_aggressive"),
+        UnitModel.CombatStatusType.InFront => GetCombatStatusIconUri("combat_front"),
+        UnitModel.CombatStatusType.Rear => GetCombatStatusIconUri("combat_rear"),
+        UnitModel.CombatStatusType.Defensive => GetCombatStatusIconUri("combat_defensive"),
+        UnitModel.CombatStatusType.DoesntFight => GetCombatStatusIconUri("combat_passive"),
+        UnitModel.CombatStatusType.Flees => GetCombatStatusIconUri("combat_flees"),
+        UnitModel.CombatStatusType.Unknown => GetCombatStatusIconUri("combat_unknown"),
+        _ => null,
+    };
+    public string? CombatStatusTooltip => CombatStatus == UnitModel.CombatStatusType.Undefined
+        ? null
+        : $"combat {Labels.Localize(DataProperty.Categories.CombatStatus, ((int)CombatStatus).ToString())}";
+    public string? HealthStatusIconUri => GetHealthStatusIconUri(Model?.Hp);
+    public string? HealthStatusTooltip => GetHealthStatusTooltip(Model?.Hp);
 
     [ObservableProperty]
     private string _id = string.Empty;
@@ -28,7 +49,6 @@ public partial class UnitViewModel : ObservableObject
     private int _factionId;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(IdentityBackground))]
     private bool? _isConfirmed;
 
     [ObservableProperty]
@@ -47,21 +67,11 @@ public partial class UnitViewModel : ObservableObject
     private string _summary = string.Empty;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(IdentityBackground))]
-    [NotifyPropertyChangedFor(nameof(IdentityForeground))]
     private bool _isSelected;
 
     public string OrdersSummary { get; private set; } = "-";
     public bool CanEditOrders { get; private set; }
     public IBrush FactionStatusBrush { get; private set; } = FactionStatusPalette.GetBorderBrush(FactionStatus.UNKNOWN);
-    public IBrush FactionStatusBackground { get; private set; } = FactionStatusPalette.GetBackgroundBrush(FactionStatus.UNKNOWN);
-    public IBrush FactionStatusSelectedBackground { get; private set; } = FactionStatusPalette.GetSelectedBackgroundBrush(FactionStatus.UNKNOWN);
-    public IBrush FactionStatusConfirmedBackground { get; private set; } = FactionStatusPalette.Darken(FactionStatusPalette.GetBackgroundBrush(FactionStatus.UNKNOWN));
-    public IBrush FactionStatusSelectedConfirmedBackground { get; private set; } = FactionStatusPalette.Darken(FactionStatusPalette.GetSelectedBackgroundBrush(FactionStatus.UNKNOWN));
-    public IBrush IdentityBackground => IsSelected
-        ? IsConfirmed == true ? FactionStatusSelectedConfirmedBackground : FactionStatusSelectedBackground
-        : IsConfirmed == true ? FactionStatusConfirmedBackground : FactionStatusBackground;
-    public IBrush IdentityForeground => IsSelected ? Brushes.White : Brushes.Black;
     public ObservableCollection<UnitItemViewModel> InventoryItems { get; } = new();
     public ObservableCollection<UnitSkillViewModel> SkillItems { get; } = new();
 
@@ -93,10 +103,6 @@ public partial class UnitViewModel : ObservableObject
             vm.CanEditOrders = unit.HasEditableOrders;
             vm.AreSkillsVisible = factionStatus is FactionStatus.ACTIVE or FactionStatus.ALLIED;
             vm.FactionStatusBrush = FactionStatusPalette.GetBorderBrush(factionStatus);
-            vm.FactionStatusBackground = FactionStatusPalette.GetBackgroundBrush(factionStatus);
-            vm.FactionStatusSelectedBackground = FactionStatusPalette.GetSelectedBackgroundBrush(factionStatus);
-            vm.FactionStatusConfirmedBackground = FactionStatusPalette.Darken(vm.FactionStatusBackground);
-            vm.FactionStatusSelectedConfirmedBackground = FactionStatusPalette.Darken(vm.FactionStatusSelectedBackground);
             if (includeSummary)
             {
                 vm.LoadUnitSummary(unit);
@@ -149,6 +155,50 @@ public partial class UnitViewModel : ObservableObject
     }
 
     public void SortSkillItems() => UnitSkillSorter.Sort(SkillItems);
+
+    private static string? GetCombatStatusIconUri(string id) =>
+        IconCatalogService.ResolvePath(IconCategories.Status, null, id);
+
+    private static string? GetHealthStatusIconUri(string? hp)
+    {
+        string? iconId = GetHealthStatusId(hp);
+        if (iconId is null)
+        {
+            return null;
+        }
+
+        string? assetPath = IconCatalogService.Catalog.ResolvePath(IconCategories.Status, null, iconId);
+        return IconAssetResolver.ResolvePreferredPath(assetPath, IconAssetFormatMode.SvgTheme);
+    }
+
+    private static string? GetHealthStatusTooltip(string? hp)
+    {
+        string? statusName = GetHealthStatusId(hp) switch
+        {
+            "badly_wounded" => "schwer verwundet",
+            "wounded" => "verwundet",
+            "exhausted" => "erschöpft",
+            "strong" => "stark",
+            "very_strong" => "sehr stark",
+            _ => null,
+        };
+
+        return statusName is null ? null : Labels.Localize(DataProperty.Categories.Status, statusName);
+    }
+
+    private static string? GetHealthStatusId(string? hp)
+    {
+        string normalized = hp?.Trim().ToLowerInvariant().Replace('_', ' ') ?? string.Empty;
+        return normalized switch
+        {
+            "badly wounded" or "schwer verwundet" or "gravement blessé" or "badly" => "badly_wounded",
+            "wounded" or "verwundet" or "blessé" => "wounded",
+            "exhausted" or "erschöpft" or "épuisé" => "exhausted",
+            "strong" or "stark" or "fort" => "strong",
+            "very strong" or "super strong" or "sehr stark" or "très fort" or "plusstrong" => "very_strong",
+            _ => null,
+        };
+    }
 
     public override string ToString() => $"{Name} ({Id})";
 }

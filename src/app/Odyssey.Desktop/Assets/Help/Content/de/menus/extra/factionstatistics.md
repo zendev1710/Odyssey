@@ -10,7 +10,7 @@ Mit dem Knopf **_Partei aus dem Report löschen_** kann man eine Partei komplett
 
 ## Statistik
 
-![faction_statistics](../../images/menu_extras_factiontatistics.gif)
+![faction_statistics](../../images/gif/menu_extras_factiontatistics.gif)
 
 Wird im linken Fenster eine oder mehrere Partei(en) gewählt, erscheint im rechten Fenster eine statistische Aufstellung über alle Güter und Einheiten, die man aktuell von diese(r) Partei(en) sehen kann. Bei der eigenen Partei ist dies natürlich das komplette Inventar.
 
@@ -18,6 +18,6 @@ Bei allen Gegenständen wird angegeben, welche Einheit diese besitzt. Klickt man
 
 ## Talentstatistik
 
-![faction_stat](../../images/menu_extras_factiontatistics_skills.gif)
+![faction_stat](../../images/gif/menu_extras_factiontatistics_skills.gif)
 
 Man kann hier sehen, wie viele Personen ein bestimmtes Talent in welcher Stufe haben. Dazu wählt man einfach aus dem Drop-Down-Menü unten links das gewünschte Talent aus. Die anderen Drop-Down-Menüs dienen nur der Information, man kann hier nichts einstellen. Sie zeigen die Anzahl der Personen mit dem Talent, die Gesamtlerntage und die Summe der Talentpunkte.

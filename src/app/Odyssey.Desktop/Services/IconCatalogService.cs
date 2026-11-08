@@ -1,6 +1,7 @@
 using System;
 using Avalonia.Platform;
 using Odyssey.Icons;
+using Odyssey.Settings;
 
 namespace Odyssey.Services;
 
@@ -17,6 +18,9 @@ public static class IconCatalogService
 
     public static string? ResolvePath(string category, string? name, string? fallbackId = null) =>
         IconAssetResolver.ResolvePreferredPath(Catalog.ResolvePath(category, name, fallbackId));
+
+    public static string? ResolvePath(string category, string? name, string? fallbackId, IconAssetFormatMode format) =>
+        IconAssetResolver.ResolvePreferredPath(Catalog.ResolvePath(category, name, fallbackId), format);
 
     private static IconCatalog LoadCatalog()
     {

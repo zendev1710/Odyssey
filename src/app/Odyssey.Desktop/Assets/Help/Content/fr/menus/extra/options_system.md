@@ -2,7 +2,7 @@
 
 Certains paramètres globaux du système peuvent être définis ici.
 
-![Menu Options - Système](../../images/menu_extras_options_system.gif)
+![Menu Options - Système](../../images/gif/menu_extras_options_system.gif)
 
 **Réglages de la langue**
     Vous pouvez régler ici la langue utilisée pour l'interface Magellan et les commandes. Pour des raisons techniques, le changement ne sera effectif qu'après un redémarrage de Magellan.
@@ -13,7 +13,7 @@ Certains paramètres globaux du système peuvent être définis ici.
 * Vérifier la présence d'une version plus récente au démarrage **.
     Si cette option est sélectionnée, Magellan vérifie au démarrage si une nouvelle version de Magellan est disponible au téléchargement. Cela nécessite une connexion à Internet. Si une nouvelle version est disponible, la boîte de dialogue suivante s'affiche au démarrage :
 
-    ![version](../../images/dialog_version.gif)
+    ![version](../../images/gif/dialog_version.gif)
 
     [https://magellan2.github.io](https://magellan2.github.io) est le site web actuel du développeur.
 **Charger le dernier rapport au démarrage**
@@ -25,7 +25,7 @@ Certains paramètres globaux du système peuvent être définis ici.
 
 ## Look & Feel
 
-![Menu Options - Système - Look&Feel](.../../images/menu_extras_options_system_lookfeel.gif)
+![Menu Options - Système - Look&Feel](../../images/gif/menu_extras_options_system_lookfeel.gif)
 
 **Look & Feel:**
 
@@ -54,7 +54,7 @@ Certains paramètres globaux du système peuvent être définis ici.
 
 ## Historique du fichier
 
-![Menu Options - Système - Historique](../../images/menu_extras_options_system_history.gif)
+![Menu Options - Système - Historique](../../images/gif/menu_extras_options_system_history.gif)
 
 La valeur saisie ici détermine combien de rapports récemment chargés apparaissent dans le menu des fichiers.
 
@@ -64,13 +64,13 @@ Si vous saisissez quelque chose ici, un nom de fichier est suggéré dans le [di
 
 ## Générateur de nom
 
-![Menu Options - Système - Générateur de noms](../../images/menu_extras_options_system_generator.gif)
+![Menu Options - Système - Générateur de noms](../../images/gif/menu_extras_options_system_generator.gif)
 
 Si vous activez cette option et que vous incluez un fichier texte dans lequel les noms sont listés ligne par ligne, vous pouvez les sélectionner lors de la création de nouvelles unités.
 
 ## Codage du texte
 
-![Menu Options - Système - Codage du texte](../../images/menu_extras_options_system_textencoding.gif)
+![Menu Options - Système - Codage du texte](../../images/gif/menu_extras_options_system_textencoding.gif)
 
 Vous pouvez définir ici comment Magellan encode les rapports et les commandes. Il existe trois types de codage.
 
@@ -82,7 +82,7 @@ Nous recommandons vivement d'encoder tous les rapports et commandes en UTF-8. Le
 
 ## Messages
 
-![Menu Options - Système - Messages](../../images/menu_extras_options_messages.gif)
+![Menu Options - Système - Messages](../../images/gif/menu_extras_options_messages.gif)
 
 **Saut de ligne**
     Si vous activez l'option _Activer le saut de ligne_, les messages qui sont trop longs pour la largeur de la fenêtre de message sont enveloppés. Cela signifie qu'il n'y a pas de barre de défilement horizontale.

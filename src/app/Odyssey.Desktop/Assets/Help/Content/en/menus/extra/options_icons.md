@@ -2,7 +2,7 @@
 
 ## Icon settings
 
-![Options - Icons](../../images/menu_extras_options_icons.gif)
+![Options - Icons](../../images/gif/menu_extras_options_icons.gif)
 
 **Show short info:** If this option is activated, you will receive the corresponding talent or building name that the icon represents if you hover the mouse pointer over an icon for a longer period of time.
 
@@ -35,13 +35,13 @@ Depending on the respective area, various sub-options are made available in the 
 
 ## Value->Colour mapping
 
-![Options - Colour mapping](../../images/menu_extras_options_icons_colour.gif)
+![Options - Colour mapping](../../images/gif/menu_extras_options_icons_colour.gif)
 
 The font colour for the talent value display in the region window can be configured here according to talent values. If no colours are defined here, black is used.
 
 ## Icon style
 
-![Options - Iconstile](../../images/menu_extras_options_icons_iconstyle.gif)
+![Options - Iconstile](../../images/gif/menu_extras_options_icons_iconstyle.gif)
 
 The type of display in the region window can be configured here.
 

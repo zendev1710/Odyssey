@@ -2,7 +2,7 @@
 
 Dans cette boîte de dialogue, vous pouvez définir les options pour la [Vue d'ensemble de la région] (.../../docks/regions.md) :
 
-![Options - Affichage des régions](../../images/menu_extras_options_region.gif)
+![Options - Affichage des régions](../../images/gif/menu_extras_options_region.gif)
 
 **Tri des régions**
     Vous pouvez ici définir l'affichage des noms de régions en fonction des coordonnées ou de l'appartenance à une île. Si l'option _Affichage des îles_ est également activée, les régions sont précédées d'un "nœud d'ordre" pour l'île, qui peut être développé et réduit.
@@ -28,6 +28,6 @@ Dans cette boîte de dialogue, vous pouvez définir les options pour la [Vue d'e
 
 ## Ordre des talents
 
-![Options - Affichage des régions - Ordre des compétences](../../images/menu_extras_options_region_skills.gif)
+![Options - Affichage des régions - Ordre des compétences](../../images/gif/menu_extras_options_region_skills.gif)
 
 L'ordre des talents est modifié en sélectionnant le talent correspondant avec la souris, puis en le déplaçant à l'aide des boutons _Higher_ ou _Lower_.

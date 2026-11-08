@@ -1,6 +1,6 @@
 # Export CR
 
-![menu_file_crexport](../../images/menu_file_crexport.gif)
+![menu_file_crexport](../../images/gif/menu_file_crexport.gif)
 
 Les options suivantes sont disponibles pour exporter un CR :
 

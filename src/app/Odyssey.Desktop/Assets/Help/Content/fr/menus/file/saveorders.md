@@ -1,12 +1,12 @@
 # Sauvegarde des commandes
 
-![Sauvegarder les commandes](../../images/menu_file_saveorders.gif)
+![Sauvegarder les commandes](../../images/gif/menu_file_saveorders.gif)
 
 Les options suivantes (onglets) sont disponibles pour enregistrer ou envoyer des commandes :
 
 * **Email**
     Envoie les commandes directement par e-mail. Magellan peut deviner les paramètres nécessaires pour certains fournisseurs de courrier électronique courants. Il suffit alors de saisir le mot de passe. Si ce n'est pas possible, vous pouvez remplir les autres paramètres vous-même. Si vous ne connaissez pas les paramètres, une simple recherche sur Internet pour "Paramètres SMTP pour le nom du fournisseur" est souvent utile. Chez certains fournisseurs, cette fonction doit d'abord être activée dans les paramètres de messagerie. Pour ce faire, visitez le site web de votre fournisseur. Ces paramètres n'ont rien à voir avec Eressea, mais la communauté Eressea se fera un plaisir de vous aider si vous le demandez gentiment.  
-    ![Sauvegarder les commandes](../../images/menu_file_saveorders_email.gif)
+    ![Sauvegarder les commandes](../../images/gif/menu_file_saveorders_email.gif)
   * **Suggestion des paramètres**
         Tente de deviner les paramètres du serveur à partir de l'adresse de l'expéditeur ou offre la possibilité de choisir parmi une liste de fournisseurs populaires.
   * **Adresse de l'expéditeur**
@@ -47,7 +47,7 @@ Les options suivantes (onglets) sont disponibles pour enregistrer ou envoyer des
 
 En cliquant sur "Détails", vous accédez à d'autres fonctions qui déterminent l'aspect exact des commandes exportées.
 
-![Options de sortie](../../images/menu_file_saveorders_details.gif)
+![Options de sortie](../../images/gif/menu_file_saveorders_details.gif)
 
 **Saut de ligne automatique**
     Interrompt le fichier de commandes après _n_ caractères. Les lignes plus longues (descriptions, messages, etc.) sont automatiquement séparées par " \\N" dans le processus. Évite les problèmes liés au saut de ligne automatique des programmes de messagerie.

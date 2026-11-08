@@ -2,7 +2,7 @@
 
 The options for the detailed display and the command supplement can be configured in this dialogue:
 
-![Options - Detail display](../../images/menu_extras_options_detail.gif)
+![Options - Detail display](../../images/gif/menu_extras_options_detail.gif)
 
 ## Data display
 
@@ -18,7 +18,7 @@ The options for the detailed display and the command supplement can be configure
 
 ## Command editor
 
-![Options - Detail display - Order editor](../../images/menu_extras_options_detail_orders.gif)
+![Options - Detail display - Order editor](../../images/gif/menu_extras_options_detail_orders.gif)
 
 **Multi-Editor Layout**
     If this option is activated, the orders of all units in the region are displayed one below the other in the order window.  
@@ -38,7 +38,7 @@ The options for the detailed display and the command supplement can be configure
 
 ### Command completion
 
-![Options - Order completion](../../images/menu_extras_options_detail_ordercompletion.gif)
+![Options - Order completion](../../images/gif/menu_extras_options_detail_ordercompletion.gif)
 
 Automatic command completion makes it easier to enter commands for the units. Depending on the context, useful or possible commands are suggested and can be selected with just a few keystrokes or clicks.
 

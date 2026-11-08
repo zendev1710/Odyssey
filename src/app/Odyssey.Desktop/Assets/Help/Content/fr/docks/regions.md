@@ -7,7 +7,7 @@ Dans la fenêtre des régions, toutes les unités et régions sont affichées so
 3. Factions / Bâtiments / Navires / Rues
 4. Unités
 
-![windows_region](../images/windows_region.gif)
+![windows_region](../images/gif/windows_region.gif)
 
 Les nœuds dont les unités ont des [ordres non confirmés](orders.html) sont affichés en gras. L'affichage de la fenêtre de la région peut être ajusté selon vos goûts dans les [options](../menus/extras/options_region.html).
 

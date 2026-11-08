@@ -2,7 +2,7 @@
 
 In this dialogue you can integrate external files into Magellan. These include, for example, alternative graphics sets, external plugins, customisations for other games (e.g. Verdanon) etc.
 
-![Options - Resources](../../images/menu_extras_options_resources.gif)
+![Options - Resources](../../images/gif/menu_extras_options_resources.gif)
 
 Here you can set the paths/directories in which the additional programmes Template, for creating move templates, and ECheck, the syntax checker for Eressea, are located.
 
