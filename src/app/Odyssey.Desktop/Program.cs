@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using System;
+using Velopack;
 
 namespace Odyssey;
 
@@ -11,6 +12,8 @@ internal class Program
     [STAThread]
     private static void Main(string[] args)
     {
+        VelopackApp.Build().Run();
+
         BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
     }
 

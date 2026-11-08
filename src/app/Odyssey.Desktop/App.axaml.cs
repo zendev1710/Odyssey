@@ -20,6 +20,8 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using Odyssey.Core.Services;
 using Avalonia.Input;
 using Odyssey.ViewModels;
@@ -716,6 +718,11 @@ public class App : Application
 
         base.OnFrameworkInitializationCompleted();
         Debug.WriteLine($"[APPLICATION] OnFrameworkInitializationCompleted done");
+        _ = AppUpdateService.CheckAndDownloadAsync().ContinueWith(
+            task => Trace.TraceError($"[UPDATER] Update check or download failed: {task.Exception}"),
+            CancellationToken.None,
+            TaskContinuationOptions.OnlyOnFaulted,
+            TaskScheduler.Default);
     }
 
     /// <summary>
