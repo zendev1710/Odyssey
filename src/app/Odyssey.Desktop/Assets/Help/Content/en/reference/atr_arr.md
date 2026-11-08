@@ -4,7 +4,7 @@
 
 The so-called replacement system is ultimately a type of programming language that allows certain values to be calculated from the information about regions. The replacement system is used for the ATR and ARR, as well as for the tooltips on the map and the region info in the detailed display. The ATR is used for labelling the map. The ARR can be used to colour regions using a numerical value and a colour scale. Of course, you can also combine ATR, ARR and tooltip. Then you get coloured regions and matching texts on each region with optional additional information. The first lines of the detailed display can also be configured using this language. The following illustration shows a map that is coloured and labelled according to the trade goods.
 
-![Map labelled according to trade](../images/atr_trade.gif)
+![Map labelled according to trade](../images/gif/atr_trade.gif)
 
 What substitution options are there? The following words are important in connection with the tooltips. An example is given in brackets. There are
 

@@ -9,7 +9,7 @@ Innerhalb des Desktopmenüs findet man Funktionen, um das Aussehen von Magellan 
 
 Unterhalb der oben genannten Menüpunkte sieht man alle gerade für Magellan bekannten [Docks](../../docks/index.md). Jedes dieser Docks stellt einen bestimmten Teil von Magellan dar. Das kann die Regionsübersicht, die Befehle oder die Karte sein. Jedes dieser Docks besitzt am oberen Rand rechts einige Funktionsbuttons, die wir hier im folgenden genauer erklären.
 
-![decoration](../../images/windows_decorations.gif)
+![decoration](../../images/gif/windows_decorations.gif)
 
 Die Schaltflächen können je nach System geringfügig anders aussehen. Ihre Bedeutung ist (von links nach rechts):
 

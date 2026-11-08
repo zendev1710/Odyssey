@@ -43,7 +43,7 @@ GIF : S'il n'y a pas de fichier avec l'extension "-alpha.gif", mais qu'il existe
 
 En principe, la taille des graphiques est arbitraire, mais elle doit être la même pour toutes les images d'un ensemble de graphiques. Le client a également besoin d'informations sur la géométrie de l'hexagone de la région, c'est-à-dire les coordonnées de ses coins, ainsi que sa position dans le graphique et la taille totale du graphique. Voici à quoi cela ressemble :
 
-![cell_geometry](../images/reference_graphicsets_cellgeometry.gif)
+![cell_geometry](../images/gif/reference_graphicsets_cellgeometry.gif)
 
 x0=32 <- coordonnée x du point d'angle à 12 heures
 x1=63 <- coordonnée x du point d'angle à 2 heures

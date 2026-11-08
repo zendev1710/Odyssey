@@ -2,7 +2,7 @@
 
 Hier kann man eine Eressea-Befehlsdatei hinzuladen, die auch mit anderen Tools erstellt werden kann. Bei Auswahl des Menüpunktes erscheint folgende Dialogbox:
 
-![Befehle öffnen](../../images/menu_file_openorders.gif)
+![Befehle öffnen](../../images/gif/menu_file_openorders.gif)
 
 Sie entspricht weitgehend dem bekannten Dateiauswahldialog. Es gibt jedoch zwei zusätzliche Optionen:
 

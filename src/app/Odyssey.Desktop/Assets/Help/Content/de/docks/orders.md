@@ -2,7 +2,7 @@
 
 Dieses Fenster dient dazu seinen Einheiten, neue Anweisungen zu geben.
 
-![orders](../images/windows_orders.gif)
+![orders](../images/gif/windows_orders.gif)
 
 Ist eine Einheit angewählt, werden die Befehle der Einheit hier dargestellt und können verändert werden. Magellan zeigt nur Befehle von Einheiten an, wenn für die entsprechende Partei ein Password gesetzt wurde. Wenn hier also keine Befehle auftauchen, muss man in der [Parteistatistik](../menus/extras/factionstatistics.md) für seine Partei zuerst ein Password angeben.
 
@@ -16,21 +16,21 @@ Magellan bietet eine komfortable Möglichkeit mit TEMP-Einheiten zu arbeiten. Da
 
 ### TEMP-Einheiten erschaffen (Strg+T)
 
-![maketemp](../images/windows_orders_button_maketemp.gif)
+![maketemp](../images/gif/windows_orders_button_maketemp.gif)
 
 Mit einem Klick auf diesen Button wird eine TEMP-Einheit erzeugt. Dabei können in folgendem Dialog Einheitenname und TEMP-ID eingegeben werden. Die entsprechenden Befehle werden dabei automatisch erzeugt.
 
-![maketemp](../images/windows_orders_maketemp.gif)
+![maketemp](../images/gif/windows_orders_maketemp.gif)
 
 Nach einem Klick auf  
 _Mehr_ erscheint folgender Dialog:
 
-![maketempmore](../images/windows_orders_maketempmore.gif)
+![maketempmore](../images/gif/windows_orders_maketempmore.gif)
 
 Hier kann zusätzlich die Anzahl der zu rekrutierenden Personen, ein Befehl und die Einheitenbeschreibung angegeben werden.
 
 ### TEMP-Einheiten löschen (Strg+Umschalt+T)
 
-![deltemp](../images/windows_orders_button_deltemp.gif)
+![deltemp](../images/gif/windows_orders_button_deltemp.gif)
 
 Bei Klick auf diesen Button wird die aktuelle TEMP-Einheit gelöscht.

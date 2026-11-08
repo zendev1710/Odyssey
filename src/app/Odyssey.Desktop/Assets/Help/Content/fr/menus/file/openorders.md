@@ -2,7 +2,7 @@
 
 Vous pouvez ici ajouter un fichier de commandes Eressea, qui peut également être créé avec d'autres outils. La boîte de dialogue suivante apparaît lorsque l'élément de menu est sélectionné :
 
-![Ouvrir des commandes](../../images/menu_file_openorders.gif)
+![Ouvrir des commandes](../../images/gif/menu_file_openorders.gif)
 
 Elle correspond en grande partie à la boîte de dialogue familière de sélection de fichiers. Cependant, il y a deux options supplémentaires :
 

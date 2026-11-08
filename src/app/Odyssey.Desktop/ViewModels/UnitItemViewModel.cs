@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Odyssey.Icons;
 using Odyssey.Services;
+using Odyssey.Settings;
 
 namespace Odyssey.ViewModels.Tools;
 
@@ -32,7 +33,13 @@ public partial class UnitItemViewModel : ObservableObject
 
     public string IconPath => string.IsNullOrEmpty(Key)
         ? string.Empty
-        : IconCatalogService.ResolvePath(IconCategories.Item, Key, "weapons") ?? string.Empty;
+        : IconCatalogService.ResolvePath(
+            IconCategories.Item,
+            Key,
+            "weapons",
+            GlobalSettings.Shared.UnitItemIconAssetFormatMode) ?? string.Empty;
+
+    public void RefreshIconPath() => OnPropertyChanged(nameof(IconPath));
 
     [ObservableProperty]
     private string _type = string.Empty;

@@ -2,7 +2,7 @@
 
 Hier sieht man, welche Plugins Magellan erkannt und gestartet hat.
 
-![Optionen - Plugins](../../images/menu_extras_options_plugins.gif)
+![Optionen - Plugins](../../images/gif/menu_extras_options_plugins.gif)
 
 In der aktuellen Installationsversion sind dies nur zwei Plugins.
 

@@ -79,7 +79,7 @@ public sealed record ShipVisual
 /// </summary>
 public static class ShipCatalog
 {
-    private const string IconsFolder = "/Assets/ships/visual";
+    private const string IconsFolder = "/Assets/ships/visual/png";
 
     // Every spelling (German, English, French) -> canonical English asset key.
     private static readonly Dictionary<string, string> Aliases = new()
@@ -239,5 +239,5 @@ public static class ShipCatalog
     /// </summary>
     public static string GetExplorerIconPath(string? type) =>
         IconCatalogService.ResolvePath(IconCategories.Ship, type, "ships")
-        ?? "/Assets/ships/ships.gif";
+        ?? "/Assets/ships/gif/ships.gif";
 }

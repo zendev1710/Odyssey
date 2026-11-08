@@ -1,6 +1,6 @@
 # Offene Probleme
 
-![windows_problems](../images/windows_problems.gif)
+![windows_problems](../images/gif/windows_problems.gif)
 
 In dieser Liste werden alle von Magellan erkannten Probleme angezeigt. Diese Liste sollte man als Ausgangspunkt für noch ausstehende Aufgaben verwenden. Allerdings kann Magellan nicht alle Probleme finden und anzeigen. Dennoch erübrigt sich hierdurch inzwischen die Benutzung von ECheck.
 

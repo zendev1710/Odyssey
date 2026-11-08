@@ -2,7 +2,7 @@
 
 Some global system settings can be set here.
 
-![Options menu - System](../../images/menu_extras_options_system.gif)
+![Options menu - System](../../images/gif/menu_extras_options_system.gif)
 
 **Language settings**
     Here you can set the language used for the Magellan interface and the commands. For technical reasons, the change will only take effect after a restart of Magellan.
@@ -13,7 +13,7 @@ Some global system settings can be set here.
 * Check for newer version at start **.
     If this option is selected, Magellan checks at startup whether a new version of Magellan is available for download. This requires a connection to the Internet. If a new version is available, the following dialogue is displayed at startup:
 
-    ![version](../../images/dialog_version.gif)
+    ![version](../../images/gif/dialog_version.gif)
 
     [https://magellan2.github.io](https://magellan2.github.io) is the current developer website.
 **Load the last report at startup**
@@ -25,7 +25,7 @@ Some global system settings can be set here.
 
 ## Look & Feel
 
-![Options menu - System - Look&Feel](../../images/menu_extras_options_system_lookfeel.gif)
+![Options menu - System - Look&Feel](../../images/gif/menu_extras_options_system_lookfeel.gif)
 
 **Look & Feel:**
 
@@ -54,7 +54,7 @@ Some global system settings can be set here.
 
 ## File history
 
-![Options menu - System - History](../../images/menu_extras_options_system_history.gif)
+![Options menu - System - History](../../images/gif/menu_extras_options_system_history.gif)
 
 The value entered here determines how many recently loaded reports appear in the file menu.
 
@@ -64,13 +64,13 @@ If you enter something here, a file name is suggested in the [dialogue for savin
 
 ## Name generator
 
-![Options menu - System - Name generator](../../images/menu_extras_options_system_generator.gif)
+![Options menu - System - Name generator](../../images/gif/menu_extras_options_system_generator.gif)
 
 If you activate this option and include a text file in which names are listed line by line, you can select these when creating new units.
 
 ## Text coding
 
-![Options menu - System - Text encoding](../../images/menu_extras_options_system_textencoding.gif)
+![Options menu - System - Text encoding](../../images/gif/menu_extras_options_system_textencoding.gif)
 
 Here you can define how Magellan encodes the reports and commands. There are basically three types of coding.
 
@@ -82,7 +82,7 @@ We highly recommend encoding all reports and commands in UTF-8. The Eressea serv
 
 ## Messages
 
-![Options menu - System - Messages](../../images/menu_extras_options_messages.gif)
+![Options menu - System - Messages](../../images/gif/menu_extras_options_messages.gif)
 
 **Line break**
     If you activate the option _Activate line break_, the messages that are too long for the width of the message window are wrapped. This means that there is no horizontal scroll bar.

@@ -7,7 +7,7 @@ In the region window all units and regions are displayed in a tree. The tree's s
 3. Factions / Buildings / Ships / Streets
 4. Units
 
-![windows_region](../images/windows_region.gif)
+![windows_region](../images/gif/windows_region.gif)
 
 Nodes that have units with [unconfirmed orders](orders.html) are shown in bold. The display of the region window can be adjusted to your tastes in the [options](../menus/extras/options_region.html).
 

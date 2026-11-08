@@ -2,7 +2,7 @@
 
 In this dialogue you can set the options for the [Region overview](../../docks/regions.md):
 
-![Options - Region display](../../images/menu_extras_options_region.gif)
+![Options - Region display](../../images/gif/menu_extras_options_region.gif)
 
 **Region sorting**
     Here you can set the display of region names according to coordinates or island affiliation. If the option _Display islands_ is also activated, the regions are preceded by an "order node" for the island, which can be expanded and collapsed.
@@ -28,6 +28,6 @@ In this dialogue you can set the options for the [Region overview](../../docks/r
 
 ## Talent order
 
-![Options - Region display - Skill order](../../images/menu_extras_options_region_skills.gif)
+![Options - Region display - Skill order](../../images/gif/menu_extras_options_region_skills.gif)
 
 The talent order is changed by selecting the corresponding talent with the mouse and then moving it using the _Higher_ or _Lower_ buttons.

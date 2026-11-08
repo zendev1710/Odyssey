@@ -4,7 +4,7 @@
 
 Das so genannte Ersetzersystem ist letztlich eine Art von Programmiersprache, die es erlaubt, aus den Infos über Regionen bestimmte Werte auszurechnen. Das Ersetzersystem wird für den ATR und ARR verwendet, sowie für die Tooltips der Karte und die Regionskurzinfos in der Detailanzeige. Der ATR dient zur Beschriftung der Karte. Mit dem ARR kann man Regionen anhand eines Zahlenwertes und einer Farbskala einfärben. Natürlich kann man auch ATR, ARR und Tooltip kombinieren. Dann erhält man farbige Regionen und passende Texte auf jeder Region mit optionalen Zusatzinfos. Auch die ersten Zeilen der Detailanzeige können mit Hilfe dieser Sprache konfiguriert werden. Die folgende Abbildung zeigt eine Karte, die anhand der Handelsgüter eingefärbt und beschriftet ist.
 
-![Nach Handel beschriftete Karte](../images/atr_trade.gif)
+![Nach Handel beschriftete Karte](../images/gif/atr_trade.gif)
 
 Welche Ersetzungsmöglichkeiten gibt es? Folgende Wörter sind im Zusammenhang mit den Tooltips wichtig. In Klammern ist jeweils ein Beispiel angegeben. Es gibt
 

@@ -155,6 +155,7 @@
     <PackageReference Include="Projektanker.Icons.Avalonia.FontAwesome" Version="9.6.2" />
     <PackageReference Include="Splat" Version="21.0.0" />
     <PackageReference Include="Svg.Skia" Version="5.2.3" />
+    <PackageReference Include="Svg.Controls.Skia.Avalonia" Version="12.0.0.17" />
     <PackageReference Include="TextMateSharp" Version="2.0.5" />
     <PackageReference Include="TextMateSharp.Grammars" Version="2.0.5" />
     <PackageReference Include="WebView.Avalonia" Version="11.0.0.1" />

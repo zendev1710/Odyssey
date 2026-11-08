@@ -52,6 +52,10 @@ public static class IconAssetResolver
         }
 
         var directory = Path.GetDirectoryName(relative)?.Replace('\\', '/') ?? string.Empty;
+        var directoryName = directory[(directory.LastIndexOf('/') + 1)..];
+        var assetDirectory = IsFormatDirectory(directoryName)
+            ? directory.LastIndexOf('/') < 0 ? string.Empty : directory[..directory.LastIndexOf('/')]
+            : directory;
         var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(relative);
         var extensions = GetPreferredExtensions(format);
         bool useDarkVariant = ShouldUseDarkVariant();
@@ -60,9 +64,7 @@ public static class IconAssetResolver
         {
             if (useDarkVariant)
             {
-                var darkCandidate = string.IsNullOrEmpty(directory)
-                    ? $"{fileNameWithoutExtension}-dark{extension}"
-                    : $"{directory}/{fileNameWithoutExtension}-dark{extension}";
+                var darkCandidate = BuildFormatPath(assetDirectory, extension, $"{fileNameWithoutExtension}-dark{extension}");
 
                 var darkCandidateUri = new Uri($"avares://Odyssey/Assets/{darkCandidate}");
                 if (AssetLoader.Exists(darkCandidateUri))
@@ -71,9 +73,7 @@ public static class IconAssetResolver
                 }
             }
 
-            var candidate = string.IsNullOrEmpty(directory)
-                ? $"{fileNameWithoutExtension}{extension}"
-                : $"{directory}/{fileNameWithoutExtension}{extension}";
+            var candidate = BuildFormatPath(assetDirectory, extension, $"{fileNameWithoutExtension}{extension}");
 
             var candidateUri = new Uri($"avares://Odyssey/Assets/{candidate}");
             if (AssetLoader.Exists(candidateUri))
@@ -82,8 +82,29 @@ public static class IconAssetResolver
             }
         }
 
-        return "/Assets/" + relative.Replace('\\', '/');
+        var sourceExtension = Path.GetExtension(relative).ToLowerInvariant();
+        var fallback = IsFormatExtension(sourceExtension)
+            ? BuildFormatPath(assetDirectory, sourceExtension, $"{fileNameWithoutExtension}{sourceExtension}")
+            : relative.Replace('\\', '/');
+        return "/Assets/" + fallback;
     }
+
+    private static string BuildFormatPath(string directory, string extension, string fileName)
+    {
+        var formatDirectory = extension.TrimStart('.');
+        var folder = string.IsNullOrEmpty(directory) ? formatDirectory : $"{directory}/{formatDirectory}";
+        return $"{folder}/{fileName}";
+    }
+
+    private static bool IsFormatDirectory(string directory) =>
+        directory.Equals("gif", StringComparison.OrdinalIgnoreCase)
+        || directory.Equals("png", StringComparison.OrdinalIgnoreCase)
+        || directory.Equals("svg", StringComparison.OrdinalIgnoreCase);
+
+    private static bool IsFormatExtension(string extension) =>
+        extension.Equals(".gif", StringComparison.OrdinalIgnoreCase)
+        || extension.Equals(".png", StringComparison.OrdinalIgnoreCase)
+        || extension.Equals(".svg", StringComparison.OrdinalIgnoreCase);
 
     private static string[] GetPreferredExtensions(IconAssetFormatMode format) => format switch
     {

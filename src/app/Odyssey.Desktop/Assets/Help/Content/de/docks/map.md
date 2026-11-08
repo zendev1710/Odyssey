@@ -2,7 +2,7 @@
 
 Hier wird eine Karte der bekannten Welt dargestellt.
 
-![window_map](../images/windows_map.gif)
+![window_map](../images/gif/windows_map.gif)
 
 Bei eingeschaltetem "Fog of War" (FOW) werden Regionen, in denen sich keine eigenen Einheiten befinden oder durchgereist sind, bzw. Ozeanregionen, die man nicht von einem Leuchtturm erblickt, dunkler gezeichnet. Mit der Tastenkombination Strg+H lässt sich der Modus an- und ausschalten.
 

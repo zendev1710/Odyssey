@@ -11,7 +11,7 @@
         "baer",
         "bears"
       ],
-      "file": "animals/bear.gif"
+      "file": "animals/gif/bear.gif"
     },
     {
       "category": "animal",
@@ -24,7 +24,7 @@
         "bloerkianisches breitmaulnashorn",
         "bloerkianbroadmouthedrhinocero"
       ],
-      "file": "animals/bloerkian_broad_mouthed_rhinoceros.gif"
+      "file": "animals/gif/bloerkian_broad_mouthed_rhinoceros.gif"
     },
     {
       "category": "animal",
@@ -37,7 +37,7 @@
         "blauer, bloerkianischer bergpuma",
         "bluebloerkianmountainpumas"
       ],
-      "file": "animals/blue_bloerkian_mountain_puma.gif"
+      "file": "animals/gif/blue_bloerkian_mountain_puma.gif"
     },
     {
       "category": "animal",
@@ -49,7 +49,7 @@
         "kamel",
         "camels"
       ],
-      "file": "animals/camel.gif"
+      "file": "animals/gif/camel.gif"
     },
     {
       "category": "animal",
@@ -61,7 +61,7 @@
         "katzen",
         "cat"
       ],
-      "file": "animals/cats.gif"
+      "file": "animals/gif/cats.gif"
     },
     {
       "category": "animal",
@@ -73,7 +73,7 @@
         "delphine",
         "dolphin"
       ],
-      "file": "animals/dolphins.gif"
+      "file": "animals/gif/dolphins.gif"
     },
     {
       "category": "animal",
@@ -85,7 +85,7 @@
         "adler",
         "eagles"
       ],
-      "file": "animals/eagle.gif"
+      "file": "animals/gif/eagle.gif"
     },
     {
       "category": "animal",
@@ -97,7 +97,7 @@
         "elefant",
         "elephants"
       ],
-      "file": "animals/elephant.gif"
+      "file": "animals/gif/elephant.gif"
     },
     {
       "category": "animal",
@@ -110,7 +110,7 @@
         "gianttortois",
         "gianttortoise"
       ],
-      "file": "animals/giant_tortoises.gif"
+      "file": "animals/gif/giant_tortoises.gif"
     },
     {
       "category": "animal",
@@ -122,7 +122,7 @@
         "pferd",
         "horses"
       ],
-      "file": "animals/horse.gif"
+      "file": "animals/gif/horse.gif"
     },
     {
       "category": "animal",
@@ -134,7 +134,7 @@
         "insekten",
         "insect"
       ],
-      "file": "animals/insects.gif"
+      "file": "animals/gif/insects.gif"
     },
     {
       "category": "animal",
@@ -147,7 +147,7 @@
         "lynx",
         "lynxe"
       ],
-      "file": "animals/lynxes.gif"
+      "file": "animals/gif/lynxes.gif"
     },
     {
       "category": "animal",
@@ -159,7 +159,7 @@
         "berghunde",
         "mountainhound"
       ],
-      "file": "animals/mountain_hounds.gif"
+      "file": "animals/gif/mountain_hounds.gif"
     },
     {
       "category": "animal",
@@ -171,7 +171,7 @@
         "eulen",
         "owl"
       ],
-      "file": "animals/owls.gif"
+      "file": "animals/gif/owls.gif"
     },
     {
       "category": "animal",
@@ -183,7 +183,7 @@
         "ladpferd",
         "packhorses"
       ],
-      "file": "animals/packhorse.gif"
+      "file": "animals/gif/packhorse.gif"
     },
     {
       "category": "animal",
@@ -195,7 +195,7 @@
         "ratten",
         "rat"
       ],
-      "file": "animals/rats.gif"
+      "file": "animals/gif/rats.gif"
     },
     {
       "category": "animal",
@@ -207,7 +207,7 @@
         "schneeleoparden",
         "snowleopard"
       ],
-      "file": "animals/snow_leopards.gif"
+      "file": "animals/gif/snow_leopards.gif"
     },
     {
       "category": "animal",
@@ -219,7 +219,7 @@
         "kroeten",
         "toad"
       ],
-      "file": "animals/toads.gif"
+      "file": "animals/gif/toads.gif"
     },
     {
       "category": "animal",
@@ -231,7 +231,7 @@
         "einhoerner",
         "unicorn"
       ],
-      "file": "animals/unicorns.gif"
+      "file": "animals/gif/unicorns.gif"
     },
     {
       "category": "animal",
@@ -243,16 +243,7 @@
         "wolf",
         "Wolf"
       ],
-      "file": "animals/wolf.gif"
-    },
-    {
-      "category": "animal",
-      "id": "animal/wolf_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "animals/wolf_alt.gif"
+      "file": "animals/gif/wolf.gif"
     },
     {
       "category": "animal",
@@ -266,7 +257,7 @@
         "Wolves",
         "wolfe"
       ],
-      "file": "animals/wolves.gif"
+      "file": "animals/gif/wolves.gif"
     },
     {
       "category": "building",
@@ -281,7 +272,7 @@
         "académie",
         "academies"
       ],
-      "file": "buildings/academy.gif"
+      "file": "buildings/gif/academy.gif"
     },
     {
       "category": "building",
@@ -293,7 +284,7 @@
         "akropolis",
         "acropoli"
       ],
-      "file": "buildings/acropolis.gif"
+      "file": "buildings/gif/acropolis.gif"
     },
     {
       "category": "building",
@@ -305,7 +296,7 @@
         "alchemistenkueche",
         "alchemistskitchens"
       ],
-      "file": "buildings/alchemist_s_kitchen.gif"
+      "file": "buildings/gif/alchemist_s_kitchen.gif"
     },
     {
       "category": "building",
@@ -320,7 +311,7 @@
         "Académie des Arts",
         "artacademies"
       ],
-      "file": "buildings/art_academy.gif"
+      "file": "buildings/gif/art_academy.gif"
     },
     {
       "category": "building",
@@ -334,7 +325,7 @@
         "cercle de pierres sacrées",
         "blessedstonecircles"
       ],
-      "file": "buildings/blessed_stone_circle.gif"
+      "file": "buildings/gif/blessed_stone_circle.gif"
     },
     {
       "category": "building",
@@ -346,16 +337,7 @@
         "buildings",
         "building"
       ],
-      "file": "buildings/buildings.gif"
-    },
-    {
-      "category": "building",
-      "id": "building/buildings_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "buildings/buildings_alt.gif"
+      "file": "buildings/gif/buildings.gif"
     },
     {
       "category": "building",
@@ -364,7 +346,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "buildings/buildings_alt2.gif"
+      "file": "buildings/gif/buildings_alt2.gif"
     },
     {
       "category": "building",
@@ -377,7 +359,7 @@
         "caravanserei",
         "caravanserais"
       ],
-      "file": "buildings/caravanserai.gif"
+      "file": "buildings/gif/caravanserai.gif"
     },
     {
       "category": "building",
@@ -389,7 +371,7 @@
         "schreinerei",
         "carpentries"
       ],
-      "file": "buildings/carpentry.gif"
+      "file": "buildings/gif/carpentry.gif"
     },
     {
       "category": "building",
@@ -404,7 +386,7 @@
         "château",
         "castles"
       ],
-      "file": "buildings/castle.gif"
+      "file": "buildings/gif/castle.gif"
     },
     {
       "category": "building",
@@ -419,7 +401,7 @@
         "citadelle",
         "citadels"
       ],
-      "file": "buildings/citadel.gif"
+      "file": "buildings/gif/citadel.gif"
     },
     {
       "category": "building",
@@ -431,7 +413,7 @@
         "kohlebergwerk",
         "coalmines"
       ],
-      "file": "buildings/coal_mine.gif"
+      "file": "buildings/gif/coal_mine.gif"
     },
     {
       "category": "building",
@@ -443,7 +425,7 @@
         "baustelle",
         "constructionsites"
       ],
-      "file": "buildings/construction_site.gif"
+      "file": "buildings/gif/construction_site.gif"
     },
     {
       "category": "building",
@@ -456,7 +438,7 @@
         "barrage",
         "dams"
       ],
-      "file": "buildings/dam.gif"
+      "file": "buildings/gif/dam.gif"
     },
     {
       "category": "building",
@@ -470,7 +452,7 @@
         "Dockyard",
         "dockyards"
       ],
-      "file": "buildings/dockyard.gif"
+      "file": "buildings/gif/dockyard.gif"
     },
     {
       "category": "building",
@@ -482,7 +464,7 @@
         "forsthaus",
         "forestershouses"
       ],
-      "file": "buildings/forester_s_house.gif"
+      "file": "buildings/gif/forester_s_house.gif"
     },
     {
       "category": "building",
@@ -494,7 +476,7 @@
         "schmiede",
         "forgesmithies"
       ],
-      "file": "buildings/forge_smithy.gif"
+      "file": "buildings/gif/forge_smithy.gif"
     },
     {
       "category": "building",
@@ -507,7 +489,7 @@
         "fortification",
         "fortifications"
       ],
-      "file": "buildings/fortification.gif"
+      "file": "buildings/gif/fortification.gif"
     },
     {
       "category": "building",
@@ -522,7 +504,7 @@
         "forteresse",
         "fortres"
       ],
-      "file": "buildings/fortress.gif"
+      "file": "buildings/gif/fortress.gif"
     },
     {
       "category": "building",
@@ -535,7 +517,7 @@
         "fondation",
         "foundation"
       ],
-      "file": "buildings/foundations.gif"
+      "file": "buildings/gif/foundations.gif"
     },
     {
       "category": "building",
@@ -547,7 +529,7 @@
         "gewaechshaus",
         "greenhouses"
       ],
-      "file": "buildings/greenhouse.gif"
+      "file": "buildings/gif/greenhouse.gif"
     },
     {
       "category": "building",
@@ -560,7 +542,7 @@
         "corps de garde",
         "guardrooms"
       ],
-      "file": "buildings/guardroom.gif"
+      "file": "buildings/gif/guardroom.gif"
     },
     {
       "category": "building",
@@ -574,7 +556,7 @@
         "Hall",
         "halls"
       ],
-      "file": "buildings/hall.gif"
+      "file": "buildings/gif/hall.gif"
     },
     {
       "category": "building",
@@ -583,7 +565,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "buildings/hall_detail.gif"
+      "file": "buildings/gif/hall_detail.gif"
     },
     {
       "category": "building",
@@ -596,7 +578,7 @@
         "port",
         "harbours"
       ],
-      "file": "buildings/harbour.gif"
+      "file": "buildings/gif/harbour.gif"
     },
     {
       "category": "building",
@@ -608,7 +590,7 @@
         "kraeuterhuette",
         "herbalistshuts"
       ],
-      "file": "buildings/herbalist_s_hut.gif"
+      "file": "buildings/gif/herbalist_s_hut.gif"
     },
     {
       "category": "building",
@@ -621,7 +603,7 @@
         "écurie",
         "horsebreedings"
       ],
-      "file": "buildings/horse_breeding.gif"
+      "file": "buildings/gif/horse_breeding.gif"
     },
     {
       "category": "building",
@@ -633,7 +615,7 @@
         "jagdhaus",
         "huntinglodges"
       ],
-      "file": "buildings/hunting_lodge.gif"
+      "file": "buildings/gif/hunting_lodge.gif"
     },
     {
       "category": "building",
@@ -645,7 +627,7 @@
         "huette",
         "huts"
       ],
-      "file": "buildings/hut.gif"
+      "file": "buildings/gif/hut.gif"
     },
     {
       "category": "building",
@@ -657,7 +639,7 @@
         "eisenbergwerk",
         "ironmines"
       ],
-      "file": "buildings/iron_mine.gif"
+      "file": "buildings/gif/iron_mine.gif"
     },
     {
       "category": "building",
@@ -670,7 +652,7 @@
         "phare",
         "lighthouses"
       ],
-      "file": "buildings/lighthouse.gif"
+      "file": "buildings/gif/lighthouse.gif"
     },
     {
       "category": "building",
@@ -683,7 +665,7 @@
         "tour des mages",
         "magetowers"
       ],
-      "file": "buildings/mage_tower.gif"
+      "file": "buildings/gif/mage_tower.gif"
     },
     {
       "category": "building",
@@ -698,7 +680,7 @@
         "marché",
         "markets"
       ],
-      "file": "buildings/market.gif"
+      "file": "buildings/gif/market.gif"
     },
     {
       "category": "building",
@@ -712,7 +694,7 @@
         "Marketplace",
         "marketplaces"
       ],
-      "file": "buildings/marketplace.gif"
+      "file": "buildings/gif/marketplace.gif"
     },
     {
       "category": "building",
@@ -724,16 +706,7 @@
         "megapolis",
         "megapoli"
       ],
-      "file": "buildings/megapolis.gif"
-    },
-    {
-      "category": "building",
-      "id": "building/megapolis_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "buildings/megapolis_alt.gif"
+      "file": "buildings/gif/megapolis.gif"
     },
     {
       "category": "building",
@@ -747,16 +720,7 @@
         "Mine",
         "mines"
       ],
-      "file": "buildings/mine.gif"
-    },
-    {
-      "category": "building",
-      "id": "building/mine_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "buildings/mine_alt.gif"
+      "file": "buildings/gif/mine.gif"
     },
     {
       "category": "building",
@@ -768,16 +732,7 @@
         "monument",
         "monuments"
       ],
-      "file": "buildings/monument.gif"
-    },
-    {
-      "category": "building",
-      "id": "building/monument_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "buildings/monument_alt.gif"
+      "file": "buildings/gif/monument.gif"
     },
     {
       "category": "building",
@@ -791,7 +746,7 @@
         "Palace",
         "palaces"
       ],
-      "file": "buildings/palace.gif"
+      "file": "buildings/gif/palace.gif"
     },
     {
       "category": "building",
@@ -803,7 +758,7 @@
         "plantage",
         "plantations"
       ],
-      "file": "buildings/plantation.gif"
+      "file": "buildings/gif/plantation.gif"
     },
     {
       "category": "building",
@@ -815,7 +770,7 @@
         "portal",
         "portals"
       ],
-      "file": "buildings/portal.gif"
+      "file": "buildings/gif/portal.gif"
     },
     {
       "category": "building",
@@ -830,7 +785,7 @@
         "carrière",
         "quarries"
       ],
-      "file": "buildings/quarry.gif"
+      "file": "buildings/gif/quarry.gif"
     },
     {
       "category": "building",
@@ -842,7 +797,7 @@
         "sattlerei",
         "saddleries"
       ],
-      "file": "buildings/saddlery.gif"
+      "file": "buildings/gif/saddlery.gif"
     },
     {
       "category": "building",
@@ -855,7 +810,7 @@
         "scierie",
         "sawmills"
       ],
-      "file": "buildings/sawmill.gif"
+      "file": "buildings/gif/sawmill.gif"
     },
     {
       "category": "building",
@@ -868,7 +823,7 @@
         "cadre",
         "scaffolds"
       ],
-      "file": "buildings/scaffold.gif"
+      "file": "buildings/gif/scaffold.gif"
     },
     {
       "category": "building",
@@ -880,7 +835,7 @@
         "spaehturm",
         "scouttowers"
       ],
-      "file": "buildings/scout_tower.gif"
+      "file": "buildings/gif/scout_tower.gif"
     },
     {
       "category": "building",
@@ -894,7 +849,7 @@
         "Shipyard",
         "shipyards"
       ],
-      "file": "buildings/shipyard.gif"
+      "file": "buildings/gif/shipyard.gif"
     },
     {
       "category": "building",
@@ -906,7 +861,7 @@
         "schilder",
         "sign"
       ],
-      "file": "buildings/signs.gif"
+      "file": "buildings/gif/signs.gif"
     },
     {
       "category": "building",
@@ -919,7 +874,7 @@
         "cercle de pierre",
         "stonecircles"
       ],
-      "file": "buildings/stone_circle.gif"
+      "file": "buildings/gif/stone_circle.gif"
     },
     {
       "category": "building",
@@ -933,7 +888,7 @@
         "Stone pit",
         "stonepits"
       ],
-      "file": "buildings/stone_pit.gif"
+      "file": "buildings/gif/stone_pit.gif"
     },
     {
       "category": "building",
@@ -945,7 +900,7 @@
         "taverne",
         "taverns"
       ],
-      "file": "buildings/tavern.gif"
+      "file": "buildings/gif/tavern.gif"
     },
     {
       "category": "building",
@@ -957,7 +912,7 @@
         "tempel",
         "temples"
       ],
-      "file": "buildings/temple.gif"
+      "file": "buildings/gif/temple.gif"
     },
     {
       "category": "building",
@@ -972,7 +927,7 @@
         "tour",
         "towers"
       ],
-      "file": "buildings/tower.gif"
+      "file": "buildings/gif/tower.gif"
     },
     {
       "category": "building",
@@ -985,7 +940,7 @@
         "poste commercial",
         "tradingposts"
       ],
-      "file": "buildings/trading_post.gif"
+      "file": "buildings/gif/trading_post.gif"
     },
     {
       "category": "building",
@@ -997,7 +952,7 @@
         "baumschule",
         "treenurseries"
       ],
-      "file": "buildings/tree_nursery.gif"
+      "file": "buildings/gif/tree_nursery.gif"
     },
     {
       "category": "building",
@@ -1009,7 +964,7 @@
         "tunnel",
         "tunnels"
       ],
-      "file": "buildings/tunnel.gif"
+      "file": "buildings/gif/tunnel.gif"
     },
     {
       "category": "building",
@@ -1021,7 +976,7 @@
         "universitaet",
         "universities"
       ],
-      "file": "buildings/university.gif"
+      "file": "buildings/gif/university.gif"
     },
     {
       "category": "building",
@@ -1036,7 +991,7 @@
         "tour de garde",
         "watchtowers"
       ],
-      "file": "buildings/watchtower.gif"
+      "file": "buildings/gif/watchtower.gif"
     },
     {
       "category": "building",
@@ -1048,7 +1003,7 @@
         "holzfaellerhuette",
         "woodcuttershuts"
       ],
-      "file": "buildings/woodcutter_s_hut.gif"
+      "file": "buildings/gif/woodcutter_s_hut.gif"
     },
     {
       "category": "building",
@@ -1060,7 +1015,7 @@
         "werkstatt",
         "workshops"
       ],
-      "file": "buildings/workshop.gif"
+      "file": "buildings/gif/workshop.gif"
     },
     {
       "category": "building",
@@ -1073,7 +1028,7 @@
         "trou de ver",
         "wormholes"
       ],
-      "file": "buildings/wormhole.gif"
+      "file": "buildings/gif/wormhole.gif"
     },
     {
       "category": "effect",
@@ -1085,7 +1040,7 @@
         "berserkerblut",
         "berserkersbloods"
       ],
-      "file": "effects/berserkers_blood.gif"
+      "file": "effects/gif/berserkers_blood.gif"
     },
     {
       "category": "effect",
@@ -1097,7 +1052,7 @@
         "gehirnschmalz",
         "brainwaxs"
       ],
-      "file": "effects/brain_wax.gif"
+      "file": "effects/gif/brain_wax.gif"
     },
     {
       "category": "effect",
@@ -1109,7 +1064,7 @@
         "schaffenstrunk",
         "busybeers"
       ],
-      "file": "effects/busybeer.gif"
+      "file": "effects/gif/busybeer.gif"
     },
     {
       "category": "effect",
@@ -1121,7 +1076,7 @@
         "dumpfbackenbrot",
         "duncebuns"
       ],
-      "file": "effects/duncebun.gif"
+      "file": "effects/gif/duncebun.gif"
     },
     {
       "category": "effect",
@@ -1133,7 +1088,7 @@
         "elixier_der_macht",
         "elixirofpowers"
       ],
-      "file": "effects/elixir_of_power.gif"
+      "file": "effects/gif/elixir_of_power.gif"
     },
     {
       "category": "effect",
@@ -1146,7 +1101,7 @@
         "eau de goliath",
         "goliathwaters"
       ],
-      "file": "effects/goliath_water.gif"
+      "file": "effects/gif/goliath_water.gif"
     },
     {
       "category": "effect",
@@ -1158,7 +1113,7 @@
         "heiltrank",
         "healingpotions"
       ],
-      "file": "effects/healing_potion.gif"
+      "file": "effects/gif/healing_potion.gif"
     },
     {
       "category": "effect",
@@ -1170,7 +1125,7 @@
         "pferdeglueck",
         "horsepowerpotions"
       ],
-      "file": "effects/horsepower_potion.gif"
+      "file": "effects/gif/horsepower_potion.gif"
     },
     {
       "category": "effect",
@@ -1182,7 +1137,7 @@
         "wundsalbe",
         "ointments"
       ],
-      "file": "effects/ointment.gif"
+      "file": "effects/gif/ointment.gif"
     },
     {
       "category": "effect",
@@ -1194,7 +1149,7 @@
         "bauernblut",
         "peasantbloods"
       ],
-      "file": "effects/peasant_blood.gif"
+      "file": "effects/gif/peasant_blood.gif"
     },
     {
       "category": "effect",
@@ -1206,7 +1161,7 @@
         "bauernlieb",
         "peasantlovepotions"
       ],
-      "file": "effects/peasant_love_potion.gif"
+      "file": "effects/gif/peasant_love_potion.gif"
     },
     {
       "category": "effect",
@@ -1218,7 +1173,7 @@
         "nestwaerme",
         "potionofnestwarmths"
       ],
-      "file": "effects/potion_of_nest_warmth.gif"
+      "file": "effects/gif/potion_of_nest_warmth.gif"
     },
     {
       "category": "effect",
@@ -1230,7 +1185,7 @@
         "trank_der_wahrheit",
         "potionoftruths"
       ],
-      "file": "effects/potion_of_truth.gif"
+      "file": "effects/gif/potion_of_truth.gif"
     },
     {
       "category": "effect",
@@ -1242,7 +1197,7 @@
         "siebenmeilentee",
         "sevenmileteas"
       ],
-      "file": "effects/seven_mile_tea.gif"
+      "file": "effects/gif/seven_mile_tea.gif"
     },
     {
       "category": "effect",
@@ -1254,7 +1209,7 @@
         "wasser_des_lebens",
         "wateroflives"
       ],
-      "file": "effects/water_of_life.gif"
+      "file": "effects/gif/water_of_life.gif"
     },
     {
       "category": "faction",
@@ -1266,16 +1221,7 @@
         "allianz",
         "alliances"
       ],
-      "file": "factions/alliance.gif"
-    },
-    {
-      "category": "faction",
-      "id": "faction/alliance_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "factions/alliance_alt.gif"
+      "file": "factions/gif/alliance.gif"
     },
     {
       "category": "faction",
@@ -1287,16 +1233,7 @@
         "verbuendete_kampffraktion",
         "alliedcombatfactions"
       ],
-      "file": "factions/allied_combat_faction.gif"
-    },
-    {
-      "category": "faction",
-      "id": "faction/allied_combat_faction_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "factions/allied_combat_faction_alt.gif"
+      "file": "factions/gif/allied_combat_faction.gif"
     },
     {
       "category": "faction",
@@ -1308,16 +1245,7 @@
         "banner",
         "banners"
       ],
-      "file": "factions/banner.gif"
-    },
-    {
-      "category": "faction",
-      "id": "faction/banner_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "factions/banner_alt.gif"
+      "file": "factions/gif/banner.gif"
     },
     {
       "category": "faction",
@@ -1329,7 +1257,7 @@
         "geschaeft",
         "busines"
       ],
-      "file": "factions/business.gif"
+      "file": "factions/gif/business.gif"
     },
     {
       "category": "faction",
@@ -1341,16 +1269,7 @@
         "feindliche_fraktion",
         "enemyfactions"
       ],
-      "file": "factions/enemy_faction.gif"
-    },
-    {
-      "category": "faction",
-      "id": "faction/enemy_faction_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "factions/enemy_faction_alt.gif"
+      "file": "factions/gif/enemy_faction.gif"
     },
     {
       "category": "faction",
@@ -1362,16 +1281,7 @@
         "fraktion",
         "factions"
       ],
-      "file": "factions/faction.gif"
-    },
-    {
-      "category": "faction",
-      "id": "faction/faction_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "factions/faction_alt.gif"
+      "file": "factions/gif/faction.gif"
     },
     {
       "category": "faction",
@@ -1383,7 +1293,7 @@
         "factionpool",
         "factionpools"
       ],
-      "file": "factions/faction_pool.gif"
+      "file": "factions/gif/faction_pool.gif"
     },
     {
       "category": "faction",
@@ -1395,7 +1305,7 @@
         "reichsschatz",
         "imperialtreasuries"
       ],
-      "file": "factions/imperial_treasury.gif"
+      "file": "factions/gif/imperial_treasury.gif"
     },
     {
       "category": "faction",
@@ -1407,16 +1317,7 @@
         "einkommen",
         "incomes"
       ],
-      "file": "factions/income.gif"
-    },
-    {
-      "category": "faction",
-      "id": "faction/income_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "factions/income_alt.gif"
+      "file": "factions/gif/income.gif"
     },
     {
       "category": "faction",
@@ -1428,16 +1329,7 @@
         "bezahlen",
         "paies"
       ],
-      "file": "factions/pay.gif"
-    },
-    {
-      "category": "faction",
-      "id": "faction/pay_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "factions/pay_alt.gif"
+      "file": "factions/gif/pay.gif"
     },
     {
       "category": "faction",
@@ -1450,7 +1342,7 @@
         "Bauer",
         "Peasant"
       ],
-      "file": "factions/peasant.gif"
+      "file": "factions/gif/peasant.gif"
     },
     {
       "category": "faction",
@@ -1463,7 +1355,7 @@
         "Bauern",
         "Peasants"
       ],
-      "file": "factions/peasants.gif"
+      "file": "factions/gif/peasants.gif"
     },
     {
       "category": "faction",
@@ -1475,16 +1367,7 @@
         "privilegierte_fraktion",
         "privilegedfactions"
       ],
-      "file": "factions/privileged_faction.gif"
-    },
-    {
-      "category": "faction",
-      "id": "faction/privileged_faction_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "factions/privileged_faction_alt.gif"
+      "file": "factions/gif/privileged_faction.gif"
     },
     {
       "category": "faction",
@@ -1496,16 +1379,7 @@
         "produktion",
         "productions"
       ],
-      "file": "factions/production.gif"
-    },
-    {
-      "category": "faction",
-      "id": "faction/production_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "factions/production_alt.gif"
+      "file": "factions/gif/production.gif"
     },
     {
       "category": "faction",
@@ -1517,7 +1391,7 @@
         "rekruten",
         "recruit"
       ],
-      "file": "factions/recruits.gif"
+      "file": "factions/gif/recruits.gif"
     },
     {
       "category": "faction",
@@ -1531,16 +1405,7 @@
         "Tax collection",
         "taxcollections"
       ],
-      "file": "factions/tax_collection.gif"
-    },
-    {
-      "category": "faction",
-      "id": "faction/tax_collection_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "factions/tax_collection_alt.gif"
+      "file": "factions/gif/tax_collection.gif"
     },
     {
       "category": "faction",
@@ -1552,16 +1417,7 @@
         "vertrauen",
         "trusts"
       ],
-      "file": "factions/trust.gif"
-    },
-    {
-      "category": "faction",
-      "id": "faction/trust_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "factions/trust_alt.gif"
+      "file": "factions/gif/trust.gif"
     },
     {
       "category": "faction",
@@ -1573,16 +1429,7 @@
         "unterhalt",
         "upkeeps"
       ],
-      "file": "factions/upkeep.gif"
-    },
-    {
-      "category": "faction",
-      "id": "faction/upkeep_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "factions/upkeep_alt.gif"
+      "file": "factions/gif/upkeep.gif"
     },
     {
       "category": "faction",
@@ -1595,7 +1442,7 @@
         "wag",
         "wage"
       ],
-      "file": "factions/wages.gif"
+      "file": "factions/gif/wages.gif"
     },
     {
       "category": "item",
@@ -1607,7 +1454,7 @@
         "adamantium",
         "adamantiums"
       ],
-      "file": "items/adamantium.gif"
+      "file": "items/gif/adamantium.gif"
     },
     {
       "category": "item",
@@ -1619,7 +1466,7 @@
         "adamantiumaxt",
         "adamantiumaxes"
       ],
-      "file": "items/adamantium_axe.gif"
+      "file": "items/gif/adamantium_axe.gif"
     },
     {
       "category": "item",
@@ -1631,7 +1478,7 @@
         "adamantiumruestung",
         "adamantiumplates"
       ],
-      "file": "items/adamantium_plate.gif"
+      "file": "items/gif/adamantium_plate.gif"
     },
     {
       "category": "item",
@@ -1643,7 +1490,7 @@
         "agriflail",
         "agriflails"
       ],
-      "file": "items/agriflail.gif"
+      "file": "items/gif/agriflail.gif"
     },
     {
       "category": "item",
@@ -1655,7 +1502,7 @@
         "mandelkern",
         "almonds"
       ],
-      "file": "items/almond.gif"
+      "file": "items/gif/almond.gif"
     },
     {
       "category": "item",
@@ -1667,16 +1514,7 @@
         "munition",
         "ammunitions"
       ],
-      "file": "items/ammunition.gif"
-    },
-    {
-      "category": "item",
-      "id": "item/ammunition_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "items/ammunition_alt.gif"
+      "file": "items/gif/ammunition.gif"
     },
     {
       "category": "item",
@@ -1688,7 +1526,7 @@
         "amulett",
         "amulets"
       ],
-      "file": "items/amulet.gif"
+      "file": "items/gif/amulet.gif"
     },
     {
       "category": "item",
@@ -1700,7 +1538,7 @@
         "amulett_der_heilung",
         "amuletofhealings"
       ],
-      "file": "items/amulet_of_healing.gif"
+      "file": "items/gif/amulet_of_healing.gif"
     },
     {
       "category": "item",
@@ -1712,7 +1550,7 @@
         "amulett_des_wahren_sehens",
         "amuletoftruesights"
       ],
-      "file": "items/amulet_of_true_sight.gif"
+      "file": "items/gif/amulet_of_true_sight.gif"
     },
     {
       "category": "item",
@@ -1724,7 +1562,7 @@
         "tierherz",
         "animalhearts"
       ],
-      "file": "items/animal_heart.gif"
+      "file": "items/gif/animal_heart.gif"
     },
     {
       "category": "item",
@@ -1736,16 +1574,7 @@
         "antimagiekristal",
         "antimagiccrystals"
       ],
-      "file": "items/antimagic_crystal.gif"
-    },
-    {
-      "category": "item",
-      "id": "item/antimagic_crystal_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "items/antimagic_crystal_alt.gif"
+      "file": "items/gif/antimagic_crystal.gif"
     },
     {
       "category": "item",
@@ -1757,7 +1586,7 @@
         "apfel",
         "apples"
       ],
-      "file": "items/apple.gif"
+      "file": "items/gif/apple.gif"
     },
     {
       "category": "item",
@@ -1769,7 +1598,7 @@
         "meermenschschuppe",
         "aquarianscales"
       ],
-      "file": "items/aquarian_scale.gif"
+      "file": "items/gif/aquarian_scale.gif"
     },
     {
       "category": "item",
@@ -1781,7 +1610,7 @@
         "arcanas_segen",
         "arcanasblessings"
       ],
-      "file": "items/arcanas_blessing.gif"
+      "file": "items/gif/arcanas_blessing.gif"
     },
     {
       "category": "item",
@@ -1793,25 +1622,7 @@
         "ruestungen",
         "armours"
       ],
-      "file": "items/armour.gif"
-    },
-    {
-      "category": "item",
-      "id": "item/armour_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "items/armour_alt.gif"
-    },
-    {
-      "category": "item",
-      "id": "item/armour_alt_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "items/armour_alt_alt.gif"
+      "file": "items/gif/armour.gif"
     },
     {
       "category": "item",
@@ -1823,7 +1634,7 @@
         "arrow",
         "arrows"
       ],
-      "file": "items/arrow.gif"
+      "file": "items/gif/arrow.gif"
     },
     {
       "category": "item",
@@ -1835,7 +1646,7 @@
         "arrowhead",
         "arrowheads"
       ],
-      "file": "items/arrowhead.gif"
+      "file": "items/gif/arrowhead.gif"
     },
     {
       "category": "item",
@@ -1847,7 +1658,7 @@
         "artefakte",
         "artefact"
       ],
-      "file": "items/artefacts.gif"
+      "file": "items/gif/artefacts.gif"
     },
     {
       "category": "item",
@@ -1859,7 +1670,7 @@
         "astraler_bann",
         "astralbans"
       ],
-      "file": "items/astral_ban.gif"
+      "file": "items/gif/astral_ban.gif"
     },
     {
       "category": "item",
@@ -1871,7 +1682,7 @@
         "astralkristall",
         "astralcrystals"
       ],
-      "file": "items/astral_crystal.gif"
+      "file": "items/gif/astral_crystal.gif"
     },
     {
       "category": "item",
@@ -1883,7 +1694,7 @@
         "aurafocus",
         "aurafocu"
       ],
-      "file": "items/aurafocus.gif"
+      "file": "items/gif/aurafocus.gif"
     },
     {
       "category": "item",
@@ -1895,16 +1706,7 @@
         "kriegsaxt",
         "axes"
       ],
-      "file": "items/axe.gif"
-    },
-    {
-      "category": "item",
-      "id": "item/axe_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "items/axe_alt.gif"
+      "file": "items/gif/axe.gif"
     },
     {
       "category": "item",
@@ -1916,7 +1718,7 @@
         "beutel_des_negativen_gewichts",
         "bagofnegativeweights"
       ],
-      "file": "items/bag_of_negative_weight.gif"
+      "file": "items/gif/bag_of_negative_weight.gif"
     },
     {
       "category": "item",
@@ -1928,7 +1730,7 @@
         "balsam",
         "balms"
       ],
-      "file": "items/balm.gif"
+      "file": "items/gif/balm.gif"
     },
     {
       "category": "item",
@@ -1940,7 +1742,7 @@
         "basiliskenzunge",
         "basilisktongues"
       ],
-      "file": "items/basilisk_tongue.gif"
+      "file": "items/gif/basilisk_tongue.gif"
     },
     {
       "category": "item",
@@ -1952,7 +1754,7 @@
         "battle_axe",
         "battleaxes"
       ],
-      "file": "items/battle_axe.gif"
+      "file": "items/gif/battle_axe.gif"
     },
     {
       "category": "item",
@@ -1964,7 +1766,7 @@
         "battlestaff",
         "battlestafves"
       ],
-      "file": "items/battlestaff.gif"
+      "file": "items/gif/battlestaff.gif"
     },
     {
       "category": "item",
@@ -1976,7 +1778,7 @@
         "guertel_der_trollstaerke",
         "beltoftrollstrengths"
       ],
-      "file": "items/belt_of_troll_strength.gif"
+      "file": "items/gif/belt_of_troll_strength.gif"
     },
     {
       "category": "item",
@@ -1988,7 +1790,7 @@
         "berserkerblut",
         "berserkersbloods"
       ],
-      "file": "items/berserkers_blood.gif"
+      "file": "items/gif/berserkers_blood.gif"
     },
     {
       "category": "item",
@@ -2000,7 +1802,7 @@
         "berserkerswut",
         "berserkersfuries"
       ],
-      "file": "items/berserkers_fury.gif"
+      "file": "items/gif/berserkers_fury.gif"
     },
     {
       "category": "item",
@@ -2012,7 +1814,7 @@
         "geburtstagstorte",
         "birthdaycakes"
       ],
-      "file": "items/birthday_cake.gif"
+      "file": "items/gif/birthday_cake.gif"
     },
     {
       "category": "item",
@@ -2024,7 +1826,7 @@
         "schwarzer_lotus",
         "blacklotu"
       ],
-      "file": "items/black_lotus.gif"
+      "file": "items/gif/black_lotus.gif"
     },
     {
       "category": "item",
@@ -2037,7 +1839,7 @@
         "blessingofhors",
         "blessingofhorse"
       ],
-      "file": "items/blessing_of_horses.gif"
+      "file": "items/gif/blessing_of_horses.gif"
     },
     {
       "category": "item",
@@ -2049,7 +1851,7 @@
         "knochenamulett",
         "boneamulets"
       ],
-      "file": "items/bone_amulet.gif"
+      "file": "items/gif/bone_amulet.gif"
     },
     {
       "category": "item",
@@ -2061,16 +1863,7 @@
         "bogen",
         "bows"
       ],
-      "file": "items/bow.gif"
-    },
-    {
-      "category": "item",
-      "id": "item/bow_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "items/bow_alt.gif"
+      "file": "items/gif/bow.gif"
     },
     {
       "category": "item",
@@ -2082,7 +1875,7 @@
         "lerntrank",
         "brainboosts"
       ],
-      "file": "items/brain_boost.gif"
+      "file": "items/gif/brain_boost.gif"
     },
     {
       "category": "item",
@@ -2094,7 +1887,7 @@
         "gehirnschmalz",
         "brainwaxs"
       ],
-      "file": "items/brain_wax.gif"
+      "file": "items/gif/brain_wax.gif"
     },
     {
       "category": "item",
@@ -2106,7 +1899,7 @@
         "bubblemorel",
         "bubblemorels"
       ],
-      "file": "items/bubblemorel.gif"
+      "file": "items/gif/bubblemorel.gif"
     },
     {
       "category": "item",
@@ -2118,7 +1911,7 @@
         "bugleweed",
         "bugleweeds"
       ],
-      "file": "items/bugleweed.gif"
+      "file": "items/gif/bugleweed.gif"
     },
     {
       "category": "item",
@@ -2130,7 +1923,7 @@
         "schaffenstrunk",
         "busybeers"
       ],
-      "file": "items/busybeer.gif"
+      "file": "items/gif/busybeer.gif"
     },
     {
       "category": "item",
@@ -2142,7 +1935,7 @@
         "wagen",
         "carts"
       ],
-      "file": "items/cart.gif"
+      "file": "items/gif/cart.gif"
     },
     {
       "category": "item",
@@ -2154,7 +1947,7 @@
         "katzenschwanz",
         "cattails"
       ],
-      "file": "items/cat_tail.gif"
+      "file": "items/gif/cat_tail.gif"
     },
     {
       "category": "item",
@@ -2166,7 +1959,7 @@
         "katapult",
         "catapults"
       ],
-      "file": "items/catapult.gif"
+      "file": "items/gif/catapult.gif"
     },
     {
       "category": "item",
@@ -2178,7 +1971,7 @@
         "katapultmunition",
         "catapultammunitions"
       ],
-      "file": "items/catapult_ammunition.gif"
+      "file": "items/gif/catapult_ammunition.gif"
     },
     {
       "category": "item",
@@ -2190,7 +1983,7 @@
         "cattle",
         "cattles"
       ],
-      "file": "items/cattle.gif"
+      "file": "items/gif/cattle.gif"
     },
     {
       "category": "item",
@@ -2202,7 +1995,7 @@
         "cavelichen",
         "cavelichens"
       ],
-      "file": "items/cave_lichen.gif"
+      "file": "items/gif/cave_lichen.gif"
     },
     {
       "category": "item",
@@ -2214,7 +2007,7 @@
         "kettenhemd",
         "chainmails"
       ],
-      "file": "items/chainmail.gif"
+      "file": "items/gif/chainmail.gif"
     },
     {
       "category": "item",
@@ -2226,7 +2019,7 @@
         "kinderreich",
         "childrenskingdoms"
       ],
-      "file": "items/childrens_kingdom.gif"
+      "file": "items/gif/childrens_kingdom.gif"
     },
     {
       "category": "item",
@@ -2238,7 +2031,7 @@
         "chitinpanzer",
         "chitinarmours"
       ],
-      "file": "items/chitin_armour.gif"
+      "file": "items/gif/chitin_armour.gif"
     },
     {
       "category": "item",
@@ -2250,7 +2043,7 @@
         "weihnachtsbaum",
         "christmastrees"
       ],
-      "file": "items/christmas_tree.gif"
+      "file": "items/gif/christmas_tree.gif"
     },
     {
       "category": "item",
@@ -2262,7 +2055,7 @@
         "bihaender",
         "claymores"
       ],
-      "file": "items/claymore.gif"
+      "file": "items/gif/claymore.gif"
     },
     {
       "category": "item",
@@ -2274,7 +2067,7 @@
         "mantel_der_unverletzlichkeit",
         "cloakofinvulnerabilities"
       ],
-      "file": "items/cloak_of_invulnerability.gif"
+      "file": "items/gif/cloak_of_invulnerability.gif"
     },
     {
       "category": "item",
@@ -2286,7 +2079,7 @@
         "wolke",
         "clouds"
       ],
-      "file": "items/cloud.gif"
+      "file": "items/gif/cloud.gif"
     },
     {
       "category": "item",
@@ -2298,7 +2091,7 @@
         "club",
         "clubs"
       ],
-      "file": "items/club.gif"
+      "file": "items/gif/club.gif"
     },
     {
       "category": "item",
@@ -2310,7 +2103,7 @@
         "coal",
         "coals"
       ],
-      "file": "items/coal.gif"
+      "file": "items/gif/coal.gif"
     },
     {
       "category": "item",
@@ -2322,7 +2115,7 @@
         "cobalt_fungus",
         "cobaltfungu"
       ],
-      "file": "items/cobalt_fungus.gif"
+      "file": "items/gif/cobalt_fungus.gif"
     },
     {
       "category": "item",
@@ -2334,7 +2127,7 @@
         "coinpurse",
         "coinpurses"
       ],
-      "file": "items/coin_purse.gif"
+      "file": "items/gif/coin_purse.gif"
     },
     {
       "category": "item",
@@ -2346,7 +2139,7 @@
         "compositebow",
         "compositebows"
       ],
-      "file": "items/composite_bow.gif"
+      "file": "items/gif/composite_bow.gif"
     },
     {
       "category": "item",
@@ -2358,16 +2151,7 @@
         "keks",
         "cookies"
       ],
-      "file": "items/cookie.gif"
-    },
-    {
-      "category": "item",
-      "id": "item/cookie_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "items/cookie_alt.gif"
+      "file": "items/gif/cookie.gif"
     },
     {
       "category": "item",
@@ -2379,16 +2163,7 @@
         "armbrust",
         "crossbows"
       ],
-      "file": "items/crossbow.gif"
-    },
-    {
-      "category": "item",
-      "id": "item/crossbow_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "items/crossbow_alt.gif"
+      "file": "items/gif/crossbow.gif"
     },
     {
       "category": "item",
@@ -2400,7 +2175,7 @@
         "daemonenblut",
         "demonbloods"
       ],
-      "file": "items/demon_blood.gif"
+      "file": "items/gif/demon_blood.gif"
     },
     {
       "category": "item",
@@ -2412,16 +2187,7 @@
         "distanz_waffen",
         "distanceweapon"
       ],
-      "file": "items/distance_weapons.gif"
-    },
-    {
-      "category": "item",
-      "id": "item/distance_weapons_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "items/distance_weapons_alt.gif"
+      "file": "items/gif/distance_weapons.gif"
     },
     {
       "category": "item",
@@ -2430,16 +2196,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "items/distance_weapons_en.gif"
-    },
-    {
-      "category": "item",
-      "id": "item/distance_weapons_en_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "items/distance_weapons_en_alt.gif"
+      "file": "items/gif/distance_weapons_en.gif"
     },
     {
       "category": "item",
@@ -2451,7 +2208,7 @@
         "doppelsicht",
         "doublesights"
       ],
-      "file": "items/double_sight.gif"
+      "file": "items/gif/double_sight.gif"
     },
     {
       "category": "item",
@@ -2463,7 +2220,7 @@
         "drachenblut",
         "dragonbloods"
       ],
-      "file": "items/dragon_blood.gif"
+      "file": "items/gif/dragon_blood.gif"
     },
     {
       "category": "item",
@@ -2475,7 +2232,7 @@
         "drachenkopf",
         "dragonheads"
       ],
-      "file": "items/dragon_head.gif"
+      "file": "items/gif/dragon_head.gif"
     },
     {
       "category": "item",
@@ -2487,7 +2244,7 @@
         "drachenhaut",
         "dragonhides"
       ],
-      "file": "items/dragon_hide.gif"
+      "file": "items/gif/dragon_hide.gif"
     },
     {
       "category": "item",
@@ -2499,7 +2256,7 @@
         "drachenpanzer",
         "dragonscalearmours"
       ],
-      "file": "items/dragon_scale_armour.gif"
+      "file": "items/gif/dragon_scale_armour.gif"
     },
     {
       "category": "item",
@@ -2511,7 +2268,7 @@
         "traumauge",
         "dreameyes"
       ],
-      "file": "items/dream_eye.gif"
+      "file": "items/gif/dream_eye.gif"
     },
     {
       "category": "item",
@@ -2523,7 +2280,7 @@
         "dumpfbackenbrot",
         "duncebuns"
       ],
-      "file": "items/duncebun.gif"
+      "file": "items/gif/duncebun.gif"
     },
     {
       "category": "item",
@@ -2535,7 +2292,7 @@
         "zwergenbart",
         "dwarvenbeards"
       ],
-      "file": "items/dwarven_beard.gif"
+      "file": "items/gif/dwarven_beard.gif"
     },
     {
       "category": "item",
@@ -2547,7 +2304,7 @@
         "zwergenhammer",
         "dwarvenhammers"
       ],
-      "file": "items/dwarven_hammer.gif"
+      "file": "items/gif/dwarven_hammer.gif"
     },
     {
       "category": "item",
@@ -2559,7 +2316,7 @@
         "ei",
         "eggs"
       ],
-      "file": "items/egg.gif"
+      "file": "items/gif/egg.gif"
     },
     {
       "category": "item",
@@ -2571,7 +2328,7 @@
         "elixier_der_macht",
         "elixirofpowers"
       ],
-      "file": "items/elixir_of_power.gif"
+      "file": "items/gif/elixir_of_power.gif"
     },
     {
       "category": "item",
@@ -2583,7 +2340,7 @@
         "elfenbogen",
         "elvenbows"
       ],
-      "file": "items/elven_bow.gif"
+      "file": "items/gif/elven_bow.gif"
     },
     {
       "category": "item",
@@ -2595,7 +2352,7 @@
         "elvendear",
         "elvendeers"
       ],
-      "file": "items/elven_deer.gif"
+      "file": "items/gif/elven_deer.gif"
     },
     {
       "category": "item",
@@ -2607,7 +2364,7 @@
         "elfenohr",
         "elvenears"
       ],
-      "file": "items/elven_ear.gif"
+      "file": "items/gif/elven_ear.gif"
     },
     {
       "category": "item",
@@ -2619,7 +2376,7 @@
         "elfenpferd",
         "elvenhorses"
       ],
-      "file": "items/elven_horse.gif"
+      "file": "items/gif/elven_horse.gif"
     },
     {
       "category": "item",
@@ -2631,7 +2388,7 @@
         "ewiges_leben",
         "eternallives"
       ],
-      "file": "items/eternal_life.gif"
+      "file": "items/gif/eternal_life.gif"
     },
     {
       "category": "item",
@@ -2643,7 +2400,7 @@
         "auge_des_drachen",
         "eyeofthedragons"
       ],
-      "file": "items/eye_of_the_dragon.gif"
+      "file": "items/gif/eye_of_the_dragon.gif"
     },
     {
       "category": "item",
@@ -2655,7 +2412,7 @@
         "feenstiefel",
         "fairyboot"
       ],
-      "file": "items/fairy_boots.gif"
+      "file": "items/gif/fairy_boots.gif"
     },
     {
       "category": "item",
@@ -2667,16 +2424,7 @@
         "fairydust",
         "fairydusts"
       ],
-      "file": "items/fairy_dust.gif"
-    },
-    {
-      "category": "item",
-      "id": "item/fairy_dust_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "items/fairy_dust_alt.gif"
+      "file": "items/gif/fairy_dust.gif"
     },
     {
       "category": "item",
@@ -2688,7 +2436,7 @@
         "fjord_fungus",
         "fjordfungu"
       ],
-      "file": "items/fjord_fungus.gif"
+      "file": "items/gif/fjord_fungus.gif"
     },
     {
       "category": "item",
@@ -2700,7 +2448,7 @@
         "flammenschwert",
         "flamingswords"
       ],
-      "file": "items/flaming_sword.gif"
+      "file": "items/gif/flaming_sword.gif"
     },
     {
       "category": "item",
@@ -2712,7 +2460,7 @@
         "flatroot",
         "flatroots"
       ],
-      "file": "items/flatroot.gif"
+      "file": "items/gif/flatroot.gif"
     },
     {
       "category": "item",
@@ -2724,16 +2472,7 @@
         "front_waffen",
         "frontweapon"
       ],
-      "file": "items/front_weapons.gif"
-    },
-    {
-      "category": "item",
-      "id": "item/front_weapons_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "items/front_weapons_alt.gif"
+      "file": "items/gif/front_weapons.gif"
     },
     {
       "category": "item",
@@ -2745,7 +2484,7 @@
         "gapgrowth",
         "gapgrowths"
       ],
-      "file": "items/gapgrowth.gif"
+      "file": "items/gif/gapgrowth.gif"
     },
     {
       "category": "item",
@@ -2757,7 +2496,7 @@
         "juwel",
         "gems"
       ],
-      "file": "items/gem.gif"
+      "file": "items/gif/gem.gif"
     },
     {
       "category": "item",
@@ -2769,7 +2508,7 @@
         "gamander",
         "germanders"
       ],
-      "file": "items/germander.gif"
+      "file": "items/gif/germander.gif"
     },
     {
       "category": "item",
@@ -2781,7 +2520,7 @@
         "goblinkopf",
         "goblinheads"
       ],
-      "file": "items/goblin_head.gif"
+      "file": "items/gif/goblin_head.gif"
     },
     {
       "category": "item",
@@ -2794,7 +2533,7 @@
         "eau de goliath",
         "goliathwaters"
       ],
-      "file": "items/goliath_water.gif"
+      "file": "items/gif/goliath_water.gif"
     },
     {
       "category": "item",
@@ -2806,16 +2545,7 @@
         "korn",
         "grains"
       ],
-      "file": "items/grain.gif"
-    },
-    {
-      "category": "item",
-      "id": "item/grain_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "items/grain_alt.gif"
+      "file": "items/gif/grain.gif"
     },
     {
       "category": "item",
@@ -2827,7 +2557,7 @@
         "griphonwing",
         "griffinwings"
       ],
-      "file": "items/griffin_wing.gif"
+      "file": "items/gif/griffin_wing.gif"
     },
     {
       "category": "item",
@@ -2839,7 +2569,7 @@
         "guilder",
         "guilders"
       ],
-      "file": "items/guilder.gif"
+      "file": "items/gif/guilder.gif"
     },
     {
       "category": "item",
@@ -2851,7 +2581,7 @@
         "hellebarde",
         "halberds"
       ],
-      "file": "items/halberd.gif"
+      "file": "items/gif/halberd.gif"
     },
     {
       "category": "item",
@@ -2863,7 +2593,7 @@
         "halblingfuss",
         "halflingfoots"
       ],
-      "file": "items/halfling_foot.gif"
+      "file": "items/gif/halfling_foot.gif"
     },
     {
       "category": "item",
@@ -2875,7 +2605,7 @@
         "harpune",
         "harpoons"
       ],
-      "file": "items/harpoon.gif"
+      "file": "items/gif/harpoon.gif"
     },
     {
       "category": "item",
@@ -2887,7 +2617,7 @@
         "heiltrank",
         "healingpotions"
       ],
-      "file": "items/healing_potion.gif"
+      "file": "items/gif/healing_potion.gif"
     },
     {
       "category": "item",
@@ -2899,7 +2629,7 @@
         "heilsalbe",
         "healingsalves"
       ],
-      "file": "items/healing_salve.gif"
+      "file": "items/gif/healing_salve.gif"
     },
     {
       "category": "item",
@@ -2911,7 +2641,7 @@
         "herz",
         "hearts"
       ],
-      "file": "items/heart.gif"
+      "file": "items/gif/heart.gif"
     },
     {
       "category": "item",
@@ -2923,7 +2653,7 @@
         "helm_der_sieben_winde",
         "helmofthesevenwind"
       ],
-      "file": "items/helm_of_the_seven_winds.gif"
+      "file": "items/gif/helm_of_the_seven_winds.gif"
     },
     {
       "category": "item",
@@ -2935,7 +2665,7 @@
         "kraeuterbeutel",
         "herbbags"
       ],
-      "file": "items/herb_bag.gif"
+      "file": "items/gif/herb_bag.gif"
     },
     {
       "category": "item",
@@ -2947,7 +2677,7 @@
         "kraeuter",
         "herb"
       ],
-      "file": "items/herbs.gif"
+      "file": "items/gif/herbs.gif"
     },
     {
       "category": "item",
@@ -2959,7 +2689,7 @@
         "horn",
         "horns"
       ],
-      "file": "items/horn.gif"
+      "file": "items/gif/horn.gif"
     },
     {
       "category": "item",
@@ -2970,16 +2700,7 @@
       "aliases": [
         "pferd"
       ],
-      "file": "items/horse.gif"
-    },
-    {
-      "category": "item",
-      "id": "item/horse_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "items/horse_alt.gif"
+      "file": "items/gif/horse.gif"
     },
     {
       "category": "item",
@@ -2991,7 +2712,7 @@
         "pferd_region",
         "horseregions"
       ],
-      "file": "items/horse_region.gif"
+      "file": "items/gif/horse_region.gif"
     },
     {
       "category": "item",
@@ -3003,7 +2724,7 @@
         "pferdeglueck",
         "horsepowerpotions"
       ],
-      "file": "items/horsepower_potion.gif"
+      "file": "items/gif/horsepower_potion.gif"
     },
     {
       "category": "item",
@@ -3015,7 +2736,7 @@
         "pferde",
         "hors"
       ],
-      "file": "items/horses.gif"
+      "file": "items/gif/horses.gif"
     },
     {
       "category": "item",
@@ -3027,7 +2748,7 @@
         "menschenskalp",
         "humanscalps"
       ],
-      "file": "items/human_scalp.gif"
+      "file": "items/gif/human_scalp.gif"
     },
     {
       "category": "item",
@@ -3039,7 +2760,7 @@
         "ice_begonia",
         "icebegonias"
       ],
-      "file": "items/ice_begonia.gif"
+      "file": "items/gif/ice_begonia.gif"
     },
     {
       "category": "item",
@@ -3051,7 +2772,7 @@
         "weihrauch",
         "incenses"
       ],
-      "file": "items/incense.gif"
+      "file": "items/gif/incense.gif"
     },
     {
       "category": "item",
@@ -3063,7 +2784,7 @@
         "insektenfuehler",
         "insectantennas"
       ],
-      "file": "items/insect_antenna.gif"
+      "file": "items/gif/insect_antenna.gif"
     },
     {
       "category": "item",
@@ -3075,16 +2796,7 @@
         "eisen",
         "irons"
       ],
-      "file": "items/iron.gif"
-    },
-    {
-      "category": "item",
-      "id": "item/iron_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "items/iron_alt.gif"
+      "file": "items/gif/iron.gif"
     },
     {
       "category": "item",
@@ -3096,7 +2808,7 @@
         "jadee_dress",
         "jadeedres"
       ],
-      "file": "items/jadee_dress.gif"
+      "file": "items/gif/jadee_dress.gif"
     },
     {
       "category": "item",
@@ -3108,16 +2820,7 @@
         "schluessel",
         "keies"
       ],
-      "file": "items/key.gif"
-    },
-    {
-      "category": "item",
-      "id": "item/key_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "items/key_alt.gif"
+      "file": "items/gif/key.gif"
     },
     {
       "category": "item",
@@ -3129,7 +2832,7 @@
         "knotroot",
         "knotroots"
       ],
-      "file": "items/knotroot.gif"
+      "file": "items/gif/knotroot.gif"
     },
     {
       "category": "item",
@@ -3141,7 +2844,7 @@
         "wissenstrunk",
         "knowledgepotions"
       ],
-      "file": "items/knowledge_potion.gif"
+      "file": "items/gif/knowledge_potion.gif"
     },
     {
       "category": "item",
@@ -3153,7 +2856,7 @@
         "kreuzer",
         "kreuzers"
       ],
-      "file": "items/kreuzer.gif"
+      "file": "items/gif/kreuzer.gif"
     },
     {
       "category": "item",
@@ -3165,7 +2868,7 @@
         "laen",
         "laens"
       ],
-      "file": "items/laen.gif"
+      "file": "items/gif/laen.gif"
     },
     {
       "category": "item",
@@ -3177,7 +2880,7 @@
         "laenkettenhemd",
         "laenchainmails"
       ],
-      "file": "items/laen_chainmail.gif"
+      "file": "items/gif/laen_chainmail.gif"
     },
     {
       "category": "item",
@@ -3189,7 +2892,7 @@
         "laen_region",
         "laenregions"
       ],
-      "file": "items/laen_region.gif"
+      "file": "items/gif/laen_region.gif"
     },
     {
       "category": "item",
@@ -3201,7 +2904,7 @@
         "laenschild",
         "laenshields"
       ],
-      "file": "items/laen_shield.gif"
+      "file": "items/gif/laen_shield.gif"
     },
     {
       "category": "item",
@@ -3213,7 +2916,7 @@
         "laenschwert",
         "laenswords"
       ],
-      "file": "items/laen_sword.gif"
+      "file": "items/gif/laen_sword.gif"
     },
     {
       "category": "item",
@@ -3225,7 +2928,7 @@
         "laminar",
         "laminars"
       ],
-      "file": "items/laminar.gif"
+      "file": "items/gif/laminar.gif"
     },
     {
       "category": "item",
@@ -3237,7 +2940,7 @@
         "lanze",
         "lances"
       ],
-      "file": "items/lance.gif"
+      "file": "items/gif/lance.gif"
     },
     {
       "category": "item",
@@ -3249,7 +2952,7 @@
         "leather",
         "leathers"
       ],
-      "file": "items/leather.gif"
+      "file": "items/gif/leather.gif"
     },
     {
       "category": "item",
@@ -3261,7 +2964,7 @@
         "lederhemd",
         "leathershirts"
       ],
-      "file": "items/leather_shirt.gif"
+      "file": "items/gif/leather_shirt.gif"
     },
     {
       "category": "item",
@@ -3273,7 +2976,7 @@
         "lmsreward",
         "lmsrewards"
       ],
-      "file": "items/lms_reward.gif"
+      "file": "items/gif/lms_reward.gif"
     },
     {
       "category": "item",
@@ -3285,7 +2988,7 @@
         "felberich",
         "loosestrives"
       ],
-      "file": "items/loosestrife.gif"
+      "file": "items/gif/loosestrife.gif"
     },
     {
       "category": "item",
@@ -3297,7 +3000,7 @@
         "luxuswaren",
         "luxurygood"
       ],
-      "file": "items/luxury_goods.gif"
+      "file": "items/gif/luxury_goods.gif"
     },
     {
       "category": "item",
@@ -3309,7 +3012,7 @@
         "streitkolben",
         "maces"
       ],
-      "file": "items/mace.gif"
+      "file": "items/gif/mace.gif"
     },
     {
       "category": "item",
@@ -3321,7 +3024,7 @@
         "zauberbeutel",
         "magicbags"
       ],
-      "file": "items/magic_bag.gif"
+      "file": "items/gif/magic_bag.gif"
     },
     {
       "category": "item",
@@ -3333,7 +3036,7 @@
         "magischer_kraeuterbeutel",
         "magicherbbags"
       ],
-      "file": "items/magic_herb_bag.gif"
+      "file": "items/gif/magic_herb_bag.gif"
     },
     {
       "category": "item",
@@ -3345,7 +3048,7 @@
         "mallorn",
         "mallorns"
       ],
-      "file": "items/mallorn.gif"
+      "file": "items/gif/mallorn.gif"
     },
     {
       "category": "item",
@@ -3357,7 +3060,7 @@
         "mallornbogen",
         "mallornbows"
       ],
-      "file": "items/mallorn_bow.gif"
+      "file": "items/gif/mallorn_bow.gif"
     },
     {
       "category": "item",
@@ -3369,7 +3072,7 @@
         "mallornarmbrust",
         "mallorncrossbows"
       ],
-      "file": "items/mallorn_crossbow.gif"
+      "file": "items/gif/mallorn_crossbow.gif"
     },
     {
       "category": "item",
@@ -3381,7 +3084,7 @@
         "mallornlanze",
         "mallornlances"
       ],
-      "file": "items/mallorn_lance.gif"
+      "file": "items/gif/mallorn_lance.gif"
     },
     {
       "category": "item",
@@ -3393,7 +3096,7 @@
         "mallorn_region",
         "mallornregions"
       ],
-      "file": "items/mallorn_region.gif"
+      "file": "items/gif/mallorn_region.gif"
     },
     {
       "category": "item",
@@ -3405,7 +3108,7 @@
         "mallornschoesslinge",
         "mallornsapling"
       ],
-      "file": "items/mallorn_saplings.gif"
+      "file": "items/gif/mallorn_saplings.gif"
     },
     {
       "category": "item",
@@ -3416,7 +3119,7 @@
       "aliases": [
         "mallornsame"
       ],
-      "file": "items/mallorn_seed.gif"
+      "file": "items/gif/mallorn_seed.gif"
     },
     {
       "category": "item",
@@ -3427,7 +3130,7 @@
       "aliases": [
         "mallornsamen"
       ],
-      "file": "items/mallorn_seeds.gif"
+      "file": "items/gif/mallorn_seeds.gif"
     },
     {
       "category": "item",
@@ -3439,7 +3142,7 @@
         "mallornspeer",
         "mallornspears"
       ],
-      "file": "items/mallorn_spear.gif"
+      "file": "items/gif/mallorn_spear.gif"
     },
     {
       "category": "item",
@@ -3452,7 +3155,7 @@
         "mallorntre",
         "mallorntree"
       ],
-      "file": "items/mallorn_trees.gif"
+      "file": "items/gif/mallorn_trees.gif"
     },
     {
       "category": "item",
@@ -3464,7 +3167,7 @@
         "mandrake",
         "mandrakes"
       ],
-      "file": "items/mandrake.gif"
+      "file": "items/gif/mandrake.gif"
     },
     {
       "category": "item",
@@ -3477,7 +3180,7 @@
         "mawflam",
         "mawflame"
       ],
-      "file": "items/maw_flames.gif"
+      "file": "items/gif/maw_flames.gif"
     },
     {
       "category": "item",
@@ -3489,7 +3192,7 @@
         "meat",
         "meats"
       ],
-      "file": "items/meat.gif"
+      "file": "items/gif/meat.gif"
     },
     {
       "category": "item",
@@ -3501,7 +3204,7 @@
         "mistelzweig",
         "mistletoes"
       ],
-      "file": "items/mistletoe.gif"
+      "file": "items/gif/mistletoe.gif"
     },
     {
       "category": "item",
@@ -3513,7 +3216,7 @@
         "mithril",
         "mithrils"
       ],
-      "file": "items/mithril.gif"
+      "file": "items/gif/mithril.gif"
     },
     {
       "category": "item",
@@ -3525,7 +3228,7 @@
         "mithrilruestung",
         "mithrilarmours"
       ],
-      "file": "items/mithril_armour.gif"
+      "file": "items/gif/mithril_armour.gif"
     },
     {
       "category": "item",
@@ -3537,7 +3240,7 @@
         "mithrilschild",
         "mithrilshields"
       ],
-      "file": "items/mithril_shield.gif"
+      "file": "items/gif/mithril_shield.gif"
     },
     {
       "category": "item",
@@ -3549,7 +3252,7 @@
         "moneybag",
         "moneybags"
       ],
-      "file": "items/money_bag.gif"
+      "file": "items/gif/money_bag.gif"
     },
     {
       "category": "item",
@@ -3561,7 +3264,7 @@
         "museumexitticket",
         "museumexittickets"
       ],
-      "file": "items/museum_exit_ticket.gif"
+      "file": "items/gif/museum_exit_ticket.gif"
     },
     {
       "category": "item",
@@ -3573,7 +3276,7 @@
         "museumticket",
         "museumtickets"
       ],
-      "file": "items/museum_ticket.gif"
+      "file": "items/gif/museum_ticket.gif"
     },
     {
       "category": "item",
@@ -3585,7 +3288,7 @@
         "myrrhe",
         "myrrhs"
       ],
-      "file": "items/myrrh.gif"
+      "file": "items/gif/myrrh.gif"
     },
     {
       "category": "item",
@@ -3597,7 +3300,7 @@
         "nuss",
         "nuts"
       ],
-      "file": "items/nut.gif"
+      "file": "items/gif/nut.gif"
     },
     {
       "category": "item",
@@ -3609,16 +3312,7 @@
         "oel",
         "oils"
       ],
-      "file": "items/oil.gif"
-    },
-    {
-      "category": "item",
-      "id": "item/oil_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "items/oil_alt.gif"
+      "file": "items/gif/oil.gif"
     },
     {
       "category": "item",
@@ -3630,7 +3324,7 @@
         "wundsalbe",
         "ointments"
       ],
-      "file": "items/ointment.gif"
+      "file": "items/gif/ointment.gif"
     },
     {
       "category": "item",
@@ -3642,7 +3336,7 @@
         "orkhauer",
         "orctusk"
       ],
-      "file": "items/orc_tusks.gif"
+      "file": "items/gif/orc_tusks.gif"
     },
     {
       "category": "item",
@@ -3654,7 +3348,7 @@
         "owlsgaze",
         "owlsgazes"
       ],
-      "file": "items/owls_gaze.gif"
+      "file": "items/gif/owls_gaze.gif"
     },
     {
       "category": "item",
@@ -3666,7 +3360,7 @@
         "parierdolch",
         "parryingdaggers"
       ],
-      "file": "items/parrying_dagger.gif"
+      "file": "items/gif/parrying_dagger.gif"
     },
     {
       "category": "item",
@@ -3677,7 +3371,7 @@
       "aliases": [
         "perle"
       ],
-      "file": "items/pearl.gif"
+      "file": "items/gif/pearl.gif"
     },
     {
       "category": "item",
@@ -3688,7 +3382,7 @@
       "aliases": [
         "perlen"
       ],
-      "file": "items/pearls.gif"
+      "file": "items/gif/pearls.gif"
     },
     {
       "category": "item",
@@ -3699,7 +3393,7 @@
       "aliases": [
         "bauer"
       ],
-      "file": "items/peasant.gif"
+      "file": "items/gif/peasant.gif"
     },
     {
       "category": "item",
@@ -3711,7 +3405,7 @@
         "bauernblut",
         "peasantbloods"
       ],
-      "file": "items/peasant_blood.gif"
+      "file": "items/gif/peasant_blood.gif"
     },
     {
       "category": "item",
@@ -3723,7 +3417,7 @@
         "bauernlieb",
         "peasantlovepotions"
       ],
-      "file": "items/peasant_love_potion.gif"
+      "file": "items/gif/peasant_love_potion.gif"
     },
     {
       "category": "item",
@@ -3734,7 +3428,7 @@
       "aliases": [
         "bauern"
       ],
-      "file": "items/peasants.gif"
+      "file": "items/gif/peasants.gif"
     },
     {
       "category": "item",
@@ -3746,7 +3440,7 @@
         "peyote",
         "peyotes"
       ],
-      "file": "items/peyote.gif"
+      "file": "items/gif/peyote.gif"
     },
     {
       "category": "item",
@@ -3758,7 +3452,7 @@
         "plattenpanzer",
         "platemails"
       ],
-      "file": "items/platemail.gif"
+      "file": "items/gif/platemail.gif"
     },
     {
       "category": "item",
@@ -3770,16 +3464,7 @@
         "giftdolch",
         "poisondaggers"
       ],
-      "file": "items/poison_dagger.gif"
-    },
-    {
-      "category": "item",
-      "id": "item/polearm_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "items/polearm_alt.gif"
+      "file": "items/gif/poison_dagger.gif"
     },
     {
       "category": "item",
@@ -3791,7 +3476,7 @@
         "stangenwaffen",
         "polearm"
       ],
-      "file": "items/polearms.gif"
+      "file": "items/gif/polearms.gif"
     },
     {
       "category": "item",
@@ -3803,7 +3488,7 @@
         "tiegel_mit_kroetenschleim",
         "potoftoadslimes"
       ],
-      "file": "items/pot_of_toadslime.gif"
+      "file": "items/gif/pot_of_toadslime.gif"
     },
     {
       "category": "item",
@@ -3815,7 +3500,7 @@
         "nestwaerme",
         "potionofnestwarmths"
       ],
-      "file": "items/potion_of_nest_warmth.gif"
+      "file": "items/gif/potion_of_nest_warmth.gif"
     },
     {
       "category": "item",
@@ -3827,7 +3512,7 @@
         "trank_der_wahrheit",
         "potionoftruths"
       ],
-      "file": "items/potion_of_truth.gif"
+      "file": "items/gif/potion_of_truth.gif"
     },
     {
       "category": "item",
@@ -3839,16 +3524,7 @@
         "traenke",
         "potion"
       ],
-      "file": "items/potions.gif"
-    },
-    {
-      "category": "item",
-      "id": "item/potions_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "items/potions_alt.gif"
+      "file": "items/gif/potions.gif"
     },
     {
       "category": "item",
@@ -3860,7 +3536,7 @@
         "reichsschatz",
         "realmtreasuries"
       ],
-      "file": "items/realm_treasury.gif"
+      "file": "items/gif/realm_treasury.gif"
     },
     {
       "category": "item",
@@ -3872,7 +3548,7 @@
         "repetierarmbrust",
         "repeatingcrossbows"
       ],
-      "file": "items/repeating_crossbow.gif"
+      "file": "items/gif/repeating_crossbow.gif"
     },
     {
       "category": "item",
@@ -3884,7 +3560,7 @@
         "rippe",
         "ribs"
       ],
-      "file": "items/rib.gif"
+      "file": "items/gif/rib.gif"
     },
     {
       "category": "item",
@@ -3896,7 +3572,7 @@
         "ring",
         "rings"
       ],
-      "file": "items/ring.gif"
+      "file": "items/gif/ring.gif"
     },
     {
       "category": "item",
@@ -3908,7 +3584,7 @@
         "ring_der_unsichtbarkeit",
         "ringofinvisibilities"
       ],
-      "file": "items/ring_of_invisibility.gif"
+      "file": "items/gif/ring_of_invisibility.gif"
     },
     {
       "category": "item",
@@ -3920,7 +3596,7 @@
         "ring_der_levitation",
         "ringoflevitations"
       ],
-      "file": "items/ring_of_levitation.gif"
+      "file": "items/gif/ring_of_levitation.gif"
     },
     {
       "category": "item",
@@ -3932,7 +3608,7 @@
         "ring_der_macht",
         "ringofpowers"
       ],
-      "file": "items/ring_of_power.gif"
+      "file": "items/gif/ring_of_power.gif"
     },
     {
       "category": "item",
@@ -3944,7 +3620,7 @@
         "ring_der_flinken_finger",
         "ringofquickfinger"
       ],
-      "file": "items/ring_of_quick_fingers.gif"
+      "file": "items/gif/ring_of_quick_fingers.gif"
     },
     {
       "category": "item",
@@ -3956,7 +3632,7 @@
         "ring_der_regeneration",
         "ringofregenerations"
       ],
-      "file": "items/ring_of_regeneration.gif"
+      "file": "items/gif/ring_of_regeneration.gif"
     },
     {
       "category": "item",
@@ -3968,7 +3644,7 @@
         "rockweed",
         "rockweeds"
       ],
-      "file": "items/rockweed.gif"
+      "file": "items/gif/rockweed.gif"
     },
     {
       "category": "item",
@@ -3980,7 +3656,7 @@
         "rundschild",
         "roundshields"
       ],
-      "file": "items/round_shield.gif"
+      "file": "items/gif/round_shield.gif"
     },
     {
       "category": "item",
@@ -3992,7 +3668,7 @@
         "runenpanzer",
         "runearmours"
       ],
-      "file": "items/rune_armour.gif"
+      "file": "items/gif/rune_armour.gif"
     },
     {
       "category": "item",
@@ -4004,7 +3680,7 @@
         "runenschwert",
         "runeswords"
       ],
-      "file": "items/runesword.gif"
+      "file": "items/gif/runesword.gif"
     },
     {
       "category": "item",
@@ -4016,7 +3692,7 @@
         "rostige_kriegsaxt",
         "rustyaxes"
       ],
-      "file": "items/rusty_axe.gif"
+      "file": "items/gif/rusty_axe.gif"
     },
     {
       "category": "item",
@@ -4028,7 +3704,7 @@
         "rostiges_kettenhemd",
         "rustychainmails"
       ],
-      "file": "items/rusty_chainmail.gif"
+      "file": "items/gif/rusty_chainmail.gif"
     },
     {
       "category": "item",
@@ -4040,7 +3716,7 @@
         "rostiger_bihaender",
         "rustyclaymores"
       ],
-      "file": "items/rusty_claymore.gif"
+      "file": "items/gif/rusty_claymore.gif"
     },
     {
       "category": "item",
@@ -4049,7 +3725,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "items/rusty_claymore_alt2.gif"
+      "file": "items/gif/rusty_claymore_alt2.gif"
     },
     {
       "category": "item",
@@ -4061,7 +3737,7 @@
         "rostige_hellebarde",
         "rustyhalberds"
       ],
-      "file": "items/rusty_halberd.gif"
+      "file": "items/gif/rusty_halberd.gif"
     },
     {
       "category": "item",
@@ -4073,7 +3749,7 @@
         "rostiger_schild",
         "rustyshields"
       ],
-      "file": "items/rusty_shield.gif"
+      "file": "items/gif/rusty_shield.gif"
     },
     {
       "category": "item",
@@ -4082,7 +3758,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "items/rusty_shield_alt2.gif"
+      "file": "items/gif/rusty_shield_alt2.gif"
     },
     {
       "category": "item",
@@ -4094,7 +3770,7 @@
         "rostiges_schwert",
         "rustyswords"
       ],
-      "file": "items/rusty_sword.gif"
+      "file": "items/gif/rusty_sword.gif"
     },
     {
       "category": "item",
@@ -4103,7 +3779,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "items/rusty_sword_alt2.gif"
+      "file": "items/gif/rusty_sword_alt2.gif"
     },
     {
       "category": "item",
@@ -4115,7 +3791,7 @@
         "sandreeker",
         "sandreekers"
       ],
-      "file": "items/sand_reeker.gif"
+      "file": "items/gif/sand_reeker.gif"
     },
     {
       "category": "item",
@@ -4127,7 +3803,7 @@
         "schoesslinge_region",
         "saplingregions"
       ],
-      "file": "items/sapling_region.gif"
+      "file": "items/gif/sapling_region.gif"
     },
     {
       "category": "item",
@@ -4139,7 +3815,7 @@
         "schoesslinge",
         "sapling"
       ],
-      "file": "items/saplings.gif"
+      "file": "items/gif/saplings.gif"
     },
     {
       "category": "item",
@@ -4151,7 +3827,7 @@
         "schuppenpanzer",
         "scalearmours"
       ],
-      "file": "items/scale_armour.gif"
+      "file": "items/gif/scale_armour.gif"
     },
     {
       "category": "item",
@@ -4163,7 +3839,7 @@
         "schuppenpanzer1",
         "scalearmour1s"
       ],
-      "file": "items/scale_armour_1.gif"
+      "file": "items/gif/scale_armour_1.gif"
     },
     {
       "category": "item",
@@ -4175,7 +3851,7 @@
         "schuppenpanzer2",
         "scalearmour2s"
       ],
-      "file": "items/scale_armour_2.gif"
+      "file": "items/gif/scale_armour_2.gif"
     },
     {
       "category": "item",
@@ -4187,7 +3863,7 @@
         "seeschlangenkopf",
         "seaserpentheads"
       ],
-      "file": "items/sea_serpent_head.gif"
+      "file": "items/gif/sea_serpent_head.gif"
     },
     {
       "category": "item",
@@ -4199,7 +3875,7 @@
         "seashell",
         "seashells"
       ],
-      "file": "items/seashell.gif"
+      "file": "items/gif/seashell.gif"
     },
     {
       "category": "item",
@@ -4210,7 +3886,7 @@
       "aliases": [
         "same"
       ],
-      "file": "items/seed.gif"
+      "file": "items/gif/seed.gif"
     },
     {
       "category": "item",
@@ -4221,7 +3897,7 @@
       "aliases": [
         "samen"
       ],
-      "file": "items/seeds.gif"
+      "file": "items/gif/seeds.gif"
     },
     {
       "category": "item",
@@ -4233,7 +3909,7 @@
         "siebenmeilentee",
         "sevenmileteas"
       ],
-      "file": "items/seven_mile_tea.gif"
+      "file": "items/gif/seven_mile_tea.gif"
     },
     {
       "category": "item",
@@ -4245,7 +3921,7 @@
         "schattenpanzer",
         "shadowarmours"
       ],
-      "file": "items/shadow_armour.gif"
+      "file": "items/gif/shadow_armour.gif"
     },
     {
       "category": "item",
@@ -4257,7 +3933,7 @@
         "schattenklinge",
         "shadowblades"
       ],
-      "file": "items/shadow_blade.gif"
+      "file": "items/gif/shadow_blade.gif"
     },
     {
       "category": "item",
@@ -4269,7 +3945,7 @@
         "muschel",
         "shells"
       ],
-      "file": "items/shell.gif"
+      "file": "items/gif/shell.gif"
     },
     {
       "category": "item",
@@ -4281,7 +3957,7 @@
         "hirtenblut",
         "shepherdbloods"
       ],
-      "file": "items/shepherd_blood.gif"
+      "file": "items/gif/shepherd_blood.gif"
     },
     {
       "category": "item",
@@ -4292,16 +3968,7 @@
       "aliases": [
         "schild"
       ],
-      "file": "items/shield.gif"
-    },
-    {
-      "category": "item",
-      "id": "item/shield_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "items/shield_alt.gif"
+      "file": "items/gif/shield.gif"
     },
     {
       "category": "item",
@@ -4313,7 +3980,7 @@
         "schildstein",
         "shieldstones"
       ],
-      "file": "items/shield_stone.gif"
+      "file": "items/gif/shield_stone.gif"
     },
     {
       "category": "item",
@@ -4324,16 +3991,7 @@
       "aliases": [
         "schilde"
       ],
-      "file": "items/shields.gif"
-    },
-    {
-      "category": "item",
-      "id": "item/shields_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "items/shields_alt.gif"
+      "file": "items/gif/shields.gif"
     },
     {
       "category": "item",
@@ -4345,7 +4003,7 @@
         "shortbow",
         "shortbows"
       ],
-      "file": "items/short_bow.gif"
+      "file": "items/gif/short_bow.gif"
     },
     {
       "category": "item",
@@ -4357,7 +4015,7 @@
         "kurzspeer",
         "shortspears"
       ],
-      "file": "items/short_spear.gif"
+      "file": "items/gif/short_spear.gif"
     },
     {
       "category": "item",
@@ -4369,7 +4027,7 @@
         "seide",
         "silks"
       ],
-      "file": "items/silk.gif"
+      "file": "items/gif/silk.gif"
     },
     {
       "category": "item",
@@ -4381,7 +4039,7 @@
         "silber",
         "silvers"
       ],
-      "file": "items/silver.gif"
+      "file": "items/gif/silver.gif"
     },
     {
       "category": "item",
@@ -4393,7 +4051,7 @@
         "silberbeutel",
         "silverbags"
       ],
-      "file": "items/silver_bag.gif"
+      "file": "items/gif/silver_bag.gif"
     },
     {
       "category": "item",
@@ -4405,7 +4063,7 @@
         "silberkassette",
         "silverchests"
       ],
-      "file": "items/silver_chest.gif"
+      "file": "items/gif/silver_chest.gif"
     },
     {
       "category": "item",
@@ -4417,7 +4075,7 @@
         "schaedel",
         "skulls"
       ],
-      "file": "items/skull.gif"
+      "file": "items/gif/skull.gif"
     },
     {
       "category": "item",
@@ -4429,7 +4087,7 @@
         "hiebwaffen",
         "slashingweapon"
       ],
-      "file": "items/slashing_weapons.gif"
+      "file": "items/gif/slashing_weapons.gif"
     },
     {
       "category": "item",
@@ -4441,7 +4099,7 @@
         "schneekugel",
         "snowglobes"
       ],
-      "file": "items/snow_globe.gif"
+      "file": "items/gif/snow_globe.gif"
     },
     {
       "category": "item",
@@ -4453,7 +4111,7 @@
         "schneeglueh",
         "snowglows"
       ],
-      "file": "items/snow_glow.gif"
+      "file": "items/gif/snow_glow.gif"
     },
     {
       "category": "item",
@@ -4465,7 +4123,7 @@
         "schneeball",
         "snowballs"
       ],
-      "file": "items/snowball.gif"
+      "file": "items/gif/snowball.gif"
     },
     {
       "category": "item",
@@ -4477,7 +4135,7 @@
         "snowcrystal_petal",
         "snowcrystalpetals"
       ],
-      "file": "items/snowcrystal_petal.gif"
+      "file": "items/gif/snowcrystal_petal.gif"
     },
     {
       "category": "item",
@@ -4489,7 +4147,7 @@
         "schneemann",
         "snowmans"
       ],
-      "file": "items/snowman.gif"
+      "file": "items/gif/snowman.gif"
     },
     {
       "category": "item",
@@ -4501,7 +4159,7 @@
         "seelenstein",
         "soulstones"
       ],
-      "file": "items/soul_stone.gif"
+      "file": "items/gif/soul_stone.gif"
     },
     {
       "category": "item",
@@ -4513,7 +4171,7 @@
         "speer",
         "spears"
       ],
-      "file": "items/spear.gif"
+      "file": "items/gif/spear.gif"
     },
     {
       "category": "item",
@@ -4525,7 +4183,7 @@
         "spearhead",
         "spearheads"
       ],
-      "file": "items/spearhead.gif"
+      "file": "items/gif/spearhead.gif"
     },
     {
       "category": "item",
@@ -4537,7 +4195,7 @@
         "sphaere_der_unsichtbarkeit",
         "sphereofinvisibilities"
       ],
-      "file": "items/sphere_of_invisibility.gif"
+      "file": "items/gif/sphere_of_invisibility.gif"
     },
     {
       "category": "item",
@@ -4549,7 +4207,7 @@
         "gewuerz",
         "spices"
       ],
-      "file": "items/spice.gif"
+      "file": "items/gif/spice.gif"
     },
     {
       "category": "item",
@@ -4561,7 +4219,7 @@
         "spider_ivy",
         "spiderivies"
       ],
-      "file": "items/spider_ivy.gif"
+      "file": "items/gif/spider_ivy.gif"
     },
     {
       "category": "item",
@@ -4573,7 +4231,7 @@
         "spinnennetz",
         "spiderwebs"
       ],
-      "file": "items/spider_web.gif"
+      "file": "items/gif/spider_web.gif"
     },
     {
       "category": "item",
@@ -4585,7 +4243,7 @@
         "stachelschild",
         "spikedshields"
       ],
-      "file": "items/spiked_shield.gif"
+      "file": "items/gif/spiked_shield.gif"
     },
     {
       "category": "item",
@@ -4597,7 +4255,7 @@
         "sternenstaub",
         "stardusts"
       ],
-      "file": "items/stardust.gif"
+      "file": "items/gif/stardust.gif"
     },
     {
       "category": "item",
@@ -4608,16 +4266,7 @@
       "aliases": [
         "stein"
       ],
-      "file": "items/stone.gif"
-    },
-    {
-      "category": "item",
-      "id": "item/stone_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "items/stone_alt.gif"
+      "file": "items/gif/stone.gif"
     },
     {
       "category": "item",
@@ -4629,7 +4278,7 @@
         "steinkeule",
         "stoneclubs"
       ],
-      "file": "items/stone_club.gif"
+      "file": "items/gif/stone_club.gif"
     },
     {
       "category": "item",
@@ -4641,7 +4290,7 @@
         "stein_region",
         "stoneregions"
       ],
-      "file": "items/stone_region.gif"
+      "file": "items/gif/stone_region.gif"
     },
     {
       "category": "item",
@@ -4653,7 +4302,7 @@
         "steine",
         "ston"
       ],
-      "file": "items/stones.gif"
+      "file": "items/gif/stones.gif"
     },
     {
       "category": "item",
@@ -4665,7 +4314,7 @@
         "steine_region",
         "stonesregions"
       ],
-      "file": "items/stones_region.gif"
+      "file": "items/gif/stones_region.gif"
     },
     {
       "category": "item",
@@ -4677,7 +4326,7 @@
         "sonnensegel",
         "sunsails"
       ],
-      "file": "items/sun_sail.gif"
+      "file": "items/gif/sun_sail.gif"
     },
     {
       "category": "item",
@@ -4689,16 +4338,7 @@
         "schwert",
         "swords"
       ],
-      "file": "items/sword.gif"
-    },
-    {
-      "category": "item",
-      "id": "item/sword_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "items/sword_alt.gif"
+      "file": "items/gif/sword.gif"
     },
     {
       "category": "item",
@@ -4710,7 +4350,7 @@
         "talenttrunk",
         "talentpotions"
       ],
-      "file": "items/talent_potion.gif"
+      "file": "items/gif/talent_potion.gif"
     },
     {
       "category": "item",
@@ -4722,7 +4362,7 @@
         "tangy_temerity",
         "tangytemerities"
       ],
-      "file": "items/tangy_temerity.gif"
+      "file": "items/gif/tangy_temerity.gif"
     },
     {
       "category": "item",
@@ -4734,7 +4374,7 @@
         "dornenpalme",
         "thornpalms"
       ],
-      "file": "items/thorn_palm.gif"
+      "file": "items/gif/thorn_palm.gif"
     },
     {
       "category": "item",
@@ -4746,7 +4386,7 @@
         "turmschild",
         "towershields"
       ],
-      "file": "items/tower_shield.gif"
+      "file": "items/gif/tower_shield.gif"
     },
     {
       "category": "item",
@@ -4758,7 +4398,7 @@
         "schatztruhe",
         "treasurechests"
       ],
-      "file": "items/treasure_chest.gif"
+      "file": "items/gif/treasure_chest.gif"
     },
     {
       "category": "item",
@@ -4770,7 +4410,7 @@
         "trollhorn",
         "trollhorns"
       ],
-      "file": "items/troll_horn.gif"
+      "file": "items/gif/troll_horn.gif"
     },
     {
       "category": "item",
@@ -4781,16 +4421,7 @@
       "aliases": [
         "trophaeen"
       ],
-      "file": "items/trophies.gif"
-    },
-    {
-      "category": "item",
-      "id": "item/trophies_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "items/trophies_alt.gif"
+      "file": "items/gif/trophies.gif"
     },
     {
       "category": "item",
@@ -4801,7 +4432,7 @@
       "aliases": [
         "trophy"
       ],
-      "file": "items/trophy.gif"
+      "file": "items/gif/trophy.gif"
     },
     {
       "category": "item",
@@ -4813,7 +4444,7 @@
         "einhorn",
         "unicorns"
       ],
-      "file": "items/unicorn.gif"
+      "file": "items/gif/unicorn.gif"
     },
     {
       "category": "item",
@@ -4825,7 +4456,7 @@
         "horn_eines_einhorns",
         "unicornhorns"
       ],
-      "file": "items/unicorn_horn.gif"
+      "file": "items/gif/unicorn_horn.gif"
     },
     {
       "category": "item",
@@ -4837,7 +4468,7 @@
         "samt",
         "velvets"
       ],
-      "file": "items/velvet.gif"
+      "file": "items/gif/velvet.gif"
     },
     {
       "category": "item",
@@ -4849,7 +4480,7 @@
         "phiole",
         "vials"
       ],
-      "file": "items/vial.gif"
+      "file": "items/gif/vial.gif"
     },
     {
       "category": "item",
@@ -4861,7 +4492,7 @@
         "wanderslust",
         "wanderlusts"
       ],
-      "file": "items/wanderlust.gif"
+      "file": "items/gif/wanderlust.gif"
     },
     {
       "category": "item",
@@ -4873,7 +4504,7 @@
         "streitross",
         "warhorses"
       ],
-      "file": "items/warhorse.gif"
+      "file": "items/gif/warhorse.gif"
     },
     {
       "category": "item",
@@ -4885,7 +4516,7 @@
         "wasser_des_lebens",
         "wateroflives"
       ],
-      "file": "items/water_of_life.gif"
+      "file": "items/gif/water_of_life.gif"
     },
     {
       "category": "item",
@@ -4897,7 +4528,7 @@
         "waterfinder",
         "waterfinders"
       ],
-      "file": "items/waterfinder.gif"
+      "file": "items/gif/waterfinder.gif"
     },
     {
       "category": "item",
@@ -4909,16 +4540,7 @@
         "waffen",
         "weapon"
       ],
-      "file": "items/weapons.gif"
-    },
-    {
-      "category": "item",
-      "id": "item/weapons_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "items/weapons_alt.gif"
+      "file": "items/gif/weapons.gif"
     },
     {
       "category": "item",
@@ -4930,7 +4552,7 @@
         "wente_dress",
         "wentedres"
       ],
-      "file": "items/wente_dress.gif"
+      "file": "items/gif/wente_dress.gif"
     },
     {
       "category": "item",
@@ -4942,7 +4564,7 @@
         "white_hemlock",
         "whitehemlocks"
       ],
-      "file": "items/white_hemlock.gif"
+      "file": "items/gif/white_hemlock.gif"
     },
     {
       "category": "item",
@@ -4954,7 +4576,7 @@
         "windbag",
         "windbags"
       ],
-      "file": "items/windbag.gif"
+      "file": "items/gif/windbag.gif"
     },
     {
       "category": "item",
@@ -4966,7 +4588,7 @@
         "wein",
         "wines"
       ],
-      "file": "items/wine.gif"
+      "file": "items/gif/wine.gif"
     },
     {
       "category": "item",
@@ -4978,7 +4600,7 @@
         "hexenfinger",
         "witchfingers"
       ],
-      "file": "items/witch_finger.gif"
+      "file": "items/gif/witch_finger.gif"
     },
     {
       "category": "item",
@@ -4990,16 +4612,7 @@
         "holz",
         "woods"
       ],
-      "file": "items/wood.gif"
-    },
-    {
-      "category": "item",
-      "id": "item/wood_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "items/wood_alt.gif"
+      "file": "items/gif/wood.gif"
     },
     {
       "category": "item",
@@ -5011,7 +4624,7 @@
         "holzschild",
         "woodenshields"
       ],
-      "file": "items/wooden_shield.gif"
+      "file": "items/gif/wooden_shield.gif"
     },
     {
       "category": "monster",
@@ -5023,16 +4636,7 @@
         "alp",
         "alpnightmares"
       ],
-      "file": "monsters/alp_nightmare.gif"
-    },
-    {
-      "category": "monster",
-      "id": "monster/alp_nightmare_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "monsters/alp_nightmare_alt.gif"
+      "file": "monsters/gif/alp_nightmare.gif"
     },
     {
       "category": "monster",
@@ -5044,7 +4648,7 @@
         "hirntoeter",
         "brainslayers"
       ],
-      "file": "monsters/brain_slayer.gif"
+      "file": "monsters/gif/brain_slayer.gif"
     },
     {
       "category": "monster",
@@ -5058,16 +4662,7 @@
         "Demons",
         "demon"
       ],
-      "file": "monsters/demons.gif"
-    },
-    {
-      "category": "monster",
-      "id": "monster/demons_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "monsters/demons_alt.gif"
+      "file": "monsters/gif/demons.gif"
     },
     {
       "category": "monster",
@@ -5080,7 +4675,7 @@
         "dragon",
         "dragons"
       ],
-      "file": "monsters/dragons.gif"
+      "file": "monsters/gif/dragons.gif"
     },
     {
       "category": "monster",
@@ -5092,16 +4687,7 @@
         "ents",
         "ent"
       ],
-      "file": "monsters/ents.gif"
-    },
-    {
-      "category": "monster",
-      "id": "monster/ents_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "monsters/ents_alt.gif"
+      "file": "monsters/gif/ents.gif"
     },
     {
       "category": "monster",
@@ -5113,7 +4699,7 @@
         "feen",
         "fairy"
       ],
-      "file": "monsters/fairies.gif"
+      "file": "monsters/gif/fairies.gif"
     },
     {
       "category": "monster",
@@ -5125,7 +4711,7 @@
         "ghaste",
         "ghasts"
       ],
-      "file": "monsters/ghast.gif"
+      "file": "monsters/gif/ghast.gif"
     },
     {
       "category": "monster",
@@ -5137,7 +4723,7 @@
         "geister",
         "ghost"
       ],
-      "file": "monsters/ghosts.gif"
+      "file": "monsters/gif/ghosts.gif"
     },
     {
       "category": "monster",
@@ -5150,7 +4736,7 @@
         "Ghul",
         "Ghoul"
       ],
-      "file": "monsters/ghoul.gif"
+      "file": "monsters/gif/ghoul.gif"
     },
     {
       "category": "monster",
@@ -5163,7 +4749,7 @@
         "Ghule",
         "Ghouls"
       ],
-      "file": "monsters/ghouls.gif"
+      "file": "monsters/gif/ghouls.gif"
     },
     {
       "category": "monster",
@@ -5175,7 +4761,7 @@
         "riesen",
         "giant"
       ],
-      "file": "monsters/giants.gif"
+      "file": "monsters/gif/giants.gif"
     },
     {
       "category": "monster",
@@ -5187,7 +4773,7 @@
         "hydren",
         "hydra"
       ],
-      "file": "monsters/hydras.gif"
+      "file": "monsters/gif/hydras.gif"
     },
     {
       "category": "monster",
@@ -5198,7 +4784,7 @@
       "aliases": [
         "irongolem"
       ],
-      "file": "monsters/iron_golem.gif"
+      "file": "monsters/gif/iron_golem.gif"
     },
     {
       "category": "monster",
@@ -5209,7 +4795,7 @@
       "aliases": [
         "eisengolems"
       ],
-      "file": "monsters/iron_golems.gif"
+      "file": "monsters/gif/iron_golems.gif"
     },
     {
       "category": "monster",
@@ -5222,16 +4808,7 @@
         "juju-zombies",
         "jujuzomby"
       ],
-      "file": "monsters/juju_zombies.gif"
-    },
-    {
-      "category": "monster",
-      "id": "monster/juju_zombies_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "monsters/juju_zombies_alt.gif"
+      "file": "monsters/gif/juju_zombies.gif"
     },
     {
       "category": "monster",
@@ -5243,16 +4820,7 @@
         "kobold",
         "kobolds"
       ],
-      "file": "monsters/kobold.gif"
-    },
-    {
-      "category": "monster",
-      "id": "monster/kobold_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "monsters/kobold_alt.gif"
+      "file": "monsters/gif/kobold.gif"
     },
     {
       "category": "monster",
@@ -5265,7 +4833,7 @@
         "Krake",
         "krakes"
       ],
-      "file": "monsters/krake.gif"
+      "file": "monsters/gif/krake.gif"
     },
     {
       "category": "monster",
@@ -5278,16 +4846,7 @@
         "Kraken",
         "krakens"
       ],
-      "file": "monsters/kraken.gif"
-    },
-    {
-      "category": "monster",
-      "id": "monster/kraken_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "monsters/kraken_alt.gif"
+      "file": "monsters/gif/kraken.gif"
     },
     {
       "category": "monster",
@@ -5299,7 +4858,7 @@
         "teufelchen",
         "littledevils"
       ],
-      "file": "monsters/little_devil.gif"
+      "file": "monsters/gif/little_devil.gif"
     },
     {
       "category": "monster",
@@ -5311,7 +4870,7 @@
         "bergwaechter",
         "mountainguardians"
       ],
-      "file": "monsters/mountain_guardian.gif"
+      "file": "monsters/gif/mountain_guardian.gif"
     },
     {
       "category": "monster",
@@ -5323,7 +4882,7 @@
         "seeschlangen",
         "seaserpent"
       ],
-      "file": "monsters/sea_serpents.gif"
+      "file": "monsters/gif/sea_serpents.gif"
     },
     {
       "category": "monster",
@@ -5335,7 +4894,7 @@
         "schatten",
         "shadows"
       ],
-      "file": "monsters/shadow.gif"
+      "file": "monsters/gif/shadow.gif"
     },
     {
       "category": "monster",
@@ -5347,7 +4906,7 @@
         "schattendaemonen",
         "shadowdemon"
       ],
-      "file": "monsters/shadow_demons.gif"
+      "file": "monsters/gif/shadow_demons.gif"
     },
     {
       "category": "monster",
@@ -5359,7 +4918,7 @@
         "schattenmeister",
         "shadowmasters"
       ],
-      "file": "monsters/shadow_master.gif"
+      "file": "monsters/gif/shadow_master.gif"
     },
     {
       "category": "monster",
@@ -5372,7 +4931,7 @@
         "Skelett",
         "Skeleton"
       ],
-      "file": "monsters/skeleton.gif"
+      "file": "monsters/gif/skeleton.gif"
     },
     {
       "category": "monster",
@@ -5384,7 +4943,7 @@
         "skelettherren",
         "skeletonlord"
       ],
-      "file": "monsters/skeleton_lords.gif"
+      "file": "monsters/gif/skeleton_lords.gif"
     },
     {
       "category": "monster",
@@ -5396,7 +4955,7 @@
         "skelettmeister",
         "skeletonmasters"
       ],
-      "file": "monsters/skeleton_master.gif"
+      "file": "monsters/gif/skeleton_master.gif"
     },
     {
       "category": "monster",
@@ -5409,7 +4968,7 @@
         "Skelette",
         "Skeletons"
       ],
-      "file": "monsters/skeletons.gif"
+      "file": "monsters/gif/skeletons.gif"
     },
     {
       "category": "monster",
@@ -5421,7 +4980,7 @@
         "snotlinge",
         "snotling"
       ],
-      "file": "monsters/snotlings.gif"
+      "file": "monsters/gif/snotlings.gif"
     },
     {
       "category": "monster",
@@ -5433,7 +4992,7 @@
         "schneemaenner",
         "snowmens"
       ],
-      "file": "monsters/snowmen.gif"
+      "file": "monsters/gif/snowmen.gif"
     },
     {
       "category": "monster",
@@ -5445,7 +5004,7 @@
         "singdrachen",
         "songdragon"
       ],
-      "file": "monsters/song_dragons.gif"
+      "file": "monsters/gif/song_dragons.gif"
     },
     {
       "category": "monster",
@@ -5456,7 +5015,7 @@
       "aliases": [
         "stonegolem"
       ],
-      "file": "monsters/stone_golem.gif"
+      "file": "monsters/gif/stone_golem.gif"
     },
     {
       "category": "monster",
@@ -5467,7 +5026,7 @@
       "aliases": [
         "steingolems"
       ],
-      "file": "monsters/stone_golems.gif"
+      "file": "monsters/gif/stone_golems.gif"
     },
     {
       "category": "monster",
@@ -5479,7 +5038,7 @@
         "baumhirte",
         "treeshepherds"
       ],
-      "file": "monsters/tree_shepherd.gif"
+      "file": "monsters/gif/tree_shepherd.gif"
     },
     {
       "category": "monster",
@@ -5491,7 +5050,7 @@
         "trolle",
         "troll"
       ],
-      "file": "monsters/trolls.gif"
+      "file": "monsters/gif/trolls.gif"
     },
     {
       "category": "monster",
@@ -5503,7 +5062,7 @@
         "tunnelwuermer",
         "tunnelworm"
       ],
-      "file": "monsters/tunnel_worms.gif"
+      "file": "monsters/gif/tunnel_worms.gif"
     },
     {
       "category": "monster",
@@ -5517,7 +5076,7 @@
         "mort-vivant",
         "undeads"
       ],
-      "file": "monsters/undead.gif"
+      "file": "monsters/gif/undead.gif"
     },
     {
       "category": "monster",
@@ -5529,16 +5088,7 @@
         "vampire",
         "vampir"
       ],
-      "file": "monsters/vampires.gif"
-    },
-    {
-      "category": "monster",
-      "id": "monster/vampires_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "monsters/vampires_alt.gif"
+      "file": "monsters/gif/vampires.gif"
     },
     {
       "category": "monster",
@@ -5550,7 +5100,7 @@
         "irrlichter",
         "willothewisp"
       ],
-      "file": "monsters/will_o_the_wisps.gif"
+      "file": "monsters/gif/will_o_the_wisps.gif"
     },
     {
       "category": "monster",
@@ -5562,7 +5112,7 @@
         "wyrme",
         "wyrms"
       ],
-      "file": "monsters/wyrm.gif"
+      "file": "monsters/gif/wyrm.gif"
     },
     {
       "category": "monster",
@@ -5574,7 +5124,7 @@
         "jungdrachen",
         "youngdragon"
       ],
-      "file": "monsters/young_dragons.gif"
+      "file": "monsters/gif/young_dragons.gif"
     },
     {
       "category": "monster",
@@ -5586,16 +5136,7 @@
         "zombie",
         "Zombie"
       ],
-      "file": "monsters/zombie.gif"
-    },
-    {
-      "category": "monster",
-      "id": "monster/zombie_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "monsters/zombie_alt.gif"
+      "file": "monsters/gif/zombie.gif"
     },
     {
       "category": "monster",
@@ -5607,7 +5148,7 @@
         "zombiemeister",
         "zombiemasters"
       ],
-      "file": "monsters/zombie_master.gif"
+      "file": "monsters/gif/zombie_master.gif"
     },
     {
       "category": "monster",
@@ -5620,16 +5161,7 @@
         "Zombies",
         "zomby"
       ],
-      "file": "monsters/zombies.gif"
-    },
-    {
-      "category": "monster",
-      "id": "monster/zombies_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "monsters/zombies_alt.gif"
+      "file": "monsters/gif/zombies.gif"
     },
     {
       "category": "race",
@@ -5643,16 +5175,7 @@
         "Homme-chat",
         "cat"
       ],
-      "file": "races/cats.gif"
-    },
-    {
-      "category": "race",
-      "id": "race/cats_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "races/cats_alt.gif"
+      "file": "races/gif/cats.gif"
     },
     {
       "category": "race",
@@ -5664,16 +5187,7 @@
         "zentauren",
         "centaur"
       ],
-      "file": "races/centaurs.gif"
-    },
-    {
-      "category": "race",
-      "id": "race/centaurs_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "races/centaurs_alt.gif"
+      "file": "races/gif/centaurs.gif"
     },
     {
       "category": "race",
@@ -5689,16 +5203,7 @@
         "Démon",
         "demon"
       ],
-      "file": "races/demons.gif"
-    },
-    {
-      "category": "race",
-      "id": "race/demons_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "races/demons_alt.gif"
+      "file": "races/gif/demons.gif"
     },
     {
       "category": "race",
@@ -5710,7 +5215,7 @@
         "dracoide",
         "Dracoid"
       ],
-      "file": "races/dracoid.gif"
+      "file": "races/gif/dracoid.gif"
     },
     {
       "category": "race",
@@ -5723,7 +5228,7 @@
         "Dracoiden",
         "Dracoids"
       ],
-      "file": "races/dracoids.gif"
+      "file": "races/gif/dracoids.gif"
     },
     {
       "category": "race",
@@ -5735,16 +5240,7 @@
         "drachen",
         "dragon"
       ],
-      "file": "races/dragons.gif"
-    },
-    {
-      "category": "race",
-      "id": "race/dragons_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "races/dragons_alt.gif"
+      "file": "races/gif/dragons.gif"
     },
     {
       "category": "race",
@@ -5759,16 +5255,7 @@
         "dwarf",
         "dwarfe"
       ],
-      "file": "races/dwarves.gif"
-    },
-    {
-      "category": "race",
-      "id": "race/dwarves_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "races/dwarves_alt.gif"
+      "file": "races/gif/dwarves.gif"
     },
     {
       "category": "race",
@@ -5782,16 +5269,7 @@
         "Elfe",
         "elf"
       ],
-      "file": "races/elves.gif"
-    },
-    {
-      "category": "race",
-      "id": "race/elves_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "races/elves_alt.gif"
+      "file": "races/gif/elves.gif"
     },
     {
       "category": "race",
@@ -5803,16 +5281,7 @@
         "ents",
         "ent"
       ],
-      "file": "races/ents.gif"
-    },
-    {
-      "category": "race",
-      "id": "race/ents_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "races/ents_alt.gif"
+      "file": "races/gif/ents.gif"
     },
     {
       "category": "race",
@@ -5824,7 +5293,7 @@
         "ghaste",
         "ghasts"
       ],
-      "file": "races/ghast.gif"
+      "file": "races/gif/ghast.gif"
     },
     {
       "category": "race",
@@ -5837,7 +5306,7 @@
         "geister",
         "ghost"
       ],
-      "file": "races/ghosts.gif"
+      "file": "races/gif/ghosts.gif"
     },
     {
       "category": "race",
@@ -5851,16 +5320,7 @@
         "Ghouls",
         "ghoul"
       ],
-      "file": "races/ghouls.gif"
-    },
-    {
-      "category": "race",
-      "id": "race/ghouls_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "races/ghouls_alt.gif"
+      "file": "races/gif/ghouls.gif"
     },
     {
       "category": "race",
@@ -5874,16 +5334,7 @@
         "Gobelin",
         "goblin"
       ],
-      "file": "races/goblins.gif"
-    },
-    {
-      "category": "race",
-      "id": "race/goblins_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "races/goblins_alt.gif"
+      "file": "races/gif/goblins.gif"
     },
     {
       "category": "race",
@@ -5897,16 +5348,7 @@
         "Halfelin",
         "halfling"
       ],
-      "file": "races/halflings.gif"
-    },
-    {
-      "category": "race",
-      "id": "race/halflings_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "races/halflings_alt.gif"
+      "file": "races/gif/halflings.gif"
     },
     {
       "category": "race",
@@ -5920,16 +5362,7 @@
         "Humain",
         "human"
       ],
-      "file": "races/humans.gif"
-    },
-    {
-      "category": "race",
-      "id": "race/humans_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "races/humans_alt.gif"
+      "file": "races/gif/humans.gif"
     },
     {
       "category": "race",
@@ -5943,16 +5376,7 @@
         "Insecte",
         "insect"
       ],
-      "file": "races/insects.gif"
-    },
-    {
-      "category": "race",
-      "id": "race/insects_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "races/insects_alt.gif"
+      "file": "races/gif/insects.gif"
     },
     {
       "category": "race",
@@ -5967,16 +5391,7 @@
         "Aquarien",
         "merfolks"
       ],
-      "file": "races/merfolk.gif"
-    },
-    {
-      "category": "race",
-      "id": "race/merfolk_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "races/merfolk_alt.gif"
+      "file": "races/gif/merfolk.gif"
     },
     {
       "category": "race",
@@ -5990,16 +5405,7 @@
         "Orcs",
         "orc"
       ],
-      "file": "races/orcs.gif"
-    },
-    {
-      "category": "race",
-      "id": "race/orcs_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "races/orcs_alt.gif"
+      "file": "races/gif/orcs.gif"
     },
     {
       "category": "race",
@@ -6012,7 +5418,7 @@
         "Orkas",
         "orka"
       ],
-      "file": "races/orkas.gif"
+      "file": "races/gif/orkas.gif"
     },
     {
       "category": "race",
@@ -6024,7 +5430,7 @@
         "eulen",
         "owl"
       ],
-      "file": "races/owls.gif"
+      "file": "races/gif/owls.gif"
     },
     {
       "category": "race",
@@ -6050,16 +5456,7 @@
         "Personne",
         "races"
       ],
-      "file": "races/race.gif"
-    },
-    {
-      "category": "race",
-      "id": "race/race_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "races/race_alt.gif"
+      "file": "races/gif/race.gif"
     },
     {
       "category": "race",
@@ -6071,16 +5468,7 @@
         "ratten",
         "rat"
       ],
-      "file": "races/rats.gif"
-    },
-    {
-      "category": "race",
-      "id": "race/rats_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "races/rats_alt.gif"
+      "file": "races/gif/rats.gif"
     },
     {
       "category": "race",
@@ -6097,16 +5485,7 @@
         "Seigneur Squelette",
         "skeleton"
       ],
-      "file": "races/skeletons.gif"
-    },
-    {
-      "category": "race",
-      "id": "race/skeletons_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "races/skeletons_alt.gif"
+      "file": "races/gif/skeletons.gif"
     },
     {
       "category": "race",
@@ -6118,16 +5497,7 @@
         "trolle",
         "Troll"
       ],
-      "file": "races/trolls.gif"
-    },
-    {
-      "category": "race",
-      "id": "race/trolls_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "races/trolls_alt.gif"
+      "file": "races/gif/trolls.gif"
     },
     {
       "category": "race",
@@ -6139,16 +5509,7 @@
         "vampire",
         "vampir"
       ],
-      "file": "races/vampires.gif"
-    },
-    {
-      "category": "race",
-      "id": "race/vampires_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "races/vampires_alt.gif"
+      "file": "races/gif/vampires.gif"
     },
     {
       "category": "race",
@@ -6163,16 +5524,7 @@
         "wolf",
         "wolfe"
       ],
-      "file": "races/wolves.gif"
-    },
-    {
-      "category": "race",
-      "id": "race/wolves_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "races/wolves_alt.gif"
+      "file": "races/gif/wolves.gif"
     },
     {
       "category": "race",
@@ -6185,16 +5537,7 @@
         "Zombies",
         "zomby"
       ],
-      "file": "races/zombies.gif"
-    },
-    {
-      "category": "race",
-      "id": "race/zombies_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "races/zombies_alt.gif"
+      "file": "races/gif/zombies.gif"
     },
     {
       "category": "resource",
@@ -6206,7 +5549,7 @@
         "adamantium",
         "adamantiums"
       ],
-      "file": "resources/adamantium.gif"
+      "file": "resources/gif/adamantium.gif"
     },
     {
       "category": "resource",
@@ -6218,7 +5561,7 @@
         "basiliskenzunge",
         "basilisktongues"
       ],
-      "file": "resources/basilisk_tongue.gif"
+      "file": "resources/gif/basilisk_tongue.gif"
     },
     {
       "category": "resource",
@@ -6230,7 +5573,7 @@
         "gulden",
         "guilders"
       ],
-      "file": "resources/guilder.gif"
+      "file": "resources/gif/guilder.gif"
     },
     {
       "category": "resource",
@@ -6244,16 +5587,7 @@
         "Herbs",
         "herb"
       ],
-      "file": "resources/herbs.gif"
-    },
-    {
-      "category": "resource",
-      "id": "resource/herbs_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "resources/herbs_alt.gif"
+      "file": "resources/gif/herbs.gif"
     },
     {
       "category": "resource",
@@ -6266,7 +5600,7 @@
         "hors",
         "horse"
       ],
-      "file": "resources/horses.gif"
+      "file": "resources/gif/horses.gif"
     },
     {
       "category": "resource",
@@ -6278,7 +5612,7 @@
         "weihrauch",
         "incenses"
       ],
-      "file": "resources/incense.gif"
+      "file": "resources/gif/incense.gif"
     },
     {
       "category": "resource",
@@ -6290,7 +5624,7 @@
         "eisen",
         "irons"
       ],
-      "file": "resources/iron.gif"
+      "file": "resources/gif/iron.gif"
     },
     {
       "category": "resource",
@@ -6302,7 +5636,7 @@
         "laen",
         "laens"
       ],
-      "file": "resources/laen.gif"
+      "file": "resources/gif/laen.gif"
     },
     {
       "category": "resource",
@@ -6316,16 +5650,7 @@
         "Luxury goods",
         "luxurygood"
       ],
-      "file": "resources/luxuries.gif"
-    },
-    {
-      "category": "resource",
-      "id": "resource/luxuries_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "resources/luxuries_alt.gif"
+      "file": "resources/gif/luxuries.gif"
     },
     {
       "category": "resource",
@@ -6337,7 +5662,7 @@
         "mallornschoesslinge",
         "mallornsapling"
       ],
-      "file": "resources/mallorn_saplings.gif"
+      "file": "resources/gif/mallorn_saplings.gif"
     },
     {
       "category": "resource",
@@ -6350,7 +5675,7 @@
         "mallorntre",
         "mallorntree"
       ],
-      "file": "resources/mallorn_trees.gif"
+      "file": "resources/gif/mallorn_trees.gif"
     },
     {
       "category": "resource",
@@ -6364,7 +5689,7 @@
         "Raw materials",
         "rawmaterial"
       ],
-      "file": "resources/raw_materials.gif"
+      "file": "resources/gif/raw_materials.gif"
     },
     {
       "category": "resource",
@@ -6379,16 +5704,7 @@
         "resourc",
         "resource"
       ],
-      "file": "resources/resources.gif"
-    },
-    {
-      "category": "resource",
-      "id": "resource/resources_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "resources/resources_alt.gif"
+      "file": "resources/gif/resources.gif"
     },
     {
       "category": "resource",
@@ -6400,7 +5716,7 @@
         "schoesslinge",
         "sapling"
       ],
-      "file": "resources/saplings.gif"
+      "file": "resources/gif/saplings.gif"
     },
     {
       "category": "resource",
@@ -6414,16 +5730,7 @@
         "Silver",
         "silvers"
       ],
-      "file": "resources/silver.gif"
-    },
-    {
-      "category": "resource",
-      "id": "resource/silver_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "resources/silver_alt.gif"
+      "file": "resources/gif/silver.gif"
     },
     {
       "category": "resource",
@@ -6435,7 +5742,7 @@
         "stein",
         "stones"
       ],
-      "file": "resources/stone.gif"
+      "file": "resources/gif/stone.gif"
     },
     {
       "category": "resource",
@@ -6447,7 +5754,7 @@
         "handelsgueter",
         "tradegood"
       ],
-      "file": "resources/trade_goods.gif"
+      "file": "resources/gif/trade_goods.gif"
     },
     {
       "category": "resource",
@@ -6460,7 +5767,7 @@
         "tre",
         "tree"
       ],
-      "file": "resources/trees.gif"
+      "file": "resources/gif/trees.gif"
     },
     {
       "category": "ship",
@@ -6472,7 +5779,7 @@
         "balliste",
         "ballistas"
       ],
-      "file": "ships/ballista.gif"
+      "file": "ships/gif/ballista.gif"
     },
     {
       "category": "ship",
@@ -6485,7 +5792,7 @@
         "luftschiff",
         "balloons"
       ],
-      "file": "ships/balloon.gif"
+      "file": "ships/gif/balloon.gif"
     },
     {
       "category": "ship",
@@ -6497,7 +5804,7 @@
         "barke",
         "barges"
       ],
-      "file": "ships/barge.gif"
+      "file": "ships/gif/barge.gif"
     },
     {
       "category": "ship",
@@ -6512,7 +5819,7 @@
         "bateau",
         "boats"
       ],
-      "file": "ships/boat.gif"
+      "file": "ships/gif/boat.gif"
     },
     {
       "category": "ship",
@@ -6526,7 +5833,7 @@
         "Canoe",
         "canoes"
       ],
-      "file": "ships/canoe.gif"
+      "file": "ships/gif/canoe.gif"
     },
     {
       "category": "ship",
@@ -6538,7 +5845,7 @@
         "karawane",
         "caravans"
       ],
-      "file": "ships/caravan.gif"
+      "file": "ships/gif/caravan.gif"
     },
     {
       "category": "ship",
@@ -6551,7 +5858,7 @@
         "caravelle",
         "caravels"
       ],
-      "file": "ships/caravel.gif"
+      "file": "ships/gif/caravel.gif"
     },
     {
       "category": "ship",
@@ -6563,7 +5870,7 @@
         "katamaran",
         "catamarans"
       ],
-      "file": "ships/catamaran.gif"
+      "file": "ships/gif/catamaran.gif"
     },
     {
       "category": "ship",
@@ -6576,16 +5883,7 @@
         "catapult",
         "catapults"
       ],
-      "file": "ships/catapult.gif"
-    },
-    {
-      "category": "ship",
-      "id": "ship/catapult_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "ships/catapult_alt.gif"
+      "file": "ships/gif/catapult.gif"
     },
     {
       "category": "ship",
@@ -6597,7 +5895,7 @@
         "kogge",
         "cogs"
       ],
-      "file": "ships/cog.gif"
+      "file": "ships/gif/cog.gif"
     },
     {
       "category": "ship",
@@ -6609,7 +5907,7 @@
         "kreuzer",
         "cruisers"
       ],
-      "file": "ships/cruiser.gif"
+      "file": "ships/gif/cruiser.gif"
     },
     {
       "category": "ship",
@@ -6621,7 +5919,7 @@
         "kutter",
         "cutters"
       ],
-      "file": "ships/cutter.gif"
+      "file": "ships/gif/cutter.gif"
     },
     {
       "category": "ship",
@@ -6635,7 +5933,7 @@
         "drakkar",
         "dragonships"
       ],
-      "file": "ships/dragon_ship.gif"
+      "file": "ships/gif/dragon_ship.gif"
     },
     {
       "category": "ship",
@@ -6647,7 +5945,7 @@
         "fregatte",
         "frigates"
       ],
-      "file": "ships/frigate.gif"
+      "file": "ships/gif/frigate.gif"
     },
     {
       "category": "ship",
@@ -6660,7 +5958,7 @@
         "galion",
         "galleons"
       ],
-      "file": "ships/galleon.gif"
+      "file": "ships/gif/galleon.gif"
     },
     {
       "category": "ship",
@@ -6673,7 +5971,7 @@
         "chaloupe",
         "longboats"
       ],
-      "file": "ships/longboat.gif"
+      "file": "ships/gif/longboat.gif"
     },
     {
       "category": "ship",
@@ -6685,7 +5983,7 @@
         "floss",
         "rafts"
       ],
-      "file": "ships/raft.gif"
+      "file": "ships/gif/raft.gif"
     },
     {
       "category": "ship",
@@ -6697,7 +5995,7 @@
         "koenigsbarke",
         "royalbarges"
       ],
-      "file": "ships/royal_barge.gif"
+      "file": "ships/gif/royal_barge.gif"
     },
     {
       "category": "ship",
@@ -6710,16 +6008,7 @@
         "ships",
         "ship"
       ],
-      "file": "ships/ships.gif"
-    },
-    {
-      "category": "ship",
-      "id": "ship/ships_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "ships/ships_alt.gif"
+      "file": "ships/gif/ships.gif"
     },
     {
       "category": "ship",
@@ -6728,7 +6017,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "ships/ships_alt2.gif"
+      "file": "ships/gif/ships_alt2.gif"
     },
     {
       "category": "ship",
@@ -6742,16 +6031,7 @@
         "trirème",
         "triremes"
       ],
-      "file": "ships/trireme.gif"
-    },
-    {
-      "category": "ship",
-      "id": "ship/trireme_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "ships/trireme_alt.gif"
+      "file": "ships/gif/trireme.gif"
     },
     {
       "category": "skill",
@@ -6773,7 +6053,7 @@
         "alchémistes",
         "alchemies"
       ],
-      "file": "skills/alchemy.gif"
+      "file": "skills/gif/alchemy.gif"
     },
     {
       "category": "skill",
@@ -6786,16 +6066,7 @@
         "Alchimie",
         "alchimies"
       ],
-      "file": "skills/alchemy_alchimie.gif"
-    },
-    {
-      "category": "skill",
-      "id": "skill/alchemy_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "skills/alchemy_alt.gif"
+      "file": "skills/gif/alchemy_alchimie.gif"
     },
     {
       "category": "skill",
@@ -6807,7 +6078,7 @@
         "tierdressur",
         "animaltrainings"
       ],
-      "file": "skills/animal_training.gif"
+      "file": "skills/gif/animal_training.gif"
     },
     {
       "category": "skill",
@@ -6819,7 +6090,7 @@
         "bogenschiessen",
         "archeries"
       ],
-      "file": "skills/archery.gif"
+      "file": "skills/gif/archery.gif"
     },
     {
       "category": "skill",
@@ -6831,7 +6102,7 @@
         "baukunst",
         "architectures"
       ],
-      "file": "skills/architecture.gif"
+      "file": "skills/gif/architecture.gif"
     },
     {
       "category": "skill",
@@ -6845,7 +6116,7 @@
         "Armour",
         "armours"
       ],
-      "file": "skills/armour.gif"
+      "file": "skills/gif/armour.gif"
     },
     {
       "category": "skill",
@@ -6859,16 +6130,7 @@
         "Armoursmithing",
         "armoursmithings"
       ],
-      "file": "skills/armoursmithing.gif"
-    },
-    {
-      "category": "skill",
-      "id": "skill/armoursmithing_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "skills/armoursmithing_alt.gif"
+      "file": "skills/gif/armoursmithing.gif"
     },
     {
       "category": "skill",
@@ -6880,7 +6142,7 @@
         "meucheln",
         "assassinations"
       ],
-      "file": "skills/assassination.gif"
+      "file": "skills/gif/assassination.gif"
     },
     {
       "category": "skill",
@@ -6892,7 +6154,7 @@
         "bow",
         "bows"
       ],
-      "file": "skills/bow.gif"
+      "file": "skills/gif/bow.gif"
     },
     {
       "category": "skill",
@@ -6904,7 +6166,7 @@
         "bogenbau",
         "bowyeries"
       ],
-      "file": "skills/bowyery.gif"
+      "file": "skills/gif/bowyery.gif"
     },
     {
       "category": "skill",
@@ -6918,16 +6180,7 @@
         "Cartmaking",
         "cartmakings"
       ],
-      "file": "skills/cartmaking.gif"
-    },
-    {
-      "category": "skill",
-      "id": "skill/cartmaking_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "skills/cartmaking_alt.gif"
+      "file": "skills/gif/cartmaking.gif"
     },
     {
       "category": "skill",
@@ -6939,7 +6192,7 @@
         "catapult",
         "catapults"
       ],
-      "file": "skills/catapult.gif"
+      "file": "skills/gif/catapult.gif"
     },
     {
       "category": "skill",
@@ -6951,7 +6204,7 @@
         "katapultbedienung",
         "catapultoperations"
       ],
-      "file": "skills/catapult_operation.gif"
+      "file": "skills/gif/catapult_operation.gif"
     },
     {
       "category": "skill",
@@ -6963,7 +6216,7 @@
         "katapultschiessen",
         "catapultshootings"
       ],
-      "file": "skills/catapult_shooting.gif"
+      "file": "skills/gif/catapult_shooting.gif"
     },
     {
       "category": "skill",
@@ -6975,7 +6228,7 @@
         "kochkunst",
         "cookings"
       ],
-      "file": "skills/cooking.gif"
+      "file": "skills/gif/cooking.gif"
     },
     {
       "category": "skill",
@@ -6987,7 +6240,7 @@
         "armbrustschiessen",
         "crossbowshootings"
       ],
-      "file": "skills/crossbow_shooting.gif"
+      "file": "skills/gif/crossbow_shooting.gif"
     },
     {
       "category": "skill",
@@ -7001,16 +6254,7 @@
         "Endurance",
         "endurances"
       ],
-      "file": "skills/endurance.gif"
-    },
-    {
-      "category": "skill",
-      "id": "skill/endurance_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "skills/endurance_alt.gif"
+      "file": "skills/gif/endurance.gif"
     },
     {
       "category": "skill",
@@ -7024,16 +6268,7 @@
         "Entertainment",
         "entertainments"
       ],
-      "file": "skills/entertainment.gif"
-    },
-    {
-      "category": "skill",
-      "id": "skill/entertainment_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "skills/entertainment_alt.gif"
+      "file": "skills/gif/entertainment.gif"
     },
     {
       "category": "skill",
@@ -7047,16 +6282,7 @@
         "Espionage",
         "espionages"
       ],
-      "file": "skills/espionage.gif"
-    },
-    {
-      "category": "skill",
-      "id": "skill/espionage_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "skills/espionage_alt.gif"
+      "file": "skills/gif/espionage.gif"
     },
     {
       "category": "skill",
@@ -7070,7 +6296,7 @@
         "Espionage (Spy)",
         "espionagespies"
       ],
-      "file": "skills/espionage_spy.gif"
+      "file": "skills/gif/espionage_spy.gif"
     },
     {
       "category": "skill",
@@ -7082,7 +6308,7 @@
         "flugkunst",
         "flyings"
       ],
-      "file": "skills/flying.gif"
+      "file": "skills/gif/flying.gif"
     },
     {
       "category": "skill",
@@ -7095,16 +6321,7 @@
         "forestry",
         "forestries"
       ],
-      "file": "skills/forestry.gif"
-    },
-    {
-      "category": "skill",
-      "id": "skill/forestry_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "skills/forestry_alt.gif"
+      "file": "skills/gif/forestry.gif"
     },
     {
       "category": "skill",
@@ -7116,7 +6333,7 @@
         "greifenzucht",
         "griffinbreedings"
       ],
-      "file": "skills/griffin_breeding.gif"
+      "file": "skills/gif/griffin_breeding.gif"
     },
     {
       "category": "skill",
@@ -7130,16 +6347,7 @@
         "Herbalism",
         "herbalisms"
       ],
-      "file": "skills/herbalism.gif"
-    },
-    {
-      "category": "skill",
-      "id": "skill/herbalism_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "skills/herbalism_alt.gif"
+      "file": "skills/gif/herbalism.gif"
     },
     {
       "category": "skill",
@@ -7151,7 +6359,7 @@
         "pferdezucht",
         "horsebreedings"
       ],
-      "file": "skills/horse_breeding.gif"
+      "file": "skills/gif/horse_breeding.gif"
     },
     {
       "category": "skill",
@@ -7163,7 +6371,7 @@
         "pferdedressur",
         "horsetrainings"
       ],
-      "file": "skills/horse_training.gif"
+      "file": "skills/gif/horse_training.gif"
     },
     {
       "category": "skill",
@@ -7175,7 +6383,7 @@
         "juwelierskunst",
         "jewellerymakings"
       ],
-      "file": "skills/jewellery_making.gif"
+      "file": "skills/gif/jewellery_making.gif"
     },
     {
       "category": "skill",
@@ -7187,7 +6395,7 @@
         "beladung",
         "loadings"
       ],
-      "file": "skills/loading.gif"
+      "file": "skills/gif/loading.gif"
     },
     {
       "category": "skill",
@@ -7209,16 +6417,7 @@
         "magiciennes",
         "magics"
       ],
-      "file": "skills/magic.gif"
-    },
-    {
-      "category": "skill",
-      "id": "skill/magic_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "skills/magic_alt.gif"
+      "file": "skills/gif/magic.gif"
     },
     {
       "category": "skill",
@@ -7230,16 +6429,7 @@
         "burgenbau",
         "masonries"
       ],
-      "file": "skills/masonry.gif"
-    },
-    {
-      "category": "skill",
-      "id": "skill/masonry_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "skills/masonry_alt.gif"
+      "file": "skills/gif/masonry.gif"
     },
     {
       "category": "skill",
@@ -7252,16 +6442,7 @@
         "melee",
         "melees"
       ],
-      "file": "skills/melee.gif"
-    },
-    {
-      "category": "skill",
-      "id": "skill/melee_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "skills/melee_alt.gif"
+      "file": "skills/gif/melee.gif"
     },
     {
       "category": "skill",
@@ -7275,16 +6456,7 @@
         "Mining",
         "minings"
       ],
-      "file": "skills/mining.gif"
-    },
-    {
-      "category": "skill",
-      "id": "skill/mining_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "skills/mining_alt.gif"
+      "file": "skills/gif/mining.gif"
     },
     {
       "category": "skill",
@@ -7298,25 +6470,7 @@
         "Perception",
         "perceptions"
       ],
-      "file": "skills/perception.gif"
-    },
-    {
-      "category": "skill",
-      "id": "skill/perception_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "skills/perception_alt.gif"
-    },
-    {
-      "category": "skill",
-      "id": "skill/polearm_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "skills/polearm_alt.gif"
+      "file": "skills/gif/perception.gif"
     },
     {
       "category": "skill",
@@ -7330,7 +6484,7 @@
         "Polearms",
         "polearm"
       ],
-      "file": "skills/polearms.gif"
+      "file": "skills/gif/polearms.gif"
     },
     {
       "category": "skill",
@@ -7344,7 +6498,7 @@
         "Quarry",
         "quarries"
       ],
-      "file": "skills/quarry.gif"
+      "file": "skills/gif/quarry.gif"
     },
     {
       "category": "skill",
@@ -7356,7 +6510,7 @@
         "quarrying",
         "quarryings"
       ],
-      "file": "skills/quarrying.gif"
+      "file": "skills/gif/quarrying.gif"
     },
     {
       "category": "skill",
@@ -7368,7 +6522,7 @@
         "fernkampf",
         "rangedcombats"
       ],
-      "file": "skills/ranged_combat.gif"
+      "file": "skills/gif/ranged_combat.gif"
     },
     {
       "category": "skill",
@@ -7380,7 +6534,7 @@
         "anwerben",
         "recruits"
       ],
-      "file": "skills/recruit.gif"
+      "file": "skills/gif/recruit.gif"
     },
     {
       "category": "skill",
@@ -7394,16 +6548,7 @@
         "Riding",
         "ridings"
       ],
-      "file": "skills/riding.gif"
-    },
-    {
-      "category": "skill",
-      "id": "skill/riding_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "skills/riding_alt.gif"
+      "file": "skills/gif/riding.gif"
     },
     {
       "category": "skill",
@@ -7417,16 +6562,7 @@
         "Roadwork",
         "roadworks"
       ],
-      "file": "skills/roadwork.gif"
-    },
-    {
-      "category": "skill",
-      "id": "skill/roadwork_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "skills/roadwork_alt.gif"
+      "file": "skills/gif/roadwork.gif"
     },
     {
       "category": "skill",
@@ -7440,16 +6576,7 @@
         "Sailing",
         "sailings"
       ],
-      "file": "skills/sailing.gif"
-    },
-    {
-      "category": "skill",
-      "id": "skill/sailing_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "skills/sailing_alt.gif"
+      "file": "skills/gif/sailing.gif"
     },
     {
       "category": "skill",
@@ -7463,16 +6590,7 @@
         "Shipbuilding",
         "shipbuildings"
       ],
-      "file": "skills/shipcraft.gif"
-    },
-    {
-      "category": "skill",
-      "id": "skill/shipcraft_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "skills/shipcraft_alt.gif"
+      "file": "skills/gif/shipcraft.gif"
     },
     {
       "category": "skill",
@@ -7485,16 +6603,7 @@
         "siege",
         "sieges"
       ],
-      "file": "skills/siege.gif"
-    },
-    {
-      "category": "skill",
-      "id": "skill/siege_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "skills/siege_alt.gif"
+      "file": "skills/gif/siege.gif"
     },
     {
       "category": "skill",
@@ -7507,16 +6616,7 @@
         "skills",
         "skill"
       ],
-      "file": "skills/skills.gif"
-    },
-    {
-      "category": "skill",
-      "id": "skill/skills_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "skills/skills_alt.gif"
+      "file": "skills/gif/skills.gif"
     },
     {
       "category": "skill",
@@ -7528,7 +6628,7 @@
         "hiebwaffen",
         "slashingweapon"
       ],
-      "file": "skills/slashing_weapons.gif"
+      "file": "skills/gif/slashing_weapons.gif"
     },
     {
       "category": "skill",
@@ -7542,16 +6642,7 @@
         "Stealth",
         "stealths"
       ],
-      "file": "skills/stealth.gif"
-    },
-    {
-      "category": "skill",
-      "id": "skill/stealth_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "skills/stealth_alt.gif"
+      "file": "skills/gif/stealth.gif"
     },
     {
       "category": "skill",
@@ -7563,7 +6654,7 @@
         "steinbau",
         "stonebuildings"
       ],
-      "file": "skills/stone_building.gif"
+      "file": "skills/gif/stone_building.gif"
     },
     {
       "category": "skill",
@@ -7585,16 +6676,7 @@
         "tacticiennes",
         "tactic"
       ],
-      "file": "skills/tactics.gif"
-    },
-    {
-      "category": "skill",
-      "id": "skill/tactics_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "skills/tactics_alt.gif"
+      "file": "skills/gif/tactics.gif"
     },
     {
       "category": "skill",
@@ -7607,16 +6689,7 @@
         "taming",
         "tamings"
       ],
-      "file": "skills/taming.gif"
-    },
-    {
-      "category": "skill",
-      "id": "skill/taming_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "skills/taming_alt.gif"
+      "file": "skills/gif/taming.gif"
     },
     {
       "category": "skill",
@@ -7630,16 +6703,7 @@
         "Tax collection",
         "taxcollections"
       ],
-      "file": "skills/tax_collection.gif"
-    },
-    {
-      "category": "skill",
-      "id": "skill/tax_collection_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "skills/tax_collection_alt.gif"
+      "file": "skills/gif/tax_collection.gif"
     },
     {
       "category": "skill",
@@ -7653,16 +6717,7 @@
         "Trade",
         "trades"
       ],
-      "file": "skills/trade.gif"
-    },
-    {
-      "category": "skill",
-      "id": "skill/trade_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "skills/trade_alt.gif"
+      "file": "skills/gif/trade.gif"
     },
     {
       "category": "skill",
@@ -7676,16 +6731,7 @@
         "Unarmed combat",
         "unarmedcombats"
       ],
-      "file": "skills/unarmed_combat.gif"
-    },
-    {
-      "category": "skill",
-      "id": "skill/unarmed_combat_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "skills/unarmed_combat_alt.gif"
+      "file": "skills/gif/unarmed_combat.gif"
     },
     {
       "category": "skill",
@@ -7699,16 +6745,7 @@
         "Weaponsmithing",
         "weaponsmithings"
       ],
-      "file": "skills/weaponsmithing.gif"
-    },
-    {
-      "category": "skill",
-      "id": "skill/weaponsmithing_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "skills/weaponsmithing_alt.gif"
+      "file": "skills/gif/weaponsmithing.gif"
     },
     {
       "category": "skill",
@@ -7720,7 +6757,7 @@
         "holzfaellen",
         "woodcuttings"
       ],
-      "file": "skills/woodcutting.gif"
+      "file": "skills/gif/woodcutting.gif"
     },
     {
       "category": "skill",
@@ -7732,7 +6769,7 @@
         "arbeiten",
         "works"
       ],
-      "file": "skills/work.gif"
+      "file": "skills/gif/work.gif"
     },
     {
       "category": "spell",
@@ -7744,16 +6781,7 @@
         "aura",
         "auras"
       ],
-      "file": "spells/aura.gif"
-    },
-    {
-      "category": "spell",
-      "id": "spell/aura_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "spells/aura_alt.gif"
+      "file": "spells/gif/aura.gif"
     },
     {
       "category": "spell",
@@ -7766,7 +6794,7 @@
         "gesegneter steinkreis",
         "blessedstonecircles"
       ],
-      "file": "spells/blessed_stone_circle.gif"
+      "file": "spells/gif/blessed_stone_circle.gif"
     },
     {
       "category": "spell",
@@ -7778,7 +6806,7 @@
         "combatspell",
         "combatspells"
       ],
-      "file": "spells/combat_spell.gif"
+      "file": "spells/gif/combat_spell.gif"
     },
     {
       "category": "spell",
@@ -7792,16 +6820,7 @@
         "Magic",
         "magics"
       ],
-      "file": "spells/magic.gif"
-    },
-    {
-      "category": "spell",
-      "id": "spell/magic_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "spells/magic_alt.gif"
+      "file": "spells/gif/magic.gif"
     },
     {
       "category": "spell",
@@ -7813,7 +6832,7 @@
         "magicschool",
         "magicschools"
       ],
-      "file": "spells/magic_school.gif"
+      "file": "spells/gif/magic_school.gif"
     },
     {
       "category": "spell",
@@ -7825,7 +6844,7 @@
         "spell_ocean",
         "oceanspells"
       ],
-      "file": "spells/ocean_spell.gif"
+      "file": "spells/gif/ocean_spell.gif"
     },
     {
       "category": "spell",
@@ -7837,7 +6856,7 @@
         "permanentaura",
         "permanentauras"
       ],
-      "file": "spells/permanent_aura.gif"
+      "file": "spells/gif/permanent_aura.gif"
     },
     {
       "category": "spell",
@@ -7849,16 +6868,7 @@
         "portal",
         "portals"
       ],
-      "file": "spells/portal.gif"
-    },
-    {
-      "category": "spell",
-      "id": "spell/portal_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "spells/portal_alt.gif"
+      "file": "spells/gif/portal.gif"
     },
     {
       "category": "spell",
@@ -7870,7 +6880,7 @@
         "spell_ship",
         "shipspells"
       ],
-      "file": "spells/ship_spell.gif"
+      "file": "spells/gif/ship_spell.gif"
     },
     {
       "category": "spell",
@@ -7883,16 +6893,7 @@
         "spell",
         "spells"
       ],
-      "file": "spells/spell.gif"
-    },
-    {
-      "category": "spell",
-      "id": "spell/spell_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "spells/spell_alt.gif"
+      "file": "spells/gif/spell.gif"
     },
     {
       "category": "spell",
@@ -7905,16 +6906,7 @@
         "spell_level",
         "spelllevels"
       ],
-      "file": "spells/spell_level.gif"
-    },
-    {
-      "category": "spell",
-      "id": "spell/spell_level_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "spells/spell_level_alt.gif"
+      "file": "spells/gif/spell_level.gif"
     },
     {
       "category": "spell",
@@ -7926,7 +6918,7 @@
         "spell_far",
         "spellranges"
       ],
-      "file": "spells/spell_range.gif"
+      "file": "spells/gif/spell_range.gif"
     },
     {
       "category": "spell",
@@ -7939,16 +6931,7 @@
         "spell_rank",
         "spellranks"
       ],
-      "file": "spells/spell_rank.gif"
-    },
-    {
-      "category": "spell",
-      "id": "spell/spell_rank_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "spells/spell_rank_alt.gif"
+      "file": "spells/gif/spell_rank.gif"
     },
     {
       "category": "spell",
@@ -7961,16 +6944,7 @@
         "spell_syntax",
         "spellsyntaxs"
       ],
-      "file": "spells/spell_syntax.gif"
-    },
-    {
-      "category": "spell",
-      "id": "spell/spell_syntax_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "spells/spell_syntax_alt.gif"
+      "file": "spells/gif/spell_syntax.gif"
     },
     {
       "category": "spell",
@@ -7983,16 +6957,7 @@
         "spell_type",
         "spelltypes"
       ],
-      "file": "spells/spell_type.gif"
-    },
-    {
-      "category": "spell",
-      "id": "spell/spell_type_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "spells/spell_type_alt.gif"
+      "file": "spells/gif/spell_type.gif"
     },
     {
       "category": "spell",
@@ -8005,16 +6970,7 @@
         "spell_noinfo",
         "spellwithoutinfos"
       ],
-      "file": "spells/spell_without_info.gif"
-    },
-    {
-      "category": "spell",
-      "id": "spell/spell_without_info_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "spells/spell_without_info_alt.gif"
+      "file": "spells/gif/spell_without_info.gif"
     },
     {
       "category": "spell",
@@ -8028,7 +6984,7 @@
         "Wall of fire",
         "walloffires"
       ],
-      "file": "spells/wall_of_fire.gif"
+      "file": "spells/gif/wall_of_fire.gif"
     },
     {
       "category": "spell",
@@ -8037,7 +6993,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "spells/wall_of_fire_detail.gif"
+      "file": "spells/gif/wall_of_fire_detail.gif"
     },
     {
       "category": "spell",
@@ -8049,7 +7005,7 @@
         "wurmloch",
         "wormholes"
       ],
-      "file": "spells/wormhole.gif"
+      "file": "spells/gif/wormhole.gif"
     },
     {
       "category": "status",
@@ -8061,16 +7017,7 @@
         "alter",
         "ages"
       ],
-      "file": "status/age.gif"
-    },
-    {
-      "category": "status",
-      "id": "status/age_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "status/age_alt.gif"
+      "file": "status/gif/age.gif"
     },
     {
       "category": "status",
@@ -8082,16 +7029,7 @@
         "angreifer",
         "attackers"
       ],
-      "file": "status/attacker.gif"
-    },
-    {
-      "category": "status",
-      "id": "status/attacker_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "status/attacker_alt.gif"
+      "file": "status/gif/attacker.gif"
     },
     {
       "category": "status",
@@ -8103,7 +7041,7 @@
         "zurueck",
         "backs"
       ],
-      "file": "status/back.gif"
+      "file": "status/gif/back.gif"
     },
     {
       "category": "status",
@@ -8117,16 +7055,7 @@
         "Badly wounded",
         "badlywoundeds"
       ],
-      "file": "status/badly_wounded.gif"
-    },
-    {
-      "category": "status",
-      "id": "status/badly_wounded_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "status/badly_wounded_alt.gif"
+      "file": "status/gif/badly_wounded.gif"
     },
     {
       "category": "status",
@@ -8138,7 +7067,7 @@
         "geburtstag",
         "birthdaies"
       ],
-      "file": "status/birthday.gif"
+      "file": "status/gif/birthday.gif"
     },
     {
       "category": "status",
@@ -8150,7 +7079,7 @@
         "buildingcost",
         "buildingcosts"
       ],
-      "file": "status/building_cost.gif"
+      "file": "status/gif/building_cost.gif"
     },
     {
       "category": "status",
@@ -8162,7 +7091,7 @@
         "build_size",
         "buildingsizes"
       ],
-      "file": "status/building_size.gif"
+      "file": "status/gif/building_size.gif"
     },
     {
       "category": "status",
@@ -8174,16 +7103,7 @@
         "kapitaen",
         "captains"
       ],
-      "file": "status/captain.gif"
-    },
-    {
-      "category": "status",
-      "id": "status/captain_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "status/captain_alt.gif"
+      "file": "status/gif/captain.gif"
     },
     {
       "category": "status",
@@ -8195,16 +7115,76 @@
         "traeger",
         "carrier"
       ],
-      "file": "status/carriers.gif"
+      "file": "status/gif/carriers.gif"
     },
     {
       "category": "status",
-      "id": "status/carriers_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "status/carriers_alt.gif"
+      "id": "status/combat_aggressive",
+      "role": "entry",
+      "de": "aggressiv",
+      "en": "aggressive",
+      "aliases": [
+        "aggressives"
+      ],
+      "file": "status/svg/combat_aggressive.svg"
+    },
+    {
+      "category": "status",
+      "id": "status/combat_defensive",
+      "role": "entry",
+      "de": "defensiv",
+      "en": "defensive",
+      "aliases": [
+        "defensives"
+      ],
+      "file": "status/svg/combat_defensive.svg"
+    },
+    {
+      "category": "status",
+      "id": "status/combat_flees",
+      "role": "entry",
+      "de": "flieht",
+      "en": "flees",
+      "aliases": [
+        "fle",
+        "flee"
+      ],
+      "file": "status/svg/combat_flees.svg"
+    },
+    {
+      "category": "status",
+      "id": "status/combat_front",
+      "role": "entry",
+      "de": "vorne",
+      "en": "in front",
+      "aliases": [
+        "front",
+        "infronts"
+      ],
+      "file": "status/svg/combat_front.svg"
+    },
+    {
+      "category": "status",
+      "id": "status/combat_passive",
+      "role": "entry",
+      "de": "kämpft nicht",
+      "en": "doesn't fight",
+      "aliases": [
+        "doesnt_fight",
+        "doesntfights"
+      ],
+      "file": "status/svg/combat_passive.svg"
+    },
+    {
+      "category": "status",
+      "id": "status/combat_rear",
+      "role": "entry",
+      "de": "hinten",
+      "en": "rear",
+      "aliases": [
+        "rears"
+      ],
+      "file": "status/svg/combat_rear.svg"
     },
     {
       "category": "status",
@@ -8216,7 +7196,18 @@
         "kampfstatus",
         "combatstatu"
       ],
-      "file": "status/combat_status.gif"
+      "file": "status/gif/combat_status.gif"
+    },
+    {
+      "category": "status",
+      "id": "status/combat_unknown",
+      "role": "entry",
+      "de": "unbekannt",
+      "en": "unknown",
+      "aliases": [
+        "unknowns"
+      ],
+      "file": "status/svg/combat_unknown.svg"
     },
     {
       "category": "status",
@@ -8228,16 +7219,7 @@
         "besatzung",
         "crews"
       ],
-      "file": "status/crew.gif"
-    },
-    {
-      "category": "status",
-      "id": "status/crew_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "status/crew_alt.gif"
+      "file": "status/gif/crew.gif"
     },
     {
       "category": "status",
@@ -8249,16 +7231,7 @@
         "schaden",
         "damages"
       ],
-      "file": "status/damage.gif"
-    },
-    {
-      "category": "status",
-      "id": "status/damage_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "status/damage_alt.gif"
+      "file": "status/gif/damage.gif"
     },
     {
       "category": "status",
@@ -8270,7 +7243,7 @@
         "email2",
         "emails"
       ],
-      "file": "status/e_mail.gif"
+      "file": "status/gif/e_mail.gif"
     },
     {
       "category": "status",
@@ -8284,16 +7257,7 @@
         "Endurance",
         "endurances"
       ],
-      "file": "status/endurance.gif"
-    },
-    {
-      "category": "status",
-      "id": "status/endurance_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "status/endurance_alt.gif"
+      "file": "status/gif/endurance.gif"
     },
     {
       "category": "status",
@@ -8305,7 +7269,7 @@
         "erschoepft",
         "exhausteds"
       ],
-      "file": "status/exhausted.gif"
+      "file": "status/gif/exhausted.gif"
     },
     {
       "category": "status",
@@ -8317,16 +7281,7 @@
         "geben",
         "gives"
       ],
-      "file": "status/give.gif"
-    },
-    {
-      "category": "status",
-      "id": "status/give_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "status/give_alt.gif"
+      "file": "status/gif/give.gif"
     },
     {
       "category": "status",
@@ -8338,7 +7293,7 @@
         "givetrans",
         "giveandtransfers"
       ],
-      "file": "status/give_and_transfer.gif"
+      "file": "status/gif/give_and_transfer.gif"
     },
     {
       "category": "status",
@@ -8350,16 +7305,7 @@
         "gruppen",
         "group"
       ],
-      "file": "status/groups.gif"
-    },
-    {
-      "category": "status",
-      "id": "status/groups_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "status/groups_alt.gif"
+      "file": "status/gif/groups.gif"
     },
     {
       "category": "status",
@@ -8371,7 +7317,7 @@
         "bewacht",
         "guardeds"
       ],
-      "file": "status/guarded.gif"
+      "file": "status/gif/guarded.gif"
     },
     {
       "category": "status",
@@ -8383,7 +7329,7 @@
         "gesund",
         "healthies"
       ],
-      "file": "status/healthy.gif"
+      "file": "status/gif/healthy.gif"
     },
     {
       "category": "status",
@@ -8400,7 +7346,7 @@
         "héroïne",
         "héroïnes"
       ],
-      "file": "status/hero.gif"
+      "file": "status/gif/hero.gif"
     },
     {
       "category": "status",
@@ -8414,16 +7360,7 @@
         "Heroes",
         "heroe"
       ],
-      "file": "status/heroes.gif"
-    },
-    {
-      "category": "status",
-      "id": "status/heroes_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "status/heroes_alt.gif"
+      "file": "status/gif/heroes.gif"
     },
     {
       "category": "status",
@@ -8435,16 +7372,7 @@
         "obdachlos",
         "homeles"
       ],
-      "file": "status/homeless.gif"
-    },
-    {
-      "category": "status",
-      "id": "status/homeless_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "status/homeless_alt.gif"
+      "file": "status/gif/homeless.gif"
     },
     {
       "category": "status",
@@ -8456,16 +7384,7 @@
         "hunger",
         "hungers"
       ],
-      "file": "status/hunger.gif"
-    },
-    {
-      "category": "status",
-      "id": "status/hunger_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "status/hunger_alt.gif"
+      "file": "status/gif/hunger.gif"
     },
     {
       "category": "status",
@@ -8477,16 +7396,7 @@
         "migranten",
         "migrant"
       ],
-      "file": "status/migrants.gif"
-    },
-    {
-      "category": "status",
-      "id": "status/migrants_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "status/migrants_alt.gif"
+      "file": "status/gif/migrants.gif"
     },
     {
       "category": "status",
@@ -8498,16 +7408,7 @@
         "moral",
         "morales"
       ],
-      "file": "status/morale.gif"
-    },
-    {
-      "category": "status",
-      "id": "status/morale_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "status/morale_alt.gif"
+      "file": "status/gif/morale.gif"
     },
     {
       "category": "status",
@@ -8519,16 +7420,7 @@
         "bewohner",
         "occupant"
       ],
-      "file": "status/occupants.gif"
-    },
-    {
-      "category": "status",
-      "id": "status/occupants_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "status/occupants_alt.gif"
+      "file": "status/gif/occupants.gif"
     },
     {
       "category": "status",
@@ -8540,16 +7432,7 @@
         "passagiere",
         "passenger"
       ],
-      "file": "status/passengers.gif"
-    },
-    {
-      "category": "status",
-      "id": "status/passengers_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "status/passengers_alt.gif"
+      "file": "status/gif/passengers.gif"
     },
     {
       "category": "status",
@@ -8561,7 +7444,7 @@
         "person",
         "Person"
       ],
-      "file": "status/person.gif"
+      "file": "status/gif/person.gif"
     },
     {
       "category": "status",
@@ -8574,16 +7457,7 @@
         "Personen",
         "Persons"
       ],
-      "file": "status/persons.gif"
-    },
-    {
-      "category": "status",
-      "id": "status/persons_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "status/persons_alt.gif"
+      "file": "status/gif/persons.gif"
     },
     {
       "category": "status",
@@ -8595,16 +7469,7 @@
         "personen_anderer_rasse",
         "personsofotherraces"
       ],
-      "file": "status/persons_of_other_race.gif"
-    },
-    {
-      "category": "status",
-      "id": "status/persons_of_other_race_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "status/persons_of_other_race_alt.gif"
+      "file": "status/gif/persons_of_other_race.gif"
     },
     {
       "category": "status",
@@ -8616,16 +7481,7 @@
         "schueler",
         "pupil"
       ],
-      "file": "status/pupils.gif"
-    },
-    {
-      "category": "status",
-      "id": "status/pupils_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "status/pupils_alt.gif"
+      "file": "status/gif/pupils.gif"
     },
     {
       "category": "status",
@@ -8637,16 +7493,7 @@
         "radius",
         "radiu"
       ],
-      "file": "status/radius.gif"
-    },
-    {
-      "category": "status",
-      "id": "status/radius_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "status/radius_alt.gif"
+      "file": "status/gif/radius.gif"
     },
     {
       "category": "status",
@@ -8658,16 +7505,7 @@
         "reserve",
         "reserves"
       ],
-      "file": "status/reserve.gif"
-    },
-    {
-      "category": "status",
-      "id": "status/reserve_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "status/reserve_alt.gif"
+      "file": "status/gif/reserve.gif"
     },
     {
       "category": "status",
@@ -8679,16 +7517,7 @@
         "punkte",
         "scores"
       ],
-      "file": "status/score.gif"
-    },
-    {
-      "category": "status",
-      "id": "status/score_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "status/score_alt.gif"
+      "file": "status/gif/score.gif"
     },
     {
       "category": "status",
@@ -8700,16 +7529,7 @@
         "sprache",
         "speechs"
       ],
-      "file": "status/speech.gif"
-    },
-    {
-      "category": "status",
-      "id": "status/speech_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "status/speech_alt.gif"
+      "file": "status/gif/speech.gif"
     },
     {
       "category": "status",
@@ -8721,7 +7541,7 @@
         "stark",
         "strongs"
       ],
-      "file": "status/strong.gif"
+      "file": "status/gif/strong.gif"
     },
     {
       "category": "status",
@@ -8733,7 +7553,7 @@
         "get",
         "takes"
       ],
-      "file": "status/take.gif"
+      "file": "status/gif/take.gif"
     },
     {
       "category": "status",
@@ -8745,7 +7565,7 @@
         "getgive",
         "takeandgives"
       ],
-      "file": "status/take_and_give.gif"
+      "file": "status/gif/take_and_give.gif"
     },
     {
       "category": "status",
@@ -8757,7 +7577,7 @@
         "gettrans",
         "takeandtransfers"
       ],
-      "file": "status/take_and_transfer.gif"
+      "file": "status/gif/take_and_transfer.gif"
     },
     {
       "category": "status",
@@ -8769,16 +7589,7 @@
         "lehrer",
         "teachers"
       ],
-      "file": "status/teacher.gif"
-    },
-    {
-      "category": "status",
-      "id": "status/teacher_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "status/teacher_alt.gif"
+      "file": "status/gif/teacher.gif"
     },
     {
       "category": "status",
@@ -8790,16 +7601,7 @@
         "einheiten",
         "unit"
       ],
-      "file": "status/units.gif"
-    },
-    {
-      "category": "status",
-      "id": "status/units_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "status/units_alt.gif"
+      "file": "status/gif/units.gif"
     },
     {
       "category": "status",
@@ -8812,7 +7614,7 @@
         "sehr stark",
         "verystrongs"
       ],
-      "file": "status/very_strong.gif"
+      "file": "status/gif/very_strong.gif"
     },
     {
       "category": "status",
@@ -8824,16 +7626,7 @@
         "opfer",
         "victims"
       ],
-      "file": "status/victim.gif"
-    },
-    {
-      "category": "status",
-      "id": "status/victim_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "status/victim_alt.gif"
+      "file": "status/gif/victim.gif"
     },
     {
       "category": "status",
@@ -8845,7 +7638,7 @@
         "warnung",
         "warnings"
       ],
-      "file": "status/warning.gif"
+      "file": "status/gif/warning.gif"
     },
     {
       "category": "status",
@@ -8857,7 +7650,7 @@
         "gewicht",
         "weights"
       ],
-      "file": "status/weight.gif"
+      "file": "status/gif/weight.gif"
     },
     {
       "category": "status",
@@ -8869,7 +7662,7 @@
         "verwundet",
         "woundeds"
       ],
-      "file": "status/wounded.gif"
+      "file": "status/gif/wounded.gif"
     },
     {
       "category": "technical",
@@ -8881,7 +7674,7 @@
         "coordinatetranslation",
         "coordinatetranslations"
       ],
-      "file": "misc/coordinate_translation.gif"
+      "file": "misc/gif/coordinate_translation.gif"
     },
     {
       "category": "technical",
@@ -8894,7 +7687,7 @@
         "coordinat",
         "coordinate"
       ],
-      "file": "misc/coordinates.gif"
+      "file": "misc/gif/coordinates.gif"
     },
     {
       "category": "technical",
@@ -8903,7 +7696,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "misc/empty_detail.gif"
+      "file": "misc/gif/empty_detail.gif"
     },
     {
       "category": "technical",
@@ -8915,16 +7708,7 @@
         "tobig",
         "imagetoobigs"
       ],
-      "file": "misc/image_too_big.gif"
-    },
-    {
-      "category": "technical",
-      "id": "technical/image_too_big_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "misc/image_too_big_alt.gif"
+      "file": "misc/gif/image_too_big.gif"
     },
     {
       "category": "technical",
@@ -8933,7 +7717,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "misc/image_too_big_alt2.gif"
+      "file": "misc/gif/image_too_big_alt2.gif"
     },
     {
       "category": "technical",
@@ -8945,7 +7729,7 @@
         "ladfuss",
         "loadfoots"
       ],
-      "file": "misc/load_foot.gif"
+      "file": "misc/gif/load_foot.gif"
     },
     {
       "category": "technical",
@@ -8954,7 +7738,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "misc/magellan_empty_detail.gif"
+      "file": "misc/gif/magellan_empty_detail.gif"
     },
     {
       "category": "technical",
@@ -8966,7 +7750,7 @@
         "misc",
         "miscs"
       ],
-      "file": "misc/misc.gif"
+      "file": "misc/gif/misc.gif"
     },
     {
       "category": "technical",
@@ -8978,7 +7762,7 @@
         "sonstiges",
         "miscellaneou"
       ],
-      "file": "misc/miscellaneous.gif"
+      "file": "misc/gif/miscellaneous.gif"
     },
     {
       "category": "technical",
@@ -8987,7 +7771,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "misc/unknown_detail.gif"
+      "file": "misc/gif/unknown_detail.gif"
     },
     {
       "category": "terrain",
@@ -9001,7 +7785,7 @@
         "Active volcano",
         "activevolcanos"
       ],
-      "file": "terrains/active_volcano.gif"
+      "file": "terrains/gif/active_volcano.gif"
     },
     {
       "category": "terrain",
@@ -9010,16 +7794,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "terrains/active_volcano_detail.gif"
-    },
-    {
-      "category": "terrain",
-      "id": "terrain/active_volcano_detail_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "terrains/active_volcano_detail_alt.gif"
+      "file": "terrains/gif/active_volcano_detail.gif"
     },
     {
       "category": "terrain",
@@ -9031,7 +7806,7 @@
         "hoehle",
         "caves"
       ],
-      "file": "terrains/cave.gif"
+      "file": "terrains/gif/cave.gif"
     },
     {
       "category": "terrain",
@@ -9043,16 +7818,7 @@
         "stroemung",
         "currents"
       ],
-      "file": "terrains/current.gif"
-    },
-    {
-      "category": "terrain",
-      "id": "terrain/current_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "terrains/current_alt.gif"
+      "file": "terrains/gif/current.gif"
     },
     {
       "category": "terrain",
@@ -9065,16 +7831,7 @@
         "thickfog",
         "densefogs"
       ],
-      "file": "terrains/dense_fog.gif"
-    },
-    {
-      "category": "terrain",
-      "id": "terrain/dense_fog_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "terrains/dense_fog_alt.gif"
+      "file": "terrains/gif/dense_fog.gif"
     },
     {
       "category": "terrain",
@@ -9083,7 +7840,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "terrains/dense_fog_detail.gif"
+      "file": "terrains/gif/dense_fog_detail.gif"
     },
     {
       "category": "terrain",
@@ -9098,16 +7855,7 @@
         "Désert",
         "deserts"
       ],
-      "file": "terrains/desert.gif"
-    },
-    {
-      "category": "terrain",
-      "id": "terrain/desert_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "terrains/desert_alt.gif"
+      "file": "terrains/gif/desert.gif"
     },
     {
       "category": "terrain",
@@ -9116,7 +7864,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "terrains/desert_detail.gif"
+      "file": "terrains/gif/desert_detail.gif"
     },
     {
       "category": "terrain",
@@ -9128,7 +7876,7 @@
         "firewall",
         "firewalls"
       ],
-      "file": "terrains/firewall.gif"
+      "file": "terrains/gif/firewall.gif"
     },
     {
       "category": "terrain",
@@ -9142,16 +7890,7 @@
         "Fog",
         "fogs"
       ],
-      "file": "terrains/fog.gif"
-    },
-    {
-      "category": "terrain",
-      "id": "terrain/fog_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "terrains/fog_alt.gif"
+      "file": "terrains/gif/fog.gif"
     },
     {
       "category": "terrain",
@@ -9160,7 +7899,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "terrains/fog_detail.gif"
+      "file": "terrains/gif/fog_detail.gif"
     },
     {
       "category": "terrain",
@@ -9174,16 +7913,7 @@
         "Forest",
         "forests"
       ],
-      "file": "terrains/forest.gif"
-    },
-    {
-      "category": "terrain",
-      "id": "terrain/forest_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "terrains/forest_alt.gif"
+      "file": "terrains/gif/forest.gif"
     },
     {
       "category": "terrain",
@@ -9192,7 +7922,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "terrains/forest_detail.gif"
+      "file": "terrains/gif/forest_detail.gif"
     },
     {
       "category": "terrain",
@@ -9206,16 +7936,7 @@
         "Glacier",
         "glaciers"
       ],
-      "file": "terrains/glacier.gif"
-    },
-    {
-      "category": "terrain",
-      "id": "terrain/glacier_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "terrains/glacier_alt.gif"
+      "file": "terrains/gif/glacier.gif"
     },
     {
       "category": "terrain",
@@ -9224,7 +7945,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "terrains/glacier_detail.gif"
+      "file": "terrains/gif/glacier_detail.gif"
     },
     {
       "category": "terrain",
@@ -9238,7 +7959,7 @@
         "Hall",
         "halls"
       ],
-      "file": "terrains/hall.gif"
+      "file": "terrains/gif/hall.gif"
     },
     {
       "category": "terrain",
@@ -9252,16 +7973,7 @@
         "Highlands",
         "Highland"
       ],
-      "file": "terrains/highlands.gif"
-    },
-    {
-      "category": "terrain",
-      "id": "terrain/highlands_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "terrains/highlands_alt.gif"
+      "file": "terrains/gif/highlands.gif"
     },
     {
       "category": "terrain",
@@ -9270,7 +7982,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "terrains/highlands_detail.gif"
+      "file": "terrains/gif/highlands_detail.gif"
     },
     {
       "category": "terrain",
@@ -9284,7 +7996,7 @@
         "Ice floe",
         "icefloes"
       ],
-      "file": "terrains/ice_floe.gif"
+      "file": "terrains/gif/ice_floe.gif"
     },
     {
       "category": "terrain",
@@ -9293,7 +8005,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "terrains/ice_floe_detail.gif"
+      "file": "terrains/gif/ice_floe_detail.gif"
     },
     {
       "category": "terrain",
@@ -9307,16 +8019,7 @@
         "Iceberg",
         "icebergs"
       ],
-      "file": "terrains/iceberg.gif"
-    },
-    {
-      "category": "terrain",
-      "id": "terrain/iceberg_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "terrains/iceberg_alt.gif"
+      "file": "terrains/gif/iceberg.gif"
     },
     {
       "category": "terrain",
@@ -9325,7 +8028,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "terrains/iceberg_detail.gif"
+      "file": "terrains/gif/iceberg_detail.gif"
     },
     {
       "category": "terrain",
@@ -9337,7 +8040,7 @@
         "insel",
         "islands"
       ],
-      "file": "terrains/island.gif"
+      "file": "terrains/gif/island.gif"
     },
     {
       "category": "terrain",
@@ -9351,7 +8054,7 @@
         "Lake",
         "lakes"
       ],
-      "file": "terrains/lake.gif"
+      "file": "terrains/gif/lake.gif"
     },
     {
       "category": "terrain",
@@ -9360,7 +8063,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "terrains/lake_detail.gif"
+      "file": "terrains/gif/lake_detail.gif"
     },
     {
       "category": "terrain",
@@ -9374,7 +8077,7 @@
         "Maelstrom",
         "maelstroms"
       ],
-      "file": "terrains/maelstrom.gif"
+      "file": "terrains/gif/maelstrom.gif"
     },
     {
       "category": "terrain",
@@ -9383,7 +8086,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "terrains/maelstrom_detail.gif"
+      "file": "terrains/gif/maelstrom_detail.gif"
     },
     {
       "category": "terrain",
@@ -9398,16 +8101,7 @@
         "Montagne",
         "mountain"
       ],
-      "file": "terrains/mountains.gif"
-    },
-    {
-      "category": "terrain",
-      "id": "terrain/mountains_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "terrains/mountains_alt.gif"
+      "file": "terrains/gif/mountains.gif"
     },
     {
       "category": "terrain",
@@ -9416,7 +8110,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "terrains/mountains_alt2.gif"
+      "file": "terrains/gif/mountains_alt2.gif"
     },
     {
       "category": "terrain",
@@ -9425,16 +8119,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "terrains/mountains_detail.gif"
-    },
-    {
-      "category": "terrain",
-      "id": "terrain/mountains_detail_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "terrains/mountains_detail_alt.gif"
+      "file": "terrains/gif/mountains_detail.gif"
     },
     {
       "category": "terrain",
@@ -9446,7 +8131,7 @@
         "pilzhoehle",
         "mushroomcaves"
       ],
-      "file": "terrains/mushroom_cave.gif"
+      "file": "terrains/gif/mushroom_cave.gif"
     },
     {
       "category": "terrain",
@@ -9458,7 +8143,7 @@
         "oase",
         "oasi"
       ],
-      "file": "terrains/oasis.gif"
+      "file": "terrains/gif/oasis.gif"
     },
     {
       "category": "terrain",
@@ -9472,16 +8157,7 @@
         "Ocean",
         "oceans"
       ],
-      "file": "terrains/ocean.gif"
-    },
-    {
-      "category": "terrain",
-      "id": "terrain/ocean_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "terrains/ocean_alt.gif"
+      "file": "terrains/gif/ocean.gif"
     },
     {
       "category": "terrain",
@@ -9490,7 +8166,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "terrains/ocean_detail.gif"
+      "file": "terrains/gif/ocean_detail.gif"
     },
     {
       "category": "terrain",
@@ -9504,7 +8180,7 @@
         "Pack ice",
         "packices"
       ],
-      "file": "terrains/pack_ice.gif"
+      "file": "terrains/gif/pack_ice.gif"
     },
     {
       "category": "terrain",
@@ -9513,7 +8189,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "terrains/pack_ice_detail.gif"
+      "file": "terrains/gif/pack_ice_detail.gif"
     },
     {
       "category": "terrain",
@@ -9526,16 +8202,7 @@
         "corridor",
         "passages"
       ],
-      "file": "terrains/passage.gif"
-    },
-    {
-      "category": "terrain",
-      "id": "terrain/passage_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "terrains/passage_alt.gif"
+      "file": "terrains/gif/passage.gif"
     },
     {
       "category": "terrain",
@@ -9544,7 +8211,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "terrains/passage_detail.gif"
+      "file": "terrains/gif/passage_detail.gif"
     },
     {
       "category": "terrain",
@@ -9559,16 +8226,7 @@
         "Plaine",
         "plain"
       ],
-      "file": "terrains/plains.gif"
-    },
-    {
-      "category": "terrain",
-      "id": "terrain/plains_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "terrains/plains_alt.gif"
+      "file": "terrains/gif/plains.gif"
     },
     {
       "category": "terrain",
@@ -9577,7 +8235,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "terrains/plains_detail.gif"
+      "file": "terrains/gif/plains_detail.gif"
     },
     {
       "category": "terrain",
@@ -9589,7 +8247,7 @@
         "strasse",
         "roads"
       ],
-      "file": "terrains/road.gif"
+      "file": "terrains/gif/road.gif"
     },
     {
       "category": "terrain",
@@ -9603,7 +8261,7 @@
         "Swamp",
         "swamps"
       ],
-      "file": "terrains/swamp.gif"
+      "file": "terrains/gif/swamp.gif"
     },
     {
       "category": "terrain",
@@ -9612,7 +8270,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "terrains/swamp_detail.gif"
+      "file": "terrains/gif/swamp_detail.gif"
     },
     {
       "category": "terrain",
@@ -9621,7 +8279,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "terrains/transition_detail.gif"
+      "file": "terrains/gif/transition_detail.gif"
     },
     {
       "category": "terrain",
@@ -9634,7 +8292,7 @@
         "tre",
         "tree"
       ],
-      "file": "terrains/trees.gif"
+      "file": "terrains/gif/trees.gif"
     },
     {
       "category": "terrain",
@@ -9646,16 +8304,7 @@
         "tunnel",
         "tunnels"
       ],
-      "file": "terrains/tunnel.gif"
-    },
-    {
-      "category": "terrain",
-      "id": "terrain/tunnel_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "terrains/tunnel_alt.gif"
+      "file": "terrains/gif/tunnel.gif"
     },
     {
       "category": "terrain",
@@ -9667,7 +8316,7 @@
         "undefined",
         "undefineds"
       ],
-      "file": "terrains/undefined.gif"
+      "file": "terrains/gif/undefined.gif"
     },
     {
       "category": "terrain",
@@ -9681,16 +8330,7 @@
         "Volcano",
         "volcanos"
       ],
-      "file": "terrains/volcano.gif"
-    },
-    {
-      "category": "terrain",
-      "id": "terrain/volcano_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "terrains/volcano_alt.gif"
+      "file": "terrains/gif/volcano.gif"
     },
     {
       "category": "terrain",
@@ -9699,7 +8339,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "terrains/volcano_detail.gif"
+      "file": "terrains/gif/volcano_detail.gif"
     },
     {
       "category": "terrain",
@@ -9712,16 +8352,7 @@
         "wall",
         "wallclifves"
       ],
-      "file": "terrains/wall_cliff.gif"
-    },
-    {
-      "category": "terrain",
-      "id": "terrain/wall_cliff_alt",
-      "role": "variant",
-      "de": "",
-      "en": "",
-      "aliases": [],
-      "file": "terrains/wall_cliff_alt.gif"
+      "file": "terrains/gif/wall_cliff.gif"
     },
     {
       "category": "terrain",
@@ -9730,7 +8361,7 @@
       "de": "",
       "en": "",
       "aliases": [],
-      "file": "terrains/wall_cliff_detail.gif"
+      "file": "terrains/gif/wall_cliff_detail.gif"
     },
     {
       "category": "trade",
@@ -9742,7 +8373,7 @@
         "balsam",
         "balms"
       ],
-      "file": "trade/balm.gif"
+      "file": "trade/gif/balm.gif"
     },
     {
       "category": "trade",
@@ -9754,7 +8385,7 @@
         "juwel",
         "gems"
       ],
-      "file": "trade/gem.gif"
+      "file": "trade/gif/gem.gif"
     },
     {
       "category": "trade",
@@ -9766,7 +8397,7 @@
         "weihrauch",
         "incenses"
       ],
-      "file": "trade/incense.gif"
+      "file": "trade/gif/incense.gif"
     },
     {
       "category": "trade",
@@ -9778,7 +8409,7 @@
         "myrrhe",
         "myrrhs"
       ],
-      "file": "trade/myrrh.gif"
+      "file": "trade/gif/myrrh.gif"
     },
     {
       "category": "trade",
@@ -9790,7 +8421,7 @@
         "oel_en",
         "oils"
       ],
-      "file": "trade/oil.gif"
+      "file": "trade/gif/oil.gif"
     },
     {
       "category": "trade",
@@ -9802,7 +8433,7 @@
         "seide",
         "silks"
       ],
-      "file": "trade/silk.gif"
+      "file": "trade/gif/silk.gif"
     },
     {
       "category": "trade",
@@ -9814,7 +8445,7 @@
         "gewuerz",
         "spices"
       ],
-      "file": "trade/spice.gif"
+      "file": "trade/gif/spice.gif"
     },
     {
       "category": "trade",
@@ -9827,7 +8458,7 @@
         "tre",
         "tree"
       ],
-      "file": "trade/trees.gif"
+      "file": "trade/gif/trees.gif"
     }
   ]
 }

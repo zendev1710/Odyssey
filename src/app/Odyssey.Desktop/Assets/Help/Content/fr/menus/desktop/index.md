@@ -9,7 +9,7 @@ Dans le menu du bureau, vous trouverez des fonctions pour personnaliser l'appare
 
 Sous les éléments de menu mentionnés ci-dessus, vous pouvez voir tous les [Docks](../../docks/index.md) actuellement connus pour Magellan. Chacun de ces docks représente une partie spécifique de Magellan. Il peut s'agir de la vue d'ensemble de la région, des commandes ou de la carte. Chacun de ces docks possède des boutons de fonction en haut à droite, que nous expliquerons plus en détail ci-dessous.
 
-![décoration](../../images/windows_decorations.gif)
+![décoration](../../images/gif/windows_decorations.gif)
 
 Les boutons peuvent avoir un aspect légèrement différent selon le système. Leur signification est la suivante (de gauche à droite) :
 

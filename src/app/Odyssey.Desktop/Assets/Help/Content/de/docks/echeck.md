@@ -4,7 +4,7 @@ Hier kann man ECheck, den Eressea-Befehlschecker aufrufen. Dieses Dock lässt si
 
 Bei Klick auf den Menüpunkt erscheint folgender Dialog:
 
-![menu_extras_echeck](../images/menu_extras_echeck.gif)
+![menu_extras_echeck](../images/gif/menu_extras_echeck.gif)
 
 Oben kann man den Pfad zu ECheck angeben. Zusätzliche Optionen können direkt übergeben werden. Die Liste der möglichen Optionen findet man in der Dokumentation zu ECheck.
 

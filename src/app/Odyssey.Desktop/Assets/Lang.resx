@@ -1278,6 +1278,12 @@
   <data name="status_erschöpft" xml:space="preserve">
     <value>exhausted</value>
   </data>
+  <data name="status_stark" xml:space="preserve">
+    <value>strong</value>
+  </data>
+  <data name="status_sehr stark" xml:space="preserve">
+    <value>very strong</value>
+  </data>
   <data name="status_guarding" xml:space="preserve">
     <value>guards</value>
   </data>
@@ -3266,6 +3272,8 @@
   <data name="parm_inf_unit_skill_badge_transparent" xml:space="preserve"><value>Make the skill badge fill transparent while keeping its outline and level capsule.</value></data>
   <data name="parm_hdr_unit_item_badge_transparent" xml:space="preserve"><value>Transparent inventory badge background</value></data>
   <data name="parm_inf_unit_item_badge_transparent" xml:space="preserve"><value>Make the inventory badge fill transparent while keeping its outline and quantity capsule.</value></data>
+  <data name="parm_hdr_unit_item_icon_asset_format" xml:space="preserve"><value>Inventory item icon format</value></data>
+  <data name="parm_inf_unit_item_icon_asset_format" xml:space="preserve"><value>Choose whether inventory item icons prefer GIF, PNG, or SVG assets.</value></data>
   <data name="parm_hdr_auto_save_session" xml:space="preserve"><value>Automatically save session on exit</value></data>
   <data name="parm_inf_auto_save_session" xml:space="preserve"><value>Save the current session on exit and restore it the next time Odyssey starts.</value></data>
 </root>
