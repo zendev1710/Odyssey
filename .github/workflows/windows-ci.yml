@@ -1,0 +1,56 @@
+name: Odyssey CI and Velopack Installer
+
+on:
+  push:
+    branches: [ "main", "develop" ]
+  pull_request:
+    branches: [ "main", "develop" ]
+
+jobs:
+  velopack:
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+
+    runs-on: windows-latest
+
+    env:
+      Solution_Name: src/Odyssey.slnx
+      VELOPACK_VERSION: 1.2.161
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Install .NET SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 10.0.x
+
+    - name: Execute unit tests
+      run: dotnet test ${{ env.Solution_Name }} --configuration ${{ matrix.configuration }}
+
+    - name: Install Velopack CLI
+      if: matrix.configuration == 'Release' && github.event_name == 'pull_request'
+      shell: pwsh
+      run: |
+        dotnet tool install --tool-path "$env:RUNNER_TEMP\velopack-tools" vpk --version $env:VELOPACK_VERSION
+        Add-Content -Path $env:GITHUB_PATH -Value "$env:RUNNER_TEMP\velopack-tools"
+
+    - name: Publish the application for Velopack
+      if: matrix.configuration == 'Release' && github.event_name == 'pull_request'
+      run: dotnet publish src/app/Odyssey.Desktop/Odyssey.csproj --configuration Release --framework net10.0 --runtime win-x64 --self-contained true --output artifacts/publish/win-x64
+
+    - name: Package Velopack installer
+      if: matrix.configuration == 'Release' && github.event_name == 'pull_request'
+      run: vpk pack --packId zendev.Odyssey --packVersion 0.0.${{ github.run_number }} --packDir artifacts/publish/win-x64 --mainExe Odyssey.exe --packTitle Odyssey --runtime win-x64 --channel win --outputDir Releases --noPortable
+
+    - name: Upload Velopack package
+      if: matrix.configuration == 'Release' && github.event_name == 'pull_request'
+      uses: actions/upload-artifact@v4
+      with:
+        name: Odyssey Velopack installer
+        path: Releases/*
+        if-no-files-found: error

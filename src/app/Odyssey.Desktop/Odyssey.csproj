@@ -158,6 +158,7 @@
     <PackageReference Include="Svg.Controls.Skia.Avalonia" Version="12.0.0.17" />
     <PackageReference Include="TextMateSharp" Version="2.0.5" />
     <PackageReference Include="TextMateSharp.Grammars" Version="2.0.5" />
+    <PackageReference Include="Velopack" Version="1.2.161" />
     <PackageReference Include="WebView.Avalonia" Version="11.0.0.1" />
   </ItemGroup>
 
@@ -270,6 +271,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\lib\Odyssey.Icons\Odyssey.Icons.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\..\THIRD-PARTY-NOTICES.txt" Link="THIRD-PARTY-NOTICES.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
 
   <PropertyGroup>
