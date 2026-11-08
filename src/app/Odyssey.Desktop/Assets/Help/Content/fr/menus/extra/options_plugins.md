@@ -2,7 +2,7 @@
 
 Ici, vous pouvez voir quels plugins Magellan a reconnu et démarré.
 
-![Options - Plugins](.../../images/menu_extras_options_plugins.gif)
+![Options - Plugins](../../images/gif/menu_extras_options_plugins.gif)
 
 Dans la version actuelle de l'installation, il n'y a que deux plugins.
 

@@ -4,7 +4,7 @@ This is a graphical frontend for Template. Template is a powerful move template 
 
 After selecting the menu item, the following dialogue opens:
 
-![menu_extras_template](../../images/menu_extras_template.gif)
+![menu_extras_template](../../images/gif/menu_extras_vorlage.gif)
 
 In the **_source CR(s)_** field, enter the path to one or more CRs that are to be edited by the template. Normally this is the CR that was sent by the Eressea server.
 

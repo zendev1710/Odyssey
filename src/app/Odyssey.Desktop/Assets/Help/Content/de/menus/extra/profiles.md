@@ -1,6 +1,6 @@
 # Profile
 
-![Profile](../../images/profiles.gif)
+![Profile](../../images/gif/profiles.gif)
 
 Dieser Dialog wird auch angezeigt, wenn Magellan zum ersten Mal gestartet wird. Hiermit ist es möglich, mehrere Profile anzulegen, jedes mit seinen eigenen Einstellungen. So können zum Beispiel mehrere Personen mit verschiedenen Vorlieben Magellan benutzen oder man kann verschiedene Einstellungen für verschiedene Spielvarianten oder bestimmte Aufgaben anlegen.
 

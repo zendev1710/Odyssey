@@ -4,7 +4,7 @@ From here you can run ECheck, the Eressea order checker. You can usually reach t
 
 Clicking on the menu entry shows the following dialog:
 
-![menu_extras_echeck](../images/menu_extras_echeck.gif)
+![menu_extras_echeck](../images/gif/menu_extras_echeck.gif)
 
 At the top one can enter the path to ECheck. Additional options can be entered directly. The list of possible options can be found in ECheck's documentation.
 

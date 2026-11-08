@@ -43,7 +43,7 @@ GIF: If there is no file with the extension "-alpha.gif", but there is a standar
 
 In principle, the size of the graphics is arbitrary, but must be the same for all images within a graphics set. The client also requires information about the geometry of the region hexagon, i.e. its corner coordinates, as well as its position in the graphic and the total size of the graphic. This then looks something like this:
 
-![cell_geometry](../images/reference_graphicsets_cellgeometry.gif)
+![cell_geometry](../images/gif/reference_graphicsets_cellgeometry.gif)
 
 x0=32 <- x-coordinate of the corner point at 12 o'clock
 x1=63 <- x-coordinate of the corner point at 2 o'clock

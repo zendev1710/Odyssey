@@ -10,7 +10,7 @@ Le bouton **_Supprimer la faction du rapport_** permet de supprimer complètemen
 
 ## Statistiques
 
-![faction_statistics](../../images/menu_extras_factiontatistics.gif)
+![faction_statistics](../../images/gif/menu_extras_factiontatistics.gif)
 
 Si une ou plusieurs factions sont sélectionnées dans la fenêtre de gauche, une liste statistique de tous les biens et unités qui peuvent actuellement être vus de cette/ces faction(s) apparaît dans la fenêtre de droite. Dans le cas de votre propre faction, il s'agit bien sûr de l'inventaire complet.
 
@@ -18,6 +18,6 @@ Pour tous les objets, l'unité qui les possède est indiquée. Si vous cliquez s
 
 ## Statistiques sur les talents
 
-![faction_stat](../../images/menu_extras_factiontatistics_skills.gif)
+![faction_stat](../../images/gif/menu_extras_factiontatistics_skills.gif)
 
 Vous pouvez voir ici combien de personnes possèdent une compétence particulière et à quel niveau. Pour cela, il suffit de sélectionner la compétence souhaitée dans le menu déroulant en bas à gauche. Les autres menus déroulants sont fournis à titre d'information uniquement, vous ne pouvez rien y définir. Ils indiquent le nombre de personnes possédant le talent, le nombre total de jours d'apprentissage et le nombre total de points de talent.

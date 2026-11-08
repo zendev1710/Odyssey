@@ -2,7 +2,7 @@
 
 ## Paramètres des icônes
 
-![Options - Icônes](../../images/menu_extras_options_icons.gif)
+![Options - Icônes](../../images/gif/menu_extras_options_icons.gif)
 
 **Afficher l'info courte:** Si cette option est activée, vous obtiendrez le talent correspondant ou le nom du bâtiment que l'icône représente si vous passez le pointeur de la souris sur une icône pendant une longue période de temps.
 
@@ -35,13 +35,13 @@ Selon la zone concernée, diverses sous-options sont disponibles sous forme d'on
 
 ## Correspondance valeur->couleur
 
-![Options - Correspondance des couleurs](../../images/menu_extras_options_icons_colour.gif)
+![Options - Correspondance des couleurs](../../images/gif/menu_extras_options_icons_colour.gif)
 
 La couleur de la police pour l'affichage des valeurs de talent dans la fenêtre de la région peut être configurée ici en fonction des valeurs de talent. Si aucune couleur n'est définie ici, le noir est utilisé.
 
 ## Style de l'icône
 
-![Options - Iconstile](../../images/menu_extras_options_icons_iconstyle.gif)
+![Options - Iconstile](../../images/gif/menu_extras_options_icons_iconstyle.gif)
 
 Le type d'affichage dans la fenêtre de la région peut être configuré ici.
 

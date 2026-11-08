@@ -4,7 +4,7 @@ A partir d'ici, vous pouvez lancer ECheck, le vérificateur de commandes d'Eress
 
 En cliquant sur l'entrée du menu, la boîte de dialogue suivante s'affiche :
 
-![menu_extras_echeck](../images/menu_extras_echeck.gif)
+![menu_extras_echeck](../images/gif/menu_extras_echeck.gif)
 
 En haut, on peut entrer le chemin d'accès à ECheck. Des options supplémentaires peuvent être saisies directement. La liste des options possibles se trouve dans la documentation d'ECheck.
 

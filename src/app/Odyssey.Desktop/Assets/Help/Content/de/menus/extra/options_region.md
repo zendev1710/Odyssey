@@ -2,7 +2,7 @@
 
 In diesem Dialog kann man die Optionen der [Regionsübersicht](../../docks/regions.md) einstellen:
 
-![Optionen - Regionsanzeige](../../images/menu_extras_options_region.gif)
+![Optionen - Regionsanzeige](../../images/gif/menu_extras_options_region.gif)
 
 * **Regionssortierung**  
     Hier kann man die Anzeige der Regionsnamen nach Koordinaten oder nach Inselzugehörigkeit einstellen. Wird zusätzlich die Option _Inseln anzeigen_ aktiviert, wird den Regionen noch ein "Ordnungsknoten" für die Insel vorangestellt, der auf- und zugeklappt werden kann.
@@ -27,6 +27,6 @@ In diesem Dialog kann man die Optionen der [Regionsübersicht](../../docks/regi
 
 ## Talentreihenfolge
 
-![Optionen - Regionsanzeige - Talentreihenfolge](../../images/menu_extras_options_region_skills.gif)
+![Optionen - Regionsanzeige - Talentreihenfolge](../../images/gif/menu_extras_options_region_skills.gif)
 
 Die Änderung der Talentreihenfolge erfolgt durch Auswahl des entsprechenden Talentes mit der Maus anschließendes Verschieben durch die Schaltflächen _Höher_ bzw. _Tiefer_.

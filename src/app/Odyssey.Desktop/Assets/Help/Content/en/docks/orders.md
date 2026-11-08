@@ -2,7 +2,7 @@
 
 This window is used to give units new orders.
 
-![windows_orders](../images/windows_orders.gif)
+![windows_orders](../images/gif/windows_orders.gif)
 
 If a unit is selected, this unit's orders are shown here and can be edited. Magellan only shows orders for units that belong to a faction that has a password set. Therefore, if no orders are shown, you should enter a password for your faction under [Faction statistics](../menus/extras/factionstatistics.html).
 
@@ -16,20 +16,20 @@ Magellan offers an easy way to work with TEMP-units. These are shown as regular 
 
 ### Creating TEMP-units (CTRL+T)
 
-![windows_orders_button_maketemp](../images/windows_orders_button_maketemp.gif)
+![windows_orders_button_maketemp](../images/gif/windows_orders_button_maketemp.gif)
 
 With a click on this button you can create a TEMP-unit. In the resulting dialog you can enter the unit's name and TEMP-ID. The corresponding orders are created automatically.
 
-![windows_orders_maketemp](../images/windows_orders_maketemp.gif)
+![windows_orders_maketemp](../images/gif/windows_orders_maketemp.gif)
 
 Clicking on _More..._ results in the following dialog:
 
-![windows_orders_maketempmore](../images/windows_orders_maketempmore.gif)
+![windows_orders_maketempmore](../images/gif/windows_orders_maketempmore.gif)
 
 Here you can enter the number of men to be recruited, an order and the unit's description.
 
 ### Deleting TEMP-units (Ctrl+Shift+T)
 
-![windows_orders_button_deltemp](../images/windows_orders_button_deltemp.gif)
+![windows_orders_button_deltemp](../images/gif/windows_orders_button_deltemp.gif)
 
 By clicking this button you can delete the current TEMP-unit.

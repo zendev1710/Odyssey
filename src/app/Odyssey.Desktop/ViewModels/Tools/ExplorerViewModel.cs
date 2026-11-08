@@ -944,14 +944,14 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
 
     private static string? GetFactionRaceIconUri(FactionRace race) =>
         IconCatalogService.ResolvePath(IconCategories.Race, race.ToString(), "race")
-        ?? "/Assets/races/race.gif";
+        ?? "/Assets/races/gif/race.gif";
 
     private static string GetFactionStatusIconUri(FactionStatus status) => status switch
     {
-        FactionStatus.ACTIVE => "/Assets/FactionStatus/blue.gif",
-        FactionStatus.ALLIED => "/Assets/FactionStatus/green.gif",
-        FactionStatus.ANONYMOUS => "/Assets/FactionStatus/gray.gif",
-        _ => "/Assets/FactionStatus/red.gif",
+        FactionStatus.ACTIVE => "/Assets/FactionStatus/gif/blue.gif",
+        FactionStatus.ALLIED => "/Assets/FactionStatus/gif/green.gif",
+        FactionStatus.ANONYMOUS => "/Assets/FactionStatus/gif/gray.gif",
+        _ => "/Assets/FactionStatus/gif/red.gif",
     };
 
     private static void AddShip(ExplorerNodeViewModel parentNode, string label, ShipModel ship, BelongsToStatus status, string? iconUri = null)
@@ -1083,10 +1083,10 @@ public partial class ExplorerViewModel : DocumentToolViewModelBase
 
         if (!string.IsNullOrEmpty(fallbackName))
         {
-            return $"/Assets/status/{fallbackName}.gif";
+            return $"/Assets/status/gif/{fallbackName}.gif";
         }
 
-        return $"/Assets/status/{name}.gif";
+        return $"/Assets/status/gif/{name}.gif";
     }
 
     private void ExpandAllItems()

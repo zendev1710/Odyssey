@@ -2,7 +2,7 @@
 
 Hier können einige globale Systemeinstellungen gesetzt werden.
 
-![Optionsmenue - System](../../images/menu_extras_options_system.gif)
+![Optionsmenue - System](../../images/gif/menu_extras_options_system.gif)
 
 * **Spracheinstellungen**  
     Hier kann man die verwendete Sprache für die Magellan-Oberfläche und die Befehle einstellen. Die Änderung wird aus technischen Gründen erst nach einem Neustart von Magellan wirksam.
@@ -12,7 +12,7 @@ Hier können einige globale Systemeinstellungen gesetzt werden.
 * **Beim Start auf neuere Version prüfen.**  
     Ist diese Option gewählt, überprüft Magellan beim Start, ob inzwischen eine neue Version von Magellan zum Download bereitliegt. Dazu wird eine Verbindung zum Internet benötigt. Falls eine neue Version vorhanden ist, wird beim Start folgender Dialog angezeigt:  
 
-    ![version](../../images/dialog_version.gif)
+    ![version](../../images/gif/dialog_version.gif)
 
     [https://magellan2.github.io](https://magellan2.github.io) ist dabei die aktuelle Entwickler-Website.
 * **Lade beim Start den letzten Report**  
@@ -24,7 +24,7 @@ Hier können einige globale Systemeinstellungen gesetzt werden.
 
 ## Look & Feel
 
-![Optionsmenue - System - Look&Feel](../../images/menu_extras_options_system_lookfeel.gif)
+![Optionsmenue - System - Look&Feel](../../images/gif/menu_extras_options_system_lookfeel.gif)
 
 * **Look & Feel**
 * Hier kann man das Look&Feel der Magellan-Oberfläche auswählen. Standardmäßig stehen hier bereits eine Reihe von Look&Feels zur Verfügung.
@@ -52,7 +52,7 @@ Hier können einige globale Systemeinstellungen gesetzt werden.
 
 ## Datei-History
 
-![Optionsmenue - System - History](../../images/menu_extras_options_system_history.gif)
+![Optionsmenue - System - History](../../images/gif/menu_extras_options_system_history.gif)
 
 Der hier eingetragene Wert bestimmt, wieviele zuletzt geladene Reports im Datei-Menü erscheinen.
 
@@ -62,13 +62,13 @@ Wenn man hier etwas einträgt, wird beim [Dialog zum Speichern der Befehle](../
 
 ## Namensgenerator
 
-![Optionsmenue - System - Namensgenerator](../../images/menu_extras_options_system_generator.gif)
+![Optionsmenue - System - Namensgenerator](../../images/gif/menu_extras_options_system_generator.gif)
 
 Wenn man diese Option aktiviert und dazu eine Textdatei einbindet, in der zeilenweise Namen aufgeführt sind, so kann man diese bei der Erstellung neuer Einheiten auswählen.
 
 ## Textkodierung
 
-![Optionsmenue - System - Textkodierung](../../images/menu_extras_options_system_textencoding.gif)
+![Optionsmenue - System - Textkodierung](../../images/gif/menu_extras_options_system_textencoding.gif)
 
 Hier kann man festlegen, wie Magellan die Reports und Befehle kodiert. Es gibt prinzipiell drei Kodierungsformen.
 
@@ -80,7 +80,7 @@ Wir empfehlen sehr, alle Reports und Befehle in UTF-8 zu kodieren. Der Eressea S
 
 ## Nachrichten
 
-![Optionsmenue - System - Nachrichten](../../images/menu_extras_options_messages.gif)
+![Optionsmenue - System - Nachrichten](../../images/gif/menu_extras_options_messages.gif)
 
 * **Zeilenumbruch**  
     Aktiviert man die Option _Aktiviere Zeilenumbruch_, so werden die Nachrichten, die zu lang für die Breite des Nachrichtenfensters sind, umgebrochen. Es entsteht also kein horizontaler Scrollbalken.

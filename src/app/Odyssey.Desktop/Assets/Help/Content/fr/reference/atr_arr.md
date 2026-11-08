@@ -4,7 +4,7 @@
 
 Le système de remplacement est en fait un type de langage de programmation qui permet de calculer certaines valeurs à partir des informations sur les régions. Le système de remplacement est utilisé pour l'ATR et l'ARR, ainsi que pour les infobulles sur la carte et les informations sur les régions dans l'affichage détaillé. L'ATR est utilisé pour étiqueter la carte. L'ARR permet de colorer les régions à l'aide d'une valeur numérique et d'une échelle de couleurs. Bien entendu, vous pouvez également combiner l'ATR, l'ARR et l'infobulle. Vous obtenez alors des régions colorées et des textes correspondants sur chaque région avec des informations supplémentaires facultatives. Les premières lignes de l'affichage détaillé peuvent également être configurées dans cette langue. L'illustration suivante montre une carte colorée et étiquetée en fonction des marchandises.
 
-![Carte étiquetée en fonction du commerce](../images/atr_trade.gif)
+![Carte étiquetée en fonction du commerce](../images/gif/atr_trade.gif)
 
 Quelles sont les possibilités de substitution ? Les mots suivants sont importants pour les infobulles. Un exemple est donné entre parenthèses. Il y a
 

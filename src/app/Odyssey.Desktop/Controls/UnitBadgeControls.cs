@@ -1,19 +1,20 @@
 using System;
 using System.Globalization;
+using System.IO;
 using AsyncImageLoader;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Data.Converters;
 using Avalonia.Input;
+using Avalonia.Markup.Xaml.MarkupExtensions;
 using Avalonia.Media;
-using Avalonia.VisualTree;
 using Odyssey.ViewModels;
 using Odyssey.ViewModels.Tools;
 using Odyssey.Settings;
 using System.ComponentModel;
 using System.Windows.Input;
+using Odyssey.Converters;
 
 namespace Odyssey.Controls;
 
@@ -49,15 +50,37 @@ public sealed class UnitItemBadgeControl : UserControl
             Height = 24,
             HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
             VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
-            Stretch = Avalonia.Media.Stretch.Uniform,
+            Stretch = Stretch.Uniform,
         };
         image.Bind(AdvancedImage.SourceProperty, new Binding(nameof(UnitItemViewModel.IconPath))
         {
-            Converter = IconAssetUriConverter.Instance,
+            Converter = IconAssetRasterUriConverter.Instance,
         });
         image.Bind(Visual.IsVisibleProperty, new Binding(nameof(UnitItemViewModel.IconPath))
         {
-            Converter = IconVisibilityConverter.Visible,
+            Converter = IconPathFormatVisibilityConverter.Raster,
+        });
+
+        var themeColors = new Border { Width = 0, Height = 0 };
+        themeColors.Bind(Border.BackgroundProperty, new DynamicResourceExtension("ApplicationThemeSurfaceBrush"));
+        themeColors.Bind(Border.TagProperty, new DynamicResourceExtension("ApplicationThemeForegroundBrush"));
+
+        var vectorImage = new Image
+        {
+            Width = 24,
+            Height = 24,
+            HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
+            VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center,
+            Stretch = Stretch.Uniform,
+        };
+        var vectorSource = new MultiBinding { Converter = new IconPathToImageConverter() };
+        vectorSource.Bindings.Add(new Binding(nameof(UnitItemViewModel.IconPath)));
+        vectorSource.Bindings.Add(new Binding(nameof(Border.Background)) { Source = themeColors });
+        vectorSource.Bindings.Add(new Binding(nameof(Border.Tag)) { Source = themeColors });
+        vectorImage.Bind(Image.SourceProperty, vectorSource);
+        vectorImage.Bind(Visual.IsVisibleProperty, new Binding(nameof(UnitItemViewModel.IconPath))
+        {
+            Converter = IconPathFormatVisibilityConverter.Svg,
         });
 
         var itemName = new TextBlock
@@ -108,6 +131,8 @@ public sealed class UnitItemBadgeControl : UserControl
         Grid.SetRow(itemName, 0);
         Grid.SetRow(quantityBadge, 1);
         grid.Children.Add(image);
+        grid.Children.Add(vectorImage);
+        grid.Children.Add(themeColors);
         grid.Children.Add(itemName);
         grid.Children.Add(quantityBadge);
 
@@ -136,8 +161,50 @@ public sealed class UnitItemBadgeControl : UserControl
         Content = _viewbox;
     }
 
-    private void OnAttachedToVisualTree(object? sender, VisualTreeAttachmentEventArgs e) =>
+internal sealed class IconAssetRasterUriConverter : IValueConverter
+{
+    public static IconAssetRasterUriConverter Instance { get; } = new();
+
+    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        if (value is not string iconPath || Path.GetExtension(iconPath).Equals(".svg", StringComparison.OrdinalIgnoreCase))
+        {
+            return null;
+        }
+
+        return IconAssetUriConverter.Instance.Convert(value, targetType, parameter, culture);
+    }
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        throw new NotSupportedException();
+}
+
+internal sealed class IconPathFormatVisibilityConverter : IValueConverter
+{
+    private readonly bool _isSvg;
+
+    private IconPathFormatVisibilityConverter(bool isSvg) => _isSvg = isSvg;
+
+    public static IconPathFormatVisibilityConverter Svg { get; } = new(true);
+    public static IconPathFormatVisibilityConverter Raster { get; } = new(false);
+
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        value is string iconPath && !string.IsNullOrWhiteSpace(iconPath) &&
+        Path.GetExtension(iconPath).Equals(".svg", StringComparison.OrdinalIgnoreCase) == _isSvg;
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        throw new NotSupportedException();
+}
+
+    private void OnAttachedToVisualTree(object? sender, VisualTreeAttachmentEventArgs e)
+    {
         _settings.SettingChanged += OnSettingChanged;
+        UpdateBadgeBackground();
+        if (DataContext is UnitItemViewModel item)
+        {
+            item.RefreshIconPath();
+        }
+    }
 
     private void OnDetachedFromVisualTree(object? sender, VisualTreeAttachmentEventArgs e) =>
         _settings.SettingChanged -= OnSettingChanged;
@@ -147,6 +214,11 @@ public sealed class UnitItemBadgeControl : UserControl
         if (e.SettingName == GlobalSettings.UNIT_ITEM_BADGE_TRANSPARENT)
         {
             UpdateBadgeBackground();
+        }
+
+        if (e.SettingName == GlobalSettings.UNIT_ITEM_ICON_ASSET_FORMAT && DataContext is UnitItemViewModel item)
+        {
+            item.RefreshIconPath();
         }
     }
 

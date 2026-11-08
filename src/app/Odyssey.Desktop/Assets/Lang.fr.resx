@@ -1278,6 +1278,12 @@
   <data name="status_erschöpft" xml:space="preserve">
     <value>épuisé</value>
   </data>
+  <data name="status_stark" xml:space="preserve">
+    <value>fort</value>
+  </data>
+  <data name="status_sehr stark" xml:space="preserve">
+    <value>très fort</value>
+  </data>
   <data name="status_guarding" xml:space="preserve">
     <value>garde</value>
   </data>
@@ -3278,6 +3284,8 @@
   <data name="parm_inf_unit_skill_badge_transparent" xml:space="preserve"><value>Rendre le fond du badge de compétence transparent tout en conservant son contour et sa capsule de niveau.</value></data>
   <data name="parm_hdr_unit_item_badge_transparent" xml:space="preserve"><value>Fond transparent du badge d'inventaire</value></data>
   <data name="parm_inf_unit_item_badge_transparent" xml:space="preserve"><value>Rendre le fond du badge d'inventaire transparent tout en conservant son contour et sa capsule de quantité.</value></data>
+  <data name="parm_hdr_unit_item_icon_asset_format" xml:space="preserve"><value>Format des icônes des objets d'inventaire</value></data>
+  <data name="parm_inf_unit_item_icon_asset_format" xml:space="preserve"><value>Choisir si les icônes des objets d'inventaire privilégient les fichiers GIF, PNG ou SVG.</value></data>
   <data name="parm_hdr_auto_save_session" xml:space="preserve"><value>Enregistrer automatiquement la session à la fermeture</value></data>
   <data name="parm_inf_auto_save_session" xml:space="preserve"><value>Enregistrer la session actuelle et la restaurer au prochain démarrage d'Odyssey.</value></data>
 </root>

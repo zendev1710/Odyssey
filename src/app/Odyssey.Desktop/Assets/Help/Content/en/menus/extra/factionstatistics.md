@@ -10,7 +10,7 @@ With the button **_Delete faction from report_** you can completely remove a fac
 
 ## Statistics
 
-![faction_statistics](../../images/menu_extras_factiontatistics.gif)
+![faction_statistics](../../images/gif/menu_extras_factiontatistics.gif)
 
 If one or more factions are selected in the left-hand window, a statistical list of all goods and units that can currently be seen from this/these faction(s) appears in the right-hand window. In the case of your own faction, this is of course the complete inventory.
 
@@ -18,6 +18,6 @@ For all items, the unit that owns them is indicated. If you click on a unit, it 
 
 ## Talent statistics
 
-![faction_stat](../../images/menu_extras_factiontatistics_skills.gif)
+![faction_stat](../../images/gif/menu_extras_factiontatistics_skills.gif)
 
 Here you can see how many people have a particular skill and at what level. To do this, simply select the desired skill from the drop-down menu at the bottom left. The other drop-down menus are for information purposes only, you cannot set anything here. They show the number of people with the talent, the total learning days and the total talent points.

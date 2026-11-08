@@ -3,6 +3,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="using:Odyssey.Controls"
+             xmlns:conv="using:Odyssey.Converters"
              xmlns:vm="using:Odyssey.ViewModels.Tools"
              x:Class="Odyssey.Views.Tools.UnitsInspectorView"
              x:Name="Root"
@@ -12,6 +13,7 @@
              d:DesignWidth="1200"
              d:DesignHeight="700">
     <UserControl.Resources>
+        <conv:IconPathToImageConverter x:Key="IconPathToImageConverter" />
         <DataTemplate x:Key="UnitIdentityTemplate" x:DataType="vm:UnitViewModel">
             <Button Width="160" Height="100" HorizontalAlignment="Center" VerticalAlignment="Center"
                     Padding="0" BorderThickness="0" Background="Transparent"
@@ -24,18 +26,84 @@
                 </Button.Styles>
                 <Border Width="160" Height="100" Padding="6" HorizontalAlignment="Center"
                         CornerRadius="12" BorderBrush="{Binding FactionStatusBrush}" BorderThickness="4"
-                        Background="{Binding IdentityBackground}">
-                    <Grid ColumnDefinitions="*,42">
-                        <StackPanel Grid.Column="0" Spacing="3" VerticalAlignment="Center">
-                            <TextBlock Text="{Binding Name}" FontWeight="SemiBold"
-                                       Foreground="{Binding IdentityForeground}" TextWrapping="NoWrap"
-                                       TextTrimming="CharacterEllipsis" />
-                            <TextBlock Text="{Binding Id}" FontSize="10"
-                                       Foreground="{Binding IdentityForeground}" TextWrapping="NoWrap" />
-                        </StackPanel>
-                        <TextBlock Grid.Column="1" Text="{Binding PeopleNumber}" FontSize="20"
-                                   FontWeight="Black" Foreground="{Binding IdentityForeground}"
-                                   TextAlignment="Center" VerticalAlignment="Center" />
+                        Background="{DynamicResource ApplicationThemeSurfaceBrush}"
+                        Classes.selected="{Binding IsSelected}">
+                    <Border.Styles>
+                        <Style Selector="Border.selected">
+                            <Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+                        </Style>
+                    </Border.Styles>
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="*,Auto" Margin="1">
+                        <Grid Grid.Column="0" Grid.RowSpan="2" RowDefinitions="*,Auto">
+                            <StackPanel Grid.Row="0" Spacing="3" VerticalAlignment="Top">
+                                <TextBlock Text="{Binding Name}" FontWeight="SemiBold"
+                                           Classes="unit-badge-text" Classes.selected="{Binding IsSelected}"
+                                           TextWrapping="NoWrap"
+                                           TextTrimming="CharacterEllipsis" />
+                                <TextBlock Text="{Binding Id}" FontSize="10"
+                                           Classes="unit-badge-text" Classes.selected="{Binding IsSelected}"
+                                           TextWrapping="NoWrap" />
+                            </StackPanel>
+                            <Grid Grid.Row="1" Width="22" Height="22" Margin="1"
+                                  HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                                <Border x:Name="CombatStatusThemeColors" Width="0" Height="0"
+                                        Background="{DynamicResource ApplicationThemeSurfaceBrush}"
+                                        Tag="{DynamicResource ApplicationThemeForegroundBrush}"
+                                        Classes.selected="{Binding IsSelected}">
+                                    <Border.Styles>
+                                        <Style Selector="Border.selected">
+                                            <Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+                                            <Setter Property="Tag" Value="{DynamicResource ApplicationThemeSelectionForegroundBrush}" />
+                                        </Style>
+                                    </Border.Styles>
+                                </Border>
+                                <Image Width="20" Height="20" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       IsVisible="{Binding CombatStatusIconUri, Converter={x:Static ObjectConverters.IsNotNull}}"
+                                       ToolTip.Tip="{Binding CombatStatusTooltip}"
+                                       Stretch="Uniform">
+                                    <Image.Source>
+                                        <MultiBinding Converter="{StaticResource IconPathToImageConverter}">
+                                            <Binding Path="CombatStatusIconUri" />
+                                            <Binding ElementName="CombatStatusThemeColors" Path="Background" />
+                                            <Binding ElementName="CombatStatusThemeColors" Path="Tag" />
+                                        </MultiBinding>
+                                    </Image.Source>
+                                </Image>
+                            </Grid>
+                        </Grid>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding PeopleNumber}" FontSize="20"
+                                   FontWeight="Black" Classes="unit-badge-text"
+                                   Classes.selected="{Binding IsSelected}"
+                                   TextAlignment="Right" HorizontalAlignment="Right"
+                                   VerticalAlignment="Top" Margin="0,1,0,0" />
+                        <Grid Grid.Row="1" Grid.Column="1" Width="22" Height="22" Margin="1"
+                              HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                            <Border x:Name="HealthStatusThemeColors" Width="0" Height="0"
+                                    Background="{DynamicResource ApplicationThemeSurfaceBrush}"
+                                    Tag="{DynamicResource ApplicationThemeForegroundBrush}"
+                                    Classes.selected="{Binding IsSelected}">
+                                <Border.Styles>
+                                    <Style Selector="Border.selected">
+                                        <Setter Property="Background" Value="{DynamicResource ApplicationThemeSelectionBrush}" />
+                                        <Setter Property="Tag" Value="{DynamicResource ApplicationThemeSelectionForegroundBrush}" />
+                                    </Style>
+                                </Border.Styles>
+                            </Border>
+                            <Image Width="20" Height="20"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   IsVisible="{Binding HealthStatusIconUri, Converter={x:Static ObjectConverters.IsNotNull}}"
+                                   ToolTip.Tip="{Binding HealthStatusTooltip}"
+                                   Stretch="Uniform">
+                                <Image.Source>
+                                    <MultiBinding Converter="{StaticResource IconPathToImageConverter}">
+                                        <Binding Path="HealthStatusIconUri" />
+                                        <Binding ElementName="HealthStatusThemeColors" Path="Background" />
+                                        <Binding ElementName="HealthStatusThemeColors" Path="Tag" />
+                                    </MultiBinding>
+                                </Image.Source>
+                            </Image>
+                        </Grid>
                     </Grid>
                 </Border>
             </Button>
@@ -90,6 +158,14 @@
             </Border>
         </DataTemplate>
     </UserControl.Resources>
+    <UserControl.Styles>
+        <Style Selector="TextBlock.unit-badge-text">
+            <Setter Property="Foreground" Value="{DynamicResource ApplicationThemeForegroundBrush}" />
+        </Style>
+        <Style Selector="TextBlock.unit-badge-text.selected">
+            <Setter Property="Foreground" Value="{DynamicResource ApplicationThemeSelectionForegroundBrush}" />
+        </Style>
+    </UserControl.Styles>
 
     <Grid Background="{DynamicResource PanelBackground}" RowDefinitions="Auto,*">
         <Grid Grid.Row="0" ColumnDefinitions="*,Auto">

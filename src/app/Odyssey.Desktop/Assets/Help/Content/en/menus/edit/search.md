@@ -4,7 +4,7 @@ CTRL-F
 
 This function allows you to search the report for keywords to find "lost" units, ships, etc. You can set the search range in the following dialogue. You can set the search range in the following dialogue:
 
-![menu_extras_search](../../images/menu_extras_search.gif)
+![menu_extras_search](../../images/gif/menu_extras_search.gif)
 
 The **_Search_pattern_** field can also remain empty. Searching for an empty search pattern and the search area "Ships", for example, returns all ships that appear in the report.
 

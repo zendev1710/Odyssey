@@ -43,7 +43,7 @@ GIF: Gibt es keine Datei mit der Endung "-alpha.gif", aber eine Standard-GIF Dat
 
 Prinzipiell ist die Größe der Grafiken beliebig, muss aber innerhalb eines Grafiksets für alle Bilder gleich sein. Außerdem benötigt der Client Informationen über die Geometrie des Regionssechsecks, also dessen Eckkoordinaten, sowie dessen Position in der Grafik und die Gesamtgröße der Grafik. Das sieht dann ungefähr folgendermaßen aus:
 
-![cell_geometry](../images/reference_graphicsets_cellgeometry.gif)
+![cell_geometry](../images/gif/reference_graphicsets_cellgeometry.gif)
 
 x0=32  <- x-Koordinate des Eckpunktes auf 12 Uhr
 x1=63  <- x-Koordinate des Eckpunktes auf 2 Uhr

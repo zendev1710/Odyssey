@@ -2,7 +2,7 @@
 
 Magellan stellt alle Informationen in verschiedenen Fensterbereichen zur Verfügung. Diese werden auch Docks genannt.
 
-![windows](../images/windows.gif)
+![windows](../images/gif/windows.gif)
 
 1. [Regionsübersicht](regions.md)
 2. [Historie](history.md)

@@ -2,7 +2,7 @@
 
 La carte du monde connu est affichée ici.
 
-![windows_map](../images/windows_map.gif)
+![windows_map](../images/gif/windows_map.gif)
 
 Lorsque le mode "Brouillard de guerre" (FOW) est activé, les régions qui ne contiennent pas d'unités ou qui n'ont pas été traversées, ainsi que les régions océaniques qui ne peuvent pas être aperçues du haut d'un phare, sont affichées en plus sombre. Ce mode peut être activé à l'aide du raccourci clavier Ctrl+W .
 

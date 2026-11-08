@@ -3634,6 +3634,15 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inventory item icon format.
+        /// </summary>
+        public static string parm_hdr_unit_item_icon_asset_format {
+            get {
+                return ResourceManager.GetString("parm_hdr_unit_item_icon_asset_format", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Application color theme (dark mode).
         /// </summary>
         public static string parm_hdr_unit_orders_dark_theme {
@@ -3930,6 +3939,15 @@ namespace Odyssey.Assets {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Choose whether inventory item icons prefer GIF, PNG, or SVG assets..
+        /// </summary>
+        public static string parm_inf_unit_item_icon_asset_format {
+            get {
+                return ResourceManager.GetString("parm_inf_unit_item_icon_asset_format", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Color theme used across the application in dark mode..
         /// </summary>
@@ -9385,6 +9403,24 @@ namespace Odyssey.Assets {
         public static string status_schwer_verwundet {
             get {
                 return ResourceManager.GetString("status_schwer verwundet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to very strong.
+        /// </summary>
+        public static string status_sehr_stark {
+            get {
+                return ResourceManager.GetString("status_sehr stark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to strong.
+        /// </summary>
+        public static string status_stark {
+            get {
+                return ResourceManager.GetString("status_stark", resourceCulture);
             }
         }
         

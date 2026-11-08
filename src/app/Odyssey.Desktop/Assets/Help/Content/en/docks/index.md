@@ -2,7 +2,7 @@
 
 Magellan shows all information in several windows called docks.
 
-![windows](../images/windows.gif)
+![windows](../images/gif/windows.gif)
 
 1. [Region Overview](regions.html)
 2. [History](history.html)

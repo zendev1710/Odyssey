@@ -2,7 +2,7 @@
 
 La fenêtre des détails est probablement la source d'information la plus importante de Magellan. Les détails des objets actuellement sélectionnés sont affichés ici.
 
-![Detailfenster](../images/windows_detail.gif)
+![Detailfenster](../images/gif/windows_detail.gif)
 
 Les informations les plus importantes concernant la région dans laquelle se trouve l'objet sont affichées en haut. Il s'agit des informations suivantes : Le nombre de paysans, le nombre maximum de recrues, le revenu des paysans (taxe éventuelle), la limite de divertissement, la réserve d'argent (l'argent de toutes les factions avec un mot de passe), le volume du commerce, les arbres disponibles, les chevaux et le fer/l'argent. Les informations de la partie inférieure diffèrent en fonction de l'objet sélectionné et sont représentées sous forme d'arbre, de sorte que les informations peuvent être facilement appelées ou cachées à volonté.
 

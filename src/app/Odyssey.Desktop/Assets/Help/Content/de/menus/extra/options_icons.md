@@ -2,7 +2,7 @@
 
 ## Iconeinstellungen
 
-![Optionen - Icons](../../images/menu_extras_options_icons.gif)
+![Optionen - Icons](../../images/gif/menu_extras_options_icons.gif)
 
 **Zeige Kurzinfo:** Ist diese Option aktiviert, erhält man bei etwas längerem Verweilen des Mauszeigers über einem Icon den dazugehörigen Talent- oder Gebäudenamen, den das Icon repräsentiert.
 
@@ -35,13 +35,13 @@ In Abhängigkeit von dem jeweiligen Bereich werden verschiedene Unteroptionen in
 
 ## Wert->Farbmapping
 
-![Optionen - Farbzuordnung](../../images/menu_extras_options_icons_colour.gif)
+![Optionen - Farbzuordnung](../../images/gif/menu_extras_options_icons_colour.gif)
 
 Hier kann die Schriftfarbe für die Talentwertanzeige im Regionsfenster nach Talentwerten konfiguriert werden. Sind hier keine Farben definiert, so wird schwarz verwendet.
 
 ## Iconstile
 
-![Optionen - Iconstile](../../images/menu_extras_options_icons_iconstyle.gif)
+![Optionen - Iconstile](../../images/gif/menu_extras_options_icons_iconstyle.gif)
 
 Hier lässt sich die Art der Anzeige im Regionsfenster konfigurieren.
 
