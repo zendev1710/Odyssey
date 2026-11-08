@@ -41,6 +41,12 @@ Upcoming feature:
 * User prefered theme in user settings
 * Combobox to select a theme between default, simple, and fluent theme
 
+## Installation and updates (Windows)
+
+Install Odyssey with the Velopack setup executable from [GitHub Releases](https://github.com/zendev1710/Odyssey/releases/latest). Odyssey checks for updates at startup, downloads them in the background, and applies them when the application is next launched.
+
+Velopack installs per user. If Odyssey was installed using the MSI from `v0.11.0` or an earlier release, uninstall that version before installing Velopack; MSI installations do not migrate automatically. Older releases remain available with their original ZIP and MSI assets.
+
 ## Settings management
 
 * settings pages view opened with `View/Settings` menu item
