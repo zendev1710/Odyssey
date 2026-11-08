@@ -142,11 +142,11 @@
     <PackageReference Include="ConfigFactory" Version="0.6.0" />
     <PackageReference Include="ConfigFactory.Avalonia" Version="0.6.0" />
     <PackageReference Include="ConfigFactory.Core" Version="0.6.0" />
-	<PackageReference Include="Dock.Avalonia" Version="12.1.0.13" />
-	<PackageReference Include="Dock.Avalonia.Diagnostics" Version="12.1.0.13" />
-	<PackageReference Include="Dock.Avalonia.Themes.Fluent" Version="12.1.0.13" />
-	<PackageReference Include="Dock.Model.Mvvm" Version="12.1.0.13" />
-    <PackageReference Include="Dock.Avalonia.Themes.Simple" Version="12.1.0.13" />
+	<PackageReference Include="Dock.Avalonia" Version="12.1.5" />
+	<PackageReference Include="Dock.Avalonia.Diagnostics" Version="12.1.5" />
+	<PackageReference Include="Dock.Avalonia.Themes.Fluent" Version="12.1.5" />
+	<PackageReference Include="Dock.Model.Mvvm" Version="12.1.5" />
+    <PackageReference Include="Dock.Avalonia.Themes.Simple" Version="12.1.5" />
     <PackageReference Include="Dock.Serializer" Version="11.3.0.12" />
     <PackageReference Include="LiveMarkdown.Avalonia" Version="2.5.1" />
     <PackageReference Include="Markdown.Avalonia" Version="12.0.2" />
