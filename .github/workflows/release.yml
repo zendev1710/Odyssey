@@ -2,8 +2,6 @@ name: Build and Release Odyssey
 
 on:
   push:
-    branches:
-      - main
     tags:
       - 'v*'
 
@@ -26,11 +24,9 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Determine release version and create tag
+      - name: Validate release tag and determine version
         id: version
         shell: pwsh
-        env:
-          PUSH_BEFORE: ${{ github.event.before }}
         run: ./scripts/Prepare-Release.ps1
 
       - name: Setup .NET
