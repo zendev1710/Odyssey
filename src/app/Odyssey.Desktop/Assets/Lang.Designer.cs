@@ -3238,6 +3238,15 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirmed.
         /// </summary>
         public static string opt_confirmed_orders {
@@ -3641,7 +3650,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("parm_hdr_unit_item_icon_asset_format", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Application color theme (dark mode).
         /// </summary>
@@ -3947,7 +3956,7 @@ namespace Odyssey.Assets {
                 return ResourceManager.GetString("parm_inf_unit_item_icon_asset_format", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Color theme used across the application in dark mode..
         /// </summary>
@@ -8993,6 +9002,33 @@ namespace Odyssey.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Changes to {0} could not be saved. The document will remain open..
+        /// </summary>
+        public static string save_changes_failed {
+            get {
+                return ResourceManager.GetString("save_changes_failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to save changes to {0}?.
+        /// </summary>
+        public static string save_changes_message {
+            get {
+                return ResourceManager.GetString("save_changes_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save changes?.
+        /// </summary>
+        public static string save_changes_title {
+            get {
+                return ResourceManager.GetString("save_changes_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Shadow.
         /// </summary>
         public static string Schatten {
@@ -9700,6 +9736,15 @@ namespace Odyssey.Assets {
         public static string win_units_inspector {
             get {
                 return ResourceManager.GetString("win_units_inspector", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

@@ -171,6 +171,22 @@ public class UnitModel : EntityModel
         _savedOrdersConfirmedStatus = _ordersConfirmed;
     }
 
+    internal void CommitCommands(IReadOnlyList<string> commands)
+    {
+        DataBlock? commandBlock = null;
+        if (!HasEditableOrders || !CRDocument.GetSeenCommands(ref commandBlock, SourceDataBlock) || commandBlock is null)
+        {
+            throw new InvalidOperationException($"Unit {Id} does not have editable orders.");
+        }
+
+        var attachment = (OrdersAttachment)commandBlock.GetAttachment();
+        attachment.Commands.Clear();
+        attachment.Commands.AddRange(commands);
+        commandBlock.GetData().Clear();
+        _commands = commands.ToArray();
+        _commandsCollected = true;
+    }
+
     private void CollectCommands()
     {
         _commandsCollected = true;

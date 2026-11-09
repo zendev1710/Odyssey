@@ -114,6 +114,7 @@ public class DockFactory : Factory
 
         var documentDock = new FilesDocumentDock
         {
+            Id = DocumentDockId,
             IsCollapsable = false,
             ActiveDockable = null,
             VisibleDockables = CreateList<IDockable>(),
@@ -302,6 +303,7 @@ public class DockFactory : Factory
     public override void InitLayout(IDockable layout)
     {
         Debug.WriteLine("[DOCK-FACTO] InitLayout...");
+        EnsureDocumentDockId(layout);
 
         if (_rootDock is not null && !ReferenceEquals(_rootDock, layout))
         {
@@ -359,6 +361,29 @@ public class DockFactory : Factory
         BindDockables(layout);
 
         Debug.WriteLine("[DOCK-FACTO] InitLayout done");
+    }
+
+    private static void EnsureDocumentDockId(IDockable layout)
+    {
+        Dictionary<string, IDockable> dockables = new(StringComparer.Ordinal);
+        HashSet<IDockable> visited = [];
+        CollectDockables(layout, dockables, visited);
+        if (dockables.TryGetValue(DocumentDockId, out IDockable? registered))
+        {
+            if (registered is not IDocumentDock)
+            {
+                throw new InvalidOperationException($"Dock '{DocumentDockId}' is not a document dock.");
+            }
+            return;
+        }
+
+        List<IDocumentDock> candidates = visited.OfType<IDocumentDock>().ToList();
+        if (candidates.Count != 1 || !string.IsNullOrEmpty(candidates[0].Id))
+        {
+            throw new InvalidOperationException("The layout does not contain a uniquely identifiable document dock.");
+        }
+
+        candidates[0].Id = DocumentDockId;
     }
 
     private static Dictionary<string, ITool> CaptureToolDockables(IDockable? layout)

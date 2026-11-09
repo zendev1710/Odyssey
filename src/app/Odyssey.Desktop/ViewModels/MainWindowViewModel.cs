@@ -43,6 +43,9 @@ namespace Odyssey.ViewModels;
 
 public partial class MainWindowViewModel : ObservableObject, IDropTarget
 {
+    public Func<FileViewModel, Task<SaveChangesChoice>>? SaveChangesPrompt { get; set; }
+    public Func<FileViewModel, Task>? SaveFailurePrompt { get; set; }
+
     public string AppVersion =>
     Assembly.GetEntryAssembly()?
         .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
@@ -370,6 +373,13 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
         LayoutOpen = new AsyncRelayCommand(OpenLayout);
         LayoutSave = new AsyncRelayCommand(SaveLayout);
         LayoutSaveAs = new AsyncRelayCommand(SaveLayoutAs);
+
+        _factory.ActiveDockableChanged += (_, _) =>
+        {
+            SaveFileCommand.NotifyCanExecuteChanged();
+            SaveFileAsCommand.NotifyCanExecuteChanged();
+            CloseFileCommand.NotifyCanExecuteChanged();
+        };
 
         FindSetFocus = new RelayCommand(ActivateFindArea);
 
@@ -844,12 +854,12 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
         switch (docType)
         {
             case DocumentType.ERESSEA_REPORT:
-            case DocumentType.ERESSEA_REPORT_FROM_ZIP:
                 saved = ReportFileService.SaveWithOrderEdits(path, doc, MapType.FULL, []);
                 if (saved)
                 {
                     doc.CommitEditedOrderChanges();
                     doc.SetModified(false);
+                    fileViewModel.IsModified = false;
                 }
                 break;
             case DocumentType.ERESSEA_ORDERS:
@@ -868,6 +878,60 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
         return saved;
     }
 
+    public async Task<bool> ConfirmCloseAllDocumentsAsync()
+    {
+        IDocumentDock filesDock = _factory.GetDockable<IDocumentDock>(DockFactory.DocumentDockId)
+            ?? throw new InvalidOperationException("The document dock is not available.");
+        List<FileViewModel> files = filesDock.VisibleDockables?.OfType<FileViewModel>().ToList() ?? [];
+
+        foreach (FileViewModel file in files)
+        {
+            if (file.IsDocumentModified() && !await ConfirmCloseFileAsync(file))
+            {
+                return false;
+            }
+        }
+
+        foreach (FileViewModel file in files)
+        {
+            file.AllowCloseOnce();
+        }
+
+        return true;
+    }
+
+    private async Task<bool> ConfirmCloseFileAsync(FileViewModel file)
+    {
+        if (!file.IsDocumentModified())
+        {
+            return true;
+        }
+
+        SaveChangesChoice choice = SaveChangesPrompt is null
+            ? SaveChangesChoice.Cancel
+            : await SaveChangesPrompt(file);
+
+        switch (choice)
+        {
+            case SaveChangesChoice.Save:
+                if (SaveFileViewModel(file))
+                {
+                    return true;
+                }
+
+                if (SaveFailurePrompt is not null)
+                {
+                    await SaveFailurePrompt(file);
+                }
+                return false;
+            case SaveChangesChoice.Discard:
+                file.DiscardChanges();
+                return true;
+            default:
+                return false;
+        }
+    }
+
     private void CollectPlanes()
     {
         Planes.Clear();
@@ -880,11 +944,15 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
         {
             _modifiedDocument.ModifiedChanged -= OnDocumentModifiedChanged;
             _modifiedDocument.OrderConfirmationChanged -= OnOrderConfirmationChanged;
+            _modifiedDocument.EditedOrderDataChanged -= OnEditedOrderDataChanged;
         }
         _modifiedDocument = report;
         _modifiedDocument.ModifiedChanged += OnDocumentModifiedChanged;
         _modifiedDocument.OrderConfirmationChanged += OnOrderConfirmationChanged;
+        _modifiedDocument.EditedOrderDataChanged += OnEditedOrderDataChanged;
         SaveFileCommand.NotifyCanExecuteChanged();
+        SaveFileAsCommand.NotifyCanExecuteChanged();
+        CloseFileCommand.NotifyCanExecuteChanged();
         OnActiveReportDocumentChanged(report);
         _globalSearchCancellation?.Cancel();
         _globalSearchEngine.ClearIndex();
@@ -892,6 +960,11 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
     }
 
     private void OnDocumentModifiedChanged(object? sender, EventArgs args)
+    {
+        SaveFileCommand.NotifyCanExecuteChanged();
+    }
+
+    private void OnEditedOrderDataChanged(object? sender, EventArgs args)
     {
         SaveFileCommand.NotifyCanExecuteChanged();
     }
@@ -952,12 +1025,24 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
 
     private void AddFileViewModel(FileViewModel fileViewModel)
     {
-        var files = _factory.GetDockable<IDocumentDock>(DockFactory.DocumentDockId);
-        if (Layout is { } && files is { })
+        IRootDock layout = Layout ?? throw new InvalidOperationException("The layout is not available.");
+        IDocumentDock files = _factory.GetDockable<IDocumentDock>(DockFactory.DocumentDockId)
+            ?? throw new InvalidOperationException("The document dock is not available.");
+        fileViewModel.ConfirmCloseAsync = ConfirmCloseFileAsync;
+        fileViewModel.CloseApproved = file => _factory.CloseDockable(file);
+        fileViewModel.PropertyChanged += OnFileViewModelPropertyChanged;
+        _factory.AddDockable(files, fileViewModel);
+        _factory.SetActiveDockable(fileViewModel);
+        _factory.SetFocusedDockable(layout, fileViewModel);
+        SaveFileAsCommand.NotifyCanExecuteChanged();
+        CloseFileCommand.NotifyCanExecuteChanged();
+    }
+
+    private void OnFileViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(FileViewModel.IsModified))
         {
-            _factory.AddDockable(files, fileViewModel);
-            _factory.SetActiveDockable(fileViewModel);
-            _factory.SetFocusedDockable(Layout, fileViewModel);
+            SaveFileCommand.NotifyCanExecuteChanged();
         }
     }
 
@@ -2076,14 +2161,16 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
     [RelayCommand]
     private void Exit()
     {
-        // TODO:
-        // - Handle modified documents
-        // - Auto-save layout configuration
-        // - Auto-save settings
-        // - Auto-save opened documents list (recent document handling...)
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopLifetime)
         {
-            desktopLifetime.Shutdown();
+            if (desktopLifetime.MainWindow is { } mainWindow)
+            {
+                mainWindow.Close();
+            }
+            else
+            {
+                desktopLifetime.Shutdown();
+            }
         }
     }
 
@@ -2160,14 +2247,9 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
     private void CloseFile()
     {
         FileViewModel? fileViewModel = null;
-        bool isModified = false;
         //IDocument? currentDocument = _factory.GetCurrentDocument();
-        if (GetActiveFileViewModel(out fileViewModel, out isModified))
+        if (GetActiveFileViewModel(out fileViewModel, out _))
         {
-            if (fileViewModel!.IsDocumentModified())
-            {
-                // TODO: modal dialog box with save/do not save/cancel
-            }
             _factory!.CloseDockable(fileViewModel);
         }
     }
@@ -2178,8 +2260,13 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
     /// <returns>true if a document is opened and has been modified; otherwise false.</returns>
     private bool CanSaveFile()
     {
-        EresseaDocument? d = GetActiveDocument(out DocumentType docFileType);
-        return d != null && docFileType != DocumentType.ERESSEA_REPORT_FROM_ZIP && d.IsModified;
+        if (!GetActiveFileViewModel(out FileViewModel? fileViewModel, out _))
+        {
+            return false;
+        }
+
+        return fileViewModel!.DocumentType != DocumentType.ERESSEA_REPORT_FROM_ZIP
+            && fileViewModel.IsDocumentModified();
     }
 
     /// <summary>
@@ -2267,10 +2354,18 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
 
     private void OnDockableClosed(object? sender, DockableClosedEventArgs args)
     {
-        if (args.Dockable is FileViewModel fileViewModel && fileViewModel.DocumentType.IsReportType())
+        if (args.Dockable is FileViewModel fileViewModel)
         {
-            _activeDocumentService.ClearDocument();
+            fileViewModel.PropertyChanged -= OnFileViewModelPropertyChanged;
+            if (fileViewModel.DocumentType.IsReportType())
+            {
+                _activeDocumentService.ClearDocument();
+            }
         }
+
+        SaveFileCommand.NotifyCanExecuteChanged();
+        SaveFileAsCommand.NotifyCanExecuteChanged();
+        CloseFileCommand.NotifyCanExecuteChanged();
     }
 
     private void CollectGlobalReportInformation(CRDocument report)

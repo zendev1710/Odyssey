@@ -66,6 +66,8 @@ public class CRDocument : EresseaDocument, ILocationResolver
     private readonly List<BattleModel> _battles = [];
 
     public event EventHandler? OrderConfirmationChanged;
+    public event EventHandler? EditedOrderChangesDiscarded;
+    public event EventHandler? EditedOrderDataChanged;
 
     public bool IsActiveFaction(int id)
     {
@@ -246,9 +248,26 @@ public class CRDocument : EresseaDocument, ILocationResolver
     {
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(unitId);
         ArgumentNullException.ThrowIfNull(commands);
+        if (!Units.TryGetValue(unitId, out UnitModel? unit))
+        {
+            throw new ArgumentOutOfRangeException(nameof(unitId), unitId, "The unit is not part of this report.");
+        }
+        if (!unit.HasEditableOrders)
+        {
+            throw new InvalidOperationException($"Unit {unitId} does not have editable orders.");
+        }
 
-        _editedCommands[unitId] = commands.ToArray();
-        SetModified(true);
+        string[] editedCommands = commands.ToArray();
+        if (unit.GetCommandLines().SequenceEqual(editedCommands, StringComparer.Ordinal))
+        {
+            _editedCommands.Remove(unitId);
+        }
+        else
+        {
+            _editedCommands[unitId] = editedCommands;
+        }
+        SetModified(HasEditedOrderData);
+        EditedOrderDataChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public bool TryGetEditedUnitConfirmationStatus(int unitId, out bool isConfirmed)
@@ -278,6 +297,7 @@ public class CRDocument : EresseaDocument, ILocationResolver
             _editedUnitConfirmationStatuses[unitId] = isConfirmed;
         }
         SetModified(HasEditedOrderData);
+        EditedOrderDataChanged?.Invoke(this, EventArgs.Empty);
         if (confirmationChanged)
         {
             OrderConfirmationChanged?.Invoke(this, EventArgs.Empty);
@@ -286,6 +306,11 @@ public class CRDocument : EresseaDocument, ILocationResolver
 
     public void CommitEditedOrderChanges()
     {
+        foreach ((int unitId, IReadOnlyList<string> commands) in _editedCommands)
+        {
+            Units[unitId].CommitCommands(commands);
+        }
+
         foreach ((int unitId, bool isConfirmed) in _editedUnitConfirmationStatuses)
         {
             if (Units.TryGetValue(unitId, out UnitModel? unit))
@@ -297,6 +322,31 @@ public class CRDocument : EresseaDocument, ILocationResolver
 
         _editedUnitConfirmationStatuses.Clear();
         _editedCommands.Clear();
+        EditedOrderDataChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void DiscardEditedOrderChanges()
+    {
+        bool confirmationChanged = false;
+        foreach (int unitId in _editedUnitConfirmationStatuses.Keys.ToArray())
+        {
+            if (Units.TryGetValue(unitId, out UnitModel? unit)
+                && unit.SavedOrdersConfirmedStatus is bool savedStatus)
+            {
+                confirmationChanged |= unit.OrdersConfirmed != savedStatus;
+                unit.SetOrdersConfirmedStatus(savedStatus);
+            }
+        }
+
+        _editedUnitConfirmationStatuses.Clear();
+        _editedCommands.Clear();
+        SetModified(false);
+        EditedOrderDataChanged?.Invoke(this, EventArgs.Empty);
+        EditedOrderChangesDiscarded?.Invoke(this, EventArgs.Empty);
+        if (confirmationChanged)
+        {
+            OrderConfirmationChanged?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     public void ClearEditedCommands()
