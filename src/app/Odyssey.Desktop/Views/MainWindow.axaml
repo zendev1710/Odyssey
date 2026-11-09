@@ -41,7 +41,35 @@
 	/>
   </Window.Resources>
   <Window.KeyBindings>
-	  <!--KeyBinding Gesture="Ctrl+F" Command="{Binding FileClose}" /-->
+	<KeyBinding Gesture="Ctrl+O" Command="{Binding OpenFileCommand}" />
+	<KeyBinding Gesture="Ctrl+S" Command="{Binding SaveFileCommand}" />
+	<KeyBinding Gesture="Ctrl+Shift+S" Command="{Binding SaveFileAsCommand}" />
+	<KeyBinding Gesture="Ctrl+F4" Command="{Binding CloseFileCommand}" />
+	<KeyBinding Gesture="Alt+F4" Command="{Binding ExitCommand}" />
+	<KeyBinding Gesture="Ctrl+Home" Command="{Binding Layout.Navigate}" CommandParameter="Workspace" />
+	<KeyBinding Gesture="F8" Command="{Binding CenterMapOnSelectedRegionCommand}" />
+	<KeyBinding Gesture="Ctrl+F8" Command="{Binding CenterMapGloballyCommand}" />
+	<KeyBinding Gesture="Ctrl+Shift+R" Command="{Binding ToggleAllShipRoutesCommand}" />
+	<KeyBinding Gesture="F11" Command="{Binding ToggleFullscreenCommand}" />
+	<KeyBinding Gesture="Ctrl+D1" Command="{Binding ToggleViewCommand}" CommandParameter="map" />
+	<KeyBinding Gesture="Ctrl+D2" Command="{Binding ToggleViewCommand}" CommandParameter="minimap" />
+	<KeyBinding Gesture="Ctrl+D3" Command="{Binding ToggleViewCommand}" CommandParameter="history" />
+	<KeyBinding Gesture="Ctrl+D4" Command="{Binding ToggleViewCommand}" CommandParameter="bookmarks" />
+	<KeyBinding Gesture="Ctrl+D5" Command="{Binding ToggleViewCommand}" CommandParameter="region_info" />
+	<KeyBinding Gesture="Ctrl+D6" Command="{Binding ToggleViewCommand}" CommandParameter="battles" />
+	<KeyBinding Gesture="Ctrl+D7" Command="{Binding ToggleViewCommand}" CommandParameter="search_results" />
+	<KeyBinding Gesture="Ctrl+D8" Command="{Binding ToggleViewCommand}" CommandParameter="report_info" />
+	<KeyBinding Gesture="Ctrl+D9" Command="{Binding ToggleViewCommand}" CommandParameter="error_list" />
+	<KeyBinding Gesture="Ctrl+D0" Command="{Binding ToggleViewCommand}" CommandParameter="details" />
+	<KeyBinding Gesture="Ctrl+Shift+D1" Command="{Binding ToggleViewCommand}" CommandParameter="region_statistics" />
+	<KeyBinding Gesture="Ctrl+Shift+D2" Command="{Binding ToggleViewCommand}" CommandParameter="unit_orders" />
+	<KeyBinding Gesture="Ctrl+Shift+D3" Command="{Binding ToggleViewCommand}" CommandParameter="region_properties" />
+	<KeyBinding Gesture="Ctrl+Shift+D4" Command="{Binding ToggleViewCommand}" CommandParameter="explorer" />
+	<KeyBinding Gesture="F2" Command="{Binding BookmarksViewModel.JumpToNextBookmarkCommand}" />
+	<KeyBinding Gesture="Shift+F2" Command="{Binding BookmarksViewModel.JumpToPreviousBookmarkCommand}" />
+	<KeyBinding Gesture="Ctrl+Shift+F" Command="{Binding NavigateToAdvancedSearchCommand}" />
+	<KeyBinding Gesture="Ctrl+," Command="{Binding Layout.Navigate}" CommandParameter="Configuration" />
+	<KeyBinding Gesture="F1" Command="{Binding ShowHelpCommand}" />
   </Window.KeyBindings>
   <Design.DataContext>
     <vm:MainWindowViewModel />

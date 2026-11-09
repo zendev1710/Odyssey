@@ -37,9 +37,6 @@
 	</UserControl.Resources>
 	<UserControl.KeyBindings>
 		<KeyBinding Gesture="Ctrl+F" Command="{Binding FindSetFocus}" />
-        <KeyBinding Gesture="F8" Command="{Binding CenterMapOnSelectedRegionCommand}" />
-        <KeyBinding Gesture="Ctrl+F8" Command="{Binding CenterMapGloballyCommand}" />
-        <KeyBinding Gesture="Ctrl+Shift+R" Command="{Binding ToggleAllShipRoutesCommand}" />
 		<KeyBinding Gesture="Ctrl+NumPad1" Command="{Binding ToggleViewCommand}" CommandParameter="map" />
 		<KeyBinding Gesture="Ctrl+NumPad2" Command="{Binding ToggleViewCommand}" CommandParameter="minimap" />
 		<KeyBinding Gesture="Ctrl+NumPad3" Command="{Binding ToggleViewCommand}" CommandParameter="history" />
@@ -60,9 +57,9 @@
 		<Menu Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" >
 			<!-- File menu -->
 			<MenuItem Header="{x:Static a:Lang.mainmenu_file}">
-				<MenuItem Header="{x:Static a:Lang.mainmenu_file_open}" Command="{Binding OpenFileCommand}" HotKey="Ctrl+O" InputGesture="Ctrl+O"/>
-				<MenuItem Header="{x:Static a:Lang.mainmenu_file_save}" Command="{Binding SaveFileCommand}" HotKey="Ctrl+S" InputGesture="Ctrl+S" />
-				<MenuItem Header="{x:Static a:Lang.mainmenu_file_save_as}" Command="{Binding SaveFileAsCommand}" HotKey="Ctrl+Shift+S" InputGesture="Ctrl+Shift+S" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_file_open}" Command="{Binding OpenFileCommand}" InputGesture="Ctrl+O"/>
+				<MenuItem Header="{x:Static a:Lang.mainmenu_file_save}" Command="{Binding SaveFileCommand}" InputGesture="Ctrl+S" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_file_save_as}" Command="{Binding SaveFileAsCommand}" InputGesture="Ctrl+Shift+S" />
 				<MenuItem Header="{x:Static a:Lang.mainmenu_file_save_orders}" Command="{Binding SaveOrdersCommand}" />
 				<Separator />
 
@@ -98,21 +95,20 @@
 				-->
 				<Separator />
 				<!-- close active document -->
-				<MenuItem Header="{x:Static a:Lang.mainmenu_file_close}" Command="{Binding CloseFileCommand}"  HotKey="Ctrl+F4" InputGesture="Ctrl+F4"/>
+				<MenuItem Header="{x:Static a:Lang.mainmenu_file_close}" Command="{Binding CloseFileCommand}"  InputGesture="Ctrl+F4"/>
 				<Separator />
-				<MenuItem Header="{x:Static a:Lang.mainmenu_file_exit}" Command="{Binding ExitCommand}" HotKey="Alt+F4" InputGesture="Alt+F4"/>
+				<MenuItem Header="{x:Static a:Lang.mainmenu_file_exit}" Command="{Binding ExitCommand}" InputGesture="Alt+F4"/>
 			</MenuItem>
 			<!-- View menu -->
 			<MenuItem Header="{x:Static a:Lang.mainmenu_view}" >
-				<MenuItem Header="{x:Static a:Lang.mainmenu_view_workspace}" DataContext="{Binding Layout}" Command="{Binding Navigate}" CommandParameter="Workspace" HotKey="Ctrl+Home" InputGesture="Ctrl+Home" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_view_workspace}" DataContext="{Binding Layout}" Command="{Binding Navigate}" CommandParameter="Workspace" InputGesture="Ctrl+Home" />
 				<Separator />
-				<MenuItem Header="{x:Static a:Lang.mainmenu_view_map_center_on_selection}" Command="{Binding CenterMapOnSelectedRegionCommand}" HotKey="F8" InputGesture="F8" />
-				<MenuItem Header="{x:Static a:Lang.mainmenu_view_map_center_globally}" Command="{Binding CenterMapGloballyCommand}" HotKey="Ctrl+F8" InputGesture="Ctrl+F8" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_view_map_center_on_selection}" Command="{Binding CenterMapOnSelectedRegionCommand}" InputGesture="F8" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_view_map_center_globally}" Command="{Binding CenterMapGloballyCommand}" InputGesture="Ctrl+F8" />
 				<MenuItem Header="{x:Static a:Lang.mainmenu_view_map_show_all_ship_routes}"
 						  Command="{Binding ToggleAllShipRoutesCommand}"
 						  IsChecked="{Binding AreAllShipRoutesVisible, Mode=OneWay}"
 						  ToggleType="CheckBox"
-						  HotKey="Ctrl+Shift+R"
 						  InputGesture="Ctrl+Shift+R" />
 				<MenuItem Header="{x:Static a:Lang.mainmenu_view_map_show_region_names}"
 						  Command="{Binding ToggleRegionNamesCommand}"
@@ -124,7 +120,7 @@
 						  ToggleType="CheckBox" />
 				<Separator />
 				<!-- TODO: restore windows label when isfullscreen is true -->
-				<MenuItem Header="{x:Static a:Lang.mainmenu_view_fullscreen}" Command="{Binding ToggleFullscreenCommand}" HotKey="F11" InputGesture="F11" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_view_fullscreen}" Command="{Binding ToggleFullscreenCommand}" InputGesture="F11" />
 				<Separator />
 				<MenuItem Header="{x:Static a:Lang.mainmenu_view_panels}" >
 					<!-- Toggle view menu items -->
@@ -134,63 +130,54 @@
 							  Command="{Binding ToggleViewCommand}"
 							  CommandParameter="map"
 							  ToggleType="CheckBox"
-							  HotKey="Ctrl+D1"
 							  InputGesture="Ctrl+D1"/>
 					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_minimap}"
 							  IsChecked="{Binding IsMiniMapViewVisible}"
 							  Command="{Binding ToggleViewCommand}"
 							  CommandParameter="minimap"
 							  ToggleType="CheckBox"
-							  HotKey="Ctrl+D2"
 							  InputGesture="Ctrl+D2"/>
 					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_history}"
 							  IsChecked="{Binding IsHistoryViewVisible}"
 							  Command="{Binding ToggleViewCommand}"
 							  CommandParameter="history"
 							  ToggleType="CheckBox"
-							  HotKey="Ctrl+D3"
 							  InputGesture="Ctrl+D3"/>
 					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_bookmarks}"
 							  IsChecked="{Binding IsBookmarksViewVisible}"
 							  Command="{Binding ToggleViewCommand}"
 							  CommandParameter="bookmarks"
 							  ToggleType="CheckBox"
-							  HotKey="Ctrl+D4"
 							  InputGesture="Ctrl+D4"/>
 					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_region_info}"
 							  IsChecked="{Binding IsRegionInfoViewVisible}"
 							  Command="{Binding ToggleViewCommand}"
 							  CommandParameter="region_info"
 							  ToggleType="CheckBox"
-							  HotKey="Ctrl+D5"
 							  InputGesture="Ctrl+D5"/>
 					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_battles}"
 							  IsChecked="{Binding IsBattlesViewVisible}"
 							  Command="{Binding ToggleViewCommand}"
 							  ToggleType="CheckBox"
 							  CommandParameter="battles"
-							  HotKey="Ctrl+D6"
 							  InputGesture="Ctrl+D6"/>
 					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_search_results}"
 							  IsChecked="{Binding IsSearchResultsViewVisible}"
 							  Command="{Binding ToggleViewCommand}"
 							  CommandParameter="search_results"
 							  ToggleType="CheckBox"
-							  HotKey="Ctrl+D7"
 							  InputGesture="Ctrl+D7"/>
 					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_report_info}"
 							  IsChecked="{Binding IsReportInfoViewVisible}"
 							  Command="{Binding ToggleViewCommand}"
 							  ToggleType="CheckBox"
 							  CommandParameter="report_info"
-							  HotKey="Ctrl+D8"
 							  InputGesture="Ctrl+D8"/>
 					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_error_list}"
 							  IsChecked="{Binding IsErrorsListViewVisible}"
 							  Command="{Binding ToggleViewCommand}"
 							  CommandParameter="error_list"
 							  ToggleType="CheckBox"
-							  HotKey="Ctrl+D9"
 							  InputGesture="Ctrl+D9"/>
 					<Separator />
 					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_details}"
@@ -198,14 +185,12 @@
 							  Command="{Binding ToggleViewCommand}"
 							  CommandParameter="details"
 							  ToggleType="CheckBox"
-							  HotKey="Ctrl+D0"
 							  InputGesture="Ctrl+D0"/>
 					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_region_statistics}"
 							  IsChecked="{Binding IsRegionStatisticsViewVisible}"
 							  Command="{Binding ToggleViewCommand}"
 							  CommandParameter="region_statistics"
 							  ToggleType="CheckBox"
-							  HotKey="Ctrl+Shift+D1"
 							  InputGesture="Ctrl+Shift+D1"/>
 					<Separator />
 					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_unit_orders}"
@@ -213,21 +198,18 @@
 							  Command="{Binding ToggleViewCommand}"
 							  CommandParameter="unit_orders"
 							  ToggleType="CheckBox"
-							  HotKey="Ctrl+Shift+D2"
 							  InputGesture="Ctrl+Shift+D2"/>
 					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_region_properties}"
 							  IsChecked="{Binding IsRegionPropertiesViewVisible}"
 							  Command="{Binding ToggleViewCommand}"
 							  CommandParameter="region_properties"
 							  ToggleType="CheckBox"
-							  HotKey="Ctrl+Shift+D3"
 							  InputGesture="Ctrl+Shift+D3"/>
 					<MenuItem Header="{x:Static a:Lang.mainmenu_view_win_explorer}"
 							  IsChecked="{Binding IsExplorerViewVisible}"
 							  Command="{Binding ToggleViewCommand}"
 							  CommandParameter="explorer"
 							  ToggleType="CheckBox"
-							  HotKey="Ctrl+Shift+D4"
 							  InputGesture="Ctrl+Shift+D4"/>
 			  </MenuItem>
 			</MenuItem>
@@ -235,8 +217,8 @@
 			<MenuItem Header="{x:Static a:Lang.mainmenu_bookmarks}" DataContext="{Binding BookmarksViewModel}">
 				<MenuItem Header="{x:Static a:Lang.mainmenu_bookmarks_toggle}" Command="{Binding ToggleBookmarkCommand}" />
 				<Separator/>
-				<MenuItem Header="{x:Static a:Lang.mainmenu_bookmarks_next}" Command="{Binding JumpToNextBookmarkCommand}" HotKey="F2" InputGesture="F2" />
-				<MenuItem Header="{x:Static a:Lang.mainmenu_bookmarks_prev}" Command="{Binding JumpToPreviousBookmarkCommand}" HotKey="Shift+F2" InputGesture="Shift+F2" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_bookmarks_next}" Command="{Binding JumpToNextBookmarkCommand}" InputGesture="F2" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_bookmarks_prev}" Command="{Binding JumpToPreviousBookmarkCommand}" InputGesture="Shift+F2" />
 				<Separator/>
 				<MenuItem Header="{x:Static a:Lang.mainmenu_bookmarks_clear_all}" Command="{Binding RemoveAllBookmarksCommand}" />
 				<Separator/>
@@ -257,9 +239,9 @@
 			<!-- Tools menu DataContext="{Binding xxxViewModel}" -->
 			<MenuItem Header="{x:Static a:Lang.mainmenu_tools}">
 				<!-- in German Ctrl in InputGesture should be replace by STRG -->
-				<MenuItem Header="{x:Static a:Lang.mainmenu_tools_advanced_search}" Command="{Binding NavigateToAdvancedSearchCommand}" HotKey="Ctrl+Shift+F" InputGesture="Ctrl+Shift+F" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_tools_advanced_search}" Command="{Binding NavigateToAdvancedSearchCommand}" InputGesture="Ctrl+Shift+F" />
 				<Separator/>
-				<MenuItem Header="{x:Static a:Lang.mainmenu_tools_settings}" DataContext="{Binding Layout}" Command="{Binding Navigate}" CommandParameter="Configuration" HotKey="Ctrl+," InputGesture="Ctrl+,"/>
+				<MenuItem Header="{x:Static a:Lang.mainmenu_tools_settings}" DataContext="{Binding Layout}" Command="{Binding Navigate}" CommandParameter="Configuration" InputGesture="Ctrl+,"/>
 				<Separator />
 			</MenuItem>
 			<!-- Window menu -->
@@ -276,7 +258,7 @@
 			</MenuItem>
 			<!-- Help menu -->
 			<MenuItem Header="{x:Static a:Lang.mainmenu_help}">
-				<MenuItem Header="{x:Static a:Lang.mainmenu_window_help_view}" Command="{Binding ShowHelpCommand}" HotKey="F1" InputGesture="F1" />
+				<MenuItem Header="{x:Static a:Lang.mainmenu_window_help_view}" Command="{Binding ShowHelpCommand}" InputGesture="F1" />
 				<MenuItem Header="{x:Static a:Lang.mainmenu_window_help_getting_started}" Command="{Binding ShowHelpCommand}" CommandParameter="getting-started" />
 				<!-- TODO : about Odyssey -->
 				<!--TODO : dynamic menu items to navigate from one document to another, with checkbox on current active document -->
