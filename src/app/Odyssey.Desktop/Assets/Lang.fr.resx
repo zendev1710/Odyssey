@@ -2010,6 +2010,21 @@
   <data name="Cancel" xml:space="preserve">
     <value>Annuler</value>
   </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Oui</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Non</value>
+  </data>
+  <data name="save_changes_title" xml:space="preserve">
+    <value>Enregistrer les modifications ?</value>
+  </data>
+  <data name="save_changes_message" xml:space="preserve">
+    <value>Voulez-vous enregistrer les modifications apportées à {0} ?</value>
+  </data>
+  <data name="save_changes_failed" xml:space="preserve">
+    <value>Impossible d'enregistrer les modifications apportées à {0}. Le document restera ouvert.</value>
+  </data>
   <data name="mainmenu_file_save" xml:space="preserve">
     <value>Enregistrer</value>
   </data>

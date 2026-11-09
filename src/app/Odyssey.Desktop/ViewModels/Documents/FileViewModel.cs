@@ -1,8 +1,18 @@
 ﻿using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
 using Dock.Model.Mvvm.Controls;
+using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Odyssey.ViewModels.Documents;
+
+public enum SaveChangesChoice
+{
+    Cancel,
+    Save,
+    Discard
+}
 
 /// <summary>
 /// View model for a file.
@@ -14,6 +24,11 @@ public class FileViewModel : Document
     private string _encoding = string.Empty;
     private DocumentType _documentType = DocumentType.UNKNOWN;
     private EresseaDocument? _document;
+    private bool _allowCloseOnce;
+    private bool _closePromptPending;
+
+    public Func<FileViewModel, Task<bool>>? ConfirmCloseAsync { get; set; }
+    public Action<FileViewModel>? CloseApproved { get; set; }
 
     public FileViewModel()
     {
@@ -21,7 +36,9 @@ public class FileViewModel : Document
 
     public bool IsDocumentModified()
     {
-        return IsModified || (Document?.IsModified ?? false);
+        return IsModified
+            || (Document?.IsModified ?? false)
+            || (Document is CRDocument report && report.HasEditedOrderData);
     }
 
     /// <summary>
@@ -31,15 +48,58 @@ public class FileViewModel : Document
     /// <returns>true to accept to close; optherwise, false.</returns>
     public override bool OnClose()
     {
-        // TODO:
-        // - a report document should be considered as modified if some orders have been edited and confirmed; in that case must be saved somewhere (orders file attached to the cr ?)
-        // 
-        // - if document is modified, ask (yes/no/cancel) if file has to be saved :
-        //   - returns false on cancel
-        //   - save if yes
-        //   - do not save if no
-        // - if it's the unique opened document, send a OnActiveDocumentChanged(null)
-        return true;
+        if (_allowCloseOnce)
+        {
+            _allowCloseOnce = false;
+            return true;
+        }
+
+        if (!IsDocumentModified())
+        {
+            return true;
+        }
+
+        if (ConfirmCloseAsync is null || CloseApproved is null || _closePromptPending)
+        {
+            return false;
+        }
+
+        _closePromptPending = true;
+        _ = CompleteCloseRequestAsync();
+        return false;
+    }
+
+    public void AllowCloseOnce() => _allowCloseOnce = true;
+
+    public void DiscardChanges()
+    {
+        if (Document is CRDocument report)
+        {
+            report.DiscardEditedOrderChanges();
+        }
+
+        Document?.SetModified(false);
+        IsModified = false;
+    }
+
+    private async Task CompleteCloseRequestAsync()
+    {
+        try
+        {
+            if (await ConfirmCloseAsync!(this))
+            {
+                AllowCloseOnce();
+                CloseApproved!(this);
+            }
+        }
+        catch (Exception exception)
+        {
+            Debug.WriteLine($"[FILEVIEWMODEL] Unable to close '{Title}': {exception}");
+        }
+        finally
+        {
+            _closePromptPending = false;
+        }
     }
 
     /// <summary>
@@ -49,7 +109,52 @@ public class FileViewModel : Document
     public EresseaDocument? Document
     {
         get => _document;
-        set => SetProperty(ref _document, value);
+        set
+        {
+            if (ReferenceEquals(_document, value))
+            {
+                return;
+            }
+
+            if (_document is CRDocument previousReport)
+            {
+                previousReport.ModifiedChanged -= OnReportModifiedChanged;
+                previousReport.EditedOrderDataChanged -= OnEditedOrderDataChanged;
+            }
+
+            if (!SetProperty(ref _document, value))
+            {
+                return;
+            }
+
+            if (_document is CRDocument report)
+            {
+                report.ModifiedChanged += OnReportModifiedChanged;
+                report.EditedOrderDataChanged += OnEditedOrderDataChanged;
+                UpdateModifiedState(report);
+            }
+        }
+    }
+
+    private void OnReportModifiedChanged(object? sender, EventArgs e)
+    {
+        if (sender is CRDocument report)
+        {
+            UpdateModifiedState(report);
+        }
+    }
+
+    private void OnEditedOrderDataChanged(object? sender, EventArgs e)
+    {
+        if (sender is CRDocument report)
+        {
+            UpdateModifiedState(report);
+        }
+    }
+
+    private void UpdateModifiedState(CRDocument report)
+    {
+        IsModified = report.IsModified || report.HasEditedOrderData;
     }
 
     /// <summary>

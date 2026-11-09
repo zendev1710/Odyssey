@@ -2,9 +2,14 @@
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
+using Avalonia.Threading;
+using Odyssey.Assets;
 using Odyssey.Settings;
 using Odyssey.ViewModels;
+using Odyssey.ViewModels.Documents;
+using System;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace Odyssey.Views;
 
@@ -15,6 +20,8 @@ public partial class MainWindow : Window
     private PixelPoint _lastNormalPosition;
     private Size _lastNormalClientSize;
     private bool _hasLastNormalBounds;
+    private bool _applicationCloseConfirmed;
+    private bool _applicationClosePromptPending;
 
     public MainWindow()
     {
@@ -23,11 +30,14 @@ public partial class MainWindow : Window
         PositionChanged += (_, _) => CaptureNormalBounds();
         SizeChanged += (_, _) => CaptureNormalBounds();
         Closing += (_, _) => SaveWindowBounds();
+        Closing += MainWindow_Closing;
 
         this.DataContextChanged += (_, e) =>
         {
             if (this.DataContext is MainWindowViewModel vm)
             {
+                vm.SaveChangesPrompt = file => SaveChangesDialog.ShowAsync(this, file.Title);
+                vm.SaveFailurePrompt = file => SaveChangesDialog.ShowSaveFailureAsync(this, file.Title);
                 vm.IsFullscreen = GlobalSettings.Shared.MainWindowIsFullscreen;
                 // Handle ViewModel property changed events
                 vm.PropertyChanged += ViewModel_PropertyChanged;
@@ -44,6 +54,44 @@ public partial class MainWindow : Window
         TopBar = this.FindControl<Border>("TopBar");
         TopBar.PointerPressed += TopBar_PointerPressed;
         */
+    }
+
+    private async void MainWindow_Closing(object? sender, WindowClosingEventArgs e)
+    {
+        if (_applicationCloseConfirmed)
+        {
+            return;
+        }
+
+        if (DataContext is not MainWindowViewModel vm)
+        {
+            return;
+        }
+
+        e.Cancel = true;
+        if (_applicationClosePromptPending)
+        {
+            return;
+        }
+
+        _applicationClosePromptPending = true;
+        try
+        {
+            if (await vm.ConfirmCloseAllDocumentsAsync())
+            {
+                _applicationCloseConfirmed = true;
+                Dispatcher.UIThread.Post(Close);
+            }
+        }
+        catch (Exception exception)
+        {
+            Debug.WriteLine($"[MAINWINDOW] Unable to close application: {exception}");
+            Console.Error.WriteLine(exception);
+        }
+        finally
+        {
+            _applicationClosePromptPending = false;
+        }
     }
 
     /// <summary>

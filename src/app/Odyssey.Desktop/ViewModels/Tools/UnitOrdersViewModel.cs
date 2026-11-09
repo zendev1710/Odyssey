@@ -75,7 +75,7 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
             if (!_isLoadingOrders && CanEditOrders && _activeEditableUnitId is int unitId)
             {
                 Report.SetEditedCommands(unitId, GetCommandLines(Document.Text));
-                IsModified = true;
+                IsModified = Report.HasEditedOrderData;
             }
         };
     }
@@ -92,10 +92,12 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
         {
             _editedReport.ModifiedChanged -= OnReportModifiedChanged;
             _editedReport.OrderConfirmationChanged -= OnOrderConfirmationChanged;
+            _editedReport.EditedOrderChangesDiscarded -= OnEditedOrderChangesDiscarded;
         }
         _editedReport = report;
         _editedReport.ModifiedChanged += OnReportModifiedChanged;
         _editedReport.OrderConfirmationChanged += OnOrderConfirmationChanged;
+        _editedReport.EditedOrderChangesDiscarded += OnEditedOrderChangesDiscarded;
         IsModified = report.HasEditedOrderData;
         NotifyNavigationCommandsCanExecuteChanged();
     }
@@ -116,7 +118,25 @@ public partial class UnitOrdersViewModel : DocumentToolViewModelBase
 
     private void OnOrderConfirmationChanged(object? sender, EventArgs e)
     {
+        if (_activeEditableUnitId is int unitId
+            && _editedReport?.Units.TryGetValue(unitId, out UnitModel? unit) == true
+            && unit.OrdersConfirmed is bool isConfirmed)
+        {
+            SetDisplayedConfirmationStatus(isConfirmed);
+        }
         NotifyNavigationCommandsCanExecuteChanged();
+    }
+
+    private void OnEditedOrderChangesDiscarded(object? sender, EventArgs e)
+    {
+        if (_activeEditableUnitId is int unitId
+            && _editedReport?.Units.TryGetValue(unitId, out UnitModel? unit) == true
+            && unit.TryGetCommands(out IReadOnlyList<string> commands))
+        {
+            SetOrders(LoadCommands(commands));
+        }
+
+        IsModified = _editedReport?.HasEditedOrderData ?? false;
     }
 
     private void OnReportModifiedChanged(object? sender, EventArgs args)
