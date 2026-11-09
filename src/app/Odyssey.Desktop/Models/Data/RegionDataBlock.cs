@@ -8,7 +8,6 @@ public class RegionDataBlock : DataBlock, ILocation, IBookmarkable
 {
     protected int X { get; set; }
     protected int Y { get; set; }
-    protected PlaneType Plane { get; }
 
     int ILocation.X
     {
@@ -24,7 +23,7 @@ public class RegionDataBlock : DataBlock, ILocation, IBookmarkable
 
     public int GetX() => X;
     public int GetY() => Y;
-    public int GetPlane() => (int)Plane;
+    public int GetPlane() => Id;
 
     public override string IdToString()
     {

@@ -188,12 +188,7 @@ public partial class MapViewModel : DocumentToolViewModelBase/*, IRecipient<Cent
 
     partial void OnSelectedPlaneChanged(WorldPlane? oldValue, WorldPlane? newValue)
     {
-        if (oldValue != newValue && newValue != null)
-        {
-            //Clear();
-            SelectedPlane = newValue;
-            RebuildMap();
-        }
+        RebuildMap();
     }
 
     private ShipModel? ResolveSelectedShip(IEntitySelection selection)
@@ -236,6 +231,10 @@ public partial class MapViewModel : DocumentToolViewModelBase/*, IRecipient<Cent
             _isUpdatingSelection = true;
             try
             {
+                if (selection.Region is { } region && Report.Planes.TryGetValue(region.GetPlane(), out WorldPlane? plane))
+                {
+                    SelectedPlane = plane;
+                }
                 SelectedRegion = selection.Region;
                 if (isRestoredReportSelection)
                 {
@@ -281,7 +280,8 @@ public partial class MapViewModel : DocumentToolViewModelBase/*, IRecipient<Cent
         }
 
         HasSeveralPlanes = Report.Planes.Count > 1;
-        SelectedPlane = Report.Planes.FirstOrDefault().Value;
+        SelectedPlane = Report.Planes.TryGetValue((int)PlaneType.WORLD, out WorldPlane? worldPlane)
+            ? worldPlane : Planes.FirstOrDefault();
     }
 
     /// <summary>

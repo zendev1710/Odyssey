@@ -2363,7 +2363,8 @@ m_blocks.push_back(*old_r);
         }
 
         if (currentRegion != null) {
-            if (SetRegionStats(currentRegion, regionOwn, regionAlly, regionEnemy, unconfirmed))
+            bool isOccupied = SetRegionStats(currentRegion, regionOwn, regionAlly, regionEnemy, unconfirmed);
+            if (isOccupied)
             {
                 SetRegionAsExplorable(currentRegion, OptimizeDataConsuming ? blockNodeToChange : null);
                 nbOccupiedRegions++;
@@ -2376,6 +2377,8 @@ m_blocks.push_back(*old_r);
                     previousNode?.Value.SetPreviousBlock(blockNodeToChange.Value);
                 }
             }
+
+            Planes[regionModel!.GetPlane()].AddRegion(regionModel, isOccupied);
         }
 
         // Update Ships from shipsCrossedRegions information
@@ -2442,9 +2445,9 @@ m_blocks.push_back(*old_r);
         Debug.WriteLine($"[DOCUMENT] Occupied regions number : {Planes[0].OccupiedRegions.Count}");
         Debug.WriteLine($"[DOCUMENT] Unoccupied regions number : {Planes[0].UnoccupiedRegions.Count}");
         Debug.WriteLine($"[DOCUMENT] With structure regions number : {RegionsWithStructure.Count}");
-        if (Planes.Count > 1)
+        if (Planes.TryGetValue((int)PlaneType.ASTRAL, out WorldPlane? astralPlane))
         {
-            Debug.WriteLine($"[DOCUMENT] regions in Astral - with-people: {Planes[1].OccupiedRegions.Count} without-people: {Planes[1].UnoccupiedRegions.Count}");
+            Debug.WriteLine($"[DOCUMENT] regions in Astral - with-people: {astralPlane.OccupiedRegions.Count} without-people: {astralPlane.UnoccupiedRegions.Count}");
         }
         Debug.WriteLine($"[DOCUMENT] Factions number : {Factions.Count}");
         Debug.WriteLine($"[DOCUMENT] Active factions number : {ActiveFactions.Count}");

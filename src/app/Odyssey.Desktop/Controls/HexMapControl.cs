@@ -127,6 +127,9 @@ public class HexMapControl : Control
     public static readonly StyledProperty<bool> IsStandardPlaneProperty =
         AvaloniaProperty.Register<HexMapControl, bool>(nameof(IsStandardPlane), false);
 
+    public static readonly StyledProperty<WorldPlane?> SelectedPlaneProperty =
+        AvaloniaProperty.Register<HexMapControl, WorldPlane?>(nameof(SelectedPlane));
+
     public Dictionary<int, RegionModel> OccupiedRegions
     {
         get => GetValue(OccupiedRegionsProperty) ?? new Dictionary<int, RegionModel>();
@@ -202,6 +205,12 @@ public class HexMapControl : Control
         set => SetValue(IsStandardPlaneProperty, value);
     }
 
+    public WorldPlane? SelectedPlane
+    {
+        get => GetValue(SelectedPlaneProperty);
+        set => SetValue(SelectedPlaneProperty, value);
+    }
+
     public RegionModel? SelectedRegion
     {
         get => GetValue(SelectedRegionProperty);
@@ -219,6 +228,7 @@ public class HexMapControl : Control
         ZoomProperty.Changed.AddClassHandler<HexMapControl>((ctrl, e) => ctrl.OnZoomChanged());
         SeasonProperty.Changed.AddClassHandler<HexMapControl>((ctrl, e) => ctrl.OnSeasonChanged());
         SelectedRegionProperty.Changed.AddClassHandler<HexMapControl>((ctrl, e) => ctrl.OnSelectedRegionChanged(e));
+        SelectedPlaneProperty.Changed.AddClassHandler<HexMapControl>((ctrl, e) => ctrl.OnSelectedPlaneChanged());
         AlliedFactionIdsProperty.Changed.AddClassHandler<HexMapControl>((ctrl, e) => ctrl.InvalidateVisual());
         SelectedShipProperty.Changed.AddClassHandler<HexMapControl>((ctrl, e) => ctrl.InvalidateVisual());
     }
@@ -3351,7 +3361,7 @@ public class HexMapControl : Control
 
         // Normal hover/tooltip processing when not panning
         var (q2, r2) = PixelToHex(pointLocal, HexSize * Zoom / 100.0);
-        int key = Coordinates.GetId(q2, r2);
+        int key = Coordinates.GetId(q2, r2, SelectedPlane?.Type ?? PlaneType.WORLD);
         if (OccupiedRegions.TryGetValue(key, out var populatedRegionModel))
         {
             var terrain = populatedRegionModel.Terrain;
@@ -3414,7 +3424,7 @@ public class HexMapControl : Control
             return baseTip;
         }
 
-        int key = Coordinates.GetId(q, r);
+        int key = Coordinates.GetId(q, r, SelectedPlane?.Type ?? PlaneType.WORLD);
         if (!OccupiedRegions.TryGetValue(key, out RegionModel? regionModel) &&
             !UnoccupiedRegions.TryGetValue(key, out regionModel))
         {
@@ -3466,6 +3476,13 @@ public class HexMapControl : Control
         }
     }
 
+    private void OnSelectedPlaneChanged()
+    {
+        _hoveredRegion = null;
+        ToolTip.SetTip(this, null);
+        InvalidateVisual();
+    }
+
     private void OnSelectedRegionChanged(AvaloniaPropertyChangedEventArgs e)
     {
         // SelectedRegion is a RegionModel (see SelectedRegionProperty).
@@ -3496,7 +3513,7 @@ public class HexMapControl : Control
         // triggers ScrollToSelectedRegion, which consumes (and resets) this flag.
         _shouldCenterNewSelection = shouldCenterNewSelection;
 
-        int key = Coordinates.GetId(q, r);
+        int key = Coordinates.GetId(q, r, SelectedPlane?.Type ?? PlaneType.WORLD);
         if (OccupiedRegions.TryGetValue(key, out var populatedRegion))
         {
             Debug.WriteLine($"UpdateSelection q={q}, r={r}, populated region found: {populatedRegion}");
@@ -3839,7 +3856,7 @@ public class HexMapControl : Control
     private void HighlightSelectedRegion(DrawingContext context, Point center, Point[] hexPoints, int x, int y, Geometry geometry)
     {
         // Draw highlight if selected
-        if (_selectedQ == x && _selectedR == y)
+        if (_selectedQ == x && _selectedR == y && SelectedRegion?.GetPlane() == (int)(SelectedPlane?.Type ?? PlaneType.WORLD))
         {
             // compute thickness according to the hexSize (depends on zoom factor)
             // min 2px to keep it visible
