@@ -100,7 +100,8 @@ public partial class MapView : UserControl, IRecipient<CenterMapMessage>
         // Wait for layout to complete
         await Dispatcher.UIThread.InvokeAsync(() =>
         {
-            if (DataContext is not MapViewModel viewModel || viewModel.SelectedRegion == null)
+            if (DataContext is not MapViewModel viewModel || viewModel.SelectedRegion == null
+                || viewModel.SelectedRegion.GetPlane() != (int?)viewModel.SelectedPlane?.Type)
                 return;
             var selected = viewModel.SelectedRegion;
             Debug.WriteLine($"[MAPVIEWMODEL] CenterMapOnSelection: {selected} {viewModel.Zoom}");

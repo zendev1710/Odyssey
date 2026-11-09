@@ -30,7 +30,11 @@ jobs:
         dotnet-version: 10.0.x
 
     - name: Execute unit tests
-      run: dotnet test ${{ env.Solution_Name }} --configuration ${{ matrix.configuration }}
+      run: |
+        dotnet test ${{ env.Solution_Name }} --configuration ${{ matrix.configuration }}
+        if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+        dotnet test src/tests/Odyssey.Desktop.Tests/Odyssey.Desktop.Tests.csproj --configuration ${{ matrix.configuration }}
+        exit $LASTEXITCODE
 
     - name: Install Velopack CLI
       if: matrix.configuration == 'Release' && github.event_name == 'pull_request'

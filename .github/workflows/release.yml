@@ -46,7 +46,11 @@ jobs:
         if: steps.version.outputs.should_release == 'true'
         env:
           RELEASE_VERSION: ${{ steps.version.outputs.version }}
-        run: dotnet test src/Odyssey.slnx --configuration Release -p:OdysseyVersion=$env:RELEASE_VERSION
+        run: |
+          dotnet test src/Odyssey.slnx --configuration Release -p:OdysseyVersion=$env:RELEASE_VERSION
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          dotnet test src/tests/Odyssey.Desktop.Tests/Odyssey.Desktop.Tests.csproj --configuration Release -p:OdysseyVersion=$env:RELEASE_VERSION
+          exit $LASTEXITCODE
 
       - name: Build for .NET 10.0
         if: steps.version.outputs.should_release == 'true'
