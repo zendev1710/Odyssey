@@ -22,10 +22,11 @@
     <File Path="../SPECS.md" />
     <File Path="../TODO.md" />
   </Folder>
-  <Project Path="app/Odyssey.Desktop/Odyssey.csproj" />
+  <Project Path="app/Odyssey.Desktop/Odyssey.csproj">
+    <Build Solution="Release|Any CPU" Project="false" />
+  </Project>
   <Project Path="lib/Odyssey.Icons/Odyssey.Icons.csproj" />
   <Project Path="tools/cropper/cropper.csproj" />
   <Project Path="tools/icons-generator/Odyssey.Icons.Generator.csproj" />
-  <Project Path="tests/Odyssey.Desktop.Tests/Odyssey.Desktop.Tests.csproj" />
   <Project Path="tests/Odyssey.Icons.Generator.Tests/Odyssey.Icons.Generator.Tests.csproj" />
 </Solution>
