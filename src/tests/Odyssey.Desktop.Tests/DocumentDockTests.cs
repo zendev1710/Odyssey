@@ -8,6 +8,7 @@ using Xunit;
 
 namespace Odyssey.Desktop.Tests;
 
+[Collection("Shared document services")]
 public class DocumentDockTests
 {
     [Fact]
