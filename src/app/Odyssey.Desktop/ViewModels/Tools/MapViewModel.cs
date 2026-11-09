@@ -76,12 +76,12 @@ public partial class MapViewModel : DocumentToolViewModelBase/*, IRecipient<Cent
         }
     }
 
-    public IEnumerable<KeyValuePair<int, RegionModel>> OccupiedRegions
+    public Dictionary<int, RegionModel> OccupiedRegions
     {
         get => _populatedRegions;
         set
         {
-            if (!EqualityComparer<IEnumerable<KeyValuePair<int, RegionModel>>>.Default.Equals(_populatedRegions, value))
+            if (!ReferenceEquals(_populatedRegions, value))
             {
                 _populatedRegions = value;
                 OnPropertyChanged(nameof(OccupiedRegions));
@@ -89,12 +89,12 @@ public partial class MapViewModel : DocumentToolViewModelBase/*, IRecipient<Cent
         }
     }
 
-    public IEnumerable<KeyValuePair<int, RegionModel>> UnoccupiedRegions
+    public Dictionary<int, RegionModel> UnoccupiedRegions
     {
         get => _emptyRegions;
         set
         {
-            if (!EqualityComparer<IEnumerable<KeyValuePair<int, RegionModel>>>.Default.Equals(_emptyRegions, value))
+            if (!ReferenceEquals(_emptyRegions, value))
             {
                 _emptyRegions = value;
                 OnPropertyChanged(nameof(UnoccupiedRegions));
@@ -142,8 +142,8 @@ public partial class MapViewModel : DocumentToolViewModelBase/*, IRecipient<Cent
         }
     }
 
-    private IEnumerable<KeyValuePair<int, RegionModel>> _populatedRegions = [];
-    private IEnumerable<KeyValuePair<int, RegionModel>> _emptyRegions = [];
+    private Dictionary<int, RegionModel> _populatedRegions = [];
+    private Dictionary<int, RegionModel> _emptyRegions = [];
     private Dictionary<int, ShipModel> _ships = [];
     private Dictionary<int, BuildingModel> _buildings = [];
     private IEnumerable<KeyValuePair<int, RegionModel>> _regionsWithStructure = [];
