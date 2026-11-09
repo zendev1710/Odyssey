@@ -60,7 +60,6 @@ Velopack installs per user. If Odyssey was installed using the MSI from `v0.11.0
 * Layout management does not work
 * Theme switching does not refresh explorer view tree items specific colors
 * In fullscreen mode (F11), screen slightly blinks
-* [AvaloniaUI issue](https://github.com/AvaloniaUI/Avalonia/issues/2441) : menu hotkey does not work until menu is displayed at lease onetime
 
 ## Useful links
 
