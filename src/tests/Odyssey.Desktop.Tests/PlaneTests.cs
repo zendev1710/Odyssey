@@ -3,6 +3,7 @@ using Odyssey.Core.Services;
 using Odyssey.Models.Dal;
 using Odyssey.Models.Data;
 using Odyssey.Models.Documents;
+using Odyssey.Models.Tools;
 using Odyssey.ViewModels.Tools;
 using Xunit;
 
@@ -55,9 +56,39 @@ public class PlaneTests
         ServiceLocator.EntitySelectionService.SelectItem(worldRegion, worldRegion, this);
         Assert.Same(report.Planes[0], map.SelectedPlane);
         Assert.Same(worldRegion, map.SelectedRegion);
+
+        var worldUnit = new UnitModel(new UnitDataBlock("1"), worldRegion.Id);
+        report.Units[worldUnit.Id] = worldUnit;
+        ServiceLocator.EntitySelectionService.SelectItem(worldUnit, worldRegion, this);
+        Assert.Same(worldUnit, ServiceLocator.EntitySelectionService.Selection.Item);
+
         ServiceLocator.EntitySelectionService.SelectItem(astralRegion, astralRegion, this);
         Assert.Same(report.Planes[1], map.SelectedPlane);
         Assert.Same(astralRegion, map.SelectedRegion);
+
+        report.SourcePath = Path.GetFullPath("planes.cr");
+        string savedSelections = map.CaptureSessionSelectionState();
+        Assert.False(string.IsNullOrWhiteSpace(savedSelections));
+
+        map.SelectedPlane = report.Planes[0];
+        Assert.Same(worldRegion, map.SelectedRegion);
+        Assert.Same(worldUnit, ServiceLocator.EntitySelectionService.Selection.Item);
+        Assert.True(map.IsSelectionCenterPending);
+        map.CompleteSelectionCenterRequest();
+
+        map.SelectedPlane = report.Planes[1];
+        Assert.Same(astralRegion, map.SelectedRegion);
+        Assert.Same(astralRegion, ServiceLocator.EntitySelectionService.Selection.Region);
+        Assert.True(map.IsSelectionCenterPending);
+        map.CompleteSelectionCenterRequest();
+
+        map.RestoreSessionSelectionState(savedSelections);
+        map.SelectedPlane = report.Planes[0];
+        Assert.Same(worldUnit, ServiceLocator.EntitySelectionService.Selection.Item);
+
+        report.Planes.Remove((int)PlaneType.ASTRAL);
+        map.RestoreSessionSelectionState(savedSelections);
+        Assert.Same(report.Planes[(int)PlaneType.WORLD], map.SelectedPlane);
     }
 
     [Fact]

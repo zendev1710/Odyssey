@@ -147,6 +147,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
     private IDockSerializer? _serializer;
     private IDockState? _dockState;
     private List<SavedDocumentState>? _documentsToRestore;
+    private string? _mapPlaneSelectionsToRestore;
 
     private const int SavedLayoutVersion = 1;
     private const string AutoSessionFileName = "last-session.json";
@@ -166,6 +167,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
         public string LayoutJson { get; set; } = string.Empty;
         public string? CurrentLayoutProfilePath { get; set; }
         public string SelectionBookmarks { get; set; } = string.Empty;
+        public string MapPlaneSelections { get; set; } = string.Empty;
         public List<SavedDocumentState>? Documents { get; set; } = [];
     }
 
@@ -1504,6 +1506,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
             LayoutJson = _serializer.Serialize(Layout),
             CurrentLayoutProfilePath = GlobalSettings.Shared.CurrentLayoutProfilePath,
             SelectionBookmarks = GlobalSettings.Shared.ReportSelectionBookmarksJson,
+            MapPlaneSelections = (_factory.GetDockable<IDockable>(Ids.Map) as MapViewModel)?.CaptureSessionSelectionState() ?? string.Empty,
             Documents = CaptureOpenDocuments()
         }, SavedLayoutJsonOptions);
     }
@@ -1660,6 +1663,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
         }
         _dockState?.Save(layout);
         _documentsToRestore = preserveCurrentContext ? null : documentsToRestore;
+        _mapPlaneSelectionsToRestore = preserveCurrentContext ? null : savedLayout.MapPlaneSelections;
 
         if (!preserveCurrentContext && !string.IsNullOrEmpty(savedLayout.SelectionBookmarks))
         {
@@ -1695,6 +1699,7 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
     {
         if (_documentsToRestore is not { } documents)
         {
+            RestorePendingMapPlaneSelections();
             return;
         }
 
@@ -1730,6 +1735,23 @@ public partial class MainWindowViewModel : ObservableObject, IDropTarget
         if (activeFile is not null)
         {
             _factory?.SetActiveDockable(activeFile);
+        }
+
+        RestorePendingMapPlaneSelections();
+    }
+
+    private void RestorePendingMapPlaneSelections()
+    {
+        if (string.IsNullOrWhiteSpace(_mapPlaneSelectionsToRestore))
+        {
+            return;
+        }
+
+        string savedSelections = _mapPlaneSelectionsToRestore;
+        _mapPlaneSelectionsToRestore = null;
+        if (_factory.GetDockable<IDockable>(Ids.Map) is MapViewModel mapViewModel)
+        {
+            mapViewModel.RestoreSessionSelectionState(savedSelections);
         }
     }
 
